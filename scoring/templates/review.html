@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ run.run_id }}</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 0; color: #151515; }
+      .layout { display: grid; grid-template-columns: minmax(280px, 40%) 1fr; min-height: 100vh; }
+      .problem { padding: 24px; background: #f7f7f7; border-right: 1px solid #ddd; white-space: pre-wrap; }
+      .answers { padding: 24px; }
+      .answer { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+      details pre { white-space: pre-wrap; line-height: 1.45; }
+      .metrics { color: #555; font-size: 14px; margin-top: 10px; }
+      input, textarea, button { font: inherit; }
+      textarea { width: 100%; min-height: 70px; }
+      @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } .problem { border-right: 0; border-bottom: 1px solid #ddd; } }
+    </style>
+  </head>
+  <body>
+    <main class="layout">
+      <section class="problem">
+        <h1>{{ run.run_id }}</h1>
+        {{ run.problem_text }}
+      </section>
+      <section class="answers">
+        {% for result in run.results %}
+          <article class="answer">
+            <h2>{{ result.model }}</h2>
+            {% if result.error %}
+              <p><strong>Ошибка:</strong> {{ result.error }}</p>
+            {% endif %}
+            <details>
+              <summary>Показать ответ</summary>
+              <pre>{{ result.answer }}</pre>
+            </details>
+            <form method="post" action="{{ url_for('score') }}">
+              <input type="hidden" name="run_id" value="{{ run.run_id }}">
+              <input type="hidden" name="model" value="{{ result.model }}">
+              <p>
+                <label>Оценка 0-10:
+                  <input type="range" name="score" min="0" max="10" value="{{ result.score if result.score is not none else 5 }}" oninput="this.nextElementSibling.value=this.value">
+                  <output>{{ result.score if result.score is not none else 5 }}</output>
+                </label>
+              </p>
+              <p><input name="scored_by" placeholder="Кто оценил" value="{{ result.scored_by or '' }}"></p>
+              <p><textarea name="comment" placeholder="Комментарий">{{ result.score_comment or '' }}</textarea></p>
+              <button type="submit">Сохранить</button>
+            </form>
+            {% if result.score is not none %}
+              <div class="metrics">
+                tokens: {{ result.prompt_tokens + result.completion_tokens }},
+                cost: ${{ "%.6f"|format(result.cost_usd) }},
+                latency: {{ result.latency_ms }} ms
+              </div>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </section>
+    </main>
+  </body>
+</html>

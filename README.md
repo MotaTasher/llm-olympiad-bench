@@ -4,6 +4,50 @@
 
 ---
 
+## Быстрый запуск
+
+### Локально
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+# Заполни .env ключами
+python runner.py --problem data/problems/example.json --models gpt,claude,gigachat,yandexgpt
+python scoring/app.py
+```
+
+### Через GitHub Actions
+
+Workflow `.github/workflows/run-benchmark.yml` запускается вручную через **Actions → Run benchmark → Run workflow**.
+В репозиторий нужно положить только Secrets:
+
+```text
+OPENAI_API_KEY
+ANTHROPIC_API_KEY
+GIGACHAT_CREDENTIALS
+# или вместо GIGACHAT_CREDENTIALS:
+GIGACHAT_CLIENT_ID
+GIGACHAT_CLIENT_SECRET
+YANDEX_API_KEY
+YANDEX_FOLDER_ID
+```
+
+Опциональные настройки моделей можно положить в **Variables**:
+
+```text
+OPENAI_MODEL=gpt-4o
+ANTHROPIC_MODEL=claude-opus-4-5
+GIGACHAT_MODEL=GigaChat-Pro
+YANDEX_MODEL=yandexgpt-pro
+RUB_PER_USD=90
+```
+
+Логи прогона Actions сохраняет как artifact `benchmark-logs`.
+
+---
+
 ## Архитектура
 
 ```
@@ -27,8 +71,8 @@ olympiad-scorer/
 │
 ├── scoring/                   # Веб-интерфейс для ручного скоринга
 │   ├── app.py
-│   ├── schema.py
 │   └── templates/
+│       ├── index.html
 │       └── review.html
 │
 └── data/

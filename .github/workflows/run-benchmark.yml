@@ -1,0 +1,59 @@
+name: Run benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      problem:
+        description: Problem file path
+        required: true
+        default: data/problems/example.json
+      models:
+        description: Comma-separated model aliases
+        required: true
+        default: gpt,claude,gigachat,yandexgpt
+      run_id:
+        description: Optional run id
+        required: false
+        default: ""
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4o' }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-opus-4-5' }}
+      GIGACHAT_CREDENTIALS: ${{ secrets.GIGACHAT_CREDENTIALS }}
+      GIGACHAT_CLIENT_ID: ${{ secrets.GIGACHAT_CLIENT_ID }}
+      GIGACHAT_CLIENT_SECRET: ${{ secrets.GIGACHAT_CLIENT_SECRET }}
+      GIGACHAT_MODEL: ${{ vars.GIGACHAT_MODEL || 'GigaChat-Pro' }}
+      GIGACHAT_SCOPE: ${{ vars.GIGACHAT_SCOPE || 'GIGACHAT_API_PERS' }}
+      YANDEX_API_KEY: ${{ secrets.YANDEX_API_KEY }}
+      YANDEX_IAM_TOKEN: ${{ secrets.YANDEX_IAM_TOKEN }}
+      YANDEX_FOLDER_ID: ${{ secrets.YANDEX_FOLDER_ID }}
+      YANDEX_MODEL: ${{ vars.YANDEX_MODEL || 'yandexgpt-pro' }}
+      RUB_PER_USD: ${{ vars.RUB_PER_USD || '90' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run models
+        run: |
+          if [ -n "${{ inputs.run_id }}" ]; then
+            python runner.py --problem "${{ inputs.problem }}" --models "${{ inputs.models }}" --run-id "${{ inputs.run_id }}"
+          else
+            python runner.py --problem "${{ inputs.problem }}" --models "${{ inputs.models }}"
+          fi
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-logs
+          path: logs/*.json

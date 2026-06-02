@@ -1,0 +1,7 @@
+{
+  "id": "example",
+  "title": "Example olympiad problem",
+  "source": "Local sample",
+  "text": "Докажите, что сумма любых двух четных чисел является четным числом.",
+  "expected_answer": null
+}
