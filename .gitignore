@@ -5,3 +5,4 @@ __pycache__/
 logs/*.json
 data/results/*
 !data/results/.gitkeep
+models/*/secrets/

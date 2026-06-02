@@ -23,6 +23,38 @@ MODEL_CLASSES = {
 }
 
 
+def load_env_file(path: Path, override: bool = False) -> None:
+    if not path.exists():
+        return
+    try:
+        from dotenv import load_dotenv
+
+        load_dotenv(path, override=override)
+        return
+    except Exception:
+        pass
+
+    import os
+
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if override or key not in os.environ:
+            os.environ[key] = value
+
+
+def load_env() -> None:
+    load_env_file(Path(".env"))
+    secret_paths = set(Path("models").glob("*/secrets/*.env"))
+    secret_paths.update(Path("models").glob("*/secrets/.env"))
+    for path in sorted(secret_paths):
+        load_env_file(path, override=True)
+
+
 def load_problem(path: Path) -> tuple[str, dict[str, Any]]:
     text = path.read_text(encoding="utf-8")
     if path.suffix.lower() == ".json":
@@ -81,12 +113,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
-    try:
-        from dotenv import load_dotenv
-
-        load_dotenv()
-    except Exception:
-        pass
+    load_env()
     args = parse_args()
 
     problem_file = Path(args.problem)
