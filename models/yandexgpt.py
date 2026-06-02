@@ -8,6 +8,7 @@ from .common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
 
 # Approximate RUB pricing per 1000 total tokens. USD conversion is controlled by RUB_PER_USD.
 PRICES_RUB_PER_1K = {
+    "yandexgpt": 0.80,
     "yandexgpt-pro": 0.80,
     "yandexgpt-lite": 0.20,
     "yandexgpt-pro-32k": 1.20,
@@ -16,7 +17,7 @@ PRICES_RUB_PER_1K = {
 
 class YandexGPTModel(BaseModel):
     def __init__(self, model: str | None = None) -> None:
-        self._model = model or env("YANDEX_MODEL", "yandexgpt-pro")
+        self._model = model or env("YANDEX_MODEL", "yandexgpt")
 
     @property
     def model_id(self) -> str:

@@ -229,6 +229,8 @@ All adapters should call provider APIs without tools.
 | GigaChat | Do not pass `tools`, `functions`, or `function_call`. |
 | YandexGPT | Use basic completion endpoint; tools are not part of this API. |
 
+YandexGPT Pro uses `YANDEX_MODEL=yandexgpt` in `gpt://<folder_ID>/yandexgpt`. YandexGPT Lite uses `YANDEX_MODEL=yandexgpt-lite`.
+
 ## Validation
 
 Before committing code changes:

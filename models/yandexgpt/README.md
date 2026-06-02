@@ -31,22 +31,21 @@ yc iam create-token
 ```
 YANDEX_API_KEY=AQVN...
 YANDEX_FOLDER_ID=b1g...
-YANDEX_MODEL=yandexgpt-pro
+YANDEX_MODEL=yandexgpt
 ```
 
 ## Актуальные модели
 
 | Модель (`modelUri`) | Описание | Цена |
 |---------------------|----------|------|
-| `yandexgpt-pro` | Продвинутая | 0.80₽ / 1K токенов |
+| `yandexgpt` | Продвинутая / Pro | 0.80₽ / 1K токенов |
 | `yandexgpt-lite` | Быстрая и дешёвая | 0.20₽ / 1K токенов |
-| `yandexgpt-pro-32k` | Большой контекст | 1.20₽ / 1K токенов |
 
 Цены актуальны на 2026-06 — сверяй на [yandex.cloud/ru/prices](https://yandex.cloud/ru/prices#foundation-models)
 
 `modelUri` передаётся как `gpt://<folder_id>/<model_name>`, например:
 ```
-gpt://b1g.../yandexgpt-pro
+gpt://b1g.../yandexgpt
 ```
 
 ## Как работает API (text-only, без инструментов)
@@ -60,7 +59,7 @@ import requests, os, time
 
 YANDEX_API_KEY = os.environ["YANDEX_API_KEY"]
 YANDEX_FOLDER_ID = os.environ["YANDEX_FOLDER_ID"]
-YANDEX_MODEL = os.environ.get("YANDEX_MODEL", "yandexgpt-pro")
+YANDEX_MODEL = os.environ.get("YANDEX_MODEL", "yandexgpt")
 
 headers = {
     "Authorization": f"Api-Key {YANDEX_API_KEY}",
@@ -102,7 +101,7 @@ completion_tokens = int(data["usage"]["completionTokens"])
 YandexGPT считает в **рублях** за 1000 токенов. В `SolveResult.cost_usd` конвертируй по курсу или храни `cost_rub`:
 
 ```python
-PRICE_PER_1K_TOKENS_RUB = 0.80  # yandexgpt-pro, вход+выход одинаково
+PRICE_PER_1K_TOKENS_RUB = 0.80  # yandexgpt, вход+выход одинаково
 total_tokens = prompt_tokens + completion_tokens
 cost_rub = (total_tokens / 1000) * PRICE_PER_1K_TOKENS_RUB
 ```
