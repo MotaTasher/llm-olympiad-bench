@@ -61,7 +61,15 @@ Secrets live beside model-specific docs/code:
 models/*/secrets/.env
 ```
 
-These folders must stay ignored by git.
+These folders must stay ignored by git. They should contain credentials only.
+
+Public model/runtime configuration lives in:
+
+```text
+config/models.env
+```
+
+This file is committed and controls concrete model names such as `OPENAI_MODEL`, `GIGACHAT_MODEL`, `YANDEX_MODEL`, plus non-secret runtime settings.
 
 ## Base Interface
 
@@ -108,7 +116,7 @@ Rules:
 Each adapter file should:
 
 - read credentials from environment variables;
-- rely on `runner.load_env()` to load `.env` and `models/*/secrets/.env`;
+- rely on `runner.load_env()` to load `.env`, `models/*/secrets/.env`, and `config/models.env`;
 - calculate `cost_usd` where pricing is known;
 - return token counts when provider response includes them;
 - keep provider-specific response parsing inside the adapter.
@@ -138,13 +146,14 @@ Behavior:
 
 1. Load env from `.env`.
 2. Load model-local env files from `models/*/secrets/.env` and `models/*/secrets/*.env`.
-3. Load problem text:
+3. Load public model/runtime config from `config/models.env`; this overrides stale model settings that may still exist in local secret files.
+4. Load problem text:
    - JSON: field `text`;
    - Markdown/other text: full file contents.
-4. Instantiate adapters from aliases.
-5. Call `solve()` sequentially.
-6. Write `logs/<run_id>.json`.
-7. Print table: model, tokens, cost, latency, status, short error.
+5. Instantiate adapters from aliases.
+6. Call `solve()` sequentially.
+7. Write `logs/<run_id>.json`.
+8. Print table: model, tokens, cost, latency, status, short error.
 
 ## Log Format
 
@@ -238,7 +247,8 @@ When extending the project:
 
 1. Preserve `SolveResult` and log compatibility.
 2. Keep secrets out of git.
-3. Prefer provider SDKs when stable and installed.
-4. Keep new provider-specific logic inside its adapter.
-5. Add README notes for humans only when behavior affects setup or operation.
-6. Add AGENTS notes when behavior affects contracts, architecture, or future agent work.
+3. Keep model selection and non-secret runtime settings in `config/models.env`, not in `models/*/secrets/.env`.
+4. Prefer provider SDKs when stable and installed.
+5. Keep new provider-specific logic inside its adapter.
+6. Add README notes for humans only when behavior affects setup or operation.
+7. Add AGENTS notes when behavior affects contracts, architecture, or future agent work.

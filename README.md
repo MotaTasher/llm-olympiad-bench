@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ## Секреты
 
-Секреты хранятся рядом с кодом конкретной модели и не попадают в git.
+Секреты хранятся рядом с кодом конкретной модели и не попадают в git. В этих файлах должны быть только ключи, токены и идентификаторы доступа.
 
 ```text
 models/gpt/secrets/.env
@@ -44,7 +44,6 @@ models/yandexgpt/secrets/.env
 
 ```env
 OPENAI_API_KEY=...
-OPENAI_MODEL=gpt-4o
 ```
 
 ### Claude
@@ -53,7 +52,6 @@ OPENAI_MODEL=gpt-4o
 
 ```env
 ANTHROPIC_API_KEY=...
-ANTHROPIC_MODEL=claude-opus-4-5
 ```
 
 ### GigaChat
@@ -64,9 +62,6 @@ ANTHROPIC_MODEL=claude-opus-4-5
 GIGACHAT_CREDENTIALS=...
 GIGACHAT_CLIENT_ID=...
 GIGACHAT_CLIENT_SECRET=...
-GIGACHAT_MODEL=GigaChat-Pro
-GIGACHAT_SCOPE=GIGACHAT_API_PERS
-GIGACHAT_VERIFY_SSL=false
 ```
 
 Достаточно либо `GIGACHAT_CREDENTIALS`, либо пары `GIGACHAT_CLIENT_ID` + `GIGACHAT_CLIENT_SECRET`.
@@ -79,10 +74,37 @@ GIGACHAT_VERIFY_SSL=false
 YANDEX_API_KEY=...
 YANDEX_API_KEY_ID=...
 YANDEX_FOLDER_ID=...
-YANDEX_MODEL=yandexgpt-pro
 ```
 
 Для YandexGPT обязательны `YANDEX_FOLDER_ID` и один из ключей: `YANDEX_API_KEY` или `YANDEX_IAM_TOKEN`.
+
+## Выбор моделей
+
+Конкретные версии моделей и не-секретные runtime-настройки лежат в публичном конфиге:
+
+```text
+config/models.env
+```
+
+Пример:
+
+```env
+OPENAI_MODEL=gpt-4o
+ANTHROPIC_MODEL=claude-opus-4-5
+GIGACHAT_MODEL=GigaChat-Pro
+GIGACHAT_SCOPE=GIGACHAT_API_PERS
+GIGACHAT_VERIFY_SSL=false
+YANDEX_MODEL=yandexgpt-pro
+YANDEX_TEMPERATURE=0.3
+YANDEX_MAX_TOKENS=4000
+RUB_PER_USD=90
+```
+
+Как это работает:
+
+- `--models gpt,gigachat` выбирает провайдеры/адаптеры для запуска;
+- `config/models.env` выбирает конкретные версии внутри провайдеров;
+- `models/*/secrets/.env` содержит только ключи.
 
 ## Проверить секреты
 

@@ -53,6 +53,7 @@ def load_env() -> None:
     secret_paths.update(Path("models").glob("*/secrets/.env"))
     for path in sorted(secret_paths):
         load_env_file(path, override=True)
+    load_env_file(Path("config/models.env"), override=True)
 
 
 def load_problem(path: Path) -> tuple[str, dict[str, Any]]:
