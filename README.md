@@ -166,6 +166,14 @@ jupyter notebook notebooks/test_gpt_runner.ipynb
 
 Он проверяет секреты, запускает `runner.py`, читает лог и показывает прямой вызов `GPTModel.solve()`.
 
+Для полного примера с олимпиадной задачей про монеты Туг-туг:
+
+```bash
+jupyter notebook notebooks/run_tug_tug_problem.ipynb
+```
+
+Ноутбук создает файл задачи, запускает выбранные модели и показывает ответы из лога.
+
 ## GitHub Actions
 
 Workflow `.github/workflows/run-benchmark.yml` запускается вручную:
