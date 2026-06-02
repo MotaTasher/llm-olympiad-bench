@@ -128,6 +128,9 @@ def main() -> int:
         result = model.solve(problem_text)
         results.append(result.to_log_dict())
         status = "error" if result.error else "ok"
+        short_error = ""
+        if result.error:
+            short_error = result.error.replace("\n", " ")[:120]
         table_rows.append(
             {
                 "model": result.model,
@@ -135,6 +138,7 @@ def main() -> int:
                 "cost_usd": f"{result.cost_usd:.6f}",
                 "latency_ms": result.latency_ms,
                 "status": status,
+                "error": short_error,
             }
         )
 

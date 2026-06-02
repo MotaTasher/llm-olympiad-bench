@@ -3,7 +3,7 @@ from __future__ import annotations
 import requests
 
 from .base import BaseModel, SolveResult
-from .common import SYSTEM_PROMPT, env, error_result, require_env, safe_dict, timed
+from .common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
 
 
 # Approximate RUB pricing per 1000 total tokens. USD conversion is controlled by RUB_PER_USD.
@@ -24,11 +24,18 @@ class YandexGPTModel(BaseModel):
 
     def solve(self, problem: str) -> SolveResult:
         try:
-            folder_id = require_env("YANDEX_FOLDER_ID")
+            folder_id = env("YANDEX_FOLDER_ID")
+            if not folder_id:
+                raise RuntimeError(
+                    "Missing YANDEX_FOLDER_ID. Put it in models/yandexgpt/secrets/.env"
+                )
             api_key = env("YANDEX_API_KEY")
             iam_token = env("YANDEX_IAM_TOKEN")
             if not api_key and not iam_token:
-                raise RuntimeError("Missing YANDEX_API_KEY or YANDEX_IAM_TOKEN")
+                raise RuntimeError(
+                    "Missing YANDEX_API_KEY or YANDEX_IAM_TOKEN. "
+                    "Put one of them in models/yandexgpt/secrets/.env"
+                )
 
             headers = {
                 "Content-Type": "application/json",

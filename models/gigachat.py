@@ -22,7 +22,8 @@ class GigaChatModel(BaseModel):
         client_secret = env("GIGACHAT_CLIENT_SECRET")
         if not client_id or not client_secret:
             raise RuntimeError(
-                "Missing GIGACHAT_CREDENTIALS or both GIGACHAT_CLIENT_ID and GIGACHAT_CLIENT_SECRET"
+                "Missing GIGACHAT_CREDENTIALS or both GIGACHAT_CLIENT_ID and "
+                "GIGACHAT_CLIENT_SECRET. Put them in models/gigachat/secrets/.env"
             )
         return base64.b64encode(f"{client_id}:{client_secret}".encode("utf-8")).decode("ascii")
 

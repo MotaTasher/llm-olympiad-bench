@@ -18,6 +18,46 @@ python runner.py --problem data/problems/example.json --models gpt,claude,gigach
 python scoring/app.py
 ```
 
+### Локальный тест GigaChat и YandexGPT
+
+Секреты можно хранить рядом с кодом конкретной модели. Эти папки игнорируются git:
+
+```text
+models/gigachat/secrets/.env
+models/yandexgpt/secrets/.env
+```
+
+GigaChat:
+
+```env
+GIGACHAT_CREDENTIALS=...
+GIGACHAT_CLIENT_ID=...
+GIGACHAT_CLIENT_SECRET=...
+GIGACHAT_MODEL=GigaChat-Pro
+GIGACHAT_SCOPE=GIGACHAT_API_PERS
+```
+
+YandexGPT:
+
+```env
+YANDEX_API_KEY=...
+YANDEX_API_KEY_ID=...
+YANDEX_FOLDER_ID=...
+YANDEX_MODEL=yandexgpt-pro
+```
+
+Проверить наличие секретов без вывода значений:
+
+```bash
+python scripts/check_secrets.py --models gigachat,yandexgpt
+```
+
+Запустить тест:
+
+```bash
+python runner.py --problem data/problems/example.json --models gigachat,yandexgpt --run-id local_test
+```
+
 ### Через GitHub Actions
 
 Workflow `.github/workflows/run-benchmark.yml` запускается вручную через **Actions → Run benchmark → Run workflow**.
