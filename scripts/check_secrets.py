@@ -10,6 +10,14 @@ from runner import load_env
 
 
 REQUIRED = {
+    "gpt": {
+        "all": [],
+        "one_of": [("OPENAI_API_KEY",)],
+    },
+    "openai": {
+        "all": [],
+        "one_of": [("OPENAI_API_KEY",)],
+    },
     "gigachat": {
         "all": [],
         "one_of": [
@@ -32,7 +40,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Check model-local secrets without printing values.")
     parser.add_argument(
         "--models",
-        default="gigachat,yandexgpt",
+        default="gpt,gigachat,yandexgpt",
         help="Comma-separated model aliases to check",
     )
     args = parser.parse_args()

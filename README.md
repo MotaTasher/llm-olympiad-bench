@@ -18,13 +18,21 @@ python runner.py --problem data/problems/example.json --models gpt,claude,gigach
 python scoring/app.py
 ```
 
-### Локальный тест GigaChat и YandexGPT
+### Локальный тест GPT, GigaChat и YandexGPT
 
 Секреты можно хранить рядом с кодом конкретной модели. Эти папки игнорируются git:
 
 ```text
+models/gpt/secrets/.env
 models/gigachat/secrets/.env
 models/yandexgpt/secrets/.env
+```
+
+GPT:
+
+```env
+OPENAI_API_KEY=...
+OPENAI_MODEL=gpt-4o
 ```
 
 GigaChat:
@@ -49,13 +57,19 @@ YANDEX_MODEL=yandexgpt-pro
 Проверить наличие секретов без вывода значений:
 
 ```bash
-python scripts/check_secrets.py --models gigachat,yandexgpt
+python scripts/check_secrets.py --models gpt,gigachat,yandexgpt
 ```
 
 Запустить тест:
 
 ```bash
-python runner.py --problem data/problems/example.json --models gigachat,yandexgpt --run-id local_test
+python runner.py --problem data/problems/example.json --models gpt,gigachat,yandexgpt --run-id local_test
+```
+
+Тестовый ноутбук для GPT:
+
+```bash
+jupyter notebook notebooks/test_gpt_runner.ipynb
 ```
 
 ### Через GitHub Actions
