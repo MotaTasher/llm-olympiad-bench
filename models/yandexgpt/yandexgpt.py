@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import requests
 
-from .base import BaseModel, SolveResult
-from .common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
+from ..base import BaseModel, SolveResult
+from ..common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
+from .versions import DEFAULT as DEFAULT_VERSION
 
 
 # Approximate RUB pricing per 1000 total tokens. USD conversion is controlled by RUB_PER_USD.
@@ -17,7 +18,7 @@ PRICES_RUB_PER_1K = {
 
 class YandexGPTModel(BaseModel):
     def __init__(self, model: str | None = None) -> None:
-        self._model = model or env("YANDEX_MODEL", "yandexgpt")
+        self._model = model or env("YANDEX_MODEL", DEFAULT_VERSION)
 
     @property
     def model_id(self) -> str:

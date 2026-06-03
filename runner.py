@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -17,9 +18,16 @@ MODEL_CLASSES = {
     "anthropic": ("models.claude", "ClaudeModel"),
     "gigachat": ("models.gigachat", "GigaChatModel"),
     "sber": ("models.gigachat", "GigaChatModel"),
-    "alice": ("models.alice", "AliceModel"),
+    "alice": ("models.yandexgpt", "AliceModel"),
     "yandex": ("models.yandexgpt", "YandexGPTModel"),
     "yandexgpt": ("models.yandexgpt", "YandexGPTModel"),
+}
+
+MODEL_ENV_VARS = {
+    "OPENAI_MODEL",
+    "ANTHROPIC_MODEL",
+    "GIGACHAT_MODEL",
+    "YANDEX_MODEL",
 }
 
 
@@ -48,11 +56,24 @@ def load_env_file(path: Path, override: bool = False) -> None:
 
 
 def load_env() -> None:
+    import os
+
+    explicit_model_env = {
+        name: os.environ[name] for name in MODEL_ENV_VARS if name in os.environ
+    }
     load_env_file(Path(".env"))
     secret_paths = set(Path("models").glob("*/secrets/*.env"))
     secret_paths.update(Path("models").glob("*/secrets/.env"))
     for path in sorted(secret_paths):
         load_env_file(path, override=True)
+
+    # .env and model-local secrets are for credentials. Ignore stale model
+    # selections left there; versions.py/config/models.env own model choice.
+    for name in MODEL_ENV_VARS:
+        if name not in explicit_model_env:
+            os.environ.pop(name, None)
+    os.environ.update(explicit_model_env)
+
     load_env_file(Path("config/models.env"), override=True)
 
 
@@ -76,6 +97,19 @@ def create_model(alias: str) -> BaseModel:
     module = importlib.import_module(module_name)
     model_class = getattr(module, class_name)
     return model_class()
+
+
+def get_git_hash() -> str:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    except Exception:
+        pass
+    return ""
 
 
 def write_log(log: dict[str, Any], logs_dir: Path) -> Path:
@@ -119,8 +153,10 @@ def main() -> int:
 
     problem_file = Path(args.problem)
     problem_text, problem_data = load_problem(problem_file)
-    run_id = args.run_id or datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     timestamp = datetime.now(UTC).isoformat().replace("+00:00", "Z")
+    timestamp_id = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+    git_hash = get_git_hash()
+    run_id = args.run_id or f"{timestamp_id}_{git_hash or 'nogit'}"
 
     results = []
     table_rows = []
@@ -145,15 +181,19 @@ def main() -> int:
 
     log = {
         "run_id": run_id,
+        "timestamp": timestamp,
+        "git_hash": git_hash,
         "problem_file": str(problem_file),
         "problem_text": problem_text,
         "problem": problem_data,
-        "timestamp": timestamp,
         "results": results,
     }
     log_path = write_log(log, Path(args.logs_dir))
     print_table(table_rows)
-    print(f"\nLog written: {log_path}")
+    print(f"\nRun ID: {run_id}")
+    print(f"Timestamp: {timestamp}")
+    print(f"Git hash: {git_hash or 'n/a'}")
+    print(f"Log written: {log_path}")
     return 0
 
 

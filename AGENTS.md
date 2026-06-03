@@ -32,15 +32,31 @@ olympiad-scorer/
 │   ├── __init__.py
 │   ├── base.py                # BaseModel + SolveResult
 │   ├── common.py              # env helpers, timing, serialization
-│   ├── gpt.py                 # OpenAI GPT
-│   ├── claude.py              # Anthropic Claude
-│   ├── gigachat.py            # Sber GigaChat
-│   ├── yandexgpt.py           # YandexGPT
-│   ├── alice.py               # alias to YandexGPT
-│   ├── gpt/README.md
-│   ├── claude/README.md
-│   ├── gigachat/README.md
-│   └── yandexgpt/README.md
+│   ├── gpt/
+│   │   ├── __init__.py        # export GPTModel
+│   │   ├── gpt.py             # OpenAI GPT adapter
+│   │   ├── versions.py        # список версий + DEFAULT
+│   │   ├── secrets/.env       # gitignored credentials
+│   │   └── README.md
+│   ├── claude/
+│   │   ├── __init__.py        # export ClaudeModel
+│   │   ├── claude.py          # Anthropic Claude adapter
+│   │   ├── versions.py
+│   │   └── README.md
+│   ├── gigachat/
+│   │   ├── __init__.py        # export GigaChatModel
+│   │   ├── gigachat.py        # Sber GigaChat adapter
+│   │   ├── versions.py
+│   │   ├── secrets/.env
+│   │   └── README.md
+│   └── yandexgpt/
+│       ├── __init__.py        # export YandexGPTModel, AliceModel
+│       ├── yandexgpt.py       # YandexGPT adapter
+│       ├── versions.py
+│       ├── secrets/.env
+│       └── README.md
+├── config/
+│   └── models.env             # non-secret runtime settings (no model versions)
 ├── logs/
 │   └── .gitkeep               # JSON logs are gitignored
 ├── scoring/
@@ -55,13 +71,7 @@ olympiad-scorer/
         └── .gitkeep
 ```
 
-Secrets live beside model-specific docs/code:
-
-```text
-models/*/secrets/.env
-```
-
-These folders must stay ignored by git. They should contain credentials only.
+Secrets live in `models/*/secrets/.env` — these folders must stay gitignored and contain credentials only.
 
 Public model/runtime configuration lives in:
 
@@ -69,7 +79,22 @@ Public model/runtime configuration lives in:
 config/models.env
 ```
 
-This file is committed and controls concrete model names such as `OPENAI_MODEL`, `GIGACHAT_MODEL`, `YANDEX_MODEL`, plus non-secret runtime settings.
+This file is committed and controls non-secret runtime settings (temperatures, token limits, exchange rates). It does **not** set model versions — those come from `versions.py`.
+
+## Version Selection
+
+Each model folder contains a `versions.py` file:
+
+```python
+VERSIONS = ["gpt-4o", "gpt-4o-mini", "o3", "o4-mini"]
+DEFAULT = VERSIONS[0]
+```
+
+The adapter reads `DEFAULT` as its fallback version. To override for a specific run, set the env variable (e.g. `OPENAI_MODEL=gpt-4o-mini`) in `config/models.env` or in the shell before invoking `runner.py`.
+
+Stale `*_MODEL` values in `.env` and `models/*/secrets/.env` are ignored by `runner.load_env()`. Those files are credentials-only.
+
+When adding a new model version: add it to `VERSIONS` in the appropriate `versions.py`. To change the default: move the desired version to `VERSIONS[0]`.
 
 ## Base Interface
 
@@ -113,10 +138,12 @@ Rules:
 
 ## Adapter Expectations
 
-Each adapter file should:
+Each adapter (`models/<provider>/<provider>.py`) should:
 
 - read credentials from environment variables;
 - rely on `runner.load_env()` to load `.env`, `models/*/secrets/.env`, and `config/models.env`;
+- resolve default version from `from .versions import DEFAULT as DEFAULT_VERSION`;
+- allow env-var override (e.g. `env("OPENAI_MODEL", DEFAULT_VERSION)`);
 - calculate `cost_usd` where pricing is known;
 - return token counts when provider response includes them;
 - keep provider-specific response parsing inside the adapter.
@@ -124,11 +151,11 @@ Each adapter file should:
 Current aliases in `runner.py`:
 
 ```text
-gpt, openai -> models.gpt.GPTModel
+gpt, openai    -> models.gpt.GPTModel
 claude, anthropic -> models.claude.ClaudeModel
 gigachat, sber -> models.gigachat.GigaChatModel
 yandex, yandexgpt -> models.yandexgpt.YandexGPTModel
-alice -> models.alice.AliceModel
+alice          -> models.yandexgpt.AliceModel
 ```
 
 ## Runner Contract
@@ -146,7 +173,7 @@ Behavior:
 
 1. Load env from `.env`.
 2. Load model-local env files from `models/*/secrets/.env` and `models/*/secrets/*.env`.
-3. Load public model/runtime config from `config/models.env`; this overrides stale model settings that may still exist in local secret files.
+3. Load public runtime config from `config/models.env`; overrides stale settings from secret files.
 4. Load problem text:
    - JSON: field `text`;
    - Markdown/other text: full file contents.
@@ -160,10 +187,11 @@ Behavior:
 ```json
 {
   "run_id": "20260602_153000",
+  "timestamp": "2026-06-02T15:30:00Z",
+  "git_hash": "17ea460",
   "problem_file": "data/problems/task1.json",
   "problem_text": "Условие задачи...",
   "problem": {},
-  "timestamp": "2026-06-02T15:30:00Z",
   "results": [
     {
       "model": "gpt-4o",
@@ -182,6 +210,8 @@ Behavior:
   ]
 }
 ```
+
+`git_hash` — короткий SHA HEAD на момент запуска; пустая строка если git недоступен.
 
 Do not change this format without updating `runner.py`, `scoring/app.py`, templates, and this document.
 
@@ -229,8 +259,6 @@ All adapters should call provider APIs without tools.
 | GigaChat | Do not pass `tools`, `functions`, or `function_call`. |
 | YandexGPT | Use basic completion endpoint; tools are not part of this API. |
 
-YandexGPT Pro uses `YANDEX_MODEL=yandexgpt` in `gpt://<folder_ID>/yandexgpt`. YandexGPT Lite uses `YANDEX_MODEL=yandexgpt-lite`.
-
 ## Validation
 
 Before committing code changes:
@@ -249,8 +277,9 @@ When extending the project:
 
 1. Preserve `SolveResult` and log compatibility.
 2. Keep secrets out of git.
-3. Keep model selection and non-secret runtime settings in `config/models.env`, not in `models/*/secrets/.env`.
-4. Prefer provider SDKs when stable and installed.
-5. Keep new provider-specific logic inside its adapter.
-6. Add README notes for humans only when behavior affects setup or operation.
-7. Add AGENTS notes when behavior affects contracts, architecture, or future agent work.
+3. Keep model versions in `models/<provider>/versions.py`, not in `config/models.env` or hardcoded in adapters.
+4. Keep non-secret runtime settings (temperatures, limits) in `config/models.env`.
+5. Prefer provider SDKs when stable and installed.
+6. Keep new provider-specific logic inside its adapter.
+7. Add README notes for humans only when behavior affects setup or operation.
+8. Add AGENTS notes when behavior affects contracts, architecture, or future agent work.

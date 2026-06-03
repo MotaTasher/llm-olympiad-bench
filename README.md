@@ -80,7 +80,16 @@ YANDEX_FOLDER_ID=...
 
 ## Выбор моделей
 
-Конкретные версии моделей и не-секретные runtime-настройки лежат в публичном конфиге:
+Список доступных версий лежит в `versions.py` внутри папки провайдера:
+
+```text
+models/gpt/versions.py
+models/claude/versions.py
+models/gigachat/versions.py
+models/yandexgpt/versions.py
+```
+
+По умолчанию берётся `DEFAULT = VERSIONS[0]`. Для разового override можно задать `*_MODEL` в публичном конфиге:
 
 ```text
 config/models.env
@@ -89,12 +98,13 @@ config/models.env
 Пример:
 
 ```env
-OPENAI_MODEL=gpt-4o
-ANTHROPIC_MODEL=claude-opus-4-5
-GIGACHAT_MODEL=GigaChat-Pro
+# OPENAI_MODEL=gpt-5.4
+# ANTHROPIC_MODEL=claude-sonnet-4-5
+# GIGACHAT_MODEL=GigaChat-2-Pro
+# YANDEX_MODEL=yandexgpt
+
 GIGACHAT_SCOPE=GIGACHAT_API_PERS
 GIGACHAT_VERIFY_SSL=false
-YANDEX_MODEL=yandexgpt
 YANDEX_TEMPERATURE=0.3
 YANDEX_MAX_TOKENS=4000
 RUB_PER_USD=90
@@ -103,8 +113,9 @@ RUB_PER_USD=90
 Как это работает:
 
 - `--models gpt,gigachat` выбирает провайдеры/адаптеры для запуска;
-- `config/models.env` выбирает конкретные версии внутри провайдеров;
-- `models/*/secrets/.env` содержит только ключи.
+- `models/<provider>/versions.py` выбирает default-версию внутри провайдера;
+- `config/models.env` может временно переопределить версию;
+- `models/*/secrets/.env` содержит только ключи, старые `*_MODEL` из secrets и `.env` игнорируются.
 
 ## Проверить секреты
 
@@ -220,11 +231,7 @@ YANDEX_FOLDER_ID
 Repository Variables:
 
 ```text
-OPENAI_MODEL=gpt-4o
-ANTHROPIC_MODEL=claude-opus-4-5
-GIGACHAT_MODEL=GigaChat-Pro
 GIGACHAT_SCOPE=GIGACHAT_API_PERS
-YANDEX_MODEL=yandexgpt
 RUB_PER_USD=90
 ```
 

@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import base64
 
-from .base import BaseModel, SolveResult
-from .common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
+from ..base import BaseModel, SolveResult
+from ..common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
+from .versions import DEFAULT as DEFAULT_VERSION
 
 
 class GigaChatModel(BaseModel):
     def __init__(self, model: str | None = None) -> None:
-        self._model = model or env("GIGACHAT_MODEL", "GigaChat-Pro")
+        self._model = model or env("GIGACHAT_MODEL", DEFAULT_VERSION)
 
     @property
     def model_id(self) -> str:

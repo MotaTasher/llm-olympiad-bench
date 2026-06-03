@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from .base import BaseModel, SolveResult
-from .common import SYSTEM_PROMPT, env, error_result, price_for, require_env, safe_dict, timed
+from ..base import BaseModel, SolveResult
+from ..common import SYSTEM_PROMPT, env, error_result, price_for, require_env, safe_dict, timed
+from .versions import DEFAULT as DEFAULT_VERSION
 
 
 # USD per 1M tokens: input, output.
@@ -15,7 +16,7 @@ PRICES_USD_PER_1M = {
 
 class GPTModel(BaseModel):
     def __init__(self, model: str | None = None) -> None:
-        self._model = model or env("OPENAI_MODEL", "gpt-4o")
+        self._model = model or env("OPENAI_MODEL", DEFAULT_VERSION)
 
     @property
     def model_id(self) -> str:
