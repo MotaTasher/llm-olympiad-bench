@@ -43,6 +43,11 @@ olympiad-scorer/
 │   │   ├── claude.py          # Anthropic Claude adapter
 │   │   ├── versions.py
 │   │   └── README.md
+│   ├── deepseek/
+│   │   ├── __init__.py        # export DeepSeekModel
+│   │   ├── deepseek.py        # DeepSeek adapter
+│   │   ├── versions.py
+│   │   └── README.md
 │   ├── gigachat/
 │   │   ├── __init__.py        # export GigaChatModel
 │   │   ├── gigachat.py        # Sber GigaChat adapter
@@ -153,6 +158,7 @@ Current aliases in `runner.py`:
 ```text
 gpt, openai    -> models.gpt.GPTModel
 claude, anthropic -> models.claude.ClaudeModel
+deepseek, ds   -> models.deepseek.DeepSeekModel
 gigachat, sber -> models.gigachat.GigaChatModel
 yandex, yandexgpt -> models.yandexgpt.YandexGPTModel
 alice          -> models.yandexgpt.AliceModel
@@ -165,7 +171,7 @@ CLI:
 ```bash
 python runner.py \
   --problem data/problems/task1.json \
-  --models gpt,claude,gigachat,yandexgpt \
+  --models gpt,claude,gigachat,yandexgpt,deepseek \
   --run-id my_run_01
 ```
 
@@ -256,6 +262,7 @@ All adapters should call provider APIs without tools.
 | --- | --- |
 | OpenAI GPT | Do not pass `tools`. |
 | Anthropic Claude | Do not pass `tools`. |
+| DeepSeek | Do not pass `tools`; use OpenAI-compatible Chat Completions. |
 | GigaChat | Do not pass `tools`, `functions`, or `function_call`. |
 | YandexGPT | Use basic completion endpoint; tools are not part of this API. |
 
@@ -265,7 +272,7 @@ Before committing code changes:
 
 ```bash
 python -m compileall runner.py models scripts scoring
-python scripts/check_secrets.py --models gpt,gigachat,yandexgpt
+python scripts/check_secrets.py --models gpt,gigachat,yandexgpt,deepseek
 python runner.py --problem data/problems/example.json --models gpt --run-id smoke_gpt
 ```
 

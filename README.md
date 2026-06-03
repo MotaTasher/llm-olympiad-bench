@@ -32,6 +32,7 @@ pip install -r requirements.txt
 ```text
 models/gpt/secrets/.env
 models/claude/secrets/.env
+models/deepseek/secrets/.env
 models/gigachat/secrets/.env
 models/yandexgpt/secrets/.env
 ```
@@ -66,6 +67,14 @@ GIGACHAT_CLIENT_SECRET=...
 
 Достаточно либо `GIGACHAT_CREDENTIALS`, либо пары `GIGACHAT_CLIENT_ID` + `GIGACHAT_CLIENT_SECRET`.
 
+### DeepSeek
+
+`models/deepseek/secrets/.env`:
+
+```env
+DEEPSEEK_API_KEY=...
+```
+
 ### YandexGPT
 
 `models/yandexgpt/secrets/.env`:
@@ -85,6 +94,7 @@ YANDEX_FOLDER_ID=...
 ```text
 models/gpt/versions.py
 models/claude/versions.py
+models/deepseek/versions.py
 models/gigachat/versions.py
 models/yandexgpt/versions.py
 ```
@@ -102,12 +112,15 @@ config/models.env
 # ANTHROPIC_MODEL=claude-sonnet-4-5
 # GIGACHAT_MODEL=GigaChat-2-Pro
 # YANDEX_MODEL=yandexgpt
+# DEEPSEEK_MODEL=deepseek-v4-flash
 
 GIGACHAT_SCOPE=GIGACHAT_API_PERS
 GIGACHAT_VERIFY_SSL=false
 YANDEX_TEMPERATURE=0.3
 YANDEX_MAX_TOKENS=4000
 RUB_PER_USD=90
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_TEMPERATURE=0.3
 ```
 
 Как это работает:
@@ -129,7 +142,7 @@ OPENAI_MODEL=gpt-5.4 python runner.py --problem data/problems/example.json --mod
 Команда не печатает значения ключей.
 
 ```bash
-python scripts/check_secrets.py --models gpt,gigachat,yandexgpt
+python scripts/check_secrets.py --models gpt,gigachat,yandexgpt,deepseek
 ```
 
 Пример вывода:
@@ -151,7 +164,7 @@ python runner.py --problem data/problems/example.json --models gpt --run-id test
 Несколько моделей:
 
 ```bash
-python runner.py --problem data/problems/example.json --models gpt,gigachat,yandexgpt --run-id local_test
+python runner.py --problem data/problems/example.json --models gpt,gigachat,yandexgpt,deepseek --run-id local_test
 ```
 
 Если не указать `--run-id`, он будет создан по timestamp.
@@ -227,6 +240,7 @@ Repository Secrets:
 ```text
 OPENAI_API_KEY
 ANTHROPIC_API_KEY
+DEEPSEEK_API_KEY
 GIGACHAT_CREDENTIALS
 GIGACHAT_CLIENT_ID
 GIGACHAT_CLIENT_SECRET
@@ -248,7 +262,7 @@ RUB_PER_USD=90
 
 ```bash
 python -m compileall runner.py models scripts scoring
-python scripts/check_secrets.py --models gpt,gigachat,yandexgpt
+python scripts/check_secrets.py --models gpt,gigachat,yandexgpt,deepseek
 python runner.py --problem data/problems/example.json --models gpt,gigachat --run-id smoke
 python scoring/app.py
 ```

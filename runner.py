@@ -16,6 +16,8 @@ MODEL_CLASSES = {
     "openai": ("models.gpt", "GPTModel"),
     "claude": ("models.claude", "ClaudeModel"),
     "anthropic": ("models.claude", "ClaudeModel"),
+    "deepseek": ("models.deepseek", "DeepSeekModel"),
+    "ds": ("models.deepseek", "DeepSeekModel"),
     "gigachat": ("models.gigachat", "GigaChatModel"),
     "sber": ("models.gigachat", "GigaChatModel"),
     "alice": ("models.yandexgpt", "AliceModel"),
@@ -28,6 +30,7 @@ MODEL_ENV_VARS = {
     "ANTHROPIC_MODEL",
     "GIGACHAT_MODEL",
     "YANDEX_MODEL",
+    "DEEPSEEK_MODEL",
 }
 
 

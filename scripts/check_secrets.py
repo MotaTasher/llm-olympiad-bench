@@ -25,6 +25,14 @@ REQUIRED = {
             ("GIGACHAT_CLIENT_ID", "GIGACHAT_CLIENT_SECRET"),
         ],
     },
+    "deepseek": {
+        "all": [],
+        "one_of": [("DEEPSEEK_API_KEY",)],
+    },
+    "ds": {
+        "all": [],
+        "one_of": [("DEEPSEEK_API_KEY",)],
+    },
     "yandexgpt": {
         "all": [("YANDEX_FOLDER_ID",)],
         "one_of": [("YANDEX_API_KEY",), ("YANDEX_IAM_TOKEN",)],
@@ -40,7 +48,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Check model-local secrets without printing values.")
     parser.add_argument(
         "--models",
-        default="gpt,gigachat,yandexgpt",
+        default="gpt,gigachat,yandexgpt,deepseek",
         help="Comma-separated model aliases to check",
     )
     args = parser.parse_args()
