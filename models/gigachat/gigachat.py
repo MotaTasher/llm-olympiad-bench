@@ -44,15 +44,25 @@ class GigaChatModel(BaseModel):
                 verify_ssl_certs=verify_ssl,
             )
 
-            response, latency_ms = timed(
-                lambda: client.chat(
-                    {
-                        "messages": [
-                            {"role": "system", "content": SYSTEM_PROMPT},
-                            {"role": "user", "content": problem},
-                        ]
-                    }
+            payload = {
+                "messages": [
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": problem},
+                ]
+            }
+            if env("GIGACHAT_TEMPERATURE") is not None:
+                payload["temperature"] = float(env("GIGACHAT_TEMPERATURE", "0.1") or "0.1")
+            if env("GIGACHAT_TOP_P") is not None:
+                payload["top_p"] = float(env("GIGACHAT_TOP_P", "0.9") or "0.9")
+            if env("GIGACHAT_MAX_TOKENS") is not None:
+                payload["max_tokens"] = int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
+            if env("GIGACHAT_REPETITION_PENALTY") is not None:
+                payload["repetition_penalty"] = float(
+                    env("GIGACHAT_REPETITION_PENALTY", "1.05") or "1.05"
                 )
+
+            response, latency_ms = timed(
+                lambda: client.chat(payload)
             )
 
             usage = getattr(response, "usage", None)

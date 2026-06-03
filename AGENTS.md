@@ -266,6 +266,11 @@ All adapters should call provider APIs without tools.
 | GigaChat | Do not pass `tools`, `functions`, or `function_call`. |
 | YandexGPT | Use basic completion endpoint; tools are not part of this API. |
 
+Reasoning/runtime settings:
+
+- YandexGPT supports `completionOptions.reasoningOptions.mode`; use `YANDEX_REASONING_MODE=ENABLED_HIDDEN` for hidden reasoning or `DISABLED` to turn it off.
+- GigaChat currently uses sampling/length controls (`GIGACHAT_TEMPERATURE`, `GIGACHAT_TOP_P`, `GIGACHAT_MAX_TOKENS`, `GIGACHAT_REPETITION_PENALTY`) plus the strongest available model. Do not add tools/functions.
+
 ## Validation
 
 Before committing code changes:

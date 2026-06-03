@@ -31,21 +31,23 @@ yc iam create-token
 ```
 YANDEX_API_KEY=AQVN...
 YANDEX_FOLDER_ID=b1g...
-YANDEX_MODEL=yandexgpt
+YANDEX_MODEL=yandexgpt-5-pro/latest
 ```
 
 ## Актуальные модели
 
 | Модель (`modelUri`) | Описание | Цена |
 |---------------------|----------|------|
-| `yandexgpt` | Продвинутая / Pro | 0.80₽ / 1K токенов |
-| `yandexgpt-lite` | Быстрая и дешёвая | 0.20₽ / 1K токенов |
+| `yandexgpt-5-pro/latest` | Продвинутая / Pro, поддерживает hidden reasoning | 0.80₽ / 1K токенов |
+| `yandexgpt-5.1/latest` | Новая ветка YandexGPT, в локальном тесте не поддержала hidden reasoning | 0.80₽ / 1K токенов |
+| `yandexgpt-5-lite/latest` | Быстрая и дешёвая | 0.20₽ / 1K токенов |
+| `aliceai-llm/latest` | Сильная модель для сложных диалогов/RAG, поддерживает hidden reasoning | сверяй в тарифах |
 
 Цены актуальны на 2026-06 — сверяй на [yandex.cloud/ru/prices](https://yandex.cloud/ru/prices#foundation-models)
 
 `modelUri` передаётся как `gpt://<folder_id>/<model_name>`, например:
 ```
-gpt://b1g.../yandexgpt
+gpt://b1g.../yandexgpt-5-pro/latest
 ```
 
 ## Как работает API (text-only, без инструментов)
@@ -59,7 +61,7 @@ import requests, os, time
 
 YANDEX_API_KEY = os.environ["YANDEX_API_KEY"]
 YANDEX_FOLDER_ID = os.environ["YANDEX_FOLDER_ID"]
-YANDEX_MODEL = os.environ.get("YANDEX_MODEL", "yandexgpt")
+YANDEX_MODEL = os.environ.get("YANDEX_MODEL", "yandexgpt-5-pro/latest")
 
 headers = {
     "Authorization": f"Api-Key {YANDEX_API_KEY}",

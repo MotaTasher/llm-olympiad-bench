@@ -27,12 +27,15 @@
 # - Available models may depend on folder, billing status, quotas, and enabled features.
 
 VERSIONS = [
+    # Strong current YandexGPT model; supports hidden reasoningOptions
+    # on the Foundation Models completion endpoint in local tests.
+    "yandexgpt-5-pro/latest",
+
     # Best current Yandex model for complex chat/RAG/dialogue scenarios.
     "aliceai-llm/latest",
 
     # Current YandexGPT family.
     "yandexgpt-5.1/latest",
-    "yandexgpt-5-pro/latest",
     "yandexgpt-5-lite/latest",
 ]
 
@@ -44,4 +47,4 @@ LEGACY_VERSIONS = [
     "yandexgpt-lite/latest",
 ]
 
-DEFAULT = VERSIONS[1]
+DEFAULT = VERSIONS[0]

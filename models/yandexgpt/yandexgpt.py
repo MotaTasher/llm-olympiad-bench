@@ -9,6 +9,10 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 # Approximate RUB pricing per 1000 total tokens. USD conversion is controlled by RUB_PER_USD.
 PRICES_RUB_PER_1K = {
+    "yandexgpt-5-pro/latest": 0.80,
+    "yandexgpt-5.1/latest": 0.80,
+    "yandexgpt-5-lite/latest": 0.20,
+    "aliceai-llm/latest": 0.80,
     "yandexgpt": 0.80,
     "yandexgpt-pro": 0.80,
     "yandexgpt-lite": 0.20,
@@ -48,29 +52,48 @@ class YandexGPTModel(BaseModel):
             else:
                 headers["Authorization"] = f"Bearer {iam_token}"
 
+            completion_options = {
+                "stream": False,
+                "temperature": float(env("YANDEX_TEMPERATURE", "0.15") or "0.15"),
+                "maxTokens": int(env("YANDEX_MAX_TOKENS", "8000") or "8000"),
+            }
+            reasoning_mode = env("YANDEX_REASONING_MODE")
+            if reasoning_mode:
+                completion_options["reasoningOptions"] = {"mode": reasoning_mode}
+
             payload = {
                 "modelUri": f"gpt://{folder_id}/{self.model_id}",
-                "completionOptions": {
-                    "stream": False,
-                    "temperature": float(env("YANDEX_TEMPERATURE", "0.3") or "0.3"),
-                    "maxTokens": int(env("YANDEX_MAX_TOKENS", "4000") or "4000"),
-                },
+                "completionOptions": completion_options,
                 "messages": [
                     {"role": "system", "text": SYSTEM_PROMPT},
                     {"role": "user", "text": problem},
                 ],
             }
 
-            response, latency_ms = timed(
-                lambda: requests.post(
+            def post_completion() -> requests.Response:
+                return requests.post(
                     "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
                     headers=headers,
                     json=payload,
                     timeout=int(env("YANDEX_TIMEOUT", "120") or "120"),
                 )
-            )
+
+            response, latency_ms = timed(post_completion)
+            retried_without_reasoning = False
+            if response.status_code == 400 and reasoning_mode:
+                error_text = response.text.lower()
+                if "reasoning" in error_text and "not support" in error_text:
+                    payload["completionOptions"].pop("reasoningOptions", None)
+                    response, retry_latency_ms = timed(post_completion)
+                    latency_ms += retry_latency_ms
+                    retried_without_reasoning = True
             response.raise_for_status()
             data = response.json()
+            if retried_without_reasoning:
+                data["_adapter_note"] = (
+                    "YANDEX_REASONING_MODE was requested, but the selected model "
+                    "does not support reasoning; retried without reasoningOptions."
+                )
             result = data.get("result", {})
             usage = result.get("usage", {})
             prompt_tokens = int(usage.get("inputTextTokens") or usage.get("inputTokens") or 0)

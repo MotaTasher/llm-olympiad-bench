@@ -111,13 +111,18 @@ config/models.env
 # OPENAI_MODEL=gpt-5.4
 # ANTHROPIC_MODEL=claude-sonnet-4-5
 # GIGACHAT_MODEL=GigaChat-2-Pro
-# YANDEX_MODEL=yandexgpt
+# YANDEX_MODEL=yandexgpt-5-pro/latest
 # DEEPSEEK_MODEL=deepseek-v4-flash
 
 GIGACHAT_SCOPE=GIGACHAT_API_PERS
 GIGACHAT_VERIFY_SSL=false
+GIGACHAT_TEMPERATURE=0.1
+GIGACHAT_TOP_P=0.9
+GIGACHAT_MAX_TOKENS=8192
+GIGACHAT_REPETITION_PENALTY=1.05
 YANDEX_TEMPERATURE=0.3
 YANDEX_MAX_TOKENS=4000
+YANDEX_REASONING_MODE=ENABLED_HIDDEN
 RUB_PER_USD=90
 DEEPSEEK_BASE_URL=https://api.deepseek.com
 DEEPSEEK_TEMPERATURE=0.3
@@ -136,6 +141,27 @@ DEEPSEEK_TEMPERATURE=0.3
 ```bash
 OPENAI_MODEL=gpt-5.4 python runner.py --problem data/problems/example.json --models gpt --allow-env-model-overrides
 ```
+
+### Настройки рассуждения
+
+У YandexGPT есть API-параметр скрытого рассуждения. Текущий default `yandexgpt-5-pro/latest` его принимает:
+
+```env
+YANDEX_REASONING_MODE=ENABLED_HIDDEN
+```
+
+Допустимые значения из API: `DISABLED`, `ENABLED_HIDDEN`. Если выбранная модель не поддерживает reasoning, адаптер автоматически повторит запрос без `reasoningOptions` и запишет заметку в `raw_response`.
+
+У GigaChat отдельного `reasoning_effort` в адаптере нет. Для более стабильных доказательств используются:
+
+```env
+GIGACHAT_TEMPERATURE=0.1
+GIGACHAT_TOP_P=0.9
+GIGACHAT_MAX_TOKENS=8192
+GIGACHAT_REPETITION_PENALTY=1.05
+```
+
+Главный рычаг качества для GigaChat — версия модели в `models/gigachat/versions.py`; сейчас default `GigaChat-2-Max`.
 
 ## Проверить секреты
 
