@@ -115,7 +115,14 @@ RUB_PER_USD=90
 - `--models gpt,gigachat` выбирает провайдеры/адаптеры для запуска;
 - `models/<provider>/versions.py` выбирает default-версию внутри провайдера;
 - `config/models.env` может временно переопределить версию;
-- `models/*/secrets/.env` содержит только ключи, старые `*_MODEL` из secrets и `.env` игнорируются.
+- `models/*/secrets/.env` содержит только ключи;
+- старые `*_MODEL` из shell env, `.env` и secrets игнорируются, чтобы Jupyter/kernel не подхватывал старые модели.
+
+Если нужно явно разрешить shell env override:
+
+```bash
+OPENAI_MODEL=gpt-5.4 python runner.py --problem data/problems/example.json --models gpt --allow-env-model-overrides
+```
 
 ## Проверить секреты
 

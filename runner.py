@@ -55,7 +55,7 @@ def load_env_file(path: Path, override: bool = False) -> None:
             os.environ[key] = value
 
 
-def load_env() -> None:
+def load_env(*, allow_model_env_overrides: bool = False) -> None:
     import os
 
     explicit_model_env = {
@@ -70,9 +70,12 @@ def load_env() -> None:
     # .env and model-local secrets are for credentials. Ignore stale model
     # selections left there; versions.py/config/models.env own model choice.
     for name in MODEL_ENV_VARS:
-        if name not in explicit_model_env:
+        if not allow_model_env_overrides:
             os.environ.pop(name, None)
-    os.environ.update(explicit_model_env)
+        elif name not in explicit_model_env:
+            os.environ.pop(name, None)
+    if allow_model_env_overrides:
+        os.environ.update(explicit_model_env)
 
     load_env_file(Path("config/models.env"), override=True)
 
@@ -144,12 +147,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--run-id", default=None, help="Optional log id")
     parser.add_argument("--logs-dir", default="logs", help="Where to write run JSON logs")
+    parser.add_argument(
+        "--allow-env-model-overrides",
+        action="store_true",
+        help="Allow inherited OPENAI_MODEL/GIGACHAT_MODEL/YANDEX_MODEL env vars to override versions.py",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
-    load_env()
     args = parse_args()
+    load_env(allow_model_env_overrides=args.allow_env_model_overrides)
 
     problem_file = Path(args.problem)
     problem_text, problem_data = load_problem(problem_file)

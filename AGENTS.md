@@ -90,9 +90,9 @@ VERSIONS = ["gpt-4o", "gpt-4o-mini", "o3", "o4-mini"]
 DEFAULT = VERSIONS[0]
 ```
 
-The adapter reads `DEFAULT` as its fallback version. To override for a specific run, set the env variable (e.g. `OPENAI_MODEL=gpt-4o-mini`) in `config/models.env` or in the shell before invoking `runner.py`.
+The adapter reads `DEFAULT` as its fallback version. To override for a specific run, set the env variable (e.g. `OPENAI_MODEL=gpt-4o-mini`) in `config/models.env`.
 
-Stale `*_MODEL` values in `.env` and `models/*/secrets/.env` are ignored by `runner.load_env()`. Those files are credentials-only.
+Stale `*_MODEL` values in inherited shell env, `.env`, and `models/*/secrets/.env` are ignored by `runner.load_env()` by default. Those files are credentials-only. Shell env model overrides are allowed only when `runner.py` is called with `--allow-env-model-overrides`.
 
 When adding a new model version: add it to `VERSIONS` in the appropriate `versions.py`. To change the default: move the desired version to `VERSIONS[0]`.
 
