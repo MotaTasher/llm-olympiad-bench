@@ -134,10 +134,10 @@ def print_table(rows: list[dict[str, Any]]) -> None:
 
         print(tabulate(rows, headers="keys", tablefmt="github"))
     except Exception:
-        headers = ["model", "tokens", "cost_usd", "latency_ms", "status"]
+        headers = ["model", "tokens", "cost_usd", "latency_ms", "status", "error"]
         print(" | ".join(headers))
         for row in rows:
-            print(" | ".join(str(row[h]) for h in headers))
+            print(" | ".join(str(row.get(h, "")) for h in headers))
 
 
 def parse_args() -> argparse.Namespace:

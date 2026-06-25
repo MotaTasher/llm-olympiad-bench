@@ -1,10 +1,42 @@
 from __future__ import annotations
 
 import base64
+import binascii
 
 from ..base import BaseModel, SolveResult
 from ..common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
 from .versions import DEFAULT as DEFAULT_VERSION
+
+
+def normalize_gigachat_credentials(credentials: str) -> str:
+    value = credentials.strip()
+    if value.lower().startswith("basic "):
+        value = value.split(None, 1)[1].strip()
+    if value.lower().startswith("base64(") and value.endswith(")"):
+        value = value[7:-1].strip()
+
+    if ":" in value:
+        return base64.b64encode(value.encode("utf-8")).decode("ascii")
+
+    try:
+        decoded = base64.b64decode(value, validate=True)
+    except (binascii.Error, ValueError) as exc:
+        raise RuntimeError(
+            "Invalid GIGACHAT_CREDENTIALS: expected Base64(client_id:client_secret), "
+            "raw client_id:client_secret, or GIGACHAT_CLIENT_ID + GIGACHAT_CLIENT_SECRET"
+        ) from exc
+
+    if b":" not in decoded:
+        raise RuntimeError(
+            "Invalid GIGACHAT_CREDENTIALS: decoded value must look like "
+            "client_id:client_secret"
+        )
+    return value
+
+
+def build_gigachat_credentials(client_id: str, client_secret: str) -> str:
+    value = f"{client_id.strip()}:{client_secret.strip()}"
+    return base64.b64encode(value.encode("utf-8")).decode("ascii")
 
 
 class GigaChatModel(BaseModel):
@@ -16,17 +48,19 @@ class GigaChatModel(BaseModel):
         return self._model
 
     def _credentials(self) -> str:
-        credentials = env("GIGACHAT_CREDENTIALS")
-        if credentials:
-            return credentials
         client_id = env("GIGACHAT_CLIENT_ID")
         client_secret = env("GIGACHAT_CLIENT_SECRET")
-        if not client_id or not client_secret:
-            raise RuntimeError(
-                "Missing GIGACHAT_CREDENTIALS or both GIGACHAT_CLIENT_ID and "
-                "GIGACHAT_CLIENT_SECRET. Put them in models/gigachat/secrets/.env"
-            )
-        return base64.b64encode(f"{client_id}:{client_secret}".encode("utf-8")).decode("ascii")
+        if client_id and client_secret:
+            return build_gigachat_credentials(client_id, client_secret)
+
+        credentials = env("GIGACHAT_CREDENTIALS")
+        if credentials:
+            return normalize_gigachat_credentials(credentials)
+
+        raise RuntimeError(
+            "Missing GIGACHAT_CREDENTIALS or both GIGACHAT_CLIENT_ID and "
+            "GIGACHAT_CLIENT_SECRET. Put them in models/gigachat/secrets/.env"
+        )
 
     def solve(self, problem: str) -> SolveResult:
         try:

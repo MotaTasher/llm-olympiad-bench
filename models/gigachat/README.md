@@ -14,7 +14,7 @@
 1. В личном кабинете студии → **GigaChat API** → твой проект
 2. Вкладка **Настройки** → раздел **Авторизационные данные**
 3. Нажми **Получить Client Secret** — скопируй `Client ID` и `Client Secret`
-4. Credentials = `Base64(Client_ID:Client_Secret)` — либо вычисляй сам, либо библиотека сделает автоматически
+4. В `.env` укажи `Client ID` и `Client Secret` в двух отдельных переменных; адаптер сам соберет `Client_ID:Client_Secret` и закодирует строку перед OAuth-запросом
 
 > ⚠️ **Важно:** GigaChat требует сертификаты НУЦ Минцифры для HTTPS.
 > Инструкция: [developers.sber.ru/docs/ru/gigachat/certificates](https://developers.sber.ru/docs/ru/gigachat/certificates)
@@ -22,10 +22,21 @@
 
 **В `.env`:**
 ```
-GIGACHAT_CREDENTIALS=Base64(client_id:client_secret)
-GIGACHAT_MODEL=GigaChat-Pro
-GIGACHAT_SCOPE=GIGACHAT_API_PERS
+GIGACHAT_CLIENT_ID=...
+GIGACHAT_CLIENT_SECRET=...
 ```
+
+Для обратной совместимости также поддерживается старый единый секрет:
+
+```env
+GIGACHAT_CREDENTIALS=<authorization_key>
+```
+
+Если заданы обе формы, `GIGACHAT_CLIENT_ID` + `GIGACHAT_CLIENT_SECRET` имеют
+приоритет над `GIGACHAT_CREDENTIALS`.
+
+`GIGACHAT_MODEL` задается не в secrets, а через `models/gigachat/versions.py`
+или временно в `config/models.env`.
 
 `GIGACHAT_SCOPE`:
 - `GIGACHAT_API_PERS` — для физлиц

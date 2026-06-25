@@ -60,12 +60,14 @@ ANTHROPIC_API_KEY=...
 `models/gigachat/secrets/.env`:
 
 ```env
-GIGACHAT_CREDENTIALS=...
 GIGACHAT_CLIENT_ID=...
 GIGACHAT_CLIENT_SECRET=...
 ```
 
-Достаточно либо `GIGACHAT_CREDENTIALS`, либо пары `GIGACHAT_CLIENT_ID` + `GIGACHAT_CLIENT_SECRET`.
+Пиши `Client ID` и `Client Secret` отдельно. Адаптер сам соберет строку
+`client_id:client_secret`, закодирует ее в base64 и передаст в OAuth. Старый
+`GIGACHAT_CREDENTIALS` все еще поддерживается для обратной совместимости, но
+пара `GIGACHAT_CLIENT_ID` + `GIGACHAT_CLIENT_SECRET` имеет приоритет.
 
 ### DeepSeek
 
