@@ -6,5 +6,4 @@ __pycache__/
 logs/*.json
 logs/**/*.json
 data/results/*
-!data/results/.gitkeep
 models/*/secrets/
