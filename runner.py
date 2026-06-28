@@ -88,9 +88,12 @@ def load_problem(path: Path) -> tuple[str, dict[str, Any]]:
     text = path.read_text(encoding="utf-8")
     if path.suffix.lower() == ".json":
         data = json.loads(text)
-        problem_text = data.get("text")
+        problem_text = data.get("text") or data.get("statement")
         if not isinstance(problem_text, str) or not problem_text.strip():
-            raise ValueError(f"{path} must contain a non-empty JSON field: text")
+            raise ValueError(
+                f"{path} must contain a non-empty JSON field: text or statement"
+            )
+        data.setdefault("text", problem_text)
         return problem_text, data
     return text, {"text": text}
 
@@ -119,9 +122,10 @@ def problem_competition(data: dict[str, Any]) -> tuple[str, str]:
 
 
 def file_competition(problem_file: Path) -> tuple[str, str] | None:
-    if problem_file.parent.name != "problems":
-        return None
-    competition_dir = problem_file.parent.parent
+    if problem_file.parent.name == "problems":
+        competition_dir = problem_file.parent.parent
+    else:
+        competition_dir = problem_file.parent
     manifest = competition_dir / "competition.json"
     if not manifest.exists():
         return None
@@ -136,9 +140,12 @@ def file_competition(problem_file: Path) -> tuple[str, str] | None:
 
 def resolve_competition(problem_file: Path, data: dict[str, Any]) -> tuple[str, str]:
     competition_id, competition_title = problem_competition(data)
+    file_metadata = file_competition(problem_file)
+    if file_metadata and file_metadata[0] == competition_id and competition_title == competition_id:
+        return file_metadata
     if competition_id != "default":
         return competition_id, competition_title
-    return file_competition(problem_file) or (competition_id, competition_title)
+    return file_metadata or (competition_id, competition_title)
 
 
 def problem_identity(problem_file: Path, data: dict[str, Any]) -> tuple[str, str]:

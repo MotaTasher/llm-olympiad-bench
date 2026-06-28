@@ -95,6 +95,7 @@ def main() -> int:
         commands.append(command)
         if remote_results:
             command = rsync_base(args.ssh_port)
+            command.extend(["--exclude", "scoring_dataset.*"])
             command.extend(["--ignore-existing", local_results, remote_results])
             commands.append(command)
     else:
@@ -103,6 +104,7 @@ def main() -> int:
         commands.append(command)
         if remote_results:
             command = rsync_base(args.ssh_port)
+            command.extend(["--exclude", "scoring_dataset.*"])
             command.extend([remote_results, local_results])
             commands.append(command)
 
