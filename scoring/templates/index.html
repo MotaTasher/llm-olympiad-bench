@@ -1,23 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-  {% if competitions %}
-    <div class="grid">
-      {% for competition in competitions %}
-        <a class="card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
-          <h2>{{ competition.competition_title }}</h2>
-          <div class="meta">{{ competition.competition_id }}</div>
-          <div class="stats">
-            <span>{{ competition.problem_count }} problems</span>
-            <span>{{ competition.run_count }} runs</span>
-            <span>{{ competition.scored_count }} scored</span>
-          </div>
-          {% if competition.latest_timestamp %}
-            <div class="meta">Latest {{ competition.latest_timestamp }}</div>
-          {% endif %}
-        </a>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="empty">No logs found in <code>logs/</code>.</div>
-  {% endif %}
+  <div class="stack">
+    {% if warnings %}
+      <details class="warning">
+        <summary>Диагностика чтения данных</summary>
+        <ul>
+          {% for warning in warnings %}
+            <li>{{ warning }}</li>
+          {% endfor %}
+        </ul>
+      </details>
+    {% endif %}
+
+    {% if competitions %}
+      <div class="grid">
+        {% for competition in competitions %}
+          <a class="card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+            <div class="card-title">
+              <div>
+                <h2>{{ competition.competition_title }}</h2>
+                <div class="meta">{{ competition.competition_id }}</div>
+              </div>
+              {% if competition.date %}<span class="pill">{{ competition.date }}</span>{% endif %}
+            </div>
+            {% if competition.description %}
+              <p class="muted">{{ competition.description }}</p>
+            {% endif %}
+            <div class="stats">
+              <span class="pill">{{ competition.problem_count }} задач</span>
+              <span class="pill">{{ competition.model_count }} моделей</span>
+              <span class="pill">{{ competition.answer_count }} ответов</span>
+              <span class="pill">{{ competition.scored_count }} проверено</span>
+            </div>
+            <div class="progress" aria-label="Прогресс проверки {{ competition.progress_percent }}%">
+              <span style="width: {{ competition.progress_percent }}%"></span>
+            </div>
+            {% if competition.latest_timestamp %}
+              <div class="meta">Последний запуск: {{ competition.latest_timestamp }}</div>
+            {% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">Соревнования не найдены.</div>
+    {% endif %}
+  </div>
 {% endblock %}

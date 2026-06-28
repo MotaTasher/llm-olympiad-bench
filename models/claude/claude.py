@@ -11,6 +11,7 @@ from ..common import (
     safe_dict,
     timed,
 )
+from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -55,7 +56,12 @@ class ClaudeModel(BaseModel):
                         "type": "enabled",
                         "budget_tokens": budget_tokens,
                     }
-            ensure_text_only_request(kwargs)
+            request_payload = {
+                **kwargs,
+                "endpoint": sanitized_base_url("https://api.anthropic.com/v1/messages"),
+                "stream": False,
+            }
+            ensure_text_only_request(request_payload)
 
             response, latency_ms = timed(
                 lambda: client.messages.create(**kwargs)
@@ -73,6 +79,7 @@ class ClaudeModel(BaseModel):
             answer = "".join(
                 block.text for block in response.content if getattr(block, "type", None) == "text"
             )
+            raw_response = safe_dict(response)
 
             return SolveResult(
                 model=self.model_id,
@@ -81,7 +88,23 @@ class ClaudeModel(BaseModel):
                 completion_tokens=completion_tokens,
                 cost_usd=round(cost_usd, 8),
                 latency_ms=latency_ms,
-                raw_response=safe_dict(response),
+                raw_response=raw_response,
+                provider="anthropic",
+                requested_model_id=self.model_id,
+                resolved_model_id=raw_response.get("model") or self.model_id,
+                request=request_payload,
+                cost={
+                    "currency": "USD",
+                    "input": round(prompt_tokens * input_per_1m / 1_000_000, 8),
+                    "output": round(completion_tokens * output_per_1m / 1_000_000, 8),
+                    "cached_input": None,
+                    "reasoning": None,
+                    "total": round(cost_usd, 8),
+                    "pricing_source": "models/claude/claude.py",
+                    "pricing_version": "2026-06-29",
+                    "estimated": True,
+                    "exchange_rate": None,
+                },
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

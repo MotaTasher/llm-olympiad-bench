@@ -10,25 +10,30 @@ canonical problem file
    │
 runner derives log metadata from CompetitionRecord + ProblemRecord
    │
-runner.create_model(alias)
+runner creates schema_version=2 run-log with status=running
+   │
+runner creates one result_id/result status=running before each model call
    │
 BaseModel.solve(problem_text)
    │
 SolveResult
    │
-runner.write_log()
+runner atomically updates the JSON after each result and final status
    │
 logs/<competition_id>/<problem_id>/<run_id>.json
 ```
 
 Adapters run sequentially. One provider failure should become a result with `error`, allowing other providers and log writing to continue.
+The runner uses `models/telemetry.py` for safe command/runtime metadata, prompt/problem hashes, recursive secret redaction and same-directory temporary-file writes followed by `os.replace`.
 
 ## Scoring flow
 
 ```text
-logs/**/*.json
+data/competitions + logs/**/*.json + data/results/**/*.json
    │
-scoring/app.py discovers and groups runs
+scoring/repository.py builds a catalog in one pass
+   │
+competition → problem → model state → attempts/evaluation
    │
 reviewer submits POST /score
    │
@@ -36,6 +41,7 @@ data/results/<competition_id>/<problem_id>/<run_id>.json
 ```
 
 Run logs remain the source of model answers. Sidecars are the source of manual scoring. The web app merges them only for display.
+New sidecars use `schema_version: 2` and key evaluations by `result_id`; old sidecars keyed by string result index remain readable.
 
 ## Dataset export flow
 
@@ -47,13 +53,13 @@ scripts/export_scoring.py
 CSV or JSONL
 ```
 
-The join key is:
+The preferred join key is:
 
 ```text
-competition_id + problem_id + run_id + result_index
+competition_id + problem_id + run_id + result_id
 ```
 
-Changing ordering of `results[]` after scoring breaks that association. Treat completed run logs as immutable.
+For old logs and old sidecars, export and UI fall back to string `result_index`. Changing ordering of `results[]` after scoring breaks legacy association. Treat completed run logs as immutable.
 
 ## Environment-loading order
 

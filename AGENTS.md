@@ -20,8 +20,8 @@ The project runs several text-only LLM adapters on olympiad problems, stores com
 
 - Model requests are **text-only**. Do not add tools, browsing, code execution, function calling, or provider-side search without an explicit project-wide contract change.
 - A model adapter returns `SolveResult`; provider/network errors are captured in `SolveResult.error`, not raised through `runner.py`.
-- Run logs are immutable model-output records under `logs/<competition_id>/<problem_id>/<run_id>.json`.
-- Human evaluations are stored separately under `data/results/<competition_id>/<problem_id>/<run_id>.json`.
+- Run logs are immutable model-output records under `logs/<competition_id>/<problem_id>/<run_id>.json`; new logs use `schema_version: 2`, stable `result_id`, structured telemetry, and atomic incremental writes.
+- Human evaluations are stored separately under `data/results/<competition_id>/<problem_id>/<run_id>.json`; new sidecars use `schema_version: 2` and key evaluations by `result_id`.
 - Credentials belong only in `models/<provider>/secrets/.env` or private environment variables. Never print, commit, copy, or move secret values.
 - Problem sets use `data/competitions/<competition_id>/competition.json` and direct child files `data/competitions/<competition_id>/<problem_id>.json`.
 - Task files must not contain `competition_id` or `competition_title`; ownership comes from the parent competition directory.

@@ -2,14 +2,28 @@ from __future__ import annotations
 
 import argparse
 import importlib
-import json
 import re
-import subprocess
+import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 from models.base import BaseModel
+from models.common import SYSTEM_PROMPT, error_result
+from models.telemetry import (
+    RUN_LOG_SCHEMA_VERSION,
+    SYSTEM_PROMPT_VERSION,
+    atomic_write_json,
+    git_metadata,
+    isoformat_z,
+    monotonic_ms,
+    normalize_legacy_result,
+    runtime_metadata,
+    sha256_json,
+    sha256_text,
+    stable_result_id,
+)
 from olympiad_data import DataLoadError, resolve_problem
 
 
@@ -87,12 +101,13 @@ def load_env(*, allow_model_env_overrides: bool = False) -> None:
 
 def load_problem_input(
     problem_file: Path,
-) -> tuple[str, dict[str, Any], str, str, str, str]:
+) -> tuple[str, dict[str, Any], dict[str, Any], str, str, str, str]:
     if problem_file.suffix.lower() == ".json":
         competition, problem = resolve_problem(problem_file)
         return (
             problem.statement,
             problem.data,
+            competition.data,
             competition.id,
             competition.title,
             problem.id,
@@ -100,7 +115,7 @@ def load_problem_input(
         )
     text = problem_file.read_text(encoding="utf-8")
     data = {"id": problem_file.stem, "statement": text}
-    return text, data, "default", "default", problem_file.stem, problem_file.stem
+    return text, data, {}, "default", "default", problem_file.stem, problem_file.stem
 
 
 def create_model(alias: str) -> BaseModel:
@@ -115,16 +130,7 @@ def create_model(alias: str) -> BaseModel:
 
 
 def get_git_hash() -> str:
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
-            capture_output=True, text=True, timeout=5,
-        )
-        if result.returncode == 0:
-            return result.stdout.strip()
-    except Exception:
-        pass
-    return ""
+    return str(git_metadata().get("hash") or "")
 
 
 def slugify_run_name(value: str) -> str:
@@ -142,6 +148,16 @@ def build_run_id(timestamp: datetime, run_name: str) -> str:
     return f"{timestamp_id}_{slugify_run_name(run_name)}"
 
 
+def log_path_for(
+    logs_dir: Path,
+    *,
+    competition_id: str,
+    problem_id: str,
+    run_id: str,
+) -> Path:
+    return logs_dir / competition_id / problem_id / f"{run_id}.json"
+
+
 def write_log(
     log: dict[str, Any],
     logs_dir: Path,
@@ -149,15 +165,167 @@ def write_log(
     competition_id: str,
     problem_id: str,
 ) -> Path:
-    logs_dir.mkdir(parents=True, exist_ok=True)
-    log_dir = logs_dir / competition_id / problem_id
-    log_dir.mkdir(parents=True, exist_ok=True)
-    log_path = log_dir / f"{log['run_id']}.json"
-    log_path.write_text(
-        json.dumps(log, ensure_ascii=False, indent=2),
-        encoding="utf-8",
+    log_path = log_path_for(
+        logs_dir,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=str(log["run_id"]),
     )
-    return log_path
+    return atomic_write_json(log_path, log)
+
+
+def provider_for_alias(alias: str) -> str:
+    key = alias.strip().lower()
+    if key in {"gpt", "openai"}:
+        return "openai"
+    if key in {"claude", "anthropic"}:
+        return "anthropic"
+    if key in {"deepseek", "ds"}:
+        return "deepseek"
+    if key in {"gigachat", "sber"}:
+        return "gigachat"
+    if key in {"alice", "yandex", "yandexgpt"}:
+        return "yandexgpt"
+    return "unknown"
+
+
+def requested_aliases(value: str) -> list[str]:
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def initial_result(
+    *,
+    run_id: str,
+    result_index: int,
+    alias: str,
+    provider: str,
+    adapter_class: str | None = None,
+    requested_model_id: str | None = None,
+) -> dict[str, Any]:
+    result_id = stable_result_id(run_id, result_index, alias, requested_model_id)
+    return {
+        "result_id": result_id,
+        "result_index": result_index,
+        "provider": provider,
+        "alias": alias,
+        "adapter_class": adapter_class,
+        "requested_model_id": requested_model_id,
+        "resolved_model_id": None,
+        "model": requested_model_id or alias,
+        "attempt": 1,
+        "started_at": isoformat_z(),
+        "completed_at": None,
+        "status": "running",
+        "request": {},
+        "answer": "",
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_ms": 0,
+        "raw_response": {},
+        "usage": {
+            "input_tokens": None,
+            "output_tokens": None,
+            "total_tokens": None,
+            "reasoning_tokens": None,
+            "cached_input_tokens": None,
+            "cache_creation_input_tokens": None,
+            "raw": {},
+            "source": None,
+        },
+        "timing": {
+            "wall_ms": None,
+            "monotonic_ms": None,
+            "time_to_first_token_ms": None,
+            "reasoning_ms": None,
+            "retry_durations_ms": [],
+            "attempts_total_ms": None,
+            "source": "runner",
+        },
+        "cost": {
+            "currency": "USD",
+            "input": None,
+            "output": None,
+            "cached_input": None,
+            "reasoning": None,
+            "total": None,
+            "pricing_source": None,
+            "pricing_version": None,
+            "estimated": None,
+            "exchange_rate": None,
+        },
+        "finish_reason": None,
+        "provider_request_id": None,
+        "response_id": None,
+        "provider_timestamp": None,
+        "error": None,
+        "error_info": None,
+        "score": None,
+        "scored_by": None,
+        "scored_at": None,
+        "score_comment": None,
+    }
+
+
+def finalize_result(
+    skeleton: dict[str, Any],
+    result: Any,
+    *,
+    competition_id: str,
+    problem_id: str,
+    run_id: str,
+    measured_ms: int,
+) -> dict[str, Any]:
+    if hasattr(result, "to_log_dict"):
+        payload = result.to_log_dict()
+    elif isinstance(result, dict):
+        payload = result
+    else:
+        payload = error_result(str(skeleton.get("model") or skeleton.get("alias")), RuntimeError("Adapter returned invalid result")).to_log_dict()
+    payload = normalize_legacy_result(
+        payload,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        result_index=int(skeleton["result_index"]),
+        provider=str(skeleton.get("provider") or "unknown"),
+    )
+    timing = payload.get("timing") if isinstance(payload.get("timing"), dict) else {}
+    if not timing.get("wall_ms"):
+        timing["wall_ms"] = measured_ms
+    if not timing.get("monotonic_ms"):
+        timing["monotonic_ms"] = measured_ms
+    if not timing.get("attempts_total_ms"):
+        timing["attempts_total_ms"] = measured_ms
+    return {
+        **skeleton,
+        **payload,
+        "result_id": skeleton["result_id"],
+        "result_index": skeleton["result_index"],
+        "provider": payload.get("provider") or skeleton.get("provider"),
+        "alias": skeleton.get("alias"),
+        "adapter_class": skeleton.get("adapter_class") or payload.get("adapter_class"),
+        "requested_model_id": payload.get("requested_model_id") or skeleton.get("requested_model_id"),
+        "resolved_model_id": payload.get("resolved_model_id") or payload.get("model") or skeleton.get("requested_model_id"),
+        "model": payload.get("model") or skeleton.get("model"),
+        "status": "error" if payload.get("error") else "success",
+        "completed_at": isoformat_z(),
+        "timing": timing,
+        "latency_ms": payload.get("latency_ms") or measured_ms,
+    }
+
+
+def run_status(results: list[dict[str, Any]]) -> str:
+    if any(item.get("status") == "running" for item in results):
+        return "running"
+    if not results:
+        return "failed"
+    success_count = sum(1 for item in results if item.get("status") == "success")
+    if success_count == len(results):
+        return "completed"
+    if success_count:
+        return "partial"
+    return "failed"
 
 
 def print_table(rows: list[dict[str, Any]]) -> None:
@@ -213,6 +381,7 @@ def main() -> int:
         (
             problem_text,
             problem_data,
+            competition_data,
             source_competition_id,
             source_competition_title,
             source_problem_id,
@@ -224,16 +393,132 @@ def main() -> int:
     competition_title = args.competition_title or source_competition_title
     problem_id = slugify_id(source_problem_id)
     now = datetime.now(UTC)
-    timestamp = now.isoformat().replace("+00:00", "Z")
-    git_hash = get_git_hash()
+    timestamp = isoformat_z(now)
+    git = git_metadata()
+    git_hash = str(git.get("hash") or "")
     run_id = build_run_id(now, args.run_id or problem_title)
+    aliases = requested_aliases(args.models)
+    logs_dir = Path(args.logs_dir)
+    log_path = log_path_for(
+        logs_dir,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+    )
+    if log_path.exists():
+        try:
+            import json
+
+            existing_data = json.loads(log_path.read_text(encoding="utf-8"))
+        except Exception:
+            existing_data = {}
+        if existing_data.get("status") == "running":
+            print(f"Existing unfinished run-log found and will be overwritten atomically: {log_path}")
+
+    started_mono = monotonic_ms()
+    log = {
+        "schema_version": RUN_LOG_SCHEMA_VERSION,
+        "run_id": run_id,
+        "timestamp": timestamp,
+        "started_at": timestamp,
+        "completed_at": None,
+        "duration_ms": None,
+        "status": "running",
+        "git_hash": git_hash,
+        "git": git,
+        "runtime": runtime_metadata(
+            sys.argv,
+            aliases,
+            {
+                "problem": str(problem_file),
+                "competition": args.competition,
+                "competition_title": args.competition_title,
+                "models": args.models,
+                "run_id": args.run_id,
+                "logs_dir": args.logs_dir,
+                "allow_env_model_overrides": args.allow_env_model_overrides,
+            },
+        ),
+        "requested_models": aliases,
+        "competition_id": competition_id,
+        "competition_title": competition_title,
+        "competition": competition_data,
+        "problem_id": problem_id,
+        "problem_number": problem_data.get("number"),
+        "problem_title": problem_title,
+        "problem_file": str(problem_file),
+        "problem_text": problem_text,
+        "problem": problem_data,
+        "problem_hash": sha256_json(problem_data),
+        "problem_text_hash": sha256_text(problem_text),
+        "system_prompt": {
+            "version": SYSTEM_PROMPT_VERSION,
+            "sha256": sha256_text(SYSTEM_PROMPT),
+            "text": SYSTEM_PROMPT,
+        },
+        "runtime_settings": {
+            "text_only": True,
+            "sequential": True,
+        },
+        "results": [],
+    }
+    write_log(
+        log,
+        logs_dir,
+        competition_id=competition_id,
+        problem_id=problem_id,
+    )
 
     results = []
     table_rows = []
-    for alias in [item.strip() for item in args.models.split(",") if item.strip()]:
-        model = create_model(alias)
-        result = model.solve(problem_text)
-        results.append(result.to_log_dict())
+    for result_index, alias in enumerate(aliases):
+        provider = provider_for_alias(alias)
+        skeleton = initial_result(
+            run_id=run_id,
+            result_index=result_index,
+            alias=alias,
+            provider=provider,
+        )
+        log["results"].append(skeleton)
+        write_log(
+            log,
+            logs_dir,
+            competition_id=competition_id,
+            problem_id=problem_id,
+        )
+        call_start = time.monotonic()
+        try:
+            model = create_model(alias)
+            skeleton["adapter_class"] = f"{model.__class__.__module__}.{model.__class__.__name__}"
+            skeleton["requested_model_id"] = model.model_id
+            skeleton["model"] = model.model_id
+            write_log(
+                log,
+                logs_dir,
+                competition_id=competition_id,
+                problem_id=problem_id,
+            )
+            result = model.solve(problem_text)
+        except Exception as exc:
+            result = error_result(skeleton.get("requested_model_id") or alias, exc)
+        measured_ms = int((time.monotonic() - call_start) * 1000)
+        finalized = finalize_result(
+            skeleton,
+            result,
+            competition_id=competition_id,
+            problem_id=problem_id,
+            run_id=run_id,
+            measured_ms=measured_ms,
+        )
+        log["results"][result_index] = finalized
+        log["status"] = run_status(log["results"])
+        write_log(
+            log,
+            logs_dir,
+            competition_id=competition_id,
+            problem_id=problem_id,
+        )
+        results.append(finalized)
         status = "error" if result.error else "ok"
         short_error = ""
         if result.error:
@@ -249,22 +534,12 @@ def main() -> int:
             }
         )
 
-    log = {
-        "run_id": run_id,
-        "timestamp": timestamp,
-        "git_hash": git_hash,
-        "competition_id": competition_id,
-        "competition_title": competition_title,
-        "problem_id": problem_id,
-        "problem_title": problem_title,
-        "problem_file": str(problem_file),
-        "problem_text": problem_text,
-        "problem": problem_data,
-        "results": results,
-    }
+    log["completed_at"] = isoformat_z()
+    log["duration_ms"] = monotonic_ms() - started_mono
+    log["status"] = run_status(log["results"])
     log_path = write_log(
         log,
-        Path(args.logs_dir),
+        logs_dir,
         competition_id=competition_id,
         problem_id=problem_id,
     )

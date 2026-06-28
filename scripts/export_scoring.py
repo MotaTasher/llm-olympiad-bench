@@ -3,8 +3,22 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from models.telemetry import normalize_run_log
+from scoring.repository import (
+    evaluation_for_result,
+    max_score_for,
+    read_sidecars,
+    score_category,
+    sidecar_path,
+)
 
 
 DEFAULT_LOGS_DIR = Path("logs")
@@ -13,119 +27,73 @@ DEFAULT_RESULTS_DIR = Path("data/results")
 
 def load_json(path: Path) -> dict[str, Any] | None:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        value = json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return None
+    return value if isinstance(value, dict) else None
 
 
-def path_competition_id(path: Path, logs_dir: Path) -> str:
-    try:
-        parts = path.relative_to(logs_dir).parts
-    except ValueError:
-        return "legacy"
-    if len(parts) >= 3:
-        return parts[0]
-    return "legacy"
+def iter_log_paths(logs_dir: Path) -> list[Path]:
+    if not logs_dir.exists():
+        return []
+    paths = []
+    for path in logs_dir.rglob("*.json"):
+        try:
+            parts = path.relative_to(logs_dir).parts
+        except ValueError:
+            continue
+        if any(part.startswith(".") or part.startswith("_") for part in parts):
+            continue
+        if path.name.endswith(".evaluation.json"):
+            continue
+        paths.append(path)
+    return sorted(paths)
 
 
-def path_problem_id(path: Path, logs_dir: Path) -> str:
-    try:
-        parts = path.relative_to(logs_dir).parts
-    except ValueError:
-        return path.stem
-    if len(parts) >= 3:
-        return parts[1]
-    return path.stem
-
-
-def value_from_problem(data: dict[str, Any], key: str) -> str:
-    problem = data.get("problem")
-    if isinstance(problem, dict):
-        value = problem.get(key)
-        if isinstance(value, str):
-            return value
-    return ""
-
-
-def sidecar_path(results_dir: Path, competition_id: str, problem_id: str, run_id: str) -> Path:
-    return results_dir / competition_id / problem_id / f"{run_id}.json"
-
-
-def sidecar_evaluation(
-    results_dir: Path,
-    competition_id: str,
-    problem_id: str,
-    run_id: str,
-    result_index: int,
-) -> dict[str, Any]:
-    data = load_json(sidecar_path(results_dir, competition_id, problem_id, run_id))
-    if not data:
-        return {}
-    evaluations = data.get("evaluations")
-    if isinstance(evaluations, dict):
-        evaluation = evaluations.get(str(result_index))
-        if isinstance(evaluation, dict):
-            return evaluation
-    if result_index == 0 and any(data.get(key) for key in ("score", "feedback", "evaluator")):
-        return {
-            "score": data.get("score"),
-            "evaluator": data.get("evaluator"),
-            "feedback": data.get("feedback"),
-            "updated_at": data.get("updated_at"),
-        }
-    return {}
+def json_field(value: Any) -> str:
+    if value is None or value == "":
+        return ""
+    return json.dumps(value, ensure_ascii=False, sort_keys=True)
 
 
 def rows_from_logs(logs_dir: Path, results_dir: Path, only_scored: bool) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for path in sorted(logs_dir.rglob("*.json")):
-        data = load_json(path)
-        if not data:
+    warnings: list[str] = []
+    sidecars = read_sidecars(results_dir, warnings)
+    for path in iter_log_paths(logs_dir):
+        raw = load_json(path)
+        if not raw:
             continue
-        competition_id = data.get("competition_id") or path_competition_id(path, logs_dir)
-        problem_id = data.get("problem_id") or path_problem_id(path, logs_dir)
-        problem_title = data.get("problem_title") or value_from_problem(data, "title") or problem_id
-        problem_text = (
-            data.get("problem_text")
-            or value_from_problem(data, "statement")
-            or value_from_problem(data, "text")
-        )
-        raw_results = data.get("results", [])
-        if isinstance(raw_results, list) and raw_results:
-            results = [item for item in raw_results if isinstance(item, dict)]
-        else:
-            answer = data.get("answer") or data.get("solution") or data.get("response") or data.get("output")
-            results = [{"model": data.get("model") or data.get("run_id", path.stem), "answer": answer}] if answer else []
-
-        run_id = data.get("run_id", path.stem)
-        for result_index, result in enumerate(results):
-            evaluation = sidecar_evaluation(
-                results_dir,
-                str(competition_id),
-                str(problem_id),
-                str(run_id),
-                result_index,
-            )
-            score = result.get("score")
-            if score is None:
-                score = evaluation.get("score")
-            scored_by = result.get("scored_by") or evaluation.get("evaluator")
-            scored_at = result.get("scored_at") or evaluation.get("updated_at")
-            score_comment = result.get("score_comment") or evaluation.get("feedback")
+        run = normalize_run_log(raw, path, logs_dir)
+        competition_id = str(run.get("competition_id") or "legacy")
+        problem_id = str(run.get("problem_id") or path.stem)
+        run_id = str(run.get("run_id") or path.stem)
+        problem = run.get("problem") if isinstance(run.get("problem"), dict) else {}
+        competition = run.get("competition") if isinstance(run.get("competition"), dict) else {}
+        max_score = max_score_for(competition, problem)
+        sidecar = sidecars.get((competition_id, problem_id, run_id))
+        for result_index, result in enumerate(run.get("results", [])):
+            if not isinstance(result, dict):
+                continue
+            evaluation = evaluation_for_result(result, sidecar)
+            score = evaluation.get("score") if evaluation else result.get("score")
             if only_scored and score is None:
                 continue
+            usage = result.get("usage") if isinstance(result.get("usage"), dict) else {}
+            timing = result.get("timing") if isinstance(result.get("timing"), dict) else {}
+            cost = result.get("cost") if isinstance(result.get("cost"), dict) else {}
             rows.append(
                 {
                     "competition_id": competition_id,
-                    "competition_title": data.get("competition_title") or competition_id,
+                    "competition_title": run.get("competition_title") or competition_id,
                     "problem_id": problem_id,
-                    "problem_title": problem_title,
+                    "problem_title": run.get("problem_title") or problem_id,
                     "run_id": run_id,
-                    "result_index": result_index,
-                    "timestamp": data.get("timestamp", ""),
-                    "git_hash": data.get("git_hash", ""),
-                    "problem_file": data.get("problem_file", ""),
-                    "problem_text": problem_text,
+                    "result_index": result.get("result_index", result_index),
+                    "timestamp": run.get("timestamp", ""),
+                    "git_hash": run.get("git_hash", ""),
+                    "problem_file": run.get("problem_file", ""),
+                    "problem_text": run.get("problem_text", ""),
                     "model": result.get("model", ""),
                     "answer": result.get("answer", ""),
                     "error": result.get("error"),
@@ -134,11 +102,37 @@ def rows_from_logs(logs_dir: Path, results_dir: Path, only_scored: bool) -> list
                     "cost_usd": result.get("cost_usd", 0.0),
                     "latency_ms": result.get("latency_ms", 0),
                     "score": score,
-                    "scored_by": scored_by,
-                    "scored_at": scored_at,
-                    "score_comment": score_comment,
+                    "scored_by": (evaluation or {}).get("evaluator") or result.get("scored_by"),
+                    "scored_at": (evaluation or {}).get("updated_at") or result.get("scored_at"),
+                    "score_comment": (evaluation or {}).get("feedback") or result.get("score_comment"),
                     "log_path": str(path),
-                    "result_path": str(sidecar_path(results_dir, str(competition_id), str(problem_id), str(run_id))),
+                    "result_path": str(sidecar_path(results_dir, competition_id, problem_id, run_id)),
+                    "schema_version": run.get("schema_version"),
+                    "result_id": result.get("result_id"),
+                    "provider": result.get("provider"),
+                    "requested_model_id": result.get("requested_model_id"),
+                    "resolved_model_id": result.get("resolved_model_id"),
+                    "result_status": result.get("status"),
+                    "total_tokens": usage.get("total_tokens"),
+                    "reasoning_tokens": usage.get("reasoning_tokens"),
+                    "cached_tokens": usage.get("cached_input_tokens"),
+                    "finish_reason": result.get("finish_reason"),
+                    "provider_request_id": result.get("provider_request_id"),
+                    "timing": json_field(timing),
+                    "timing_wall_ms": timing.get("wall_ms"),
+                    "timing_monotonic_ms": timing.get("monotonic_ms"),
+                    "time_to_first_token_ms": timing.get("time_to_first_token_ms"),
+                    "reasoning_ms": timing.get("reasoning_ms"),
+                    "cost": json_field(cost),
+                    "cost_currency": cost.get("currency"),
+                    "cost_total": cost.get("total"),
+                    "cost_estimated": cost.get("estimated"),
+                    "max_score": max_score,
+                    "score_category": score_category(score, max_score),
+                    "problem_hash": run.get("problem_hash"),
+                    "problem_text_hash": run.get("problem_text_hash"),
+                    "system_prompt_hash": (run.get("system_prompt") or {}).get("sha256") if isinstance(run.get("system_prompt"), dict) else "",
+                    "evaluation_source": (evaluation or {}).get("_source"),
                 }
             )
     return rows
@@ -149,8 +143,13 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     if not rows:
         path.write_text("", encoding="utf-8")
         return
+    fieldnames: list[str] = []
+    for row in rows:
+        for key in row:
+            if key not in fieldnames:
+                fieldnames.append(key)
     with path.open("w", encoding="utf-8", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=list(rows[0].keys()))
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 

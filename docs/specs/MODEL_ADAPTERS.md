@@ -23,11 +23,22 @@ class BaseModel(abc.ABC):
 - `raw_response`;
 - optional `error`.
 
+`SolveResult` also accepts optional telemetry fields used by schema v2 logs:
+
+- `provider`;
+- `requested_model_id` and `resolved_model_id`;
+- safe `request` snapshot;
+- structured `usage`, `timing`, `cost`;
+- `finish_reason`, `provider_request_id`, `response_id`, `provider_timestamp`;
+- structured `error_info`.
+
+Adapters should fill provider-specific fields when the API exposes them, but must not invent missing metrics. If reasoning/cache usage or time-to-first-token is not returned or measured, leave it `null`/absent. `SolveResult.to_log_dict()` preserves legacy fields while adding normalized telemetry and redacting unsafe data.
+
 ## Failure behavior
 
 `solve()` must catch provider, credential, parsing and network exceptions and return `error_result(...)`. It must not abort the outer runner.
 
-`raw_response` must be JSON-serializable. Use `safe_dict()` for SDK objects.
+`raw_response` must be JSON-serializable and redacted. Use `safe_dict()` for SDK objects. Request snapshots must not include API keys, Authorization headers, cookies, credentials, full secret `.env` contents, full environment dumps, hostnames or user/home-directory identifiers.
 
 ## Text-only policy
 
@@ -42,6 +53,8 @@ web_search_options
 ```
 
 Do not bypass the guard. Adding any tool/search capability is a project-wide experimental-design change, not an adapter tweak.
+
+The current adapters still use text-only system/user messages. Telemetry logging must not add tools, web search, function calling or provider-side code execution.
 
 ## Shared system prompt
 

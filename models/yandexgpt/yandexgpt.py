@@ -4,6 +4,7 @@ import requests
 
 from ..base import BaseModel, SolveResult
 from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
+from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -69,7 +70,16 @@ class YandexGPTModel(BaseModel):
                     {"role": "user", "text": problem},
                 ],
             }
-            ensure_text_only_request(payload)
+            request_payload = {
+                "model": self.model_id,
+                "completionOptions": completion_options,
+                "messages": payload["messages"],
+                "endpoint": sanitized_base_url(
+                    "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+                ),
+                "stream": completion_options.get("stream"),
+            }
+            ensure_text_only_request(request_payload)
 
             def post_completion() -> requests.Response:
                 return requests.post(
@@ -109,6 +119,7 @@ class YandexGPTModel(BaseModel):
             price_rub_per_1k = PRICES_RUB_PER_1K.get(self.model_id.lower(), 0.80)
             rub_per_usd = float(env("RUB_PER_USD", "90") or "90")
             cost_usd = (total_tokens / 1000) * price_rub_per_1k / rub_per_usd
+            raw_response = safe_dict(data)
 
             return SolveResult(
                 model=self.model_id,
@@ -117,7 +128,28 @@ class YandexGPTModel(BaseModel):
                 completion_tokens=completion_tokens,
                 cost_usd=round(cost_usd, 8),
                 latency_ms=latency_ms,
-                raw_response=safe_dict(data),
+                raw_response=raw_response,
+                provider="yandexgpt",
+                requested_model_id=self.model_id,
+                resolved_model_id=self.model_id,
+                request=request_payload,
+                cost={
+                    "currency": "USD",
+                    "input": None,
+                    "output": None,
+                    "cached_input": None,
+                    "reasoning": None,
+                    "total": round(cost_usd, 8),
+                    "pricing_source": "models/yandexgpt/yandexgpt.py",
+                    "pricing_version": "2026-06-29",
+                    "estimated": True,
+                    "exchange_rate": {"RUB_PER_USD": rub_per_usd},
+                    "native": {
+                        "currency": "RUB",
+                        "total": round((total_tokens / 1000) * price_rub_per_1k, 8),
+                        "price_per_1k_total_tokens": price_rub_per_1k,
+                    },
+                },
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

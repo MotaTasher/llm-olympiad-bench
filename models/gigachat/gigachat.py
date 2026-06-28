@@ -5,6 +5,7 @@ import binascii
 
 from ..base import BaseModel, SolveResult
 from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
+from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -94,7 +95,13 @@ class GigaChatModel(BaseModel):
                 payload["repetition_penalty"] = float(
                     env("GIGACHAT_REPETITION_PENALTY", "1.05") or "1.05"
                 )
-            ensure_text_only_request(payload)
+            request_payload = {
+                "model": self.model_id,
+                **payload,
+                "endpoint": sanitized_base_url("https://gigachat.devices.sberbank.ru/api/v1/chat/completions"),
+                "stream": False,
+            }
+            ensure_text_only_request(request_payload)
 
             response, latency_ms = timed(
                 lambda: client.chat(payload)
@@ -104,6 +111,7 @@ class GigaChatModel(BaseModel):
             prompt_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
             completion_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
             answer = response.choices[0].message.content or ""
+            raw_response = safe_dict(response)
 
             return SolveResult(
                 model=self.model_id,
@@ -112,7 +120,23 @@ class GigaChatModel(BaseModel):
                 completion_tokens=completion_tokens,
                 cost_usd=0.0,
                 latency_ms=latency_ms,
-                raw_response=safe_dict(response),
+                raw_response=raw_response,
+                provider="gigachat",
+                requested_model_id=self.model_id,
+                resolved_model_id=raw_response.get("model") or self.model_id,
+                request=request_payload,
+                cost={
+                    "currency": "USD",
+                    "input": None,
+                    "output": None,
+                    "cached_input": None,
+                    "reasoning": None,
+                    "total": None,
+                    "pricing_source": None,
+                    "pricing_version": None,
+                    "estimated": True,
+                    "exchange_rate": None,
+                },
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

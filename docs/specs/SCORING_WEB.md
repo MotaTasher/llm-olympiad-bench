@@ -14,52 +14,82 @@ Development URL:
 http://127.0.0.1:8000
 ```
 
-The current app uses Flask debug mode and binds only to loopback. It is not a production deployment configuration.
+The app is a local Flask/Jinja application. It does not instantiate provider clients and does not require model credentials to browse logs or score answers.
 
-The app resolves paths from the repository root inferred from `scoring/app.py`:
+## Data layer
 
-```python
-BASE_DIR = Path(__file__).resolve().parents[1]
-LOGS_DIR = BASE_DIR / "logs"
-RESULTS_DIR = BASE_DIR / "data" / "results"
+`scoring/repository.py` builds the display catalog from:
+
+```text
+data/competitions/
+logs/**/*.json
+data/results/**/*.json
 ```
 
-This lets the same code run from a local shell and from a systemd service whose
-working directory is the repository root.
+The catalog shape is:
+
+```text
+competition
+  problems
+    model_states
+      attempts/results
+      evaluation
+```
+
+Canonical competitions and problems are loaded first, so a task is visible even when no model has run on it. Logs that cannot be connected to a canonical competition/problem are grouped under `legacy` with title `Старые прогоны`.
+
+Invalid JSON is collected as a diagnostic warning instead of crashing the whole site. The original log objects are not mutated while merging sidecar evaluations.
 
 ## Routes
 
 | Method/path | Behavior |
 | --- | --- |
-| `GET /` | groups logs by competition |
-| `GET /competition/<competition_id>` | lists problems with run and score counts |
-| `GET /competition/<competition_id>/problem/<problem_id>` | lists runs and shows problem text |
-| `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | review page for model answers |
+| `GET /` | Russian competition cards from canonical data plus log/evaluation counts |
+| `GET /competition/<competition_id>` | matrix: rows are tasks, columns are models |
+| `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>` | task statement, selected model answer, metrics, score form, previous attempts |
+| `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | compatibility redirect to the task page with a model selected |
 | `GET /run/<run_id>` | legacy lookup and redirect |
-| `POST /score` | writes one evaluation into the score sidecar |
+| `POST /score` | validates run/result/score and writes sidecar evaluation keyed by `result_id` |
 
-## Discovery behavior
+`model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. Model columns are the union of provider `versions.py` entries, models found in logs, and unknown legacy model IDs.
 
-`iter_log_paths()` scans `logs/**/*.json`, skipping hidden/service paths and old
-`*.evaluation.json` files. Invalid JSON is skipped silently by listing
-functions. This means a missing run in the UI may be a malformed file rather
-than an absent file.
+## Cell status
 
-Metadata fallback logic supports old logs:
+Model cell status is computed by pure functions in `scoring/repository.py`.
 
-- missing competition ID may come from path or become `legacy`;
-- missing problem ID may come from path, nested problem metadata or filename;
-- missing titles fall back to IDs.
+Rules:
 
-## Persistence
+- `not_run`: no attempts for the model/problem;
+- `error`: latest attempt has no successful non-empty answer;
+- `unscored`: latest attempt has a successful non-empty answer and no score;
+- `zero`: latest successful answer score is `0`;
+- `partial`: `0 < score < max_score`;
+- `full`: `score == max_score`.
 
-The score route loads the selected run, uses `result_index`, and writes:
+The primary status is based on the latest attempt timestamp. If the latest attempt is an error but an earlier successful answer was scored, the cell remains `error` while tooltip text reports the earlier scored answer. Tooltips and `aria-label` include model, state, score, latest attempt, attempt count, latency, tokens and error summary where available.
+
+## Score persistence
+
+New sidecars use `schema_version: 2` and store evaluations by `result_id`:
 
 ```text
 data/results/<competition_id>/<problem_id>/<run_id>.json
 ```
 
-The route expects score input convertible to `int`. The UI contract is score `0–10`; server-side range enforcement is currently not explicit in `app.py`.
+Read precedence:
+
+1. sidecar keyed by `result_id`;
+2. old sidecar keyed by string result index;
+3. legacy score fields embedded in the run-log.
+
+`POST /score` validates:
+
+- competition/problem/run IDs;
+- `result_id` belongs to the submitted run;
+- `0 <= score <= max_score`;
+- `max_score` from `problem.metadata.max_score`, then `competition.metadata.max_score`, then `10`.
+
+An empty evaluator field does not overwrite an existing evaluator in the sidecar.
 
 ## Web-change validation
 
@@ -81,4 +111,4 @@ print("ok")
 PY
 ```
 
-For persistence changes, create a temporary run/sidecar fixture outside tracked data or use a temporary working directory. Verify that the run log remains unchanged.
+For persistence changes, verify that the run log bytes do not change when saving a score; only the sidecar should be written.

@@ -11,6 +11,7 @@ from ..common import (
     safe_dict,
     timed,
 )
+from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -49,7 +50,15 @@ class DeepSeekModel(BaseModel):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": problem},
             ]
-            ensure_text_only_request({"messages": messages, **kwargs})
+            base_url = env("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+            request_payload = {
+                "model": self.model_id,
+                "messages": messages,
+                **kwargs,
+                "endpoint": sanitized_base_url(f"{base_url}/chat/completions"),
+                "stream": False,
+            }
+            ensure_text_only_request(request_payload)
 
             response, latency_ms = timed(
                 lambda: client.chat.completions.create(
@@ -85,6 +94,22 @@ class DeepSeekModel(BaseModel):
                 cost_usd=round(cost_usd, 8),
                 latency_ms=latency_ms,
                 raw_response=raw_response,
+                provider="deepseek",
+                requested_model_id=self.model_id,
+                resolved_model_id=raw_response.get("model") or self.model_id,
+                request=request_payload,
+                cost={
+                    "currency": "USD",
+                    "input": round(prompt_tokens * input_per_1m / 1_000_000, 8),
+                    "output": round(completion_tokens * output_per_1m / 1_000_000, 8),
+                    "cached_input": None,
+                    "reasoning": None,
+                    "total": round(cost_usd, 8),
+                    "pricing_source": "models/deepseek/deepseek.py",
+                    "pricing_version": "2026-06-29",
+                    "estimated": True,
+                    "exchange_rate": None,
+                },
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

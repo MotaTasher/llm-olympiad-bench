@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "math-cup-2026-qualifying",
+  "title": "Math Cup 2026",
+  "description": "Отборочный тур. Решения",
+  "date": "2026",
+  "source": "CS Space",
+  "metadata": {
+    "stage": "Отборочный тур",
+    "document_type": "Решения"
+  }
+}

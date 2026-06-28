@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "task_02",
+  "number": 2,
+  "title": "Матрицы",
+  "statement": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]",
+  "answer": null,
+  "solution": "\\[\nT^2=(AB-BA)^2=ABAB-AB\\cdot BA-BA\\cdot AB+BABA=AB+BA,\n\\]\n\\[\nT^3=(AB-BA)(AB+BA)=ABAB-BABA=AB-BA=T.\n\\]\n\n**Решение 1.** Для любого \\(x\\in V\\) запишем\n\\[\nx=(x-T^2x)+T^2x.\n\\]\nТогда\n\\[\nT(x-T^2x)=Tx-T^3x=0,\\qquad T^2x=T(Tx)\\in\\operatorname{Im}T.\n\\]\nЗначит, \\(x-T^2x\\in\\ker T\\), откуда \\(V=\\ker T+\\operatorname{Im}T\\).\n\nОсталось проверить, что сумма прямая. Для этого достаточно показать пустоту пересечения подпространств. Пусть \\(z\\in\\ker T\\cap\\operatorname{Im}T\\). Тогда \\(z=Ty\\) и \\(Tz=0\\), поэтому \\(T^2y=0\\). Следовательно,\n\\[\nz=Ty=T^3y=T(T^2y)=0.\n\\]\n\n**Решение 2.** Из \\(T^3=T\\) имеем\n\\[\nT^3-T=T(T-I)(T+I)=0.\n\\]\nПоэтому минимальный многочлен \\(T\\) делит \\(t(t-1)(t+1)\\), а значит, не имеет кратных корней. Следовательно, \\(T\\) диагонализуем и\n\\[\nV=\\ker T\\oplus\\ker(T-I)\\oplus\\ker(T+I).\n\\]\nДокажем, что\n\\[\n\\operatorname{Im}T=\\ker(T-I)\\oplus\\ker(T+I),\n\\]\nиз чего будет следовать требуемое.\n\n1. \\(\\ker(T-I)\\oplus\\ker(T+I)\\subseteq\\operatorname{Im}T\\). Если \\(Tv=\\lambda v\\), где \\(\\lambda=\\pm1\\), то \\(v=\\lambda Tv\\in\\operatorname{Im}T\\).\n2. \\(\\ker(T-I)\\oplus\\ker(T+I)\\supseteq\\operatorname{Im}T\\). Если \\(x=x_0+x_++x_-\\), где \\(x_0\\in\\ker T\\), \\(x_+\\in\\ker(T-I)\\), \\(x_-\\in\\ker(T+I)\\), то\n\\[\nTx=x_+-x_-\\in\\ker(T-I)\\oplus\\ker(T+I).\n\\]",
+  "tags": [],
+  "metadata": {
+    "source_pages": [
+      2
+    ]
+  }
+}

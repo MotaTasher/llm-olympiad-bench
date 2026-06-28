@@ -1,26 +1,61 @@
 {% extends "base.html" %}
 {% block crumbs %}
-  <a href="{{ url_for('index') }}">Competitions</a> / {{ competition_title }}
+  <a href="{{ url_for('index') }}">Соревнования</a> / {{ competition.competition_title }}
 {% endblock %}
 {% block content %}
-  {% if problems %}
-    <div class="grid">
-      {% for problem in problems %}
-        <a class="card" href="{{ url_for('problem_page', competition_id=competition_id, problem_id=problem.problem_id) }}">
-          <h2>{{ problem.problem_title }}</h2>
-          <div class="meta">{{ problem.problem_id }}</div>
-          <div class="stats">
-            <span>{{ problem.run_count }} runs</span>
-            <span>{{ problem.answer_count }} answers</span>
-            <span>{{ problem.scored_count }} scored</span>
-          </div>
-          {% if problem.latest_timestamp %}
-            <div class="meta">Latest {{ problem.latest_timestamp }}</div>
-          {% endif %}
-        </a>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="empty">No problems found for this competition.</div>
-  {% endif %}
+  <div class="stack">
+    <section class="panel">
+      <h1>{{ competition.competition_title }}</h1>
+      <div class="meta">{{ competition.competition_id }}</div>
+      {% if competition.description %}<p>{{ competition.description }}</p>{% endif %}
+      <div class="stats">
+        <span class="pill">{{ competition.problem_count }} задач</span>
+        <span class="pill">{{ competition.model_count }} моделей с попытками</span>
+        <span class="pill">{{ competition.answer_count }} ответов</span>
+        <span class="pill">{{ competition.scored_count }} проверено</span>
+      </div>
+    </section>
+
+    {% if competition.problem_order %}
+      <div class="table-wrap" role="region" aria-label="Матрица задач и моделей" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th>Задача</th>
+              {% for model in competition.model_columns %}
+                <th title="{{ model.provider }}: {{ model.model_id }}">{{ model.label }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for problem_id in competition.problem_order %}
+              {% set problem = competition.problems[problem_id] %}
+              <tr>
+                <td>
+                  <a class="problem-link" href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">
+                    {% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}
+                  </a>
+                  <div class="meta">{{ problem.problem_id }} · максимум {{ "%g"|format(problem.max_score) }}</div>
+                </td>
+                {% for state in problem.model_states %}
+                  <td>
+                    <a
+                      class="matrix-cell {{ state.css_class }}"
+                      href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=state.model_key) }}"
+                      title="{{ state.tooltip }}"
+                      aria-label="{{ state.aria_label }}"
+                    >
+                      {{ state.symbol }}
+                    </a>
+                  </td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty">В соревновании нет канонических задач.</div>
+    {% endif %}
+  </div>
 {% endblock %}

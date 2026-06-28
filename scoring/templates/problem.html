@@ -1,39 +1,174 @@
 {% extends "base.html" %}
 {% block crumbs %}
-  <a href="{{ url_for('index') }}">Competitions</a> /
-  <a href="{{ url_for('competition_page', competition_id=competition_id) }}">{{ competition_title }}</a> /
-  {{ problem_title }}
+  <a href="{{ url_for('index') }}">Соревнования</a> /
+  <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
+  {{ problem.problem_title }}
 {% endblock %}
 {% block content %}
   <div class="stack">
-    <section class="paper">
-      <h2>{{ problem_title }}</h2>
-      <div class="meta">{{ problem_id }}</div>
-      {% if problem_text %}
-        <div class="rendered" data-markdown>{{ problem_text }}</div>
-      {% else %}
-        <div class="empty">No problem statement found in this log.</div>
-      {% endif %}
+    <section class="panel">
+      <h1>{% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}</h1>
+      <div class="meta">{{ problem.problem_id }} · максимум {{ "%g"|format(problem.max_score) }} баллов</div>
+      <div class="nav-row">
+        <div>
+          {% if previous_id %}
+            <a class="button secondary" href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=previous_id, model=selected_state.model_key if selected_state else none) }}">Предыдущая задача</a>
+          {% endif %}
+        </div>
+        <div>
+          {% if next_id %}
+            <a class="button secondary" href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=next_id, model=selected_state.model_key if selected_state else none) }}">Следующая задача</a>
+          {% endif %}
+        </div>
+      </div>
     </section>
 
-    {% if runs %}
-      <div class="grid">
-        {% for run in runs %}
-          <a class="card" href="{{ url_for('review_run', competition_id=competition_id, problem_id=problem_id, run_id=run.run_id) }}">
-            <h2>{{ run.run_id }}</h2>
-            <div class="meta">{{ run.timestamp }}</div>
-            <div class="stats">
-              <span>{{ run.answer_count }} answers</span>
-              <span>{{ run.scored_count }} scored</span>
-            </div>
-            {% if run.problem_file %}
-              <div class="meta">{{ run.problem_file }}</div>
+    <nav class="model-tabs" aria-label="Выбор модели">
+      {% for state in problem.model_states %}
+        <a
+          class="model-tab {{ state.css_class }}"
+          href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=state.model_key) }}"
+          aria-current="{{ 'true' if selected_state and state.model_key == selected_state.model_key else 'false' }}"
+          title="{{ state.tooltip }}"
+        >
+          {{ state.label }} · {{ state.status_label }}
+        </a>
+      {% endfor %}
+    </nav>
+
+    <div class="layout">
+      <div class="stack">
+        <section class="panel">
+          <h2>Условие</h2>
+          {% if problem.statement %}
+            <div class="rendered" data-markdown>{{ problem.statement }}</div>
+          {% else %}
+            <div class="empty">Условие не найдено.</div>
+          {% endif %}
+        </section>
+
+        {% if problem.answer or problem.solution %}
+          <section class="panel">
+            <h2>Эталон</h2>
+            {% if problem.answer %}
+              <h3>Ответ</h3>
+              <div class="rendered" data-markdown>{{ problem.answer }}</div>
             {% endif %}
-          </a>
-        {% endfor %}
+            {% if problem.solution %}
+              <h3>Решение</h3>
+              <div class="rendered" data-markdown>{{ problem.solution }}</div>
+            {% endif %}
+          </section>
+        {% endif %}
       </div>
-    {% else %}
-      <div class="empty">No runs found for this problem.</div>
-    {% endif %}
+
+      <div class="stack">
+        <section class="panel">
+          {% if selected_state %}
+            <h2>{{ selected_state.label }}</h2>
+            <div class="meta">{{ selected_state.provider }} · {{ selected_state.status_label }} · попыток: {{ selected_state.attempt_count }}</div>
+          {% endif %}
+
+          {% if selected_attempt %}
+            {% set result = selected_attempt.result %}
+            {% set usage = result.usage if result.usage is mapping else {} %}
+            {% set timing = result.timing if result.timing is mapping else {} %}
+            {% set cost = result.cost if result.cost is mapping else {} %}
+            {% set evaluation = selected_attempt.evaluation or {} %}
+
+            <div class="metric-grid" aria-label="Метрики ответа">
+              <div class="metric"><b>Provider</b>{{ selected_attempt.provider or "—" }}</div>
+              <div class="metric"><b>Model</b>{{ result.resolved_model_id or selected_attempt.model_id or "—" }}</div>
+              <div class="metric"><b>Run timestamp</b>{{ selected_attempt.run_timestamp or "—" }}</div>
+              <div class="metric"><b>Status</b>{{ result.status or "—" }}</div>
+              <div class="metric"><b>Prompt tokens</b>{{ result.prompt_tokens if result.prompt_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Completion tokens</b>{{ result.completion_tokens if result.completion_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Total tokens</b>{{ usage.total_tokens if usage.total_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Reasoning tokens</b>{{ usage.reasoning_tokens if usage.reasoning_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Cached tokens</b>{{ usage.cached_input_tokens if usage.cached_input_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Latency</b>{{ result.latency_ms if result.latency_ms is not none else "—" }}{% if result.latency_ms is not none %} ms{% endif %}</div>
+              <div class="metric"><b>Стоимость</b>{% if cost.total is not none %}{{ cost.total }} {{ cost.currency or "USD" }}{% else %}—{% endif %}</div>
+              <div class="metric"><b>Finish reason</b>{{ result.finish_reason or "—" }}</div>
+              <div class="metric"><b>Provider request ID</b>{{ result.provider_request_id or "—" }}</div>
+            </div>
+
+            {% if result.error %}
+              <div class="empty">Ошибка: {{ result.error }}</div>
+            {% endif %}
+
+            <h3>Ответ модели</h3>
+            {% if result.answer %}
+              <div class="rendered" data-markdown>{{ result.answer }}</div>
+            {% else %}
+              <div class="empty">У выбранной попытки нет непустого ответа.</div>
+            {% endif %}
+
+            <form class="score-form" method="post" action="{{ url_for('score') }}">
+              <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+              <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+              <input type="hidden" name="run_id" value="{{ selected_attempt.run_id }}">
+              <input type="hidden" name="result_id" value="{{ selected_attempt.result_id }}">
+              <input type="hidden" name="model_key" value="{{ selected_attempt.model_key }}">
+
+              <label>Проверяющий
+                <input name="evaluator" value="{{ evaluation.evaluator or '' }}" autocomplete="name">
+              </label>
+
+              <label>Оценка из {{ "%g"|format(problem.max_score) }}
+                <input
+                  id="score-input"
+                  name="score"
+                  type="number"
+                  min="0"
+                  max="{{ "%g"|format(problem.max_score) }}"
+                  step="0.5"
+                  value="{{ evaluation.score if evaluation.score is not none else '' }}"
+                  autocomplete="off"
+                >
+              </label>
+              <div class="quick" aria-label="Быстрый выбор оценки">
+                <button class="secondary" type="button" data-score-target="score-input" data-score-set="0">0</button>
+                <button class="secondary" type="button" data-score-target="score-input" data-score-set="{{ "%g"|format(problem.max_score / 2) }}">Половина</button>
+                <button class="secondary" type="button" data-score-target="score-input" data-score-set="{{ "%g"|format(problem.max_score) }}">Максимум</button>
+              </div>
+
+              <label>Комментарий
+                <textarea name="feedback">{{ evaluation.feedback or '' }}</textarea>
+              </label>
+
+              <button type="submit">Сохранить оценку</button>
+              {% if evaluation.updated_at %}
+                <div class="meta">Последнее сохранение: {{ evaluation.updated_at }}</div>
+              {% endif %}
+            </form>
+
+            <details>
+              <summary>Очищенный JSON результата</summary>
+              <pre>{{ result | tojson(indent=2) }}</pre>
+            </details>
+          {% else %}
+            <div class="empty">Для выбранной модели пока нет попыток запуска.</div>
+          {% endif %}
+        </section>
+
+        {% if selected_state and selected_state.attempts %}
+          <section class="panel">
+            <h2>Предыдущие попытки</h2>
+            <div class="stack">
+              {% for attempt in selected_state.attempts %}
+                <div class="empty">
+                  <b>{{ attempt.run_timestamp or "—" }}</b>
+                  <div class="meta">
+                    run_id: {{ attempt.run_id }} · result_id: {{ attempt.result_id }} ·
+                    {% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}
+                  </div>
+                  {% if attempt.error %}<div>Ошибка: {{ attempt.error[:180] }}</div>{% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+      </div>
+    </div>
   </div>
 {% endblock %}

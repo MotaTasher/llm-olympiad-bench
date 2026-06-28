@@ -11,6 +11,7 @@ from ..common import (
     safe_dict,
     timed,
 )
+from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -47,7 +48,14 @@ class GPTModel(BaseModel):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": problem},
             ]
-            ensure_text_only_request({"messages": messages, **kwargs})
+            request_payload = {
+                "model": self.model_id,
+                "messages": messages,
+                **kwargs,
+                "endpoint": sanitized_base_url("https://api.openai.com/v1/chat/completions"),
+                "stream": False,
+            }
+            ensure_text_only_request(request_payload)
 
             response, latency_ms = timed(
                 lambda: client.chat.completions.create(
@@ -67,6 +75,7 @@ class GPTModel(BaseModel):
                 prompt_tokens * input_per_1m / 1_000_000
                 + completion_tokens * output_per_1m / 1_000_000
             )
+            raw_response = safe_dict(response)
 
             return SolveResult(
                 model=self.model_id,
@@ -75,7 +84,23 @@ class GPTModel(BaseModel):
                 completion_tokens=completion_tokens,
                 cost_usd=round(cost_usd, 8),
                 latency_ms=latency_ms,
-                raw_response=safe_dict(response),
+                raw_response=raw_response,
+                provider="openai",
+                requested_model_id=self.model_id,
+                resolved_model_id=raw_response.get("model") or self.model_id,
+                request=request_payload,
+                cost={
+                    "currency": "USD",
+                    "input": round(prompt_tokens * input_per_1m / 1_000_000, 8),
+                    "output": round(completion_tokens * output_per_1m / 1_000_000, 8),
+                    "cached_input": None,
+                    "reasoning": None,
+                    "total": round(cost_usd, 8),
+                    "pricing_source": "models/gpt/gpt.py",
+                    "pricing_version": "2026-06-29",
+                    "estimated": True,
+                    "exchange_rate": None,
+                },
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

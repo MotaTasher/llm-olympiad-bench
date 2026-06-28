@@ -5,13 +5,14 @@ Start from the first missing or incorrect persisted artifact, not from the UI sy
 | Symptom | Likely layer | Inspect | First checks |
 | --- | --- | --- | --- |
 | runner exits before writing any log | CLI/problem parsing/model construction | `runner.py` | file exists, JSON parses, alias is known |
+| log remains `status: running` | interrupted process | run-log JSON | completed results are preserved; rerun if needed |
 | log exists and one result has `error` | provider adapter/config | `models/<provider>/`, secret file, `config/models.env` | credential presence, model ID, endpoint, account access |
 | all adapters fail similarly | shared environment or prompt/request logic | `runner.load_env`, `models/common.py` | env precedence, forbidden request keys, dependency versions |
-| run file exists but is absent from site | log discovery/metadata | `scoring/app.py`, JSON file | launch from repo root, valid JSON, correct path depth |
-| site is completely empty | no readable logs | `logs/` | `find logs -type f`, parse each JSON |
-| score form returns an error | route input or run lookup | `POST /score`, `find_run_path` | IDs, result index, integer score |
+| run file exists but is absent from site | log discovery/metadata | `scoring/repository.py`, JSON file | valid JSON, canonical IDs, legacy group |
+| canonical task absent from site | problem data loading | `data/competitions/`, diagnostics panel | valid `competition.json`, problem id matches filename |
+| score form returns an error | route input or run/result lookup | `POST /score`, `find_attempt` | IDs, `result_id`, score range |
 | score appears then disappears | sidecar path/write/sync issue | `data/results/`, `save_result_sidecar` | write permissions, matching IDs, remote pull overwrite |
-| export omits an evaluated answer | join-key mismatch | run log, sidecar, `export_scoring.py` | competition/problem/run IDs and result index |
+| export omits an evaluated answer | join-key mismatch | run log, sidecar, `export_scoring.py` | competition/problem/run IDs and result_id, then legacy result index |
 | wrong model version runs | env precedence | `versions.py`, `config/models.env`, shell | inherited env and `--allow-env-model-overrides` |
 | task text is empty or truncated | import/data contract | problem JSON, source PDF | `statement`, JSON escaping, import report |
 | sync command fails immediately | local config/tooling | `sync_logs.py`, `config/server.env` | remote value, `rsync` installed, SSH port |

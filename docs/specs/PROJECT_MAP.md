@@ -20,6 +20,7 @@
 models/
   base.py                 BaseModel and SolveResult contract
   common.py               shared prompt, env helpers, text-only guard, serialization
+  telemetry.py            run-log schema v2 helpers, redaction, hashing, atomic writes, legacy normalization
   <provider>/
     <provider>.py         provider API integration
     versions.py           available/default model identifiers
@@ -27,7 +28,8 @@ models/
     secrets/.env          local credentials; never committed
 
 scoring/
-  app.py                  Flask routes, log discovery, score-sidecar persistence
+  app.py                  Flask routes, redirects and score request validation
+  repository.py           one-pass catalog builder, log/sidecar merge, model-cell status logic
   templates/              HTML pages
 
 scripts/
@@ -65,6 +67,6 @@ data/competitions/<competition_id>/
 - Generated model answers: `logs/`.
 - Human evaluation: `data/results/`.
 - Provider details: corresponding `models/<provider>/` directory.
-- Shared API policy and result serialization: `models/common.py` and `models/base.py`.
+- Shared API policy, result serialization and telemetry helpers: `models/common.py`, `models/base.py` and `models/telemetry.py`.
 - User documentation: root README, `docs/` and provider READMEs.
 - Agent contracts: `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `docs/specs/`.

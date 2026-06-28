@@ -11,7 +11,10 @@ from unittest.mock import patch
 
 import runner
 from models.base import SolveResult
+from models.telemetry import normalize_run_log, redact
 from olympiad_data import DataLoadError, list_problems, load_competition
+from scoring.repository import build_catalog, find_attempt, save_evaluation
+from scripts.export_scoring import rows_from_logs
 from scripts.validate_problem_data import Finding, validate_competition_dir
 
 
@@ -108,6 +111,10 @@ class RunnerTests(TempCompetition):
         logs_dir = self.tmp / "logs"
 
         class FakeModel:
+            @property
+            def model_id(self) -> str:
+                return "fake-model"
+
             def solve(self, problem: str) -> SolveResult:
                 return SolveResult(
                     model="fake-model",
@@ -135,10 +142,315 @@ class RunnerTests(TempCompetition):
 
         log_path = next(logs_dir.rglob("*.json"))
         log = json.loads(log_path.read_text(encoding="utf-8"))
+        self.assertEqual(log["schema_version"], 2)
+        self.assertEqual(log["status"], "completed")
         self.assertEqual(log["competition_id"], "sample_competition")
         self.assertEqual(log["competition_title"], "Sample Competition")
         self.assertEqual(log["problem_id"], "task_01")
         self.assertEqual(log["problem_title"], "Runner Task")
+        self.assertEqual(log["results"][0]["status"], "success")
+        self.assertRegex(log["results"][0]["result_id"], r"^res_")
+        self.assertIn("system_prompt", log)
+
+    def test_runner_writes_running_log_before_model_call_and_keeps_prior_success(self) -> None:
+        problem_path = self.write_problem("task_01", title="Runner Task")
+        logs_dir = self.tmp / "logs"
+        seen_during_call: dict[str, object] = {}
+
+        class GoodModel:
+            @property
+            def model_id(self) -> str:
+                return "good-model"
+
+            def solve(self, problem: str) -> SolveResult:
+                log_path = next(logs_dir.rglob("*.json"))
+                data = json.loads(log_path.read_text(encoding="utf-8"))
+                seen_during_call["run_status"] = data["status"]
+                seen_during_call["result_status"] = data["results"][0]["status"]
+                seen_during_call["result_id"] = data["results"][0]["result_id"]
+                return SolveResult(
+                    model="good-model",
+                    answer="ok",
+                    prompt_tokens=1,
+                    completion_tokens=2,
+                    cost_usd=0.0,
+                    latency_ms=3,
+                    raw_response={"usage": {"total_tokens": 3}},
+                )
+
+        class BadModel:
+            @property
+            def model_id(self) -> str:
+                return "bad-model"
+
+            def solve(self, problem: str) -> SolveResult:
+                raise RuntimeError("boom Authorization: secret")
+
+        def factory(alias: str):
+            return GoodModel() if alias == "good" else BadModel()
+
+        argv = [
+            "runner.py",
+            "--problem",
+            str(problem_path),
+            "--models",
+            "good,bad",
+            "--run-id",
+            "unit",
+            "--logs-dir",
+            str(logs_dir),
+        ]
+        with patch.object(sys, "argv", argv), patch.object(runner, "load_env"), patch.object(runner, "create_model", side_effect=factory):
+            self.assertEqual(runner.main(), 0)
+
+        self.assertEqual(seen_during_call["run_status"], "running")
+        self.assertEqual(seen_during_call["result_status"], "running")
+        self.assertRegex(str(seen_during_call["result_id"]), r"^res_")
+        log = json.loads(next(logs_dir.rglob("*.json")).read_text(encoding="utf-8"))
+        self.assertEqual(log["status"], "partial")
+        self.assertEqual(log["results"][0]["status"], "success")
+        self.assertEqual(log["results"][1]["status"], "error")
+        self.assertEqual(log["results"][0]["answer"], "ok")
+        self.assertNotIn("secret", json.dumps(log, ensure_ascii=False).lower())
+
+    def test_redactor_preserves_token_counts_but_removes_credentials(self) -> None:
+        data = {
+            "Authorization": "Bearer abc",
+            "api_key": "abc",
+            "prompt_tokens": 10,
+            "max_tokens": 20,
+            "nested": {"client_secret": "hidden", "completion_tokens": 30},
+        }
+        redacted = redact(data)
+        self.assertEqual(redacted["Authorization"], "[REDACTED]")
+        self.assertEqual(redacted["api_key"], "[REDACTED]")
+        self.assertEqual(redacted["prompt_tokens"], 10)
+        self.assertEqual(redacted["max_tokens"], 20)
+        self.assertEqual(redacted["nested"]["completion_tokens"], 30)
+
+    def test_old_log_normalizes_without_mutating_schema(self) -> None:
+        old = {
+            "run_id": "legacy",
+            "problem": {"id": "task", "text": "Statement"},
+            "results": [{"model": "GigaChat", "answer": "A", "prompt_tokens": 1, "completion_tokens": 2, "latency_ms": 3}],
+        }
+        normalized = normalize_run_log(old)
+        self.assertEqual(normalized["schema_version"], 1)
+        self.assertEqual(normalized["results"][0]["usage"]["input_tokens"], 1)
+        self.assertIsNone(normalized["results"][0]["usage"]["reasoning_tokens"])
+
+
+class ScoringRepositoryTests(TempCompetition):
+    def test_catalog_contains_canonical_problem_without_logs_and_statuses(self) -> None:
+        self.write_problem("task_01", title="No Logs")
+        logs_dir = self.tmp / "logs"
+        results_dir = self.tmp / "results"
+        catalog = build_catalog(
+            competitions_dir=self.tmp,
+            logs_dir=logs_dir,
+            results_dir=results_dir,
+        )
+        problem = catalog["competition_map"]["sample_competition"]["problems"]["task_01"]
+        self.assertTrue(problem["model_states"])
+        self.assertTrue(any(state["status"] == "not_run" for state in problem["model_states"]))
+
+    def test_sidecar_v2_save_and_invalid_result_id_protection(self) -> None:
+        self.write_problem("task_01", title="Task", metadata={"max_score": 5})
+        logs_dir = self.tmp / "logs"
+        results_dir = self.tmp / "results"
+        write_json(
+            logs_dir / "sample_competition" / "task_01" / "run.json",
+            {
+                "schema_version": 2,
+                "run_id": "run",
+                "timestamp": "2026-06-29T00:00:00Z",
+                "competition_id": "sample_competition",
+                "competition_title": "Sample Competition",
+                "problem_id": "task_01",
+                "problem_title": "Task",
+                "results": [
+                    {
+                        "result_id": "res_a",
+                        "result_index": 0,
+                        "provider": "openai",
+                        "model": "gpt-test",
+                        "requested_model_id": "gpt-test",
+                        "answer": "answer",
+                        "error": None,
+                        "prompt_tokens": 1,
+                        "completion_tokens": 1,
+                        "cost_usd": 0,
+                        "latency_ms": 1,
+                        "raw_response": {},
+                    }
+                ],
+            },
+        )
+        catalog = build_catalog(competitions_dir=self.tmp, logs_dir=logs_dir, results_dir=results_dir)
+        found = find_attempt(
+            catalog,
+            competition_id="sample_competition",
+            problem_id="task_01",
+            run_id="run",
+            result_id="res_a",
+        )
+        self.assertIsNotNone(found)
+        self.assertIsNone(
+            find_attempt(
+                catalog,
+                competition_id="sample_competition",
+                problem_id="task_01",
+                run_id="run",
+                result_id="res_b",
+            )
+        )
+        before = (logs_dir / "sample_competition" / "task_01" / "run.json").read_bytes()
+        save_evaluation(
+            results_dir=results_dir,
+            competition_id="sample_competition",
+            problem_id="task_01",
+            run_id="run",
+            result_id="res_a",
+            result_index=0,
+            model_key_value="openai:gpt-test",
+            model="gpt-test",
+            evaluator="judge",
+            score=3,
+            max_score=5,
+            feedback="ok",
+        )
+        sidecar = json.loads((results_dir / "sample_competition" / "task_01" / "run.json").read_text(encoding="utf-8"))
+        self.assertEqual(sidecar["schema_version"], 2)
+        self.assertIn("res_a", sidecar["evaluations"])
+        after = (logs_dir / "sample_competition" / "task_01" / "run.json").read_bytes()
+        self.assertEqual(before, after)
+
+    def test_legacy_sidecar_by_index_and_export(self) -> None:
+        self.write_problem("task_01", title="Task")
+        logs_dir = self.tmp / "logs"
+        results_dir = self.tmp / "results"
+        write_json(
+            logs_dir / "legacy_root.json",
+            {
+                "run_id": "legacy_root",
+                "timestamp": "2026-06-29T00:00:00Z",
+                "problem": {"id": "task_01", "title": "Task", "text": "S"},
+                "results": [{"model": "GigaChat", "answer": "A", "prompt_tokens": 1, "completion_tokens": 2, "cost_usd": 0, "latency_ms": 4}],
+            },
+        )
+        write_json(
+            results_dir / "legacy" / "task_01" / "legacy_root.json",
+            {
+                "evaluations": {
+                    "0": {"score": 10, "evaluator": "old", "feedback": "good", "updated_at": "now"}
+                }
+            },
+        )
+        catalog = build_catalog(competitions_dir=self.tmp, logs_dir=logs_dir, results_dir=results_dir)
+        legacy_problem = catalog["competition_map"]["legacy"]["problems"]["task_01"]
+        scored_states = [state for state in legacy_problem["model_states"] if state["attempt_count"]]
+        self.assertEqual(scored_states[0]["status"], "full")
+        rows = rows_from_logs(logs_dir, results_dir, only_scored=False)
+        self.assertEqual(rows[0]["score"], 10)
+        self.assertIn("result_id", rows[0])
+
+    def test_flask_pages_and_score_flow(self) -> None:
+        try:
+            from scoring.app import app as scoring_app
+        except ModuleNotFoundError as exc:
+            if exc.name == "flask":
+                self.skipTest("Flask is not installed in this interpreter")
+            raise
+        self.write_problem("task_01", title="Task", metadata={"max_score": 4})
+        logs_dir = self.tmp / "logs"
+        results_dir = self.tmp / "results"
+        write_json(
+            logs_dir / "sample_competition" / "task_01" / "run.json",
+            {
+                "schema_version": 2,
+                "run_id": "run",
+                "timestamp": "2026-06-29T00:00:00Z",
+                "competition_id": "sample_competition",
+                "competition_title": "Sample Competition",
+                "problem_id": "task_01",
+                "problem_title": "Task",
+                "results": [
+                    {
+                        "result_id": "res_a",
+                        "result_index": 0,
+                        "provider": "openai",
+                        "model": "gpt-test",
+                        "requested_model_id": "gpt-test",
+                        "answer": "answer",
+                        "error": None,
+                        "prompt_tokens": 1,
+                        "completion_tokens": 1,
+                        "cost_usd": 0,
+                        "latency_ms": 1,
+                        "raw_response": {},
+                    }
+                ],
+            },
+        )
+        old_config = {
+            "COMPETITIONS_DIR": scoring_app.config["COMPETITIONS_DIR"],
+            "LOGS_DIR": scoring_app.config["LOGS_DIR"],
+            "RESULTS_DIR": scoring_app.config["RESULTS_DIR"],
+            "TESTING": scoring_app.config.get("TESTING"),
+        }
+        scoring_app.config.update(
+            COMPETITIONS_DIR=self.tmp,
+            LOGS_DIR=logs_dir,
+            RESULTS_DIR=results_dir,
+            TESTING=True,
+        )
+        try:
+            client = scoring_app.test_client()
+            response = client.get("/")
+            self.assertEqual(response.status_code, 200)
+            self.assertIn("Sample Competition".encode(), response.data)
+            response = client.get("/competition/sample_competition")
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('aria-label="'.encode(), response.data)
+            response = client.get("/competition/sample_competition/problem/task_01?model=openai:gpt-test")
+            self.assertEqual(response.status_code, 200)
+            self.assertIn("answer".encode(), response.data)
+            bad = client.post(
+                "/score",
+                data={
+                    "competition_id": "sample_competition",
+                    "problem_id": "task_01",
+                    "run_id": "run",
+                    "result_id": "res_a",
+                    "model_key": "openai:gpt-test",
+                    "score": "5",
+                },
+                follow_redirects=False,
+            )
+            self.assertEqual(bad.status_code, 302)
+            self.assertFalse((results_dir / "sample_competition" / "task_01" / "run.json").exists())
+            ok = client.post(
+                "/score",
+                data={
+                    "competition_id": "sample_competition",
+                    "problem_id": "task_01",
+                    "run_id": "run",
+                    "result_id": "res_a",
+                    "model_key": "openai:gpt-test",
+                    "evaluator": "judge",
+                    "score": "4",
+                    "feedback": "ok",
+                },
+                follow_redirects=False,
+            )
+            self.assertEqual(ok.status_code, 302)
+            self.assertIn("model=openai:gpt-test", ok.headers["Location"])
+            sidecar = json.loads((results_dir / "sample_competition" / "task_01" / "run.json").read_text(encoding="utf-8"))
+            self.assertIn("res_a", sidecar["evaluations"])
+            legacy = client.get("/run/run")
+            self.assertEqual(legacy.status_code, 302)
+        finally:
+            scoring_app.config.update(old_config)
 
 
 class RealDataTests(unittest.TestCase):

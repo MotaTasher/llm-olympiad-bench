@@ -90,30 +90,117 @@ Canonical path:
 logs/<competition_id>/<problem_id>/<run_id>.json
 ```
 
-Shape written by `runner.py`:
+New shape written by `runner.py` uses `schema_version: 2`:
 
 ```json
 {
+  "schema_version": 2,
   "run_id": "2026_06_28_12_00_00_first_pass",
   "timestamp": "2026-06-28T12:00:00Z",
+  "started_at": "2026-06-28T12:00:00Z",
+  "completed_at": "2026-06-28T12:03:10Z",
+  "duration_ms": 190000,
+  "status": "completed",
   "git_hash": "abc1234",
+  "git": {
+    "hash": "abc1234",
+    "full_hash": "abc1234...",
+    "branch": "main",
+    "dirty": false
+  },
+  "runtime": {
+    "command": ["runner.py", "--problem", "data/competitions/school_2026/task_01.json", "--models", "gpt"],
+    "cli": {"models": "gpt", "allow_env_model_overrides": false},
+    "requested_models": ["gpt"],
+    "python": {"version": "3.11.9"},
+    "platform": {"system": "Darwin"},
+    "packages": {"openai": "2.0.0"},
+    "environment": {"OPENAI_MAX_COMPLETION_TOKENS": "4096"}
+  },
+  "requested_models": ["gpt"],
   "competition_id": "school_2026",
   "competition_title": "Школьная олимпиада 2026",
+  "competition": {},
   "problem_id": "task_01",
+  "problem_number": 1,
   "problem_title": "Название задачи",
   "problem_file": "data/competitions/school_2026/task_01.json",
   "problem_text": "Полное условие...",
   "problem": {},
+  "problem_hash": "sha256...",
+  "problem_text_hash": "sha256...",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "sha256...",
+    "text": "Полный system prompt..."
+  },
+  "runtime_settings": {"text_only": true, "sequential": true},
   "results": [
     {
+      "result_id": "res_0123456789abcdef01234567",
+      "result_index": 0,
+      "provider": "openai",
+      "alias": "gpt",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.5",
+      "resolved_model_id": "gpt-5.5-20260601",
       "model": "provider-model-id",
+      "attempt": 1,
+      "started_at": "2026-06-28T12:00:01Z",
+      "completed_at": "2026-06-28T12:03:10Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "model": "gpt-5.5",
+        "messages": [
+          {"role": "system", "content": "Полный system prompt..."},
+          {"role": "user", "content": "Полное условие..."}
+        ],
+        "stream": false
+      },
       "answer": "Решение модели",
       "prompt_tokens": 100,
       "completion_tokens": 500,
       "cost_usd": 0.001,
       "latency_ms": 1200,
+      "usage": {
+        "input_tokens": 100,
+        "output_tokens": 500,
+        "total_tokens": 600,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 1200,
+        "monotonic_ms": 1200,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 1200,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00025,
+        "output": 0.00075,
+        "cached_input": null,
+        "reasoning": null,
+        "total": 0.001,
+        "pricing_source": "models/gpt/gpt.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "req_...",
+      "response_id": "chatcmpl_...",
+      "provider_timestamp": 1782427699,
       "raw_response": {},
       "error": null,
+      "error_info": null,
       "score": null,
       "scored_by": null,
       "scored_at": null,
@@ -123,11 +210,15 @@ Shape written by `runner.py`:
 }
 ```
 
-`competition_id`, `competition_title`, `problem_id` and `problem_title` for new logs are derived from the canonical competition and problem files unless explicitly overridden by CLI flags. Old logs remain readable and are not migrated.
+Run status is `running`, `completed`, `partial` or `failed`. Result status is `running`, `success` or `error`. The runner creates the run-log before the first provider call, appends a `running` result before each model call, and atomically rewrites the JSON through a temporary file plus `os.replace` after each result.
+
+`competition_id`, `competition_title`, `problem_id` and `problem_title` for new logs are derived from the canonical competition and problem files unless explicitly overridden by CLI flags. Old logs without `schema_version` remain readable through `models.telemetry.normalize_run_log()` and are not migrated on disk.
 
 `score*` fields remain in new run entries for backward compatibility. The authoritative current evaluations are sidecars.
 
 Do not mutate `results[]` order after a score sidecar exists.
+
+Requests, raw responses, errors and tracebacks are recursively redacted before persistence. API keys, Authorization headers, cookies, client secrets, credentials and token values that are credentials must not be stored. Token-count fields such as `prompt_tokens`, `completion_tokens`, `total_tokens`, `reasoning_tokens`, `max_tokens` and `time_to_first_token_ms` are not secrets.
 
 ## Scoring sidecar
 
@@ -137,19 +228,25 @@ Canonical path:
 data/results/<competition_id>/<problem_id>/<run_id>.json
 ```
 
-Shape:
+New sidecar shape:
 
 ```json
 {
+  "schema_version": 2,
   "competition_id": "school_2026",
   "problem_id": "task_01",
   "run_id": "2026_06_28_12_00_00_first_pass",
   "updated_at": "2026-06-28T12:10:00Z",
   "evaluations": {
-    "0": {
+    "res_0123456789abcdef01234567": {
+      "result_id": "res_0123456789abcdef01234567",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.5",
       "model": "provider-model-id",
       "evaluator": "reviewer",
       "score": 8,
+      "max_score": 10,
+      "score_category": "partial",
       "feedback": "Комментарий",
       "updated_at": "2026-06-28T12:10:00Z"
     }
@@ -157,7 +254,13 @@ Shape:
 }
 ```
 
-The evaluation key is the string form of the index in run-log `results[]`.
+The evaluation key for new writes is `result_id`. Readers use this precedence:
+
+1. sidecar evaluation keyed by `result_id`;
+2. old sidecar evaluation keyed by string result index, for example `"0"`;
+3. legacy `score`, `scored_by`, `scored_at` and `score_comment` inside the run-log.
+
+Manual scoring must not be written back into run logs. Server-side score validation uses `problem.metadata.max_score`, then `competition.metadata.max_score`, then fallback `10`.
 
 ## Validation
 

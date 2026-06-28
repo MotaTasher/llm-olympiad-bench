@@ -7,6 +7,7 @@ import time
 from typing import Any, Callable
 
 from .base import SolveResult
+from .telemetry import redact, structured_error
 
 
 FORBIDDEN_REQUEST_KEYS = {
@@ -69,17 +70,18 @@ def safe_dict(value: Any) -> dict[str, Any]:
         method = getattr(value, attr, None)
         if callable(method):
             try:
-                return json.loads(json.dumps(method(), default=str))
+                return redact(json.loads(json.dumps(method(), default=str)))
             except Exception:
                 pass
     if dataclasses.is_dataclass(value):
-        return json.loads(json.dumps(dataclasses.asdict(value), default=str))
+        return redact(json.loads(json.dumps(dataclasses.asdict(value), default=str)))
     if isinstance(value, dict):
-        return json.loads(json.dumps(value, default=str))
+        return redact(json.loads(json.dumps(value, default=str)))
     return {"repr": repr(value)}
 
 
 def error_result(model_id: str, error: Exception | str, latency_ms: int = 0) -> SolveResult:
+    safe_error = str(redact(str(error)))
     return SolveResult(
         model=model_id,
         answer="",
@@ -88,7 +90,8 @@ def error_result(model_id: str, error: Exception | str, latency_ms: int = 0) -> 
         cost_usd=0.0,
         latency_ms=latency_ms,
         raw_response={},
-        error=str(error),
+        error=safe_error,
+        error_info=structured_error(error),
     )
 
 
