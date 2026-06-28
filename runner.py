@@ -95,6 +95,58 @@ def load_problem(path: Path) -> tuple[str, dict[str, Any]]:
     return text, {"text": text}
 
 
+def nested_str(data: dict[str, Any], key: str) -> str | None:
+    value = data.get(key)
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return None
+
+
+def problem_competition(data: dict[str, Any]) -> tuple[str, str]:
+    competition = data.get("competition")
+    if isinstance(competition, dict):
+        competition_id = nested_str(competition, "id")
+        competition_title = nested_str(competition, "title") or nested_str(competition, "name")
+        if competition_id:
+            return competition_id, competition_title or competition_id
+    competition_id = nested_str(data, "competition_id") or "default"
+    competition_title = (
+        nested_str(data, "competition_title")
+        or nested_str(data, "competition_name")
+        or competition_id
+    )
+    return competition_id, competition_title
+
+
+def file_competition(problem_file: Path) -> tuple[str, str] | None:
+    if problem_file.parent.name != "problems":
+        return None
+    competition_dir = problem_file.parent.parent
+    manifest = competition_dir / "competition.json"
+    if not manifest.exists():
+        return None
+    try:
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    competition_id = nested_str(data, "id") or competition_dir.name
+    competition_title = nested_str(data, "title") or nested_str(data, "name") or competition_id
+    return competition_id, competition_title
+
+
+def resolve_competition(problem_file: Path, data: dict[str, Any]) -> tuple[str, str]:
+    competition_id, competition_title = problem_competition(data)
+    if competition_id != "default":
+        return competition_id, competition_title
+    return file_competition(problem_file) or (competition_id, competition_title)
+
+
+def problem_identity(problem_file: Path, data: dict[str, Any]) -> tuple[str, str]:
+    problem_id = nested_str(data, "id") or problem_file.stem
+    problem_title = nested_str(data, "title") or problem_id
+    return problem_id, problem_title
+
+
 def create_model(alias: str) -> BaseModel:
     key = alias.strip().lower()
     if key not in MODEL_CLASSES:
@@ -125,12 +177,8 @@ def slugify_run_name(value: str) -> str:
     return slug or "run"
 
 
-def problem_run_name(problem_file: Path, problem_data: dict[str, Any]) -> str:
-    for key in ("title", "id"):
-        value = problem_data.get(key)
-        if isinstance(value, str) and value.strip():
-            return value
-    return problem_file.stem
+def slugify_id(value: str) -> str:
+    return slugify_run_name(value).lower()
 
 
 def build_run_id(timestamp: datetime, run_name: str) -> str:
@@ -138,9 +186,17 @@ def build_run_id(timestamp: datetime, run_name: str) -> str:
     return f"{timestamp_id}_{slugify_run_name(run_name)}"
 
 
-def write_log(log: dict[str, Any], logs_dir: Path) -> Path:
+def write_log(
+    log: dict[str, Any],
+    logs_dir: Path,
+    *,
+    competition_id: str,
+    problem_id: str,
+) -> Path:
     logs_dir.mkdir(parents=True, exist_ok=True)
-    log_path = logs_dir / f"{log['run_id']}.json"
+    log_dir = logs_dir / competition_id / problem_id
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_path = log_dir / f"{log['run_id']}.json"
     log_path.write_text(
         json.dumps(log, ensure_ascii=False, indent=2),
         encoding="utf-8",
@@ -163,6 +219,16 @@ def print_table(rows: list[dict[str, Any]]) -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run olympiad problem through selected LLMs.")
     parser.add_argument("--problem", required=True, help="Path to .json problem or .md file")
+    parser.add_argument(
+        "--competition",
+        default=None,
+        help="Competition id override. Defaults to problem competition_id or 'default'.",
+    )
+    parser.add_argument(
+        "--competition-title",
+        default=None,
+        help="Human-readable competition title override.",
+    )
     parser.add_argument(
         "--models",
         required=True,
@@ -188,10 +254,17 @@ def main() -> int:
 
     problem_file = Path(args.problem)
     problem_text, problem_data = load_problem(problem_file)
+    source_competition_id, source_competition_title = resolve_competition(
+        problem_file, problem_data
+    )
+    source_problem_id, problem_title = problem_identity(problem_file, problem_data)
+    competition_id = slugify_id(args.competition or source_competition_id)
+    competition_title = args.competition_title or source_competition_title
+    problem_id = slugify_id(source_problem_id)
     now = datetime.now(UTC)
     timestamp = now.isoformat().replace("+00:00", "Z")
     git_hash = get_git_hash()
-    run_id = build_run_id(now, args.run_id or problem_run_name(problem_file, problem_data))
+    run_id = build_run_id(now, args.run_id or problem_title)
 
     results = []
     table_rows = []
@@ -218,14 +291,25 @@ def main() -> int:
         "run_id": run_id,
         "timestamp": timestamp,
         "git_hash": git_hash,
+        "competition_id": competition_id,
+        "competition_title": competition_title,
+        "problem_id": problem_id,
+        "problem_title": problem_title,
         "problem_file": str(problem_file),
         "problem_text": problem_text,
         "problem": problem_data,
         "results": results,
     }
-    log_path = write_log(log, Path(args.logs_dir))
+    log_path = write_log(
+        log,
+        Path(args.logs_dir),
+        competition_id=competition_id,
+        problem_id=problem_id,
+    )
     print_table(table_rows)
     print(f"\nRun ID: {run_id}")
+    print(f"Competition: {competition_id} ({competition_title})")
+    print(f"Problem: {problem_id} ({problem_title})")
     print(f"Timestamp: {timestamp}")
     print(f"Git hash: {git_hash or 'n/a'}")
     print(f"Log written: {log_path}")

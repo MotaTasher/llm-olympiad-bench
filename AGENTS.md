@@ -10,7 +10,7 @@
 
 1. Загружает задачу из `data/problems/`.
 2. Запускает выбранные модели через адаптеры в `models/`.
-3. Сохраняет результаты в `logs/<run_id>.json`.
+3. Сохраняет результаты в `logs/<competition_id>/<problem_id>/<run_id>.json`.
 4. Позволяет вручную оценить ответы через `scoring/app.py`.
 
 Модели должны работать в режиме text-only: без инструментов, поиска, кода, function calling и внешних цепочек.
@@ -70,8 +70,14 @@ olympiad-scorer/
 │       ├── index.html
 │       └── review.html
 └── data/
+    ├── competitions/
+    │   └── local_examples/
+    │       ├── competition.json
+    │       └── problems/
+    │           ├── example.json
+    │           └── tug_tug_500.json
     ├── problems/
-    │   └── example.json
+    │   └── example.json         # legacy/simple problem location
     └── results/
         └── .gitkeep
 ```
@@ -193,9 +199,14 @@ Behavior:
 4. Load problem text:
    - JSON: field `text`;
    - Markdown/other text: full file contents.
+   - canonical competition paths:
+     `data/competitions/<competition_id>/problems/<problem_id>.json`;
+   - if a problem is under `data/competitions/<competition_id>/problems/`,
+     read `data/competitions/<competition_id>/competition.json` as competition metadata
+     unless CLI or problem metadata overrides it.
 5. Instantiate adapters from aliases.
 6. Call `solve()` sequentially.
-7. Write `logs/<run_id>.json`.
+7. Write `logs/<competition_id>/<problem_id>/<run_id>.json`.
 8. Print table: model, tokens, cost, latency, status, short error.
 
 ## Log Format
@@ -205,6 +216,10 @@ Behavior:
   "run_id": "2026_06_02_15_30_00_task1",
   "timestamp": "2026-06-02T15:30:00Z",
   "git_hash": "17ea460",
+  "competition_id": "school_2026",
+  "competition_title": "Школьная олимпиада 2026",
+  "problem_id": "task1",
+  "problem_title": "Название задачи",
   "problem_file": "data/problems/task1.json",
   "problem_text": "Условие задачи...",
   "problem": {},
@@ -231,7 +246,33 @@ Behavior:
 
 Do not change this format without updating `runner.py`, `scoring/app.py`, templates, and this document.
 
+New logs are stored under:
+
+```text
+logs/<competition_id>/<problem_id>/<run_id>.json
+```
+
+Old root-level `logs/*.json` files are still supported by `scoring/app.py` and
+shown under competition `legacy`.
+
 ## Problem Format
+
+Canonical storage:
+
+```text
+data/competitions/<competition_id>/competition.json
+data/competitions/<competition_id>/problems/<problem_id>.json
+```
+
+`competition.json`:
+
+```json
+{
+  "id": "school_2026",
+  "title": "Школьная олимпиада 2026",
+  "description": "Optional human-readable note"
+}
+```
 
 JSON:
 
@@ -253,16 +294,46 @@ Markdown is accepted as raw problem text.
 
 Endpoints:
 
-- `GET /`: list run logs from `logs/`;
-- `GET /run/<run_id>`: review page;
+- `GET /`: list competitions;
+- `GET /competition/<competition_id>`: list problems for a competition;
+- `GET /competition/<competition_id>/problem/<problem_id>`: list runs for a problem;
+- `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>`: review page;
+- `GET /run/<run_id>`: legacy redirect to the structured review page;
 - `POST /score`: update score fields in the JSON log.
 
 Review UI requirements:
 
+- show competitions first;
+- inside a competition, show problems;
+- inside a problem, show runs;
 - show problem text;
 - keep answers hidden behind click/expand before review;
 - allow score 0-10, reviewer name, comment;
 - show metrics after score exists.
+
+## Server Sync
+
+Local model runs can be pushed to the scoring server with:
+
+```bash
+python scripts/sync_logs.py push
+```
+
+Scoring fields can be pulled back with:
+
+```bash
+python scripts/sync_logs.py pull
+```
+
+The remote is configured privately through:
+
+```text
+config/server.env
+```
+
+`config/server.env` is gitignored. Use `config/server.env.example` as the public
+template. Override with `SCORER_REMOTE_LOGS` or `--remote`. Push uses
+`rsync --ignore-existing` to avoid overwriting server-side scoring edits.
 
 ## Text-Only API Policy
 

@@ -29,6 +29,12 @@ IAM-токен живет ограниченное время, поэтому д
 models/yandexgpt/secrets/.env
 ```
 
+Если папки еще нет:
+
+```bash
+mkdir -p models/yandexgpt/secrets
+```
+
 Вариант с API-ключом:
 
 ```env
@@ -91,13 +97,31 @@ RUB_PER_USD=90
 
 ```bash
 python scripts/check_secrets.py --models yandexgpt
-python runner.py --problem data/problems/example.json --models yandexgpt --run-id smoke_yandexgpt
-python runner.py --problem data/problems/example.json --models alice --run-id smoke_alice
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models yandexgpt \
+  --run-id smoke_yandexgpt
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models alice \
+  --run-id smoke_alice
 ```
 
-## Text-Only Policy
+## Tools и runtime
 
 Адаптер использует Yandex Foundation Models completion endpoint. Инструменты на этом уровне API не передаются. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+
+Tools не включаются через конфиг. Если в payload случайно появится `tools`, `tool_choice`, `functions`, `function_call` или `web_search_options`, общий guard в `models/common.py` остановит запрос.
+
+Настраивать можно только text-only runtime:
+
+```env
+YANDEX_TEMPERATURE=0.1
+YANDEX_MAX_TOKENS=8000
+YANDEX_REASONING_MODE=ENABLED_HIDDEN
+YANDEX_TIMEOUT=120
+RUB_PER_USD=90
+```
 
 ## Полезные ссылки
 

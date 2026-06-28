@@ -1,7 +1,5 @@
 {
   "id": "example",
-  "competition_id": "local_examples",
-  "competition_title": "Локальные примеры",
   "title": "Example olympiad problem",
   "source": "Local sample",
   "text": "Докажите, что сумма любых двух четных чисел является четным числом.",

@@ -18,6 +18,12 @@
 models/gpt/secrets/.env
 ```
 
+Если папки еще нет:
+
+```bash
+mkdir -p models/gpt/secrets
+```
+
 Положи туда только credential:
 
 ```env
@@ -64,12 +70,24 @@ OPENAI_MAX_COMPLETION_TOKENS=12000
 
 ```bash
 python scripts/check_secrets.py --models gpt
-python runner.py --problem data/problems/example.json --models gpt --run-id smoke_gpt
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models gpt \
+  --run-id smoke_gpt
 ```
 
-## Text-Only Policy
+## Tools и runtime
 
-Адаптер использует Chat Completions и не передает `tools`. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+Адаптер использует Chat Completions и не передает `tools`, web search, code interpreter или function calling. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+
+Tools не включаются через конфиг. Если в payload случайно появится `tools`, `tool_choice`, `functions`, `function_call` или `web_search_options`, общий guard в `models/common.py` остановит запрос.
+
+Настраивать можно только text-only runtime:
+
+```env
+OPENAI_REASONING_EFFORT=high
+OPENAI_MAX_COMPLETION_TOKENS=12000
+```
 
 ## Полезные ссылки
 

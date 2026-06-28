@@ -18,6 +18,12 @@
 models/claude/secrets/.env
 ```
 
+Если папки еще нет:
+
+```bash
+mkdir -p models/claude/secrets
+```
+
 Положи туда только credential:
 
 ```env
@@ -70,12 +76,24 @@ ANTHROPIC_MAX_TOKENS=4096
 
 ```bash
 python scripts/check_secrets.py --models claude
-python runner.py --problem data/problems/example.json --models claude --run-id smoke_claude
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models claude \
+  --run-id smoke_claude
 ```
 
-## Text-Only Policy
+## Tools и runtime
 
-Адаптер использует Anthropic Messages API и не передает `tools`. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+Адаптер использует Anthropic Messages API и не передает `tools`, web search или computer use. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+
+Tools не включаются через конфиг. Если в payload случайно появится `tools`, `tool_choice`, `functions`, `function_call` или `web_search_options`, общий guard в `models/common.py` остановит запрос.
+
+Настраивать можно только text-only runtime:
+
+```env
+ANTHROPIC_MAX_TOKENS=12000
+# ANTHROPIC_THINKING_BUDGET_TOKENS=8000
+```
 
 ## Полезные ссылки
 

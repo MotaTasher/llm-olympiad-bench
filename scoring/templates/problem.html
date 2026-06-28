@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ problem_title }}</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 32px; color: #151515; }
+      table { border-collapse: collapse; width: 100%; margin-top: 24px; }
+      th, td { border-bottom: 1px solid #ddd; padding: 10px; text-align: left; }
+      a { color: #0755c7; }
+      pre { background: #f7f7f7; border: 1px solid #ddd; padding: 16px; white-space: pre-wrap; }
+      .muted { color: #666; }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a href="{{ url_for('index') }}">Соревнования</a>
+      →
+      <a href="{{ url_for('competition_page', competition_id=competition_id) }}">{{ competition_title }}</a>
+    </p>
+    <h1>{{ problem_title }}</h1>
+    <p class="muted">{{ problem_id }}</p>
+    <pre>{{ problem_text }}</pre>
+    <h2>Прогоны</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Run ID</th>
+          <th>Дата</th>
+          <th>Ответов</th>
+          <th>Оценок</th>
+          <th>Источник</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for run in runs %}
+          <tr>
+            <td>
+              <a href="{{ url_for('review_run', competition_id=competition_id, problem_id=problem_id, run_id=run.run_id) }}">
+                {{ run.run_id }}
+              </a>
+            </td>
+            <td>{{ run.timestamp }}</td>
+            <td>{{ run.answer_count }}</td>
+            <td>{{ run.scored_count }}</td>
+            <td>{{ run.problem_file }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

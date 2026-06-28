@@ -6,10 +6,12 @@
 
 - берет задачу из JSON или Markdown;
 - запускает выбранные модели через общий `runner.py`;
-- сохраняет ответы, токены, стоимость, задержку и ошибки в `logs/<run_id>.json`;
+- сохраняет ответы, токены, стоимость, задержку и ошибки в `logs/<competition_id>/<problem_id>/<run_id>.json`;
 - дает простой веб-интерфейс для ручной оценки ответов.
 
 Агентная архитектура, контракты адаптеров и формат логов описаны в [AGENTS.md](AGENTS.md).
+
+Работа с сервером, push локальных решений и pull оценок описаны в [SERVER.md](SERVER.md).
 
 ## Установка
 
@@ -55,7 +57,7 @@ pip install -r requirements.txt
 
 ## 2. Как положить ключи
 
-Создай нужные secret-файлы:
+Секреты всегда лежат в папке конкретного провайдера:
 
 ```text
 models/gpt/secrets/.env
@@ -65,7 +67,17 @@ models/gigachat/secrets/.env
 models/yandexgpt/secrets/.env
 ```
 
-Папки `models/*/secrets/` gitignored.
+Создать структуру можно так:
+
+```bash
+mkdir -p models/gpt/secrets \
+  models/claude/secrets \
+  models/deepseek/secrets \
+  models/gigachat/secrets \
+  models/yandexgpt/secrets
+```
+
+Папки `models/*/secrets/` gitignored. В них должны быть только ключи, токены и идентификаторы доступа. Не клади туда выбор моделей, temperature, token limits, reasoning settings, server remote или другие runtime-настройки.
 
 ### GPT
 
@@ -195,7 +207,7 @@ RUB_PER_USD=90
 
 ```bash
 OPENAI_MODEL=gpt-5.4 python runner.py \
-  --problem data/problems/example.json \
+  --problem data/competitions/local_examples/problems/example.json \
   --models gpt \
   --allow-env-model-overrides
 ```
@@ -218,31 +230,58 @@ yandexgpt: missing required: YANDEX_FOLDER_ID
 
 ## Запуск моделей
 
-Пример задачи лежит в `data/problems/example.json`.
+Каноническая структура задач:
+
+```text
+data/competitions/
+  <competition_id>/
+    competition.json
+    problems/
+      <problem_id>.json
+```
+
+Пример задачи лежит в `data/competitions/local_examples/problems/example.json`.
 
 ```bash
-python runner.py --problem data/problems/example.json --models gpt --run-id test_gpt
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models gpt \
+  --run-id test_gpt
 ```
 
 Несколько моделей:
 
 ```bash
 python runner.py \
-  --problem data/problems/example.json \
+  --problem data/competitions/local_examples/problems/example.json \
   --models gpt,gigachat,yandexgpt,deepseek \
   --run-id local_test
 ```
 
+Запуск внутри соревнования:
+
+```bash
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models gpt,claude,deepseek \
+  --run-id first_pass
+```
+
+Если задача лежит в `data/competitions/<competition_id>/problems/`, runner автоматически читает `data/competitions/<competition_id>/competition.json`. Флаги `--competition` и `--competition-title` нужны только для override.
+
 Алиас `alice` использует YandexGPT-адаптер:
 
 ```bash
-python runner.py --problem data/problems/example.json --models alice --run-id test_alice
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models alice \
+  --run-id test_alice
 ```
 
 Если не указать `--run-id`, он будет создан по timestamp. Результат пишется в:
 
 ```text
-logs/<run_id>.json
+logs/<competition_id>/<problem_id>/<run_id>.json
 ```
 
 Формат автоматического `run_id`:
@@ -254,15 +293,71 @@ YYYY_MM_DD_HH_MM_SS_<название>
 Если передать `--run-id`, значение используется как название после timestamp:
 
 ```bash
-python runner.py --problem data/problems/example.json --models claude --run-id smoke_claude
-# logs/2026_06_28_14_30_05_smoke_claude.json
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models claude \
+  --run-id smoke_claude
+# logs/local_examples/example/2026_06_28_14_30_05_smoke_claude.json
 ```
 
 Если `--run-id` не передан, название берется из `title` задачи, затем из `id`, затем из имени файла.
 
 JSON-логи игнорируются git.
 
+## Соревнования и задачи
+
+Соревнования и задачи хранятся в `data/competitions/`:
+
+```text
+data/competitions/
+  local_examples/
+    competition.json
+    problems/
+      example.json
+      tug_tug_500.json
+```
+
+`competition.json`:
+
+```json
+{
+  "id": "local_examples",
+  "title": "Локальные примеры",
+  "description": "Примеры задач для локальной проверки runner и scoring UI."
+}
+```
+
+Каждая задача в `problems/` использует обычный problem JSON с `id`, `title`, `source`, `text`, `expected_answer`.
+
+Новые логи лежат так:
+
+```text
+logs/
+  <competition_id>/
+    <problem_id>/
+      <run_id>.json
+```
+
+В JSON-лог добавляются поля:
+
+```json
+{
+  "competition_id": "school_2026",
+  "competition_title": "Школьная олимпиада 2026",
+  "problem_id": "task1",
+  "problem_title": "Название задачи"
+}
+```
+
+`competition_id` можно передать через `--competition`. Если он не передан, runner берет `competition.id` из `data/competitions/<competition_id>/competition.json`, затем `competition_id` из JSON задачи, затем `default`.
+
+`problem_id` берется из поля `id` JSON-задачи или из имени файла.
+
+Старая папка `data/problems/` остается для обратной совместимости с простыми одиночными задачами. Старые логи из `logs/*.json` остаются видны в UI как соревнование `legacy`.
+
 ## Tools и thinking limits
+
+В этом проекте tools намеренно выключены для честного text-only сравнения решений. Они не настраиваются через `.env` или `config/models.env`.
 
 Адаптеры не передают tools/functions/search/code execution:
 
@@ -271,6 +366,10 @@ JSON-логи игнорируются git.
 - DeepSeek: нет `tools`;
 - GigaChat: нет `tools`, `functions`, `function_call`;
 - YandexGPT/Alice: используется basic completion endpoint без tools.
+
+В коде есть дополнительный предохранитель `ensure_text_only_request()` в `models/common.py`: если в будущей правке в payload появятся `tools`, `tool_choice`, `functions`, `function_call` или `web_search_options`, запрос будет остановлен ошибкой до отправки провайдеру.
+
+Если когда-нибудь нужно включить tools, это уже изменение контракта проекта: нужно обновить `AGENTS.md`, адаптеры в `models/`, scoring/log формат при необходимости и этот README. Для текущего проекта правильная настройка tools — не включать их.
 
 Лимит “сколько модель может думать” у провайдеров устроен по-разному:
 
@@ -312,7 +411,56 @@ python scoring/app.py
 http://127.0.0.1:8000
 ```
 
-Интерфейс показывает список прогонов из `logs/`, условие задачи, ответы моделей и форму оценки 0-10.
+Интерфейс показывает структуру:
+
+```text
+соревнования -> задачи -> прогоны -> ответы моделей
+```
+
+Ответы скрыты за раскрытием. Оценка, reviewer и комментарий сохраняются в JSON-логе рядом с ответом модели.
+
+## Синхронизация с сервером
+
+Локально запускай модели и пушь получившиеся логи на сервер:
+
+```bash
+python scripts/sync_logs.py push
+```
+
+Настрой private remote в gitignored-файле:
+
+```bash
+cp config/server.env.example config/server.env
+```
+
+В `config/server.env`:
+
+```env
+SCORER_REMOTE_LOGS=user@host:/absolute/path/to/shared/logs/
+# SCORER_SSH_PORT=22
+```
+
+Переопределить remote можно также через env или аргумент:
+
+```bash
+SCORER_REMOTE_LOGS=user@host:/absolute/path/to/shared/logs/ \
+python scripts/sync_logs.py push
+
+python scripts/sync_logs.py pull --remote user@host:/absolute/path/to/shared/logs/
+```
+
+`push` использует `rsync --ignore-existing`, чтобы не перезаписать уже оцененный лог на сервере. После вычитки на сайте забери оценки обратно:
+
+```bash
+python scripts/sync_logs.py pull
+```
+
+Проверить команду без выполнения:
+
+```bash
+python scripts/sync_logs.py push --dry-run
+python scripts/sync_logs.py pull --dry-run
+```
 
 ## Ноутбуки
 
@@ -371,6 +519,7 @@ RUB_PER_USD
 ```bash
 python -m compileall runner.py models scripts scoring
 python scripts/check_secrets.py --models gpt,claude,gigachat,yandexgpt,deepseek
-python runner.py --problem data/problems/example.json --models gpt,gigachat --run-id smoke
+python runner.py --problem data/competitions/local_examples/problems/example.json --models gpt,gigachat --run-id smoke
 python scoring/app.py
+python scripts/sync_logs.py push --dry-run
 ```

@@ -19,6 +19,13 @@
   <body>
     <main class="layout">
       <section class="problem">
+        <p>
+          <a href="{{ url_for('index') }}">Соревнования</a>
+          →
+          <a href="{{ url_for('competition_page', competition_id=run.competition_id) }}">{{ run.competition_title }}</a>
+          →
+          <a href="{{ url_for('problem_page', competition_id=run.competition_id, problem_id=run.problem_id) }}">{{ run.problem_title }}</a>
+        </p>
         <h1>{{ run.run_id }}</h1>
         {{ run.problem_text }}
       </section>
@@ -35,6 +42,8 @@
             </details>
             <form method="post" action="{{ url_for('score') }}">
               <input type="hidden" name="run_id" value="{{ run.run_id }}">
+              <input type="hidden" name="competition_id" value="{{ run.competition_id }}">
+              <input type="hidden" name="problem_id" value="{{ run.problem_id }}">
               <input type="hidden" name="model" value="{{ result.model }}">
               <p>
                 <label>Оценка 0-10:

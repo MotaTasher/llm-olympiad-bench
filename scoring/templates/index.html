@@ -8,24 +8,41 @@
       table { border-collapse: collapse; width: 100%; }
       th, td { border-bottom: 1px solid #ddd; padding: 10px; text-align: left; }
       a { color: #0755c7; }
+      .muted { color: #666; }
     </style>
   </head>
   <body>
-    <h1>Прогоны</h1>
-    <table>
-      <thead>
-        <tr><th>Run ID</th><th>Дата</th><th>Задача</th><th>Ответов</th></tr>
-      </thead>
-      <tbody>
-        {% for run in runs %}
+    <h1>Соревнования</h1>
+    {% if competitions %}
+      <table>
+        <thead>
           <tr>
-            <td><a href="{{ url_for('review_run', run_id=run.run_id) }}">{{ run.run_id }}</a></td>
-            <td>{{ run.timestamp }}</td>
-            <td>{{ run.problem_file }}</td>
-            <td>{{ run.count }}</td>
+            <th>Соревнование</th>
+            <th>Задач</th>
+            <th>Прогонов</th>
+            <th>Оценок</th>
+            <th>Последний прогон</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for competition in competitions %}
+            <tr>
+              <td>
+                <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+                  {{ competition.competition_title }}
+                </a>
+                <div class="muted">{{ competition.competition_id }}</div>
+              </td>
+              <td>{{ competition.problem_count }}</td>
+              <td>{{ competition.run_count }}</td>
+              <td>{{ competition.scored_count }}</td>
+              <td>{{ competition.latest_timestamp }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Пока нет логов для вычитки.</p>
+    {% endif %}
   </body>
 </html>

@@ -18,6 +18,12 @@
 models/deepseek/secrets/.env
 ```
 
+Если папки еще нет:
+
+```bash
+mkdir -p models/deepseek/secrets
+```
+
 Положи туда только credential:
 
 ```env
@@ -71,7 +77,10 @@ DEEPSEEK_MAX_TOKENS=8192
 
 ```bash
 python scripts/check_secrets.py --models deepseek
-python runner.py --problem data/problems/example.json --models deepseek --run-id smoke_deepseek
+python runner.py \
+  --problem data/competitions/local_examples/problems/example.json \
+  --models deepseek \
+  --run-id smoke_deepseek
 ```
 
 Список моделей, доступных конкретному ключу, можно проверить через API:
@@ -81,9 +90,18 @@ curl https://api.deepseek.com/models \
   -H "Authorization: Bearer $DEEPSEEK_API_KEY"
 ```
 
-## Text-Only Policy
+## Tools и runtime
 
-Адаптер использует OpenAI-compatible Chat Completions API и не передает `tools`. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+Адаптер использует OpenAI-compatible Chat Completions API и не передает `tools` или function calling. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+
+Tools не включаются через конфиг. Если в payload случайно появится `tools`, `tool_choice`, `functions`, `function_call` или `web_search_options`, общий guard в `models/common.py` остановит запрос.
+
+Настраивать можно только text-only runtime:
+
+```env
+DEEPSEEK_TEMPERATURE=0.3
+DEEPSEEK_MAX_TOKENS=8192
+```
 
 ## Полезные ссылки
 
