@@ -51,7 +51,7 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `GET /run/<run_id>` | legacy lookup and redirect |
 | `POST /score` | validates run/result/score and writes sidecar evaluation keyed by `result_id` |
 
-`model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. Model columns are the union of provider `versions.py` entries, models found in logs, and unknown legacy model IDs.
+`model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. Configured model columns come from provider `versions.py` `VERSIONS` entries only. Models found in logs are added as historical columns when attempts exist for the current competition/problem; `LEGACY_VERSIONS` does not seed the default matrix.
 
 ## Cell status
 

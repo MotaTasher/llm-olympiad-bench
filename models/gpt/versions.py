@@ -4,12 +4,14 @@
 #   https://developers.openai.com/api/docs/models/all
 #   https://developers.openai.com/api/docs/deprecations
 #   https://developers.openai.com/api/reference/resources/models/methods/list
-# Updated: 2026-06-03
+# Updated: 2026-06-29
 #
 # Scope:
-#   Text-generation / chat-capable OpenAI API model IDs for Olympiad Scorer.
-#   Image, audio, video, embeddings, moderation, realtime, and open-weight-only
-#   models are intentionally excluded.
+#   Active OpenAI API model IDs for Olympiad Scorer.
+#   Keep only the strongest paid model and the strongest budget model that
+#   the current Chat Completions adapter can call. Image, audio, video,
+#   embeddings, moderation, realtime, search, and open-weight-only models are
+#   intentionally excluded.
 #
 # Programmatic check:
 #   OpenAI has an authenticated public list-models endpoint.
@@ -33,29 +35,12 @@
 #     snapshot IDs instead of stable aliases.
 
 VERSIONS = [
-    # Latest / frontier chat-completions-compatible models
+    # Strongest paid chat-completions-compatible model.
     "gpt-5.5",
-    "gpt-5.4",
+
+    # OpenAI API does not expose a separate free model ID for this adapter.
+    # Use the strongest current mini/budget model as the low-cost column.
     "gpt-5.4-mini",
-    "gpt-5.4-nano",
-
-    # Previous current GPT-5 family
-    "gpt-5.3-codex",
-    "gpt-5.2",
-    "gpt-5.1",
-    "gpt-5",
-    "gpt-5-mini",
-    "gpt-5-nano",
-
-    # Reasoning / older current families
-    "o3-pro",
-    "o3",
-    "gpt-4.1",
-    "gpt-4.1-mini",
-    "gpt-4o-mini",
-
-    # Mutable ChatGPT-style alias; API-callable, but not ideal as a stable default
-    "chat-latest",
 ]
 
 NON_CHAT_COMPLETIONS_VERSIONS = [
@@ -68,46 +53,6 @@ NON_CHAT_COMPLETIONS_VERSIONS = [
     "gpt-5-pro",
 ]
 
-LEGACY_VERSIONS = [
-    # Deprecated; scheduled for shutdown on 2026-08-10
-    "gpt-5.3-chat-latest",
-    "gpt-5.2-chat-latest",
-
-    # Deprecated; scheduled for shutdown on 2026-07-23
-    "gpt-5.2-codex",
-    "gpt-5.1-chat-latest",
-    "gpt-5.1-codex-max",
-    "gpt-5.1-codex",
-    "gpt-5.1-codex-mini",
-    "gpt-5-chat-latest",
-    "gpt-5-codex",
-    "o3-deep-research",
-    "o4-mini-deep-research",
-    "gpt-4o-search-preview",
-    "gpt-4o-mini-search-preview",
-
-    # Deprecated; scheduled for shutdown on 2026-10-23
-    "gpt-4.1-nano",
-    "o4-mini",
-    "o3-mini",
-    "o1-pro",
-    "o1",
-    "o1-mini",
-    "o1-preview",
-    "gpt-4o",
-    "gpt-4-turbo",
-    "gpt-4",
-
-    # Older legacy/base models; keep only if your adapter still supports them
-    "gpt-3.5-turbo",
-    "davinci-002",
-    "babbage-002",
-
-    # Deprecated ChatGPT/Codex aliases listed in the official catalog
-    "chatgpt-4o-latest",
-    "codex-mini-latest",
-    "gpt-4.5-preview",
-    "gpt-4-turbo-preview",
-]
+LEGACY_VERSIONS = []
 
 DEFAULT = VERSIONS[0]

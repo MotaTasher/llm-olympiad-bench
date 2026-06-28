@@ -125,19 +125,18 @@ def configured_model_columns() -> dict[str, dict[str, Any]]:
             module = importlib.import_module(module_name)
         except Exception:
             continue
-        for name in ("VERSIONS", "LEGACY_VERSIONS"):
-            for model_id in getattr(module, name, []) or []:
-                key = model_key(provider, str(model_id))
-                columns.setdefault(
-                    key,
-                    {
-                        "model_key": key,
-                        "provider": provider,
-                        "model_id": str(model_id),
-                        "label": str(model_id),
-                        "configured": name == "VERSIONS",
-                    },
-                )
+        for model_id in getattr(module, "VERSIONS", []) or []:
+            key = model_key(provider, str(model_id))
+            columns.setdefault(
+                key,
+                {
+                    "model_key": key,
+                    "provider": provider,
+                    "model_id": str(model_id),
+                    "label": str(model_id),
+                    "configured": True,
+                },
+            )
     return columns
 
 

@@ -76,6 +76,20 @@ self._model = model or env("PROVIDER_MODEL", DEFAULT_VERSION)
 
 Default identifiers belong in `versions.py`. Temporary overrides may live in `config/models.env` or inherited shell variables only when runner is invoked with `--allow-env-model-overrides`.
 
+`VERSIONS` is the active benchmark set and should stay small. The scoring UI uses only `VERSIONS` for configured columns; `LEGACY_VERSIONS` may document retired IDs, but must not be used to seed the default matrix.
+
+Current active set:
+
+| Provider | Strongest paid | Budget/free-tier candidate |
+| --- | --- | --- |
+| OpenAI | `gpt-5.5` | `gpt-5.4-mini` |
+| Anthropic | `claude-opus-4-8` | `claude-haiku-4-5-20251001` |
+| DeepSeek | `deepseek-v4-pro` | `deepseek-v4-flash` |
+| GigaChat | `GigaChat-2-Max` | `GigaChat-2` |
+| YandexGPT | `yandexgpt-5.1` | `yandexgpt-5-lite` |
+
+For providers whose API does not expose a separate free model ID, the second column is the best budget or free-tier-compatible model available through the existing text-only adapter.
+
 ## Current aliases
 
 | Alias | Class |

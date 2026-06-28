@@ -68,7 +68,7 @@ config/models.env
 Пример:
 
 ```env
-GIGACHAT_MODEL=GigaChat-2-Pro
+GIGACHAT_MODEL=GigaChat-2
 ```
 
 Runtime-настройки GigaChat тоже должны жить в `config/models.env`:

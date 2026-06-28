@@ -57,7 +57,7 @@ config/models.env
 Пример:
 
 ```env
-OPENAI_MODEL=gpt-5.4
+OPENAI_MODEL=gpt-5.4-mini
 OPENAI_REASONING_EFFORT=high
 OPENAI_MAX_COMPLETION_TOKENS=12000
 ```

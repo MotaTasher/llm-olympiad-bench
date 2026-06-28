@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import requests
-
 from ..base import BaseModel, SolveResult
 from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
 from ..telemetry import sanitized_base_url
@@ -10,6 +8,8 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 # Approximate RUB pricing per 1000 total tokens. USD conversion is controlled by RUB_PER_USD.
 PRICES_RUB_PER_1K = {
+    "yandexgpt-5.1": 0.80,
+    "yandexgpt-5-lite": 0.20,
     "yandexgpt-5-pro/latest": 0.80,
     "yandexgpt-5.1/latest": 0.80,
     "yandexgpt-5-lite/latest": 0.20,
@@ -31,6 +31,8 @@ class YandexGPTModel(BaseModel):
 
     def solve(self, problem: str) -> SolveResult:
         try:
+            import requests
+
             folder_id = env("YANDEX_FOLDER_ID")
             if not folder_id:
                 raise RuntimeError(
