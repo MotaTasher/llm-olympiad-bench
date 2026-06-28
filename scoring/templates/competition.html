@@ -1,46 +1,26 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <title>{{ competition_title }}</title>
-    <style>
-      body { font-family: system-ui, sans-serif; margin: 32px; color: #151515; }
-      table { border-collapse: collapse; width: 100%; }
-      th, td { border-bottom: 1px solid #ddd; padding: 10px; text-align: left; }
-      a { color: #0755c7; }
-      .muted { color: #666; }
-    </style>
-  </head>
-  <body>
-    <p><a href="{{ url_for('index') }}">← Соревнования</a></p>
-    <h1>{{ competition_title }}</h1>
-    <p class="muted">{{ competition_id }}</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Задача</th>
-          <th>Прогонов</th>
-          <th>Ответов</th>
-          <th>Оценок</th>
-          <th>Последний прогон</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for problem in problems %}
-          <tr>
-            <td>
-              <a href="{{ url_for('problem_page', competition_id=competition_id, problem_id=problem.problem_id) }}">
-                {{ problem.problem_title }}
-              </a>
-              <div class="muted">{{ problem.problem_id }}</div>
-            </td>
-            <td>{{ problem.run_count }}</td>
-            <td>{{ problem.answer_count }}</td>
-            <td>{{ problem.scored_count }}</td>
-            <td>{{ problem.latest_timestamp }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block crumbs %}
+  <a href="{{ url_for('index') }}">Competitions</a> / {{ competition_title }}
+{% endblock %}
+{% block content %}
+  {% if problems %}
+    <div class="grid">
+      {% for problem in problems %}
+        <a class="card" href="{{ url_for('problem_page', competition_id=competition_id, problem_id=problem.problem_id) }}">
+          <h2>{{ problem.problem_title }}</h2>
+          <div class="meta">{{ problem.problem_id }}</div>
+          <div class="stats">
+            <span>{{ problem.run_count }} runs</span>
+            <span>{{ problem.answer_count }} answers</span>
+            <span>{{ problem.scored_count }} scored</span>
+          </div>
+          {% if problem.latest_timestamp %}
+            <div class="meta">Latest {{ problem.latest_timestamp }}</div>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty">No problems found for this competition.</div>
+  {% endif %}
+{% endblock %}

@@ -16,14 +16,16 @@ http://127.0.0.1:8000
 
 The current app uses Flask debug mode and binds only to loopback. It is not a production deployment configuration.
 
-The app uses paths relative to the current working directory:
+The app resolves paths from the repository root inferred from `scoring/app.py`:
 
 ```python
-LOGS_DIR = Path("logs")
-RESULTS_DIR = Path("data/results")
+BASE_DIR = Path(__file__).resolve().parents[1]
+LOGS_DIR = BASE_DIR / "logs"
+RESULTS_DIR = BASE_DIR / "data" / "results"
 ```
 
-Therefore it must be started from the repository root unless the implementation is changed.
+This lets the same code run from a local shell and from a systemd service whose
+working directory is the repository root.
 
 ## Routes
 
@@ -38,7 +40,10 @@ Therefore it must be started from the repository root unless the implementation 
 
 ## Discovery behavior
 
-`iter_log_paths()` scans `logs/**/*.json`. Invalid JSON is skipped silently by listing functions. This means a missing run in the UI may be a malformed file rather than an absent file.
+`iter_log_paths()` scans `logs/**/*.json`, skipping hidden/service paths and old
+`*.evaluation.json` files. Invalid JSON is skipped silently by listing
+functions. This means a missing run in the UI may be a malformed file rather
+than an absent file.
 
 Metadata fallback logic supports old logs:
 

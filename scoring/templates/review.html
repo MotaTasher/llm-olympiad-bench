@@ -1,71 +1,85 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <title>{{ run.run_id }}</title>
-    <style>
-      body { font-family: system-ui, sans-serif; margin: 0; color: #151515; }
-      .layout { display: grid; grid-template-columns: minmax(280px, 40%) 1fr; min-height: 100vh; }
-      .problem { padding: 24px; background: #f7f7f7; border-right: 1px solid #ddd; white-space: pre-wrap; }
-      .answers { padding: 24px; }
-      .answer { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
-      details pre { white-space: pre-wrap; line-height: 1.45; }
-      .metrics { color: #555; font-size: 14px; margin-top: 10px; }
-      input, textarea, button { font: inherit; }
-      textarea { width: 100%; min-height: 70px; }
-      @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } .problem { border-right: 0; border-bottom: 1px solid #ddd; } }
-    </style>
-  </head>
-  <body>
-    <main class="layout">
-      <section class="problem">
-        <p>
-          <a href="{{ url_for('index') }}">Соревнования</a>
-          →
-          <a href="{{ url_for('competition_page', competition_id=run.competition_id) }}">{{ run.competition_title }}</a>
-          →
-          <a href="{{ url_for('problem_page', competition_id=run.competition_id, problem_id=run.problem_id) }}">{{ run.problem_title }}</a>
-        </p>
-        <h1>{{ run.run_id }}</h1>
-        {{ run.problem_text }}
+{% extends "base.html" %}
+{% block crumbs %}
+  <a href="{{ url_for('index') }}">Competitions</a> /
+  <a href="{{ url_for('competition_page', competition_id=run.competition_id) }}">{{ run.competition_title }}</a> /
+  <a href="{{ url_for('problem_page', competition_id=run.competition_id, problem_id=run.problem_id) }}">{{ run.problem_title }}</a> /
+  {{ run.run_id }}
+{% endblock %}
+{% block content %}
+  <div class="stack">
+    <section class="paper">
+      <h2>{{ run.problem_title }}</h2>
+      {% if run.problem_text %}
+        <div class="rendered" data-markdown>{{ run.problem_text }}</div>
+      {% else %}
+        <div class="empty">No problem statement found in this log.</div>
+      {% endif %}
+    </section>
+
+    {% set expected_answer = run.problem.expected_answer if run.problem is mapping else none %}
+    {% if expected_answer %}
+      <section class="paper">
+        <h2>Expected Answer</h2>
+        <div class="rendered" data-markdown>{{ expected_answer }}</div>
       </section>
-      <section class="answers">
-        {% for result in run.results %}
-          <article class="answer">
-            <h2>{{ result.model }}</h2>
-            {% if result.error %}
-              <p><strong>Ошибка:</strong> {{ result.error }}</p>
-            {% endif %}
-            <details>
-              <summary>Показать ответ</summary>
-              <pre>{{ result.answer }}</pre>
-            </details>
-            <form method="post" action="{{ url_for('score') }}">
-              <input type="hidden" name="run_id" value="{{ run.run_id }}">
-              <input type="hidden" name="competition_id" value="{{ run.competition_id }}">
-              <input type="hidden" name="problem_id" value="{{ run.problem_id }}">
-              <input type="hidden" name="result_index" value="{{ loop.index0 }}">
-              <input type="hidden" name="model" value="{{ result.model }}">
-              <p>
-                <label>Оценка 0-10:
-                  <input type="range" name="score" min="0" max="10" value="{{ result.score if result.score is not none else 5 }}" oninput="this.nextElementSibling.value=this.value">
-                  <output>{{ result.score if result.score is not none else 5 }}</output>
-                </label>
-              </p>
-              <p><input name="scored_by" placeholder="Кто оценил" value="{{ result.scored_by or '' }}"></p>
-              <p><textarea name="comment" placeholder="Комментарий">{{ result.score_comment or '' }}</textarea></p>
-              <button type="submit">Сохранить</button>
-            </form>
-            {% if result.score is not none %}
-              <div class="metrics">
-                tokens: {{ result.prompt_tokens + result.completion_tokens }},
-                cost: ${{ "%.6f"|format(result.cost_usd) }},
-                latency: {{ result.latency_ms }} ms
-              </div>
-            {% endif %}
-          </article>
-        {% endfor %}
+    {% endif %}
+
+    {% for result in run.results %}
+      <section class="paper">
+        <div class="result-head">
+          <h2>{{ result.model }}</h2>
+          {% if result.score is not none %}
+            <span class="meta">
+              tokens: {{ result.prompt_tokens + result.completion_tokens }},
+              cost: ${{ "%.6f"|format(result.cost_usd) }},
+              latency: {{ result.latency_ms }} ms
+            </span>
+          {% endif %}
+        </div>
+
+        {% if result.error %}
+          <div class="empty">Error: {{ result.error }}</div>
+        {% endif %}
+
+        {% if result.answer %}
+          <div class="rendered" data-markdown>{{ result.answer }}</div>
+        {% else %}
+          <div class="empty">No answer text found in this result.</div>
+        {% endif %}
+
+        <form class="score-form" method="post" action="{{ url_for('score') }}">
+          <h3>Evaluation</h3>
+          <input type="hidden" name="run_id" value="{{ run.run_id }}">
+          <input type="hidden" name="competition_id" value="{{ run.competition_id }}">
+          <input type="hidden" name="problem_id" value="{{ run.problem_id }}">
+          <input type="hidden" name="result_index" value="{{ loop.index0 }}">
+          <input type="hidden" name="model" value="{{ result.model }}">
+
+          <label for="scored-by-{{ loop.index0 }}">Evaluator</label>
+          <input id="scored-by-{{ loop.index0 }}" name="scored_by" value="{{ result.scored_by or '' }}" autocomplete="name">
+
+          <label for="score-{{ loop.index0 }}">Score</label>
+          <input id="score-{{ loop.index0 }}" name="score" type="number" min="0" max="10" value="{{ result.score if result.score is not none else '' }}" autocomplete="off">
+
+          <label for="comment-{{ loop.index0 }}">Feedback</label>
+          <textarea id="comment-{{ loop.index0 }}" name="comment">{{ result.score_comment or '' }}</textarea>
+
+          <button type="submit">Save Evaluation</button>
+          {% if result.scored_at %}
+            <p class="meta">Saved {{ result.scored_at }}</p>
+          {% endif %}
+        </form>
+
+        <details>
+          <summary>Raw result JSON</summary>
+          <pre>{{ result | tojson(indent=2) }}</pre>
+        </details>
       </section>
-    </main>
-  </body>
-</html>
+    {% endfor %}
+
+    <details>
+      <summary>Full raw log JSON</summary>
+      <pre>{{ run | tojson(indent=2) }}</pre>
+    </details>
+  </div>
+{% endblock %}

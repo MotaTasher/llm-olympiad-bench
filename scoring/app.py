@@ -7,14 +7,32 @@ from pathlib import Path
 from flask import Flask, abort, redirect, render_template, request, url_for
 
 
-LOGS_DIR = Path("logs")
-RESULTS_DIR = Path("data/results")
+BASE_DIR = Path(__file__).resolve().parents[1]
+LOGS_DIR = BASE_DIR / "logs"
+RESULTS_DIR = BASE_DIR / "data" / "results"
 
 app = Flask(__name__)
 
 
+def safe_id(value: str) -> str:
+    if not value or "/" in value or "\\" in value or value in {".", ".."}:
+        abort(404)
+    return value
+
+
 def iter_log_paths() -> list[Path]:
-    return sorted(LOGS_DIR.rglob("*.json"), reverse=True)
+    paths = []
+    for path in LOGS_DIR.rglob("*.json"):
+        try:
+            parts = path.relative_to(LOGS_DIR).parts
+        except ValueError:
+            continue
+        if any(part.startswith(".") or part.startswith("_") for part in parts):
+            continue
+        if path.name.endswith(".evaluation.json"):
+            continue
+        paths.append(path)
+    return sorted(paths, reverse=True)
 
 
 def load_log(path: Path) -> dict | None:
@@ -168,6 +186,9 @@ def list_runs(competition_id: str, problem_id: str) -> list[dict]:
 
 
 def find_run_path(competition_id: str, problem_id: str, run_id: str) -> Path | None:
+    competition_id = safe_id(competition_id)
+    problem_id = safe_id(problem_id)
+    run_id = safe_id(run_id)
     direct = LOGS_DIR / competition_id / problem_id / f"{run_id}.json"
     if direct.exists():
         return direct
@@ -199,7 +220,7 @@ def load_run(competition_id: str, problem_id: str, run_id: str) -> dict:
 
 
 def result_path(competition_id: str, problem_id: str, run_id: str) -> Path:
-    return RESULTS_DIR / competition_id / problem_id / f"{run_id}.json"
+    return RESULTS_DIR / safe_id(competition_id) / safe_id(problem_id) / f"{safe_id(run_id)}.json"
 
 
 def load_result_sidecar(competition_id: str, problem_id: str, run_id: str) -> dict:

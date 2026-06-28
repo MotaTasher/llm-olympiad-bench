@@ -1,48 +1,23 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <title>Olympiad Scorer</title>
-    <style>
-      body { font-family: system-ui, sans-serif; margin: 32px; color: #151515; }
-      table { border-collapse: collapse; width: 100%; }
-      th, td { border-bottom: 1px solid #ddd; padding: 10px; text-align: left; }
-      a { color: #0755c7; }
-      .muted { color: #666; }
-    </style>
-  </head>
-  <body>
-    <h1>Соревнования</h1>
-    {% if competitions %}
-      <table>
-        <thead>
-          <tr>
-            <th>Соревнование</th>
-            <th>Задач</th>
-            <th>Прогонов</th>
-            <th>Оценок</th>
-            <th>Последний прогон</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for competition in competitions %}
-            <tr>
-              <td>
-                <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
-                  {{ competition.competition_title }}
-                </a>
-                <div class="muted">{{ competition.competition_id }}</div>
-              </td>
-              <td>{{ competition.problem_count }}</td>
-              <td>{{ competition.run_count }}</td>
-              <td>{{ competition.scored_count }}</td>
-              <td>{{ competition.latest_timestamp }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>Пока нет логов для вычитки.</p>
-    {% endif %}
-  </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+  {% if competitions %}
+    <div class="grid">
+      {% for competition in competitions %}
+        <a class="card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+          <h2>{{ competition.competition_title }}</h2>
+          <div class="meta">{{ competition.competition_id }}</div>
+          <div class="stats">
+            <span>{{ competition.problem_count }} problems</span>
+            <span>{{ competition.run_count }} runs</span>
+            <span>{{ competition.scored_count }} scored</span>
+          </div>
+          {% if competition.latest_timestamp %}
+            <div class="meta">Latest {{ competition.latest_timestamp }}</div>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty">No logs found in <code>logs/</code>.</div>
+  {% endif %}
+{% endblock %}
