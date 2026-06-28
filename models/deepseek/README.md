@@ -78,7 +78,7 @@ DEEPSEEK_MAX_TOKENS=8192
 ```bash
 python scripts/check_secrets.py --models deepseek
 python runner.py \
-  --problem data/competitions/local_examples/problems/example.json \
+  --problem data/competitions/local_examples/example.json \
   --models deepseek \
   --run-id smoke_deepseek
 ```

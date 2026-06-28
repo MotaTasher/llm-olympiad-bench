@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "example",
+  "number": 1,
+  "title": "Example olympiad problem",
+  "statement": "Докажите, что сумма любых двух четных чисел является четным числом.",
+  "answer": null,
+  "solution": null,
+  "tags": [],
+  "metadata": {},
+  "source": "Local sample"
+}

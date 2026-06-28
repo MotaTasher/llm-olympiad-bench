@@ -1,6 +1,6 @@
 # Server Workflow
 
-Инструкция для обмена логами со scoring-сервером.
+Инструкция для обмена логами со scoring-сервером. Доступ к серверу не нужен для локального запуска сайта; см. [docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md).
 
 ## Кто может пушить
 
@@ -152,7 +152,7 @@ python scripts/export_scoring.py --all
 
 ```bash
 python runner.py \
-  --problem data/competitions/local_examples/problems/example.json \
+  --problem data/competitions/local_examples/example.json \
   --models gpt,claude,deepseek \
   --run-id first_pass
 ```

@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from models.base import BaseModel
+from olympiad_data import DataLoadError, resolve_problem
 
 
 MODEL_CLASSES = {
@@ -84,74 +85,22 @@ def load_env(*, allow_model_env_overrides: bool = False) -> None:
     load_env_file(Path("config/models.env"), override=True)
 
 
-def load_problem(path: Path) -> tuple[str, dict[str, Any]]:
-    text = path.read_text(encoding="utf-8")
-    if path.suffix.lower() == ".json":
-        data = json.loads(text)
-        problem_text = data.get("text") or data.get("statement")
-        if not isinstance(problem_text, str) or not problem_text.strip():
-            raise ValueError(
-                f"{path} must contain a non-empty JSON field: text or statement"
-            )
-        data.setdefault("text", problem_text)
-        return problem_text, data
-    return text, {"text": text}
-
-
-def nested_str(data: dict[str, Any], key: str) -> str | None:
-    value = data.get(key)
-    if isinstance(value, str) and value.strip():
-        return value.strip()
-    return None
-
-
-def problem_competition(data: dict[str, Any]) -> tuple[str, str]:
-    competition = data.get("competition")
-    if isinstance(competition, dict):
-        competition_id = nested_str(competition, "id")
-        competition_title = nested_str(competition, "title") or nested_str(competition, "name")
-        if competition_id:
-            return competition_id, competition_title or competition_id
-    competition_id = nested_str(data, "competition_id") or "default"
-    competition_title = (
-        nested_str(data, "competition_title")
-        or nested_str(data, "competition_name")
-        or competition_id
-    )
-    return competition_id, competition_title
-
-
-def file_competition(problem_file: Path) -> tuple[str, str] | None:
-    if problem_file.parent.name == "problems":
-        competition_dir = problem_file.parent.parent
-    else:
-        competition_dir = problem_file.parent
-    manifest = competition_dir / "competition.json"
-    if not manifest.exists():
-        return None
-    try:
-        data = json.loads(manifest.read_text(encoding="utf-8"))
-    except Exception:
-        return None
-    competition_id = nested_str(data, "id") or competition_dir.name
-    competition_title = nested_str(data, "title") or nested_str(data, "name") or competition_id
-    return competition_id, competition_title
-
-
-def resolve_competition(problem_file: Path, data: dict[str, Any]) -> tuple[str, str]:
-    competition_id, competition_title = problem_competition(data)
-    file_metadata = file_competition(problem_file)
-    if file_metadata and file_metadata[0] == competition_id and competition_title == competition_id:
-        return file_metadata
-    if competition_id != "default":
-        return competition_id, competition_title
-    return file_metadata or (competition_id, competition_title)
-
-
-def problem_identity(problem_file: Path, data: dict[str, Any]) -> tuple[str, str]:
-    problem_id = nested_str(data, "id") or problem_file.stem
-    problem_title = nested_str(data, "title") or problem_id
-    return problem_id, problem_title
+def load_problem_input(
+    problem_file: Path,
+) -> tuple[str, dict[str, Any], str, str, str, str]:
+    if problem_file.suffix.lower() == ".json":
+        competition, problem = resolve_problem(problem_file)
+        return (
+            problem.statement,
+            problem.data,
+            competition.id,
+            competition.title,
+            problem.id,
+            problem.title,
+        )
+    text = problem_file.read_text(encoding="utf-8")
+    data = {"id": problem_file.stem, "statement": text}
+    return text, data, "default", "default", problem_file.stem, problem_file.stem
 
 
 def create_model(alias: str) -> BaseModel:
@@ -229,7 +178,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--competition",
         default=None,
-        help="Competition id override. Defaults to problem competition_id or 'default'.",
+        help="Competition id override. Defaults to parent competition.json or 'default'.",
     )
     parser.add_argument(
         "--competition-title",
@@ -260,11 +209,17 @@ def main() -> int:
     load_env(allow_model_env_overrides=args.allow_env_model_overrides)
 
     problem_file = Path(args.problem)
-    problem_text, problem_data = load_problem(problem_file)
-    source_competition_id, source_competition_title = resolve_competition(
-        problem_file, problem_data
-    )
-    source_problem_id, problem_title = problem_identity(problem_file, problem_data)
+    try:
+        (
+            problem_text,
+            problem_data,
+            source_competition_id,
+            source_competition_title,
+            source_problem_id,
+            problem_title,
+        ) = load_problem_input(problem_file)
+    except DataLoadError as exc:
+        raise SystemExit(str(exc)) from exc
     competition_id = slugify_id(args.competition or source_competition_id)
     competition_title = args.competition_title or source_competition_title
     problem_id = slugify_id(source_problem_id)

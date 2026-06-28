@@ -1,5 +1,9 @@
 {
+  "schema_version": 1,
   "id": "2026_05_math_cup_cs_space",
   "title": "CS Space Math Cup",
-  "description": "Май 2026, финал, условия. Класс или возрастная категория в PDF не указаны."
+  "description": "Май 2026, финал, условия. Класс или возрастная категория в PDF не указаны.",
+  "date": null,
+  "source": null,
+  "metadata": {}
 }

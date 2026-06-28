@@ -77,7 +77,7 @@ ANTHROPIC_MAX_TOKENS=4096
 ```bash
 python scripts/check_secrets.py --models claude
 python runner.py \
-  --problem data/competitions/local_examples/problems/example.json \
+  --problem data/competitions/local_examples/example.json \
   --models claude \
   --run-id smoke_claude
 ```

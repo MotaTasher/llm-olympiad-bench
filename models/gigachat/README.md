@@ -94,7 +94,7 @@ GIGACHAT_REPETITION_PENALTY=1.05
 ```bash
 python scripts/check_secrets.py --models gigachat
 python runner.py \
-  --problem data/competitions/local_examples/problems/example.json \
+  --problem data/competitions/local_examples/example.json \
   --models gigachat \
   --run-id smoke_gigachat
 ```

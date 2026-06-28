@@ -98,11 +98,11 @@ RUB_PER_USD=90
 ```bash
 python scripts/check_secrets.py --models yandexgpt
 python runner.py \
-  --problem data/competitions/local_examples/problems/example.json \
+  --problem data/competitions/local_examples/example.json \
   --models yandexgpt \
   --run-id smoke_yandexgpt
 python runner.py \
-  --problem data/competitions/local_examples/problems/example.json \
+  --problem data/competitions/local_examples/example.json \
   --models alice \
   --run-id smoke_alice
 ```

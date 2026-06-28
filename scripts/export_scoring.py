@@ -85,7 +85,11 @@ def rows_from_logs(logs_dir: Path, results_dir: Path, only_scored: bool) -> list
         competition_id = data.get("competition_id") or path_competition_id(path, logs_dir)
         problem_id = data.get("problem_id") or path_problem_id(path, logs_dir)
         problem_title = data.get("problem_title") or value_from_problem(data, "title") or problem_id
-        problem_text = data.get("problem_text") or value_from_problem(data, "text")
+        problem_text = (
+            data.get("problem_text")
+            or value_from_problem(data, "statement")
+            or value_from_problem(data, "text")
+        )
         raw_results = data.get("results", [])
         if isinstance(raw_results, list) and raw_results:
             results = [item for item in raw_results if isinstance(item, dict)]

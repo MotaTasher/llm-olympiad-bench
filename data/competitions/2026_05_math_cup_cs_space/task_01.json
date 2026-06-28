@@ -1,7 +1,13 @@
 {
-  "id": "2026_05_math_cup_cs_space_01",
-  "competition_id": "2026_05_math_cup_cs_space",
+  "schema_version": 1,
+  "id": "task_01",
   "number": 1,
   "title": "Произведение",
-  "statement": "Вычислите\n\\[\n  \\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]"
+  "statement": "Вычислите\n\\[\n  \\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]",
+  "answer": null,
+  "solution": null,
+  "tags": [],
+  "metadata": {
+    "legacy_id": "2026_05_math_cup_cs_space_01"
+  }
 }

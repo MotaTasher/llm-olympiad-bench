@@ -71,7 +71,7 @@ OPENAI_MAX_COMPLETION_TOKENS=12000
 ```bash
 python scripts/check_secrets.py --models gpt
 python runner.py \
-  --problem data/competitions/local_examples/problems/example.json \
+  --problem data/competitions/local_examples/example.json \
   --models gpt \
   --run-id smoke_gpt
 ```

@@ -1,0 +1,70 @@
+# Project map
+
+## Root files
+
+| Path | Responsibility |
+| --- | --- |
+| `README.md` | concise user onboarding and navigation |
+| `AGENTS.md` | primary Codex/general-agent rules |
+| `CLAUDE.md` | Claude entry point |
+| `CODEX.md` | explicit Codex pointer to `AGENTS.md` |
+| `SERVER.md` | user workflow for server sync |
+| `requirements.txt` | Python runtime dependencies |
+| `runner.py` | CLI orchestration, adapter selection, log writing |
+| `olympiad_data.py` | shared competition/problem loading and canonical directory scanning |
+| `.gitignore` | blocks credentials, caches and runtime artifacts |
+
+## Runtime subsystems
+
+```text
+models/
+  base.py                 BaseModel and SolveResult contract
+  common.py               shared prompt, env helpers, text-only guard, serialization
+  <provider>/
+    <provider>.py         provider API integration
+    versions.py           available/default model identifiers
+    README.md             provider-specific setup
+    secrets/.env          local credentials; never committed
+
+scoring/
+  app.py                  Flask routes, log discovery, score-sidecar persistence
+  templates/              HTML pages
+
+scripts/
+  check_secrets.py        credential presence checks without printing values
+  validate_problem_data.py problem/competition JSON validation
+  export_scoring.py       merge run logs and sidecars into CSV/JSONL
+  sync_logs.py            rsync push/pull for logs and score sidecars
+```
+
+## Data directories
+
+| Path | Contents | Mutability |
+| --- | --- | --- |
+| `data/competitions/` | source competitions and problem sets | versioned source data |
+| `logs/` | model run records | generated, normally ignored by Git |
+| `data/results/` | manual score sidecars and exports | generated, normally ignored by Git |
+| `notebooks/` | exploratory/manual workflows | not authoritative |
+| `config/models.env` | non-secret runtime configuration | versioned |
+| `config/server.env` | private SSH/rsync targets | local only |
+
+## Canonical problem-set layout
+
+```text
+data/competitions/<competition_id>/
+  competition.json
+  <problem_id>.json
+  assets/
+```
+
+`assets/` is optional. Problem JSON files are direct children of the competition directory. `competition.json`, hidden files, temporary files, `assets/`, directories and unknown non-JSON files are not treated as problems.
+
+## Ownership rules
+
+- Problem text and metadata: `data/competitions/`.
+- Generated model answers: `logs/`.
+- Human evaluation: `data/results/`.
+- Provider details: corresponding `models/<provider>/` directory.
+- Shared API policy and result serialization: `models/common.py` and `models/base.py`.
+- User documentation: root README, `docs/` and provider READMEs.
+- Agent contracts: `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `docs/specs/`.
