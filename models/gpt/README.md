@@ -1,83 +1,78 @@
 # GPT (OpenAI)
 
-## Получение API-ключа
+Этот адаптер запускает OpenAI-модели через общий `runner.py` в text-only режиме: без `tools`, поиска, code interpreter и function calling.
 
-1. Зайди на [platform.openai.com](https://platform.openai.com) → войди или зарегистрируйся
-2. Левое меню → **API keys** (или напрямую: [platform.openai.com/api-keys](https://platform.openai.com/api-keys))
-3. Нажми **+ Create new secret key** → дай имя → **Create secret key**
-4. Скопируй ключ сразу — потом не покажет
-5. Пополни баланс: [platform.openai.com/settings/organization/billing](https://platform.openai.com/settings/organization/billing) → **Add to credit balance**
+## 1. Как получить ключ
 
-**В `.env`:**
+1. Открой [platform.openai.com](https://platform.openai.com) и войди в аккаунт.
+2. Перейди в раздел API keys: [platform.openai.com/api-keys](https://platform.openai.com/api-keys).
+3. Нажми **Create new secret key**.
+4. Скопируй ключ сразу после создания. Позже платформа не покажет его полностью.
+5. Проверь billing и лимиты проекта в настройках платформы, иначе API-запросы могут отклоняться.
+
+## 2. Как положить ключ
+
+Создай файл:
+
+```text
+models/gpt/secrets/.env
 ```
+
+Положи туда только credential:
+
+```env
 OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4o
 ```
 
-## Актуальные модели для задачи
+Файл лежит в gitignored-папке `models/gpt/secrets/` и не должен попадать в репозиторий.
 
-| Модель | Описание | Цена (вход/выход) |
-|--------|----------|-------------------|
-| `gpt-4o` | Основная, быстрая | $2.50 / $10.00 за 1M токенов |
-| `gpt-4o-mini` | Дешевле, чуть слабее | $0.15 / $0.60 |
-| `o3` | Reasoning, думает дольше | $2.00 / $8.00 |
-| `o4-mini` | Reasoning, дешевле | $1.10 / $4.40 |
+## 3. Где выбирать модель
 
-Цены актуальны на 2026-06 — сверяй на [openai.com/api/pricing](https://openai.com/api/pricing)
+Не клади `OPENAI_MODEL` в `models/gpt/secrets/.env`, корневой `.env` или shell env для обычных запусков. Secret-файл нужен только для ключей.
 
-## Как работает API (text-only, без инструментов)
+Default-модель выбирается в:
 
-Endpoint: `POST https://api.openai.com/v1/chat/completions`
+```text
+models/gpt/versions.py
+```
 
-Инструменты (`tools`) — **opt-in**: просто не передаём поле — и модель работает без них.
+Проект берет:
 
 ```python
-import openai, os, time
-
-client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-
-start = time.time()
-response = client.chat.completions.create(
-    model=os.environ.get("OPENAI_MODEL", "gpt-4o"),
-    messages=[
-        {"role": "system", "content": "Ты решаешь олимпиадные задачи. Думай пошагово и дай финальный ответ."},
-        {"role": "user", "content": problem_text}
-    ],
-    # НЕ передаём tools= → никакого веба, кода, поиска
-)
-latency_ms = int((time.time() - start) * 1000)
-
-answer = response.choices[0].message.content
-prompt_tokens = response.usage.prompt_tokens
-completion_tokens = response.usage.completion_tokens
+DEFAULT = VERSIONS[0]
 ```
 
-## Подсчёт стоимости
+Если нужно временно выбрать другую модель для запуска, задай override в едином публичном конфиге:
 
-Цены хранить константами в `gpt.py`:
-```python
-# Цены за 1 токен в USD (обновить при смене модели)
-PRICE_INPUT_PER_TOKEN = 2.50 / 1_000_000   # gpt-4o
-PRICE_OUTPUT_PER_TOKEN = 10.00 / 1_000_000
-
-cost_usd = (prompt_tokens * PRICE_INPUT_PER_TOKEN +
-            completion_tokens * PRICE_OUTPUT_PER_TOKEN)
+```text
+config/models.env
 ```
 
-## Будущее: включить инструменты
+Пример:
 
-Когда нужно будет добавить веб-поиск или код — передать в запрос:
-```python
-tools=[{"type": "web_search_preview"}]
-# или
-tools=[{"type": "code_interpreter"}]
+```env
+OPENAI_MODEL=gpt-5.4
+OPENAI_REASONING_EFFORT=high
+OPENAI_MAX_COMPLETION_TOKENS=12000
 ```
 
-Документация: [platform.openai.com/docs/guides/tools](https://platform.openai.com/docs/guides/tools)
+`runner.load_env()` специально игнорирует старые `OPENAI_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
+
+`OPENAI_REASONING_EFFORT` побуждает reasoning-модель думать больше или меньше. `OPENAI_MAX_COMPLETION_TOKENS` задает hard cap на generated tokens. API не гарантирует минимум thinking tokens.
+
+## Проверка
+
+```bash
+python scripts/check_secrets.py --models gpt
+python runner.py --problem data/problems/example.json --models gpt --run-id smoke_gpt
+```
+
+## Text-Only Policy
+
+Адаптер использует Chat Completions и не передает `tools`. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
 
 ## Полезные ссылки
 
-- [Документация Chat Completions](https://platform.openai.com/docs/api-reference/chat)
-- [Список моделей и цены](https://openai.com/api/pricing)
-- [Playground для теста](https://platform.openai.com/playground)
-- [Лимиты и квоты](https://platform.openai.com/settings/organization/limits)
+- [OpenAI API keys](https://platform.openai.com/api-keys)
+- [OpenAI API docs](https://platform.openai.com/docs)
+- [OpenAI pricing](https://openai.com/api/pricing)

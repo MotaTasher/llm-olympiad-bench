@@ -1,122 +1,102 @@
 # GigaChat (Сбер)
 
-## Получение доступа
+Этот адаптер запускает GigaChat через общий `runner.py` в text-only режиме: без `tools`, `functions`, `function_call` и внешних цепочек.
 
-### Шаг 1 — Регистрация в Sber Studio
+## 1. Как получить ключи
 
-1. Зайди на [developers.sber.ru/studio](https://developers.sber.ru/studio/workspaces/my-space/get/gigachat-api)
-2. Войди через **СберID** (нужен аккаунт Сбербанк Онлайн) или зарегистрируйся
-3. На странице GigaChat API нажми **Подключить**
-4. Создай проект (или используй дефолтный workspace)
+1. Открой страницу GigaChat API в Sber Studio: [developers.sber.ru/studio/workspaces/my-space/get/gigachat-api](https://developers.sber.ru/studio/workspaces/my-space/get/gigachat-api).
+2. Войди через СберID.
+3. Подключи GigaChat API и создай проект, если он еще не создан.
+4. В проекте открой настройки авторизационных данных.
+5. Получи и скопируй `Client ID` и `Client Secret`.
 
-### Шаг 2 — Получить credentials
+GigaChat может требовать сертификаты НУЦ Минцифры для HTTPS. Для локальной разработки в проекте есть настройка `GIGACHAT_VERIFY_SSL=false`, но это runtime-настройка и она должна лежать в `config/models.env`, а не в secrets.
 
-1. В личном кабинете студии → **GigaChat API** → твой проект
-2. Вкладка **Настройки** → раздел **Авторизационные данные**
-3. Нажми **Получить Client Secret** — скопируй `Client ID` и `Client Secret`
-4. В `.env` укажи `Client ID` и `Client Secret` в двух отдельных переменных; адаптер сам соберет `Client_ID:Client_Secret` и закодирует строку перед OAuth-запросом
+## 2. Как положить ключи
 
-> ⚠️ **Важно:** GigaChat требует сертификаты НУЦ Минцифры для HTTPS.
-> Инструкция: [developers.sber.ru/docs/ru/gigachat/certificates](https://developers.sber.ru/docs/ru/gigachat/certificates)
-> Без них запросы падают с SSL-ошибкой. Для разработки можно отключить проверку (`verify=False`), но не в проде.
+Создай файл:
 
-**В `.env`:**
+```text
+models/gigachat/secrets/.env
 ```
+
+Рекомендуемый формат:
+
+```env
 GIGACHAT_CLIENT_ID=...
 GIGACHAT_CLIENT_SECRET=...
 ```
 
-Для обратной совместимости также поддерживается старый единый секрет:
+Адаптер сам соберет строку `client_id:client_secret`, закодирует ее в base64 и передаст в OAuth.
+
+Для обратной совместимости поддерживается старый единый credential:
 
 ```env
-GIGACHAT_CREDENTIALS=<authorization_key>
+GIGACHAT_CREDENTIALS=...
 ```
 
-Если заданы обе формы, `GIGACHAT_CLIENT_ID` + `GIGACHAT_CLIENT_SECRET` имеют
-приоритет над `GIGACHAT_CREDENTIALS`.
+Если заданы обе формы, `GIGACHAT_CLIENT_ID` + `GIGACHAT_CLIENT_SECRET` имеют приоритет.
 
-`GIGACHAT_MODEL` задается не в secrets, а через `models/gigachat/versions.py`
-или временно в `config/models.env`.
+Файл `models/gigachat/secrets/.env` должен содержать только credentials. Не клади туда `GIGACHAT_MODEL`, `GIGACHAT_SCOPE`, `GIGACHAT_VERIFY_SSL`, temperature, token limits или другие runtime-настройки.
 
-`GIGACHAT_SCOPE`:
-- `GIGACHAT_API_PERS` — для физлиц
-- `GIGACHAT_API_CORP` — для юрлиц/ИП (другой договор)
+## 3. Где выбирать модель
 
-## Актуальные модели
+Default-модель выбирается в:
 
-| Модель | Описание |
-|--------|----------|
-| `GigaChat` | Базовая |
-| `GigaChat-Pro` | Продвинутая, лучше для задач |
-| `GigaChat-Max` | Максимальная |
-| `GigaChat-2-Max` | Последняя флагманская (2026) |
+```text
+models/gigachat/versions.py
+```
 
-Цены: [developers.sber.ru/docs/ru/gigachat/api/tariffs](https://developers.sber.ru/docs/ru/gigachat/api/tariffs)
-
-## Как работает API
-
-GigaChat совместим с OpenAI Chat Completions — можно использовать официальный SDK `gigachat`:
+Проект берет:
 
 ```python
-from gigachat import GigaChat as GigaChatClient
-import os, time
-
-# SDK автоматически получает и обновляет OAuth-токен
-client = GigaChatClient(
-    credentials=os.environ["GIGACHAT_CREDENTIALS"],
-    scope=os.environ.get("GIGACHAT_SCOPE", "GIGACHAT_API_PERS"),
-    model=os.environ.get("GIGACHAT_MODEL", "GigaChat-Pro"),
-    verify_ssl_certs=False,  # только для разработки без сертификатов Минцифры
-)
-
-start = time.time()
-response = client.chat(
-    {
-        "messages": [
-            {"role": "system", "content": "Ты решаешь олимпиадные задачи. Думай пошагово и дай финальный ответ."},
-            {"role": "user", "content": problem_text}
-        ]
-        # НЕ передаём function_call / tools → чистый текстовый ответ
-    }
-)
-latency_ms = int((time.time() - start) * 1000)
-
-answer = response.choices[0].message.content
-prompt_tokens = response.usage.prompt_tokens
-completion_tokens = response.usage.completion_tokens
+DEFAULT = VERSIONS[0]
 ```
 
-### Альтернатива: через OpenAI-совместимый endpoint
+Если нужно временно выбрать другую модель для запуска, задай override в едином публичном конфиге:
 
-```python
-import openai, os
-
-client = openai.OpenAI(
-    api_key="<oauth_token>",   # получить отдельно через /oauth
-    base_url="https://gigachat.devices.sberbank.ru/api/v1",
-)
-# Далее как обычный OpenAI клиент
+```text
+config/models.env
 ```
 
-## Подсчёт стоимости
+Пример:
 
-GigaChat считает в **рублях**, токены — собственные. Цену за токен смотри в тарифах. В `SolveResult.cost_usd` переводи по текущему курсу или храни отдельное поле `cost_rub`.
-
-## Будущее: включить инструменты
-
-GigaChat поддерживает function calling (одна функция за запрос):
-```python
-"functions": [{"name": "...", "description": "...", "parameters": {...}}],
-"function_call": "auto"
+```env
+GIGACHAT_MODEL=GigaChat-2-Pro
 ```
 
-Документация: [developers.sber.ru/docs/ru/gigachat/guides/functions/overview](https://developers.sber.ru/docs/ru/gigachat/guides/functions/overview)
+Runtime-настройки GigaChat тоже должны жить в `config/models.env`:
+
+```env
+GIGACHAT_SCOPE=GIGACHAT_API_PERS
+GIGACHAT_VERIFY_SSL=false
+GIGACHAT_TEMPERATURE=0.1
+GIGACHAT_TOP_P=0.9
+GIGACHAT_MAX_TOKENS=8192
+GIGACHAT_REPETITION_PENALTY=1.05
+```
+
+`GIGACHAT_SCOPE` обычно:
+
+- `GIGACHAT_API_PERS` для физлиц;
+- `GIGACHAT_API_CORP` для юрлиц/ИП.
+
+`runner.load_env()` специально игнорирует старые `GIGACHAT_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
+
+## Проверка
+
+```bash
+python scripts/check_secrets.py --models gigachat
+python runner.py --problem data/problems/example.json --models gigachat --run-id smoke_gigachat
+```
+
+## Text-Only Policy
+
+Адаптер не передает `tools`, `functions` или `function_call`. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
 
 ## Полезные ссылки
 
-- [Быстрый старт (физлица)](https://developers.sber.ru/docs/ru/gigachat/individuals-quickstart)
-- [Справка API](https://developers.sber.ru/docs/ru/gigachat/api/reference/rest/gigachat-api)
-- [SDK gigachat (PyPI)](https://github.com/ai-forever/gigachat)
-- [Песочница промптов](https://developers.sber.ru/docs/ru/gigachat/prompts-hub/playground)
-- [Тарифы](https://developers.sber.ru/docs/ru/gigachat/api/tariffs)
-- [Поддержка](https://t.me/SD_SmartApp_Supprot_Bot)
+- [GigaChat API quickstart](https://developers.sber.ru/docs/ru/gigachat/individuals-quickstart)
+- [GigaChat API reference](https://developers.sber.ru/docs/ru/gigachat/api/reference/rest/gigachat-api)
+- [Сертификаты для GigaChat](https://developers.sber.ru/docs/ru/gigachat/certificates)
+- [Тарифы GigaChat](https://developers.sber.ru/docs/ru/gigachat/api/tariffs)

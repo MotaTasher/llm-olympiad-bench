@@ -3,7 +3,7 @@ from __future__ import annotations
 import requests
 
 from ..base import BaseModel, SolveResult
-from ..common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
+from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -69,6 +69,7 @@ class YandexGPTModel(BaseModel):
                     {"role": "user", "text": problem},
                 ],
             }
+            ensure_text_only_request(payload)
 
             def post_completion() -> requests.Response:
                 return requests.post(

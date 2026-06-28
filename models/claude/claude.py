@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 from ..base import BaseModel, SolveResult
-from ..common import SYSTEM_PROMPT, env, error_result, price_for, require_env, safe_dict, timed
+from ..common import (
+    SYSTEM_PROMPT,
+    ensure_text_only_request,
+    env,
+    error_result,
+    price_for,
+    require_env,
+    safe_dict,
+    timed,
+)
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -26,14 +35,30 @@ class ClaudeModel(BaseModel):
             import anthropic
 
             client = anthropic.Anthropic(api_key=require_env("ANTHROPIC_API_KEY"))
+            max_tokens = int(env("ANTHROPIC_MAX_TOKENS", "4096") or "4096")
+            kwargs = {
+                "model": self.model_id,
+                "max_tokens": max_tokens,
+                "system": SYSTEM_PROMPT,
+                "messages": [{"role": "user", "content": problem}],
+            }
+            thinking_budget = env("ANTHROPIC_THINKING_BUDGET_TOKENS")
+            if thinking_budget is not None:
+                budget_tokens = int(thinking_budget or "0")
+                if budget_tokens > 0:
+                    if max_tokens <= budget_tokens:
+                        raise RuntimeError(
+                            "ANTHROPIC_MAX_TOKENS must be greater than "
+                            "ANTHROPIC_THINKING_BUDGET_TOKENS when extended thinking is enabled"
+                        )
+                    kwargs["thinking"] = {
+                        "type": "enabled",
+                        "budget_tokens": budget_tokens,
+                    }
+            ensure_text_only_request(kwargs)
 
             response, latency_ms = timed(
-                lambda: client.messages.create(
-                    model=self.model_id,
-                    max_tokens=int(env("ANTHROPIC_MAX_TOKENS", "4096") or "4096"),
-                    system=SYSTEM_PROMPT,
-                    messages=[{"role": "user", "content": problem}],
-                )
+                lambda: client.messages.create(**kwargs)
             )
 
             prompt_tokens = int(getattr(response.usage, "input_tokens", 0) or 0)

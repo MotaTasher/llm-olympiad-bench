@@ -9,6 +9,15 @@ from typing import Any, Callable
 from .base import SolveResult
 
 
+FORBIDDEN_REQUEST_KEYS = {
+    "tool_choice",
+    "tools",
+    "function_call",
+    "functions",
+    "web_search_options",
+}
+
+
 SYSTEM_PROMPT = (
     "Ты решаешь олимпиадные задачи строго и аккуратно. "
     "Сначала формализуй условие, введи обозначения и проверь все ограничения. "
@@ -19,6 +28,18 @@ SYSTEM_PROMPT = (
     "В конце явно сформулируй финальный вывод. "
     "Не используй инструменты, поиск, код или калькуляторы."
 )
+
+
+def ensure_text_only_request(value: Any, path: str = "request") -> None:
+    if isinstance(value, dict):
+        for key, item in value.items():
+            next_path = f"{path}.{key}"
+            if key in FORBIDDEN_REQUEST_KEYS:
+                raise RuntimeError(f"Text-only policy violation: {next_path} is forbidden")
+            ensure_text_only_request(item, next_path)
+    elif isinstance(value, (list, tuple)):
+        for index, item in enumerate(value):
+            ensure_text_only_request(item, f"{path}[{index}]")
 
 
 def env(name: str, default: str | None = None) -> str | None:

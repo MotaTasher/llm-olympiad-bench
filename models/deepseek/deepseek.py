@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 from ..base import BaseModel, SolveResult
-from ..common import SYSTEM_PROMPT, env, error_result, price_for, require_env, safe_dict, timed
+from ..common import (
+    SYSTEM_PROMPT,
+    ensure_text_only_request,
+    env,
+    error_result,
+    price_for,
+    require_env,
+    safe_dict,
+    timed,
+)
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -34,14 +43,18 @@ class DeepSeekModel(BaseModel):
             kwargs = {}
             if self.model_id not in {"deepseek-reasoner"}:
                 kwargs["temperature"] = float(env("DEEPSEEK_TEMPERATURE", "0.3") or "0.3")
+            if env("DEEPSEEK_MAX_TOKENS") is not None:
+                kwargs["max_tokens"] = int(env("DEEPSEEK_MAX_TOKENS", "4096") or "4096")
+            messages = [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": problem},
+            ]
+            ensure_text_only_request({"messages": messages, **kwargs})
 
             response, latency_ms = timed(
                 lambda: client.chat.completions.create(
                     model=self.model_id,
-                    messages=[
-                        {"role": "system", "content": SYSTEM_PROMPT},
-                        {"role": "user", "content": problem},
-                    ],
+                    messages=messages,
                     **kwargs,
                 )
             )

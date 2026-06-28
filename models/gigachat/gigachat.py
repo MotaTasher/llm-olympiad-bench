@@ -4,7 +4,7 @@ import base64
 import binascii
 
 from ..base import BaseModel, SolveResult
-from ..common import SYSTEM_PROMPT, env, error_result, safe_dict, timed
+from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -94,6 +94,7 @@ class GigaChatModel(BaseModel):
                 payload["repetition_penalty"] = float(
                     env("GIGACHAT_REPETITION_PENALTY", "1.05") or "1.05"
                 )
+            ensure_text_only_request(payload)
 
             response, latency_ms = timed(
                 lambda: client.chat(payload)

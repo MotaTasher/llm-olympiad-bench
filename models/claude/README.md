@@ -1,94 +1,84 @@
 # Claude (Anthropic)
 
-## Получение API-ключа
+Этот адаптер запускает Claude через общий `runner.py` в text-only режиме: без `tools`, web search, computer use и внешних цепочек.
 
-1. Зайди на [console.anthropic.com](https://console.anthropic.com) → войди или зарегистрируйся
-2. Левое меню → **Settings** → **API Keys** (или: [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys))
-3. Нажми **Create Key** → дай имя → **Create Key**
-4. Скопируй сразу — потом не покажет
-5. Пополни баланс: **Settings** → **Billing** → **Add credits**
+## 1. Как получить ключ
 
-**В `.env`:**
+1. Открой [console.anthropic.com](https://console.anthropic.com) и войди в аккаунт.
+2. Перейди в **Settings** -> **API Keys** или открой [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys).
+3. Нажми **Create Key**.
+4. Скопируй ключ сразу после создания.
+5. Проверь billing и лимиты аккаунта, иначе запросы к API могут не пройти.
+
+## 2. Как положить ключ
+
+Создай файл:
+
+```text
+models/claude/secrets/.env
 ```
+
+Положи туда только credential:
+
+```env
 ANTHROPIC_API_KEY=sk-ant-...
-ANTHROPIC_MODEL=claude-opus-4-5
 ```
 
-## Актуальные модели для задачи
+Файл лежит в gitignored-папке `models/claude/secrets/` и не должен попадать в репозиторий.
 
-| Модель | Описание | Цена (вход/выход) |
-|--------|----------|-------------------|
-| `claude-opus-4-5` | Самая мощная | $15 / $75 за 1M токенов |
-| `claude-sonnet-4-5` | Баланс цена/качество | $3 / $15 |
-| `claude-haiku-4-5` | Быстрая и дешёвая | $0.80 / $4 |
+## 3. Где выбирать модель
 
-Цены актуальны на 2026-06 — сверяй на [anthropic.com/pricing](https://www.anthropic.com/pricing)
+Не клади `ANTHROPIC_MODEL` в `models/claude/secrets/.env`, корневой `.env` или shell env для обычных запусков. Secret-файл нужен только для ключей.
 
-## Как работает API (text-only, без инструментов)
+Default-модель выбирается в:
 
-Endpoint: `POST https://api.anthropic.com/v1/messages`
+```text
+models/claude/versions.py
+```
 
-Инструменты — **opt-in**: без поля `tools` в запросе — никакого веба, кода, поиска.
+Проект берет:
 
 ```python
-import anthropic, os, time
-
-client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-
-start = time.time()
-response = client.messages.create(
-    model=os.environ.get("ANTHROPIC_MODEL", "claude-opus-4-5"),
-    max_tokens=4096,
-    system="Ты решаешь олимпиадные задачи. Думай пошагово и дай финальный ответ.",
-    messages=[
-        {"role": "user", "content": problem_text}
-    ],
-    # НЕ передаём tools= → чистый текстовый ответ
-)
-latency_ms = int((time.time() - start) * 1000)
-
-answer = response.content[0].text
-prompt_tokens = response.usage.input_tokens
-completion_tokens = response.usage.output_tokens
+DEFAULT = VERSIONS[0]
 ```
 
-## Подсчёт стоимости
+Если нужно временно выбрать другую модель для запуска, задай override в едином публичном конфиге:
 
-```python
-PRICE_INPUT_PER_TOKEN = 15.00 / 1_000_000   # claude-opus-4-5
-PRICE_OUTPUT_PER_TOKEN = 75.00 / 1_000_000
-
-cost_usd = (prompt_tokens * PRICE_INPUT_PER_TOKEN +
-            completion_tokens * PRICE_OUTPUT_PER_TOKEN)
+```text
+config/models.env
 ```
 
-## Extended Thinking (опционально)
+Пример:
 
-Для сложных задач можно включить расширенное обдумывание — модель тратит больше токенов на внутренние рассуждения:
-
-```python
-response = client.messages.create(
-    model="claude-opus-4-5",
-    max_tokens=16000,
-    thinking={"type": "enabled", "budget_tokens": 10000},
-    messages=[{"role": "user", "content": problem_text}]
-)
-# Думающие токены тоже биллятся, учитывать в cost_usd
+```env
+ANTHROPIC_MODEL=claude-sonnet-4-5
+ANTHROPIC_MAX_TOKENS=12000
+# ANTHROPIC_THINKING_BUDGET_TOKENS=8000
 ```
 
-## Будущее: включить инструменты
+Runtime-настройки, которые не являются секретами, тоже должны жить в `config/models.env`. Например:
 
-```python
-tools=[{"type": "web_search_20260209"}]
-# или custom tools через стандартный tool_use
+```env
+ANTHROPIC_MAX_TOKENS=4096
 ```
 
-Документация: [platform.claude.com/docs/en/agents-and-tools/tool-use/overview](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
+`ANTHROPIC_THINKING_BUDGET_TOKENS` включает extended thinking и задает максимум thinking tokens. `ANTHROPIC_MAX_TOKENS` должен быть больше thinking budget. API не гарантирует минимум thinking tokens.
+
+`runner.load_env()` специально игнорирует старые `ANTHROPIC_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
+
+## Проверка
+
+```bash
+python scripts/check_secrets.py --models claude
+python runner.py --problem data/problems/example.json --models claude --run-id smoke_claude
+```
+
+## Text-Only Policy
+
+Адаптер использует Anthropic Messages API и не передает `tools`. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
 
 ## Полезные ссылки
 
-- [Документация Messages API](https://platform.claude.com/docs/en/api/messages/create)
-- [Список моделей](https://platform.claude.com/docs/en/about-claude/models/overview)
-- [Workbench (тест в браузере)](https://console.anthropic.com/workbench)
-- [Цены](https://www.anthropic.com/pricing)
-- [Лимиты](https://platform.claude.com/docs/en/api/rate-limits)
+- [Anthropic API keys](https://console.anthropic.com/settings/keys)
+- [Anthropic docs](https://docs.anthropic.com)
+- [Anthropic pricing](https://www.anthropic.com/pricing)

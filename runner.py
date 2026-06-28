@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import re
 import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
@@ -118,6 +119,25 @@ def get_git_hash() -> str:
     return ""
 
 
+def slugify_run_name(value: str) -> str:
+    slug = re.sub(r"[^\w.-]+", "_", value.strip(), flags=re.UNICODE)
+    slug = re.sub(r"_+", "_", slug).strip("_.-")
+    return slug or "run"
+
+
+def problem_run_name(problem_file: Path, problem_data: dict[str, Any]) -> str:
+    for key in ("title", "id"):
+        value = problem_data.get(key)
+        if isinstance(value, str) and value.strip():
+            return value
+    return problem_file.stem
+
+
+def build_run_id(timestamp: datetime, run_name: str) -> str:
+    timestamp_id = timestamp.strftime("%Y_%m_%d_%H_%M_%S")
+    return f"{timestamp_id}_{slugify_run_name(run_name)}"
+
+
 def write_log(log: dict[str, Any], logs_dir: Path) -> Path:
     logs_dir.mkdir(parents=True, exist_ok=True)
     log_path = logs_dir / f"{log['run_id']}.json"
@@ -148,7 +168,11 @@ def parse_args() -> argparse.Namespace:
         required=True,
         help="Comma-separated aliases: gpt,claude,gigachat,yandexgpt/alice",
     )
-    parser.add_argument("--run-id", default=None, help="Optional log id")
+    parser.add_argument(
+        "--run-id",
+        default=None,
+        help="Optional run name suffix. Final log id is YYYY_MM_DD_HH_MM_SS_<name>",
+    )
     parser.add_argument("--logs-dir", default="logs", help="Where to write run JSON logs")
     parser.add_argument(
         "--allow-env-model-overrides",
@@ -164,10 +188,10 @@ def main() -> int:
 
     problem_file = Path(args.problem)
     problem_text, problem_data = load_problem(problem_file)
-    timestamp = datetime.now(UTC).isoformat().replace("+00:00", "Z")
-    timestamp_id = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+    now = datetime.now(UTC)
+    timestamp = now.isoformat().replace("+00:00", "Z")
     git_hash = get_git_hash()
-    run_id = args.run_id or f"{timestamp_id}_{git_hash or 'nogit'}"
+    run_id = build_run_id(now, args.run_id or problem_run_name(problem_file, problem_data))
 
     results = []
     table_rows = []

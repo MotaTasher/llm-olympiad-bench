@@ -19,6 +19,14 @@ REQUIRED = {
         "all": [],
         "one_of": [("OPENAI_API_KEY",)],
     },
+    "claude": {
+        "all": [],
+        "one_of": [("ANTHROPIC_API_KEY",)],
+    },
+    "anthropic": {
+        "all": [],
+        "one_of": [("ANTHROPIC_API_KEY",)],
+    },
     "gigachat": {
         "all": [],
         "one_of": [

@@ -1,7 +1,16 @@
 from __future__ import annotations
 
 from ..base import BaseModel, SolveResult
-from ..common import SYSTEM_PROMPT, env, error_result, price_for, require_env, safe_dict, timed
+from ..common import (
+    SYSTEM_PROMPT,
+    ensure_text_only_request,
+    env,
+    error_result,
+    price_for,
+    require_env,
+    safe_dict,
+    timed,
+)
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
@@ -27,14 +36,24 @@ class GPTModel(BaseModel):
             from openai import OpenAI
 
             client = OpenAI(api_key=require_env("OPENAI_API_KEY"))
+            kwargs = {}
+            if env("OPENAI_MAX_COMPLETION_TOKENS") is not None:
+                kwargs["max_completion_tokens"] = int(
+                    env("OPENAI_MAX_COMPLETION_TOKENS", "4096") or "4096"
+                )
+            if env("OPENAI_REASONING_EFFORT") is not None:
+                kwargs["reasoning_effort"] = env("OPENAI_REASONING_EFFORT")
+            messages = [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": problem},
+            ]
+            ensure_text_only_request({"messages": messages, **kwargs})
 
             response, latency_ms = timed(
                 lambda: client.chat.completions.create(
                     model=self.model_id,
-                    messages=[
-                        {"role": "system", "content": SYSTEM_PROMPT},
-                        {"role": "user", "content": problem},
-                    ],
+                    messages=messages,
+                    **kwargs,
                 )
             )
 

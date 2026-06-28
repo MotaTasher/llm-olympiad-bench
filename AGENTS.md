@@ -175,6 +175,16 @@ python runner.py \
   --run-id my_run_01
 ```
 
+`--run-id` is a human-readable run name suffix. The final generated `run_id`
+and log filename use:
+
+```text
+YYYY_MM_DD_HH_MM_SS_<name>
+```
+
+If `--run-id` is omitted, `<name>` is taken from problem `title`, then `id`,
+then the problem filename stem.
+
 Behavior:
 
 1. Load env from `.env`.
@@ -192,7 +202,7 @@ Behavior:
 
 ```json
 {
-  "run_id": "20260602_153000",
+  "run_id": "2026_06_02_15_30_00_task1",
   "timestamp": "2026-06-02T15:30:00Z",
   "git_hash": "17ea460",
   "problem_file": "data/problems/task1.json",
@@ -268,8 +278,16 @@ All adapters should call provider APIs without tools.
 
 Reasoning/runtime settings:
 
+- OpenAI GPT can use `OPENAI_REASONING_EFFORT` and `OPENAI_MAX_COMPLETION_TOKENS`.
+- Claude can use `ANTHROPIC_MAX_TOKENS`; `ANTHROPIC_THINKING_BUDGET_TOKENS`
+  enables extended thinking and must be lower than `ANTHROPIC_MAX_TOKENS`.
+- DeepSeek can use `DEEPSEEK_MAX_TOKENS`; for reasoning models this caps output
+  including reasoning content where the provider API counts it that way.
 - YandexGPT supports `completionOptions.reasoningOptions.mode`; use `YANDEX_REASONING_MODE=ENABLED_HIDDEN` for hidden reasoning or `DISABLED` to turn it off.
 - GigaChat currently uses sampling/length controls (`GIGACHAT_TEMPERATURE`, `GIGACHAT_TOP_P`, `GIGACHAT_MAX_TOKENS`, `GIGACHAT_REPETITION_PENALTY`) plus the strongest available model. Do not add tools/functions.
+- Providers generally support maximum reasoning/output budgets, not guaranteed
+  minimum thinking budgets. Encourage more reasoning through effort settings,
+  enough token budget, and the shared system prompt.
 
 ## Validation
 
@@ -277,7 +295,7 @@ Before committing code changes:
 
 ```bash
 python -m compileall runner.py models scripts scoring
-python scripts/check_secrets.py --models gpt,gigachat,yandexgpt,deepseek
+python scripts/check_secrets.py --models gpt,claude,gigachat,yandexgpt,deepseek
 python runner.py --problem data/problems/example.json --models gpt --run-id smoke_gpt
 ```
 

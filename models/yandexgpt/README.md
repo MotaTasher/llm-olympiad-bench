@@ -1,122 +1,107 @@
-# YandexGPT (Яндекс)
+# YandexGPT / Alice
 
-> **Про Alice:** голосовой ассистент Alice недоступен через публичный API для кастомных запросов.
-> Для скоринга задач используем **YandexGPT API** — это основная текстовая модель Яндекса,
-> которая лежит в основе Alice.
+Алиас `alice` в `runner.py` использует адаптер `AliceModel`, который ходит в YandexGPT API. Публичного API голосовой Alice для произвольного скоринга задач здесь не используется.
 
-## Получение доступа
+Адаптер работает через basic completion endpoint в text-only режиме: без tools, function calling, поиска, кода и внешних цепочек.
 
-### Шаг 1 — Аккаунт Yandex Cloud
+## 1. Как получить ключ
 
-1. Зайди на [console.yandex.cloud](https://console.yandex.cloud)
-2. Войди через Яндекс ID или зарегистрируйся
-3. Создай **платёжный аккаунт** (Billing → Создать аккаунт) — нужна карта, есть бесплатный грант на старт
-4. Создай **папку** (folder): главная страница консоли → Создать папку → запомни `Folder ID`
+1. Открой [console.yandex.cloud](https://console.yandex.cloud) и войди через Яндекс ID.
+2. Создай платежный аккаунт, если его еще нет.
+3. Создай или выбери folder и скопируй его `Folder ID`.
+4. Создай сервисный аккаунт.
+5. Выдай сервисному аккаунту роль `ai.languageModels.user`.
+6. Создай API-ключ сервисного аккаунта и скопируй его.
 
-### Шаг 2 — API-ключ сервисного аккаунта (рекомендуется для автоматизации)
-
-1. Консоль → **IAM** → **Сервисные аккаунты** → **Создать**
-2. Дай имя, добавь роль `ai.languageModels.user`
-3. Открой созданный аккаунт → вкладка **API-ключи** → **Создать API-ключ**
-4. Скопируй ключ (начинается с `AQVN...`)
-
-### Альтернатива: IAM-токен (для быстрого теста)
+Для короткого ручного теста можно использовать IAM-токен:
 
 ```bash
 yc iam create-token
-# Токен живёт 12 часов, не подходит для постоянного использования
 ```
 
-**В `.env`:**
-```
-YANDEX_API_KEY=AQVN...
-YANDEX_FOLDER_ID=b1g...
-YANDEX_MODEL=yandexgpt-5-pro/latest
-```
+IAM-токен живет ограниченное время, поэтому для обычных запусков удобнее API-ключ.
 
-## Актуальные модели
+## 2. Как положить ключ
 
-| Модель (`modelUri`) | Описание | Цена |
-|---------------------|----------|------|
-| `yandexgpt-5-pro/latest` | Продвинутая / Pro, поддерживает hidden reasoning | 0.80₽ / 1K токенов |
-| `yandexgpt-5.1/latest` | Новая ветка YandexGPT, в локальном тесте не поддержала hidden reasoning | 0.80₽ / 1K токенов |
-| `yandexgpt-5-lite/latest` | Быстрая и дешёвая | 0.20₽ / 1K токенов |
-| `aliceai-llm/latest` | Сильная модель для сложных диалогов/RAG, поддерживает hidden reasoning | сверяй в тарифах |
+Создай файл:
 
-Цены актуальны на 2026-06 — сверяй на [yandex.cloud/ru/prices](https://yandex.cloud/ru/prices#foundation-models)
-
-`modelUri` передаётся как `gpt://<folder_id>/<model_name>`, например:
-```
-gpt://b1g.../yandexgpt-5-pro/latest
+```text
+models/yandexgpt/secrets/.env
 ```
 
-## Как работает API (text-only, без инструментов)
+Вариант с API-ключом:
 
-Endpoint: `POST https://llm.api.cloud.yandex.net/foundationModels/v1/completion`
+```env
+YANDEX_API_KEY=...
+YANDEX_FOLDER_ID=...
+```
 
-YandexGPT базовый completion API **изначально без инструментов** — поиск, код, функции не предусмотрены на этом уровне.
+Вариант с IAM-токеном:
+
+```env
+YANDEX_IAM_TOKEN=...
+YANDEX_FOLDER_ID=...
+```
+
+`YANDEX_FOLDER_ID` обязателен. Для авторизации нужен один из вариантов: `YANDEX_API_KEY` или `YANDEX_IAM_TOKEN`.
+
+Файл `models/yandexgpt/secrets/.env` должен содержать только credentials и идентификаторы доступа: ключ, IAM-токен, folder id. Не клади туда `YANDEX_MODEL`, temperature, token limits, reasoning mode или курс валют.
+
+## 3. Где выбирать модель
+
+Default-модель выбирается в:
+
+```text
+models/yandexgpt/versions.py
+```
+
+Проект берет:
 
 ```python
-import requests, os, time
-
-YANDEX_API_KEY = os.environ["YANDEX_API_KEY"]
-YANDEX_FOLDER_ID = os.environ["YANDEX_FOLDER_ID"]
-YANDEX_MODEL = os.environ.get("YANDEX_MODEL", "yandexgpt-5-pro/latest")
-
-headers = {
-    "Authorization": f"Api-Key {YANDEX_API_KEY}",
-    "Content-Type": "application/json",
-    "x-folder-id": YANDEX_FOLDER_ID,
-}
-
-payload = {
-    "modelUri": f"gpt://{YANDEX_FOLDER_ID}/{YANDEX_MODEL}",
-    "completionOptions": {
-        "stream": False,
-        "temperature": 0.3,
-        "maxTokens": 4000,
-    },
-    "messages": [
-        {"role": "system", "text": "Ты решаешь олимпиадные задачи. Думай пошагово и дай финальный ответ."},
-        {"role": "user", "text": problem_text},
-    ],
-}
-
-start = time.time()
-response = requests.post(
-    "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
-    headers=headers,
-    json=payload,
-    timeout=120,
-)
-response.raise_for_status()
-latency_ms = int((time.time() - start) * 1000)
-
-data = response.json()["result"]
-answer = data["alternatives"][0]["message"]["text"]
-prompt_tokens = int(data["usage"]["inputTextTokens"])
-completion_tokens = int(data["usage"]["completionTokens"])
+DEFAULT = VERSIONS[0]
 ```
 
-## Подсчёт стоимости
+Если нужно временно выбрать другую модель для запуска, задай override в едином публичном конфиге:
 
-YandexGPT считает в **рублях** за 1000 токенов. В `SolveResult.cost_usd` конвертируй по курсу или храни `cost_rub`:
-
-```python
-PRICE_PER_1K_TOKENS_RUB = 0.80  # yandexgpt, вход+выход одинаково
-total_tokens = prompt_tokens + completion_tokens
-cost_rub = (total_tokens / 1000) * PRICE_PER_1K_TOKENS_RUB
+```text
+config/models.env
 ```
 
-## Будущее: включить инструменты
+Пример:
 
-YandexGPT через базовый API не поддерживает function calling. Для инструментов нужно использовать **Yandex AI Studio** (UI) или **YandexGPT через LangChain/GigaChain** с кастомными цепочками.
+```env
+YANDEX_MODEL=aliceai-llm/latest
+```
+
+Runtime-настройки YandexGPT тоже должны жить в `config/models.env`:
+
+```env
+YANDEX_TEMPERATURE=0.1
+YANDEX_MAX_TOKENS=8000
+YANDEX_REASONING_MODE=ENABLED_HIDDEN
+YANDEX_TIMEOUT=120
+RUB_PER_USD=90
+```
+
+`YANDEX_REASONING_MODE` поддерживает значения `ENABLED_HIDDEN` и `DISABLED`. Если выбранная модель не поддерживает hidden reasoning, адаптер повторит запрос без `reasoningOptions` и запишет это в `raw_response`.
+
+`runner.load_env()` специально игнорирует старые `YANDEX_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
+
+## Проверка
+
+```bash
+python scripts/check_secrets.py --models yandexgpt
+python runner.py --problem data/problems/example.json --models yandexgpt --run-id smoke_yandexgpt
+python runner.py --problem data/problems/example.json --models alice --run-id smoke_alice
+```
+
+## Text-Only Policy
+
+Адаптер использует Yandex Foundation Models completion endpoint. Инструменты на этом уровне API не передаются. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
 
 ## Полезные ссылки
 
-- [Быстрый старт YandexGPT](https://yandex.cloud/en/docs/foundation-models/quickstart/yandexgpt)
-- [Справка API completion](https://yandex.cloud/en/docs/foundation-models/text-generation/api-ref/TextGeneration/completion)
-- [Управление IAM-ключами](https://yandex.cloud/en/docs/iam/operations/api-key/create)
-- [AI Studio (тест в браузере)](https://console.yandex.cloud/link/foundation-models)
-- [Цены Foundation Models](https://yandex.cloud/ru/prices#foundation-models)
-- [Квоты и лимиты](https://yandex.cloud/en/docs/foundation-models/concepts/limits)
+- [Yandex Cloud Console](https://console.yandex.cloud)
+- [YandexGPT quickstart](https://yandex.cloud/en/docs/foundation-models/quickstart/yandexgpt)
+- [API key management](https://yandex.cloud/en/docs/iam/operations/api-key/create)
+- [Foundation Models pricing](https://yandex.cloud/ru/prices#foundation-models)
