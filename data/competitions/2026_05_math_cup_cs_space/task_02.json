@@ -1,0 +1,7 @@
+{
+  "id": "2026_05_math_cup_cs_space_02",
+  "competition_id": "2026_05_math_cup_cs_space",
+  "number": 2,
+  "title": "Матрицы",
+  "statement": "Пусть $V$ — векторное пространство над $\\mathbb{R}$, а $A, B \\colon V \\to V$ — линейные операторы, для которых выполнено\n\\[\n  A^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n\\]\nПусть $T = AB - BA$. Докажите, что $V = \\ker T \\oplus \\operatorname{Im} T$."
+}

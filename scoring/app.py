@@ -8,6 +8,7 @@ from flask import Flask, abort, redirect, render_template, request, url_for
 
 
 LOGS_DIR = Path("logs")
+RESULTS_DIR = Path("data/results")
 
 app = Flask(__name__)
 
@@ -96,9 +97,7 @@ def list_competitions() -> list[dict]:
         problem_id = log_problem_id(data, path)
         item["problem_ids"].add(problem_id)
         item["run_count"] += 1
-        item["scored_count"] += sum(
-            1 for result in data.get("results", []) if result.get("score") is not None
-        )
+        item["scored_count"] += scored_count_for_run(competition_id, problem_id, data)
         timestamp = data.get("timestamp", "")
         if timestamp > item["latest_timestamp"]:
             item["latest_timestamp"] = timestamp
@@ -134,7 +133,7 @@ def list_problems(competition_id: str) -> list[dict]:
         results = data.get("results", [])
         item["run_count"] += 1
         item["answer_count"] += len(results)
-        item["scored_count"] += sum(1 for result in results if result.get("score") is not None)
+        item["scored_count"] += scored_count_for_run(competition_id, problem_id, data)
         timestamp = data.get("timestamp", "")
         if timestamp > item["latest_timestamp"]:
             item["latest_timestamp"] = timestamp
@@ -152,7 +151,7 @@ def list_runs(competition_id: str, problem_id: str) -> list[dict]:
         if log_problem_id(data, path) != problem_id:
             continue
         results = data.get("results", [])
-        scored_count = sum(1 for result in results if result.get("score") is not None)
+        scored_count = scored_count_for_run(competition_id, problem_id, data)
         runs.append(
             {
                 "competition_id": competition_id,
@@ -195,18 +194,90 @@ def load_run(competition_id: str, problem_id: str, run_id: str) -> dict:
     data.setdefault("competition_title", log_competition_title(data, competition_id))
     data.setdefault("problem_id", problem_id)
     data.setdefault("problem_title", log_problem_title(data, problem_id))
+    merge_sidecar_scores(data)
     return data
 
 
-def save_run(competition_id: str, problem_id: str, run_id: str, data: dict) -> None:
-    path = find_run_path(competition_id, problem_id, run_id)
-    if not path:
-        path = LOGS_DIR / competition_id / problem_id / f"{run_id}.json"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2),
-        encoding="utf-8",
+def result_path(competition_id: str, problem_id: str, run_id: str) -> Path:
+    return RESULTS_DIR / competition_id / problem_id / f"{run_id}.json"
+
+
+def load_result_sidecar(competition_id: str, problem_id: str, run_id: str) -> dict:
+    path = result_path(competition_id, problem_id, run_id)
+    if not path.exists():
+        return {"evaluations": {}}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {"evaluations": {}}
+    if not isinstance(data.get("evaluations"), dict):
+        data["evaluations"] = {}
+    return data
+
+
+def sidecar_evaluation(data: dict, index: int) -> dict:
+    result = load_result_sidecar(
+        data.get("competition_id", ""),
+        data.get("problem_id", ""),
+        data.get("run_id", ""),
     )
+    evaluation = result.get("evaluations", {}).get(str(index))
+    return evaluation if isinstance(evaluation, dict) else {}
+
+
+def merge_sidecar_scores(data: dict) -> None:
+    for index, result in enumerate(data.get("results", [])):
+        if not isinstance(result, dict):
+            continue
+        evaluation = sidecar_evaluation(data, index)
+        if not evaluation:
+            continue
+        result["score"] = evaluation.get("score")
+        result["scored_by"] = evaluation.get("evaluator")
+        result["score_comment"] = evaluation.get("feedback")
+        result["scored_at"] = evaluation.get("updated_at")
+
+
+def scored_count_for_run(competition_id: str, problem_id: str, data: dict) -> int:
+    run_id = data.get("run_id", "")
+    sidecar = load_result_sidecar(competition_id, problem_id, run_id)
+    evaluations = sidecar.get("evaluations", {})
+    if evaluations:
+        return sum(1 for item in evaluations.values() if isinstance(item, dict) and item.get("score") not in {None, ""})
+    return sum(1 for result in data.get("results", []) if result.get("score") is not None)
+
+
+def save_result_sidecar(
+    competition_id: str,
+    problem_id: str,
+    run_id: str,
+    result_index: int,
+    model: str,
+    evaluator: str | None,
+    score: int,
+    feedback: str | None,
+) -> None:
+    path = result_path(competition_id, problem_id, run_id)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = load_result_sidecar(competition_id, problem_id, run_id)
+    evaluations = payload.setdefault("evaluations", {})
+    updated_at = datetime.now(UTC).isoformat().replace("+00:00", "Z")
+    evaluations[str(result_index)] = {
+        "model": model,
+        "evaluator": evaluator or "",
+        "score": score,
+        "feedback": feedback or "",
+        "updated_at": updated_at,
+    }
+    payload.update(
+        {
+            "competition_id": competition_id,
+            "problem_id": problem_id,
+            "run_id": run_id,
+            "updated_at": updated_at,
+        }
+    )
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def list_logs() -> list[dict]:
@@ -293,16 +364,20 @@ def score():
     run_id = request.form["run_id"]
     competition_id = request.form["competition_id"]
     problem_id = request.form["problem_id"]
+    result_index = int(request.form["result_index"])
     model = request.form["model"]
     data = load_run(competition_id, problem_id, run_id)
-    for result in data.get("results", []):
-        if result.get("model") == model:
-            result["score"] = int(request.form["score"])
-            result["scored_by"] = request.form.get("scored_by") or None
-            result["score_comment"] = request.form.get("comment") or None
-            result["scored_at"] = datetime.now(UTC).isoformat().replace("+00:00", "Z")
-            break
-    save_run(competition_id, problem_id, run_id, data)
+    result = data.get("results", [])[result_index]
+    save_result_sidecar(
+        competition_id,
+        problem_id,
+        run_id,
+        result_index,
+        result.get("model") or model,
+        request.form.get("scored_by"),
+        int(request.form["score"]),
+        request.form.get("comment"),
+    )
     return redirect(
         url_for(
             "review_run",

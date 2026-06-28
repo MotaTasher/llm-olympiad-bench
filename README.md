@@ -417,7 +417,81 @@ http://127.0.0.1:8000
 соревнования -> задачи -> прогоны -> ответы моделей
 ```
 
-Ответы скрыты за раскрытием. Оценка, reviewer и комментарий сохраняются в JSON-логе рядом с ответом модели.
+Ответы скрыты за раскрытием. Оценка, reviewer и комментарий сохраняются отдельным sidecar-файлом в `data/results/`.
+
+## Результаты скоринга и датасет
+
+Ответы моделей хранятся в JSON-логах:
+
+```text
+logs/<competition_id>/<problem_id>/<run_id>.json
+```
+
+Оценки хранятся отдельно:
+
+```text
+data/results/<competition_id>/<problem_id>/<run_id>.json
+```
+
+Формат scoring sidecar:
+
+```json
+{
+  "competition_id": "school_2026",
+  "problem_id": "task1",
+  "run_id": "2026_06_28_14_30_00_first_pass",
+  "updated_at": "2026-06-28T14:40:00Z",
+  "evaluations": {
+    "0": {
+      "model": "gpt-5.5",
+      "evaluator": "reviewer",
+      "score": 8,
+      "feedback": "Комментарий",
+      "updated_at": "2026-06-28T14:40:00Z"
+    }
+  }
+}
+```
+
+Ключ `"0"` — индекс ответа в `results[]` исходного run-лога.
+
+Посмотреть оценки можно через сайт:
+
+```bash
+python scoring/app.py
+```
+
+Или собрать датасет из логов:
+
+```bash
+python scripts/export_scoring.py
+```
+
+По умолчанию экспортируются только оцененные ответы в:
+
+```text
+data/results/scoring_dataset.csv
+```
+
+JSONL:
+
+```bash
+python scripts/export_scoring.py --format jsonl
+```
+
+Включить неоцененные ответы тоже:
+
+```bash
+python scripts/export_scoring.py --all
+```
+
+Указать свой путь:
+
+```bash
+python scripts/export_scoring.py \
+  --format csv \
+  --output data/results/my_dataset.csv
+```
 
 ## Синхронизация с сервером
 

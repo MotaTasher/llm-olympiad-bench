@@ -44,6 +44,7 @@
               <input type="hidden" name="run_id" value="{{ run.run_id }}">
               <input type="hidden" name="competition_id" value="{{ run.competition_id }}">
               <input type="hidden" name="problem_id" value="{{ run.problem_id }}">
+              <input type="hidden" name="result_index" value="{{ loop.index0 }}">
               <input type="hidden" name="model" value="{{ result.model }}">
               <p>
                 <label>Оценка 0-10:

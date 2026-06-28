@@ -25,6 +25,7 @@ cp config/server.env.example config/server.env
 
 ```env
 SCORER_REMOTE_LOGS=user@host:/absolute/path/to/shared/logs/
+SCORER_REMOTE_RESULTS=user@host:/absolute/path/to/data/results/
 # SCORER_SSH_PORT=22
 ```
 
@@ -32,6 +33,7 @@ SCORER_REMOTE_LOGS=user@host:/absolute/path/to/shared/logs/
 
 ```env
 SCORER_REMOTE_LOGS=deploy@example.com:/srv/my-scorer/shared/logs/
+SCORER_REMOTE_RESULTS=deploy@example.com:/srv/my-scorer/data/results/
 SCORER_SSH_PORT=22
 ```
 
@@ -45,7 +47,7 @@ SCORER_SSH_PORT=22
 logs/<competition_id>/<problem_id>/<run_id>.json
 ```
 
-На сервере scoring-сайт читает те же логи из remote-папки, указанной в `SCORER_REMOTE_LOGS`.
+На сервере scoring-сайт читает ответы из remote-папки, указанной в `SCORER_REMOTE_LOGS`, и пишет оценки в `SCORER_REMOTE_RESULTS`.
 
 ## Push: отправить решения на сервер
 
@@ -55,7 +57,7 @@ logs/<competition_id>/<problem_id>/<run_id>.json
 python scripts/sync_logs.py push
 ```
 
-Команда отправляет содержимое локальной папки `logs/` на сервер.
+Команда отправляет содержимое локальной папки `logs/` на сервер. Если задан `SCORER_REMOTE_RESULTS`, sidecar-файлы из `data/results/` тоже синхронизируются с `--ignore-existing`.
 
 Внутри используется:
 
@@ -79,21 +81,69 @@ python scripts/sync_logs.py push --dry-run
 python scripts/sync_logs.py pull
 ```
 
-Команда скачивает серверные JSON обратно в локальную папку `logs/`.
+Команда скачивает серверные JSON обратно в локальные папки `logs/` и `data/results/`.
 
-Вместе с логами подтягиваются scoring-поля:
+Оценки подтягиваются из sidecar-файлов:
 
 ```text
-score
-scored_by
-scored_at
-score_comment
+data/results/<competition_id>/<problem_id>/<run_id>.json
 ```
 
 Проверить команду без выполнения:
 
 ```bash
 python scripts/sync_logs.py pull --dry-run
+```
+
+## Где лежит scoring
+
+Оценки не лежат в базе. Они записываются отдельными JSON sidecar-файлами:
+
+```text
+data/results/<competition_id>/<problem_id>/<run_id>.json
+```
+
+Внутри:
+
+```text
+evaluations.<result_index>.score
+evaluations.<result_index>.evaluator
+evaluations.<result_index>.feedback
+evaluations.<result_index>.updated_at
+```
+
+Ответы моделей остаются в `logs/<competition_id>/<problem_id>/<run_id>.json`. Экспорт датасета объединяет `logs/` и `data/results/`.
+
+## Собрать датасет
+
+Сначала подтяни оценки с сервера:
+
+```bash
+python scripts/sync_logs.py pull
+```
+
+Потом экспортируй CSV:
+
+```bash
+python scripts/export_scoring.py
+```
+
+Файл появится здесь:
+
+```text
+data/results/scoring_dataset.csv
+```
+
+JSONL:
+
+```bash
+python scripts/export_scoring.py --format jsonl
+```
+
+По умолчанию экспортируются только оцененные ответы. Чтобы включить все ответы:
+
+```bash
+python scripts/export_scoring.py --all
 ```
 
 ## Полный рабочий цикл

@@ -1,0 +1,7 @@
+{
+  "id": "2026_05_math_cup_cs_space_03",
+  "competition_id": "2026_05_math_cup_cs_space",
+  "number": 3,
+  "title": "Многочлен",
+  "statement": "Пусть $P(x)$ — такой многочлен с вещественными коэффициентами, что $2P(m) - P(m+1)$ является целым числом для любого $m \\in \\mathbb{Z}$. Докажите, что $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$."
+}

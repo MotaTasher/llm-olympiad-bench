@@ -1,0 +1,7 @@
+{
+  "id": "2026_05_math_cup_cs_space_06",
+  "competition_id": "2026_05_math_cup_cs_space",
+  "number": 6,
+  "title": "Гамильтонов граф",
+  "statement": "В простом графе $G$ на $n$ вершинах есть гамильтонов путь. Придумайте алгоритм, который находит в $G$ простой путь длины:\na) $\\Omega(\\log n)$ за полиномиальное от $n$ время;\nb) $\\omega(\\log n)$ за в среднем полиномиальное от $n$ время.\n\nПояснение. Для функций $f, g \\colon \\mathbb{N} \\to \\mathbb{R}_{>0}$\n\\[\nf(n) \\in \\Omega(g(n)) \\Longleftrightarrow \\exists c > 0\\ \\exists N\\ \\forall n \\geqslant N: f(n) \\geqslant c g(n);\n\\]\n\\[\nf(n) \\in \\omega(g(n)) \\Longleftrightarrow \\forall C > 0\\ \\exists N\\ \\forall n \\geqslant N: f(n) > C g(n).\n\\]"
+}

@@ -299,7 +299,7 @@ Endpoints:
 - `GET /competition/<competition_id>/problem/<problem_id>`: list runs for a problem;
 - `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>`: review page;
 - `GET /run/<run_id>`: legacy redirect to the structured review page;
-- `POST /score`: update score fields in the JSON log.
+- `POST /score`: update scoring sidecar fields in `data/results/<competition_id>/<problem_id>/<run_id>.json`.
 
 Review UI requirements:
 
@@ -310,6 +310,16 @@ Review UI requirements:
 - keep answers hidden behind click/expand before review;
 - allow score 0-10, reviewer name, comment;
 - show metrics after score exists.
+
+Scoring storage:
+
+```text
+data/results/<competition_id>/<problem_id>/<run_id>.json
+```
+
+The sidecar file stores `evaluations`, keyed by result index from the run log's
+`results[]`. Run logs remain the source of model answers; sidecars are the
+source of manual scoring.
 
 ## Server Sync
 

@@ -50,6 +50,11 @@ def main() -> int:
         help="Local logs directory. Defaults to logs/.",
     )
     parser.add_argument(
+        "--local-results",
+        default="data/results/",
+        help="Local scoring results directory. Defaults to data/results/.",
+    )
+    parser.add_argument(
         "--remote",
         default=os.environ.get("SCORER_REMOTE_LOGS"),
         help="Remote rsync target. Defaults to SCORER_REMOTE_LOGS or config/server.env.",
@@ -58,6 +63,14 @@ def main() -> int:
         "--ssh-port",
         default=os.environ.get("SCORER_SSH_PORT"),
         help="Optional SSH port. Defaults to SCORER_SSH_PORT or ssh default.",
+    )
+    parser.add_argument(
+        "--remote-results",
+        default=os.environ.get("SCORER_REMOTE_RESULTS"),
+        help=(
+            "Remote scoring-results rsync target. Defaults to SCORER_REMOTE_RESULTS. "
+            "If omitted, syncs logs only."
+        ),
     )
     parser.add_argument(
         "--dry-run",
@@ -72,13 +85,31 @@ def main() -> int:
         )
 
     local = ensure_trailing_slash(str(Path(args.local)))
+    local_results = ensure_trailing_slash(str(Path(args.local_results)))
     remote = ensure_trailing_slash(args.remote)
-    command = rsync_base(args.ssh_port)
+    remote_results = ensure_trailing_slash(args.remote_results) if args.remote_results else None
+    commands = []
     if args.direction == "push":
+        command = rsync_base(args.ssh_port)
         command.extend(["--ignore-existing", local, remote])
+        commands.append(command)
+        if remote_results:
+            command = rsync_base(args.ssh_port)
+            command.extend(["--ignore-existing", local_results, remote_results])
+            commands.append(command)
     else:
+        command = rsync_base(args.ssh_port)
         command.extend([remote, local])
-    return run(command, args.dry_run)
+        commands.append(command)
+        if remote_results:
+            command = rsync_base(args.ssh_port)
+            command.extend([remote_results, local_results])
+            commands.append(command)
+
+    exit_code = 0
+    for command in commands:
+        exit_code = run(command, args.dry_run) or exit_code
+    return exit_code
 
 
 if __name__ == "__main__":
