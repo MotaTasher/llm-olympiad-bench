@@ -49,34 +49,27 @@
         <section class="panel">
           <h2>Условие</h2>
           {% if problem.statement %}
-            <div class="rendered" data-markdown>{{ problem.statement }}</div>
+            <div class="rendered scrollable-content" data-markdown>{{ problem.statement }}</div>
           {% else %}
             <div class="empty">Условие не найдено.</div>
           {% endif %}
         </section>
 
         {% if problem.answer or problem.solution %}
-          <section class="panel">
-            <h2>Эталон</h2>
+          <details class="panel">
+            <summary>Показать эталонное решение</summary>
             {% if problem.answer %}
               <h3>Ответ</h3>
-              <div class="rendered" data-markdown>{{ problem.answer }}</div>
+              <div class="rendered scrollable-content" data-markdown>{{ problem.answer }}</div>
             {% endif %}
             {% if problem.solution %}
               <h3>Решение</h3>
-              <div class="rendered" data-markdown>{{ problem.solution }}</div>
+              <div class="rendered scrollable-content" data-markdown>{{ problem.solution }}</div>
             {% endif %}
-          </section>
+          </details>
         {% endif %}
-      </div>
 
-      <div class="stack">
         <section class="panel">
-          {% if selected_state %}
-            <h2>{{ selected_state.label }}</h2>
-            <div class="meta">{{ selected_state.provider }} · {{ selected_state.status_label }} · попыток: {{ selected_state.attempt_count }}</div>
-          {% endif %}
-
           {% if selected_attempt %}
             {% set result = selected_attempt.result %}
             {% set usage = result.usage if result.usage is mapping else {} %}
@@ -84,6 +77,11 @@
             {% set cost = result.cost if result.cost is mapping else {} %}
             {% set evaluation = selected_attempt.evaluation or {} %}
             {% set evaluation_pool = selected_attempt.evaluations or [] %}
+
+            {% if selected_state %}
+              <h2>{{ selected_state.label }}</h2>
+              <div class="meta">{{ selected_state.provider }} · {{ selected_state.status_label }} · попыток: {{ selected_state.attempt_count }}</div>
+            {% endif %}
 
             {% if selected_state and selected_state.attempts|length > 1 %}
               <nav class="attempt-switcher" aria-label="Выбор попытки">
@@ -102,60 +100,18 @@
               </nav>
             {% endif %}
 
-            <div class="metric-grid" aria-label="Метрики ответа">
-              <div class="metric"><b>Provider</b>{{ selected_attempt.provider or "—" }}</div>
-              <div class="metric"><b>Model</b>{{ result.resolved_model_id or selected_attempt.model_id or "—" }}</div>
-              <div class="metric"><b>Run timestamp</b>{{ selected_attempt.run_timestamp or "—" }}</div>
-              <div class="metric"><b>Status</b>{{ result.status or "—" }}</div>
-              <div class="metric"><b>Prompt tokens</b>{{ result.prompt_tokens if result.prompt_tokens is not none else "—" }}</div>
-              <div class="metric"><b>Completion tokens</b>{{ result.completion_tokens if result.completion_tokens is not none else "—" }}</div>
-              <div class="metric"><b>Total tokens</b>{{ usage.total_tokens if usage.total_tokens is not none else "—" }}</div>
-              <div class="metric"><b>Reasoning tokens</b>{{ usage.reasoning_tokens if usage.reasoning_tokens is not none else "—" }}</div>
-              <div class="metric"><b>Cached tokens</b>{{ usage.cached_input_tokens if usage.cached_input_tokens is not none else "—" }}</div>
-              <div class="metric"><b>Latency</b>{{ result.latency_ms if result.latency_ms is not none else "—" }}{% if result.latency_ms is not none %} ms{% endif %}</div>
-              <div class="metric"><b>Стоимость</b>{% if cost.total is not none %}{{ cost.total }} {{ cost.currency or "USD" }}{% else %}—{% endif %}</div>
-              <div class="metric"><b>Finish reason</b>{{ result.finish_reason or "—" }}</div>
-              <div class="metric"><b>Provider request ID</b>{{ result.provider_request_id or "—" }}</div>
-            </div>
-
             {% if result.error %}
               <div class="empty">Ошибка: {{ result.error }}</div>
             {% endif %}
 
             <h3>Ответ модели</h3>
             {% if result.answer %}
-              <div class="rendered" data-markdown>{{ result.answer }}</div>
+              <div class="rendered scrollable-content" data-markdown>{{ result.answer }}</div>
             {% else %}
               <div class="empty">У выбранной попытки нет непустого ответа.</div>
             {% endif %}
 
-            {% if evaluation_pool %}
-              <div class="evaluation-list">
-                <h3>Пул проверок</h3>
-                {% for item in evaluation_pool|reverse %}
-                  <div class="evaluation-card">
-                    <header>
-                      <strong>{{ item.evaluator or "Без имени" }}</strong>
-                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ item.updated_at or item.created_at or "—" }}</span>
-                    </header>
-                    {% if item.feedback %}
-                      <div class="rendered" data-markdown>{{ item.feedback }}</div>
-                    {% endif %}
-                    <form method="post" action="{{ url_for('delete_score') }}">
-                      <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
-                      <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
-                      <input type="hidden" name="run_id" value="{{ selected_attempt.run_id }}">
-                      <input type="hidden" name="result_id" value="{{ selected_attempt.result_id }}">
-                      <input type="hidden" name="evaluation_id" value="{{ item.evaluation_id }}">
-                      <input type="hidden" name="model_key" value="{{ selected_attempt.model_key }}">
-                      <button class="secondary" type="submit">Удалить проверку</button>
-                    </form>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
-
-            <form class="score-form" method="post" action="{{ url_for('score') }}">
+            <form class="score-form" method="post" action="{{ url_for('score') }}" data-score-form>
               <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
               <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
               <input type="hidden" name="run_id" value="{{ selected_attempt.run_id }}">
@@ -185,8 +141,51 @@
                 <textarea name="feedback"></textarea>
               </label>
 
-              <button type="submit">Добавить проверку</button>
+              <div class="form-help" data-reviewer-required-message hidden>Введите имя проверяющего в верхней панели.</div>
+              <button type="submit" data-score-submit>Добавить проверку</button>
             </form>
+
+            {% if evaluation_pool %}
+              <div class="evaluation-list">
+                <h3>Пул проверок</h3>
+                {% for item in evaluation_pool|reverse %}
+                  <div class="evaluation-card">
+                    <header>
+                      <strong>{{ item.evaluator or "Без имени" }}</strong>
+                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ item.updated_at or item.created_at or "—" }}</span>
+                    </header>
+                    {% if item.feedback %}
+                      <div class="rendered" data-markdown>{{ item.feedback }}</div>
+                    {% endif %}
+                    <form method="post" action="{{ url_for('delete_score') }}">
+                      <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+                      <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+                      <input type="hidden" name="run_id" value="{{ selected_attempt.run_id }}">
+                      <input type="hidden" name="result_id" value="{{ selected_attempt.result_id }}">
+                      <input type="hidden" name="evaluation_id" value="{{ item.evaluation_id }}">
+                      <input type="hidden" name="model_key" value="{{ selected_attempt.model_key }}">
+                      <button class="secondary" type="submit">Удалить проверку</button>
+                    </form>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="metric-grid" aria-label="Метрики ответа">
+              <div class="metric"><b>Provider</b>{{ selected_attempt.provider or "—" }}</div>
+              <div class="metric"><b>Model</b>{{ result.resolved_model_id or selected_attempt.model_id or "—" }}</div>
+              <div class="metric"><b>Run timestamp</b>{{ selected_attempt.run_timestamp or "—" }}</div>
+              <div class="metric"><b>Status</b>{{ result.status or "—" }}</div>
+              <div class="metric"><b>Prompt tokens</b>{{ result.prompt_tokens if result.prompt_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Completion tokens</b>{{ result.completion_tokens if result.completion_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Total tokens</b>{{ usage.total_tokens if usage.total_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Reasoning tokens</b>{{ usage.reasoning_tokens if usage.reasoning_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Cached tokens</b>{{ usage.cached_input_tokens if usage.cached_input_tokens is not none else "—" }}</div>
+              <div class="metric"><b>Latency</b>{{ result.latency_ms if result.latency_ms is not none else "—" }}{% if result.latency_ms is not none %} ms{% endif %}</div>
+              <div class="metric"><b>Стоимость</b>{% if cost.total is not none %}{{ cost.total }} {{ cost.currency or "USD" }}{% else %}—{% endif %}</div>
+              <div class="metric"><b>Finish reason</b>{{ result.finish_reason or "—" }}</div>
+              <div class="metric"><b>Provider request ID</b>{{ result.provider_request_id or "—" }}</div>
+            </div>
 
             <details>
               <summary>Очищенный JSON результата</summary>

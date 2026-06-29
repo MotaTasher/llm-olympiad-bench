@@ -70,6 +70,11 @@ data/results/<competition_id>/<problem_id>/<run_id>.json
 ```
 
 Задача появляется в интерфейсе даже без run-лога. Логи и sidecar-оценки объединяются для матрицы моделей и страницы проверки.
+На главной странице соревнования сгруппированы по годам, извлеченным из `date`,
+ID или названия. Страница проверки задачи идет в одну колонку: условие,
+закрытый эталон, ответ модели, затем форма оценки, история проверок, метрики и
+сырой JSON. Новую оценку нельзя сохранить без непустого имени в поле
+`Проверяющий`.
 
 ## 3. Если сайт пустой
 
@@ -161,7 +166,7 @@ python scripts/check_secrets.py --models gpt,claude,deepseek,gigachat,yandexgpt
 models/<provider>/versions.py
 ```
 
-`VERSIONS` в этих файлах задает активный набор для runner defaults и колонок scoring UI. По умолчанию там оставлены только сильнейшая платная и лучший бюджетный/free-tier кандидат для каждого провайдера.
+`VERSIONS` в этих файлах задает активный набор для runner defaults и колонок scoring UI. По умолчанию там оставлена только сильнейшая модель каждого провайдера.
 
 Обычные runtime-настройки находятся в:
 
@@ -176,14 +181,15 @@ RUNNER_MODELS=all
 ```
 
 `all` разворачивается в активные `VERSIONS` из `models/*/versions.py`, то есть
-в те же модели, которые показаны колонками scoring UI. Можно запускать
-конкретную версию через `provider:model_id`, например:
+в те же пять моделей, которые показаны колонками scoring UI. Исторические логи
+с удаленными слабым моделями не добавляют отдельные колонки на сайте. Можно
+запускать конкретную версию через `provider:model_id`, например:
 
 ```bash
 python runner.py \
   --problem data/competitions/local_examples/example.json \
-  --models openai:gpt-5.5,openai:gpt-5.4-mini \
-  --run-id openai_pair
+  --models openai:gpt-5.5,anthropic:claude-opus-4-8 \
+  --run-id strong_pair
 ```
 
 Не помещайте runtime-настройки в `models/*/secrets/.env`.
@@ -241,6 +247,7 @@ Get-NetTCPConnection -LocalPort 8000
 
 ### Оценка не сохраняется
 
-Проверьте права на запись в `data/results/` и валидность исходного run-лога.
+Проверьте, что поле `Проверяющий` в верхней панели заполнено непустым именем.
+Также проверьте права на запись в `data/results/` и валидность исходного run-лога.
 
 Расширенная карта диагностики: [specs/TROUBLESHOOTING.md](specs/TROUBLESHOOTING.md).

@@ -133,6 +133,7 @@ def index():
     return render_template(
         "index.html",
         competitions=data["competitions"],
+        competition_groups=data.get("competition_groups", []),
         warnings=data["warnings"],
     )
 
@@ -299,6 +300,18 @@ def score():
         abort(400, "result_id does not match this run")
     problem, attempt = found
     mode = request.form.get("mode")
+    evaluator = request.form.get("evaluator", "").strip()
+    if not evaluator:
+        flash("Введите имя проверяющего.", "error")
+        return score_redirect(
+            mode=mode,
+            competition_id=competition_id,
+            problem_id=problem_id,
+            model_key=model_key or attempt["model_key"],
+            result_id=attempt["result_id"],
+            anonymous_seed=anonymous_seed,
+            anonymous_index=anonymous_index,
+        )
     try:
         score_value = float(request.form.get("score", ""))
     except ValueError:
@@ -337,7 +350,7 @@ def score():
         result_index=int(attempt["result_index"]),
         model_key_value=attempt["model_key"],
         model=attempt["model_id"],
-        evaluator=request.form.get("evaluator"),
+        evaluator=evaluator,
         score=score,
         max_score=max_score,
         feedback=request.form.get("feedback"),

@@ -57,7 +57,7 @@ config/models.env
 Пример:
 
 ```env
-ANTHROPIC_MODEL=claude-haiku-4-5-20251001
+ANTHROPIC_MODEL=claude-opus-4-8
 ANTHROPIC_MAX_TOKENS=12000
 # ANTHROPIC_THINKING_BUDGET_TOKENS=8000
 ```

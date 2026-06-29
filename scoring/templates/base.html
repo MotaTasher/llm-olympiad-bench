@@ -59,8 +59,8 @@
     h2 { font-size: 20px; }
     h3 { font-size: 16px; }
     .muted, .meta { color: var(--muted); font-size: 13px; }
-    .stack { display: grid; gap: 16px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+    .stack { display: grid; gap: 16px; min-width: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; min-width: 0; }
     .card, .panel {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -139,29 +139,60 @@
     .cell-full { background: var(--full); }
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
       align-items: start;
+      min-width: 0;
     }
     .review-layout {
       display: grid;
-      grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
       align-items: start;
+      min-width: 0;
     }
     .answer-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 180px;
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
       align-items: start;
+      min-width: 0;
     }
-    .panel { padding: 16px; }
+    .panel { padding: 16px; min-width: 0; }
     .rendered {
       max-width: 78ch;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
       font-family: ui-serif, Georgia, "Times New Roman", serif;
       font-size: 18px;
       line-height: 1.65;
+    }
+    .scrollable-content {
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: auto;
+      overflow-y: visible;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+    .scrollable-content > * { max-width: 100%; }
+    .scrollable-content pre {
+      max-width: 100%;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .scrollable-content code { overflow-wrap: anywhere; }
+    .scrollable-content table {
+      display: block;
+      width: max-content;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    .scrollable-content mjx-container,
+    .scrollable-content .MathJax {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
     .rendered p { margin: 0 0 14px; }
     .rendered h1, .rendered h2, .rendered h3 { margin: 20px 0 10px; }
@@ -229,26 +260,24 @@
     }
     .attempt-card:hover, .attempt-chip:hover { border-color: #9fb5b8; }
     .attempt-sidebar {
-      position: sticky;
-      top: 78px;
-      max-height: calc(100vh - 96px);
-      overflow-y: auto;
+      max-height: none;
+      overflow: visible;
     }
     .attempt-sidebar .attempt-switcher {
-      display: grid;
-      grid-template-columns: 1fr;
-      overflow-x: visible;
+      display: flex;
+      flex-wrap: wrap;
+      overflow-x: auto;
       overflow-y: visible;
       padding: 0;
       margin: 12px 0;
       border-bottom: 0;
     }
     .attempt-sidebar .attempt-chip {
-      min-width: 0;
-      width: 100%;
+      min-width: 140px;
+      width: auto;
     }
     .attempt-sidebar .button {
-      width: 100%;
+      width: auto;
       margin-top: 8px;
     }
     .result-head {
@@ -262,6 +291,7 @@
       scroll-margin-top: 90px;
     }
     .score-form { display: grid; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .form-help { color: var(--warn); font-size: 13px; }
     label { display: grid; gap: 5px; font-size: 13px; font-weight: 700; }
     input, textarea {
       width: 100%;
@@ -287,6 +317,10 @@
       font-weight: 700;
       text-decoration: none;
       cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
     }
     .button.secondary, button.secondary { background: #ffffff; color: var(--accent); }
     .quick { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -437,27 +471,46 @@
     const reviewerKey = 'olympiadScorerReviewer';
     function syncReviewerTargets(value) {
       document.querySelectorAll('input[name="evaluator"][data-global-reviewer]').forEach((input) => {
-        input.value = value || '';
+        input.value = (value || '').trim();
       });
       document.querySelectorAll('[data-reviewer-href]').forEach((link) => {
         const url = new URL(link.href, window.location.href);
-        if (value) url.searchParams.set('evaluator', value);
+        const trimmed = (value || '').trim();
+        if (trimmed) url.searchParams.set('evaluator', trimmed);
         else url.searchParams.delete('evaluator');
         link.href = url.toString();
+      });
+    }
+    function updateScoreForms() {
+      const reviewerName = reviewerInput ? reviewerInput.value.trim() : '';
+      document.querySelectorAll('form[data-score-form]').forEach((form) => {
+        const submit = form.querySelector('[data-score-submit]');
+        const message = form.querySelector('[data-reviewer-required-message]');
+        const disabled = !reviewerName;
+        if (submit) submit.disabled = disabled;
+        if (message) message.hidden = !disabled;
       });
     }
     if (reviewerInput) {
       const storedReviewer = localStorage.getItem(reviewerKey) || '';
       reviewerInput.value = storedReviewer;
       syncReviewerTargets(storedReviewer);
+      updateScoreForms();
       reviewerInput.addEventListener('input', () => {
         localStorage.setItem(reviewerKey, reviewerInput.value);
         syncReviewerTargets(reviewerInput.value);
+        updateScoreForms();
       });
     }
     document.querySelectorAll('form').forEach((form) => {
-      form.addEventListener('submit', () => {
+      form.addEventListener('submit', (event) => {
         if (reviewerInput) syncReviewerTargets(reviewerInput.value);
+        if (!form.matches('[data-score-form]')) return;
+        if (reviewerInput && !reviewerInput.value.trim()) {
+          event.preventDefault();
+          updateScoreForms();
+          reviewerInput.focus();
+        }
       });
     });
   </script>

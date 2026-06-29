@@ -57,7 +57,7 @@ config/models.env
 Пример:
 
 ```env
-DEEPSEEK_MODEL=deepseek-v4-flash
+DEEPSEEK_MODEL=deepseek-v4-pro
 DEEPSEEK_MAX_TOKENS=8192
 ```
 

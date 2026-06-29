@@ -76,7 +76,7 @@ config/models.env
 Пример:
 
 ```env
-YANDEX_MODEL=yandexgpt-5-lite
+YANDEX_MODEL=yandexgpt-5.1
 ```
 
 Runtime-настройки YandexGPT тоже должны жить в `config/models.env`:

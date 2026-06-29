@@ -273,8 +273,8 @@ class ScoringRepositoryTests(TempCompetition):
                         "result_id": "res_a",
                         "result_index": 0,
                         "provider": "openai",
-                        "model": "gpt-test",
-                        "requested_model_id": "gpt-test",
+                        "model": "gpt-5.5",
+                        "requested_model_id": "gpt-5.5",
                         "answer": "answer",
                         "error": None,
                         "prompt_tokens": 1,
@@ -312,8 +312,8 @@ class ScoringRepositoryTests(TempCompetition):
             run_id="run",
             result_id="res_a",
             result_index=0,
-            model_key_value="openai:gpt-test",
-            model="gpt-test",
+            model_key_value="openai:gpt-5.5",
+            model="gpt-5.5",
             evaluator="judge",
             score=3,
             max_score=5,
@@ -335,7 +335,18 @@ class ScoringRepositoryTests(TempCompetition):
                 "run_id": "legacy_root",
                 "timestamp": "2026-06-29T00:00:00Z",
                 "problem": {"id": "task_01", "title": "Task", "text": "S"},
-                "results": [{"model": "GigaChat", "answer": "A", "prompt_tokens": 1, "completion_tokens": 2, "cost_usd": 0, "latency_ms": 4}],
+                "results": [
+                    {
+                        "provider": "gigachat",
+                        "model": "GigaChat-2-Max",
+                        "requested_model_id": "GigaChat-2-Max",
+                        "answer": "A",
+                        "prompt_tokens": 1,
+                        "completion_tokens": 2,
+                        "cost_usd": 0,
+                        "latency_ms": 4,
+                    }
+                ],
             },
         )
         write_json(
@@ -379,8 +390,8 @@ class ScoringRepositoryTests(TempCompetition):
                         "result_id": "res_a",
                         "result_index": 0,
                         "provider": "openai",
-                        "model": "gpt-test",
-                        "requested_model_id": "gpt-test",
+                        "model": "gpt-5.5",
+                        "requested_model_id": "gpt-5.5",
                         "answer": "answer",
                         "error": None,
                         "prompt_tokens": 1,
@@ -412,7 +423,7 @@ class ScoringRepositoryTests(TempCompetition):
             response = client.get("/competition/sample_competition")
             self.assertEqual(response.status_code, 200)
             self.assertIn('aria-label="'.encode(), response.data)
-            response = client.get("/competition/sample_competition/problem/task_01?model=openai:gpt-test")
+            response = client.get("/competition/sample_competition/problem/task_01?model=openai:gpt-5.5")
             self.assertEqual(response.status_code, 200)
             self.assertIn("answer".encode(), response.data)
             bad = client.post(
@@ -422,7 +433,7 @@ class ScoringRepositoryTests(TempCompetition):
                     "problem_id": "task_01",
                     "run_id": "run",
                     "result_id": "res_a",
-                    "model_key": "openai:gpt-test",
+                    "model_key": "openai:gpt-5.5",
                     "score": "5",
                 },
                 follow_redirects=False,
@@ -436,7 +447,7 @@ class ScoringRepositoryTests(TempCompetition):
                     "problem_id": "task_01",
                     "run_id": "run",
                     "result_id": "res_a",
-                    "model_key": "openai:gpt-test",
+                    "model_key": "openai:gpt-5.5",
                     "evaluator": "judge",
                     "score": "4",
                     "feedback": "ok",
@@ -444,7 +455,7 @@ class ScoringRepositoryTests(TempCompetition):
                 follow_redirects=False,
             )
             self.assertEqual(ok.status_code, 302)
-            self.assertIn("model=openai:gpt-test", ok.headers["Location"])
+            self.assertIn("model=openai:gpt-5.5", ok.headers["Location"])
             sidecar = json.loads((results_dir / "sample_competition" / "task_01" / "run.json").read_text(encoding="utf-8"))
             self.assertIn("res_a", sidecar["evaluations"])
             legacy = client.get("/run/run")

@@ -79,6 +79,9 @@ The intended separation is:
 `RUNNER_MODELS=all` expands to every active `VERSIONS` entry from
 `models/*/versions.py`, matching the configured columns in the scoring UI.
 Explicit CLI `--models` values override `RUNNER_MODELS` for that run.
+The active benchmark set is one strongest model per provider; retired
+budget/free-tier IDs may remain documented as legacy versions but do not create
+scoring UI columns from historical logs.
 
 ## Identity rules
 

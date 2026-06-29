@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import importlib
 import json
+import re
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
@@ -40,6 +41,8 @@ STATUS_META = {
     "partial": ("Частично", "cell-partial", "Частично"),
     "full": ("Максимум", "cell-full", "Макс."),
 }
+
+YEAR_PATTERN = re.compile(r"(?<!\d)((?:19|20)\d{2})(?!\d)")
 
 
 def utc_now() -> str:
@@ -161,6 +164,16 @@ def model_key(provider: str | None, model_id: str | None) -> str:
     provider = provider or "unknown"
     model_id = model_id or "unknown"
     return f"{provider}:{model_id}"
+
+
+ACTIVE_MODEL_ALIASES = {
+    model_key("yandexgpt", "yandexgpt-5.1/latest"): model_key("yandexgpt", "yandexgpt-5.1"),
+}
+
+
+def canonical_model_key(provider: str | None, model_id: str | None) -> str:
+    key = model_key(provider, model_id)
+    return ACTIVE_MODEL_ALIASES.get(key, key)
 
 
 def display_score(value: Any) -> str:
@@ -316,7 +329,7 @@ def run_attempt(
 ) -> dict[str, Any]:
     provider = result.get("provider") or infer_provider(str(result.get("model") or ""))
     requested_model = result.get("requested_model_id") or result.get("model") or "unknown"
-    key = model_key(str(provider), str(requested_model))
+    key = canonical_model_key(str(provider), str(requested_model))
     return {
         "model_key": key,
         "provider": str(provider),
@@ -542,6 +555,7 @@ def attach_run(
 
 def finalize_catalog(competitions: dict[str, dict[str, Any]], warnings: list[str]) -> dict[str, Any]:
     configured = configured_model_columns()
+    active_keys = set(configured)
     for competition in competitions.values():
         model_columns = dict(configured)
         answer_count = 0
@@ -550,20 +564,11 @@ def finalize_catalog(competitions: dict[str, dict[str, Any]], warnings: list[str
         model_keys_seen: set[str] = set()
         for problem_id in competition["problem_order"]:
             problem = competition["problems"][problem_id]
-            for attempts in problem["attempts_by_model"].values():
+            for key, attempts in problem["attempts_by_model"].items():
+                if key not in active_keys:
+                    continue
                 for attempt in attempts:
-                    key = attempt["model_key"]
                     model_keys_seen.add(key)
-                    model_columns.setdefault(
-                        key,
-                        {
-                            "model_key": key,
-                            "provider": attempt["provider"],
-                            "model_id": attempt["model_id"],
-                            "label": attempt["model_id"],
-                            "configured": False,
-                        },
-                    )
                     answer_count += 1
                     if attempt.get("score") is not None:
                         scored_count += 1
@@ -587,19 +592,65 @@ def finalize_catalog(competitions: dict[str, dict[str, Any]], warnings: list[str
         competition["scored_count"] = scored_count
         competition["progress_percent"] = int((scored_count / answer_count) * 100) if answer_count else 0
         competition["latest_timestamp"] = latest_run
-    competition_list = sorted(
-        competitions.values(),
-        key=lambda item: (
-            item.get("date") or item.get("latest_timestamp") or "",
-            item.get("competition_title") or "",
-        ),
-        reverse=True,
-    )
+    competition_list = sorted(competitions.values(), key=competition_sort_key)
     return {
         "competitions": competition_list,
+        "competition_groups": group_competitions_by_year(competition_list),
         "competition_map": competitions,
         "warnings": warnings,
     }
+
+
+def extract_year_from_text(value: Any) -> int | None:
+    if value is None:
+        return None
+    match = YEAR_PATTERN.search(str(value))
+    return int(match.group(1)) if match else None
+
+
+def competition_year(competition: dict[str, Any]) -> int | None:
+    for key in ("date", "competition_id", "competition_title"):
+        year = extract_year_from_text(competition.get(key))
+        if year is not None:
+            return year
+    return None
+
+
+def numeric_date_score(value: Any) -> int:
+    if value is None:
+        return 0
+    text = str(value)
+    match = re.search(r"((?:19|20)\d{2})(?:[-_.](\d{1,2}))?(?:[-_.](\d{1,2}))?", text)
+    if not match:
+        return 0
+    year = int(match.group(1))
+    month = int(match.group(2) or 0)
+    day = int(match.group(3) or 0)
+    if not (0 <= month <= 12 and 0 <= day <= 31):
+        return 0
+    return year * 10000 + month * 100 + day
+
+
+def competition_sort_key(competition: dict[str, Any]) -> tuple[int, int, int, str]:
+    return (
+        -numeric_date_score(competition.get("date")),
+        -numeric_date_score(competition.get("competition_id")),
+        -numeric_date_score(competition.get("latest_timestamp")),
+        str(competition.get("competition_title") or competition.get("competition_id") or "").lower(),
+    )
+
+
+def group_competitions_by_year(competitions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    groups: dict[int | None, list[dict[str, Any]]] = {}
+    for competition in competitions:
+        year = competition_year(competition)
+        competition["display_year"] = year
+        groups.setdefault(year, []).append(competition)
+    years = sorted((year for year in groups if year is not None), reverse=True)
+    result = [{"year": year, "competitions": groups[year]} for year in years]
+    if None in groups:
+        result.append({"year": None, "competitions": groups[None]})
+    return result
 
 
 def build_catalog(
@@ -849,16 +900,8 @@ def save_evaluation(
     path = sidecar_path(results_dir, competition_id, problem_id, run_id)
     payload = load_sidecar_payload(results_dir, competition_id, problem_id, run_id)
     pool = payload.setdefault("evaluation_pool", {})
-    previous_values = pool.get(result_id)
-    previous = {}
-    if isinstance(previous_values, list) and previous_values:
-        previous = sorted(previous_values, key=lambda item: item.get("updated_at") or item.get("created_at") or "")[-1]
-    elif isinstance(payload["evaluations"].get(result_id), dict):
-        previous = payload["evaluations"][result_id]
-    elif isinstance(payload["evaluations"].get(str(result_index)), dict):
-        previous = payload["evaluations"][str(result_index)]
     updated_at = utc_now()
-    evaluator_value = evaluator if evaluator not in {None, ""} else previous.get("evaluator", "")
+    evaluator_value = (evaluator or "").strip()
     entry = {
         "evaluation_id": f"ev_{uuid.uuid4().hex}",
         "result_id": result_id,

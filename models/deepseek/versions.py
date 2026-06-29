@@ -10,13 +10,11 @@
 #     -H "Authorization: Bearer $DEEPSEEK_API_KEY"
 
 VERSIONS = [
-    # Strongest paid model.
     "deepseek-v4-pro",
-
-    # Strongest budget/free-tier candidate available through this adapter.
-    "deepseek-v4-flash",
 ]
 
-LEGACY_VERSIONS = []
+LEGACY_VERSIONS = [
+    "deepseek-v4-flash",
+]
 
 DEFAULT = VERSIONS[0]

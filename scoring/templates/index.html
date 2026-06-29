@@ -12,7 +12,41 @@
       </details>
     {% endif %}
 
-    {% if competitions %}
+    {% if competition_groups %}
+      {% for group in competition_groups %}
+        <section class="stack">
+          <h2>{{ group.year if group.year else "Без года" }}</h2>
+          <div class="grid">
+            {% for competition in group.competitions %}
+              <a class="card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+                <div class="card-title">
+                  <div>
+                    <h3>{{ competition.competition_title }}</h3>
+                    <div class="meta">{{ competition.competition_id }}</div>
+                  </div>
+                  {% if competition.date %}<span class="pill">{{ competition.date }}</span>{% endif %}
+                </div>
+                {% if competition.description %}
+                  <p class="muted">{{ competition.description }}</p>
+                {% endif %}
+                <div class="stats">
+                  <span class="pill">{{ competition.problem_count }} задач</span>
+                  <span class="pill">{{ competition.model_count }} моделей</span>
+                  <span class="pill">{{ competition.answer_count }} ответов</span>
+                  <span class="pill">{{ competition.scored_count }} проверено</span>
+                </div>
+                <div class="progress" aria-label="Прогресс проверки {{ competition.progress_percent }}%">
+                  <span style="width: {{ competition.progress_percent }}%"></span>
+                </div>
+                {% if competition.latest_timestamp %}
+                  <div class="meta">Последний запуск: {{ competition.latest_timestamp }}</div>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+        </section>
+      {% endfor %}
+    {% elif competitions %}
       <div class="grid">
         {% for competition in competitions %}
           <a class="card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">

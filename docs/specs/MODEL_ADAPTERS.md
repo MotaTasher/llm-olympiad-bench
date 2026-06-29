@@ -83,19 +83,23 @@ provider, using explicit specs such as `openai:gpt-5.5`. If `--models` is
 omitted, runner reads `RUNNER_MODELS` from `config/models.env`; the committed
 default is `RUNNER_MODELS=all`, so CLI runs match the scoring UI configured
 columns. Individual model specs may be mixed with aliases, for example
-`--models gpt,openai:gpt-5.4-mini`.
+`--models gpt,anthropic:claude-opus-4-8`.
 
 Current active set:
 
-| Provider | Strongest paid | Budget/free-tier candidate |
-| --- | --- | --- |
-| OpenAI | `gpt-5.5` | `gpt-5.4-mini` |
-| Anthropic | `claude-opus-4-8` | `claude-haiku-4-5-20251001` |
-| DeepSeek | `deepseek-v4-pro` | `deepseek-v4-flash` |
-| GigaChat | `GigaChat-2-Max` | `GigaChat-2` |
-| YandexGPT | `yandexgpt-5.1` | `yandexgpt-5-lite` |
+| Provider | Active model |
+| --- | --- |
+| OpenAI | `gpt-5.5` |
+| Anthropic | `claude-opus-4-8` |
+| DeepSeek | `deepseek-v4-pro` |
+| GigaChat | `GigaChat-2-Max` |
+| YandexGPT | `yandexgpt-5.1` |
 
-For providers whose API does not expose a separate free model ID, the second column is the best budget or free-tier-compatible model available through the existing text-only adapter.
+Retired budget/free-tier IDs may be listed in provider `LEGACY_VERSIONS` for
+operator context, but they are not active benchmark models and must not create
+scoring UI columns from historical logs. Equivalent aliases for the same active
+model must be explicit; for example `yandexgpt-5.1/latest` is canonicalized to
+`yandexgpt-5.1`, while unrelated similar names are not merged.
 
 ## Current aliases
 

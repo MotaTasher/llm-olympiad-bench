@@ -4,16 +4,15 @@
 # Source: https://platform.claude.com/docs/en/api/models/list
 # Updated: 2026-06-29
 
-# Keep the scoring UI focused: strongest paid Claude plus the strongest
-# budget/Haiku Claude. Anthropic API access is billed by usage; there is no
-# separate free API model ID in this adapter.
+# Keep the scoring UI focused on the strongest active Claude model.
 
 VERSIONS = [
     "claude-opus-4-8",
-    "claude-haiku-4-5-20251001",
 ]
 
-LEGACY_VERSIONS = []
+LEGACY_VERSIONS = [
+    "claude-haiku-4-5-20251001",
+]
 
 DEFAULT = VERSIONS[0]
 
