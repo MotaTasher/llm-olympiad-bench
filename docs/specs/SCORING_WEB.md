@@ -15,6 +15,9 @@ http://127.0.0.1:8000
 ```
 
 The app is a local Flask/Jinja application. It does not instantiate provider clients and does not require model credentials to browse logs or score answers.
+By default it reads data paths relative to the repository root. Deployments can
+override those paths with `SCORER_LOGS_DIR`, `SCORER_RESULTS_DIR` and
+`SCORER_COMPETITIONS_DIR`.
 
 ## Data layer
 

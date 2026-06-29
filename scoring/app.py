@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import io
+import os
 from pathlib import Path
 import secrets
 import sys
@@ -57,9 +58,12 @@ COMPETITIONS_DIR = BASE_DIR / "data" / "competitions"
 
 app = Flask(__name__)
 app.secret_key = "local-dev-scoring"
-app.config.setdefault("LOGS_DIR", LOGS_DIR)
-app.config.setdefault("RESULTS_DIR", RESULTS_DIR)
-app.config.setdefault("COMPETITIONS_DIR", COMPETITIONS_DIR)
+app.config.setdefault("LOGS_DIR", Path(os.environ.get("SCORER_LOGS_DIR", LOGS_DIR)))
+app.config.setdefault("RESULTS_DIR", Path(os.environ.get("SCORER_RESULTS_DIR", RESULTS_DIR)))
+app.config.setdefault(
+    "COMPETITIONS_DIR",
+    Path(os.environ.get("SCORER_COMPETITIONS_DIR", COMPETITIONS_DIR)),
+)
 
 
 def catalog() -> dict:

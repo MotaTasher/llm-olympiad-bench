@@ -19,6 +19,8 @@ python -m pip --version
 Команды runner и скриптов выполняются из корня проекта — папки, где лежат
 `runner.py` и `requirements.txt`. Scoring-сайт сам находит `logs/` и
 `data/results/` относительно расположения `scoring/app.py`.
+На сервере эти пути можно переопределить переменными `SCORER_LOGS_DIR`,
+`SCORER_RESULTS_DIR` и `SCORER_COMPETITIONS_DIR`.
 
 ## 1. Создать окружение
 
