@@ -11,15 +11,9 @@
       <div class="meta">{{ problem.problem_id }} · максимум {{ "%g"|format(problem.max_score) }} баллов · анонимный режим</div>
       <div class="nav-row">
         <div>
-          {% if previous_id %}
-            <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=previous_id) }}">Предыдущая задача</a>
-          {% endif %}
         </div>
         <div>
-          <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Матрица</a>
-          {% if next_id %}
-            <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=next_id) }}">Следующая задача</a>
-          {% endif %}
+          <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Меню соревнования</a>
         </div>
       </div>
     </section>
@@ -127,7 +121,7 @@
                 </a>
               {% endfor %}
             </nav>
-            <a class="button" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=next_index) }}">Следующее</a>
+            <a class="button" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=next_index) }}">Следующее решение</a>
             <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">Перемешать</a>
           </aside>
         {% else %}
