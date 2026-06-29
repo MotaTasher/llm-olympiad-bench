@@ -17,6 +17,14 @@
       <div class="nav-row">
         <a class="button" href="{{ url_for('competition_stats_page', competition_id=competition.competition_id) }}">Статистика моделей</a>
       </div>
+      <div class="csv-actions">
+        <a class="button secondary" href="{{ url_for('competition_evaluations_csv', competition_id=competition.competition_id) }}">CSV всех проверок</a>
+        <a class="button secondary" data-reviewer-href href="{{ url_for('competition_evaluations_csv', competition_id=competition.competition_id) }}">CSV моих проверок</a>
+        <form method="post" action="{{ url_for('import_competition_evaluations', competition_id=competition.competition_id) }}" enctype="multipart/form-data">
+          <input type="file" name="csv_file" accept=".csv,text/csv">
+          <button class="secondary" type="submit">Импорт CSV проверок</button>
+        </form>
+      </div>
     </section>
 
     {% if competition.problem_order %}

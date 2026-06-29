@@ -38,9 +38,16 @@
       backdrop-filter: blur(8px);
     }
     .topbar, main { width: min(1440px, calc(100% - 32px)); margin: 0 auto; }
-    .topbar { padding: 14px 0 12px; }
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+      gap: 16px;
+      align-items: end;
+      padding: 14px 0 12px;
+    }
     .brand { margin: 0 0 4px; font-size: 20px; line-height: 1.2; font-weight: 750; letter-spacing: 0; }
     .crumbs { color: var(--muted); font-size: 14px; }
+    .reviewer-control label { font-size: 12px; color: var(--muted); }
     main { padding: 18px 0 40px; }
     a { color: var(--accent); text-underline-offset: 3px; }
     a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, .matrix-cell:focus-visible {
@@ -284,6 +291,51 @@
     .button.secondary, button.secondary { background: #ffffff; color: var(--accent); }
     .quick { display: flex; flex-wrap: wrap; gap: 6px; }
     .quick button { min-height: 30px; padding: 4px 9px; }
+    .csv-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: end;
+      margin-top: 12px;
+    }
+    .csv-actions form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .csv-actions input[type="file"] {
+      width: auto;
+      max-width: 280px;
+      padding: 6px;
+    }
+    .evaluation-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .evaluation-card {
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fafbfb;
+    }
+    .evaluation-card header {
+      position: static;
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      border: 0;
+      background: transparent;
+      backdrop-filter: none;
+    }
+    .evaluation-card form { justify-self: start; }
+    .evaluation-card button { min-height: 30px; padding: 4px 9px; }
     details { margin-top: 12px; }
     summary { cursor: pointer; color: var(--accent); font-weight: 700; }
     pre {
@@ -299,6 +351,7 @@
     .flash { margin-bottom: 12px; }
     @media (max-width: 900px) {
       .topbar, main { width: min(100% - 20px, 1440px); }
+      .topbar { grid-template-columns: 1fr; align-items: stretch; }
       .layout { grid-template-columns: 1fr; }
       .review-layout, .answer-layout { grid-template-columns: 1fr; }
       .attempt-sidebar { position: static; max-height: none; overflow: visible; }
@@ -310,8 +363,15 @@
 <body>
   <header>
     <div class="topbar">
-      <h1 class="brand">Olympiad Scorer</h1>
-      <nav class="crumbs">{% block crumbs %}<a href="{{ url_for('index') }}">Соревнования</a>{% endblock %}</nav>
+      <div>
+        <h1 class="brand">Olympiad Scorer</h1>
+        <nav class="crumbs">{% block crumbs %}<a href="{{ url_for('index') }}">Соревнования</a>{% endblock %}</nav>
+      </div>
+      <div class="reviewer-control">
+        <label>Проверяющий
+          <input id="global-reviewer" type="text" autocomplete="name" placeholder="Имя для новых проверок">
+        </label>
+      </div>
     </div>
   </header>
   <main>
@@ -371,6 +431,33 @@
       button.addEventListener('click', () => {
         const target = document.getElementById(button.dataset.scoreTarget);
         if (target) target.value = button.dataset.scoreSet;
+      });
+    });
+    const reviewerInput = document.getElementById('global-reviewer');
+    const reviewerKey = 'olympiadScorerReviewer';
+    function syncReviewerTargets(value) {
+      document.querySelectorAll('input[name="evaluator"][data-global-reviewer]').forEach((input) => {
+        input.value = value || '';
+      });
+      document.querySelectorAll('[data-reviewer-href]').forEach((link) => {
+        const url = new URL(link.href, window.location.href);
+        if (value) url.searchParams.set('evaluator', value);
+        else url.searchParams.delete('evaluator');
+        link.href = url.toString();
+      });
+    }
+    if (reviewerInput) {
+      const storedReviewer = localStorage.getItem(reviewerKey) || '';
+      reviewerInput.value = storedReviewer;
+      syncReviewerTargets(storedReviewer);
+      reviewerInput.addEventListener('input', () => {
+        localStorage.setItem(reviewerKey, reviewerInput.value);
+        syncReviewerTargets(reviewerInput.value);
+      });
+    }
+    document.querySelectorAll('form').forEach((form) => {
+      form.addEventListener('submit', () => {
+        if (reviewerInput) syncReviewerTargets(reviewerInput.value);
       });
     });
   </script>

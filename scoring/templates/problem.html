@@ -21,6 +21,14 @@
           {% endif %}
         </div>
       </div>
+      <div class="csv-actions">
+        <a class="button secondary" href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">CSV всех проверок задачи</a>
+        <a class="button secondary" data-reviewer-href href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">CSV моих проверок задачи</a>
+        <form method="post" action="{{ url_for('import_problem_evaluations', competition_id=competition.competition_id, problem_id=problem.problem_id) }}" enctype="multipart/form-data">
+          <input type="file" name="csv_file" accept=".csv,text/csv">
+          <button class="secondary" type="submit">Импорт CSV проверок</button>
+        </form>
+      </div>
     </section>
 
     <nav class="model-tabs" aria-label="Выбор модели">
@@ -75,6 +83,7 @@
             {% set timing = result.timing if result.timing is mapping else {} %}
             {% set cost = result.cost if result.cost is mapping else {} %}
             {% set evaluation = selected_attempt.evaluation or {} %}
+            {% set evaluation_pool = selected_attempt.evaluations or [] %}
 
             {% if selected_state and selected_state.attempts|length > 1 %}
               <nav class="attempt-switcher" aria-label="Выбор попытки">
@@ -87,7 +96,7 @@
                   >
                     <b>{{ loop.index }}</b>
                     <span>{{ attempt.run_timestamp or "—" }}</span>
-                    <em>{% if attempt.score is not none %}{{ attempt.score }} / {{ "%g"|format(problem.max_score) }}{% else %}без оценки{% endif %}</em>
+                    <em>{% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }} · {{ attempt.score }} / {{ "%g"|format(problem.max_score) }}{% else %}без оценки{% endif %}</em>
                   </a>
                 {% endfor %}
               </nav>
@@ -120,16 +129,39 @@
               <div class="empty">У выбранной попытки нет непустого ответа.</div>
             {% endif %}
 
+            {% if evaluation_pool %}
+              <div class="evaluation-list">
+                <h3>Пул проверок</h3>
+                {% for item in evaluation_pool|reverse %}
+                  <div class="evaluation-card">
+                    <header>
+                      <strong>{{ item.evaluator or "Без имени" }}</strong>
+                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ item.updated_at or item.created_at or "—" }}</span>
+                    </header>
+                    {% if item.feedback %}
+                      <div class="rendered" data-markdown>{{ item.feedback }}</div>
+                    {% endif %}
+                    <form method="post" action="{{ url_for('delete_score') }}">
+                      <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+                      <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+                      <input type="hidden" name="run_id" value="{{ selected_attempt.run_id }}">
+                      <input type="hidden" name="result_id" value="{{ selected_attempt.result_id }}">
+                      <input type="hidden" name="evaluation_id" value="{{ item.evaluation_id }}">
+                      <input type="hidden" name="model_key" value="{{ selected_attempt.model_key }}">
+                      <button class="secondary" type="submit">Удалить проверку</button>
+                    </form>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
             <form class="score-form" method="post" action="{{ url_for('score') }}">
               <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
               <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
               <input type="hidden" name="run_id" value="{{ selected_attempt.run_id }}">
               <input type="hidden" name="result_id" value="{{ selected_attempt.result_id }}">
               <input type="hidden" name="model_key" value="{{ selected_attempt.model_key }}">
-
-              <label>Проверяющий
-                <input name="evaluator" value="{{ evaluation.evaluator or '' }}" autocomplete="name">
-              </label>
+              <input type="hidden" name="evaluator" value="" data-global-reviewer>
 
               <label>Оценка из {{ "%g"|format(problem.max_score) }}
                 <input
@@ -139,7 +171,7 @@
                   min="0"
                   max="{{ "%g"|format(problem.max_score) }}"
                   step="0.5"
-                  value="{{ evaluation.score if evaluation.score is not none else '' }}"
+                  value=""
                   autocomplete="off"
                 >
               </label>
@@ -150,13 +182,10 @@
               </div>
 
               <label>Комментарий
-                <textarea name="feedback">{{ evaluation.feedback or '' }}</textarea>
+                <textarea name="feedback"></textarea>
               </label>
 
-              <button type="submit">Сохранить оценку</button>
-              {% if evaluation.updated_at %}
-                <div class="meta">Последнее сохранение: {{ evaluation.updated_at }}</div>
-              {% endif %}
+              <button type="submit">Добавить проверку</button>
             </form>
 
             <details>
@@ -181,7 +210,7 @@
                   <b>{{ loop.index }}. {{ attempt.run_timestamp or "—" }}</b>
                   <div class="meta">
                     run_id: {{ attempt.run_id }} · result_id: {{ attempt.result_id }} ·
-                    {% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}
+                    {% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }}, последняя {{ attempt.score }}{% else %}без оценки{% endif %}
                   </div>
                   {% if attempt.error %}<div>Ошибка: {{ attempt.error[:180] }}</div>{% endif %}
                 </a>

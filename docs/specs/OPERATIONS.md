@@ -38,6 +38,19 @@ python scripts/export_scoring.py --format jsonl
 
 The exporter joins run logs and sidecars using competition/problem/run/index. It also supports some legacy single-answer log shapes.
 
+## Evaluation-pool CSV
+
+The web UI can export and import manual checks without touching model run logs:
+
+- competition-level export: `GET /competition/<competition_id>/evaluations.csv`;
+- task-level export: `GET /competition/<competition_id>/problem/<problem_id>/evaluations.csv`;
+- add `?evaluator=<name>` to export only one reviewer's checks;
+- import CSV from the same competition or task pages.
+
+CSV rows are matched by `competition_id`, `problem_id`, `run_id` and
+`result_id`. Existing rows with the same `evaluation_id` are replaced; rows
+without `evaluation_id` create new checks.
+
 ## Server sync
 
 Private configuration:

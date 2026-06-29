@@ -237,8 +237,27 @@ New sidecar shape:
   "problem_id": "task_01",
   "run_id": "2026_06_28_12_00_00_first_pass",
   "updated_at": "2026-06-28T12:10:00Z",
+  "evaluation_pool": {
+    "res_0123456789abcdef01234567": [
+      {
+        "evaluation_id": "ev_0123456789abcdef0123456789abcdef",
+        "result_id": "res_0123456789abcdef01234567",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "provider-model-id",
+        "evaluator": "reviewer",
+        "score": 8,
+        "max_score": 10,
+        "score_category": "partial",
+        "feedback": "Комментарий",
+        "created_at": "2026-06-28T12:10:00Z",
+        "updated_at": "2026-06-28T12:10:00Z"
+      }
+    ]
+  },
   "evaluations": {
     "res_0123456789abcdef01234567": {
+      "evaluation_id": "ev_0123456789abcdef0123456789abcdef",
       "result_id": "res_0123456789abcdef01234567",
       "result_index": 0,
       "model_key": "openai:gpt-5.5",
@@ -248,17 +267,24 @@ New sidecar shape:
       "max_score": 10,
       "score_category": "partial",
       "feedback": "Комментарий",
+      "created_at": "2026-06-28T12:10:00Z",
       "updated_at": "2026-06-28T12:10:00Z"
     }
   }
 }
 ```
 
+`evaluation_pool` is authoritative and stores all manual checks for a result. A
+single model answer can have multiple checks from one or more reviewers.
+`evaluations` is a compatibility snapshot of the latest check for each
+`result_id`; it must not be treated as the full history.
+
 The evaluation key for new writes is `result_id`. Readers use this precedence:
 
-1. sidecar evaluation keyed by `result_id`;
-2. old sidecar evaluation keyed by string result index, for example `"0"`;
-3. legacy `score`, `scored_by`, `scored_at` and `score_comment` inside the run-log.
+1. `evaluation_pool` keyed by `result_id`;
+2. old sidecar `evaluations` keyed by `result_id`;
+3. old sidecar `evaluations` keyed by string result index, for example `"0"`;
+4. legacy `score`, `scored_by`, `scored_at` and `score_comment` inside the run-log.
 
 Manual scoring must not be written back into run logs. Server-side score validation uses `problem.metadata.max_score`, then `competition.metadata.max_score`, then fallback `10`.
 

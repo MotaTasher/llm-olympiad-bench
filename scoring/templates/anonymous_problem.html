@@ -16,6 +16,14 @@
           <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Меню соревнования</a>
         </div>
       </div>
+      <div class="csv-actions">
+        <a class="button secondary" href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">CSV всех проверок задачи</a>
+        <a class="button secondary" data-reviewer-href href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">CSV моих проверок задачи</a>
+        <form method="post" action="{{ url_for('import_problem_evaluations', competition_id=competition.competition_id, problem_id=problem.problem_id) }}" enctype="multipart/form-data">
+          <input type="file" name="csv_file" accept=".csv,text/csv">
+          <button class="secondary" type="submit">Импорт CSV проверок</button>
+        </form>
+      </div>
     </section>
 
     <div class="review-layout">
@@ -51,16 +59,46 @@
           {% set attempt = selected_attempt %}
           {% set result = attempt.result %}
           {% set evaluation = attempt.evaluation or {} %}
+          {% set evaluation_pool = attempt.evaluations or [] %}
           <section class="panel anonymous-answer" id="attempt-{{ attempt.result_id }}">
             <div class="result-head">
               <h2>Решение {{ selected_index }}</h2>
-              <span class="meta">{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
+              <span class="meta">{% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }}{% else %}без оценки{% endif %}</span>
             </div>
 
             {% if result.answer %}
               <div class="rendered" data-markdown>{{ result.answer }}</div>
             {% else %}
               <div class="empty">У этого ответа нет текста.</div>
+            {% endif %}
+
+            {% if evaluation_pool %}
+              <div class="evaluation-list">
+                <h3>Пул проверок</h3>
+                {% for item in evaluation_pool|reverse %}
+                  <div class="evaluation-card">
+                    <header>
+                      <strong>{{ item.evaluator or "Без имени" }}</strong>
+                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ item.updated_at or item.created_at or "—" }}</span>
+                    </header>
+                    {% if item.feedback %}
+                      <div class="rendered" data-markdown>{{ item.feedback }}</div>
+                    {% endif %}
+                    <form method="post" action="{{ url_for('delete_score') }}">
+                      <input type="hidden" name="mode" value="anonymous">
+                      <input type="hidden" name="anonymous_seed" value="{{ seed }}">
+                      <input type="hidden" name="anonymous_index" value="{{ selected_index }}">
+                      <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+                      <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+                      <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
+                      <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
+                      <input type="hidden" name="evaluation_id" value="{{ item.evaluation_id }}">
+                      <input type="hidden" name="model_key" value="{{ attempt.model_key }}">
+                      <button class="secondary" type="submit">Удалить проверку</button>
+                    </form>
+                  </div>
+                {% endfor %}
+              </div>
             {% endif %}
 
             <form class="score-form" method="post" action="{{ url_for('score') }}">
@@ -72,10 +110,7 @@
               <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
               <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
               <input type="hidden" name="model_key" value="{{ attempt.model_key }}">
-
-              <label>Проверяющий
-                <input name="evaluator" value="{{ evaluation.evaluator or '' }}" autocomplete="name">
-              </label>
+              <input type="hidden" name="evaluator" value="" data-global-reviewer>
 
               <label>Оценка из {{ "%g"|format(problem.max_score) }}
                 <input
@@ -85,7 +120,7 @@
                   min="0"
                   max="{{ "%g"|format(problem.max_score) }}"
                   step="0.5"
-                  value="{{ evaluation.score if evaluation.score is not none else '' }}"
+                  value=""
                   autocomplete="off"
                 >
               </label>
@@ -96,13 +131,10 @@
               </div>
 
               <label>Комментарий
-                <textarea name="feedback">{{ evaluation.feedback or '' }}</textarea>
+                <textarea name="feedback"></textarea>
               </label>
 
-              <button type="submit">Сохранить оценку</button>
-              {% if evaluation.updated_at %}
-                <div class="meta">Последнее сохранение: {{ evaluation.updated_at }}</div>
-              {% endif %}
+              <button type="submit">Добавить проверку</button>
             </form>
           </section>
 
@@ -117,7 +149,7 @@
                   aria-current="{{ 'true' if loop.index == selected_index else 'false' }}"
                 >
                   <b>{{ loop.index }}</b>
-                  <span>{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
+                  <span>{% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }}{% else %}без оценки{% endif %}</span>
                 </a>
               {% endfor %}
             </nav>

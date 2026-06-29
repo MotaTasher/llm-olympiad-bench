@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import importlib
 import json
+import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -200,6 +201,8 @@ def read_sidecars(results_dir: Path, warnings: list[str]) -> dict[tuple[str, str
                     "updated_at": data.get("updated_at"),
                 }
         data["evaluations"] = evaluations
+        pool = data.get("evaluation_pool")
+        data["evaluation_pool"] = pool if isinstance(pool, dict) else {}
         sidecars[(competition_id, problem_id, run_id)] = data
     return sidecars
 
@@ -208,24 +211,96 @@ def sidecar_path(results_dir: Path, competition_id: str, problem_id: str, run_id
     return results_dir / safe_id(competition_id) / safe_id(problem_id) / f"{safe_id(run_id)}.json"
 
 
-def evaluation_for_result(result: dict[str, Any], sidecar: dict[str, Any] | None) -> dict[str, Any] | None:
+def stable_legacy_evaluation_id(run_id: str | None, result_id: str, source: str) -> str:
+    digest = hashlib.sha1(f"{run_id or ''}:{result_id}:{source}".encode("utf-8")).hexdigest()[:16]
+    return f"legacy_{digest}"
+
+
+def normalize_evaluation(
+    entry: dict[str, Any],
+    *,
+    result: dict[str, Any],
+    run_id: str | None,
+    source: str,
+) -> dict[str, Any]:
+    result_id = str(result.get("result_id") or entry.get("result_id") or "")
+    updated_at = entry.get("updated_at") or entry.get("scored_at") or ""
+    created_at = entry.get("created_at") or updated_at
+    evaluation_id = entry.get("evaluation_id") or stable_legacy_evaluation_id(run_id, result_id, source)
+    return {
+        **entry,
+        "evaluation_id": str(evaluation_id),
+        "result_id": result_id,
+        "result_index": entry.get("result_index", result.get("result_index")),
+        "model_key": entry.get("model_key") or model_key(
+            entry.get("provider") or result.get("provider") or infer_provider(str(result.get("model") or "")),
+            entry.get("model") or result.get("requested_model_id") or result.get("model") or "unknown",
+        ),
+        "model": entry.get("model") or result.get("requested_model_id") or result.get("model") or "unknown",
+        "evaluator": entry.get("evaluator") or entry.get("scored_by") or "",
+        "score": entry.get("score"),
+        "max_score": entry.get("max_score"),
+        "score_category": entry.get("score_category"),
+        "feedback": entry.get("feedback") if entry.get("feedback") is not None else entry.get("score_comment") or "",
+        "created_at": created_at,
+        "updated_at": updated_at,
+        "_source": source,
+    }
+
+
+def evaluation_pool_for_result(result: dict[str, Any], sidecar: dict[str, Any] | None) -> list[dict[str, Any]]:
+    entries: list[dict[str, Any]] = []
+    result_id = str(result.get("result_id") or "")
+    result_index = str(result.get("result_index"))
+    run_id = sidecar.get("run_id") if isinstance(sidecar, dict) else None
+    pool = sidecar.get("evaluation_pool") if isinstance(sidecar, dict) else None
+    if isinstance(pool, dict):
+        for key in (result_id, result_index):
+            values = pool.get(key)
+            if isinstance(values, list):
+                for value in values:
+                    if isinstance(value, dict):
+                        entries.append(
+                            normalize_evaluation(value, result=result, run_id=run_id, source="sidecar_pool")
+                        )
+                if key == result_id:
+                    break
+
     evaluations = sidecar.get("evaluations") if isinstance(sidecar, dict) else None
     if isinstance(evaluations, dict):
-        by_id = evaluations.get(str(result.get("result_id")))
-        if isinstance(by_id, dict):
-            return {**by_id, "_source": "sidecar_result_id"}
-        by_index = evaluations.get(str(result.get("result_index")))
-        if isinstance(by_index, dict):
-            return {**by_index, "_source": "sidecar_result_index"}
-    if result.get("score") is not None:
-        return {
-            "score": result.get("score"),
-            "evaluator": result.get("scored_by"),
-            "feedback": result.get("score_comment"),
-            "updated_at": result.get("scored_at"),
-            "_source": "run_log_legacy",
-        }
-    return None
+        legacy = evaluations.get(result_id)
+        source = "sidecar_result_id"
+        if not isinstance(legacy, dict):
+            legacy = evaluations.get(result_index)
+            source = "sidecar_result_index"
+        if isinstance(legacy, dict) and not entries:
+            entries.append(normalize_evaluation(legacy, result=result, run_id=run_id, source=source))
+
+    if result.get("score") is not None and not entries:
+        entries.append(
+            normalize_evaluation(
+                {
+                    "score": result.get("score"),
+                    "evaluator": result.get("scored_by"),
+                    "feedback": result.get("score_comment"),
+                    "updated_at": result.get("scored_at"),
+                },
+                result=result,
+                run_id=run_id,
+                source="run_log_legacy",
+            )
+        )
+    return sorted(entries, key=lambda item: item.get("updated_at") or item.get("created_at") or "")
+
+
+def evaluation_for_result(result: dict[str, Any], sidecar: dict[str, Any] | None) -> dict[str, Any] | None:
+    pool = evaluation_pool_for_result(result, sidecar)
+    if not pool:
+        return None
+    latest = {**pool[-1]}
+    latest["evaluation_pool"] = pool
+    latest["evaluation_count"] = len(pool)
+    return latest
 
 
 def is_successful_answer(result: dict[str, Any]) -> bool:
@@ -253,6 +328,8 @@ def run_attempt(
         "result_id": result.get("result_id"),
         "result_index": result.get("result_index"),
         "evaluation": evaluation,
+        "evaluations": evaluation.get("evaluation_pool", []) if evaluation else [],
+        "evaluation_count": evaluation.get("evaluation_count", 0) if evaluation else 0,
         "score": evaluation.get("score") if evaluation else None,
         "score_category": score_category(evaluation.get("score") if evaluation else None, max_score),
         "successful_answer": is_successful_answer(result),
@@ -703,6 +780,57 @@ def find_attempt(
     return None
 
 
+def load_sidecar_payload(results_dir: Path, competition_id: str, problem_id: str, run_id: str) -> dict[str, Any]:
+    path = sidecar_path(results_dir, competition_id, problem_id, run_id)
+    warnings: list[str] = []
+    payload = load_json(path, warnings) if path.exists() else None
+    if not payload:
+        payload = {}
+    evaluations = payload.get("evaluations")
+    if not isinstance(evaluations, dict):
+        evaluations = {}
+    payload["evaluations"] = evaluations
+    pool = payload.get("evaluation_pool")
+    if not isinstance(pool, dict):
+        pool = {}
+    payload["evaluation_pool"] = pool
+    return payload
+
+
+def sync_latest_evaluation_snapshot(payload: dict[str, Any], result_id: str) -> None:
+    pool = payload.setdefault("evaluation_pool", {})
+    evaluations = payload.setdefault("evaluations", {})
+    values = pool.get(result_id)
+    if isinstance(values, list) and values:
+        latest = sorted(values, key=lambda item: item.get("updated_at") or item.get("created_at") or "")[-1]
+        evaluations[result_id] = {
+            key: value
+            for key, value in latest.items()
+            if not str(key).startswith("_")
+        }
+    else:
+        evaluations.pop(result_id, None)
+
+
+def stamp_sidecar(
+    payload: dict[str, Any],
+    *,
+    competition_id: str,
+    problem_id: str,
+    run_id: str,
+    updated_at: str,
+) -> None:
+    payload.update(
+        {
+            "schema_version": SIDECAR_SCHEMA_VERSION,
+            "competition_id": competition_id,
+            "problem_id": problem_id,
+            "run_id": run_id,
+            "updated_at": updated_at,
+        }
+    )
+
+
 def save_evaluation(
     *,
     results_dir: Path,
@@ -719,20 +847,20 @@ def save_evaluation(
     feedback: str | None,
 ) -> dict[str, Any]:
     path = sidecar_path(results_dir, competition_id, problem_id, run_id)
-    warnings: list[str] = []
-    payload = load_json(path, warnings) if path.exists() else None
-    if not payload:
-        payload = {"evaluations": {}}
-    evaluations = payload.setdefault("evaluations", {})
-    if not isinstance(evaluations, dict):
-        evaluations = {}
-        payload["evaluations"] = evaluations
-    previous = evaluations.get(result_id)
-    if not isinstance(previous, dict):
-        previous = evaluations.get(str(result_index)) if isinstance(evaluations.get(str(result_index)), dict) else {}
+    payload = load_sidecar_payload(results_dir, competition_id, problem_id, run_id)
+    pool = payload.setdefault("evaluation_pool", {})
+    previous_values = pool.get(result_id)
+    previous = {}
+    if isinstance(previous_values, list) and previous_values:
+        previous = sorted(previous_values, key=lambda item: item.get("updated_at") or item.get("created_at") or "")[-1]
+    elif isinstance(payload["evaluations"].get(result_id), dict):
+        previous = payload["evaluations"][result_id]
+    elif isinstance(payload["evaluations"].get(str(result_index)), dict):
+        previous = payload["evaluations"][str(result_index)]
     updated_at = utc_now()
     evaluator_value = evaluator if evaluator not in {None, ""} else previous.get("evaluator", "")
-    evaluations[result_id] = {
+    entry = {
+        "evaluation_id": f"ev_{uuid.uuid4().hex}",
         "result_id": result_id,
         "result_index": result_index,
         "model_key": model_key_value,
@@ -742,16 +870,162 @@ def save_evaluation(
         "max_score": max_score,
         "score_category": score_category(score, max_score),
         "feedback": feedback or "",
+        "created_at": updated_at,
         "updated_at": updated_at,
     }
-    payload.update(
-        {
-            "schema_version": SIDECAR_SCHEMA_VERSION,
-            "competition_id": competition_id,
-            "problem_id": problem_id,
-            "run_id": run_id,
-            "updated_at": updated_at,
-        }
+    values = pool.setdefault(result_id, [])
+    if not isinstance(values, list):
+        values = []
+        pool[result_id] = values
+    values.append(entry)
+    sync_latest_evaluation_snapshot(payload, result_id)
+    stamp_sidecar(
+        payload,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        updated_at=updated_at,
     )
     atomic_write_json(path, payload)
     return payload
+
+
+def delete_evaluation(
+    *,
+    results_dir: Path,
+    competition_id: str,
+    problem_id: str,
+    run_id: str,
+    result_id: str,
+    evaluation_id: str,
+) -> bool:
+    path = sidecar_path(results_dir, competition_id, problem_id, run_id)
+    if not path.exists():
+        return False
+    payload = load_sidecar_payload(results_dir, competition_id, problem_id, run_id)
+    pool = payload.setdefault("evaluation_pool", {})
+    values = pool.get(result_id)
+    if not isinstance(values, list):
+        return False
+    next_values = [
+        item
+        for item in values
+        if not (isinstance(item, dict) and str(item.get("evaluation_id")) == str(evaluation_id))
+    ]
+    if len(next_values) == len(values):
+        return False
+    if next_values:
+        pool[result_id] = next_values
+    else:
+        pool.pop(result_id, None)
+    updated_at = utc_now()
+    sync_latest_evaluation_snapshot(payload, result_id)
+    stamp_sidecar(
+        payload,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        updated_at=updated_at,
+    )
+    atomic_write_json(path, payload)
+    return True
+
+
+def upsert_imported_evaluation(
+    *,
+    results_dir: Path,
+    competition_id: str,
+    problem_id: str,
+    run_id: str,
+    result_id: str,
+    result_index: int,
+    model_key_value: str,
+    model: str,
+    evaluation: dict[str, Any],
+) -> None:
+    path = sidecar_path(results_dir, competition_id, problem_id, run_id)
+    payload = load_sidecar_payload(results_dir, competition_id, problem_id, run_id)
+    pool = payload.setdefault("evaluation_pool", {})
+    now = utc_now()
+    entry = {
+        "evaluation_id": str(evaluation.get("evaluation_id") or f"ev_{uuid.uuid4().hex}"),
+        "result_id": result_id,
+        "result_index": result_index,
+        "model_key": evaluation.get("model_key") or model_key_value,
+        "model": evaluation.get("model") or model,
+        "evaluator": evaluation.get("evaluator") or "",
+        "score": evaluation.get("score"),
+        "max_score": evaluation.get("max_score"),
+        "score_category": evaluation.get("score_category"),
+        "feedback": evaluation.get("feedback") or "",
+        "created_at": evaluation.get("created_at") or now,
+        "updated_at": evaluation.get("updated_at") or now,
+    }
+    if entry["score_category"] is None and entry["score"] is not None and entry["max_score"] is not None:
+        entry["score_category"] = score_category(entry["score"], float(entry["max_score"]))
+    values = pool.setdefault(result_id, [])
+    if not isinstance(values, list):
+        values = []
+        pool[result_id] = values
+    replaced = False
+    for index, item in enumerate(values):
+        if isinstance(item, dict) and str(item.get("evaluation_id")) == entry["evaluation_id"]:
+            values[index] = entry
+            replaced = True
+            break
+    if not replaced:
+        values.append(entry)
+    sync_latest_evaluation_snapshot(payload, result_id)
+    stamp_sidecar(
+        payload,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        updated_at=now,
+    )
+    atomic_write_json(path, payload)
+
+
+def iter_evaluation_rows(
+    catalog: dict[str, Any],
+    *,
+    competition_id: str | None = None,
+    problem_id: str | None = None,
+    evaluator: str | None = None,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    evaluator_filter = (evaluator or "").strip()
+    for competition in catalog.get("competitions", []):
+        if competition_id and competition.get("competition_id") != competition_id:
+            continue
+        for current_problem_id in competition.get("problem_order", []):
+            if problem_id and current_problem_id != problem_id:
+                continue
+            problem = competition["problems"][current_problem_id]
+            for state in problem.get("model_states", []):
+                for attempt in state.get("attempts", []):
+                    for evaluation in attempt.get("evaluations", []):
+                        if evaluator_filter and evaluation.get("evaluator") != evaluator_filter:
+                            continue
+                        rows.append(
+                            {
+                                "competition_id": competition["competition_id"],
+                                "competition_title": competition.get("competition_title") or "",
+                                "problem_id": problem["problem_id"],
+                                "problem_title": problem.get("problem_title") or "",
+                                "run_id": attempt.get("run_id") or "",
+                                "result_id": attempt.get("result_id") or "",
+                                "result_index": attempt.get("result_index"),
+                                "evaluation_id": evaluation.get("evaluation_id") or "",
+                                "evaluator": evaluation.get("evaluator") or "",
+                                "score": evaluation.get("score"),
+                                "max_score": evaluation.get("max_score") or problem.get("max_score"),
+                                "score_category": evaluation.get("score_category") or "",
+                                "feedback": evaluation.get("feedback") or "",
+                                "created_at": evaluation.get("created_at") or "",
+                                "updated_at": evaluation.get("updated_at") or "",
+                                "model_key": attempt.get("model_key") or "",
+                                "model": attempt.get("model_id") or "",
+                            }
+                        )
+    return rows

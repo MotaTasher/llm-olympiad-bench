@@ -49,9 +49,14 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics and model-task table |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
 | `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
+| `GET /competition/<competition_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for a competition, optionally filtered by reviewer |
+| `GET /competition/<competition_id>/problem/<problem_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for one task, optionally filtered by reviewer |
+| `POST /competition/<competition_id>/evaluations/import` | import evaluation-pool CSV for the competition |
+| `POST /competition/<competition_id>/problem/<problem_id>/evaluations/import` | import evaluation-pool CSV for one task |
 | `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | compatibility redirect to the task page with a model and attempt selected |
 | `GET /run/<run_id>` | legacy lookup and redirect |
-| `POST /score` | validates run/result/score and writes sidecar evaluation keyed by `result_id` |
+| `POST /score` | validates run/result/score and appends a sidecar evaluation keyed by `result_id` |
+| `POST /score/delete` | deletes one evaluation from a result's evaluation pool |
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. Models found in logs are added as historical columns when attempts exist for the current competition/problem; `LEGACY_VERSIONS` does not seed the default matrix.
 
@@ -81,7 +86,7 @@ The primary status is based on the latest attempt timestamp. If the latest attem
 
 ## Score persistence
 
-New sidecars use `schema_version: 2` and store evaluations by `result_id`:
+New sidecars use `schema_version: 2` and store an evaluation pool by `result_id`:
 
 ```text
 data/results/<competition_id>/<problem_id>/<run_id>.json
@@ -89,9 +94,10 @@ data/results/<competition_id>/<problem_id>/<run_id>.json
 
 Read precedence:
 
-1. sidecar keyed by `result_id`;
-2. old sidecar keyed by string result index;
-3. legacy score fields embedded in the run-log.
+1. sidecar `evaluation_pool` keyed by `result_id`;
+2. old sidecar `evaluations` keyed by `result_id`;
+3. old sidecar `evaluations` keyed by string result index;
+4. legacy score fields embedded in the run-log.
 
 `POST /score` validates:
 
@@ -100,7 +106,17 @@ Read precedence:
 - `0 <= score <= max_score`;
 - `max_score` from `problem.metadata.max_score`, then `competition.metadata.max_score`, then `10`.
 
-An empty evaluator field does not overwrite an existing evaluator in the sidecar.
+Each submitted score creates a new evaluation entry with its own
+`evaluation_id`. The latest evaluation is also copied to `evaluations[result_id]`
+for backward compatibility with older exporters. The reviewer name is a global
+browser field stored in `localStorage`; score forms send it as a hidden
+`evaluator` input.
+
+CSV import/export uses these columns:
+
+```text
+competition_id,competition_title,problem_id,problem_title,run_id,result_id,result_index,evaluation_id,evaluator,score,max_score,score_category,feedback,created_at,updated_at,model_key,model
+```
 
 ## Web-change validation
 
