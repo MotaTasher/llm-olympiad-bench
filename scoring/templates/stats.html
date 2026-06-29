@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block crumbs %}
+  <a href="{{ url_for('index') }}">Соревнования</a> /
+  <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
+  Статистика
+{% endblock %}
+{% block content %}
+  <div class="stack">
+    <section class="panel">
+      <h1>Статистика моделей</h1>
+      <div class="meta">{{ competition.competition_title }} · {{ competition.competition_id }}</div>
+      <div class="nav-row">
+        <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Матрица</a>
+      </div>
+    </section>
+
+    {% if selected_model %}
+      {% for model in stats.models %}
+        {% if model.model_key == selected_model %}
+          <section class="panel">
+            <h2>{{ model.label }}</h2>
+            <div class="stats">
+              <span class="pill">ответов: {{ model.answer_count }}</span>
+              <span class="pill">проверено: {{ model.scored_count }}</span>
+              <span class="pill">средний %: {% if model.average_percent is not none %}{{ "%.1f"|format(model.average_percent) }}{% else %}—{% endif %}</span>
+              <span class="pill">максимумов: {{ model.full_count }}</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Задача</th>
+                    <th>Ответов</th>
+                    <th>Проверено</th>
+                    <th>Средний балл</th>
+                    <th>Средний %</th>
+                    <th>Последний run</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for task in model.tasks %}
+                    <tr>
+                      <td>
+                        <a class="problem-link" href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=task.problem_id, model=model.model_key) }}">
+                          {% if task.number is not none %}{{ task.number }}. {% endif %}{{ task.problem_title }}
+                        </a>
+                      </td>
+                      <td>{{ task.attempt_count }}</td>
+                      <td>{{ task.scored_count }}</td>
+                      <td>{% if task.average_score is not none %}{{ "%.2f"|format(task.average_score) }}{% else %}—{% endif %}</td>
+                      <td>{% if task.average_percent is not none %}{{ "%.1f"|format(task.average_percent) }}{% else %}—{% endif %}</td>
+                      <td class="meta">{{ task.latest_run or "—" }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    <section class="panel">
+      <h2>По моделям</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Модель</th>
+              <th>Ответов</th>
+              <th>Задач с ответами</th>
+              <th>Проверено</th>
+              <th>Средний балл</th>
+              <th>Средний %</th>
+              <th>Максимумов</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for model in stats.models %}
+              <tr>
+                <td>
+                  <a class="problem-link" href="{{ url_for('competition_stats_page', competition_id=competition.competition_id, model=model.model_key) }}">
+                    {{ model.label }}
+                  </a>
+                  <div class="meta">{{ model.provider }}</div>
+                </td>
+                <td>{{ model.answer_count }}</td>
+                <td>{{ model.problem_count }}</td>
+                <td>{{ model.scored_count }}</td>
+                <td>{% if model.average_score is not none %}{{ "%.2f"|format(model.average_score) }}{% else %}—{% endif %}</td>
+                <td>{% if model.average_percent is not none %}{{ "%.1f"|format(model.average_percent) }}{% else %}—{% endif %}</td>
+                <td>{{ model.full_count }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Модель-задача</h2>
+      <div class="table-wrap" role="region" aria-label="Статистика модель-задача" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th>Задача</th>
+              {% for model in stats.model_columns %}
+                <th>
+                  <a href="{{ url_for('competition_stats_page', competition_id=competition.competition_id, model=model.model_key) }}">{{ model.label }}</a>
+                </th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in stats.tasks %}
+              {% set problem = row.problem %}
+              <tr>
+                <td>
+                  <a class="problem-link" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">
+                    {% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}
+                  </a>
+                </td>
+                {% for model in stats.model_columns %}
+                  {% set cell = row.cells.get(model.model_key) %}
+                  <td>
+                    {% if cell and cell.attempt_count %}
+                      {% if cell.scored_count %}
+                        <b>{% if cell.average_percent is not none %}{{ "%.1f"|format(cell.average_percent) }}%{% else %}—{% endif %}</b>
+                        <div class="meta">{{ cell.scored_count }}/{{ cell.attempt_count }} проверено</div>
+                      {% else %}
+                        <span class="meta">ждёт проверки</span>
+                        <div class="meta">{{ cell.attempt_count }} ответ(ов)</div>
+                      {% endif %}
+                    {% else %}
+                      <span class="meta">—</span>
+                    {% endif %}
+                  </td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+{% endblock %}

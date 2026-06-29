@@ -11,7 +11,9 @@ if str(BASE_DIR) not in sys.path:
 
 try:
     from .repository import (
+        anonymized_attempts,
         build_catalog,
+        competition_statistics,
         find_attempt,
         find_problem,
         neighbor_problem_ids,
@@ -21,7 +23,9 @@ try:
     )
 except ImportError:  # pragma: no cover - direct `python scoring/app.py`
     from scoring.repository import (  # type: ignore
+        anonymized_attempts,
         build_catalog,
+        competition_statistics,
         find_attempt,
         find_problem,
         neighbor_problem_ids,
@@ -91,6 +95,24 @@ def competition_page(competition_id: str):
     )
 
 
+@app.get("/competition/<competition_id>/stats")
+def competition_stats_page(competition_id: str):
+    competition_id = clean_id(competition_id)
+    data = catalog()
+    competition = data["competition_map"].get(competition_id)
+    if not competition:
+        abort(404)
+    stats = competition_statistics(competition)
+    selected_model = request.args.get("model")
+    return render_template(
+        "stats.html",
+        competition=competition,
+        stats=stats,
+        selected_model=selected_model,
+        warnings=data["warnings"],
+    )
+
+
 @app.get("/competition/<competition_id>/problem/<problem_id>")
 def problem_page(competition_id: str, problem_id: str):
     competition_id = clean_id(competition_id)
@@ -109,6 +131,27 @@ def problem_page(competition_id: str, problem_id: str):
         problem=problem,
         selected_state=state,
         selected_attempt=attempt,
+        previous_id=previous_id,
+        next_id=next_id,
+        warnings=data["warnings"],
+    )
+
+
+@app.get("/competition/<competition_id>/problem/<problem_id>/anonymous")
+def anonymous_problem_page(competition_id: str, problem_id: str):
+    competition_id = clean_id(competition_id)
+    problem_id = clean_id(problem_id)
+    data = catalog()
+    competition = data["competition_map"].get(competition_id)
+    problem = find_problem(data, competition_id, problem_id)
+    if not competition or not problem:
+        abort(404)
+    previous_id, next_id = neighbor_problem_ids(competition, problem_id)
+    return render_template(
+        "anonymous_problem.html",
+        competition=competition,
+        problem=problem,
+        attempts=anonymized_attempts(problem),
         previous_id=previous_id,
         next_id=next_id,
         warnings=data["warnings"],
@@ -179,10 +222,20 @@ def score():
     if not found:
         abort(400, "result_id does not match this run")
     problem, attempt = found
+    mode = request.form.get("mode")
     try:
         score_value = float(request.form.get("score", ""))
     except ValueError:
         flash("Оценка должна быть числом.", "error")
+        if mode == "anonymous":
+            return redirect(
+                url_for(
+                    "anonymous_problem_page",
+                    competition_id=competition_id,
+                    problem_id=problem_id,
+                    _anchor=f"attempt-{result_id}",
+                )
+            )
         return redirect(
             url_for(
                 "problem_page",
@@ -195,6 +248,15 @@ def score():
     max_score = float(problem["max_score"])
     if not (0 <= score_value <= max_score):
         flash(f"Оценка должна быть в диапазоне от 0 до {max_score:g}.", "error")
+        if mode == "anonymous":
+            return redirect(
+                url_for(
+                    "anonymous_problem_page",
+                    competition_id=competition_id,
+                    problem_id=problem_id,
+                    _anchor=f"attempt-{result_id}",
+                )
+            )
         return redirect(
             url_for(
                 "problem_page",
@@ -222,6 +284,15 @@ def score():
         max_score=max_score,
         feedback=request.form.get("feedback"),
     )
+    if mode == "anonymous":
+        return redirect(
+            url_for(
+                "anonymous_problem_page",
+                competition_id=competition_id,
+                problem_id=problem_id,
+                _anchor=f"attempt-{result_id}",
+            )
+        )
     return redirect(
         url_for(
             "problem_page",

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block crumbs %}
+  <a href="{{ url_for('index') }}">Соревнования</a> /
+  <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
+  {{ problem.problem_title }} / Анонимная проверка
+{% endblock %}
+{% block content %}
+  <div class="stack">
+    <section class="panel">
+      <h1>{% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}</h1>
+      <div class="meta">{{ problem.problem_id }} · максимум {{ "%g"|format(problem.max_score) }} баллов · анонимный режим</div>
+      <div class="nav-row">
+        <div>
+          {% if previous_id %}
+            <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=previous_id) }}">Предыдущая задача</a>
+          {% endif %}
+        </div>
+        <div>
+          <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Матрица</a>
+          {% if next_id %}
+            <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=next_id) }}">Следующая задача</a>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <div class="stack">
+        <section class="panel">
+          <h2>Условие</h2>
+          {% if problem.statement %}
+            <div class="rendered" data-markdown>{{ problem.statement }}</div>
+          {% else %}
+            <div class="empty">Условие не найдено.</div>
+          {% endif %}
+        </section>
+
+        {% if problem.answer or problem.solution %}
+          <section class="panel">
+            <h2>Эталон</h2>
+            {% if problem.answer %}
+              <h3>Ответ</h3>
+              <div class="rendered" data-markdown>{{ problem.answer }}</div>
+            {% endif %}
+            {% if problem.solution %}
+              <details>
+                <summary>Показать решение</summary>
+                <div class="rendered" data-markdown>{{ problem.solution }}</div>
+              </details>
+            {% endif %}
+          </section>
+        {% endif %}
+      </div>
+
+      <div class="stack">
+        {% if attempts %}
+          {% for attempt in attempts %}
+            {% set result = attempt.result %}
+            {% set evaluation = attempt.evaluation or {} %}
+            <section class="panel anonymous-answer" id="attempt-{{ attempt.result_id }}">
+              <div class="result-head">
+                <h2>{{ attempt.anonymous_label }}</h2>
+                <span class="meta">{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
+              </div>
+
+              {% if result.answer %}
+                <div class="rendered" data-markdown>{{ result.answer }}</div>
+              {% else %}
+                <div class="empty">У этого ответа нет текста.</div>
+              {% endif %}
+
+              <form class="score-form" method="post" action="{{ url_for('score') }}">
+                <input type="hidden" name="mode" value="anonymous">
+                <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+                <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+                <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
+                <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
+                <input type="hidden" name="model_key" value="{{ attempt.model_key }}">
+
+                <label>Проверяющий
+                  <input name="evaluator" value="{{ evaluation.evaluator or '' }}" autocomplete="name">
+                </label>
+
+                <label>Оценка из {{ "%g"|format(problem.max_score) }}
+                  <input
+                    id="score-input-{{ loop.index }}"
+                    name="score"
+                    type="number"
+                    min="0"
+                    max="{{ "%g"|format(problem.max_score) }}"
+                    step="0.5"
+                    value="{{ evaluation.score if evaluation.score is not none else '' }}"
+                    autocomplete="off"
+                  >
+                </label>
+                <div class="quick" aria-label="Быстрый выбор оценки">
+                  <button class="secondary" type="button" data-score-target="score-input-{{ loop.index }}" data-score-set="0">0</button>
+                  <button class="secondary" type="button" data-score-target="score-input-{{ loop.index }}" data-score-set="{{ "%g"|format(problem.max_score / 2) }}">Половина</button>
+                  <button class="secondary" type="button" data-score-target="score-input-{{ loop.index }}" data-score-set="{{ "%g"|format(problem.max_score) }}">Максимум</button>
+                </div>
+
+                <label>Комментарий
+                  <textarea name="feedback">{{ evaluation.feedback or '' }}</textarea>
+                </label>
+
+                <button type="submit">Сохранить оценку</button>
+                {% if evaluation.updated_at %}
+                  <div class="meta">Последнее сохранение: {{ evaluation.updated_at }}</div>
+                {% endif %}
+              </form>
+            </section>
+          {% endfor %}
+        {% else %}
+          <section class="panel">
+            <div class="empty">Для этой задачи пока нет успешных ответов моделей.</div>
+          </section>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib
 import json
 from datetime import UTC, datetime
@@ -559,6 +560,119 @@ def selected_state(problem: dict[str, Any], model_key_value: str | None) -> dict
         if state.get("attempt_count"):
             return state
     return states[0] if states else None
+
+
+def anonymized_attempts(problem: dict[str, Any]) -> list[dict[str, Any]]:
+    attempts = []
+    for state in problem.get("model_states", []):
+        for attempt in state.get("attempts", []):
+            if not attempt.get("successful_answer"):
+                continue
+            result_id = str(attempt.get("result_id") or "")
+            digest = hashlib.sha256(result_id.encode("utf-8")).hexdigest()
+            attempts.append({**attempt, "_anon_sort": digest})
+    attempts = sorted(attempts, key=lambda item: item["_anon_sort"])
+    for index, attempt in enumerate(attempts, start=1):
+        attempt["anonymous_label"] = f"Решение {index}"
+    return attempts
+
+
+def competition_statistics(competition: dict[str, Any]) -> dict[str, Any]:
+    model_stats: dict[str, dict[str, Any]] = {}
+    task_rows = []
+    for problem_id in competition.get("problem_order", []):
+        problem = competition["problems"][problem_id]
+        task_cells = {}
+        for state in problem.get("model_states", []):
+            model_key_value = state["model_key"]
+            model = model_stats.setdefault(
+                model_key_value,
+                {
+                    "model_key": model_key_value,
+                    "provider": state.get("provider"),
+                    "model_id": state.get("model_id"),
+                    "label": state.get("label"),
+                    "answer_count": 0,
+                    "scored_count": 0,
+                    "score_sum": 0.0,
+                    "max_score_sum": 0.0,
+                    "full_count": 0,
+                    "problem_ids": set(),
+                    "tasks": [],
+                },
+            )
+            attempts = state.get("attempts") or []
+            successful = [attempt for attempt in attempts if attempt.get("successful_answer")]
+            scored = [attempt for attempt in successful if attempt.get("score") is not None]
+            model["answer_count"] += len(successful)
+            if successful:
+                model["problem_ids"].add(problem_id)
+            score_sum = 0.0
+            max_score_sum = 0.0
+            for attempt in scored:
+                score = float(attempt.get("score") or 0)
+                max_score = float(attempt.get("max_score") or problem["max_score"] or 10)
+                model["score_sum"] += score
+                model["max_score_sum"] += max_score
+                model["scored_count"] += 1
+                score_sum += score
+                max_score_sum += max_score
+                if score >= max_score:
+                    model["full_count"] += 1
+            average = (score_sum / len(scored)) if scored else None
+            percent = (score_sum / max_score_sum * 100) if max_score_sum else None
+            latest = state.get("latest")
+            cell = {
+                "attempt_count": len(successful),
+                "scored_count": len(scored),
+                "average_score": average,
+                "average_percent": percent,
+                "latest_run": latest.get("run_id") if latest else None,
+                "status": state.get("status"),
+            }
+            task_cells[model_key_value] = cell
+            model["tasks"].append(
+                {
+                    "problem_id": problem_id,
+                    "problem_title": problem["problem_title"],
+                    "number": problem.get("number"),
+                    **cell,
+                }
+            )
+        task_rows.append({"problem": problem, "cells": task_cells})
+
+    model_rows = []
+    for model in model_stats.values():
+        scored_count = model["scored_count"]
+        answer_count = model["answer_count"]
+        model_rows.append(
+            {
+                **model,
+                "problem_count": len(model["problem_ids"]),
+                "average_score": (model["score_sum"] / scored_count) if scored_count else None,
+                "average_percent": (
+                    model["score_sum"] / model["max_score_sum"] * 100
+                    if model["max_score_sum"]
+                    else None
+                ),
+                "coverage_percent": (
+                    answer_count / max(1, competition.get("problem_count", 0)) * 100
+                ),
+            }
+        )
+    model_rows.sort(
+        key=lambda item: (
+            item["average_percent"] if item["average_percent"] is not None else -1,
+            item["scored_count"],
+            item["answer_count"],
+        ),
+        reverse=True,
+    )
+    return {
+        "models": model_rows,
+        "tasks": task_rows,
+        "model_columns": competition.get("model_columns", []),
+    }
 
 
 def neighbor_problem_ids(competition: dict[str, Any], problem_id: str) -> tuple[str | None, str | None]:
