@@ -84,6 +84,8 @@ python runner.py \
 настройки вроде `OPENAI_MAX_COMPLETION_TOKENS` или `YANDEX_MAX_TOKENS`.
 
 Runner пишет `schema_version: 2` run-log со статусом `running` до первого API-вызова и атомарно обновляет JSON после каждой модели. Ошибки API не должны останавливать весь запуск: они записываются в `error` и `error_info` соответствующего результата.
+Во время запуска runner печатает live-progress по моделям: `START`, затем
+`DONE` или `ERROR` с длительностью, токенами и оценкой стоимости.
 
 ## Добавить задачи из PDF или TXT
 

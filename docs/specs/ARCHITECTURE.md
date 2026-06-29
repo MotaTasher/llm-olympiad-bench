@@ -25,6 +25,9 @@ logs/<competition_id>/<problem_id>/<run_id>.json
 
 Adapters run sequentially. One provider failure should become a result with `error`, allowing other providers and log writing to continue.
 The runner uses `models/telemetry.py` for safe command/runtime metadata, prompt/problem hashes, recursive secret redaction and same-directory temporary-file writes followed by `os.replace`.
+For operator visibility, runner prints flushed live progress before and after
+each provider call. This console output is informational only; run logs remain
+the source of persisted state.
 
 ## Scoring flow
 

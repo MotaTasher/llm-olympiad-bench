@@ -384,6 +384,20 @@ def print_table(rows: list[dict[str, Any]]) -> None:
             print(" | ".join(str(row.get(h, "")) for h in headers))
 
 
+def format_duration(ms: int) -> str:
+    if ms < 1000:
+        return f"{ms}ms"
+    seconds = ms / 1000
+    if seconds < 60:
+        return f"{seconds:.1f}s"
+    minutes, remainder = divmod(int(seconds), 60)
+    return f"{minutes}m{remainder:02d}s"
+
+
+def print_progress(message: str) -> None:
+    print(message, flush=True)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run olympiad problem through selected LLMs.")
     parser.add_argument("--problem", required=True, help="Path to .json problem or .md file")
@@ -540,7 +554,13 @@ def main() -> int:
 
     results = []
     table_rows = []
+    total_models = len(aliases)
+    print_progress(
+        f"Run {run_id}: {competition_id}/{problem_id}, "
+        f"{total_models} model(s), max_tokens={max_tokens or 'provider-default'}"
+    )
     for result_index, alias in enumerate(aliases):
+        ordinal = f"[{result_index + 1}/{total_models}]"
         provider = provider_for_alias(alias)
         skeleton = initial_result(
             run_id=run_id,
@@ -556,8 +576,11 @@ def main() -> int:
             problem_id=problem_id,
         )
         call_start = time.monotonic()
+        model_label = alias
+        print_progress(f"{ordinal} START {model_label}")
         try:
             model = create_model(alias)
+            model_label = model.model_id
             skeleton["adapter_class"] = f"{model.__class__.__module__}.{model.__class__.__name__}"
             skeleton["requested_model_id"] = model.model_id
             skeleton["model"] = model.model_id
@@ -592,10 +615,21 @@ def main() -> int:
         short_error = ""
         if result.error:
             short_error = result.error.replace("\n", " ")[:120]
+        token_count = result.prompt_tokens + result.completion_tokens
+        if result.error:
+            print_progress(
+                f"{ordinal} ERROR {model_label} in {format_duration(measured_ms)}: "
+                f"{short_error or 'unknown error'}"
+            )
+        else:
+            print_progress(
+                f"{ordinal} DONE  {model_label} in {format_duration(measured_ms)} "
+                f"tokens={token_count} cost_usd={result.cost_usd:.6f}"
+            )
         table_rows.append(
             {
                 "model": result.model,
-                "tokens": result.prompt_tokens + result.completion_tokens,
+                "tokens": token_count,
                 "cost_usd": f"{result.cost_usd:.6f}",
                 "latency_ms": result.latency_ms,
                 "status": status,
