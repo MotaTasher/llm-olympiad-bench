@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "math-cup-2025-winter-qualifying",
+  "title": "Math Cup 2025 — Зимний турнир",
+  "description": "Отборочный тур. Решения",
+  "date": "2025",
+  "source": "CS Space",
+  "metadata": {
+    "stage": "Отборочный тур",
+    "document_type": "Решения",
+    "season": "Зимний турнир"
+  }
+}

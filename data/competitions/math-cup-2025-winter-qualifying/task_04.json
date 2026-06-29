@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "task_04",
+  "number": 4,
+  "title": "10 чисел",
+  "statement": "Найти десять положительных целых чисел\n\\[\nx_1,x_2,\\dots,x_{10},\n\\]\nтаких, что для любых \\(i\\neq j\\) выполняется\n\\[\n|x_i-x_j|\\ge 100,\n\\]\nи при этом имеет место равенство\n\\[\n\\frac{\\bigl(x_1+x_2+\\cdots+x_{10}\\bigr)^2}\n{x_1^2+x_2^2+\\cdots+x_{10}^2}\n=3.\n\\]",
+  "answer": null,
+  "solution": null,
+  "tags": [],
+  "metadata": {}
+}
