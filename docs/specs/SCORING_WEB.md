@@ -48,7 +48,7 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `GET /competition/<competition_id>` | matrix: rows are tasks, columns are models; task title opens anonymous scoring |
 | `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics and model-task table |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
-| `GET /competition/<competition_id>/problem/<problem_id>/anonymous` | anonymous scoring page: answers are shown without model/provider labels |
+| `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
 | `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | compatibility redirect to the task page with a model and attempt selected |
 | `GET /run/<run_id>` | legacy lookup and redirect |
 | `POST /score` | validates run/result/score and writes sidecar evaluation keyed by `result_id` |
@@ -56,10 +56,13 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. Models found in logs are added as historical columns when attempts exist for the current competition/problem; `LEGACY_VERSIONS` does not seed the default matrix.
 
 The anonymous scoring page hides model/provider names, metrics and raw JSON from
-the reviewer UI. It still submits the underlying `run_id`, `result_id` and
-`model_key` as hidden form fields so evaluations are written to the same sidecar
-format. This is UI-level anonymity, not a security boundary against inspecting
-page source.
+the reviewer UI. It displays one answer at a time with numbered navigation and a
+"next solution" control. On first entry the app redirects to the same page with a
+random `seed`; answer order is shuffled from that seed and remains stable while
+the reviewer moves between answer numbers. The page still submits the underlying
+`run_id`, `result_id` and `model_key` as hidden form fields so evaluations are
+written to the same sidecar format. This is UI-level anonymity, not a security
+boundary against inspecting page source.
 
 ## Cell status
 

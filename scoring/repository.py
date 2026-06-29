@@ -562,14 +562,14 @@ def selected_state(problem: dict[str, Any], model_key_value: str | None) -> dict
     return states[0] if states else None
 
 
-def anonymized_attempts(problem: dict[str, Any]) -> list[dict[str, Any]]:
+def anonymized_attempts(problem: dict[str, Any], seed: str) -> list[dict[str, Any]]:
     attempts = []
     for state in problem.get("model_states", []):
         for attempt in state.get("attempts", []):
             if not attempt.get("successful_answer"):
                 continue
             result_id = str(attempt.get("result_id") or "")
-            digest = hashlib.sha256(result_id.encode("utf-8")).hexdigest()
+            digest = hashlib.sha256(f"{seed}:{result_id}".encode("utf-8")).hexdigest()
             attempts.append({**attempt, "_anon_sort": digest})
     attempts = sorted(attempts, key=lambda item: item["_anon_sort"])
     for index, attempt in enumerate(attempts, start=1):

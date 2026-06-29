@@ -53,63 +53,83 @@
       </div>
 
       <div class="stack">
-        {% if attempts %}
-          {% for attempt in attempts %}
-            {% set result = attempt.result %}
-            {% set evaluation = attempt.evaluation or {} %}
-            <section class="panel anonymous-answer" id="attempt-{{ attempt.result_id }}">
-              <div class="result-head">
-                <h2>{{ attempt.anonymous_label }}</h2>
-                <span class="meta">{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
+        {% if attempts and selected_attempt %}
+          <section class="panel">
+            <h2>Выбор решения</h2>
+            <div class="meta">Порядок случайный для этого захода и закреплен в ссылке.</div>
+            <nav class="attempt-switcher" aria-label="Выбор анонимного решения">
+              {% for attempt in attempts %}
+                <a
+                  class="attempt-chip {{ 'active' if loop.index == selected_index else '' }}"
+                  href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=loop.index) }}"
+                  aria-current="{{ 'true' if loop.index == selected_index else 'false' }}"
+                >
+                  <b>{{ loop.index }}</b>
+                  <span>{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
+                </a>
+              {% endfor %}
+            </nav>
+            <a class="button" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=next_index) }}">Следующее решение</a>
+            <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">Перемешать заново</a>
+          </section>
+
+          {% set attempt = selected_attempt %}
+          {% set result = attempt.result %}
+          {% set evaluation = attempt.evaluation or {} %}
+          <section class="panel anonymous-answer" id="attempt-{{ attempt.result_id }}">
+            <div class="result-head">
+              <h2>Решение {{ selected_index }}</h2>
+              <span class="meta">{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
+            </div>
+
+            {% if result.answer %}
+              <div class="rendered" data-markdown>{{ result.answer }}</div>
+            {% else %}
+              <div class="empty">У этого ответа нет текста.</div>
+            {% endif %}
+
+            <form class="score-form" method="post" action="{{ url_for('score') }}">
+              <input type="hidden" name="mode" value="anonymous">
+              <input type="hidden" name="anonymous_seed" value="{{ seed }}">
+              <input type="hidden" name="anonymous_index" value="{{ selected_index }}">
+              <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+              <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+              <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
+              <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
+              <input type="hidden" name="model_key" value="{{ attempt.model_key }}">
+
+              <label>Проверяющий
+                <input name="evaluator" value="{{ evaluation.evaluator or '' }}" autocomplete="name">
+              </label>
+
+              <label>Оценка из {{ "%g"|format(problem.max_score) }}
+                <input
+                  id="score-input-{{ selected_index }}"
+                  name="score"
+                  type="number"
+                  min="0"
+                  max="{{ "%g"|format(problem.max_score) }}"
+                  step="0.5"
+                  value="{{ evaluation.score if evaluation.score is not none else '' }}"
+                  autocomplete="off"
+                >
+              </label>
+              <div class="quick" aria-label="Быстрый выбор оценки">
+                <button class="secondary" type="button" data-score-target="score-input-{{ selected_index }}" data-score-set="0">0</button>
+                <button class="secondary" type="button" data-score-target="score-input-{{ selected_index }}" data-score-set="{{ "%g"|format(problem.max_score / 2) }}">Половина</button>
+                <button class="secondary" type="button" data-score-target="score-input-{{ selected_index }}" data-score-set="{{ "%g"|format(problem.max_score) }}">Максимум</button>
               </div>
 
-              {% if result.answer %}
-                <div class="rendered" data-markdown>{{ result.answer }}</div>
-              {% else %}
-                <div class="empty">У этого ответа нет текста.</div>
+              <label>Комментарий
+                <textarea name="feedback">{{ evaluation.feedback or '' }}</textarea>
+              </label>
+
+              <button type="submit">Сохранить оценку</button>
+              {% if evaluation.updated_at %}
+                <div class="meta">Последнее сохранение: {{ evaluation.updated_at }}</div>
               {% endif %}
-
-              <form class="score-form" method="post" action="{{ url_for('score') }}">
-                <input type="hidden" name="mode" value="anonymous">
-                <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
-                <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
-                <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
-                <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
-                <input type="hidden" name="model_key" value="{{ attempt.model_key }}">
-
-                <label>Проверяющий
-                  <input name="evaluator" value="{{ evaluation.evaluator or '' }}" autocomplete="name">
-                </label>
-
-                <label>Оценка из {{ "%g"|format(problem.max_score) }}
-                  <input
-                    id="score-input-{{ loop.index }}"
-                    name="score"
-                    type="number"
-                    min="0"
-                    max="{{ "%g"|format(problem.max_score) }}"
-                    step="0.5"
-                    value="{{ evaluation.score if evaluation.score is not none else '' }}"
-                    autocomplete="off"
-                  >
-                </label>
-                <div class="quick" aria-label="Быстрый выбор оценки">
-                  <button class="secondary" type="button" data-score-target="score-input-{{ loop.index }}" data-score-set="0">0</button>
-                  <button class="secondary" type="button" data-score-target="score-input-{{ loop.index }}" data-score-set="{{ "%g"|format(problem.max_score / 2) }}">Половина</button>
-                  <button class="secondary" type="button" data-score-target="score-input-{{ loop.index }}" data-score-set="{{ "%g"|format(problem.max_score) }}">Максимум</button>
-                </div>
-
-                <label>Комментарий
-                  <textarea name="feedback">{{ evaluation.feedback or '' }}</textarea>
-                </label>
-
-                <button type="submit">Сохранить оценку</button>
-                {% if evaluation.updated_at %}
-                  <div class="meta">Последнее сохранение: {{ evaluation.updated_at }}</div>
-                {% endif %}
-              </form>
-            </section>
-          {% endfor %}
+            </form>
+          </section>
         {% else %}
           <section class="panel">
             <div class="empty">Для этой задачи пока нет успешных ответов моделей.</div>

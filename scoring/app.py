@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import secrets
 import sys
 
 from flask import Flask, abort, flash, redirect, render_template, request, url_for
@@ -69,6 +70,14 @@ def selected_attempt_for(state: dict | None, attempt_id: str | None) -> dict | N
             if attempt.get("result_id") == attempt_id or attempt.get("run_id") == attempt_id:
                 return attempt
     return state.get("latest")
+
+
+def positive_int(value: str | None, default: int = 1) -> int:
+    try:
+        parsed = int(value or "")
+    except ValueError:
+        return default
+    return parsed if parsed > 0 else default
 
 
 @app.get("/")
@@ -141,17 +150,35 @@ def problem_page(competition_id: str, problem_id: str):
 def anonymous_problem_page(competition_id: str, problem_id: str):
     competition_id = clean_id(competition_id)
     problem_id = clean_id(problem_id)
+    seed = request.args.get("seed")
+    if not seed:
+        return redirect(
+            url_for(
+                "anonymous_problem_page",
+                competition_id=competition_id,
+                problem_id=problem_id,
+                seed=secrets.token_urlsafe(8),
+                n=1,
+            )
+        )
     data = catalog()
     competition = data["competition_map"].get(competition_id)
     problem = find_problem(data, competition_id, problem_id)
     if not competition or not problem:
         abort(404)
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
+    attempts = anonymized_attempts(problem, seed)
+    selected_index = min(positive_int(request.args.get("n")), len(attempts)) if attempts else 0
+    selected_attempt = attempts[selected_index - 1] if selected_index else None
     return render_template(
         "anonymous_problem.html",
         competition=competition,
         problem=problem,
-        attempts=anonymized_attempts(problem),
+        attempts=attempts,
+        selected_attempt=selected_attempt,
+        selected_index=selected_index,
+        next_index=(selected_index % len(attempts) + 1) if attempts else None,
+        seed=seed,
         previous_id=previous_id,
         next_id=next_id,
         warnings=data["warnings"],
@@ -211,6 +238,8 @@ def score():
     run_id = clean_id(request.form.get("run_id", ""))
     result_id = request.form.get("result_id", "")
     model_key = request.form.get("model_key", "")
+    anonymous_seed = request.form.get("anonymous_seed")
+    anonymous_index = request.form.get("anonymous_index")
     data = catalog()
     found = find_attempt(
         data,
@@ -233,6 +262,8 @@ def score():
                     "anonymous_problem_page",
                     competition_id=competition_id,
                     problem_id=problem_id,
+                    seed=anonymous_seed,
+                    n=anonymous_index,
                     _anchor=f"attempt-{result_id}",
                 )
             )
@@ -254,6 +285,8 @@ def score():
                     "anonymous_problem_page",
                     competition_id=competition_id,
                     problem_id=problem_id,
+                    seed=anonymous_seed,
+                    n=anonymous_index,
                     _anchor=f"attempt-{result_id}",
                 )
             )
@@ -290,6 +323,8 @@ def score():
                 "anonymous_problem_page",
                 competition_id=competition_id,
                 problem_id=problem_id,
+                seed=anonymous_seed,
+                n=anonymous_index,
                 _anchor=f"attempt-{result_id}",
             )
         )
