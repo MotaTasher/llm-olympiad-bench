@@ -73,8 +73,12 @@ For old logs and old sidecars, export and UI fall back to string `result_index`.
 The intended separation is:
 
 - credentials in provider `secrets/.env`;
-- runtime parameters in `config/models.env`;
+- runtime parameters and `RUNNER_MODELS` in `config/models.env`;
 - default model identifiers in `models/<provider>/versions.py`.
+
+`RUNNER_MODELS=all` expands to every active `VERSIONS` entry from
+`models/*/versions.py`, matching the configured columns in the scoring UI.
+Explicit CLI `--models` values override `RUNNER_MODELS` for that run.
 
 ## Identity rules
 

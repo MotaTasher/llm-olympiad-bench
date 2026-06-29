@@ -78,6 +78,13 @@ Default identifiers belong in `versions.py`. Temporary overrides may live in `co
 
 `VERSIONS` is the active benchmark set and should stay small. The scoring UI uses only `VERSIONS` for configured columns; `LEGACY_VERSIONS` may document retired IDs, but must not be used to seed the default matrix.
 
+`runner.py --models all` expands to every active `VERSIONS` entry for every
+provider, using explicit specs such as `openai:gpt-5.5`. If `--models` is
+omitted, runner reads `RUNNER_MODELS` from `config/models.env`; the committed
+default is `RUNNER_MODELS=all`, so CLI runs match the scoring UI configured
+columns. Individual model specs may be mixed with aliases, for example
+`--models gpt,openai:gpt-5.4-mini`.
+
 Current active set:
 
 | Provider | Strongest paid | Budget/free-tier candidate |

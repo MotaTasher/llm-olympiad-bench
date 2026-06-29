@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import importlib
+import os
 import re
 import sys
 import time
@@ -39,6 +40,14 @@ MODEL_CLASSES = {
     "alice": ("models.yandexgpt", "AliceModel"),
     "yandex": ("models.yandexgpt", "YandexGPTModel"),
     "yandexgpt": ("models.yandexgpt", "YandexGPTModel"),
+}
+
+MODEL_VERSION_MODULES = {
+    "openai": "models.gpt.versions",
+    "anthropic": "models.claude.versions",
+    "deepseek": "models.deepseek.versions",
+    "gigachat": "models.gigachat.versions",
+    "yandexgpt": "models.yandexgpt.versions",
 }
 
 MODEL_ENV_VARS = {
@@ -119,14 +128,16 @@ def load_problem_input(
 
 
 def create_model(alias: str) -> BaseModel:
-    key = alias.strip().lower()
+    raw = alias.strip()
+    key, _, model_id = raw.partition(":")
+    key = key.lower()
     if key not in MODEL_CLASSES:
         known = ", ".join(sorted(MODEL_CLASSES))
         raise ValueError(f"Unknown model alias '{alias}'. Known aliases: {known}")
     module_name, class_name = MODEL_CLASSES[key]
     module = importlib.import_module(module_name)
     model_class = getattr(module, class_name)
-    return model_class()
+    return model_class(model=model_id) if model_id else model_class()
 
 
 def get_git_hash() -> str:
@@ -175,7 +186,7 @@ def write_log(
 
 
 def provider_for_alias(alias: str) -> str:
-    key = alias.strip().lower()
+    key = alias.strip().split(":", 1)[0].lower()
     if key in {"gpt", "openai"}:
         return "openai"
     if key in {"claude", "anthropic"}:
@@ -189,8 +200,29 @@ def provider_for_alias(alias: str) -> str:
     return "unknown"
 
 
+def active_model_specs() -> list[str]:
+    specs = []
+    for provider, module_name in MODEL_VERSION_MODULES.items():
+        module = importlib.import_module(module_name)
+        for model_id in getattr(module, "VERSIONS", []) or []:
+            specs.append(f"{provider}:{model_id}")
+    return specs
+
+
 def requested_aliases(value: str) -> list[str]:
-    return [item.strip() for item in value.split(",") if item.strip()]
+    aliases = []
+    for item in [part.strip() for part in value.split(",") if part.strip()]:
+        if item.lower() in {"all", "site", "configured"}:
+            aliases.extend(active_model_specs())
+        else:
+            aliases.append(item)
+    result = []
+    seen = set()
+    for alias in aliases:
+        if alias not in seen:
+            result.append(alias)
+            seen.add(alias)
+    return result
 
 
 def initial_result(
@@ -355,8 +387,13 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--models",
-        required=True,
-        help="Comma-separated aliases: gpt,claude,gigachat,yandexgpt/alice",
+        default=None,
+        help=(
+            "Comma-separated aliases/specs. Examples: gpt,claude or "
+            "openai:gpt-5.5,openai:gpt-5.4-mini. Use 'all' to run every "
+            "active model shown in the scoring UI. Defaults to RUNNER_MODELS "
+            "from config/models.env."
+        ),
     )
     parser.add_argument(
         "--run-id",
@@ -375,6 +412,11 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     load_env(allow_model_env_overrides=args.allow_env_model_overrides)
+    models_value = args.models or os.environ.get("RUNNER_MODELS") or os.environ.get("OLYMPIAD_MODELS")
+    if not models_value:
+        raise SystemExit(
+            "models are required. Pass --models or set RUNNER_MODELS in config/models.env"
+        )
 
     problem_file = Path(args.problem)
     try:
@@ -397,7 +439,7 @@ def main() -> int:
     git = git_metadata()
     git_hash = str(git.get("hash") or "")
     run_id = build_run_id(now, args.run_id or problem_title)
-    aliases = requested_aliases(args.models)
+    aliases = requested_aliases(models_value)
     logs_dir = Path(args.logs_dir)
     log_path = log_path_for(
         logs_dir,
@@ -433,7 +475,7 @@ def main() -> int:
                 "problem": str(problem_file),
                 "competition": args.competition,
                 "competition_title": args.competition_title,
-                "models": args.models,
+                "models": models_value,
                 "run_id": args.run_id,
                 "logs_dir": args.logs_dir,
                 "allow_env_model_overrides": args.allow_env_model_overrides,

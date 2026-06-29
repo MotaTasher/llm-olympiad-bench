@@ -86,6 +86,11 @@ python runner.py \
 
 После запуска обновите страницу.
 
+Если `--models` не указан, runner берет `RUNNER_MODELS` из
+`config/models.env`. В committed-конфиге стоит `RUNNER_MODELS=all`, поэтому
+запуск без `--models` обращается ко всем активным моделям сайта. Для дешевого
+smoke-теста явно указывайте одну модель, как в примере выше.
+
 ## 4. Настроить ключи моделей
 
 Создайте только нужный secret-файл.
@@ -162,6 +167,23 @@ models/<provider>/versions.py
 
 ```text
 config/models.env
+```
+
+Там же задается набор моделей runner по умолчанию:
+
+```env
+RUNNER_MODELS=all
+```
+
+`all` разворачивается в активные `VERSIONS` из `models/*/versions.py`, то есть
+в те же модели, которые показаны колонками scoring UI. Можно запускать
+конкретную версию через `provider:model_id`, например:
+
+```bash
+python runner.py \
+  --problem data/competitions/local_examples/example.json \
+  --models openai:gpt-5.5,openai:gpt-5.4-mini \
+  --run-id openai_pair
 ```
 
 Не помещайте runtime-настройки в `models/*/secrets/.env`.

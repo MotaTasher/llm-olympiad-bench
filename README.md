@@ -65,6 +65,19 @@ python runner.py \
   --run-id comparison
 ```
 
+Все активные модели, которые показаны колонками на сайте:
+
+```bash
+python runner.py \
+  --problem data/competitions/local_examples/example.json \
+  --models all \
+  --run-id comparison_all
+```
+
+Если `--models` не указан, runner берет значение из `RUNNER_MODELS` в
+`config/models.env`. По умолчанию там стоит `RUNNER_MODELS=all`, то есть
+запускаются все активные версии из `models/*/versions.py`.
+
 Runner пишет `schema_version: 2` run-log со статусом `running` до первого API-вызова и атомарно обновляет JSON после каждой модели. Ошибки API не должны останавливать весь запуск: они записываются в `error` и `error_info` соответствующего результата.
 
 ## Добавить задачи из PDF или TXT
@@ -142,6 +155,16 @@ models/yandexgpt/secrets/.env
 ```text
 config/models.env
 ```
+
+Там же лежит публичный набор моделей для runner:
+
+```env
+RUNNER_MODELS=all
+```
+
+`all` разворачивается в те же активные модели, что используются как колонки
+scoring UI. Точечный запуск конкретной версии можно задать через
+`provider:model_id`, например `openai:gpt-5.5,openai:gpt-5.4-mini`.
 
 **Версии моделей по умолчанию**:
 
