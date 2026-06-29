@@ -115,7 +115,7 @@ class RunnerTests(TempCompetition):
             def model_id(self) -> str:
                 return "fake-model"
 
-            def solve(self, problem: str) -> SolveResult:
+            def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
                 return SolveResult(
                     model="fake-model",
                     answer=f"answer to {problem}",
@@ -162,7 +162,7 @@ class RunnerTests(TempCompetition):
             def model_id(self) -> str:
                 return "good-model"
 
-            def solve(self, problem: str) -> SolveResult:
+            def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
                 log_path = next(logs_dir.rglob("*.json"))
                 data = json.loads(log_path.read_text(encoding="utf-8"))
                 seen_during_call["run_status"] = data["status"]
@@ -183,7 +183,7 @@ class RunnerTests(TempCompetition):
             def model_id(self) -> str:
                 return "bad-model"
 
-            def solve(self, problem: str) -> SolveResult:
+            def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
                 raise RuntimeError("boom Authorization: secret")
 
         def factory(alias: str):
@@ -212,6 +212,49 @@ class RunnerTests(TempCompetition):
         self.assertEqual(log["results"][1]["status"], "error")
         self.assertEqual(log["results"][0]["answer"], "ok")
         self.assertNotIn("secret", json.dumps(log, ensure_ascii=False).lower())
+
+    def test_runner_passes_max_tokens_to_model_and_runtime_metadata(self) -> None:
+        problem_path = self.write_problem("task_01", title="Runner Task")
+        logs_dir = self.tmp / "logs"
+        seen: dict[str, object] = {}
+
+        class FakeModel:
+            @property
+            def model_id(self) -> str:
+                return "fake-model"
+
+            def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
+                seen["max_tokens"] = max_tokens
+                return SolveResult(
+                    model="fake-model",
+                    answer="ok",
+                    prompt_tokens=1,
+                    completion_tokens=2,
+                    cost_usd=0.0,
+                    latency_ms=3,
+                    raw_response={},
+                )
+
+        argv = [
+            "runner.py",
+            "--problem",
+            str(problem_path),
+            "--models",
+            "fake",
+            "--run-id",
+            "unit",
+            "--logs-dir",
+            str(logs_dir),
+            "--max-tokens",
+            "1234",
+        ]
+        with patch.object(sys, "argv", argv), patch.object(runner, "load_env"), patch.object(runner, "create_model", return_value=FakeModel()):
+            self.assertEqual(runner.main(), 0)
+
+        self.assertEqual(seen["max_tokens"], 1234)
+        log = json.loads(next(logs_dir.rglob("*.json")).read_text(encoding="utf-8"))
+        self.assertEqual(log["runtime"]["cli"]["max_tokens"], 1234)
+        self.assertEqual(log["runtime_settings"]["max_tokens"], 1234)
 
     def test_redactor_preserves_token_counts_but_removes_credentials(self) -> None:
         data = {

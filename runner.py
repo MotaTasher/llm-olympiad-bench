@@ -225,6 +225,18 @@ def requested_aliases(value: str) -> list[str]:
     return result
 
 
+def positive_optional_int(value: str | int | None, *, name: str) -> int | None:
+    if value is None or value == "":
+        return None
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError) as exc:
+        raise SystemExit(f"{name} must be a positive integer") from exc
+    if parsed <= 0:
+        raise SystemExit(f"{name} must be a positive integer")
+    return parsed
+
+
 def initial_result(
     *,
     run_id: str,
@@ -406,6 +418,15 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Allow inherited OPENAI_MODEL/GIGACHAT_MODEL/YANDEX_MODEL env vars to override versions.py",
     )
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=None,
+        help=(
+            "Maximum completion/output tokens passed to every selected adapter. "
+            "Defaults to RUNNER_MAX_TOKENS or provider-specific env settings."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -418,6 +439,10 @@ def main() -> int:
             "models are required. Pass --models or set RUNNER_MODELS in config/models.env"
         )
 
+    max_tokens = positive_optional_int(
+        args.max_tokens if args.max_tokens is not None else os.environ.get("RUNNER_MAX_TOKENS"),
+        name="--max-tokens",
+    )
     problem_file = Path(args.problem)
     try:
         (
@@ -479,6 +504,7 @@ def main() -> int:
                 "run_id": args.run_id,
                 "logs_dir": args.logs_dir,
                 "allow_env_model_overrides": args.allow_env_model_overrides,
+                "max_tokens": max_tokens,
             },
         ),
         "requested_models": aliases,
@@ -501,6 +527,7 @@ def main() -> int:
         "runtime_settings": {
             "text_only": True,
             "sequential": True,
+            "max_tokens": max_tokens,
         },
         "results": [],
     }
@@ -540,7 +567,7 @@ def main() -> int:
                 competition_id=competition_id,
                 problem_id=problem_id,
             )
-            result = model.solve(problem_text)
+            result = model.solve(problem_text, max_tokens=max_tokens)
         except Exception as exc:
             result = error_result(skeleton.get("requested_model_id") or alias, exc)
         measured_ms = int((time.monotonic() - call_start) * 1000)

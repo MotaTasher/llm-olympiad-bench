@@ -1,6 +1,7 @@
 # GPT (OpenAI)
 
 Этот адаптер запускает OpenAI-модели через общий `runner.py` в text-only режиме: без `tools`, поиска, code interpreter и function calling.
+Единый лимит completion-токенов задаётся через `runner.py --max-tokens`; `OPENAI_MAX_COMPLETION_TOKENS` остаётся fallback-настройкой.
 
 ## 1. Как получить ключ
 

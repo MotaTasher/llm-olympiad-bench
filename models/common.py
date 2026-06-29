@@ -7,6 +7,7 @@ import time
 from typing import Any, Callable
 
 from .base import SolveResult
+from .pricing import price_for
 from .telemetry import redact, structured_error
 
 
@@ -93,13 +94,3 @@ def error_result(model_id: str, error: Exception | str, latency_ms: int = 0) -> 
         error=safe_error,
         error_info=structured_error(error),
     )
-
-
-def price_for(model_id: str, prices: dict[str, tuple[float, float]], fallback: tuple[float, float]) -> tuple[float, float]:
-    normalized = model_id.lower()
-    if normalized in prices:
-        return prices[normalized]
-    for prefix, price in prices.items():
-        if normalized.startswith(prefix):
-            return price
-    return fallback

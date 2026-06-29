@@ -189,6 +189,18 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
 
+    def test_competition_page_shows_local_cost_calculator(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+
+        response = self.client.get("/competition/math_2026?max_tokens=2048&runs=3")
+        self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+
+        self.assertIn("Калькулятор стоимости", html)
+        self.assertIn("потолок 2048 output-токенов", html)
+        self.assertIn("GigaChat-2-Max", html)
+        self.assertIn("RUB", html)
+
     def test_weak_historical_model_does_not_create_scoring_column(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(model_id="gpt-5.4-mini", result_id="res_weak", run_id="run_weak")

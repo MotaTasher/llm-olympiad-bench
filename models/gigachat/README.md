@@ -1,6 +1,7 @@
 # GigaChat (Сбер)
 
 Этот адаптер запускает GigaChat через общий `runner.py` в text-only режиме: без `tools`, `functions`, `function_call` и внешних цепочек.
+Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `GIGACHAT_MAX_TOKENS` остаётся fallback-настройкой.
 
 ## 1. Как получить ключи
 

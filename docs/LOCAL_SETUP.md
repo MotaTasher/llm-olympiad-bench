@@ -74,7 +74,9 @@ data/results/<competition_id>/<problem_id>/<run_id>.json
 ID или названия. Страница проверки задачи идет в одну колонку: условие,
 закрытый эталон, ответ модели, затем форма оценки, история проверок, метрики и
 сырой JSON. Новую оценку нельзя сохранить без непустого имени в поле
-`Проверяющий`.
+`Проверяющий`. На страницах соревнования и задачи есть локальный калькулятор
+стоимости по активным моделям, числу запусков и потолку output-токенов; он не
+вызывает API провайдеров.
 
 ## 3. Если сайт пустой
 
@@ -189,8 +191,17 @@ RUNNER_MODELS=all
 python runner.py \
   --problem data/competitions/local_examples/example.json \
   --models openai:gpt-5.5,anthropic:claude-opus-4-8 \
+  --max-tokens 4096 \
   --run-id strong_pair
 ```
+
+Единый лимит output/completion-токенов можно задать CLI-флагом
+`--max-tokens` или переменной `RUNNER_MAX_TOKENS` в `config/models.env`.
+В committed-конфиге стоит `RUNNER_MAX_TOKENS=8000`. CLI-флаг имеет приоритет
+над `RUNNER_MAX_TOKENS`, а они вместе имеют приоритет над provider-specific
+переменными (`ANTHROPIC_MAX_TOKENS`,
+`OPENAI_MAX_COMPLETION_TOKENS`, `DEEPSEEK_MAX_TOKENS`, `GIGACHAT_MAX_TOKENS`,
+`YANDEX_MAX_TOKENS`).
 
 Не помещайте runtime-настройки в `models/*/secrets/.env`.
 

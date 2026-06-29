@@ -2,23 +2,9 @@ from __future__ import annotations
 
 from ..base import BaseModel, SolveResult
 from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
+from ..pricing import YANDEX_RUB_PER_1K as PRICES_RUB_PER_1K, estimate_cost
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
-
-
-# Approximate RUB pricing per 1000 total tokens. USD conversion is controlled by RUB_PER_USD.
-PRICES_RUB_PER_1K = {
-    "yandexgpt-5.1": 0.80,
-    "yandexgpt-5-lite": 0.20,
-    "yandexgpt-5-pro/latest": 0.80,
-    "yandexgpt-5.1/latest": 0.80,
-    "yandexgpt-5-lite/latest": 0.20,
-    "aliceai-llm/latest": 0.80,
-    "yandexgpt": 0.80,
-    "yandexgpt-pro": 0.80,
-    "yandexgpt-lite": 0.20,
-    "yandexgpt-pro-32k": 1.20,
-}
 
 
 class YandexGPTModel(BaseModel):
@@ -29,7 +15,7 @@ class YandexGPTModel(BaseModel):
     def model_id(self) -> str:
         return self._model
 
-    def solve(self, problem: str) -> SolveResult:
+    def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
         try:
             import requests
 
@@ -58,7 +44,7 @@ class YandexGPTModel(BaseModel):
             completion_options = {
                 "stream": False,
                 "temperature": float(env("YANDEX_TEMPERATURE", "0.15") or "0.15"),
-                "maxTokens": int(env("YANDEX_MAX_TOKENS", "8000") or "8000"),
+                "maxTokens": max_tokens or int(env("YANDEX_MAX_TOKENS", "8000") or "8000"),
             }
             reasoning_mode = env("YANDEX_REASONING_MODE")
             if reasoning_mode:
@@ -121,6 +107,12 @@ class YandexGPTModel(BaseModel):
             price_rub_per_1k = PRICES_RUB_PER_1K.get(self.model_id.lower(), 0.80)
             rub_per_usd = float(env("RUB_PER_USD", "90") or "90")
             cost_usd = (total_tokens / 1000) * price_rub_per_1k / rub_per_usd
+            cost = estimate_cost(
+                "yandexgpt",
+                self.model_id,
+                input_tokens=prompt_tokens,
+                output_tokens=completion_tokens,
+            )
             raw_response = safe_dict(data)
 
             return SolveResult(
@@ -135,23 +127,7 @@ class YandexGPTModel(BaseModel):
                 requested_model_id=self.model_id,
                 resolved_model_id=self.model_id,
                 request=request_payload,
-                cost={
-                    "currency": "USD",
-                    "input": None,
-                    "output": None,
-                    "cached_input": None,
-                    "reasoning": None,
-                    "total": round(cost_usd, 8),
-                    "pricing_source": "models/yandexgpt/yandexgpt.py",
-                    "pricing_version": "2026-06-29",
-                    "estimated": True,
-                    "exchange_rate": {"RUB_PER_USD": rub_per_usd},
-                    "native": {
-                        "currency": "RUB",
-                        "total": round((total_tokens / 1000) * price_rub_per_1k, 8),
-                        "price_per_1k_total_tokens": price_rub_per_1k,
-                    },
-                },
+                cost={**cost, "cached_input": None, "reasoning": None},
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

@@ -1,6 +1,7 @@
 # Claude (Anthropic)
 
 Этот адаптер запускает Claude через общий `runner.py` в text-only режиме: без `tools`, web search, computer use и внешних цепочек.
+Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `ANTHROPIC_MAX_TOKENS` остаётся fallback-настройкой.
 
 ## 1. Как получить ключ
 

@@ -343,6 +343,53 @@
       max-width: 280px;
       padding: 6px;
     }
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .calculator-form {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(150px, 220px) auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .calculator-form label:first-of-type {
+      grid-template-columns: minmax(0, 1fr) 120px;
+      align-items: end;
+    }
+    .calculator-form label:first-of-type span {
+      grid-column: 1 / -1;
+    }
+    .calculator-form input[type="range"] {
+      padding: 0;
+      accent-color: var(--accent);
+    }
+    .cost-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .cost-summary .metric {
+      margin: 0;
+      min-height: 58px;
+    }
+    .cost-summary .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .compact-table {
+      max-height: 360px;
+    }
+    .compact-table th:first-child,
+    .compact-table td:first-child {
+      min-width: 130px;
+      max-width: 180px;
+    }
     .evaluation-list {
       display: grid;
       gap: 8px;
@@ -391,6 +438,8 @@
       .attempt-sidebar { position: static; max-height: none; overflow: visible; }
       .metric-grid { grid-template-columns: 1fr; }
       th:first-child, td:first-child { min-width: 220px; }
+      .calculator-form { grid-template-columns: 1fr; }
+      .calculator-form label:first-of-type { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -465,6 +514,19 @@
       button.addEventListener('click', () => {
         const target = document.getElementById(button.dataset.scoreTarget);
         if (target) target.value = button.dataset.scoreSet;
+      });
+    });
+    document.querySelectorAll('.calculator-form').forEach((form) => {
+      const range = form.querySelector('[data-token-range]');
+      const number = form.querySelector('[data-token-number]');
+      if (!range || !number) return;
+      const sync = (source, target) => {
+        target.value = source.value;
+      };
+      range.addEventListener('input', () => sync(range, number));
+      number.addEventListener('input', () => sync(number, range));
+      form.addEventListener('submit', () => {
+        range.disabled = true;
       });
     });
     const reviewerInput = document.getElementById('global-reviewer');

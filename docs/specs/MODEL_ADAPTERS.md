@@ -9,7 +9,7 @@ class BaseModel(abc.ABC):
     @property
     def model_id(self) -> str: ...
 
-    def solve(self, problem: str) -> SolveResult: ...
+    def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult: ...
 ```
 
 `SolveResult` fields are:
@@ -33,6 +33,11 @@ class BaseModel(abc.ABC):
 - structured `error_info`.
 
 Adapters should fill provider-specific fields when the API exposes them, but must not invent missing metrics. If reasoning/cache usage or time-to-first-token is not returned or measured, leave it `null`/absent. `SolveResult.to_log_dict()` preserves legacy fields while adding normalized telemetry and redacting unsafe data.
+
+`max_tokens` is the runner-wide output/completion-token ceiling. Adapters map it
+to the provider's text completion field (`max_completion_tokens`, `max_tokens`,
+`maxTokens`, etc.) and include it in the safe request snapshot. When it is
+`None`, provider-specific env settings remain the fallback.
 
 ## Failure behavior
 
@@ -84,6 +89,9 @@ omitted, runner reads `RUNNER_MODELS` from `config/models.env`; the committed
 default is `RUNNER_MODELS=all`, so CLI runs match the scoring UI configured
 columns. Individual model specs may be mixed with aliases, for example
 `--models gpt,anthropic:claude-opus-4-8`.
+`runner.py --max-tokens N` overrides `RUNNER_MAX_TOKENS` (committed default:
+`8000`) and provider-specific token env vars for all selected adapters in that
+run.
 
 Current active set:
 

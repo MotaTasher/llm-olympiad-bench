@@ -1,0 +1,70 @@
+<section class="panel cost-calculator" aria-label="Калькулятор стоимости">
+  <div class="section-title">
+    <div>
+      <h2>Калькулятор стоимости</h2>
+      <div class="meta">
+        {{ cost_calculator.problem_count }} задач · {{ cost_calculator.runs }} запусков на модель · потолок {{ cost_calculator.max_tokens }} output-токенов
+      </div>
+    </div>
+    <span class="pill">локальная оценка</span>
+  </div>
+  <form class="calculator-form" method="get">
+    {% if request.args.get("model") %}<input type="hidden" name="model" value="{{ request.args.get("model") }}">{% endif %}
+    {% if request.args.get("attempt") %}<input type="hidden" name="attempt" value="{{ request.args.get("attempt") }}">{% endif %}
+    <label>
+      <span>Максимум output-токенов</span>
+      <input type="range" name="max_tokens" min="512" max="32000" step="512" value="{{ cost_calculator.max_tokens }}" data-token-range>
+      <input type="number" min="1" max="32000" step="1" name="max_tokens" value="{{ cost_calculator.max_tokens }}" data-token-number>
+    </label>
+    <label>
+      <span>Запусков на задачу</span>
+      <input type="number" min="1" max="1000" step="1" name="runs" value="{{ cost_calculator.runs }}">
+    </label>
+    <button type="submit">Пересчитать</button>
+  </form>
+  <div class="cost-summary">
+    <div class="metric">
+      <b>Всего по всем колонкам</b>
+      ${{ cost_calculator.usd_total_display }}
+    </div>
+    {% for total in cost_calculator.provider_totals %}
+      <div class="metric">
+        <b>{{ total.provider_label }}</b>
+        ${{ total.usd_display }}{% if total.native_display %}<span>{{ total.native_display }}</span>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="table-wrap compact-table" role="region" aria-label="Стоимость по моделям" tabindex="0">
+    <table>
+      <thead>
+        <tr>
+          <th>Компания</th>
+          <th>Модель</th>
+          <th>Input tokens</th>
+          <th>Output cap</th>
+          <th>Всего tokens</th>
+          <th>Стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in cost_calculator.rows %}
+          <tr>
+            <td>{{ row.provider_label }}</td>
+            <td>{{ row.label }}</td>
+            <td>{{ "{:,}".format(row.prompt_tokens).replace(",", " ") }}</td>
+            <td>{{ "{:,}".format(row.completion_tokens).replace(",", " ") }}</td>
+            <td>{{ "{:,}".format(row.total_tokens).replace(",", " ") }}</td>
+            <td>
+              ${{ row.usd_display }}
+              {% if row.native_display %}<div class="meta">{{ row.native_display }}</div>{% endif %}
+              {% if row.pricing_note %}<div class="meta">{{ row.pricing_note }}</div>{% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="meta">
+    Input-токены оценены по длине system prompt и условий задач; output считается по выбранному максимуму. Реальная сумма может быть ниже.
+  </div>
+</section>

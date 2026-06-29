@@ -6,22 +6,13 @@ from ..common import (
     ensure_text_only_request,
     env,
     error_result,
-    price_for,
     require_env,
     safe_dict,
     timed,
 )
+from ..pricing import DEEPSEEK_USD_PER_1M as PRICES_USD_PER_1M, estimate_cost, price_for
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
-
-
-# USD per 1M tokens: input cache miss, output.
-PRICES_USD_PER_1M = {
-    "deepseek-v4-flash": (0.14, 0.28),
-    "deepseek-v4-pro": (0.435, 0.87),
-    "deepseek-chat": (0.14, 0.28),
-    "deepseek-reasoner": (0.14, 0.28),
-}
 
 
 class DeepSeekModel(BaseModel):
@@ -32,7 +23,7 @@ class DeepSeekModel(BaseModel):
     def model_id(self) -> str:
         return self._model
 
-    def solve(self, problem: str) -> SolveResult:
+    def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
         try:
             from openai import OpenAI
 
@@ -44,8 +35,13 @@ class DeepSeekModel(BaseModel):
             kwargs = {}
             if self.model_id not in {"deepseek-reasoner"}:
                 kwargs["temperature"] = float(env("DEEPSEEK_TEMPERATURE", "0.3") or "0.3")
-            if env("DEEPSEEK_MAX_TOKENS") is not None:
-                kwargs["max_tokens"] = int(env("DEEPSEEK_MAX_TOKENS", "4096") or "4096")
+            configured_max = max_tokens or (
+                int(env("DEEPSEEK_MAX_TOKENS", "4096") or "4096")
+                if env("DEEPSEEK_MAX_TOKENS") is not None
+                else None
+            )
+            if configured_max is not None:
+                kwargs["max_tokens"] = configured_max
             messages = [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": problem},
@@ -78,6 +74,12 @@ class DeepSeekModel(BaseModel):
                 prompt_tokens * input_per_1m / 1_000_000
                 + completion_tokens * output_per_1m / 1_000_000
             )
+            cost = estimate_cost(
+                "deepseek",
+                self.model_id,
+                input_tokens=prompt_tokens,
+                output_tokens=completion_tokens,
+            )
 
             message = response.choices[0].message
             answer = message.content or ""
@@ -98,18 +100,7 @@ class DeepSeekModel(BaseModel):
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
                 request=request_payload,
-                cost={
-                    "currency": "USD",
-                    "input": round(prompt_tokens * input_per_1m / 1_000_000, 8),
-                    "output": round(completion_tokens * output_per_1m / 1_000_000, 8),
-                    "cached_input": None,
-                    "reasoning": None,
-                    "total": round(cost_usd, 8),
-                    "pricing_source": "models/deepseek/deepseek.py",
-                    "pricing_version": "2026-06-29",
-                    "estimated": True,
-                    "exchange_rate": None,
-                },
+                cost={**cost, "cached_input": None, "reasoning": None},
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

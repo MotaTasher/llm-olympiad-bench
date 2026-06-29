@@ -216,6 +216,11 @@ Run status is `running`, `completed`, `partial` or `failed`. Result status is `r
 
 `score*` fields remain in new run entries for backward compatibility. The authoritative current evaluations are sidecars.
 
+When runner receives a unified output-token ceiling, the value is recorded as
+`runtime.cli.max_tokens` and `runtime_settings.max_tokens`. Adapter request
+snapshots also include the provider-specific request key used for that ceiling,
+for example `max_completion_tokens`, `max_tokens` or `maxTokens`.
+
 Do not mutate `results[]` order after a score sidecar exists.
 
 Requests, raw responses, errors and tracebacks are recursively redacted before persistence. API keys, Authorization headers, cookies, client secrets, credentials and token values that are credentials must not be stored. Token-count fields such as `prompt_tokens`, `completion_tokens`, `total_tokens`, `reasoning_tokens`, `max_tokens` and `time_to_first_token_ms` are not secrets.

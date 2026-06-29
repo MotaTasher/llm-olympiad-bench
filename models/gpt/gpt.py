@@ -6,22 +6,13 @@ from ..common import (
     ensure_text_only_request,
     env,
     error_result,
-    price_for,
     require_env,
     safe_dict,
     timed,
 )
+from ..pricing import OPENAI_USD_PER_1M as PRICES_USD_PER_1M, estimate_cost, price_for
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
-
-
-# USD per 1M tokens: input, output.
-PRICES_USD_PER_1M = {
-    "gpt-4o": (2.50, 10.00),
-    "gpt-4o-mini": (0.15, 0.60),
-    "o3": (2.00, 8.00),
-    "o4-mini": (1.10, 4.40),
-}
 
 
 class GPTModel(BaseModel):
@@ -32,16 +23,19 @@ class GPTModel(BaseModel):
     def model_id(self) -> str:
         return self._model
 
-    def solve(self, problem: str) -> SolveResult:
+    def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
         try:
             from openai import OpenAI
 
             client = OpenAI(api_key=require_env("OPENAI_API_KEY"))
             kwargs = {}
-            if env("OPENAI_MAX_COMPLETION_TOKENS") is not None:
-                kwargs["max_completion_tokens"] = int(
-                    env("OPENAI_MAX_COMPLETION_TOKENS", "4096") or "4096"
-                )
+            configured_max = max_tokens or (
+                int(env("OPENAI_MAX_COMPLETION_TOKENS", "4096") or "4096")
+                if env("OPENAI_MAX_COMPLETION_TOKENS") is not None
+                else None
+            )
+            if configured_max is not None:
+                kwargs["max_completion_tokens"] = configured_max
             if env("OPENAI_REASONING_EFFORT") is not None:
                 kwargs["reasoning_effort"] = env("OPENAI_REASONING_EFFORT")
             messages = [
@@ -75,6 +69,12 @@ class GPTModel(BaseModel):
                 prompt_tokens * input_per_1m / 1_000_000
                 + completion_tokens * output_per_1m / 1_000_000
             )
+            cost = estimate_cost(
+                "openai",
+                self.model_id,
+                input_tokens=prompt_tokens,
+                output_tokens=completion_tokens,
+            )
             raw_response = safe_dict(response)
 
             return SolveResult(
@@ -89,18 +89,7 @@ class GPTModel(BaseModel):
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
                 request=request_payload,
-                cost={
-                    "currency": "USD",
-                    "input": round(prompt_tokens * input_per_1m / 1_000_000, 8),
-                    "output": round(completion_tokens * output_per_1m / 1_000_000, 8),
-                    "cached_input": None,
-                    "reasoning": None,
-                    "total": round(cost_usd, 8),
-                    "pricing_source": "models/gpt/gpt.py",
-                    "pricing_version": "2026-06-29",
-                    "estimated": True,
-                    "exchange_rate": None,
-                },
+                cost={**cost, "cached_input": None, "reasoning": None},
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

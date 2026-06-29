@@ -5,6 +5,7 @@ import binascii
 
 from ..base import BaseModel, SolveResult
 from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
+from ..pricing import estimate_cost
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
@@ -63,7 +64,7 @@ class GigaChatModel(BaseModel):
             "GIGACHAT_CLIENT_SECRET. Put them in models/gigachat/secrets/.env"
         )
 
-    def solve(self, problem: str) -> SolveResult:
+    def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
         try:
             from gigachat import GigaChat
 
@@ -89,8 +90,13 @@ class GigaChatModel(BaseModel):
                 payload["temperature"] = float(env("GIGACHAT_TEMPERATURE", "0.1") or "0.1")
             if env("GIGACHAT_TOP_P") is not None:
                 payload["top_p"] = float(env("GIGACHAT_TOP_P", "0.9") or "0.9")
-            if env("GIGACHAT_MAX_TOKENS") is not None:
-                payload["max_tokens"] = int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
+            configured_max = max_tokens or (
+                int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
+                if env("GIGACHAT_MAX_TOKENS") is not None
+                else None
+            )
+            if configured_max is not None:
+                payload["max_tokens"] = configured_max
             if env("GIGACHAT_REPETITION_PENALTY") is not None:
                 payload["repetition_penalty"] = float(
                     env("GIGACHAT_REPETITION_PENALTY", "1.05") or "1.05"
@@ -112,31 +118,26 @@ class GigaChatModel(BaseModel):
             completion_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
             answer = response.choices[0].message.content or ""
             raw_response = safe_dict(response)
+            cost = estimate_cost(
+                "gigachat",
+                self.model_id,
+                input_tokens=prompt_tokens,
+                output_tokens=completion_tokens,
+            )
 
             return SolveResult(
                 model=self.model_id,
                 answer=answer,
                 prompt_tokens=prompt_tokens,
                 completion_tokens=completion_tokens,
-                cost_usd=0.0,
+                cost_usd=cost.get("total") or 0.0,
                 latency_ms=latency_ms,
                 raw_response=raw_response,
                 provider="gigachat",
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
                 request=request_payload,
-                cost={
-                    "currency": "USD",
-                    "input": None,
-                    "output": None,
-                    "cached_input": None,
-                    "reasoning": None,
-                    "total": None,
-                    "pricing_source": None,
-                    "pricing_version": None,
-                    "estimated": True,
-                    "exchange_rate": None,
-                },
+                cost={**cost, "cached_input": None, "reasoning": None},
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

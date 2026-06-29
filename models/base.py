@@ -97,5 +97,5 @@ class BaseModel(abc.ABC):
         ...
 
     @abc.abstractmethod
-    def solve(self, problem: str) -> SolveResult:
+    def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
         ...

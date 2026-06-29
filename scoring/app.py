@@ -13,6 +13,7 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 try:
+    from .costs import build_cost_calculator, calculator_inputs
     from .repository import (
         anonymized_attempts,
         build_catalog,
@@ -28,6 +29,7 @@ try:
         upsert_imported_evaluation,
     )
 except ImportError:  # pragma: no cover - direct `python scoring/app.py`
+    from scoring.costs import build_cost_calculator, calculator_inputs  # type: ignore
     from scoring.repository import (  # type: ignore
         anonymized_attempts,
         build_catalog,
@@ -145,9 +147,11 @@ def competition_page(competition_id: str):
     competition = data["competition_map"].get(competition_id)
     if not competition:
         abort(404)
+    cost_inputs = calculator_inputs(request.args)
     return render_template(
         "competition.html",
         competition=competition,
+        cost_calculator=build_cost_calculator(competition, **cost_inputs),
         warnings=data["warnings"],
     )
 
@@ -182,6 +186,7 @@ def problem_page(competition_id: str, problem_id: str):
     state = selected_state(problem, request.args.get("model"))
     attempt = selected_attempt_for(state, request.args.get("attempt"))
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
+    cost_inputs = calculator_inputs(request.args)
     return render_template(
         "problem.html",
         competition=competition,
@@ -190,6 +195,11 @@ def problem_page(competition_id: str, problem_id: str):
         selected_attempt=attempt,
         previous_id=previous_id,
         next_id=next_id,
+        cost_calculator=build_cost_calculator(
+            competition,
+            problem_id=problem_id,
+            **cost_inputs,
+        ),
         warnings=data["warnings"],
     )
 
