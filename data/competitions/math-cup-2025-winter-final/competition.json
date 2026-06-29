@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "math-cup-2025-winter-final",
+  "title": "Math Cup 2025. Финал зимы",
+  "description": "Финал зимы",
+  "date": "2025",
+  "source": "CS Space",
+  "metadata": {
+    "document_type": "Решения",
+    "max_score": 3
+  }
+}
