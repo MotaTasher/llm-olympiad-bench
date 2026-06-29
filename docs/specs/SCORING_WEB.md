@@ -63,14 +63,6 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
 
-Problem pages include a server-rendered per-task cost calculator. Query
-parameters `max_tokens` and `runs` control the output-token ceiling and launch
-count for the selected task/model columns. The calculator does not call
-provider APIs; it estimates input tokens from the system prompt and problem
-statement length and treats `max_tokens` as the full output-token budget.
-RUB-native tariffs are converted to USD for cross-provider totals while still
-displaying the native RUB amount.
-
 The anonymous scoring page hides model/provider names, metrics and raw JSON from
 the reviewer UI. It displays one answer at a time, followed by a full-width
 answer-selection panel with numbered navigation and a "next solution" control.

@@ -195,17 +195,17 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
 
-    def test_problem_page_shows_server_cost_calculator(self) -> None:
+    def test_problem_page_does_not_show_legacy_cost_calculator(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
 
         response = self.client.get("/competition/math_2026/problem/task_01?max_tokens=2048&runs=3")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
 
-        self.assertIn("Калькулятор стоимости", html)
-        self.assertIn("потолок 2048 output-токенов", html)
-        self.assertIn("GigaChat-2-Max", html)
-        self.assertIn("RUB", html)
+        self.assertNotIn("Калькулятор стоимости", html)
+        self.assertNotIn("потолок 2048 output-токенов", html)
+        self.assertNotIn("Пересчитать", html)
+        self.assertNotIn("calculator-form", html)
 
     def test_active_budget_model_creates_scoring_column(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -289,7 +289,10 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("data-cost-number=\"finalTokens\"", html)
         self.assertIn("data-cost-competition=\"math_2026\"", html)
         self.assertIn("data-cost-model=\"openai:gpt-5.5\"", html)
+        self.assertIn("cost-run-grid", html)
         self.assertIn("API-вызовы не выполняются", html)
+        self.assertNotIn("Пересчитать", html)
+        self.assertNotIn("calculator-form", html)
         self.assertNotIn("Запустить соревнование", html)
 
         self.assertEqual(

@@ -29,15 +29,15 @@
       </div>
     </section>
 
-    <section class="panel">
+    <section class="panel cost-run-panel">
       <h2>Стоимость прогона</h2>
-      <div class="cost-summary">
-        <div class="stats">
+      <div class="cost-run-grid">
+        <div class="cost-run-totals">
           <span class="pill">итого: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
           <span class="pill" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
         </div>
-        <p class="meta">Расчёт приблизительный: локальные price tables, грубая оценка токенов, курс USD/RUB из ЦБ. API-вызовы не выполняются, run-log не создаются.</p>
-        <div class="table-wrap cost-table" role="region" aria-label="Оценка стоимости по моделям" tabindex="0">
+        <p class="meta cost-run-note">Расчёт приблизительный: локальные price tables, грубая оценка токенов, курс USD/RUB из ЦБ. API-вызовы не выполняются, run-log не создаются.</p>
+        <div class="table-wrap cost-run-table" role="region" aria-label="Оценка стоимости по моделям" tabindex="0">
           <table>
             <thead>
               <tr>
