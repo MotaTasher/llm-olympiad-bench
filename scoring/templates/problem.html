@@ -76,6 +76,23 @@
             {% set cost = result.cost if result.cost is mapping else {} %}
             {% set evaluation = selected_attempt.evaluation or {} %}
 
+            {% if selected_state and selected_state.attempts|length > 1 %}
+              <nav class="attempt-switcher" aria-label="Выбор попытки">
+                {% for attempt in selected_state.attempts %}
+                  <a
+                    class="attempt-chip {{ 'active' if attempt.result_id == selected_attempt.result_id else '' }}"
+                    href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=selected_state.model_key, attempt=attempt.result_id) }}"
+                    aria-current="{{ 'true' if attempt.result_id == selected_attempt.result_id else 'false' }}"
+                    title="run_id: {{ attempt.run_id }} · result_id: {{ attempt.result_id }}"
+                  >
+                    <b>{{ loop.index }}</b>
+                    <span>{{ attempt.run_timestamp or "—" }}</span>
+                    <em>{% if attempt.score is not none %}{{ attempt.score }} / {{ "%g"|format(problem.max_score) }}{% else %}без оценки{% endif %}</em>
+                  </a>
+                {% endfor %}
+              </nav>
+            {% endif %}
+
             <div class="metric-grid" aria-label="Метрики ответа">
               <div class="metric"><b>Provider</b>{{ selected_attempt.provider or "—" }}</div>
               <div class="metric"><b>Model</b>{{ result.resolved_model_id or selected_attempt.model_id or "—" }}</div>
@@ -153,17 +170,21 @@
 
         {% if selected_state and selected_state.attempts %}
           <section class="panel">
-            <h2>Предыдущие попытки</h2>
-            <div class="stack">
+            <h2>Все попытки</h2>
+            <div class="attempt-list">
               {% for attempt in selected_state.attempts %}
-                <div class="empty">
-                  <b>{{ attempt.run_timestamp or "—" }}</b>
+                <a
+                  class="attempt-card {{ 'active' if selected_attempt and attempt.result_id == selected_attempt.result_id else '' }}"
+                  href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=selected_state.model_key, attempt=attempt.result_id) }}"
+                  aria-current="{{ 'true' if selected_attempt and attempt.result_id == selected_attempt.result_id else 'false' }}"
+                >
+                  <b>{{ loop.index }}. {{ attempt.run_timestamp or "—" }}</b>
                   <div class="meta">
                     run_id: {{ attempt.run_id }} · result_id: {{ attempt.result_id }} ·
                     {% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}
                   </div>
                   {% if attempt.error %}<div>Ошибка: {{ attempt.error[:180] }}</div>{% endif %}
-                </div>
+                </a>
               {% endfor %}
             </div>
           </section>

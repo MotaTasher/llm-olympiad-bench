@@ -56,6 +56,17 @@ def clean_id(value: str) -> str:
         abort(404)
 
 
+def selected_attempt_for(state: dict | None, attempt_id: str | None) -> dict | None:
+    if not state:
+        return None
+    attempts = state.get("attempts") or []
+    if attempt_id:
+        for attempt in attempts:
+            if attempt.get("result_id") == attempt_id or attempt.get("run_id") == attempt_id:
+                return attempt
+    return state.get("latest")
+
+
 @app.get("/")
 def index():
     data = catalog()
@@ -90,13 +101,14 @@ def problem_page(competition_id: str, problem_id: str):
     if not competition or not problem:
         abort(404)
     state = selected_state(problem, request.args.get("model"))
+    attempt = selected_attempt_for(state, request.args.get("attempt"))
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
     return render_template(
         "problem.html",
         competition=competition,
         problem=problem,
         selected_state=state,
-        selected_attempt=state.get("latest") if state else None,
+        selected_attempt=attempt,
         previous_id=previous_id,
         next_id=next_id,
         warnings=data["warnings"],
@@ -121,6 +133,7 @@ def review_run(competition_id: str, problem_id: str, run_id: str):
                         competition_id=competition_id,
                         problem_id=problem_id,
                         model=state["model_key"],
+                        attempt=attempt.get("result_id"),
                     )
                 )
     abort(404)
@@ -142,6 +155,7 @@ def legacy_review_run(run_id: str):
                                 competition_id=competition["competition_id"],
                                 problem_id=problem["problem_id"],
                                 model=state["model_key"],
+                                attempt=attempt.get("result_id"),
                             )
                         )
     abort(404)
@@ -175,6 +189,7 @@ def score():
                 competition_id=competition_id,
                 problem_id=problem_id,
                 model=model_key or attempt["model_key"],
+                attempt=attempt["result_id"],
             )
         )
     max_score = float(problem["max_score"])
@@ -186,6 +201,7 @@ def score():
                 competition_id=competition_id,
                 problem_id=problem_id,
                 model=model_key or attempt["model_key"],
+                attempt=attempt["result_id"],
             )
         )
     if score_value.is_integer():
@@ -212,6 +228,7 @@ def score():
             competition_id=competition_id,
             problem_id=problem_id,
             model=model_key or attempt["model_key"],
+            attempt=attempt["result_id"],
         )
     )
 

@@ -46,12 +46,12 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | --- | --- |
 | `GET /` | Russian competition cards from canonical data plus log/evaluation counts |
 | `GET /competition/<competition_id>` | matrix: rows are tasks, columns are models |
-| `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>` | task statement, selected model answer, metrics, score form, previous attempts |
-| `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | compatibility redirect to the task page with a model selected |
+| `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
+| `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | compatibility redirect to the task page with a model and attempt selected |
 | `GET /run/<run_id>` | legacy lookup and redirect |
 | `POST /score` | validates run/result/score and writes sidecar evaluation keyed by `result_id` |
 
-`model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. Configured model columns come from provider `versions.py` `VERSIONS` entries only. Models found in logs are added as historical columns when attempts exist for the current competition/problem; `LEGACY_VERSIONS` does not seed the default matrix.
+`model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. Models found in logs are added as historical columns when attempts exist for the current competition/problem; `LEGACY_VERSIONS` does not seed the default matrix.
 
 ## Cell status
 
