@@ -136,6 +136,18 @@
       gap: 16px;
       align-items: start;
     }
+    .review-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .answer-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 180px;
+      gap: 16px;
+      align-items: start;
+    }
     .panel { padding: 16px; }
     .rendered {
       max-width: 78ch;
@@ -209,6 +221,29 @@
       text-decoration: none;
     }
     .attempt-card:hover, .attempt-chip:hover { border-color: #9fb5b8; }
+    .attempt-sidebar {
+      position: sticky;
+      top: 78px;
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+    .attempt-sidebar .attempt-switcher {
+      display: grid;
+      grid-template-columns: 1fr;
+      overflow-x: visible;
+      overflow-y: visible;
+      padding: 0;
+      margin: 12px 0;
+      border-bottom: 0;
+    }
+    .attempt-sidebar .attempt-chip {
+      min-width: 0;
+      width: 100%;
+    }
+    .attempt-sidebar .button {
+      width: 100%;
+      margin-top: 8px;
+    }
     .result-head {
       display: flex;
       gap: 12px;
@@ -265,6 +300,8 @@
     @media (max-width: 900px) {
       .topbar, main { width: min(100% - 20px, 1440px); }
       .layout { grid-template-columns: 1fr; }
+      .review-layout, .answer-layout { grid-template-columns: 1fr; }
+      .attempt-sidebar { position: static; max-height: none; overflow: visible; }
       .metric-grid { grid-template-columns: 1fr; }
       th:first-child, td:first-child { min-width: 220px; }
     }

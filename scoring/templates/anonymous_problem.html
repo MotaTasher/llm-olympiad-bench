@@ -24,7 +24,7 @@
       </div>
     </section>
 
-    <div class="layout">
+    <div class="review-layout">
       <div class="stack">
         <section class="panel">
           <h2>Условие</h2>
@@ -52,27 +52,8 @@
         {% endif %}
       </div>
 
-      <div class="stack">
+      <div class="answer-layout">
         {% if attempts and selected_attempt %}
-          <section class="panel">
-            <h2>Выбор решения</h2>
-            <div class="meta">Порядок случайный для этого захода и закреплен в ссылке.</div>
-            <nav class="attempt-switcher" aria-label="Выбор анонимного решения">
-              {% for attempt in attempts %}
-                <a
-                  class="attempt-chip {{ 'active' if loop.index == selected_index else '' }}"
-                  href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=loop.index) }}"
-                  aria-current="{{ 'true' if loop.index == selected_index else 'false' }}"
-                >
-                  <b>{{ loop.index }}</b>
-                  <span>{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
-                </a>
-              {% endfor %}
-            </nav>
-            <a class="button" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=next_index) }}">Следующее решение</a>
-            <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">Перемешать заново</a>
-          </section>
-
           {% set attempt = selected_attempt %}
           {% set result = attempt.result %}
           {% set evaluation = attempt.evaluation or {} %}
@@ -130,6 +111,25 @@
               {% endif %}
             </form>
           </section>
+
+          <aside class="panel attempt-sidebar">
+            <h2>Выбор решения</h2>
+            <div class="meta">Порядок случайный для этого захода и закреплен в ссылке.</div>
+            <nav class="attempt-switcher" aria-label="Выбор анонимного решения">
+              {% for attempt in attempts %}
+                <a
+                  class="attempt-chip {{ 'active' if loop.index == selected_index else '' }}"
+                  href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=loop.index) }}"
+                  aria-current="{{ 'true' if loop.index == selected_index else 'false' }}"
+                >
+                  <b>{{ loop.index }}</b>
+                  <span>{% if attempt.score is not none %}оценка {{ attempt.score }}{% else %}без оценки{% endif %}</span>
+                </a>
+              {% endfor %}
+            </nav>
+            <a class="button" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, seed=seed, n=next_index) }}">Следующее</a>
+            <a class="button secondary" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">Перемешать</a>
+          </aside>
         {% else %}
           <section class="panel">
             <div class="empty">Для этой задачи пока нет успешных ответов моделей.</div>
