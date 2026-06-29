@@ -1,0 +1,21 @@
+{
+  "evaluations": {
+    "legacy_aec3fa04895ac215e51169eb": {
+      "result_id": "legacy_aec3fa04895ac215e51169eb",
+      "result_index": 0,
+      "model_key": "unknown:deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "evaluator": "deploy-check",
+      "score": 5,
+      "max_score": 10.0,
+      "score_category": "partial",
+      "feedback": "post-pull smoke check",
+      "updated_at": "2026-06-29T07:16:11.316250Z"
+    }
+  },
+  "schema_version": 2,
+  "competition_id": "local_examples",
+  "problem_id": "example",
+  "run_id": "2026_06_28_14_02_06_structured_log_smoke",
+  "updated_at": "2026-06-29T07:16:11.316250Z"
+}

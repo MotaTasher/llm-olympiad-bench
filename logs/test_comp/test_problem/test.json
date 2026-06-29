@@ -1,0 +1,7 @@
+{
+  "competition": "test_comp",
+  "problem": "test_problem",
+  "run_id": "test",
+  "answer": "This is a deployment smoke test.",
+  "expected": "The UI should list this run."
+}

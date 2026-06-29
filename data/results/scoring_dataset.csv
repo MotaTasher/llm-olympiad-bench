@@ -1,0 +1,2 @@
+competition_id,competition_title,problem_id,problem_title,run_id,result_index,timestamp,git_hash,problem_file,problem_text,model,answer,error,prompt_tokens,completion_tokens,cost_usd,latency_ms,score,scored_by,scored_at,score_comment,log_path,result_path
+test_comp,test_comp,test_problem,test_problem,test,0,,,,,test,This is a deployment smoke test.,,0,0,0.0,0,4,Мотя,2026-06-28T14:52:18.953568+00:00,"ну соу-соу, не выглядит, как норм решение, но мне не хвататет компетенций оценить",logs/test_comp/test_problem/test.json,data/results/test_comp/test_problem/test.json

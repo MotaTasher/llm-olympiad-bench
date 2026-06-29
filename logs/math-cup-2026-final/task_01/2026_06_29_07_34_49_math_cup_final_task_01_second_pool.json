@@ -1,0 +1,709 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_06_29_07_34_49_math_cup_final_task_01_second_pool",
+  "timestamp": "2026-06-29T07:34:49.727236Z",
+  "started_at": "2026-06-29T07:34:49.727236Z",
+  "completed_at": "2026-06-29T07:36:28.700429Z",
+  "duration_ms": 98927,
+  "status": "completed",
+  "git_hash": "5c124b7",
+  "git": {
+    "hash": "5c124b7",
+    "full_hash": "5c124b7c85a0d4704ac8d14cf3d25bba1307f1e6",
+    "branch": "main",
+    "dirty": false
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_01.json",
+      "--models",
+      "gpt,claude,gigachat,yandexgpt,deepseek",
+      "--run-id",
+      "math_cup_final_task_01_second_pool"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_01.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "gpt,claude,gigachat,yandexgpt,deepseek",
+      "run_id": "math_cup_final_task_01_second_pool",
+      "logs_dir": "logs",
+      "allow_env_model_overrides": false
+    },
+    "requested_models": [
+      "gpt",
+      "claude",
+      "gigachat",
+      "yandexgpt",
+      "deepseek"
+    ],
+    "python": {
+      "version": "3.13.2",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Darwin",
+      "release": "25.5.0",
+      "machine": "arm64"
+    },
+    "packages": {
+      "anthropic": "0.105.2",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.40.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.32.3"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1"
+    }
+  },
+  "requested_models": [
+    "gpt",
+    "claude",
+    "gigachat",
+    "yandexgpt",
+    "deepseek"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал",
+    "date": "2026",
+    "source": "CS Space",
+    "metadata": {
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_01",
+  "problem_number": 1,
+  "problem_title": "Произведение",
+  "problem_file": "data/competitions/math-cup-2026-final/task_01.json",
+  "problem_text": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_01",
+    "number": 1,
+    "title": "Произведение",
+    "statement": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]",
+    "answer": "\\(2e^{\\frac{\\pi}{2}-2}\\).",
+    "solution": "Обозначим искомый предел за \\(L\\). Прологарифмировав произведение, получаем риманову сумму:\n\\[\n\\ln L=\\lim_{n\\to\\infty}\\frac1n\\sum_{k=1}^{n}\\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right)=\\int_0^1\\ln(1+x^2)\\,dx.\n\\]\n\n**Решение 1.** Интегрируем по частям:\n\\[\n\\int_0^1\\ln(1+x^2)\\,dx=[x\\ln(1+x^2)]_0^1-2\\int_0^1\\frac{x^2}{1+x^2}\\,dx\n=\\ln2-2\\int_0^1\\frac{x^2}{1+x^2}\\,dx.\n\\]\nТак как \\(\\frac{x^2}{1+x^2}=1-\\frac1{1+x^2}\\), имеем\n\\[\n\\int_0^1\\frac{x^2}{1+x^2}\\,dx=[x-\\arctan x]_0^1=1-\\frac\\pi4,\n\\]\nпоэтому\n\\[\n\\ln L=\\ln2-2\\left(1-\\frac\\pi4\\right)=\\ln2+\\frac\\pi2-2.\n\\]\n\n**Решение 2.** При \\(|x|\\le1\\) равномерно сходится разложение\n\\[\n\\ln(1+x^2)=\\sum_{m\\ge1}\\frac{(-1)^{m-1}x^{2m}}m,\n\\]\nпоэтому его можно интегрировать почленно:\n\\[\n\\int_0^1\\ln(1+x^2)\\,dx\n=\\sum_{m=1}^{\\infty}\\frac{(-1)^{m-1}}{m(2m+1)}\n=\\sum_{m=1}^{\\infty}\\frac{(-1)^{m-1}}m-2\\sum_{m=1}^{\\infty}\\frac{(-1)^{m-1}}{2m+1}\n=\\ln2+2\\left(1-\\frac\\pi4\\right).\n\\]\n\n**Решение 3.** Введём параметр: пусть\n\\[\nI(a)=\\int_0^1\\ln(1+ax^2)\\,dx,\n\\]\nтогда \\(I(0)=0\\), а нужное значение равно \\(I(1)\\). Дифференцируя,\n\\[\nI'(a)=\\int_0^1\\frac{x^2}{1+ax^2}\\,dx=\\frac1a-\\frac{\\arctan\\sqrt a}{a\\sqrt a}.\n\\]\nИнтегрируя по \\(a\\) от \\(0\\) до \\(1\\), получаем то же значение \\(\\ln2+\\frac\\pi2-2\\).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        1
+      ]
+    }
+  },
+  "problem_hash": "23ea479db1f9f82812edd308afff626858d68a6a5d6323e184a6b9f3637c6ff2",
+  "problem_text_hash": "2ebbf1944484036ab406c0c5e5e9355b7f9d7f1341319829348eea7ef45a724a",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true
+  },
+  "results": [
+    {
+      "result_id": "res_c10bca017a722f371a752ae8",
+      "result_index": 0,
+      "provider": "openai",
+      "alias": "gpt",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.5",
+      "resolved_model_id": "gpt-5.5-2026-04-23",
+      "model": "gpt-5.5",
+      "attempt": 1,
+      "started_at": "2026-06-29T07:34:49.786567Z",
+      "completed_at": "2026-06-29T07:35:11.810319Z",
+      "status": "success",
+      "request": {
+        "model": "gpt-5.5",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]"
+          }
+        ],
+        "max_completion_tokens": 12000,
+        "reasoning_effort": "high",
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Обозначим\n\n\\[\nP_n=\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]\n\nТак как\n\n\\[\n\\frac{n^2+k^2}{n^2}=1+\\left(\\frac{k}{n}\\right)^2>0,\n\\]\n\nможно перейти к логарифму:\n\n\\[\n\\ln P_n\n=\\sum_{k=1}^{n}\\frac1n \\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right).\n\\]\n\nТо есть\n\n\\[\n\\ln P_n=\\frac1n\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right),\n\\qquad\nf(x)=\\ln(1+x^2).\n\\]\n\nФункция \\(f\\) непрерывна на \\([0,1]\\), поэтому правая сумма Римана сходится к интегралу:\n\n\\[\n\\frac1n\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right)\n\\to \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nВычислим интеграл. Интегрируя по частям, получаем:\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\left[x\\ln(1+x^2)\\right]_0^1\n-\n\\int_0^1 x\\cdot \\frac{2x}{1+x^2}\\,dx.\n\\]\n\nСледовательно,\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\ln 2\n-\n2\\int_0^1 \\frac{x^2}{1+x^2}\\,dx.\n\\]\n\nНо\n\n\\[\n\\frac{x^2}{1+x^2}=1-\\frac1{1+x^2},\n\\]\n\nпоэтому\n\n\\[\n\\int_0^1 \\frac{x^2}{1+x^2}\\,dx\n=\n\\int_0^1 1\\,dx-\\int_0^1\\frac{dx}{1+x^2}\n=\n1-\\arctan 1\n=\n1-\\frac{\\pi}{4}.\n\\]\n\nЗначит,\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\ln 2-2\\left(1-\\frac{\\pi}{4}\\right)\n=\n\\ln 2-2+\\frac{\\pi}{2}.\n\\]\n\nИтак,\n\n\\[\n\\ln P_n \\to \\ln 2-2+\\frac{\\pi}{2}.\n\\]\n\nПереходя обратно от логарифма, получаем\n\n\\[\nP_n \\to \\exp\\left(\\ln 2-2+\\frac{\\pi}{2}\\right)\n=\n2e^{\\frac{\\pi}{2}-2}.\n\\]\n\nОтвет:\n\n\\[\n\\boxed{2e^{\\frac{\\pi}{2}-2}}.\n\\]",
+      "prompt_tokens": 190,
+      "completion_tokens": 1382,
+      "cost_usd": 0.014295,
+      "latency_ms": 21610,
+      "raw_response": {
+        "id": "chatcmpl-Dw0o0HAIAImBmAoSov5kEnnaVhHzs",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Обозначим\n\n\\[\nP_n=\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]\n\nТак как\n\n\\[\n\\frac{n^2+k^2}{n^2}=1+\\left(\\frac{k}{n}\\right)^2>0,\n\\]\n\nможно перейти к логарифму:\n\n\\[\n\\ln P_n\n=\\sum_{k=1}^{n}\\frac1n \\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right).\n\\]\n\nТо есть\n\n\\[\n\\ln P_n=\\frac1n\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right),\n\\qquad\nf(x)=\\ln(1+x^2).\n\\]\n\nФункция \\(f\\) непрерывна на \\([0,1]\\), поэтому правая сумма Римана сходится к интегралу:\n\n\\[\n\\frac1n\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right)\n\\to \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nВычислим интеграл. Интегрируя по частям, получаем:\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\left[x\\ln(1+x^2)\\right]_0^1\n-\n\\int_0^1 x\\cdot \\frac{2x}{1+x^2}\\,dx.\n\\]\n\nСледовательно,\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\ln 2\n-\n2\\int_0^1 \\frac{x^2}{1+x^2}\\,dx.\n\\]\n\nНо\n\n\\[\n\\frac{x^2}{1+x^2}=1-\\frac1{1+x^2},\n\\]\n\nпоэтому\n\n\\[\n\\int_0^1 \\frac{x^2}{1+x^2}\\,dx\n=\n\\int_0^1 1\\,dx-\\int_0^1\\frac{dx}{1+x^2}\n=\n1-\\arctan 1\n=\n1-\\frac{\\pi}{4}.\n\\]\n\nЗначит,\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\ln 2-2\\left(1-\\frac{\\pi}{4}\\right)\n=\n\\ln 2-2+\\frac{\\pi}{2}.\n\\]\n\nИтак,\n\n\\[\n\\ln P_n \\to \\ln 2-2+\\frac{\\pi}{2}.\n\\]\n\nПереходя обратно от логарифма, получаем\n\n\\[\nP_n \\to \\exp\\left(\\ln 2-2+\\frac{\\pi}{2}\\right)\n=\n2e^{\\frac{\\pi}{2}-2}.\n\\]\n\nОтвет:\n\n\\[\n\\boxed{2e^{\\frac{\\pi}{2}-2}}.\n\\]",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": [],
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1782718492,
+        "model": "gpt-5.5-2026-04-23",
+        "object": "chat.completion",
+        "service_tier": "default",
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 1382,
+          "prompt_tokens": 190,
+          "total_tokens": 1572,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        }
+      },
+      "usage": {
+        "input_tokens": 190,
+        "output_tokens": 1382,
+        "total_tokens": 1572,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 1382,
+          "prompt_tokens": 190,
+          "total_tokens": 1572,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 21610,
+        "monotonic_ms": 21610,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 21610,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.000475,
+        "output": 0.01382,
+        "cached_input": null,
+        "reasoning": null,
+        "total": 0.014295,
+        "pricing_source": "models/gpt/gpt.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "chatcmpl-Dw0o0HAIAImBmAoSov5kEnnaVhHzs",
+      "provider_timestamp": 1782718492,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_e0c6db750567554beee11f06",
+      "result_index": 1,
+      "provider": "anthropic",
+      "alias": "claude",
+      "adapter_class": "models.claude.claude.ClaudeModel",
+      "requested_model_id": "claude-opus-4-8",
+      "resolved_model_id": "claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "attempt": 1,
+      "started_at": "2026-06-29T07:35:11.812919Z",
+      "completed_at": "2026-06-29T07:35:27.582284Z",
+      "status": "success",
+      "request": {
+        "model": "claude-opus-4-8",
+        "max_tokens": 12000,
+        "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]"
+          }
+        ],
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "stream": false
+      },
+      "answer": "Обозначим искомый предел через $L$.\n\n**Формализация.**\n\nРассмотрим произведение\n$$\nP_n = \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n$$\nКаждый множитель положителен, поэтому $P_n > 0$. Прологарифмируем:\n$$\n\\ln P_n = \\frac{1}{n}\\sum_{k=1}^{n}\\ln\\frac{n^2+k^2}{n^2} = \\frac{1}{n}\\sum_{k=1}^{n}\\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right).\n$$\n\n**Сведение к интегралу.**\n\nРассмотрим функцию $f(x)=\\ln(1+x^2)$ на отрезке $[0,1]$. Она непрерывна на $[0,1]$, следовательно интегрируема по Риману, и суммы вида\n$$\nS_n = \\frac{1}{n}\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right)\n$$\nявляются интегральными суммами Римана для разбиения отрезка $[0,1]$ на $n$ равных частей точками $x_k = k/n$ с выбором правых концов. По определению интеграла Римана для интегрируемой функции эти суммы сходятся к интегралу:\n$$\n\\lim_{n\\to\\infty} \\ln P_n = \\lim_{n\\to\\infty} S_n = \\int_0^1 \\ln(1+x^2)\\,dx.\n$$\n\n**Вычисление интеграла.**\n\nИнтегрируем по частям, полагая $u=\\ln(1+x^2)$, $dv=dx$, тогда $du=\\dfrac{2x}{1+x^2}\\,dx$, $v=x$:\n$$\n\\int_0^1 \\ln(1+x^2)\\,dx = \\Big[x\\ln(1+x^2)\\Big]_0^1 - \\int_0^1 \\frac{2x^2}{1+x^2}\\,dx.\n$$\nПервое слагаемое: $1\\cdot\\ln 2 - 0 = \\ln 2$.\n\nВо втором интеграле преобразуем подынтегральную дробь:\n$$\n\\frac{2x^2}{1+x^2} = 2\\cdot\\frac{x^2+1-1}{1+x^2} = 2 - \\frac{2}{1+x^2}.\n$$\nТогда\n$$\n\\int_0^1 \\frac{2x^2}{1+x^2}\\,dx = \\int_0^1 \\left(2 - \\frac{2}{1+x^2}\\right)dx = \\Big[2x - 2\\arctan x\\Big]_0^1 = 2 - 2\\cdot\\frac{\\pi}{4} = 2 - \\frac{\\pi}{2}.\n$$\n\nСледовательно,\n$$\n\\int_0^1 \\ln(1+x^2)\\,dx = \\ln 2 - \\left(2 - \\frac{\\pi}{2}\\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n$$\n\n**Возврат к пределу.**\n\nИтак,\n$$\n\\lim_{n\\to\\infty}\\ln P_n = \\ln 2 - 2 + \\frac{\\pi}{2}.\n$$\nПоскольку экспонента непрерывна, имеем\n$$\nL = \\lim_{n\\to\\infty} P_n = \\exp\\left(\\ln 2 - 2 + \\frac{\\pi}{2}\\right) = 2\\,e^{\\frac{\\pi}{2}-2}.\n$$\n\n**Проверка корректности.** Функция $f(x)=\\ln(1+x^2)$ непрерывна на $[0,1]$, поэтому интеграл существует и сходимость интегральных сумм гарантирована. Все преобразования выполнены над определёнными конечными величинами, экспонента и логарифм определены, так как $P_n>0$.\n\n**Финальный вывод.**\n$$\n\\boxed{\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = 2\\,e^{\\frac{\\pi}{2}-2}.}\n$$",
+      "prompt_tokens": 285,
+      "completion_tokens": 1421,
+      "cost_usd": 0.11085,
+      "latency_ms": 15552,
+      "raw_response": {
+        "id": "msg_01Qi3rhCfUm9YMi36NQhXqii",
+        "container": null,
+        "content": [
+          {
+            "citations": null,
+            "text": "Обозначим искомый предел через $L$.\n\n**Формализация.**\n\nРассмотрим произведение\n$$\nP_n = \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n$$\nКаждый множитель положителен, поэтому $P_n > 0$. Прологарифмируем:\n$$\n\\ln P_n = \\frac{1}{n}\\sum_{k=1}^{n}\\ln\\frac{n^2+k^2}{n^2} = \\frac{1}{n}\\sum_{k=1}^{n}\\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right).\n$$\n\n**Сведение к интегралу.**\n\nРассмотрим функцию $f(x)=\\ln(1+x^2)$ на отрезке $[0,1]$. Она непрерывна на $[0,1]$, следовательно интегрируема по Риману, и суммы вида\n$$\nS_n = \\frac{1}{n}\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right)\n$$\nявляются интегральными суммами Римана для разбиения отрезка $[0,1]$ на $n$ равных частей точками $x_k = k/n$ с выбором правых концов. По определению интеграла Римана для интегрируемой функции эти суммы сходятся к интегралу:\n$$\n\\lim_{n\\to\\infty} \\ln P_n = \\lim_{n\\to\\infty} S_n = \\int_0^1 \\ln(1+x^2)\\,dx.\n$$\n\n**Вычисление интеграла.**\n\nИнтегрируем по частям, полагая $u=\\ln(1+x^2)$, $dv=dx$, тогда $du=\\dfrac{2x}{1+x^2}\\,dx$, $v=x$:\n$$\n\\int_0^1 \\ln(1+x^2)\\,dx = \\Big[x\\ln(1+x^2)\\Big]_0^1 - \\int_0^1 \\frac{2x^2}{1+x^2}\\,dx.\n$$\nПервое слагаемое: $1\\cdot\\ln 2 - 0 = \\ln 2$.\n\nВо втором интеграле преобразуем подынтегральную дробь:\n$$\n\\frac{2x^2}{1+x^2} = 2\\cdot\\frac{x^2+1-1}{1+x^2} = 2 - \\frac{2}{1+x^2}.\n$$\nТогда\n$$\n\\int_0^1 \\frac{2x^2}{1+x^2}\\,dx = \\int_0^1 \\left(2 - \\frac{2}{1+x^2}\\right)dx = \\Big[2x - 2\\arctan x\\Big]_0^1 = 2 - 2\\cdot\\frac{\\pi}{4} = 2 - \\frac{\\pi}{2}.\n$$\n\nСледовательно,\n$$\n\\int_0^1 \\ln(1+x^2)\\,dx = \\ln 2 - \\left(2 - \\frac{\\pi}{2}\\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n$$\n\n**Возврат к пределу.**\n\nИтак,\n$$\n\\lim_{n\\to\\infty}\\ln P_n = \\ln 2 - 2 + \\frac{\\pi}{2}.\n$$\nПоскольку экспонента непрерывна, имеем\n$$\nL = \\lim_{n\\to\\infty} P_n = \\exp\\left(\\ln 2 - 2 + \\frac{\\pi}{2}\\right) = 2\\,e^{\\frac{\\pi}{2}-2}.\n$$\n\n**Проверка корректности.** Функция $f(x)=\\ln(1+x^2)$ непрерывна на $[0,1]$, поэтому интеграл существует и сходимость интегральных сумм гарантирована. Все преобразования выполнены над определёнными конечными величинами, экспонента и логарифм определены, так как $P_n>0$.\n\n**Финальный вывод.**\n$$\n\\boxed{\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = 2\\,e^{\\frac{\\pi}{2}-2}.}\n$$",
+            "type": "text"
+          }
+        ],
+        "model": "claude-opus-4-8",
+        "role": "assistant",
+        "stop_details": null,
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "global",
+          "input_tokens": 285,
+          "output_tokens": 1421,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "usage": {
+        "input_tokens": 285,
+        "output_tokens": 1421,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "global",
+          "input_tokens": 285,
+          "output_tokens": 1421,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 15552,
+        "monotonic_ms": 15552,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 15552,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.004275,
+        "output": 0.106575,
+        "cached_input": null,
+        "reasoning": null,
+        "total": 0.11085,
+        "pricing_source": "models/claude/claude.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null
+      },
+      "finish_reason": "end_turn",
+      "provider_request_id": null,
+      "response_id": "msg_01Qi3rhCfUm9YMi36NQhXqii",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_d70ff94f6b1c10dcce58ac0d",
+      "result_index": 2,
+      "provider": "gigachat",
+      "alias": "gigachat",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2-Max",
+      "resolved_model_id": "GigaChat-2-Max:2.0.28.2",
+      "model": "GigaChat-2-Max",
+      "attempt": 1,
+      "started_at": "2026-06-29T07:35:27.585189Z",
+      "completed_at": "2026-06-29T07:35:53.090695Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2-Max",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]"
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 8192,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Рассмотрим предел:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}\n$$\n\nПреобразуем выражение под знаком предела:\n\n$$\n\\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n}\n$$\n\nДалее упростим произведение внутри корня:\n\n$$\n\\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( \\frac{1}{n^{2n}} \\prod_{k=1}^{n} (n^2 + k^2) \\right)^{1/n} = \\frac{1}{n^2} \\left( \\prod_{k=1}^{n} (1 + \\frac{k^2}{n^2}) \\right)^{1/n}\n$$\n\nТеперь рассмотрим логарифм выражения:\n\n$$\n\\ln \\left( \\frac{1}{n^2} \\left( \\prod_{k=1}^{n} (1 + \\frac{k^2}{n^2}) \\right)^{1/n} \\right) = -\\ln n^2 + \\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right)\n$$\n\nИспользуя разложение $\\ln(1+x) \\approx x$ при $x \\to 0$, получаем:\n\n$$\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right) \\approx \\frac{1}{n} \\sum_{k=1}^{n} \\frac{k^2}{n^2} = \\frac{1}{n^3} \\sum_{k=1}^{n} k^2\n$$\n\nСумма квадратов первых $n$ натуральных чисел известна:\n\n$$\n\\sum_{k=1}^{n} k^2 = \\frac{n(n+1)(2n+1)}{6}\n$$\n\nПодставляем в выражение:\n\n$$\n\\frac{1}{n^3} \\cdot \\frac{n(n+1)(2n+1)}{6} = \\frac{(n+1)(2n+1)}{6n^2} \\to \\frac{1}{3}, \\quad n \\to \\infty\n$$\n\nТаким образом, исходный логарифм стремится к:\n\n$$\n-\\ln n^2 + \\frac{1}{3} \\to -\\infty + \\frac{1}{3} = -\\infty\n$$\n\nОднако это неверно, так как мы упустили множитель $\\frac{1}{n^2}$. Вернемся к исходному выражению и учтем его корректно:\n\n$$\n\\exp \\left( -\\ln n^2 + \\frac{1}{3} \\right) = \\exp \\left( -2\\ln n + \\frac{1}{3} \\right) = \\frac{e^{1/3}}{n^2}\n$$\n\nНо это снова неверно, так как мы неправильно интерпретировали поведение логарифма. Правильное рассмотрение показывает, что основной вклад дает сумма, а не множитель $\\frac{1}{n^2}$, который исчезает при переходе к пределу.\n\nИтак, правильный подход:\n\n$$\n\\lim_{n \\to \\infty} \\left( \\prod_{k=1}^{n} (1 + \\frac{k^2}{n^2}) \\right)^{1/n} = e^{\\frac{1}{3}}\n$$\n\nФинальный ответ:\n\n$$\ne^{1/3}\n$$",
+      "prompt_tokens": 167,
+      "completion_tokens": 826,
+      "cost_usd": 0.0,
+      "latency_ms": 25457,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "9f95cff6-ac24-40ee-8544-ae7871dc19b4",
+          "x-session-id": "4d694a91-d073-4287-ab01-c3db5b79436e"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "Рассмотрим предел:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}\n$$\n\nПреобразуем выражение под знаком предела:\n\n$$\n\\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n}\n$$\n\nДалее упростим произведение внутри корня:\n\n$$\n\\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( \\frac{1}{n^{2n}} \\prod_{k=1}^{n} (n^2 + k^2) \\right)^{1/n} = \\frac{1}{n^2} \\left( \\prod_{k=1}^{n} (1 + \\frac{k^2}{n^2}) \\right)^{1/n}\n$$\n\nТеперь рассмотрим логарифм выражения:\n\n$$\n\\ln \\left( \\frac{1}{n^2} \\left( \\prod_{k=1}^{n} (1 + \\frac{k^2}{n^2}) \\right)^{1/n} \\right) = -\\ln n^2 + \\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right)\n$$\n\nИспользуя разложение $\\ln(1+x) \\approx x$ при $x \\to 0$, получаем:\n\n$$\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right) \\approx \\frac{1}{n} \\sum_{k=1}^{n} \\frac{k^2}{n^2} = \\frac{1}{n^3} \\sum_{k=1}^{n} k^2\n$$\n\nСумма квадратов первых $n$ натуральных чисел известна:\n\n$$\n\\sum_{k=1}^{n} k^2 = \\frac{n(n+1)(2n+1)}{6}\n$$\n\nПодставляем в выражение:\n\n$$\n\\frac{1}{n^3} \\cdot \\frac{n(n+1)(2n+1)}{6} = \\frac{(n+1)(2n+1)}{6n^2} \\to \\frac{1}{3}, \\quad n \\to \\infty\n$$\n\nТаким образом, исходный логарифм стремится к:\n\n$$\n-\\ln n^2 + \\frac{1}{3} \\to -\\infty + \\frac{1}{3} = -\\infty\n$$\n\nОднако это неверно, так как мы упустили множитель $\\frac{1}{n^2}$. Вернемся к исходному выражению и учтем его корректно:\n\n$$\n\\exp \\left( -\\ln n^2 + \\frac{1}{3} \\right) = \\exp \\left( -2\\ln n + \\frac{1}{3} \\right) = \\frac{e^{1/3}}{n^2}\n$$\n\nНо это снова неверно, так как мы неправильно интерпретировали поведение логарифма. Правильное рассмотрение показывает, что основной вклад дает сумма, а не множитель $\\frac{1}{n^2}$, который исчезает при переходе к пределу.\n\nИтак, правильный подход:\n\n$$\n\\lim_{n \\to \\infty} \\left( \\prod_{k=1}^{n} (1 + \\frac{k^2}{n^2}) \\right)^{1/n} = e^{\\frac{1}{3}}\n$$\n\nФинальный ответ:\n\n$$\ne^{1/3}\n$$",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782718553,
+        "model": "GigaChat-2-Max:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 167,
+          "completion_tokens": 826,
+          "total_tokens": 993,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 167,
+        "output_tokens": 826,
+        "total_tokens": 993,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 167,
+          "completion_tokens": 826,
+          "total_tokens": 993,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 25457,
+        "monotonic_ms": 25457,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 25457,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "cached_input": null,
+        "reasoning": null,
+        "total": null,
+        "pricing_source": null,
+        "pricing_version": null,
+        "estimated": true,
+        "exchange_rate": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "9f95cff6-ac24-40ee-8544-ae7871dc19b4",
+      "response_id": null,
+      "provider_timestamp": 1782718553,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_520a42cbb402847da95e4365",
+      "result_index": 3,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "yandexgpt-5.1",
+      "resolved_model_id": "yandexgpt-5.1",
+      "model": "yandexgpt-5.1",
+      "attempt": 1,
+      "started_at": "2026-06-29T07:35:53.097732Z",
+      "completed_at": "2026-06-29T07:36:00.125249Z",
+      "status": "success",
+      "request": {
+        "model": "yandexgpt-5.1",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 8000
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]"
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false
+      },
+      "answer": "**Формализация условия:**\n\nНеобходимо вычислить предел:\n$$\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n$$\n\n**Введём обозначения:**\n\nПусть $a_n = \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}$. Требуется найти $\\lim_{n\\to\\infty} a_n$.\n\n**Решение:**\n\n1. Преобразуем выражение под пределом:\n$$\na_n = \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = \\prod_{k=1}^{n}\\left(\\frac{n^2+k^2}{n^2}\\right)^{\\frac{1}{n}} = \\prod_{k=1}^{n}\\left(1 + \\frac{k^2}{n^2}\\right)^{\\frac{1}{n}}.\n$$\n\n2. Прологарифмируем выражение для $a_n$:\n$$\n\\ln a_n = \\ln \\left(\\prod_{k=1}^{n}\\left(1 + \\frac{k^2}{n^2}\\right)^{\\frac{1}{n}}\\right) = \\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left(1 + \\frac{k^2}{n^2}\\right).\n$$\n\n3. Рассмотрим сумму $\\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left(1 + \\frac{k^2}{n^2}\\right)$ как интегральную сумму для функции $f(x) = \\ln(1 + x^2)$ на отрезке $[0, 1]$ с разбиением на $n$ равных частей. При $n \\to \\infty$ эта сумма стремится к определённому интегралу:\n$$\n\\lim_{n \\to \\infty} \\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left(1 + \\frac{k^2}{n^2}\\right) = \\int_{0}^{1} \\ln(1 + x^2) \\, dx.\n$$\n\n4. Вычислим интеграл $\\int_{0}^{1} \\ln(1 + x^2) \\, dx$:\n$$\n\\int \\ln(1 + x^2) \\, dx = x \\ln(1 + x^2) - \\int \\frac{2x^2}{1 + x^2} \\, dx = x \\ln(1 + x^2) - \\int \\left(2 - \\frac{2}{1 + x^2}\\right) \\, dx = x \\ln(1 + x^2) - 2x + 2 \\arctan(x) + C.\n$$\nПодставляя пределы интегрирования от $0$ до $1$, получаем:\n$$\n\\int_{0}^{1} \\ln(1 + x^2) \\, dx = \\left[ x \\ln(1 + x^2) - 2x + 2 \\arctan(x) \\right]_{0}^{1} = \\ln 2 - 2 + 2 \\arctan(1) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n$$\n\n5. Таким образом, $\\lim_{n \\to \\infty} \\ln a_n = \\ln 2 - 2 + \\frac{\\pi}{2}$, следовательно,\n$$\n\\lim_{n \\to \\infty} a_n = e^{\\ln 2 - 2 + \\frac{\\pi}{2}} = 2e^{\\frac{\\pi}{2} - 2}.\n$$\n\n**Финальный вывод:**\n$$\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = 2e^{\\frac{\\pi}{2} - 2}.\n$$",
+      "prompt_tokens": 165,
+      "completion_tokens": 925,
+      "cost_usd": 0.00968889,
+      "latency_ms": 6909,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": "**Формализация условия:**\n\nНеобходимо вычислить предел:\n$$\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n$$\n\n**Введём обозначения:**\n\nПусть $a_n = \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}$. Требуется найти $\\lim_{n\\to\\infty} a_n$.\n\n**Решение:**\n\n1. Преобразуем выражение под пределом:\n$$\na_n = \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = \\prod_{k=1}^{n}\\left(\\frac{n^2+k^2}{n^2}\\right)^{\\frac{1}{n}} = \\prod_{k=1}^{n}\\left(1 + \\frac{k^2}{n^2}\\right)^{\\frac{1}{n}}.\n$$\n\n2. Прологарифмируем выражение для $a_n$:\n$$\n\\ln a_n = \\ln \\left(\\prod_{k=1}^{n}\\left(1 + \\frac{k^2}{n^2}\\right)^{\\frac{1}{n}}\\right) = \\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left(1 + \\frac{k^2}{n^2}\\right).\n$$\n\n3. Рассмотрим сумму $\\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left(1 + \\frac{k^2}{n^2}\\right)$ как интегральную сумму для функции $f(x) = \\ln(1 + x^2)$ на отрезке $[0, 1]$ с разбиением на $n$ равных частей. При $n \\to \\infty$ эта сумма стремится к определённому интегралу:\n$$\n\\lim_{n \\to \\infty} \\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left(1 + \\frac{k^2}{n^2}\\right) = \\int_{0}^{1} \\ln(1 + x^2) \\, dx.\n$$\n\n4. Вычислим интеграл $\\int_{0}^{1} \\ln(1 + x^2) \\, dx$:\n$$\n\\int \\ln(1 + x^2) \\, dx = x \\ln(1 + x^2) - \\int \\frac{2x^2}{1 + x^2} \\, dx = x \\ln(1 + x^2) - \\int \\left(2 - \\frac{2}{1 + x^2}\\right) \\, dx = x \\ln(1 + x^2) - 2x + 2 \\arctan(x) + C.\n$$\nПодставляя пределы интегрирования от $0$ до $1$, получаем:\n$$\n\\int_{0}^{1} \\ln(1 + x^2) \\, dx = \\left[ x \\ln(1 + x^2) - 2x + 2 \\arctan(x) \\right]_{0}^{1} = \\ln 2 - 2 + 2 \\arctan(1) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n$$\n\n5. Таким образом, $\\lim_{n \\to \\infty} \\ln a_n = \\ln 2 - 2 + \\frac{\\pi}{2}$, следовательно,\n$$\n\\lim_{n \\to \\infty} a_n = e^{\\ln 2 - 2 + \\frac{\\pi}{2}} = 2e^{\\frac{\\pi}{2} - 2}.\n$$\n\n**Финальный вывод:**\n$$\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = 2e^{\\frac{\\pi}{2} - 2}.\n$$"
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "165",
+            "completionTokens": "925",
+            "totalTokens": "[REDACTED]",
+            "completionTokensDetails": "[REDACTED]"
+          },
+          "modelVersion": "yagpt-5.1-2025-08"
+        },
+        "_adapter_note": "YANDEX_REASONING_MODE was requested, but the selected model does not support reasoning; retried without reasoningOptions."
+      },
+      "usage": {
+        "input_tokens": 165,
+        "output_tokens": 925,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "legacy_fields"
+      },
+      "timing": {
+        "wall_ms": 6909,
+        "monotonic_ms": 6909,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 6909,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "cached_input": null,
+        "reasoning": null,
+        "total": 0.00968889,
+        "pricing_source": "models/yandexgpt/yandexgpt.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "native": {
+          "currency": "RUB",
+          "total": 0.872,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        }
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_3a7fa0ccf73fecef9bbd42da",
+      "result_index": 4,
+      "provider": "deepseek",
+      "alias": "deepseek",
+      "adapter_class": "models.deepseek.deepseek.DeepSeekModel",
+      "requested_model_id": "deepseek-v4-pro",
+      "resolved_model_id": "deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "attempt": 1,
+      "started_at": "2026-06-29T07:36:00.133504Z",
+      "completed_at": "2026-06-29T07:36:28.693649Z",
+      "status": "success",
+      "request": {
+        "model": "deepseek-v4-pro",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]"
+          }
+        ],
+        "temperature": 0.3,
+        "max_tokens": 8192,
+        "endpoint": "https://api.deepseek.com/chat/completions",
+        "stream": false
+      },
+      "answer": "**Ответ:**  \n\\[\n2e^{\\frac{\\pi}{2}-2}\n\\]\n\n**Решение:**\n\n1. Преобразуем выражение под знаком предела:\n\n\\[\nP_n = \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2+k^2}{n^2}}\n      = \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{\\!1/n}\n      = \\Biggl( \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right) \\Biggr)^{\\!1/n}.\n\\]\n\n2. Логарифмируем:\n\n\\[\n\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left(1 + \\frac{k^2}{n^2}\\right)\n        = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left(1 + \\left(\\frac{k}{n}\\right)^2\\right).\n\\]\n\nЭто интегральная сумма для непрерывной на отрезке \\([0,1]\\) функции \\(f(x) = \\ln(1+x^2)\\). При \\(n \\to \\infty\\):\n\n\\[\n\\lim_{n\\to\\infty} \\ln P_n = \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\n3. Вычисляем интеграл:\n\n\\[\nI = \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nИнтегрируем по частям (\\(u = \\ln(1+x^2)\\), \\(dv = dx\\)):\n\n\\[\nI = \\left.x\\ln(1+x^2)\\right|_0^1 - \\int_0^1 x\\cdot\\frac{2x}{1+x^2}\\,dx \n  = \\ln 2 - 2\\int_0^1 \\frac{x^2}{1+x^2}\\,dx.\n\\]\n\nПреобразуем подынтегральную функцию:\n\n\\[\n\\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.\n\\]\n\nТогда\n\n\\[\n\\int_0^1 \\frac{x^2}{1+x^2}\\,dx\n= \\int_0^1 dx - \\int_0^1 \\frac{dx}{1+x^2}\n= 1 - \\Bigl.\\arctan x\\Bigr|_0^1\n= 1 - \\frac{\\pi}{4}.\n\\]\n\nПодставляем обратно:\n\n\\[\nI = \\ln 2 - 2\\left(1 - \\frac{\\pi}{4}\\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n\\]\n\n4. Искомый предел:\n\n\\[\nL = \\lim_{n\\to\\infty} P_n = e^I = e^{\\ln 2 - 2 + \\frac{\\pi}{2}} = 2\\,e^{\\frac{\\pi}{2}-2}.\n\\]",
+      "prompt_tokens": 200,
+      "completion_tokens": 2049,
+      "cost_usd": 0.00186963,
+      "latency_ms": 28534,
+      "raw_response": {
+        "id": "f83e9f0c-57e0-4cdd-9650-c36b0aa80666",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "**Ответ:**  \n\\[\n2e^{\\frac{\\pi}{2}-2}\n\\]\n\n**Решение:**\n\n1. Преобразуем выражение под знаком предела:\n\n\\[\nP_n = \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2+k^2}{n^2}}\n      = \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{\\!1/n}\n      = \\Biggl( \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right) \\Biggr)^{\\!1/n}.\n\\]\n\n2. Логарифмируем:\n\n\\[\n\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left(1 + \\frac{k^2}{n^2}\\right)\n        = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left(1 + \\left(\\frac{k}{n}\\right)^2\\right).\n\\]\n\nЭто интегральная сумма для непрерывной на отрезке \\([0,1]\\) функции \\(f(x) = \\ln(1+x^2)\\). При \\(n \\to \\infty\\):\n\n\\[\n\\lim_{n\\to\\infty} \\ln P_n = \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\n3. Вычисляем интеграл:\n\n\\[\nI = \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nИнтегрируем по частям (\\(u = \\ln(1+x^2)\\), \\(dv = dx\\)):\n\n\\[\nI = \\left.x\\ln(1+x^2)\\right|_0^1 - \\int_0^1 x\\cdot\\frac{2x}{1+x^2}\\,dx \n  = \\ln 2 - 2\\int_0^1 \\frac{x^2}{1+x^2}\\,dx.\n\\]\n\nПреобразуем подынтегральную функцию:\n\n\\[\n\\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.\n\\]\n\nТогда\n\n\\[\n\\int_0^1 \\frac{x^2}{1+x^2}\\,dx\n= \\int_0^1 dx - \\int_0^1 \\frac{dx}{1+x^2}\n= 1 - \\Bigl.\\arctan x\\Bigr|_0^1\n= 1 - \\frac{\\pi}{4}.\n\\]\n\nПодставляем обратно:\n\n\\[\nI = \\ln 2 - 2\\left(1 - \\frac{\\pi}{4}\\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n\\]\n\n4. Искомый предел:\n\n\\[\nL = \\lim_{n\\to\\infty} P_n = e^I = e^{\\ln 2 - 2 + \\frac{\\pi}{2}} = 2\\,e^{\\frac{\\pi}{2}-2}.\n\\]",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "Мы должны вычислить предел:\n\n\\[\nL = \\lim_{n\\to\\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]\n\nПерепишем выражение. Для каждого n у нас есть произведение от k=1 до n. Под корнем n-ой степени находится дробь (n^2+k^2)/n^2. Но вся эта дробь умножается под общим корнем? Запись: \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2+k^2}{n^2}}. Это означает, что для каждого k мы извлекаем корень n-й степени из дроби, и потом перемножаем все эти множители. То есть:\n\n\\[\nP_n = \\prod_{k=1}^{n} \\left( \\frac{n^2+k^2}{n^2} \\right)^{1/n} = \\left( \\prod_{k=1}^{n} \\frac{n^2+k^2}{n^2} \\right)^{1/n}.\n\\]\n\nНа самом деле, \\prod_{k=1}^n a_k^{1/n} = \\left( \\prod_{k=1}^n a_k \\right)^{1/n}. Да, так и есть: произведение корней n-й степени равно корню n-й степени из произведения. Значит:\n\n\\[\nP_n = \\left( \\prod_{k=1}^n \\left( 1 + \\frac{k^2}{n^2} \\right) \\right)^{1/n}.\n\\]\n\nОбозначим:\n\n\\[\nA_n = \\prod_{k=1}^n \\left( 1 + \\frac{k^2}{n^2} \\right).\n\\]\n\nТогда P_n = (A_n)^{1/n}. Нам нужно найти предел P_n при n \\to \\infty. Это эквивалентно нахождению предела (A_n)^{1/n}. Обычно такие пределы вычисляются через логарифмирование и переход к интегралу.\n\nРассмотрим логарифм:\n\n\\[\n\\ln P_n = \\frac{1}{n} \\ln A_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right).\n\\]\n\nЭто сумма Римана для функции f(x) = \\ln(1+x^2) на отрезке [0,1] (или [0,1] с шагом 1/n). Точнее:\n\n\\[\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\left(\\frac{k}{n}\\right)^2 \\right) \\to \\int_0^1 \\ln(1+x^2) \\, dx \\quad \\text{при } n\\to\\infty.\n\\]\n\nПоскольку функция \\ln(1+x^2) непрерывна на [0,1], предел существует и равен интегралу.\n\nТогда \\lim_{n\\to\\infty} \\ln P_n = \\int_0^1 \\ln(1+x^2) dx.\n\nА искомый предел L = \\exp\\left( \\int_0^1 \\ln(1+x^2) dx \\right).\n\nТеперь вычислим интеграл I = \\int_0^1 \\ln(1+x^2) dx.\n\nИнтегрируем по частям: u = \\ln(1+x^2), dv = dx. Тогда du = \\frac{2x}{1+x^2} dx, v = x.\n\nI = \\left. x \\ln(1+x^2) \\right|_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2} dx = \\ln 2 - 2 \\int_0^1 \\frac{x^2}{1+x^2} dx.\n\nПреобразуем подынтегральное выражение: \\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.\n\nТогда \\int_0^1 \\frac{x^2}{1+x^2} dx = \\int_0^1 1 \\, dx - \\int_0^1 \\frac{1}{1+x^2} dx = 1 - \\left. \\arctan x \\right|_0^1 = 1 - \\frac{\\pi}{4}.\n\nСледовательно:\n\nI = \\ln 2 - 2 \\left( 1 - \\frac{\\pi}{4} \\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n\nТаким образом, L = \\exp\\left( \\ln 2 - 2 + \\frac{\\pi}{2} \\right) = 2 \\cdot e^{\\frac{\\pi}{2} - 2}.\n\nПроверим вычисления. \\int x^2/(1+x^2) = \\int (1 - 1/(1+x^2)) = x - \\arctan x. При x=1 это 1 - \\pi/4. При x=0 это 0. Интеграл от 2x^2/(1+x^2) дал 2(1 - \\pi/4). Тогда I = \\ln 2 - 2 + \\pi/2. Верно.\n\nИтак, предел равен 2 e^{\\pi/2 - 2}.\n\nПроверим частный случай? Нет смысла, n стремится к бесконечности. Но мы можем проверить, соответствует ли произведение корней такой форме? Да.\n\nЗапись условия: \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}. Это произведение сомножителей, каждый равен (\\frac{n^2+k^2}{n^2})^{1/n}. Произведение этих множителей равно (\\prod_{k=1}^n \\frac{n^2+k^2}{n^2})^{1/n}. Всё верно.\n\nОтвет: 2 e^{\\pi/2 - 2}.\n\nНо можно записать ответ в виде 2 e^{\\frac{\\pi}{2}-2} или 2 e^{\\frac{\\pi-4}{2}}? Обычно оставляют в виде 2 e^{\\frac{\\pi}{2}-2}. Я дам в красивом виде: 2e^{\\frac{\\pi}{2}-2}."
+            }
+          }
+        ],
+        "created": 1782718560,
+        "model": "deepseek-v4-pro",
+        "object": "chat.completion",
+        "service_tier": null,
+        "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 2049,
+          "prompt_tokens": 200,
+          "total_tokens": 2249,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "reasoning_content": "Мы должны вычислить предел:\n\n\\[\nL = \\lim_{n\\to\\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]\n\nПерепишем выражение. Для каждого n у нас есть произведение от k=1 до n. Под корнем n-ой степени находится дробь (n^2+k^2)/n^2. Но вся эта дробь умножается под общим корнем? Запись: \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2+k^2}{n^2}}. Это означает, что для каждого k мы извлекаем корень n-й степени из дроби, и потом перемножаем все эти множители. То есть:\n\n\\[\nP_n = \\prod_{k=1}^{n} \\left( \\frac{n^2+k^2}{n^2} \\right)^{1/n} = \\left( \\prod_{k=1}^{n} \\frac{n^2+k^2}{n^2} \\right)^{1/n}.\n\\]\n\nНа самом деле, \\prod_{k=1}^n a_k^{1/n} = \\left( \\prod_{k=1}^n a_k \\right)^{1/n}. Да, так и есть: произведение корней n-й степени равно корню n-й степени из произведения. Значит:\n\n\\[\nP_n = \\left( \\prod_{k=1}^n \\left( 1 + \\frac{k^2}{n^2} \\right) \\right)^{1/n}.\n\\]\n\nОбозначим:\n\n\\[\nA_n = \\prod_{k=1}^n \\left( 1 + \\frac{k^2}{n^2} \\right).\n\\]\n\nТогда P_n = (A_n)^{1/n}. Нам нужно найти предел P_n при n \\to \\infty. Это эквивалентно нахождению предела (A_n)^{1/n}. Обычно такие пределы вычисляются через логарифмирование и переход к интегралу.\n\nРассмотрим логарифм:\n\n\\[\n\\ln P_n = \\frac{1}{n} \\ln A_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right).\n\\]\n\nЭто сумма Римана для функции f(x) = \\ln(1+x^2) на отрезке [0,1] (или [0,1] с шагом 1/n). Точнее:\n\n\\[\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\left(\\frac{k}{n}\\right)^2 \\right) \\to \\int_0^1 \\ln(1+x^2) \\, dx \\quad \\text{при } n\\to\\infty.\n\\]\n\nПоскольку функция \\ln(1+x^2) непрерывна на [0,1], предел существует и равен интегралу.\n\nТогда \\lim_{n\\to\\infty} \\ln P_n = \\int_0^1 \\ln(1+x^2) dx.\n\nА искомый предел L = \\exp\\left( \\int_0^1 \\ln(1+x^2) dx \\right).\n\nТеперь вычислим интеграл I = \\int_0^1 \\ln(1+x^2) dx.\n\nИнтегрируем по частям: u = \\ln(1+x^2), dv = dx. Тогда du = \\frac{2x}{1+x^2} dx, v = x.\n\nI = \\left. x \\ln(1+x^2) \\right|_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2} dx = \\ln 2 - 2 \\int_0^1 \\frac{x^2}{1+x^2} dx.\n\nПреобразуем подынтегральное выражение: \\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.\n\nТогда \\int_0^1 \\frac{x^2}{1+x^2} dx = \\int_0^1 1 \\, dx - \\int_0^1 \\frac{1}{1+x^2} dx = 1 - \\left. \\arctan x \\right|_0^1 = 1 - \\frac{\\pi}{4}.\n\nСледовательно:\n\nI = \\ln 2 - 2 \\left( 1 - \\frac{\\pi}{4} \\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n\nТаким образом, L = \\exp\\left( \\ln 2 - 2 + \\frac{\\pi}{2} \\right) = 2 \\cdot e^{\\frac{\\pi}{2} - 2}.\n\nПроверим вычисления. \\int x^2/(1+x^2) = \\int (1 - 1/(1+x^2)) = x - \\arctan x. При x=1 это 1 - \\pi/4. При x=0 это 0. Интеграл от 2x^2/(1+x^2) дал 2(1 - \\pi/4). Тогда I = \\ln 2 - 2 + \\pi/2. Верно.\n\nИтак, предел равен 2 e^{\\pi/2 - 2}.\n\nПроверим частный случай? Нет смысла, n стремится к бесконечности. Но мы можем проверить, соответствует ли произведение корней такой форме? Да.\n\nЗапись условия: \\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}. Это произведение сомножителей, каждый равен (\\frac{n^2+k^2}{n^2})^{1/n}. Произведение этих множителей равно (\\prod_{k=1}^n \\frac{n^2+k^2}{n^2})^{1/n}. Всё верно.\n\nОтвет: 2 e^{\\pi/2 - 2}.\n\nНо можно записать ответ в виде 2 e^{\\frac{\\pi}{2}-2} или 2 e^{\\frac{\\pi-4}{2}}? Обычно оставляют в виде 2 e^{\\frac{\\pi}{2}-2}. Я дам в красивом виде: 2e^{\\frac{\\pi}{2}-2}."
+      },
+      "usage": {
+        "input_tokens": 200,
+        "output_tokens": 2049,
+        "total_tokens": 2249,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 2049,
+          "prompt_tokens": 200,
+          "total_tokens": 2249,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 28534,
+        "monotonic_ms": 28534,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 28534,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 8.7e-05,
+        "output": 0.00178263,
+        "cached_input": null,
+        "reasoning": null,
+        "total": 0.00186963,
+        "pricing_source": "models/deepseek/deepseek.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "f83e9f0c-57e0-4cdd-9650-c36b0aa80666",
+      "provider_timestamp": 1782718560,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "run_id": "2026_06_28_22_22_33_new_storage_smoke",
+  "timestamp": "2026-06-28T22:22:33.585853Z",
+  "git_hash": "b4ddfe6",
+  "competition_id": "local_examples",
+  "competition_title": "Локальные примеры",
+  "problem_id": "example",
+  "problem_title": "Example olympiad problem",
+  "problem_file": "data/competitions/local_examples/example.json",
+  "problem_text": "Докажите, что сумма любых двух четных чисел является четным числом.",
+  "problem": {
+    "schema_version": 1,
+    "id": "example",
+    "number": 1,
+    "title": "Example olympiad problem",
+    "statement": "Докажите, что сумма любых двух четных чисел является четным числом.",
+    "answer": null,
+    "solution": null,
+    "tags": [],
+    "metadata": {},
+    "source": "Local sample"
+  },
+  "results": [
+    {
+      "model": "gpt-5.5",
+      "answer": "Пусть даны любые два чётных числа \\(a\\) и \\(b\\).\n\nПо определению чётного числа:\n\n- число \\(a\\) чётное, значит существует целое число \\(m\\), такое что  \n  \\[\n  a = 2m;\n  \\]\n- число \\(b\\) чётное, значит существует целое число \\(n\\), такое что  \n  \\[\n  b = 2n.\n  \\]\n\nТогда их сумма равна:\n\\[\na+b = 2m+2n = 2(m+n).\n\\]\n\nТак как \\(m\\) и \\(n\\) — целые числа, то \\(m+n\\) тоже является целым числом.\n\nОбозначим \\(k=m+n\\). Тогда\n\\[\na+b = 2k,\n\\]\nгде \\(k\\) — целое число.\n\nСледовательно, \\(a+b\\) делится на \\(2\\), то есть является чётным числом.\n\nИтак, сумма любых двух чётных чисел является чётным числом.",
+      "prompt_tokens": 162,
+      "completion_tokens": 273,
+      "cost_usd": 0.003135,
+      "latency_ms": 5814,
+      "raw_response": {
+        "id": "chatcmpl-DvsBXtU03eNcXmDnhc3whW6if8pNW",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Пусть даны любые два чётных числа \\(a\\) и \\(b\\).\n\nПо определению чётного числа:\n\n- число \\(a\\) чётное, значит существует целое число \\(m\\), такое что  \n  \\[\n  a = 2m;\n  \\]\n- число \\(b\\) чётное, значит существует целое число \\(n\\), такое что  \n  \\[\n  b = 2n.\n  \\]\n\nТогда их сумма равна:\n\\[\na+b = 2m+2n = 2(m+n).\n\\]\n\nТак как \\(m\\) и \\(n\\) — целые числа, то \\(m+n\\) тоже является целым числом.\n\nОбозначим \\(k=m+n\\). Тогда\n\\[\na+b = 2k,\n\\]\nгде \\(k\\) — целое число.\n\nСледовательно, \\(a+b\\) делится на \\(2\\), то есть является чётным числом.\n\nИтак, сумма любых двух чётных чисел является чётным числом.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": [],
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1782685355,
+        "model": "gpt-5.5-2026-04-23",
+        "object": "chat.completion",
+        "service_tier": "default",
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 273,
+          "prompt_tokens": 162,
+          "total_tokens": 435,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": 0,
+            "audio_tokens": 0,
+            "reasoning_tokens": 35,
+            "rejected_prediction_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0
+          }
+        }
+      },
+      "error": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

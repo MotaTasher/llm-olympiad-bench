@@ -1,0 +1,78 @@
+{
+  "run_id": "2026_06_28_14_02_06_structured_log_smoke",
+  "timestamp": "2026-06-28T14:02:06.462272Z",
+  "git_hash": "6a248d8",
+  "competition_id": "local_examples",
+  "competition_title": "Локальные примеры",
+  "problem_id": "example",
+  "problem_title": "Example olympiad problem",
+  "problem_file": "data/problems/example.json",
+  "problem_text": "Докажите, что сумма любых двух четных чисел является четным числом.",
+  "problem": {
+    "id": "example",
+    "competition_id": "local_examples",
+    "competition_title": "Локальные примеры",
+    "title": "Example olympiad problem",
+    "source": "Local sample",
+    "text": "Докажите, что сумма любых двух четных чисел является четным числом.",
+    "expected_answer": null
+  },
+  "results": [
+    {
+      "model": "deepseek-v4-pro",
+      "answer": "### Формализация условия\n\n- **Исходные объекты:** два произвольных чётных числа.\n- **Требуется доказать:** их сумма является чётным числом.\n- **Определение:** целое число \\( n \\) называется *чётным*, если существует целое число \\( k \\) такое, что \\( n = 2k \\).  \n  (Рассматриваем только целые числа; любое чётное число по определению является целым.)\n\n### Доказательство\n\n1. **Выбор произвольных чётных чисел.**  \n   Пусть \\( a \\) и \\( b \\) — произвольные чётные числа. По определению чётности существуют такие целые числа \\( m \\) и \\( n \\), что  \n   \\[\n   a = 2m,\\qquad b = 2n.\n   \\]\n\n2. **Сумма.**  \n   Рассмотрим сумму \\( a + b \\):  \n   \\[\n   a + b = 2m + 2n.\n   \\]\n\n3. **Преобразование.**  \n   Вынесем общий множитель 2 за скобки:  \n   \\[\n   2m + 2n = 2(m + n).\n   \\]\n\n4. **Проверка целостности.**  \n   Так как \\( m \\) и \\( n \\) — целые числа, а множество целых чисел замкнуто относительно сложения, сумма \\( m + n \\) также является целым числом.  \n   (Лемма о замкнутости целых чисел относительно сложения: для любых целых \\( x, y \\) их сумма \\( x + y \\) есть целое число. Это свойство можно считать аксиомой кольца целых чисел.)\n\n5. **Применение определения.**  \n   Мы получили представление  \n   \\[\n   a + b = 2(m + n),\n   \\]  \n   где \\( m + n \\) — целое число. По определению, число, равное удвоенному целому, является чётным. Следовательно, \\( a + b \\) — чётное число.\n\n6. **Всеобщность.**  \n   Рассуждение проведено для произвольных чётных \\( a \\) и \\( b \\), и на каждом шаге мы опирались только на их чётность. Значит, утверждение справедливо для *любых* двух чётных чисел.\n\n### Вывод\n\nСумма любых двух чётных чисел всегда является чётным числом.",
+      "prompt_tokens": 179,
+      "completion_tokens": 1032,
+      "cost_usd": 0.0009757,
+      "latency_ms": 13695,
+      "raw_response": {
+        "id": "c9770c9c-4052-4e6c-aae9-af2eb8c7b8ad",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "### Формализация условия\n\n- **Исходные объекты:** два произвольных чётных числа.\n- **Требуется доказать:** их сумма является чётным числом.\n- **Определение:** целое число \\( n \\) называется *чётным*, если существует целое число \\( k \\) такое, что \\( n = 2k \\).  \n  (Рассматриваем только целые числа; любое чётное число по определению является целым.)\n\n### Доказательство\n\n1. **Выбор произвольных чётных чисел.**  \n   Пусть \\( a \\) и \\( b \\) — произвольные чётные числа. По определению чётности существуют такие целые числа \\( m \\) и \\( n \\), что  \n   \\[\n   a = 2m,\\qquad b = 2n.\n   \\]\n\n2. **Сумма.**  \n   Рассмотрим сумму \\( a + b \\):  \n   \\[\n   a + b = 2m + 2n.\n   \\]\n\n3. **Преобразование.**  \n   Вынесем общий множитель 2 за скобки:  \n   \\[\n   2m + 2n = 2(m + n).\n   \\]\n\n4. **Проверка целостности.**  \n   Так как \\( m \\) и \\( n \\) — целые числа, а множество целых чисел замкнуто относительно сложения, сумма \\( m + n \\) также является целым числом.  \n   (Лемма о замкнутости целых чисел относительно сложения: для любых целых \\( x, y \\) их сумма \\( x + y \\) есть целое число. Это свойство можно считать аксиомой кольца целых чисел.)\n\n5. **Применение определения.**  \n   Мы получили представление  \n   \\[\n   a + b = 2(m + n),\n   \\]  \n   где \\( m + n \\) — целое число. По определению, число, равное удвоенному целому, является чётным. Следовательно, \\( a + b \\) — чётное число.\n\n6. **Всеобщность.**  \n   Рассуждение проведено для произвольных чётных \\( a \\) и \\( b \\), и на каждом шаге мы опирались только на их чётность. Значит, утверждение справедливо для *любых* двух чётных чисел.\n\n### Вывод\n\nСумма любых двух чётных чисел всегда является чётным числом.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "We need to prove that the sum of any two even numbers is even. The user asks to solve the problem strictly and carefully. Need to formalize, introduce notation, check constraints, give a complete proof without leaps, no unfounded claims. If using a lemma, prove it. Don't prove by example. Before final answer, check that the chosen objects exist for any valid data. Finally state the conclusion. \n\nWe can start with definition: an even number is an integer that is divisible by 2, i.e., can be written as 2k for some integer k. Let the two even numbers be a and b. Then a = 2m, b = 2n for some integers m, n. Their sum is a + b = 2m + 2n = 2(m + n). Since m and n are integers, m + n is an integer. Thus a+b is 2 times an integer, so it's even. That's the proof. Need to state that the sum of two integers is an integer (closure of integers under addition). That's a known fact, but you can mention it as a lemma. The proof is complete and rigorous. No constraints beyond that. We'll present it in a clear step-by-step manner.\n\nLet's structure:\n\n1. Formalize the statement: For all integers x, y, if x and y are even, then x+y is even.\n2. Definition: An integer n is even if there exists an integer k such that n = 2k.\n3. Proof:\n   - Let a and b be arbitrary even integers.\n   - Then there exist integers m, n such that a = 2m, b = 2n.\n   - Then a + b = 2m + 2n = 2(m + n).\n   - Since m and n are integers, their sum m+n is an integer (closure property of integers under addition).\n   - Therefore a + b = 2(m+n) where m+n is an integer, which by definition means a+b is even.\n4. Conclusion: The sum of any two even numbers is even.\n\nNo need for further lemmas. This is straightforward. Ensure we mention that m+n is integer, which relies on the fact that integers are closed under addition. This is a basic property. \n\nWe'll output the proof in the required format."
+            }
+          }
+        ],
+        "created": 1782655327,
+        "model": "deepseek-v4-pro",
+        "object": "chat.completion",
+        "service_tier": null,
+        "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 1032,
+          "prompt_tokens": 179,
+          "total_tokens": 1211,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 488,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 128
+          },
+          "prompt_cache_hit_tokens": 128,
+          "prompt_cache_miss_tokens": 51
+        },
+        "reasoning_content": "We need to prove that the sum of any two even numbers is even. The user asks to solve the problem strictly and carefully. Need to formalize, introduce notation, check constraints, give a complete proof without leaps, no unfounded claims. If using a lemma, prove it. Don't prove by example. Before final answer, check that the chosen objects exist for any valid data. Finally state the conclusion. \n\nWe can start with definition: an even number is an integer that is divisible by 2, i.e., can be written as 2k for some integer k. Let the two even numbers be a and b. Then a = 2m, b = 2n for some integers m, n. Their sum is a + b = 2m + 2n = 2(m + n). Since m and n are integers, m + n is an integer. Thus a+b is 2 times an integer, so it's even. That's the proof. Need to state that the sum of two integers is an integer (closure of integers under addition). That's a known fact, but you can mention it as a lemma. The proof is complete and rigorous. No constraints beyond that. We'll present it in a clear step-by-step manner.\n\nLet's structure:\n\n1. Formalize the statement: For all integers x, y, if x and y are even, then x+y is even.\n2. Definition: An integer n is even if there exists an integer k such that n = 2k.\n3. Proof:\n   - Let a and b be arbitrary even integers.\n   - Then there exist integers m, n such that a = 2m, b = 2n.\n   - Then a + b = 2m + 2n = 2(m + n).\n   - Since m and n are integers, their sum m+n is an integer (closure property of integers under addition).\n   - Therefore a + b = 2(m+n) where m+n is an integer, which by definition means a+b is even.\n4. Conclusion: The sum of any two even numbers is even.\n\nNo need for further lemmas. This is straightforward. Ensure we mention that m+n is integer, which relies on the fact that integers are closed under addition. This is a basic property. \n\nWe'll output the proof in the required format."
+      },
+      "error": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

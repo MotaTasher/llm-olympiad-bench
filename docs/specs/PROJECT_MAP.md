@@ -44,8 +44,8 @@ scripts/
 | Path | Contents | Mutability |
 | --- | --- | --- |
 | `data/competitions/` | source competitions and problem sets | versioned source data |
-| `logs/` | model run records | generated, normally ignored by Git |
-| `data/results/` | manual score sidecars and exports | generated, normally ignored by Git |
+| `logs/` | model run records | generated, versioned benchmark data |
+| `data/results/` | manual score sidecars and exports | generated, versioned review data |
 | `notebooks/` | exploratory/manual workflows | not authoritative |
 | `config/models.env` | non-secret runtime configuration | versioned |
 | `config/server.env` | private SSH/rsync targets | local only |

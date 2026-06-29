@@ -1,0 +1,258 @@
+{
+  "run_id": "2026_06_28_15_04_58_math_cup_task_01_all_models",
+  "timestamp": "2026-06-28T15:04:58.170815Z",
+  "git_hash": "953c635",
+  "competition_id": "2026_05_math_cup_cs_space",
+  "competition_title": "CS Space Math Cup",
+  "problem_id": "2026_05_math_cup_cs_space_01",
+  "problem_title": "Произведение",
+  "problem_file": "data/competitions/2026_05_math_cup_cs_space/task_01.json",
+  "problem_text": "Вычислите\n\\[\n  \\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]",
+  "problem": {
+    "id": "2026_05_math_cup_cs_space_01",
+    "competition_id": "2026_05_math_cup_cs_space",
+    "number": 1,
+    "title": "Произведение",
+    "statement": "Вычислите\n\\[\n  \\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]",
+    "text": "Вычислите\n\\[\n  \\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]"
+  },
+  "results": [
+    {
+      "model": "gpt-5.5",
+      "answer": "Обозначим\n\n\\[\nP_n=\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]\n\nДля всех \\(n\\ge 1\\) и \\(1\\le k\\le n\\)\n\n\\[\n\\frac{n^2+k^2}{n^2}=1+\\left(\\frac{k}{n}\\right)^2>0,\n\\]\n\nпоэтому все корни и логарифмы ниже корректно определены.\n\nИмеем\n\n\\[\nP_n=\\prod_{k=1}^{n}\\left(1+\\left(\\frac{k}{n}\\right)^2\\right)^{1/n}.\n\\]\n\nБерём логарифм:\n\n\\[\n\\ln P_n\n=\n\\frac1n\\sum_{k=1}^{n}\\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right).\n\\]\n\nРассмотрим функцию\n\n\\[\nf(x)=\\ln(1+x^2).\n\\]\n\nОна непрерывна на \\([0,1]\\). Поэтому правая интегральная сумма сходится к интегралу:\n\n\\[\n\\frac1n\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right)\n\\longrightarrow\n\\int_0^1 f(x)\\,dx.\n\\]\n\nСледовательно,\n\n\\[\n\\ln P_n \\longrightarrow \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nВычислим интеграл:\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nИнтегрируем по частям:\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\left[x\\ln(1+x^2)\\right]_0^1\n-\n\\int_0^1 \\frac{2x^2}{1+x^2}\\,dx.\n\\]\n\nТак как\n\n\\[\n\\frac{x^2}{1+x^2}=1-\\frac{1}{1+x^2},\n\\]\n\nполучаем\n\n\\[\n\\int_0^1 \\frac{2x^2}{1+x^2}\\,dx\n=\n2\\int_0^1\\left(1-\\frac{1}{1+x^2}\\right)dx\n=\n2\\left(1-\\frac{\\pi}{4}\\right).\n\\]\n\nЗначит,\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\ln 2-2+\\frac{\\pi}{2}.\n\\]\n\nПо непрерывности экспоненты:\n\n\\[\nP_n \\longrightarrow \\exp\\left(\\ln 2-2+\\frac{\\pi}{2}\\right)\n=\n2e^{\\frac{\\pi}{2}-2}.\n\\]\n\nИтак,\n\n\\[\n\\boxed{\\displaystyle \\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}\n=\n2e^{\\frac{\\pi}{2}-2}}\n\\]",
+      "prompt_tokens": 194,
+      "completion_tokens": 1671,
+      "cost_usd": 0.017195,
+      "latency_ms": 22772,
+      "raw_response": {
+        "id": "chatcmpl-DvlM42L1wyy6U4zfgzLL1PSGzxhiV",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Обозначим\n\n\\[\nP_n=\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]\n\nДля всех \\(n\\ge 1\\) и \\(1\\le k\\le n\\)\n\n\\[\n\\frac{n^2+k^2}{n^2}=1+\\left(\\frac{k}{n}\\right)^2>0,\n\\]\n\nпоэтому все корни и логарифмы ниже корректно определены.\n\nИмеем\n\n\\[\nP_n=\\prod_{k=1}^{n}\\left(1+\\left(\\frac{k}{n}\\right)^2\\right)^{1/n}.\n\\]\n\nБерём логарифм:\n\n\\[\n\\ln P_n\n=\n\\frac1n\\sum_{k=1}^{n}\\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right).\n\\]\n\nРассмотрим функцию\n\n\\[\nf(x)=\\ln(1+x^2).\n\\]\n\nОна непрерывна на \\([0,1]\\). Поэтому правая интегральная сумма сходится к интегралу:\n\n\\[\n\\frac1n\\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right)\n\\longrightarrow\n\\int_0^1 f(x)\\,dx.\n\\]\n\nСледовательно,\n\n\\[\n\\ln P_n \\longrightarrow \\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nВычислим интеграл:\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx.\n\\]\n\nИнтегрируем по частям:\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\left[x\\ln(1+x^2)\\right]_0^1\n-\n\\int_0^1 \\frac{2x^2}{1+x^2}\\,dx.\n\\]\n\nТак как\n\n\\[\n\\frac{x^2}{1+x^2}=1-\\frac{1}{1+x^2},\n\\]\n\nполучаем\n\n\\[\n\\int_0^1 \\frac{2x^2}{1+x^2}\\,dx\n=\n2\\int_0^1\\left(1-\\frac{1}{1+x^2}\\right)dx\n=\n2\\left(1-\\frac{\\pi}{4}\\right).\n\\]\n\nЗначит,\n\n\\[\n\\int_0^1 \\ln(1+x^2)\\,dx\n=\n\\ln 2-2+\\frac{\\pi}{2}.\n\\]\n\nПо непрерывности экспоненты:\n\n\\[\nP_n \\longrightarrow \\exp\\left(\\ln 2-2+\\frac{\\pi}{2}\\right)\n=\n2e^{\\frac{\\pi}{2}-2}.\n\\]\n\nИтак,\n\n\\[\n\\boxed{\\displaystyle \\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}\n=\n2e^{\\frac{\\pi}{2}-2}}\n\\]",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": [],
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1782659100,
+        "model": "gpt-5.5-2026-04-23",
+        "object": "chat.completion",
+        "service_tier": "default",
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 1671,
+          "prompt_tokens": 194,
+          "total_tokens": 1865,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": 0,
+            "audio_tokens": 0,
+            "reasoning_tokens": 993,
+            "rejected_prediction_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0
+          }
+        }
+      },
+      "error": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "model": "claude-opus-4-8",
+      "answer": "# Вычисление предела\n\n## Формализация\n\nОбозначим искомый предел через $L$:\n$$L = \\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.$$\n\nЗаметим, что все множители положительны, поэтому произведение положительно, и можно перейти к логарифму.\n\n## Переход к логарифму\n\nПоложим\n$$P_n = \\prod_{k=1}^{n} \\left(\\frac{n^2 + k^2}{n^2}\\right)^{1/n} = \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}.$$\n\nТогда\n$$\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\left(1 + \\frac{k^2}{n^2}\\right).$$\n\n## Распознавание интегральной суммы\n\nРассмотрим функцию $f(x) = \\ln(1 + x^2)$ на отрезке $[0,1]$. Она непрерывна на $[0,1]$, следовательно интегрируема по Риману.\n\nВыражение\n$$\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} f\\!\\left(\\frac{k}{n}\\right)$$\nявляется интегральной суммой Римана для $f$ на $[0,1]$, отвечающей разбиению точками $x_k = k/n$ с равными длинами $1/n$ и выбором правых концов отрезков.\n\nВ силу интегрируемости $f$ интегральные суммы при любом таком разбиении сходятся к интегралу:\n$$\\lim_{n \\to \\infty} \\ln P_n = \\int_0^1 \\ln(1 + x^2)\\, dx.$$\n\n## Вычисление интеграла\n\nВычислим $I = \\displaystyle\\int_0^1 \\ln(1 + x^2)\\, dx$ интегрированием по частям. Возьмём $u = \\ln(1+x^2)$, $dv = dx$, тогда $du = \\dfrac{2x}{1+x^2}\\,dx$, $v = x$:\n\n$$I = \\Big[ x \\ln(1+x^2) \\Big]_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2}\\, dx = \\ln 2 - 2\\int_0^1 \\frac{x^2}{1+x^2}\\, dx.$$\n\nПреобразуем подынтегральное выражение:\n$$\\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.$$\n\nТогда\n$$\\int_0^1 \\frac{x^2}{1+x^2}\\, dx = \\int_0^1 1\\, dx - \\int_0^1 \\frac{1}{1+x^2}\\, dx = 1 - \\arctan x \\Big|_0^1 = 1 - \\frac{\\pi}{4}.$$\n\nПодставляя:\n$$I = \\ln 2 - 2\\left(1 - \\frac{\\pi}{4}\\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.$$\n\n## Возврат к пределу\n\nПоскольку $\\ln P_n \\to I$, а функция $\\exp$ непрерывна, имеем\n$$L = \\lim_{n\\to\\infty} P_n = e^{I} = \\exp\\!\\left(\\ln 2 - 2 + \\frac{\\pi}{2}\\right) = 2\\, e^{\\frac{\\pi}{2} - 2}.$$\n\n## Проверка существования объектов\n\n- Все множители $\\left(1 + \\tfrac{k^2}{n^2}\\right)^{1/n}$ положительны, переход к логарифму корректен.\n- Функция $f(x) = \\ln(1+x^2)$ непрерывна на $[0,1]$, значит интегрируема, и интегральные суммы сходятся к интегралу — теорема применима.\n- Все промежуточные интегралы вычислены через элементарные первообразные, существующие на $[0,1]$.\n\n## Финальный вывод\n\n$$\\boxed{\\;\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = 2\\, e^{\\frac{\\pi}{2} - 2}\\;}$$",
+      "prompt_tokens": 287,
+      "completion_tokens": 1465,
+      "cost_usd": 0.11418,
+      "latency_ms": 16216,
+      "raw_response": {
+        "id": "msg_01RUCmE8RqVkMmkjFGErR6cG",
+        "container": null,
+        "content": [
+          {
+            "citations": null,
+            "text": "# Вычисление предела\n\n## Формализация\n\nОбозначим искомый предел через $L$:\n$$L = \\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.$$\n\nЗаметим, что все множители положительны, поэтому произведение положительно, и можно перейти к логарифму.\n\n## Переход к логарифму\n\nПоложим\n$$P_n = \\prod_{k=1}^{n} \\left(\\frac{n^2 + k^2}{n^2}\\right)^{1/n} = \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}.$$\n\nТогда\n$$\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\left(1 + \\frac{k^2}{n^2}\\right).$$\n\n## Распознавание интегральной суммы\n\nРассмотрим функцию $f(x) = \\ln(1 + x^2)$ на отрезке $[0,1]$. Она непрерывна на $[0,1]$, следовательно интегрируема по Риману.\n\nВыражение\n$$\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} f\\!\\left(\\frac{k}{n}\\right)$$\nявляется интегральной суммой Римана для $f$ на $[0,1]$, отвечающей разбиению точками $x_k = k/n$ с равными длинами $1/n$ и выбором правых концов отрезков.\n\nВ силу интегрируемости $f$ интегральные суммы при любом таком разбиении сходятся к интегралу:\n$$\\lim_{n \\to \\infty} \\ln P_n = \\int_0^1 \\ln(1 + x^2)\\, dx.$$\n\n## Вычисление интеграла\n\nВычислим $I = \\displaystyle\\int_0^1 \\ln(1 + x^2)\\, dx$ интегрированием по частям. Возьмём $u = \\ln(1+x^2)$, $dv = dx$, тогда $du = \\dfrac{2x}{1+x^2}\\,dx$, $v = x$:\n\n$$I = \\Big[ x \\ln(1+x^2) \\Big]_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2}\\, dx = \\ln 2 - 2\\int_0^1 \\frac{x^2}{1+x^2}\\, dx.$$\n\nПреобразуем подынтегральное выражение:\n$$\\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.$$\n\nТогда\n$$\\int_0^1 \\frac{x^2}{1+x^2}\\, dx = \\int_0^1 1\\, dx - \\int_0^1 \\frac{1}{1+x^2}\\, dx = 1 - \\arctan x \\Big|_0^1 = 1 - \\frac{\\pi}{4}.$$\n\nПодставляя:\n$$I = \\ln 2 - 2\\left(1 - \\frac{\\pi}{4}\\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.$$\n\n## Возврат к пределу\n\nПоскольку $\\ln P_n \\to I$, а функция $\\exp$ непрерывна, имеем\n$$L = \\lim_{n\\to\\infty} P_n = e^{I} = \\exp\\!\\left(\\ln 2 - 2 + \\frac{\\pi}{2}\\right) = 2\\, e^{\\frac{\\pi}{2} - 2}.$$\n\n## Проверка существования объектов\n\n- Все множители $\\left(1 + \\tfrac{k^2}{n^2}\\right)^{1/n}$ положительны, переход к логарифму корректен.\n- Функция $f(x) = \\ln(1+x^2)$ непрерывна на $[0,1]$, значит интегрируема, и интегральные суммы сходятся к интегралу — теорема применима.\n- Все промежуточные интегралы вычислены через элементарные первообразные, существующие на $[0,1]$.\n\n## Финальный вывод\n\n$$\\boxed{\\;\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = 2\\, e^{\\frac{\\pi}{2} - 2}\\;}$$",
+            "type": "text"
+          }
+        ],
+        "model": "claude-opus-4-8",
+        "role": "assistant",
+        "stop_details": null,
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "global",
+          "input_tokens": 287,
+          "output_tokens": 1465,
+          "output_tokens_details": {
+            "thinking_tokens": 0
+          },
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "error": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "model": "GigaChat-2-Max",
+      "answer": "### Шаг 1: Формализация условия\n\nРассмотрим предел:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}\n$$\n\n### Шаг 2: Упрощение выражения под знаком предела\n\nПреобразуем выражение внутри произведения:\n$$\n\\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\left(\\frac{n^2 + k^2}{n^2}\\right)^{1/n} = \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\n$$\n\nТогда исходный предел принимает вид:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\n$$\n\n### Шаг 3: Логарифмирование выражения\n\nДля удобства вычисления логарифмируем выражение:\n$$\n\\ln\\left(\\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\\right) = \\sum_{k=1}^{n} \\ln\\left(\\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\\right)\n$$\n\nИспользуя свойство логарифма $\\ln(a^b) = b \\ln(a)$, получаем:\n$$\n\\sum_{k=1}^{n} \\frac{1}{n} \\ln\\left(1 + \\frac{k^2}{n^2}\\right)\n$$\n\n### Шаг 4: Преобразование в интеграл\n\nЗаметим, что сумма приближается к интегралу при $n \\to \\infty$:\n$$\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln\\left(1 + \\frac{k^2}{n^2}\\right) \\approx \\int_0^1 \\ln(1 + x^2) \\, dx\n$$\n\n### Шаг 5: Вычисление интеграла\n\nВычислим интеграл:\n$$\n\\int_0^1 \\ln(1 + x^2) \\, dx\n$$\n\nИспользуем интегрирование по частям, где $u = \\ln(1 + x^2)$ и $dv = dx$. Тогда $du = \\frac{2x}{1 + x^2} \\, dx$ и $v = x$.\n\nПрименяя формулу интегрирования по частям:\n$$\n\\int u \\, dv = uv - \\int v \\, du\n$$\n\nПолучаем:\n$$\n\\int_0^1 \\ln(1 + x^2) \\, dx = \\left[x \\ln(1 + x^2)\\right]_0^1 - \\int_0^1 \\frac{2x^2}{1 + x^2} \\, dx\n$$\n\nВычисляем первый член:\n$$\n\\left[x \\ln(1 + x^2)\\right]_0^1 = 1 \\cdot \\ln(2) - 0 \\cdot \\ln(1) = \\ln(2)\n$$\n\nВторой член преобразуем:\n$$\n\\int_0^1 \\frac{2x^2}{1 + x^2} \\, dx = 2 \\int_0^1 \\frac{x^2}{1 + x^2} \\, dx = 2 \\int_0^1 \\left(1 - \\frac{1}{1 + x^2}\\right) \\, dx\n$$\n\nРазделяем интеграл:\n$$\n2 \\int_0^1 1 \\, dx - 2 \\int_0^1 \\frac{1}{1 + x^2} \\, dx = 2 \\cdot 1 - 2 \\arctan(x)\\Big|_0^1 = 2 - 2 \\cdot \\frac{\\pi}{4} = 2 - \\frac{\\pi}{2}\n$$\n\nТаким образом, интеграл равен:\n$$\n\\ln(2) - (2 - \\frac{\\pi}{2}) = \\ln(2) - 2 + \\frac{\\pi}{2}\n$$\n\n### Шаг 6: Возвращение к исходному выражению\n\nВозвращаясь к исходному выражению, имеем:\n$$\n\\ln\\left(\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\\right) = \\ln(2) - 2 + \\frac{\\pi}{2}\n$$\n\nОтсюда:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n} = e^{\\ln(2) - 2 + \\frac{\\pi}{2}} = \\frac{e^{\\ln(2)} e^{\\frac{\\pi}{2}}}{e^2} = \\frac{2 e^{\\frac{\\pi}{2}}}{e^2} = \\frac{2}{\\sqrt{e^\\pi}}\n$$",
+      "prompt_tokens": 174,
+      "completion_tokens": 1064,
+      "cost_usd": 0.0,
+      "latency_ms": 22366,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "89e8d3cf-ac85-4b07-9e89-9dbc4cd83328",
+          "x-session-id": "1e90bb2b-577f-4ce7-9945-0e46f3e5e5d9",
+          "x-client-id": null
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "### Шаг 1: Формализация условия\n\nРассмотрим предел:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}\n$$\n\n### Шаг 2: Упрощение выражения под знаком предела\n\nПреобразуем выражение внутри произведения:\n$$\n\\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\left(\\frac{n^2 + k^2}{n^2}\\right)^{1/n} = \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\n$$\n\nТогда исходный предел принимает вид:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\n$$\n\n### Шаг 3: Логарифмирование выражения\n\nДля удобства вычисления логарифмируем выражение:\n$$\n\\ln\\left(\\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\\right) = \\sum_{k=1}^{n} \\ln\\left(\\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\\right)\n$$\n\nИспользуя свойство логарифма $\\ln(a^b) = b \\ln(a)$, получаем:\n$$\n\\sum_{k=1}^{n} \\frac{1}{n} \\ln\\left(1 + \\frac{k^2}{n^2}\\right)\n$$\n\n### Шаг 4: Преобразование в интеграл\n\nЗаметим, что сумма приближается к интегралу при $n \\to \\infty$:\n$$\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln\\left(1 + \\frac{k^2}{n^2}\\right) \\approx \\int_0^1 \\ln(1 + x^2) \\, dx\n$$\n\n### Шаг 5: Вычисление интеграла\n\nВычислим интеграл:\n$$\n\\int_0^1 \\ln(1 + x^2) \\, dx\n$$\n\nИспользуем интегрирование по частям, где $u = \\ln(1 + x^2)$ и $dv = dx$. Тогда $du = \\frac{2x}{1 + x^2} \\, dx$ и $v = x$.\n\nПрименяя формулу интегрирования по частям:\n$$\n\\int u \\, dv = uv - \\int v \\, du\n$$\n\nПолучаем:\n$$\n\\int_0^1 \\ln(1 + x^2) \\, dx = \\left[x \\ln(1 + x^2)\\right]_0^1 - \\int_0^1 \\frac{2x^2}{1 + x^2} \\, dx\n$$\n\nВычисляем первый член:\n$$\n\\left[x \\ln(1 + x^2)\\right]_0^1 = 1 \\cdot \\ln(2) - 0 \\cdot \\ln(1) = \\ln(2)\n$$\n\nВторой член преобразуем:\n$$\n\\int_0^1 \\frac{2x^2}{1 + x^2} \\, dx = 2 \\int_0^1 \\frac{x^2}{1 + x^2} \\, dx = 2 \\int_0^1 \\left(1 - \\frac{1}{1 + x^2}\\right) \\, dx\n$$\n\nРазделяем интеграл:\n$$\n2 \\int_0^1 1 \\, dx - 2 \\int_0^1 \\frac{1}{1 + x^2} \\, dx = 2 \\cdot 1 - 2 \\arctan(x)\\Big|_0^1 = 2 - 2 \\cdot \\frac{\\pi}{4} = 2 - \\frac{\\pi}{2}\n$$\n\nТаким образом, интеграл равен:\n$$\n\\ln(2) - (2 - \\frac{\\pi}{2}) = \\ln(2) - 2 + \\frac{\\pi}{2}\n$$\n\n### Шаг 6: Возвращение к исходному выражению\n\nВозвращаясь к исходному выражению, имеем:\n$$\n\\ln\\left(\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n}\\right) = \\ln(2) - 2 + \\frac{\\pi}{2}\n$$\n\nОтсюда:\n$$\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\left(1 + \\frac{k^2}{n^2}\\right)^{1/n} = e^{\\ln(2) - 2 + \\frac{\\pi}{2}} = \\frac{e^{\\ln(2)} e^{\\frac{\\pi}{2}}}{e^2} = \\frac{2 e^{\\frac{\\pi}{2}}}{e^2} = \\frac{2}{\\sqrt{e^\\pi}}\n$$",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782659160,
+        "model": "GigaChat-2-Max:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 174,
+          "completion_tokens": 1064,
+          "total_tokens": 1238,
+          "precached_prompt_tokens": 2
+        },
+        "object_": "chat.completion"
+      },
+      "error": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "model": "yandexgpt-5-pro/latest",
+      "answer": "Рассмотрим предел:\n\\[\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]\n\nСначала упростим выражение под знаком предела:\n\\[\n\\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\left( \\frac{n^2 + k^2}{n^2} \\right)^{\\frac{1}{n}} = \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}}.\n\\]\n\nТеперь рассмотрим произведение:\n\\[\n\\prod_{k=1}^{n} \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}}.\n\\]\n\nДля упрощения вычислений возьмем логарифм от этого произведения:\n\\[\n\\ln \\left( \\prod_{k=1}^{n} \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}} \\right) = \\sum_{k=1}^{n} \\ln \\left( \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}} \\right).\n\\]\n\nИспользуя свойство логарифма, получим:\n\\[\n\\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right).\n\\]\n\nЭто сумма представляет собой интегральную сумму для функции \\( f(x) = \\ln(1 + x^2) \\) на отрезке \\([0, 1]\\):\n\\[\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right).\n\\]\n\nПри \\( n \\to \\infty \\), эта сумма стремится к интегралу:\n\\[\n\\int_0^1 \\ln(1 + x^2) \\, dx.\n\\]\n\nВычислим этот интеграл:\n\\[\n\\int_0^1 \\ln(1 + x^2) \\, dx.\n\\]\n\nИспользуем замену \\( x = \\tan \\theta \\), тогда \\( dx = \\sec^2 \\theta \\, d\\theta \\):\n\\[\n\\int_0^{\\frac{\\pi}{4}} \\ln(1 + \\tan^2 \\theta) \\sec^2 \\theta \\, d\\theta = \\int_0^{\\frac{\\pi}{4}} \\ln(\\sec^2 \\theta) \\sec^2 \\theta \\, d\\theta.\n\\]\n\nТак как \\( \\ln(\\sec^2 \\theta) = 2 \\ln(\\sec \\theta) \\), получим:\n\\[\n2 \\int_0^{\\frac{\\pi}{4}} \\ln(\\sec \\theta) \\sec^2 \\theta \\, d\\theta.\n\\]\n\nИнтеграл \\( \\int \\ln(\\sec \\theta) \\sec^2 \\theta \\, d\\theta \\) можно вычислить, используя интегрирование по частям:\n\\[\n\\int \\ln(\\sec \\theta) \\sec^2 \\theta \\, d\\theta = \\ln(\\sec \\theta) \\tan \\theta - \\int \\tan \\theta \\cdot \\frac{\\tan \\theta}{\\sec \\theta} \\, d\\theta = \\ln(\\sec \\theta) \\tan \\theta - \\int \\sin \\theta \\, d\\theta.\n\\]\n\n\\[\n= \\ln(\\sec \\theta) \\tan \\theta + \\cos \\theta + C.\n\\]\n\nОценим интеграл на интервале \\([0, \\frac{\\pi}{4}]\\):\n\\[\n2 \\left[ \\ln(\\sec \\theta) \\tan \\theta + \\cos \\theta \\right]_0^{\\frac{\\pi}{4}}.\n\\]\n\n\\[\n= 2 \\left( \\ln(\\sqrt{2}) \\cdot 1 + \\frac{\\sqrt{2}}{2} - (\\ln(1) \\cdot 0 + 1) \\right) = 2 \\left( \\frac{1}{2} \\ln 2 + \\frac{\\sqrt{2}}{2} - 1 \\right).\n\\]\n\n\\[\n= \\ln 2 - 2 + \\sqrt{2}.\n\\]\n\nТаким образом, предел равен:\n\\[\ne^{\\ln 2 - 2 + \\sqrt{2}} = e^{\\ln 2} \\cdot e^{-2} \\cdot e^{\\sqrt{2}} = 2 \\cdot e^{-2} \\cdot e^{\\sqrt{2}}.\n\\]\n\nОтвет:\n\\[\n2 e^{\\sqrt{2} - 2}.\n\\]",
+      "prompt_tokens": 169,
+      "completion_tokens": 1139,
+      "cost_usd": 0.01162667,
+      "latency_ms": 15647,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": "Рассмотрим предел:\n\\[\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]\n\nСначала упростим выражение под знаком предела:\n\\[\n\\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\left( \\frac{n^2 + k^2}{n^2} \\right)^{\\frac{1}{n}} = \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}}.\n\\]\n\nТеперь рассмотрим произведение:\n\\[\n\\prod_{k=1}^{n} \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}}.\n\\]\n\nДля упрощения вычислений возьмем логарифм от этого произведения:\n\\[\n\\ln \\left( \\prod_{k=1}^{n} \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}} \\right) = \\sum_{k=1}^{n} \\ln \\left( \\left( 1 + \\frac{k^2}{n^2} \\right)^{\\frac{1}{n}} \\right).\n\\]\n\nИспользуя свойство логарифма, получим:\n\\[\n\\sum_{k=1}^{n} \\frac{1}{n} \\ln \\left( 1 + \\frac{k^2}{n^2} \\right).\n\\]\n\nЭто сумма представляет собой интегральную сумму для функции \\( f(x) = \\ln(1 + x^2) \\) на отрезке \\([0, 1]\\):\n\\[\n\\frac{1}{n} \\sum_{k=1}^{n} \\ln \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right).\n\\]\n\nПри \\( n \\to \\infty \\), эта сумма стремится к интегралу:\n\\[\n\\int_0^1 \\ln(1 + x^2) \\, dx.\n\\]\n\nВычислим этот интеграл:\n\\[\n\\int_0^1 \\ln(1 + x^2) \\, dx.\n\\]\n\nИспользуем замену \\( x = \\tan \\theta \\), тогда \\( dx = \\sec^2 \\theta \\, d\\theta \\):\n\\[\n\\int_0^{\\frac{\\pi}{4}} \\ln(1 + \\tan^2 \\theta) \\sec^2 \\theta \\, d\\theta = \\int_0^{\\frac{\\pi}{4}} \\ln(\\sec^2 \\theta) \\sec^2 \\theta \\, d\\theta.\n\\]\n\nТак как \\( \\ln(\\sec^2 \\theta) = 2 \\ln(\\sec \\theta) \\), получим:\n\\[\n2 \\int_0^{\\frac{\\pi}{4}} \\ln(\\sec \\theta) \\sec^2 \\theta \\, d\\theta.\n\\]\n\nИнтеграл \\( \\int \\ln(\\sec \\theta) \\sec^2 \\theta \\, d\\theta \\) можно вычислить, используя интегрирование по частям:\n\\[\n\\int \\ln(\\sec \\theta) \\sec^2 \\theta \\, d\\theta = \\ln(\\sec \\theta) \\tan \\theta - \\int \\tan \\theta \\cdot \\frac{\\tan \\theta}{\\sec \\theta} \\, d\\theta = \\ln(\\sec \\theta) \\tan \\theta - \\int \\sin \\theta \\, d\\theta.\n\\]\n\n\\[\n= \\ln(\\sec \\theta) \\tan \\theta + \\cos \\theta + C.\n\\]\n\nОценим интеграл на интервале \\([0, \\frac{\\pi}{4}]\\):\n\\[\n2 \\left[ \\ln(\\sec \\theta) \\tan \\theta + \\cos \\theta \\right]_0^{\\frac{\\pi}{4}}.\n\\]\n\n\\[\n= 2 \\left( \\ln(\\sqrt{2}) \\cdot 1 + \\frac{\\sqrt{2}}{2} - (\\ln(1) \\cdot 0 + 1) \\right) = 2 \\left( \\frac{1}{2} \\ln 2 + \\frac{\\sqrt{2}}{2} - 1 \\right).\n\\]\n\n\\[\n= \\ln 2 - 2 + \\sqrt{2}.\n\\]\n\nТаким образом, предел равен:\n\\[\ne^{\\ln 2 - 2 + \\sqrt{2}} = e^{\\ln 2} \\cdot e^{-2} \\cdot e^{\\sqrt{2}} = 2 \\cdot e^{-2} \\cdot e^{\\sqrt{2}}.\n\\]\n\nОтвет:\n\\[\n2 e^{\\sqrt{2} - 2}.\n\\]"
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "169",
+            "completionTokens": "1139",
+            "totalTokens": "1308",
+            "completionTokensDetails": {
+              "reasoningTokens": "0"
+            }
+          },
+          "modelVersion": "09.02.2025"
+        }
+      },
+      "error": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "answer": "Для вычисления предела\n\n\\[\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}\n\\]\n\nпреобразуем произведение. Поскольку \\(\\sqrt[n]{a} = a^{1/n}\\), имеем\n\n\\[\nP_n = \\prod_{k=1}^{n} \\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n}.\n\\]\n\nЛогарифмируем:\n\n\\[\n\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left( \\frac{n^2 + k^2}{n^2} \\right)\n= \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left( 1 + \\left(\\frac{k}{n}\\right)^2 \\right).\n\\]\n\nПри \\(n \\to \\infty\\) это интегральная сумма для непрерывной функции \\(f(x) = \\ln(1+x^2)\\) на отрезке \\([0,1]\\). Следовательно,\n\n\\[\n\\lim_{n \\to \\infty} \\ln P_n = \\int_0^1 \\ln(1+x^2)\\, dx.\n\\]\n\nВычислим интеграл, используя интегрирование по частям:\n\n\\[\n\\begin{aligned}\n\\int_0^1 \\ln(1+x^2)\\, dx\n&= \\Bigl[ x \\ln(1+x^2) \\Bigr]_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2}\\, dx \\\\\n&= \\ln 2 - 2 \\int_0^1 \\frac{x^2}{1+x^2}\\, dx \\\\\n&= \\ln 2 - 2 \\int_0^1 \\left(1 - \\frac{1}{1+x^2}\\right) dx \\\\\n&= \\ln 2 - 2 \\Bigl[ x - \\arctan x \\Bigr]_0^1 \\\\\n&= \\ln 2 - 2 \\left(1 - \\frac{\\pi}{4}\\right) \\\\\n&= \\ln 2 - 2 + \\frac{\\pi}{2}.\n\\end{aligned}\n\\]\n\nТаким образом,\n\n\\[\n\\lim_{n \\to \\infty} P_n = \\exp\\left( \\ln 2 - 2 + \\frac{\\pi}{2} \\right) = 2 e^{\\frac{\\pi}{2} - 2}.\n\\]\n\n**Ответ:** \\(\\displaystyle 2 e^{\\frac{\\pi}{2} - 2}\\).",
+      "prompt_tokens": 206,
+      "completion_tokens": 1467,
+      "cost_usd": 0.0013659,
+      "latency_ms": 13439,
+      "raw_response": {
+        "id": "a1f75559-8fe1-4053-bda9-a998bacf6b2a",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Для вычисления предела\n\n\\[\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}\n\\]\n\nпреобразуем произведение. Поскольку \\(\\sqrt[n]{a} = a^{1/n}\\), имеем\n\n\\[\nP_n = \\prod_{k=1}^{n} \\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n}.\n\\]\n\nЛогарифмируем:\n\n\\[\n\\ln P_n = \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left( \\frac{n^2 + k^2}{n^2} \\right)\n= \\frac{1}{n} \\sum_{k=1}^{n} \\ln\\!\\left( 1 + \\left(\\frac{k}{n}\\right)^2 \\right).\n\\]\n\nПри \\(n \\to \\infty\\) это интегральная сумма для непрерывной функции \\(f(x) = \\ln(1+x^2)\\) на отрезке \\([0,1]\\). Следовательно,\n\n\\[\n\\lim_{n \\to \\infty} \\ln P_n = \\int_0^1 \\ln(1+x^2)\\, dx.\n\\]\n\nВычислим интеграл, используя интегрирование по частям:\n\n\\[\n\\begin{aligned}\n\\int_0^1 \\ln(1+x^2)\\, dx\n&= \\Bigl[ x \\ln(1+x^2) \\Bigr]_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2}\\, dx \\\\\n&= \\ln 2 - 2 \\int_0^1 \\frac{x^2}{1+x^2}\\, dx \\\\\n&= \\ln 2 - 2 \\int_0^1 \\left(1 - \\frac{1}{1+x^2}\\right) dx \\\\\n&= \\ln 2 - 2 \\Bigl[ x - \\arctan x \\Bigr]_0^1 \\\\\n&= \\ln 2 - 2 \\left(1 - \\frac{\\pi}{4}\\right) \\\\\n&= \\ln 2 - 2 + \\frac{\\pi}{2}.\n\\end{aligned}\n\\]\n\nТаким образом,\n\n\\[\n\\lim_{n \\to \\infty} P_n = \\exp\\left( \\ln 2 - 2 + \\frac{\\pi}{2} \\right) = 2 e^{\\frac{\\pi}{2} - 2}.\n\\]\n\n**Ответ:** \\(\\displaystyle 2 e^{\\frac{\\pi}{2} - 2}\\).",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "Мы должны вычислить предел:\n\n\\[\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]\n\nОбозначим произведение через \\( P_n \\):\n\n\\[\nP_n = \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\prod_{k=1}^{n} \\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n}.\n\\]\n\nЗначит, \\(P_n = \\exp\\left( \\frac{1}{n} \\sum_{k=1}^n \\ln\\left( \\frac{n^2 + k^2}{n^2} \\right) \\right)\\).\n\nУпростим выражение под логарифмом:\n\n\\[\n\\frac{n^2 + k^2}{n^2} = 1 + \\left( \\frac{k}{n} \\right)^2.\n\\]\n\nТогда\n\n\\[\n\\frac{1}{n} \\sum_{k=1}^n \\ln\\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right).\n\\]\n\nЭто интегральная сумма для функции \\(f(x) = \\ln(1+x^2)\\) на отрезке \\([0,1]\\). Действительно, при \\(n \\to \\infty\\):\n\n\\[\n\\frac{1}{n} \\sum_{k=1}^n \\ln\\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right) \\to \\int_0^1 \\ln(1+x^2) \\, dx.\n\\]\n\nПоскольку функция \\(\\ln(1+x^2)\\) непрерывна на \\([0,1]\\), предел существует и равен интегралу.\n\nТаким образом, искомый предел равен\n\n\\[\nL = \\exp\\left( \\int_0^1 \\ln(1+x^2) \\, dx \\right).\n\\]\n\nТеперь вычислим интеграл.\n\n\\[\nI = \\int_0^1 \\ln(1+x^2) \\, dx.\n\\]\n\nИнтегрируем по частям:\n\nПусть \\(u = \\ln(1+x^2)\\), \\(dv = dx\\). Тогда \\(du = \\frac{2x}{1+x^2} dx\\), \\(v = x\\).\n\n\\[\nI = \\left. x \\ln(1+x^2) \\right|_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2} dx = \\ln 2 - 2 \\int_0^1 \\frac{x^2}{1+x^2} dx.\n\\]\n\nПреобразуем интеграл:\n\n\\[\n\\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.\n\\]\n\nТогда\n\n\\[\n\\int_0^1 \\frac{x^2}{1+x^2} dx = \\int_0^1 1 \\, dx - \\int_0^1 \\frac{1}{1+x^2} dx = 1 - \\arctan x \\Big|_0^1 = 1 - \\frac{\\pi}{4}.\n\\]\n\nПодставим:\n\n\\[\nI = \\ln 2 - 2 \\left( 1 - \\frac{\\pi}{4} \\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n\\]\n\nЗначит,\n\n\\[\nL = e^{I} = e^{\\ln 2 - 2 + \\pi/2} = 2 \\cdot e^{-2} \\cdot e^{\\pi/2} = 2 e^{\\frac{\\pi}{2} - 2}.\n\\]\n\nПроверим: предел равен \\(2 e^{\\frac{\\pi}{2} - 2}\\).\n\nМожно записать ответ в виде \\(2 e^{\\pi/2 - 2}\\)."
+            }
+          }
+        ],
+        "created": 1782659176,
+        "model": "deepseek-v4-pro",
+        "object": "chat.completion",
+        "service_tier": null,
+        "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 1467,
+          "prompt_tokens": 206,
+          "total_tokens": 1673,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 878,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 128
+          },
+          "prompt_cache_hit_tokens": 128,
+          "prompt_cache_miss_tokens": 78
+        },
+        "reasoning_content": "Мы должны вычислить предел:\n\n\\[\n\\lim_{n \\to \\infty} \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}}.\n\\]\n\nОбозначим произведение через \\( P_n \\):\n\n\\[\nP_n = \\prod_{k=1}^{n} \\sqrt[n]{\\frac{n^2 + k^2}{n^2}} = \\prod_{k=1}^{n} \\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( \\prod_{k=1}^{n} \\frac{n^2 + k^2}{n^2} \\right)^{1/n}.\n\\]\n\nЗначит, \\(P_n = \\exp\\left( \\frac{1}{n} \\sum_{k=1}^n \\ln\\left( \\frac{n^2 + k^2}{n^2} \\right) \\right)\\).\n\nУпростим выражение под логарифмом:\n\n\\[\n\\frac{n^2 + k^2}{n^2} = 1 + \\left( \\frac{k}{n} \\right)^2.\n\\]\n\nТогда\n\n\\[\n\\frac{1}{n} \\sum_{k=1}^n \\ln\\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right).\n\\]\n\nЭто интегральная сумма для функции \\(f(x) = \\ln(1+x^2)\\) на отрезке \\([0,1]\\). Действительно, при \\(n \\to \\infty\\):\n\n\\[\n\\frac{1}{n} \\sum_{k=1}^n \\ln\\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right) \\to \\int_0^1 \\ln(1+x^2) \\, dx.\n\\]\n\nПоскольку функция \\(\\ln(1+x^2)\\) непрерывна на \\([0,1]\\), предел существует и равен интегралу.\n\nТаким образом, искомый предел равен\n\n\\[\nL = \\exp\\left( \\int_0^1 \\ln(1+x^2) \\, dx \\right).\n\\]\n\nТеперь вычислим интеграл.\n\n\\[\nI = \\int_0^1 \\ln(1+x^2) \\, dx.\n\\]\n\nИнтегрируем по частям:\n\nПусть \\(u = \\ln(1+x^2)\\), \\(dv = dx\\). Тогда \\(du = \\frac{2x}{1+x^2} dx\\), \\(v = x\\).\n\n\\[\nI = \\left. x \\ln(1+x^2) \\right|_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1+x^2} dx = \\ln 2 - 2 \\int_0^1 \\frac{x^2}{1+x^2} dx.\n\\]\n\nПреобразуем интеграл:\n\n\\[\n\\frac{x^2}{1+x^2} = 1 - \\frac{1}{1+x^2}.\n\\]\n\nТогда\n\n\\[\n\\int_0^1 \\frac{x^2}{1+x^2} dx = \\int_0^1 1 \\, dx - \\int_0^1 \\frac{1}{1+x^2} dx = 1 - \\arctan x \\Big|_0^1 = 1 - \\frac{\\pi}{4}.\n\\]\n\nПодставим:\n\n\\[\nI = \\ln 2 - 2 \\left( 1 - \\frac{\\pi}{4} \\right) = \\ln 2 - 2 + \\frac{\\pi}{2}.\n\\]\n\nЗначит,\n\n\\[\nL = e^{I} = e^{\\ln 2 - 2 + \\pi/2} = 2 \\cdot e^{-2} \\cdot e^{\\pi/2} = 2 e^{\\frac{\\pi}{2} - 2}.\n\\]\n\nПроверим: предел равен \\(2 e^{\\frac{\\pi}{2} - 2}\\).\n\nМожно записать ответ в виде \\(2 e^{\\pi/2 - 2}\\)."
+      },
+      "error": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

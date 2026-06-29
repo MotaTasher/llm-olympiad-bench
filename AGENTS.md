@@ -77,4 +77,9 @@ Use [`docs/specs/TROUBLESHOOTING.md`](docs/specs/TROUBLESHOOTING.md). Start with
 
 ## Repository hygiene
 
-Do not modify generated logs, scoring sidecars, notebooks, or sample datasets unless the task requires it. Never add `__pycache__`, `.DS_Store`, `__MACOSX`, virtual environments, private server config, or real secret files to an archive or commit.
+Logs and scoring sidecars are versioned project data. Before committing new files
+under `logs/` or `data/results/`, scan for accidental credentials. Do not modify
+existing generated logs, scoring sidecars, notebooks, or sample datasets unless
+the task requires it. Never add `__pycache__`, `.DS_Store`, `__MACOSX`, virtual
+environments, private server config, or real secret files to an archive or
+commit.

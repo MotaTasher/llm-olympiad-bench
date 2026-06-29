@@ -3,11 +3,5 @@ config/server.env
 .DS_Store
 __pycache__/
 *.py[cod]
-logs
-logs/
-logs/*.json
-logs/**/*.json
-data/results
-data/results/
-data/results/*
+logs/.evaluations/
 models/*/secrets/

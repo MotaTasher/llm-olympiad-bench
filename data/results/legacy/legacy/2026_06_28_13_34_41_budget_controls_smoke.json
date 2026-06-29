@@ -1,0 +1,15 @@
+{
+  "evaluations": {
+    "0": {
+      "model": "gpt-5.5",
+      "evaluator": "Мотя",
+      "score": "3",
+      "feedback": "Не нравится как визуально отображается, человек не мог такое написать \r\n\r\nхихи",
+      "updated_at": "2026-06-28T14:45:19.742935+00:00"
+    }
+  },
+  "competition_id": "legacy",
+  "problem_id": "legacy",
+  "run_id": "2026_06_28_13_34_41_budget_controls_smoke",
+  "updated_at": "2026-06-28T14:45:19.742960+00:00"
+}

@@ -88,11 +88,15 @@ The script requires local `rsync` and SSH access. Push uses `--ignore-existing`;
 
 ## Generated artifacts
 
-Normal generated files are ignored by Git:
+Model runs and review results are project data and are versioned:
 
 - `logs/**/*.json`;
 - `data/results/**/*.json`;
-- exported CSV/JSONL;
-- caches and virtual environments.
+- curated result CSV files under `data/results/`.
 
-Existing sample logs may still be present in a distributed archive for UI demonstration.
+Normal generated files still ignored by Git are caches, virtual environments and
+ad-hoc exports outside the tracked data tree.
+
+Before committing new logs/results, scan for accidental credentials. Provider
+tokens, Authorization headers, cookies and private server config must never be
+committed.

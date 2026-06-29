@@ -1,0 +1,22 @@
+{
+  "evaluations": {
+    "0": {
+      "model": "gpt-5.5",
+      "evaluator": "Alice",
+      "score": "7",
+      "feedback": "First model feedback",
+      "updated_at": "2026-06-28T14:44:05.121348+00:00"
+    },
+    "1": {
+      "model": "GigaChat-2-Max",
+      "evaluator": "Bob",
+      "score": "4",
+      "feedback": "Second model feedback",
+      "updated_at": "2026-06-28T14:44:05.314712+00:00"
+    }
+  },
+  "competition_id": "legacy",
+  "problem_id": "legacy",
+  "run_id": "20260603_073120_17ea460",
+  "updated_at": "2026-06-28T14:44:05.314728+00:00"
+}

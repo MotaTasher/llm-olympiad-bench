@@ -1,0 +1,17 @@
+{
+  "competition_id": "test_comp",
+  "problem_id": "test_problem",
+  "run_id": "test",
+  "score": "1",
+  "feedback": "Deployment smoke test passed",
+  "updated_at": "2026-06-28T14:52:18.953589+00:00",
+  "evaluations": {
+    "0": {
+      "model": "test",
+      "evaluator": "Мотя",
+      "score": "4",
+      "feedback": "ну соу-соу, не выглядит, как норм решение, но мне не хвататет компетенций оценить",
+      "updated_at": "2026-06-28T14:52:18.953568+00:00"
+    }
+  }
+}
