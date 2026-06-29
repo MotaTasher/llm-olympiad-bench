@@ -14,6 +14,9 @@ if str(BASE_DIR) not in sys.path:
 
 try:
     from .costs import build_cost_calculator, calculator_inputs
+    from .cost_estimator import (
+        cost_context,
+    )
     from .repository import (
         anonymized_attempts,
         build_catalog,
@@ -30,6 +33,9 @@ try:
     )
 except ImportError:  # pragma: no cover - direct `python scoring/app.py`
     from scoring.costs import build_cost_calculator, calculator_inputs  # type: ignore
+    from scoring.cost_estimator import (  # type: ignore
+        cost_context,
+    )
     from scoring.repository import (  # type: ignore
         anonymized_attempts,
         build_catalog,
@@ -137,6 +143,7 @@ def index():
         competitions=data["competitions"],
         competition_groups=data.get("competition_groups", []),
         warnings=data["warnings"],
+        cost_context=cost_context(data["competitions"]),
     )
 
 
@@ -153,6 +160,7 @@ def competition_page(competition_id: str):
         competition=competition,
         cost_calculator=build_cost_calculator(competition, **cost_inputs),
         warnings=data["warnings"],
+        cost_context=cost_context([competition]),
     )
 
 

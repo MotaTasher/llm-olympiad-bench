@@ -80,6 +80,13 @@ self._model = model or env("PROVIDER_MODEL", DEFAULT_VERSION)
 ```
 
 Default identifiers belong in `versions.py`. Temporary overrides may live in `config/models.env` or inherited shell variables only when runner is invoked with `--allow-env-model-overrides`.
+Adapters may also accept explicit constructor settings from `runner.RunSettings`,
+currently `reasoning_budget_tokens` and `max_final_tokens`. These settings are
+request-scoped and take precedence over provider token-limit environment
+variables for that model object. They must not add tools, web search, function
+calling or provider-side code execution. Providers with no numeric reasoning
+budget API leave that setting as best effort while still applying the visible
+answer token cap when supported.
 
 `VERSIONS` is the active benchmark set and should stay small. The scoring UI uses only `VERSIONS` for configured columns; `LEGACY_VERSIONS` may document retired IDs, but must not be used to seed the default matrix.
 

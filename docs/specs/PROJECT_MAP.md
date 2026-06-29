@@ -30,6 +30,7 @@ models/
 scoring/
   app.py                  Flask routes, redirects and score request validation
   repository.py           one-pass catalog builder, log/sidecar merge, model-cell status logic
+  cost_estimator.py       local best-effort cost estimate for configured model runs
   templates/              HTML pages
 
 scripts/

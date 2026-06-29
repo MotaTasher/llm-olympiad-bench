@@ -8,8 +8,16 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 class YandexGPTModel(BaseModel):
-    def __init__(self, model: str | None = None) -> None:
+    def __init__(
+        self,
+        model: str | None = None,
+        *,
+        reasoning_budget_tokens: int | None = None,
+        max_final_tokens: int | None = None,
+    ) -> None:
         self._model = model or env("YANDEX_MODEL", DEFAULT_VERSION)
+        self._reasoning_budget_tokens = reasoning_budget_tokens
+        self._max_final_tokens = max_final_tokens
 
     @property
     def model_id(self) -> str:
@@ -44,7 +52,13 @@ class YandexGPTModel(BaseModel):
             completion_options = {
                 "stream": False,
                 "temperature": float(env("YANDEX_TEMPERATURE", "0.15") or "0.15"),
-                "maxTokens": max_tokens or int(env("YANDEX_MAX_TOKENS", "8000") or "8000"),
+                "maxTokens": (
+                    int(max_tokens)
+                    if max_tokens is not None
+                    else int(self._max_final_tokens)
+                    if self._max_final_tokens is not None
+                    else int(env("YANDEX_MAX_TOKENS", "8000") or "8000")
+                ),
             }
             reasoning_mode = env("YANDEX_REASONING_MODE")
             if reasoning_mode:

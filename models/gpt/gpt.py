@@ -16,8 +16,16 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 class GPTModel(BaseModel):
-    def __init__(self, model: str | None = None) -> None:
+    def __init__(
+        self,
+        model: str | None = None,
+        *,
+        reasoning_budget_tokens: int | None = None,
+        max_final_tokens: int | None = None,
+    ) -> None:
         self._model = model or env("OPENAI_MODEL", DEFAULT_VERSION)
+        self._reasoning_budget_tokens = reasoning_budget_tokens
+        self._max_final_tokens = max_final_tokens
 
     @property
     def model_id(self) -> str:
@@ -29,13 +37,15 @@ class GPTModel(BaseModel):
 
             client = OpenAI(api_key=require_env("OPENAI_API_KEY"))
             kwargs = {}
-            configured_max = max_tokens or (
-                int(env("OPENAI_MAX_COMPLETION_TOKENS", "4096") or "4096")
-                if env("OPENAI_MAX_COMPLETION_TOKENS") is not None
-                else None
-            )
-            if configured_max is not None:
-                kwargs["max_completion_tokens"] = configured_max
+            if max_tokens is not None:
+                kwargs["max_completion_tokens"] = int(max_tokens)
+            elif self._max_final_tokens is not None:
+                budget = max(0, int(self._reasoning_budget_tokens or 0))
+                kwargs["max_completion_tokens"] = int(self._max_final_tokens) + budget
+            elif env("OPENAI_MAX_COMPLETION_TOKENS") is not None:
+                kwargs["max_completion_tokens"] = int(
+                    env("OPENAI_MAX_COMPLETION_TOKENS", "4096") or "4096"
+                )
             if env("OPENAI_REASONING_EFFORT") is not None:
                 kwargs["reasoning_effort"] = env("OPENAI_REASONING_EFFORT")
             messages = [

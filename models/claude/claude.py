@@ -16,8 +16,16 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 class ClaudeModel(BaseModel):
-    def __init__(self, model: str | None = None) -> None:
+    def __init__(
+        self,
+        model: str | None = None,
+        *,
+        reasoning_budget_tokens: int | None = None,
+        max_final_tokens: int | None = None,
+    ) -> None:
         self._model = model or env("ANTHROPIC_MODEL", DEFAULT_VERSION)
+        self._reasoning_budget_tokens = reasoning_budget_tokens
+        self._max_final_tokens = max_final_tokens
 
     @property
     def model_id(self) -> str:
@@ -28,18 +36,29 @@ class ClaudeModel(BaseModel):
             import anthropic
 
             client = anthropic.Anthropic(api_key=require_env("ANTHROPIC_API_KEY"))
-            max_tokens = max_tokens or int(env("ANTHROPIC_MAX_TOKENS", "4096") or "4096")
+            if max_tokens is not None:
+                max_tokens = int(max_tokens)
+            elif self._max_final_tokens is not None:
+                max_tokens = int(self._max_final_tokens)
+            else:
+                max_tokens = int(env("ANTHROPIC_MAX_TOKENS", "4096") or "4096")
             kwargs = {
                 "model": self.model_id,
                 "max_tokens": max_tokens,
                 "system": SYSTEM_PROMPT,
                 "messages": [{"role": "user", "content": problem}],
             }
-            thinking_budget = env("ANTHROPIC_THINKING_BUDGET_TOKENS")
+            if self._reasoning_budget_tokens is not None:
+                budget_tokens = int(self._reasoning_budget_tokens)
+                thinking_budget = str(budget_tokens)
+            else:
+                thinking_budget = env("ANTHROPIC_THINKING_BUDGET_TOKENS")
+                budget_tokens = int(thinking_budget or "0") if thinking_budget is not None else 0
             if thinking_budget is not None:
-                budget_tokens = int(thinking_budget or "0")
                 if budget_tokens > 0:
-                    if max_tokens <= budget_tokens:
+                    if self._max_final_tokens is not None:
+                        kwargs["max_tokens"] = max_tokens + budget_tokens
+                    elif max_tokens <= budget_tokens:
                         raise RuntimeError(
                             "ANTHROPIC_MAX_TOKENS must be greater than "
                             "ANTHROPIC_THINKING_BUDGET_TOKENS when extended thinking is enabled"

@@ -8,7 +8,7 @@ canonical problem file
    ├─ olympiad_data.resolve_problem() reads parent competition.json
    └─ olympiad_data.load_problem() reads statement
    │
-runner derives log metadata from CompetitionRecord + ProblemRecord
+runner.run_problem() derives log metadata from CompetitionRecord + ProblemRecord
    │
 runner creates schema_version=2 run-log with status=running
    │
@@ -28,6 +28,8 @@ The runner uses `models/telemetry.py` for safe command/runtime metadata, prompt/
 For operator visibility, runner prints flushed live progress before and after
 each provider call. This console output is informational only; run logs remain
 the source of persisted state.
+`runner.main()` is a CLI wrapper around `runner.run_problem()`, so future programmatic callers can use the same schema-v2 atomic log writer.
+Programmatic callers pass model/runtime limits explicitly through `RunSettings`; request-scoped limits must not be passed by mutating global environment variables.
 
 ## Scoring flow
 
@@ -45,6 +47,27 @@ data/results/<competition_id>/<problem_id>/<run_id>.json
 
 Run logs remain the source of model answers. Sidecars are the source of manual scoring. The web app merges them only for display.
 New sidecars use `schema_version: 2` and key evaluations by `result_id`; old sidecars keyed by string result index remain readable.
+
+## Web cost-estimate flow
+
+```text
+GET /competition/<competition_id>
+   │
+scoring/app.py loads the display catalog
+   │
+scoring/cost_estimator.py reads canonical problem text and active model specs
+   │
+skip already-solved problem × model pairs unless requested otherwise
+   │
+render a local best-effort USD estimate
+```
+
+The scoring web UI does not launch model calls. The shared cost control on index
+and competition pages uses local price tables, rough token estimates and the
+current USD/RUB rate from the Central Bank of Russia XML daily endpoint. The
+browser recalculates values immediately when sliders or the solved-task checkbox
+change. It creates no jobs, calls no provider clients and writes no run logs or
+sidecars.
 
 ## Dataset export flow
 

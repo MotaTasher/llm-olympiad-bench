@@ -134,7 +134,12 @@ New shape written by `runner.py` uses `schema_version: 2`:
     "sha256": "sha256...",
     "text": "Полный system prompt..."
   },
-  "runtime_settings": {"text_only": true, "sequential": true},
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "reasoning_budget_tokens": 8000,
+    "max_final_tokens": 8000
+  },
   "results": [
     {
       "result_id": "res_0123456789abcdef01234567",
@@ -210,7 +215,7 @@ New shape written by `runner.py` uses `schema_version: 2`:
 }
 ```
 
-Run status is `running`, `completed`, `partial` or `failed`. Result status is `running`, `success` or `error`. The runner creates the run-log before the first provider call, appends a `running` result before each model call, and atomically rewrites the JSON through a temporary file plus `os.replace` after each result.
+Run status is `running`, `completed`, `partial` or `failed`. Result status is `running`, `success` or `error`. The runner creates the run-log before the first provider call, appends a `running` result before each model call, and atomically rewrites the JSON through a temporary file plus `os.replace` after each result. `runtime_settings.reasoning_budget_tokens` and `runtime_settings.max_final_tokens` are request-scoped limits when supplied by a programmatic caller; they may be `null` for ordinary CLI defaults.
 
 `competition_id`, `competition_title`, `problem_id` and `problem_title` for new logs are derived from the canonical competition and problem files unless explicitly overridden by CLI flags. Old logs without `schema_version` remain readable through `models.telemetry.normalize_run_log()` and are not migrated on disk.
 

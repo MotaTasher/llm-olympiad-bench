@@ -16,8 +16,16 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 class DeepSeekModel(BaseModel):
-    def __init__(self, model: str | None = None) -> None:
+    def __init__(
+        self,
+        model: str | None = None,
+        *,
+        reasoning_budget_tokens: int | None = None,
+        max_final_tokens: int | None = None,
+    ) -> None:
         self._model = model or env("DEEPSEEK_MODEL", DEFAULT_VERSION)
+        self._reasoning_budget_tokens = reasoning_budget_tokens
+        self._max_final_tokens = max_final_tokens
 
     @property
     def model_id(self) -> str:
@@ -35,13 +43,12 @@ class DeepSeekModel(BaseModel):
             kwargs = {}
             if self.model_id not in {"deepseek-reasoner"}:
                 kwargs["temperature"] = float(env("DEEPSEEK_TEMPERATURE", "0.3") or "0.3")
-            configured_max = max_tokens or (
-                int(env("DEEPSEEK_MAX_TOKENS", "4096") or "4096")
-                if env("DEEPSEEK_MAX_TOKENS") is not None
-                else None
-            )
-            if configured_max is not None:
-                kwargs["max_tokens"] = configured_max
+            if max_tokens is not None:
+                kwargs["max_tokens"] = int(max_tokens)
+            elif self._max_final_tokens is not None:
+                kwargs["max_tokens"] = int(self._max_final_tokens)
+            elif env("DEEPSEEK_MAX_TOKENS") is not None:
+                kwargs["max_tokens"] = int(env("DEEPSEEK_MAX_TOKENS", "4096") or "4096")
             messages = [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": problem},

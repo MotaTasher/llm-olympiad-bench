@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import dataclass
 import importlib
 import os
 import re
@@ -57,6 +58,21 @@ MODEL_ENV_VARS = {
     "YANDEX_MODEL",
     "DEEPSEEK_MODEL",
 }
+
+
+@dataclass(frozen=True)
+class RunSettings:
+    reasoning_budget_tokens: int | None = None
+    max_final_tokens: int | None = None
+
+
+@dataclass(frozen=True)
+class ProblemRunResult:
+    run_id: str
+    log_path: Path
+    log: dict[str, Any]
+    results: list[dict[str, Any]]
+    table_rows: list[dict[str, Any]]
 
 
 def load_env_file(path: Path, override: bool = False) -> None:
@@ -127,7 +143,12 @@ def load_problem_input(
     return text, data, {}, "default", "default", problem_file.stem, problem_file.stem
 
 
-def create_model(alias: str) -> BaseModel:
+def create_model(
+    alias: str,
+    *,
+    reasoning_budget_tokens: int | None = None,
+    max_final_tokens: int | None = None,
+) -> BaseModel:
     raw = alias.strip()
     key, _, model_id = raw.partition(":")
     key = key.lower()
@@ -137,6 +158,12 @@ def create_model(alias: str) -> BaseModel:
     module_name, class_name = MODEL_CLASSES[key]
     module = importlib.import_module(module_name)
     model_class = getattr(module, class_name)
+    kwargs = {
+        "reasoning_budget_tokens": reasoning_budget_tokens,
+        "max_final_tokens": max_final_tokens,
+    }
+    if any(value is not None for value in kwargs.values()):
+        return model_class(model=model_id or None, **kwargs)
     return model_class(model=model_id) if model_id else model_class()
 
 
@@ -444,42 +471,39 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> int:
-    args = parse_args()
-    load_env(allow_model_env_overrides=args.allow_env_model_overrides)
-    models_value = args.models or os.environ.get("RUNNER_MODELS") or os.environ.get("OLYMPIAD_MODELS")
-    if not models_value:
-        raise SystemExit(
-            "models are required. Pass --models or set RUNNER_MODELS in config/models.env"
-        )
-
-    max_tokens = positive_optional_int(
-        args.max_tokens if args.max_tokens is not None else os.environ.get("RUNNER_MAX_TOKENS"),
-        name="--max-tokens",
-    )
-    problem_file = Path(args.problem)
-    try:
-        (
-            problem_text,
-            problem_data,
-            competition_data,
-            source_competition_id,
-            source_competition_title,
-            source_problem_id,
-            problem_title,
-        ) = load_problem_input(problem_file)
-    except DataLoadError as exc:
-        raise SystemExit(str(exc)) from exc
-    competition_id = slugify_id(args.competition or source_competition_id)
-    competition_title = args.competition_title or source_competition_title
+def run_problem(
+    *,
+    problem_file: Path | str,
+    models_value: str,
+    logs_dir: Path | str = "logs",
+    competition: str | None = None,
+    competition_title: str | None = None,
+    run_id_suffix: str | None = None,
+    command: list[str] | None = None,
+    cli_metadata: dict[str, Any] | None = None,
+    settings: RunSettings | None = None,
+    max_tokens: int | None = None,
+) -> ProblemRunResult:
+    problem_file = Path(problem_file)
+    (
+        problem_text,
+        problem_data,
+        competition_data,
+        source_competition_id,
+        source_competition_title,
+        source_problem_id,
+        problem_title,
+    ) = load_problem_input(problem_file)
+    competition_id = slugify_id(competition or source_competition_id)
+    resolved_competition_title = competition_title or source_competition_title
     problem_id = slugify_id(source_problem_id)
     now = datetime.now(UTC)
     timestamp = isoformat_z(now)
     git = git_metadata()
     git_hash = str(git.get("hash") or "")
-    run_id = build_run_id(now, args.run_id or problem_title)
+    run_id = build_run_id(now, run_id_suffix or problem_title)
     aliases = requested_aliases(models_value)
-    logs_dir = Path(args.logs_dir)
+    logs_dir = Path(logs_dir)
     log_path = log_path_for(
         logs_dir,
         competition_id=competition_id,
@@ -508,22 +532,21 @@ def main() -> int:
         "git_hash": git_hash,
         "git": git,
         "runtime": runtime_metadata(
-            sys.argv,
+            command or sys.argv,
             aliases,
-            {
+            cli_metadata or {
                 "problem": str(problem_file),
-                "competition": args.competition,
-                "competition_title": args.competition_title,
+                "competition": competition,
+                "competition_title": competition_title,
                 "models": models_value,
-                "run_id": args.run_id,
-                "logs_dir": args.logs_dir,
-                "allow_env_model_overrides": args.allow_env_model_overrides,
+                "run_id": run_id_suffix,
+                "logs_dir": str(logs_dir),
                 "max_tokens": max_tokens,
             },
         ),
         "requested_models": aliases,
         "competition_id": competition_id,
-        "competition_title": competition_title,
+        "competition_title": resolved_competition_title,
         "competition": competition_data,
         "problem_id": problem_id,
         "problem_number": problem_data.get("number"),
@@ -542,6 +565,10 @@ def main() -> int:
             "text_only": True,
             "sequential": True,
             "max_tokens": max_tokens,
+            "reasoning_budget_tokens": (
+                settings.reasoning_budget_tokens if settings else None
+            ),
+            "max_final_tokens": settings.max_final_tokens if settings else None,
         },
         "results": [],
     }
@@ -579,7 +606,17 @@ def main() -> int:
         model_label = alias
         print_progress(f"{ordinal} START {model_label}")
         try:
-            model = create_model(alias)
+            if settings and (
+                settings.reasoning_budget_tokens is not None
+                or settings.max_final_tokens is not None
+            ):
+                model = create_model(
+                    alias,
+                    reasoning_budget_tokens=settings.reasoning_budget_tokens,
+                    max_final_tokens=settings.max_final_tokens,
+                )
+            else:
+                model = create_model(alias)
             model_label = model.model_id
             skeleton["adapter_class"] = f"{model.__class__.__module__}.{model.__class__.__name__}"
             skeleton["requested_model_id"] = model.model_id
@@ -646,6 +683,60 @@ def main() -> int:
         competition_id=competition_id,
         problem_id=problem_id,
     )
+    return ProblemRunResult(
+        run_id=run_id,
+        log_path=log_path,
+        log=log,
+        results=results,
+        table_rows=table_rows,
+    )
+
+
+def main() -> int:
+    args = parse_args()
+    load_env(allow_model_env_overrides=args.allow_env_model_overrides)
+    models_value = args.models or os.environ.get("RUNNER_MODELS") or os.environ.get("OLYMPIAD_MODELS")
+    if not models_value:
+        raise SystemExit(
+            "models are required. Pass --models or set RUNNER_MODELS in config/models.env"
+        )
+    max_tokens = positive_optional_int(
+        args.max_tokens if args.max_tokens is not None else os.environ.get("RUNNER_MAX_TOKENS"),
+        name="--max-tokens",
+    )
+    try:
+        run_result = run_problem(
+            problem_file=Path(args.problem),
+            models_value=models_value,
+            logs_dir=Path(args.logs_dir),
+            competition=args.competition,
+            competition_title=args.competition_title,
+            run_id_suffix=args.run_id,
+            command=sys.argv,
+            cli_metadata={
+                "problem": str(args.problem),
+                "competition": args.competition,
+                "competition_title": args.competition_title,
+                "models": models_value,
+                "run_id": args.run_id,
+                "logs_dir": args.logs_dir,
+                "allow_env_model_overrides": args.allow_env_model_overrides,
+                "max_tokens": max_tokens,
+            },
+            max_tokens=max_tokens,
+        )
+    except DataLoadError as exc:
+        raise SystemExit(str(exc)) from exc
+    log = run_result.log
+    run_id = run_result.run_id
+    competition_id = str(log["competition_id"])
+    competition_title = str(log["competition_title"])
+    problem_id = str(log["problem_id"])
+    problem_title = str(log["problem_title"])
+    timestamp = str(log["timestamp"])
+    git_hash = str(log.get("git_hash") or "")
+    log_path = run_result.log_path
+    table_rows = run_result.table_rows
     print_table(table_rows)
     print(f"\nRun ID: {run_id}")
     print(f"Competition: {competition_id} ({competition_title})")

@@ -390,6 +390,53 @@
       min-width: 130px;
       max-width: 180px;
     }
+    .cost-controls {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(190px, 1fr) minmax(190px, 1fr) auto auto;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 0 10px;
+      border-top: 1px solid rgba(217, 221, 225, 0.75);
+    }
+    .cost-control {
+      display: grid;
+      grid-template-columns: auto minmax(110px, 1fr) 76px;
+      gap: 6px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 0;
+    }
+    .cost-control input[type="range"] { padding: 0; }
+    .cost-control input[type="number"] {
+      padding: 5px 6px;
+      font-size: 12px;
+    }
+    .inline-check {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: 700;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .inline-check input {
+      width: auto;
+    }
+    .cost-summary {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .cost-table {
+      max-height: none;
+    }
     .evaluation-list {
       display: grid;
       gap: 8px;
@@ -437,6 +484,10 @@
       .review-layout, .answer-layout { grid-template-columns: 1fr; }
       .attempt-sidebar { position: static; max-height: none; overflow: visible; }
       .metric-grid { grid-template-columns: 1fr; }
+      .cost-controls {
+        width: min(100% - 20px, 1440px);
+        grid-template-columns: 1fr;
+      }
       th:first-child, td:first-child { min-width: 220px; }
       .calculator-form { grid-template-columns: 1fr; }
       .calculator-form label:first-of-type { grid-template-columns: 1fr; }
@@ -456,6 +507,47 @@
         </label>
       </div>
     </div>
+    {% if cost_context %}
+      <div class="cost-controls" data-cost-context='{{ cost_context|tojson|forceescape }}'>
+        <label class="cost-control">Размышления
+          <input
+            type="range"
+            min="{{ cost_context.defaults.reasoningMin }}"
+            max="{{ cost_context.defaults.reasoningMax }}"
+            step="1000"
+            data-cost-range="reasoningBudget"
+          >
+          <input
+            type="number"
+            min="{{ cost_context.defaults.reasoningMin }}"
+            max="{{ cost_context.defaults.reasoningMax }}"
+            step="1"
+            data-cost-number="reasoningBudget"
+          >
+        </label>
+        <label class="cost-control">Ответ
+          <input
+            type="range"
+            min="{{ cost_context.defaults.finalMin }}"
+            max="{{ cost_context.defaults.finalMax }}"
+            step="512"
+            data-cost-range="finalTokens"
+          >
+          <input
+            type="number"
+            min="{{ cost_context.defaults.finalMin }}"
+            max="{{ cost_context.defaults.finalMax }}"
+            step="1"
+            data-cost-number="finalTokens"
+          >
+        </label>
+        <label class="inline-check">
+          <input type="checkbox" data-cost-include-solved>
+          учитывать решённые
+        </label>
+        <span class="meta" data-cost-rate></span>
+      </div>
+    {% endif %}
   </header>
   <main>
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -575,6 +667,131 @@
         }
       });
     });
+    const costControls = document.querySelector('[data-cost-context]');
+    if (costControls) {
+      const context = JSON.parse(costControls.dataset.costContext || '{}');
+      const defaults = context.defaults || {};
+      const storageKey = 'olympiadScorerCostSettings';
+      function clampNumber(value, min, max, fallback) {
+        const parsed = Number(value);
+        if (!Number.isFinite(parsed)) return fallback;
+        return Math.max(min, Math.min(max, Math.round(parsed)));
+      }
+      function loadCostSettings() {
+        let saved = {};
+        try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch (error) { saved = {}; }
+        return {
+          reasoningBudget: clampNumber(saved.reasoningBudget, defaults.reasoningMin, defaults.reasoningMax, defaults.reasoningBudget),
+          finalTokens: clampNumber(saved.finalTokens, defaults.finalMin, defaults.finalMax, defaults.finalTokens),
+          includeSolved: Boolean(saved.includeSolved),
+        };
+      }
+      let costSettings = loadCostSettings();
+      function saveCostSettings() {
+        localStorage.setItem(storageKey, JSON.stringify(costSettings));
+      }
+      function formatUsd(value) {
+        if (!Number.isFinite(value)) return '—';
+        return value < 0.01 ? `$${value.toFixed(4)}` : `$${value.toFixed(2)}`;
+      }
+      function formatRub(value) {
+        if (!Number.isFinite(value)) return '—';
+        return value < 1 ? `${value.toFixed(2)} ₽` : `${Math.round(value).toLocaleString('ru-RU')} ₽`;
+      }
+      function outputTokens() {
+        return costSettings.finalTokens + Math.max(0, costSettings.reasoningBudget);
+      }
+      function computeModelCost(modelData) {
+        const pricing = (context.models || {})[modelData.model] || {};
+        const pairs = costSettings.includeSolved ? modelData.pairs : modelData.pairs - modelData.solvedPairs;
+        const inputTokens = costSettings.includeSolved ? modelData.inputTokens : modelData.unsolvedInputTokens;
+        if (!pricing.known) return { pairs, unknownPairs: pairs, usd: 0 };
+        const outTokens = pairs * outputTokens();
+        const usd = (
+          inputTokens * Number(pricing.inputUsdPer1M || 0) / 1000000
+          + outTokens * Number(pricing.outputUsdPer1M || 0) / 1000000
+        );
+        return { pairs, unknownPairs: 0, usd };
+      }
+      function computeCompetitionCost(competitionId) {
+        const competition = (context.competitions || []).find((item) => item.competitionId === competitionId);
+        const result = { pairs: 0, skipped: 0, unknownPairs: 0, usd: 0, models: [] };
+        if (!competition) return result;
+        (competition.models || []).forEach((modelData) => {
+          const modelCost = computeModelCost(modelData);
+          const skipped = costSettings.includeSolved ? 0 : modelData.solvedPairs;
+          result.pairs += modelCost.pairs;
+          result.skipped += skipped;
+          result.unknownPairs += modelCost.unknownPairs;
+          result.usd += modelCost.usd;
+          result.models.push({ ...modelData, ...modelCost, skipped });
+        });
+        return result;
+      }
+      function renderCostNode(node, cost) {
+        const rate = Number((context.exchangeRate || {}).usdRub || 0);
+        const rub = cost.usd * rate;
+        node.textContent = `${formatUsd(cost.usd)} / ${formatRub(rub)}`;
+      }
+      function updateCosts() {
+        document.querySelectorAll('[data-cost-range]').forEach((input) => {
+          input.value = costSettings[input.dataset.costRange];
+        });
+        document.querySelectorAll('[data-cost-number]').forEach((input) => {
+          input.value = costSettings[input.dataset.costNumber];
+        });
+        const checkbox = document.querySelector('[data-cost-include-solved]');
+        if (checkbox) checkbox.checked = costSettings.includeSolved;
+        const rate = context.exchangeRate || {};
+        const rateNode = document.querySelector('[data-cost-rate]');
+        if (rateNode) {
+          rateNode.textContent = `USD/RUB ${Number(rate.usdRub || 0).toFixed(2)}${rate.fallback ? ' fallback' : ''}`;
+        }
+        document.querySelectorAll('[data-cost-competition]').forEach((node) => {
+          const cost = computeCompetitionCost(node.dataset.costCompetition);
+          renderCostNode(node, cost);
+        });
+        document.querySelectorAll('[data-cost-competition-pairs]').forEach((node) => {
+          const cost = computeCompetitionCost(node.dataset.costCompetitionPairs);
+          node.textContent = `${cost.pairs} пар, ${cost.skipped} пропущено`;
+        });
+        document.querySelectorAll('[data-cost-model]').forEach((row) => {
+          const total = computeCompetitionCost(row.dataset.costCompetitionId);
+          const modelCost = total.models.find((item) => item.model === row.dataset.costModel) || { pairs: 0, skipped: 0, unknownPairs: 0, usd: 0 };
+          const amount = row.querySelector('[data-cost-model-amount]');
+          const pairs = row.querySelector('[data-cost-model-pairs]');
+          const unknown = row.querySelector('[data-cost-model-unknown]');
+          if (amount) renderCostNode(amount, modelCost);
+          if (pairs) pairs.textContent = `${modelCost.pairs} / ${modelCost.skipped}`;
+          if (unknown) unknown.textContent = modelCost.unknownPairs || '';
+        });
+      }
+      document.querySelectorAll('[data-cost-range]').forEach((range) => {
+        range.addEventListener('input', () => {
+          const key = range.dataset.costRange;
+          costSettings[key] = clampNumber(range.value, Number(range.min), Number(range.max), costSettings[key]);
+          saveCostSettings();
+          updateCosts();
+        });
+      });
+      document.querySelectorAll('[data-cost-number]').forEach((number) => {
+        number.addEventListener('input', () => {
+          const key = number.dataset.costNumber;
+          costSettings[key] = clampNumber(number.value, Number(number.min), Number(number.max), costSettings[key]);
+          saveCostSettings();
+          updateCosts();
+        });
+      });
+      const includeSolved = document.querySelector('[data-cost-include-solved]');
+      if (includeSolved) {
+        includeSolved.addEventListener('change', () => {
+          costSettings.includeSolved = includeSolved.checked;
+          saveCostSettings();
+          updateCosts();
+        });
+      }
+      updateCosts();
+    }
   </script>
 </body>
 </html>

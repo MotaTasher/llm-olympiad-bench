@@ -42,8 +42,16 @@ def build_gigachat_credentials(client_id: str, client_secret: str) -> str:
 
 
 class GigaChatModel(BaseModel):
-    def __init__(self, model: str | None = None) -> None:
+    def __init__(
+        self,
+        model: str | None = None,
+        *,
+        reasoning_budget_tokens: int | None = None,
+        max_final_tokens: int | None = None,
+    ) -> None:
         self._model = model or env("GIGACHAT_MODEL", DEFAULT_VERSION)
+        self._reasoning_budget_tokens = reasoning_budget_tokens
+        self._max_final_tokens = max_final_tokens
 
     @property
     def model_id(self) -> str:
@@ -90,13 +98,12 @@ class GigaChatModel(BaseModel):
                 payload["temperature"] = float(env("GIGACHAT_TEMPERATURE", "0.1") or "0.1")
             if env("GIGACHAT_TOP_P") is not None:
                 payload["top_p"] = float(env("GIGACHAT_TOP_P", "0.9") or "0.9")
-            configured_max = max_tokens or (
-                int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
-                if env("GIGACHAT_MAX_TOKENS") is not None
-                else None
-            )
-            if configured_max is not None:
-                payload["max_tokens"] = configured_max
+            if max_tokens is not None:
+                payload["max_tokens"] = int(max_tokens)
+            elif self._max_final_tokens is not None:
+                payload["max_tokens"] = int(self._max_final_tokens)
+            elif env("GIGACHAT_MAX_TOKENS") is not None:
+                payload["max_tokens"] = int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
             if env("GIGACHAT_REPETITION_PENALTY") is not None:
                 payload["repetition_penalty"] = float(
                     env("GIGACHAT_REPETITION_PENALTY", "1.05") or "1.05"

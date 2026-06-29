@@ -13,6 +13,8 @@
         <span class="pill">{{ competition.model_count }} моделей с попытками</span>
         <span class="pill">{{ competition.answer_count }} ответов</span>
         <span class="pill">{{ competition.scored_count }} проверено</span>
+        <span class="pill">стоимость: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
+        <span class="pill" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
       </div>
       <div class="nav-row">
         <a class="button" href="{{ url_for('competition_stats_page', competition_id=competition.competition_id) }}">Статистика моделей</a>
@@ -27,7 +29,38 @@
       </div>
     </section>
 
-    {% include "_cost_calculator.html" %}
+    <section class="panel">
+      <h2>Стоимость прогона</h2>
+      <div class="cost-summary">
+        <div class="stats">
+          <span class="pill">итого: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
+          <span class="pill" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
+        </div>
+        <p class="meta">Расчёт приблизительный: локальные price tables, грубая оценка токенов, курс USD/RUB из ЦБ. API-вызовы не выполняются, run-log не создаются.</p>
+        <div class="table-wrap cost-table" role="region" aria-label="Оценка стоимости по моделям" tabindex="0">
+          <table>
+            <thead>
+              <tr>
+                <th>Модель</th>
+                <th>Стоимость</th>
+                <th>Пар / пропущено</th>
+                <th>Без price table</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for model in competition.model_columns %}
+                <tr data-cost-competition-id="{{ competition.competition_id }}" data-cost-model="{{ model.model_key }}">
+                  <td>{{ model.model_key }}</td>
+                  <td data-cost-model-amount>—</td>
+                  <td data-cost-model-pairs>—</td>
+                  <td data-cost-model-unknown></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
     {% if competition.problem_order %}
       <div class="table-wrap" role="region" aria-label="Матрица задач и моделей" tabindex="0">

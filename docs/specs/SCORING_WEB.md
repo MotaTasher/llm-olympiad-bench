@@ -44,8 +44,8 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 
 | Method/path | Behavior |
 | --- | --- |
-| `GET /` | Russian competition cards from canonical data plus log/evaluation counts, grouped by inferred year |
-| `GET /competition/<competition_id>` | matrix: rows are tasks, columns are models; task title opens anonymous scoring |
+| `GET /` | Russian competition cards from canonical data plus log/evaluation counts and live cost estimates, grouped by inferred year |
+| `GET /competition/<competition_id>` | live cost estimate plus matrix: rows are tasks, columns are models; task title opens anonymous scoring |
 | `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics and model-task table |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
 | `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
@@ -60,14 +60,13 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
 
-Competition and problem pages include a local cost calculator. Query parameters
-`max_tokens` and `runs` control the output-token ceiling and launch count per
-task/model. The calculator does not call provider APIs; it estimates input
-tokens from the system prompt and problem statement length and treats
-`max_tokens` as the full output-token budget. Costs are grouped by configured
-model columns and provider. RUB-native tariffs are converted to USD with
-`RUB_PER_USD` for cross-provider totals while still displaying the native RUB
-amount.
+Problem pages include a server-rendered per-task cost calculator. Query
+parameters `max_tokens` and `runs` control the output-token ceiling and launch
+count for the selected task/model columns. The calculator does not call
+provider APIs; it estimates input tokens from the system prompt and problem
+statement length and treats `max_tokens` as the full output-token budget.
+RUB-native tariffs are converted to USD for cross-provider totals while still
+displaying the native RUB amount.
 
 The anonymous scoring page hides model/provider names, metrics and raw JSON from
 the reviewer UI. It displays one answer at a time, followed by a full-width
@@ -78,6 +77,37 @@ the reviewer moves between answer numbers. The page still submits the underlying
 `run_id`, `result_id` and `model_key` as hidden form fields so evaluations are
 written to the same sidecar format. This is UI-level anonymity, not a security
 boundary against inspecting page source.
+
+## Cost Estimate
+
+Index and competition pages share one compact local cost control in the page
+header. It never launches model calls. By default it estimates every active
+model from provider `VERSIONS`, matching the set used by `runner.py --models
+all`. The same slider/checkbox settings are stored in browser `localStorage`
+and apply to every competition card and competition page.
+
+Controls:
+
+- reasoning budget: integer `0..64000`, default `8000`; `0` means no separate reasoning budget is requested;
+- final-answer token cap: integer `512..32000`, default `8000`;
+- `include_solved` checkbox defaults to off.
+
+Browser range and number inputs are synchronized for both numeric settings.
+Changing a slider, manual input or checkbox immediately recalculates displayed
+numbers; there is no recalculation button or HTTP request. Different APIs split
+hidden reasoning and visible answer tokens differently, so the estimate is best
+effort. The calculation uses local price tables, rough token estimates and the
+current USD/RUB rate fetched from the Central Bank of Russia XML daily endpoint
+with a local fallback. It must not instantiate provider clients, call model
+APIs, create background jobs or write run logs.
+
+When `include_solved` is off, skip logic is evaluated independently for every
+`problem × model` pair. A pair is already solved only when existing logs contain
+at least one successful attempt for that exact model with a non-empty answer.
+API errors and empty answers do not count as solved, and answers from other
+models do not cause a skip. The index shows total estimated cost in USD and
+RUB on each competition card. The competition page also shows per-model costs
+in USD and RUB.
 
 ## Cell status
 
@@ -151,8 +181,11 @@ The index route passes `competition_groups` to `index.html`:
 Year inference checks `date`, then `competition_id`, then
 `competition_title`, accepting years in the `1900..2099` range. Year groups are
 sorted descending and the `None` group is always last. Competitions inside each
-group sort newest first by full date when available, then numeric date-like
-components from the ID, then latest run timestamp, then title for stability.
+year group sort chronologically from earlier to later. The order source is:
+full date from `competition.json.date`, then date or month parsed from
+`competition_id`, then stable title and ID ordering. Competitions without a
+determinable date are placed at the end of their year group. `latest_timestamp`
+from model runs is displayed but does not affect historical ordering.
 
 CSV import/export uses these columns:
 

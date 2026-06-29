@@ -8,6 +8,7 @@ from pathlib import Path
 
 import runner
 from scoring.app import app as scoring_app
+from scoring.cost_estimator import cost_context
 from scoring.repository import build_catalog, configured_model_columns
 
 
@@ -194,10 +195,10 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
 
-    def test_competition_page_shows_local_cost_calculator(self) -> None:
+    def test_problem_page_shows_server_cost_calculator(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
 
-        response = self.client.get("/competition/math_2026?max_tokens=2048&runs=3")
+        response = self.client.get("/competition/math_2026/problem/task_01?max_tokens=2048&runs=3")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
 
@@ -239,7 +240,7 @@ class ScoringWebTests(unittest.TestCase):
         html = self.client.get("/competition/math_2026").get_data(as_text=True)
         self.assertIn("gpt-5.4-mini", html)
 
-    def test_competitions_group_by_year_and_sort_newest_first(self) -> None:
+    def test_competitions_group_by_year_and_sort_chronologically_inside_year(self) -> None:
         self.write_competition("2026_05_math_cup_cs_space", title="May Cup", date=None)
         self.write_competition("math_2026_june", title="June Cup", date="2026-06-01")
         self.write_competition("math_2025_winter", title="Winter Cup", date="2025-12-01")
@@ -257,9 +258,48 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual([group["year"] for group in groups], [2026, 2025, None])
         self.assertEqual(
             [item["competition_id"] for item in groups[0]["competitions"]],
-            ["math_2026_june", "2026_05_math_cup_cs_space"],
+            ["2026_05_math_cup_cs_space", "math_2026_june"],
         )
         self.assertEqual(groups[-1]["competitions"][0]["competition_id"], "legacy_examples")
+
+    def test_cost_context_contains_competition_and_exchange_rate(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        catalog = build_catalog(
+            competitions_dir=self.competitions_dir,
+            logs_dir=self.logs_dir,
+            results_dir=self.results_dir,
+        )
+        context = cost_context(catalog["competitions"])
+        self.assertIn("exchangeRate", context)
+        self.assertIn("usdRub", context["exchangeRate"])
+        self.assertEqual(context["defaults"]["reasoningBudget"], 8000)
+        self.assertEqual(context["competitions"][0]["competitionId"], "math_2026")
+        self.assertTrue(context["competitions"][0]["models"])
+
+    def test_competition_page_shows_cost_without_launch_routes(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run(competition_id="math_2026", model_id="gpt-5.5", provider="openai")
+
+        response = self.client.get("/competition/math_2026")
+        self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+        self.assertIn("Стоимость прогона", html)
+        self.assertIn("data-cost-context", html)
+        self.assertIn("data-cost-range=\"reasoningBudget\"", html)
+        self.assertIn("data-cost-number=\"finalTokens\"", html)
+        self.assertIn("data-cost-competition=\"math_2026\"", html)
+        self.assertIn("data-cost-model=\"openai:gpt-5.5\"", html)
+        self.assertIn("API-вызовы не выполняются", html)
+        self.assertNotIn("Запустить соревнование", html)
+
+        self.assertEqual(
+            self.client.post("/competition/math_2026/runs", data={}).status_code,
+            404,
+        )
+        self.assertEqual(
+            self.client.get("/competition/math_2026/runs/job_missing").status_code,
+            404,
+        )
 
 
 if __name__ == "__main__":

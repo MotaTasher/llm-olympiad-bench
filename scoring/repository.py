@@ -43,6 +43,32 @@ STATUS_META = {
 }
 
 YEAR_PATTERN = re.compile(r"(?<!\d)((?:19|20)\d{2})(?!\d)")
+MONTH_NAMES = {
+    "jan": 1,
+    "january": 1,
+    "feb": 2,
+    "february": 2,
+    "mar": 3,
+    "march": 3,
+    "apr": 4,
+    "april": 4,
+    "may": 5,
+    "jun": 6,
+    "june": 6,
+    "jul": 7,
+    "july": 7,
+    "aug": 8,
+    "august": 8,
+    "sep": 9,
+    "sept": 9,
+    "september": 9,
+    "oct": 10,
+    "october": 10,
+    "nov": 11,
+    "november": 11,
+    "dec": 12,
+    "december": 12,
+}
 
 
 def utc_now() -> str:
@@ -616,27 +642,59 @@ def competition_year(competition: dict[str, Any]) -> int | None:
     return None
 
 
-def numeric_date_score(value: Any) -> int:
+def numeric_date_score(value: Any, *, allow_month_name: bool = False) -> int:
     if value is None:
         return 0
     text = str(value)
     match = re.search(r"((?:19|20)\d{2})(?:[-_.](\d{1,2}))?(?:[-_.](\d{1,2}))?", text)
-    if not match:
+    if match:
+        year = int(match.group(1))
+        month = int(match.group(2) or 0)
+        day = int(match.group(3) or 0)
+        if not (0 <= month <= 12 and 0 <= day <= 31):
+            return 0
+        return year * 10000 + month * 100 + day
+    if not allow_month_name:
         return 0
-    year = int(match.group(1))
-    month = int(match.group(2) or 0)
-    day = int(match.group(3) or 0)
-    if not (0 <= month <= 12 and 0 <= day <= 31):
+    year_match = YEAR_PATTERN.search(text)
+    if not year_match:
         return 0
+    lower = text.lower()
+    month = 0
+    for name, number in MONTH_NAMES.items():
+        if re.search(rf"(?<![a-z]){re.escape(name)}(?![a-z])", lower):
+            month = number
+            break
+    if not month:
+        return 0
+    year = int(year_match.group(1))
+    day = 0
     return year * 10000 + month * 100 + day
 
 
-def competition_sort_key(competition: dict[str, Any]) -> tuple[int, int, int, str]:
+def competition_date_order_score(competition: dict[str, Any]) -> int:
+    date_score = numeric_date_score(competition.get("date"))
+    if date_score % 10000:
+        return date_score
+    return numeric_date_score(competition.get("competition_id"), allow_month_name=True)
+
+
+def competition_inner_sort_key(competition: dict[str, Any]) -> tuple[int, int, str, str]:
+    order_score = competition_date_order_score(competition)
     return (
-        -numeric_date_score(competition.get("date")),
-        -numeric_date_score(competition.get("competition_id")),
-        -numeric_date_score(competition.get("latest_timestamp")),
-        str(competition.get("competition_title") or competition.get("competition_id") or "").lower(),
+        0 if order_score else 1,
+        order_score,
+        str(competition.get("competition_title") or "").lower(),
+        str(competition.get("competition_id") or "").lower(),
+    )
+
+
+def competition_sort_key(competition: dict[str, Any]) -> tuple[int, int, int, int, str, str]:
+    year = competition_year(competition)
+    return (
+        1 if year is None else 0,
+        -(year or 0),
+        *competition_inner_sort_key(competition),
     )
 
 
@@ -647,9 +705,14 @@ def group_competitions_by_year(competitions: list[dict[str, Any]]) -> list[dict[
         competition["display_year"] = year
         groups.setdefault(year, []).append(competition)
     years = sorted((year for year in groups if year is not None), reverse=True)
-    result = [{"year": year, "competitions": groups[year]} for year in years]
+    result = [
+        {"year": year, "competitions": sorted(groups[year], key=competition_inner_sort_key)}
+        for year in years
+    ]
     if None in groups:
-        result.append({"year": None, "competitions": groups[None]})
+        result.append(
+            {"year": None, "competitions": sorted(groups[None], key=competition_inner_sort_key)}
+        )
     return result
 
 
