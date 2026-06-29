@@ -2,10 +2,16 @@
   "schema_version": 1,
   "id": "math-cup-2026-final",
   "title": "Math Cup 2026. Финал",
-  "description": "Финал",
-  "date": "2026",
-  "source": "CS Space",
+  "description": "Финал. Решения",
+  "date": "2026-05-17",
+  "source": "https://csspace.io/competition/2026spring-math-cup",
   "metadata": {
+    "series": "Math Cup",
+    "organizer": "CS Space",
+    "season": "Весна",
+    "year": 2026,
+    "stage": "Финал",
+    "stage_index": 2,
     "document_type": "Решения"
   }
 }
