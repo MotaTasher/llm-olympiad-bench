@@ -1,0 +1,30 @@
+{
+  "run_id": "20260625_224129_801b26f",
+  "timestamp": "2026-06-25T22:41:29.179268Z",
+  "git_hash": "801b26f",
+  "problem_file": "data/problems/example.json",
+  "problem_text": "Докажите, что сумма любых двух четных чисел является четным числом.",
+  "problem": {
+    "id": "example",
+    "title": "Example olympiad problem",
+    "source": "Local sample",
+    "text": "Докажите, что сумма любых двух четных чисел является четным числом.",
+    "expected_answer": null
+  },
+  "results": [
+    {
+      "model": "GigaChat-2-Max",
+      "answer": "",
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "raw_response": {},
+      "error": "400 https://ngw.devices.sberbank.ru:9443/api/v2/oauth: b'{\"code\":4,\"message\":\"Can\\'t decode \\'Authorization\\' header\"}', Headers([('server', 'SynGX'), ('date', 'Thu, 25 Jun 2026 22:41:29 GMT'), ('content-type', 'application/json'), ('content-length', '58'), ('connection', 'keep-alive'), ('vary', 'Origin'), ('vary', 'Access-Control-Request-Method'), ('vary', 'Access-Control-Request-Headers'), ('cache-control', 'no-cache, no-store, max-age=0, must-revalidate'), ('pragma', 'no-cache'), ('expires', '0'), ('x-content-type-options', 'nosniff'), ('strict-transport-security', 'max-age=31536000 ; includeSubDomains'), ('x-frame-options', 'DENY'), ('x-xss-protection', '0'), ('referrer-policy', 'no-referrer'), ('allow', 'GET, POST'), ('strict-transport-security', 'max-age=31536000; includeSubDomains')])",
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}
