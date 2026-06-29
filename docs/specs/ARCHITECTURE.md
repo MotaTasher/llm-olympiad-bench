@@ -83,9 +83,9 @@ Explicit CLI `--models` values override `RUNNER_MODELS` for that run.
 adapter. If omitted, runner reads `RUNNER_MAX_TOKENS` from `config/models.env`
 (committed default: `8000`); if that is also omitted, adapters fall back to
 their provider-specific token settings.
-The active benchmark set is one strongest model per provider; retired
-budget/free-tier IDs may remain documented as legacy versions but do not create
-scoring UI columns from historical logs.
+The active benchmark set includes paid and budget/free-tier models per
+provider. Retired IDs may remain documented as legacy versions but do not
+create scoring UI columns from historical logs.
 
 ## Identity rules
 

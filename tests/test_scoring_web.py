@@ -181,10 +181,15 @@ class ScoringWebTests(unittest.TestCase):
     def test_active_model_catalog_contains_only_strong_models(self) -> None:
         expected = {
             "openai:gpt-5.5",
+            "openai:gpt-5.4-mini",
             "anthropic:claude-opus-4-8",
+            "anthropic:claude-haiku-4-5-20251001",
             "deepseek:deepseek-v4-pro",
+            "deepseek:deepseek-v4-flash",
             "gigachat:GigaChat-2-Max",
+            "gigachat:GigaChat-2",
             "yandexgpt:yandexgpt-5.1",
+            "yandexgpt:yandexgpt-5-lite",
         }
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
@@ -201,9 +206,9 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("GigaChat-2-Max", html)
         self.assertIn("RUB", html)
 
-    def test_weak_historical_model_does_not_create_scoring_column(self) -> None:
+    def test_active_budget_model_creates_scoring_column(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
-        self.write_run(model_id="gpt-5.4-mini", result_id="res_weak", run_id="run_weak")
+        self.write_run(model_id="gpt-5.4-mini", result_id="res_budget", run_id="run_budget")
         self.write_run(
             model_id="yandexgpt-5.1/latest",
             provider="yandexgpt",
@@ -219,7 +224,7 @@ class ScoringWebTests(unittest.TestCase):
         )
         competition = catalog["competition_map"]["math_2026"]
         model_keys = [column["model_key"] for column in competition["model_columns"]]
-        self.assertNotIn("openai:gpt-5.4-mini", model_keys)
+        self.assertIn("openai:gpt-5.4-mini", model_keys)
         self.assertIn("yandexgpt:yandexgpt-5.1", model_keys)
 
         problem = competition["problems"]["task_01"]
@@ -228,10 +233,11 @@ class ScoringWebTests(unittest.TestCase):
             for state in problem["model_states"]
         }
         self.assertEqual(active_attempts["openai:gpt-5.5"], 0)
+        self.assertEqual(active_attempts["openai:gpt-5.4-mini"], 1)
         self.assertEqual(active_attempts["yandexgpt:yandexgpt-5.1"], 1)
 
         html = self.client.get("/competition/math_2026").get_data(as_text=True)
-        self.assertNotIn("gpt-5.4-mini", html)
+        self.assertIn("gpt-5.4-mini", html)
 
     def test_competitions_group_by_year_and_sort_newest_first(self) -> None:
         self.write_competition("2026_05_math_cup_cs_space", title="May Cup", date=None)

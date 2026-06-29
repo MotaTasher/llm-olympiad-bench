@@ -177,7 +177,12 @@ scoring UI. Точечный запуск конкретной версии мо
 models/<provider>/versions.py
 ```
 
-Эти файлы также задают активные колонки в scoring UI. Сейчас в активном бенчмарке оставлена только сильнейшая модель каждого провайдера: `claude-opus-4-8`, `deepseek-v4-pro`, `GigaChat-2-Max`, `gpt-5.5`, `yandexgpt-5.1`. Старые ID не добавляются в матрицу через `LEGACY_VERSIONS`, а исторические логи слабых или удаленных моделей не создают отдельные колонки на сайте.
+Эти файлы также задают активные колонки в scoring UI. Сейчас в активном
+бенчмарке по каждому провайдеру оставлены paid и budget/free-tier модели:
+`claude-opus-4-8`, `claude-haiku-4-5-20251001`, `deepseek-v4-pro`,
+`deepseek-v4-flash`, `GigaChat-2-Max`, `GigaChat-2`, `gpt-5.5`,
+`gpt-5.4-mini`, `yandexgpt-5.1`, `yandexgpt-5-lite`. Исторические логи моделей
+вне `VERSIONS` не создают отдельные колонки на сайте.
 
 `runner.load_env()` загружает корневой `.env` для обратной совместимости, затем provider secrets, затем `config/models.env`. Не храните выбор модели, temperature или лимиты токенов в secret-файлах.
 

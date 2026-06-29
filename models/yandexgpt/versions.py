@@ -27,11 +27,13 @@
 # - Available models may depend on folder, billing status, quotas, and enabled features.
 
 VERSIONS = [
+    # Strongest current YandexGPT model for this completion adapter.
     "yandexgpt-5.1",
-]
 
-LEGACY_VERSIONS = [
+    # Strongest budget/free-tier YandexGPT model for this completion adapter.
     "yandexgpt-5-lite",
 ]
+
+LEGACY_VERSIONS = []
 
 DEFAULT = VERSIONS[0]

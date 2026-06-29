@@ -168,7 +168,9 @@ python scripts/check_secrets.py --models gpt,claude,deepseek,gigachat,yandexgpt
 models/<provider>/versions.py
 ```
 
-`VERSIONS` в этих файлах задает активный набор для runner defaults и колонок scoring UI. По умолчанию там оставлена только сильнейшая модель каждого провайдера.
+`VERSIONS` в этих файлах задает активный набор для runner defaults и колонок
+scoring UI. По умолчанию там оставлены paid и budget/free-tier модели каждого
+провайдера.
 
 Обычные runtime-настройки находятся в:
 
