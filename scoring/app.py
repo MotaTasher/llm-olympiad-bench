@@ -7,7 +7,17 @@ from pathlib import Path
 import secrets
 import sys
 
-from flask import Flask, Response, abort, flash, redirect, render_template, request, url_for
+from flask import (
+    Flask,
+    Response,
+    abort,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 if str(BASE_DIR) not in sys.path:
@@ -243,6 +253,25 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
         next_id=next_id,
         warnings=data["warnings"],
     )
+
+
+def serve_competition_asset(competition_id: str, asset_path: str) -> Response:
+    competition_id = clean_id(competition_id)
+    return send_from_directory(
+        Path(app.config["COMPETITIONS_DIR"]) / competition_id / "assets",
+        asset_path,
+    )
+
+
+@app.get("/competition/<competition_id>/problem/assets/<path:asset_path>")
+def problem_directory_asset(competition_id: str, asset_path: str):
+    return serve_competition_asset(competition_id, asset_path)
+
+
+@app.get("/competition/<competition_id>/problem/<problem_id>/assets/<path:asset_path>")
+def problem_asset(competition_id: str, problem_id: str, asset_path: str):
+    clean_id(problem_id)
+    return serve_competition_asset(competition_id, asset_path)
 
 
 @app.get("/competition/<competition_id>/problem/<problem_id>/run/<run_id>")

@@ -139,6 +139,22 @@ class ScoringWebTests(unittest.TestCase):
         self.assertLess(html.index("MODEL_ANSWER_TOKEN"), html.index("Выбор решения"))
         self.assertIn('<div class="answer-layout">', html)
 
+    def test_problem_markdown_relative_assets_are_served(self) -> None:
+        competition_path = self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        asset_path = competition_path / "assets" / "diagram.png"
+        asset_path.parent.mkdir(parents=True, exist_ok=True)
+        asset_path.write_bytes(b"image-bytes")
+
+        problem_relative = self.client.get("/competition/math_2026/problem/assets/diagram.png")
+        self.assertEqual(problem_relative.status_code, 200)
+        self.assertEqual(problem_relative.data, b"image-bytes")
+        problem_relative.close()
+
+        anonymous_relative = self.client.get("/competition/math_2026/problem/task_01/assets/diagram.png")
+        self.assertEqual(anonymous_relative.status_code, 200)
+        self.assertEqual(anonymous_relative.data, b"image-bytes")
+        anonymous_relative.close()
+
     def test_blank_evaluator_does_not_create_sidecar_and_nonblank_saves(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run()

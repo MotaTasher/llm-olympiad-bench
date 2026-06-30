@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "vsosh-informatics-2026-ai-final-round-1",
+  "title": "Всероссийская олимпиада школьников по информатике 2026. Заключительный этап. Профиль «Искусственный интеллект». Первый тур",
+  "description": "Заключительный этап всероссийской олимпиады школьников по информатике, профиль «Искусственный интеллект», первый тур. Москва.",
+  "date": "2026-03-23",
+  "source": "https://vserosinf.ru/iskusstvennyj-intellekt/",
+  "metadata": {
+    "series": "Всероссийская олимпиада школьников по информатике",
+    "organizer": "Московский физико-технический институт; Национальный исследовательский университет «Высшая школа экономики»; Национальный исследовательский ядерный университет «МИФИ»",
+    "season": "2025/26 учебный год",
+    "year": 2026,
+    "stage": "Заключительный этап",
+    "profile": "Искусственный интеллект",
+    "round": "Первый тур",
+    "round_index": 1,
+    "location": "Москва",
+    "document_type": "Условия, решения и критерии проверки",
+    "research_sources": [
+      "https://vserosinf.ru/iskusstvennyj-intellekt/",
+      "https://vos.olimpiada.ru/news/6934",
+      "https://edu.gov.ru/press/11204/moskva-primet-finalistov-vserossiyskoy-olimpiady-shkolnikov-po-informatike/",
+      "https://olimpiada.ru/news/33631"
+    ]
+  }
+}

@@ -131,6 +131,8 @@ The normal task page and anonymous page use a one-column review sequence:
 Statement, reference answer/solution and model answer are rendered in reusable
 scrollable content containers so wide Markdown tables, code blocks and MathJax
 formulas scroll inside the panel instead of widening the page.
+Markdown image or file links that use relative `assets/...` paths are served
+from the selected competition directory, `data/competitions/<competition_id>/assets/`.
 
 New sidecars use `schema_version: 2` and store an evaluation pool by `result_id`:
 
