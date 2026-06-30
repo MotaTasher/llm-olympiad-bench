@@ -45,9 +45,19 @@
       align-items: end;
       padding: 14px 0 12px;
     }
+    .topbar-single { grid-template-columns: minmax(0, 1fr); }
     .brand { margin: 0 0 4px; font-size: 20px; line-height: 1.2; font-weight: 750; letter-spacing: 0; }
     .crumbs { color: var(--muted); font-size: 14px; }
-    .reviewer-control label { font-size: 12px; color: var(--muted); }
+    .account-control {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .account-control form { margin: 0; }
+    .account-control button { min-height: 32px; padding: 5px 10px; }
     main { padding: 18px 0 40px; }
     a { color: var(--accent); text-underline-offset: 3px; }
     a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, .matrix-cell:focus-visible {
@@ -65,6 +75,36 @@
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 8px;
+    }
+    .login-screen {
+      display: grid;
+      place-items: center;
+      min-height: calc(100vh - 150px);
+    }
+    .login-panel {
+      width: min(420px, 100%);
+    }
+    .login-heading {
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .login-icon {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--accent);
+    }
+    .login-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
     }
     .card {
       display: block;
@@ -515,16 +555,20 @@
 </head>
 <body>
   <header>
-    <div class="topbar">
+    <div class="topbar {{ 'topbar-single' if not current_user.is_authenticated else '' }}">
       <div>
         <h1 class="brand">Olympiad Scorer</h1>
         <nav class="crumbs">{% block crumbs %}<a href="{{ url_for('index') }}">Соревнования</a>{% endblock %}</nav>
       </div>
-      <div class="reviewer-control">
-        <label>Проверяющий
-          <input id="global-reviewer" type="text" autocomplete="name" placeholder="Имя для новых проверок">
-        </label>
-      </div>
+      {% if current_user.is_authenticated %}
+        <div class="account-control">
+          <strong>{{ current_user.username }}</strong>
+          <form method="post" action="{{ url_for('logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="secondary" type="submit">Выйти</button>
+          </form>
+        </div>
+      {% endif %}
     </div>
     {% if cost_context %}
       <div class="cost-controls" data-cost-context='{{ cost_context|tojson|forceescape }}'>
@@ -625,52 +669,6 @@
       button.addEventListener('click', () => {
         const target = document.getElementById(button.dataset.scoreTarget);
         if (target) target.value = button.dataset.scoreSet;
-      });
-    });
-    const reviewerInput = document.getElementById('global-reviewer');
-    const reviewerKey = 'olympiadScorerReviewer';
-    function syncReviewerTargets(value) {
-      document.querySelectorAll('input[name="evaluator"][data-global-reviewer]').forEach((input) => {
-        input.value = (value || '').trim();
-      });
-      document.querySelectorAll('[data-reviewer-href]').forEach((link) => {
-        const url = new URL(link.href, window.location.href);
-        const trimmed = (value || '').trim();
-        if (trimmed) url.searchParams.set('evaluator', trimmed);
-        else url.searchParams.delete('evaluator');
-        link.href = url.toString();
-      });
-    }
-    function updateScoreForms() {
-      const reviewerName = reviewerInput ? reviewerInput.value.trim() : '';
-      document.querySelectorAll('form[data-score-form]').forEach((form) => {
-        const submit = form.querySelector('[data-score-submit]');
-        const message = form.querySelector('[data-reviewer-required-message]');
-        const disabled = !reviewerName;
-        if (submit) submit.disabled = disabled;
-        if (message) message.hidden = !disabled;
-      });
-    }
-    if (reviewerInput) {
-      const storedReviewer = localStorage.getItem(reviewerKey) || '';
-      reviewerInput.value = storedReviewer;
-      syncReviewerTargets(storedReviewer);
-      updateScoreForms();
-      reviewerInput.addEventListener('input', () => {
-        localStorage.setItem(reviewerKey, reviewerInput.value);
-        syncReviewerTargets(reviewerInput.value);
-        updateScoreForms();
-      });
-    }
-    document.querySelectorAll('form').forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        if (reviewerInput) syncReviewerTargets(reviewerInput.value);
-        if (!form.matches('[data-score-form]')) return;
-        if (reviewerInput && !reviewerInput.value.trim()) {
-          event.preventDefault();
-          updateScoreForms();
-          reviewerInput.focus();
-        }
       });
     });
     const costControls = document.querySelector('[data-cost-context]');

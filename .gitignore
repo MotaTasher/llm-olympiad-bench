@@ -3,5 +3,8 @@ config/server.env
 .DS_Store
 __pycache__/
 *.py[cod]
+*.sqlite3
+__MACOSX/
+instance/
 logs/.evaluations/
 models/*/secrets/

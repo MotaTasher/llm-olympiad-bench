@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -411,8 +412,9 @@ class ScoringRepositoryTests(TempCompetition):
     def test_flask_pages_and_score_flow(self) -> None:
         try:
             from scoring.app import app as scoring_app
+            from scoring.auth import create_user
         except ModuleNotFoundError as exc:
-            if exc.name == "flask":
+            if exc.name in {"flask", "flask_login", "flask_wtf", "wtforms"}:
                 self.skipTest("Flask is not installed in this interpreter")
             raise
         self.write_problem("task_01", title="Task", metadata={"max_score": 4})
@@ -450,16 +452,29 @@ class ScoringRepositoryTests(TempCompetition):
             "COMPETITIONS_DIR": scoring_app.config["COMPETITIONS_DIR"],
             "LOGS_DIR": scoring_app.config["LOGS_DIR"],
             "RESULTS_DIR": scoring_app.config["RESULTS_DIR"],
+            "AUTH_DB": scoring_app.config.get("AUTH_DB"),
             "TESTING": scoring_app.config.get("TESTING"),
+            "WTF_CSRF_TIME_LIMIT": scoring_app.config.get("WTF_CSRF_TIME_LIMIT"),
         }
         scoring_app.config.update(
             COMPETITIONS_DIR=self.tmp,
             LOGS_DIR=logs_dir,
             RESULTS_DIR=results_dir,
+            AUTH_DB=self.tmp / "auth.sqlite3",
             TESTING=True,
+            WTF_CSRF_TIME_LIMIT=None,
         )
         try:
+            _, password = create_user(scoring_app.config["AUTH_DB"], "repo-smoke")
             client = scoring_app.test_client()
+            login_page = client.get("/login").get_data(as_text=True)
+            csrf = re.search(r'name="csrf_token"[^>]*value="([^"]+)"', login_page).group(1)
+            login = client.post(
+                "/login",
+                data={"username": "repo-smoke", "password": password, "csrf_token": csrf},
+                follow_redirects=False,
+            )
+            self.assertEqual(login.status_code, 302)
             response = client.get("/")
             self.assertEqual(response.status_code, 200)
             self.assertIn("Sample Competition".encode(), response.data)
@@ -469,6 +484,7 @@ class ScoringRepositoryTests(TempCompetition):
             response = client.get("/competition/sample_competition/problem/task_01?model=openai:gpt-5.5")
             self.assertEqual(response.status_code, 200)
             self.assertIn("answer".encode(), response.data)
+            csrf = re.search(r'name="csrf_token"[^>]*value="([^"]+)"', response.get_data(as_text=True)).group(1)
             bad = client.post(
                 "/score",
                 data={
@@ -481,17 +497,18 @@ class ScoringRepositoryTests(TempCompetition):
                 },
                 follow_redirects=False,
             )
-            self.assertEqual(bad.status_code, 302)
+            self.assertEqual(bad.status_code, 400)
             self.assertFalse((results_dir / "sample_competition" / "task_01" / "run.json").exists())
             ok = client.post(
                 "/score",
                 data={
+                    "csrf_token": csrf,
                     "competition_id": "sample_competition",
                     "problem_id": "task_01",
                     "run_id": "run",
                     "result_id": "res_a",
                     "model_key": "openai:gpt-5.5",
-                    "evaluator": "judge",
+                    "evaluator": "browser-ignored",
                     "score": "4",
                     "feedback": "ok",
                 },
@@ -501,6 +518,7 @@ class ScoringRepositoryTests(TempCompetition):
             self.assertIn("model=openai:gpt-5.5", ok.headers["Location"])
             sidecar = json.loads((results_dir / "sample_competition" / "task_01" / "run.json").read_text(encoding="utf-8"))
             self.assertIn("res_a", sidecar["evaluations"])
+            self.assertEqual(sidecar["evaluation_pool"]["res_a"][0]["evaluator"], "repo-smoke")
             legacy = client.get("/run/run")
             self.assertEqual(legacy.status_code, 302)
         finally:

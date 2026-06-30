@@ -1,29 +1,54 @@
 from __future__ import annotations
 
 import csv
+from datetime import timedelta
 import io
 import os
 from pathlib import Path
 import secrets
 import sys
+from urllib.parse import urlsplit
+import warnings
 
+import click
 from flask import (
     Flask,
     Response,
     abort,
     flash,
+    make_response,
     redirect,
     render_template,
     request,
     send_from_directory,
+    session,
     url_for,
 )
+from flask_login import (
+    LoginManager,
+    current_user,
+    login_user,
+    logout_user,
+)
+from flask_wtf import CSRFProtect, FlaskForm
+from flask_wtf.csrf import CSRFError
+from wtforms import PasswordField, StringField, SubmitField
+from wtforms.validators import DataRequired
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 try:
+    from .auth import (
+        authenticate_user,
+        auth_db_path,
+        create_user,
+        get_active_user_for_session,
+        list_users,
+        reset_password,
+        set_user_active,
+    )
     from .cost_estimator import (
         cost_context,
     )
@@ -42,6 +67,15 @@ try:
         upsert_imported_evaluation,
     )
 except ImportError:  # pragma: no cover - direct `python scoring/app.py`
+    from scoring.auth import (  # type: ignore
+        authenticate_user,
+        auth_db_path,
+        create_user,
+        get_active_user_for_session,
+        list_users,
+        reset_password,
+        set_user_active,
+    )
     from scoring.cost_estimator import (  # type: ignore
         cost_context,
     )
@@ -65,13 +99,178 @@ RESULTS_DIR = BASE_DIR / "data" / "results"
 COMPETITIONS_DIR = BASE_DIR / "data" / "competitions"
 
 app = Flask(__name__)
-app.secret_key = "local-dev-scoring"
+
+
+def env_bool(name: str, default: bool = False) -> bool:
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def env_session_hours() -> float:
+    try:
+        value = float(os.environ.get("SCORER_SESSION_HOURS", "12"))
+    except ValueError:
+        return 12.0
+    return value if value > 0 else 12.0
+
+
+secret_key = os.environ.get("SCORER_SECRET_KEY")
+if not secret_key:
+    secret_key = secrets.token_urlsafe(48)
+    warnings.warn(
+        "SCORER_SECRET_KEY is not set; using a temporary per-process Flask session key.",
+        RuntimeWarning,
+        stacklevel=2,
+    )
+app.config["SECRET_KEY"] = secret_key
 app.config.setdefault("LOGS_DIR", Path(os.environ.get("SCORER_LOGS_DIR", LOGS_DIR)))
 app.config.setdefault("RESULTS_DIR", Path(os.environ.get("SCORER_RESULTS_DIR", RESULTS_DIR)))
 app.config.setdefault(
     "COMPETITIONS_DIR",
     Path(os.environ.get("SCORER_COMPETITIONS_DIR", COMPETITIONS_DIR)),
 )
+app.config.setdefault("AUTH_DB", Path(os.environ.get("SCORER_AUTH_DB", "")) if os.environ.get("SCORER_AUTH_DB") else None)
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = env_bool("SCORER_COOKIE_SECURE", False)
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=env_session_hours())
+
+login_manager = LoginManager()
+login_manager.login_view = "login"
+login_manager.init_app(app)
+csrf = CSRFProtect(app)
+
+
+class LoginForm(FlaskForm):
+    username = StringField("Логин", validators=[DataRequired()])
+    password = PasswordField("Пароль", validators=[DataRequired()])
+    submit = SubmitField("Войти")
+
+
+@login_manager.user_loader
+def load_user(user_id: str):
+    return get_active_user_for_session(auth_db_path(app), user_id)
+
+
+def is_safe_next(target: str | None) -> bool:
+    if not target:
+        return False
+    parts = urlsplit(target)
+    return not parts.scheme and not parts.netloc and target.startswith("/") and not target.startswith("//")
+
+
+def login_redirect_target() -> str:
+    full_path = request.full_path if request.query_string else request.path
+    return url_for("login", next=full_path if is_safe_next(full_path) else "/")
+
+
+def wants_login_redirect() -> bool:
+    return request.method == "GET"
+
+
+@app.before_request
+def require_authenticated_user():
+    allowed_endpoints = {"login", "static"}
+    if request.endpoint in allowed_endpoints:
+        return None
+    if current_user.is_authenticated:
+        return None
+    if wants_login_redirect():
+        return redirect(login_redirect_target())
+    abort(401)
+
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(error: CSRFError):
+    response = make_response("Ошибка CSRF: обновите страницу и повторите запрос.", 400)
+    response.mimetype = "text/plain"
+    return response
+
+
+@app.get("/login")
+@app.post("/login")
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = LoginForm()
+    next_url = request.args.get("next") or request.form.get("next")
+    safe_next = next_url if is_safe_next(next_url) else ""
+    if form.validate_on_submit():
+        user = authenticate_user(auth_db_path(app), form.username.data or "", form.password.data or "")
+        if user:
+            session.permanent = True
+            login_user(user, remember=False)
+            return redirect(safe_next or url_for("index"))
+        flash("Неверный логин или пароль", "error")
+    return render_template("login.html", form=form, next_url=safe_next)
+
+
+@app.post("/logout")
+def logout():
+    logout_user()
+    session.clear()
+    return redirect(url_for("login"))
+
+
+@app.cli.group("user")
+def user_cli():
+    """Manage scoring-site reviewer accounts."""
+
+
+@user_cli.command("create")
+@click.argument("username")
+def user_create(username: str):
+    try:
+        user, password = create_user(auth_db_path(app), username)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    print(f"User created: {user.username}")
+    print(f"Password: {password}")
+    print("Save this password now. It will not be shown again.")
+
+
+@user_cli.command("reset-password")
+@click.argument("username")
+def user_reset_password(username: str):
+    try:
+        user, password = reset_password(auth_db_path(app), username)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    print(f"Password reset: {user.username}")
+    print(f"Password: {password}")
+    print("Save this password now. It will not be shown again.")
+
+
+@user_cli.command("disable")
+@click.argument("username")
+def user_disable(username: str):
+    try:
+        user = set_user_active(auth_db_path(app), username, False)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    print(f"User disabled: {user.username}")
+
+
+@user_cli.command("enable")
+@click.argument("username")
+def user_enable(username: str):
+    try:
+        user = set_user_active(auth_db_path(app), username, True)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    print(f"User enabled: {user.username}")
+
+
+@user_cli.command("list")
+def user_list():
+    rows = list_users(auth_db_path(app))
+    if not rows:
+        print("No users.")
+        return
+    for row in rows:
+        print(f"{row['username']}\t{row['status']}\t{row['created_at']}\t{row['updated_at']}")
 
 
 def catalog() -> dict:
@@ -341,18 +540,7 @@ def score():
         abort(400, "result_id does not match this run")
     problem, attempt = found
     mode = request.form.get("mode")
-    evaluator = request.form.get("evaluator", "").strip()
-    if not evaluator:
-        flash("Введите имя проверяющего.", "error")
-        return score_redirect(
-            mode=mode,
-            competition_id=competition_id,
-            problem_id=problem_id,
-            model_key=model_key or attempt["model_key"],
-            result_id=attempt["result_id"],
-            anonymous_seed=anonymous_seed,
-            anonymous_index=anonymous_index,
-        )
+    evaluator = current_user.username
     try:
         score_value = float(request.form.get("score", ""))
     except ValueError:

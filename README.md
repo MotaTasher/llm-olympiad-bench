@@ -20,6 +20,9 @@ http://127.0.0.1:8000
 ```
 
 Сайт показывает соревнования и задачи из `data/competitions/` даже до первого запуска модели. Ответы и прогресс проверки подтягиваются из `logs/` и `data/results/`. На главной и странице соревнования есть общий live-калькулятор стоимости потенциального прогона активных моделей в USD/RUB; сайт не запускает модели и не создаёт run-log.
+Scoring-сайт закрыт авторизацией; перед использованием создайте reviewer через
+`flask --app scoring.app user create <username>`. Подробности:
+[scoring/README.md](scoring/README.md).
 
 Полная инструкция, включая Windows и проверку без браузера: [docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md).
 
@@ -139,6 +142,7 @@ model adapters → logs/.../run.json (schema_version 2)
 | локальный запуск сайта и CLI | [docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md) |
 | импорт задач из PDF/TXT | [docs/ADDING_PROBLEMS.md](docs/ADDING_PROBLEMS.md) |
 | серверная синхронизация | [SERVER.md](SERVER.md) |
+| авторизация scoring-сайта | [scoring/README.md](scoring/README.md) |
 | инструкции для Codex/Claude/агентов | [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md), [CODEX.md](CODEX.md) |
 | архитектура и контракты | [docs/specs/INDEX.md](docs/specs/INDEX.md) |
 | настройка конкретного провайдера | `models/<provider>/README.md` |
@@ -215,8 +219,8 @@ data/results/<competition_id>/<problem_id>/<run_id>.json
 ```
 
 У одного ответа может быть несколько проверок. Сайт хранит их как пул проверок,
-позволяет добавлять и удалять отдельные проверки, а имя проверяющего задаётся
-один раз в шапке сайта и обязательно для сохранения новой оценки. Главная
+позволяет добавлять и удалять отдельные проверки, а имя проверяющего берётся из
+активной login-сессии (`current_user.username`). Главная
 страница группирует соревнования по годам, а внутри года показывает их от более
 ранних к более поздним. Страница задачи показывает проверку в одну колонку:
 условие, закрытый эталон, ответ модели, затем форма, история, метрики и сырой
@@ -242,6 +246,7 @@ python scripts/export_scoring.py --all
 ## Важные ограничения
 
 - Модели работают в режиме text-only: без tools, поиска, function calling и исполнения кода.
-- Локальный Flask-сервер запускается с debug-режимом и предназначен только для разработки на `127.0.0.1`.
+- Локальный Flask-сервер запускается с debug-режимом и предназначен только для разработки на `127.0.0.1`; серверный сайт должен работать за HTTPS reverse proxy.
 - Реальные API-ключи, `config/server.env`, кэши Python и системные файлы не должны попадать в Git или архивы.
+- Auth DB (`instance/scorer-auth.sqlite3` или `SCORER_AUTH_DB`) содержит password hashes и не должна попадать в Git.
 - Изменение форматов problem/log/score требует одновременного обновления runner, scoring, export и спецификаций.

@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import tempfile
 import unittest
 from pathlib import Path
 
 import runner
+
 from scoring.app import app as scoring_app
+from scoring.auth import create_user, get_user_by_username, set_user_active
 from scoring.cost_estimator import cost_context
 from scoring.repository import build_catalog, configured_model_columns
 
@@ -27,19 +30,59 @@ class ScoringWebTests(unittest.TestCase):
             "COMPETITIONS_DIR": scoring_app.config["COMPETITIONS_DIR"],
             "LOGS_DIR": scoring_app.config["LOGS_DIR"],
             "RESULTS_DIR": scoring_app.config["RESULTS_DIR"],
+            "AUTH_DB": scoring_app.config.get("AUTH_DB"),
             "TESTING": scoring_app.config.get("TESTING"),
+            "WTF_CSRF_TIME_LIMIT": scoring_app.config.get("WTF_CSRF_TIME_LIMIT"),
         }
         scoring_app.config.update(
             COMPETITIONS_DIR=self.competitions_dir,
             LOGS_DIR=self.logs_dir,
             RESULTS_DIR=self.results_dir,
+            AUTH_DB=self.tmp / "auth.sqlite3",
             TESTING=True,
+            WTF_CSRF_TIME_LIMIT=None,
         )
+        self.username = "reviewer-01"
+        _, self.password = create_user(Path(scoring_app.config["AUTH_DB"]), self.username)
         self.client = scoring_app.test_client()
+        self.login()
 
     def tearDown(self) -> None:
         scoring_app.config.update(self.old_config)
         shutil.rmtree(self.tmp)
+
+    def anonymous_client(self):
+        return scoring_app.test_client()
+
+    def csrf_token(self, path: str = "/login", *, client=None) -> str:
+        client = client or self.client
+        response = client.get(path)
+        self.assertEqual(response.status_code, 200, response.get_data(as_text=True))
+        match = re.search(r'name="csrf_token"[^>]*value="([^"]+)"', response.get_data(as_text=True))
+        self.assertIsNotNone(match, response.get_data(as_text=True))
+        return match.group(1)
+
+    def login(self, *, username: str | None = None, password: str | None = None, client=None, next_url: str = "/"):
+        client = client or self.client
+        token = self.csrf_token(f"/login?next={next_url}", client=client)
+        return client.post(
+            f"/login?next={next_url}",
+            data={
+                "username": username or self.username,
+                "password": password or self.password,
+                "csrf_token": token,
+            },
+            follow_redirects=False,
+        )
+
+    def logout(self) -> None:
+        token = self.csrf_token("/")
+        response = self.client.post("/logout", data={"csrf_token": token}, follow_redirects=False)
+        self.assertEqual(response.status_code, 302)
+
+    def authorized_post(self, path: str, data: dict, *, token_path: str | None = None, follow_redirects: bool = False):
+        payload = {**data, "csrf_token": self.csrf_token(token_path or "/")}
+        return self.client.post(path, data=payload, follow_redirects=follow_redirects)
 
     def write_competition(self, competition_id: str, *, title: str, date: str | None = None) -> Path:
         path = self.competitions_dir / competition_id
@@ -111,6 +154,225 @@ class ScoringWebTests(unittest.TestCase):
             },
         )
 
+    def test_unauthenticated_get_routes_redirect_to_login(self) -> None:
+        competition_path = self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        asset_path = competition_path / "assets" / "diagram.png"
+        asset_path.parent.mkdir(parents=True, exist_ok=True)
+        asset_path.write_bytes(b"image-bytes")
+        self.write_run()
+
+        anon = self.anonymous_client()
+        paths = [
+            "/",
+            "/competition/math_2026",
+            "/competition/math_2026/stats",
+            "/competition/math_2026/problem/task_01",
+            "/competition/math_2026/problem/task_01/anonymous?seed=fixed&n=1",
+            "/competition/math_2026/problem/assets/diagram.png",
+            "/competition/math_2026/problem/task_01/assets/diagram.png",
+            "/competition/math_2026/evaluations.csv",
+            "/competition/math_2026/problem/task_01/evaluations.csv",
+            "/competition/math_2026/problem/task_01/run/run_active",
+            "/run/run_active",
+        ]
+        for path in paths:
+            with self.subTest(path=path):
+                response = anon.get(path)
+                self.assertEqual(response.status_code, 302)
+                self.assertIn("/login?next=", response.headers["Location"])
+
+    def test_unauthenticated_posts_do_not_write(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+        anon = self.anonymous_client()
+        sidecar_path = self.results_dir / "math_2026" / "task_01" / "run_active.json"
+
+        requests = [
+            (
+                "/score",
+                {
+                    "competition_id": "math_2026",
+                    "problem_id": "task_01",
+                    "run_id": "run_active",
+                    "result_id": "res_a",
+                    "model_key": "openai:gpt-5.5",
+                    "score": "7",
+                },
+            ),
+            (
+                "/score/delete",
+                {
+                    "competition_id": "math_2026",
+                    "problem_id": "task_01",
+                    "run_id": "run_active",
+                    "result_id": "res_a",
+                    "evaluation_id": "ev_missing",
+                },
+            ),
+            ("/competition/math_2026/evaluations/import", {}),
+            ("/competition/math_2026/problem/task_01/evaluations/import", {}),
+        ]
+        for path, data in requests:
+            with self.subTest(path=path):
+                response = anon.post(path, data=data)
+                self.assertIn(response.status_code, {400, 401})
+        self.assertFalse(sidecar_path.exists())
+
+    def test_login_page_register_route_and_open_redirect(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run(answer="MODEL_SECRET_TOKEN")
+        anon = self.anonymous_client()
+
+        login_page = anon.get("/login")
+        self.assertEqual(login_page.status_code, 200)
+        html = login_page.get_data(as_text=True)
+        self.assertNotIn("STATEMENT_TOKEN", html)
+        self.assertNotIn("MODEL_SECRET_TOKEN", html)
+        self.assertNotIn("Стоимость прогона", html)
+
+        token = self.csrf_token("/login?next=https://example.com/steal", client=anon)
+        response = anon.post(
+            "/login?next=https://example.com/steal",
+            data={"username": self.username, "password": self.password, "csrf_token": token},
+            follow_redirects=False,
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.headers["Location"], "/")
+        self.assertEqual(self.client.get("/register").status_code, 404)
+
+    def test_cli_create_generates_random_password_and_hash_only(self) -> None:
+        runner_cli = scoring_app.test_cli_runner()
+        result = runner_cli.invoke(args=["user", "create", "cli-user"])
+        self.assertEqual(result.exit_code, 0, result.output)
+        self.assertIn("User created: cli-user", result.output)
+        self.assertIn("Save this password now", result.output)
+        match = re.search(r"Password: (\S+)", result.output)
+        self.assertIsNotNone(match, result.output)
+        password = match.group(1)
+        self.assertGreaterEqual(len(password), 40)
+
+        user = get_user_by_username(Path(scoring_app.config["AUTH_DB"]), "CLI-USER")
+        self.assertIsNotNone(user)
+        self.assertNotEqual(user.password_hash, password)
+        self.assertNotIn(user.password_hash, result.output)
+
+        second = runner_cli.invoke(args=["user", "create", "cli-user"])
+        self.assertNotEqual(second.exit_code, 0)
+
+    def test_login_failures_disabled_reset_logout_and_csrf(self) -> None:
+        anon = self.anonymous_client()
+        bad_token = self.csrf_token("/login", client=anon)
+        bad = anon.post(
+            "/login",
+            data={"username": self.username, "password": "wrong", "csrf_token": bad_token},
+        )
+        self.assertEqual(bad.status_code, 200)
+        self.assertIn("Неверный логин или пароль", bad.get_data(as_text=True))
+        self.assertEqual(anon.get("/").status_code, 302)
+
+        unknown_token = self.csrf_token("/login", client=anon)
+        unknown = anon.post(
+            "/login",
+            data={"username": "missing-user", "password": "wrong", "csrf_token": unknown_token},
+        )
+        self.assertEqual(unknown.status_code, 200)
+        self.assertIn("Неверный логин или пароль", unknown.get_data(as_text=True))
+
+        set_user_active(Path(scoring_app.config["AUTH_DB"]), self.username, False)
+        disabled_token = self.csrf_token("/login", client=anon)
+        disabled = anon.post(
+            "/login",
+            data={"username": self.username, "password": self.password, "csrf_token": disabled_token},
+        )
+        self.assertEqual(disabled.status_code, 200)
+        self.assertIn("Неверный логин или пароль", disabled.get_data(as_text=True))
+        self.assertEqual(self.client.get("/").status_code, 302)
+
+        set_user_active(Path(scoring_app.config["AUTH_DB"]), self.username, True)
+        reset_result = scoring_app.test_cli_runner().invoke(args=["user", "reset-password", self.username])
+        self.assertEqual(reset_result.exit_code, 0, reset_result.output)
+        new_password = re.search(r"Password: (\S+)", reset_result.output).group(1)
+
+        old_client = self.anonymous_client()
+        old_token = self.csrf_token("/login", client=old_client)
+        old_login = old_client.post(
+            "/login",
+            data={"username": self.username, "password": self.password, "csrf_token": old_token},
+        )
+        self.assertIn("Неверный логин или пароль", old_login.get_data(as_text=True))
+
+        new_client = self.anonymous_client()
+        new_login = self.login(password=new_password, client=new_client)
+        self.assertEqual(new_login.status_code, 302)
+        self.assertEqual(new_client.get("/").status_code, 200)
+
+        self.assertEqual(new_client.post("/score", data={}).status_code, 400)
+        self.assertEqual(new_client.get("/logout").status_code, 405)
+        self.assertEqual(new_client.get("/").status_code, 200)
+        logout_token = self.csrf_token("/", client=new_client)
+        logout_response = new_client.post("/logout", data={"csrf_token": logout_token})
+        self.assertEqual(logout_response.status_code, 302)
+        self.assertEqual(new_client.get("/").status_code, 302)
+
+    def test_templates_do_not_contain_legacy_reviewer_controls(self) -> None:
+        for path in Path("scoring/templates").glob("*.html"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("global-reviewer", text, path)
+            self.assertNotIn("olympiadScorerReviewer", text, path)
+            self.assertNotIn('name="evaluator"', text, path)
+
+    def test_csv_my_reviews_filters_by_current_username(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+        write_json(
+            self.results_dir / "math_2026" / "task_01" / "run_active.json",
+            {
+                "schema_version": 2,
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "evaluation_pool": {
+                    "res_a": [
+                        {
+                            "evaluation_id": "ev_mine",
+                            "result_id": "res_a",
+                            "result_index": 0,
+                            "model_key": "openai:gpt-5.5",
+                            "model": "gpt-5.5",
+                            "evaluator": self.username,
+                            "score": 7,
+                            "max_score": 10,
+                            "score_category": "partial",
+                            "feedback": "mine",
+                            "created_at": "2026-06-20T00:00:00Z",
+                            "updated_at": "2026-06-20T00:00:00Z",
+                        },
+                        {
+                            "evaluation_id": "ev_other",
+                            "result_id": "res_a",
+                            "result_index": 0,
+                            "model_key": "openai:gpt-5.5",
+                            "model": "gpt-5.5",
+                            "evaluator": "other-reviewer",
+                            "score": 5,
+                            "max_score": 10,
+                            "score_category": "partial",
+                            "feedback": "other",
+                            "created_at": "2026-06-20T00:00:01Z",
+                            "updated_at": "2026-06-20T00:00:01Z",
+                        },
+                    ]
+                },
+            },
+        )
+        page = self.client.get("/competition/math_2026").get_data(as_text=True)
+        self.assertIn(f"evaluator={self.username}", page)
+
+        csv_response = self.client.get(f"/competition/math_2026/evaluations.csv?evaluator={self.username}")
+        text = csv_response.get_data(as_text=True)
+        self.assertIn("ev_mine", text)
+        self.assertNotIn("ev_other", text)
+
     def test_problem_page_is_single_column_statement_reference_answer_order(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run()
@@ -155,45 +417,29 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(anonymous_relative.data, b"image-bytes")
         anonymous_relative.close()
 
-    def test_blank_evaluator_does_not_create_sidecar_and_nonblank_saves(self) -> None:
+    def test_score_uses_current_user_and_ignores_posted_evaluator(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run()
         sidecar_path = self.results_dir / "math_2026" / "task_01" / "run_active.json"
 
-        blank = self.client.post(
+        ok = self.authorized_post(
             "/score",
-            data={
+            {
                 "competition_id": "math_2026",
                 "problem_id": "task_01",
                 "run_id": "run_active",
                 "result_id": "res_a",
                 "model_key": "openai:gpt-5.5",
-                "evaluator": "   ",
-                "score": "7",
-            },
-            follow_redirects=True,
-        )
-        self.assertEqual(blank.status_code, 200)
-        self.assertIn("Введите имя проверяющего.", blank.get_data(as_text=True))
-        self.assertFalse(sidecar_path.exists())
-
-        ok = self.client.post(
-            "/score",
-            data={
-                "competition_id": "math_2026",
-                "problem_id": "task_01",
-                "run_id": "run_active",
-                "result_id": "res_a",
-                "model_key": "openai:gpt-5.5",
-                "evaluator": " Judge ",
+                "evaluator": "BrowserSuppliedName",
                 "score": "7",
                 "feedback": "ok",
             },
+            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.5",
             follow_redirects=False,
         )
         self.assertEqual(ok.status_code, 302)
         payload = json.loads(sidecar_path.read_text(encoding="utf-8"))
-        self.assertEqual(payload["evaluation_pool"]["res_a"][0]["evaluator"], "Judge")
+        self.assertEqual(payload["evaluation_pool"]["res_a"][0]["evaluator"], self.username)
 
     def test_active_model_catalog_contains_only_strong_models(self) -> None:
         expected = {
@@ -323,7 +569,11 @@ class ScoringWebTests(unittest.TestCase):
         self.assertNotIn("Запустить соревнование", html)
 
         self.assertEqual(
-            self.client.post("/competition/math_2026/runs", data={}).status_code,
+            self.authorized_post(
+                "/competition/math_2026/runs",
+                {},
+                token_path="/competition/math_2026",
+            ).status_code,
             404,
         )
         self.assertEqual(

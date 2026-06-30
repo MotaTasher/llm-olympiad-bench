@@ -29,8 +29,10 @@ models/
 
 scoring/
   app.py                  Flask routes, redirects and score request validation
+  auth.py                 SQLite-backed reviewer accounts, password hashes and Flask-Login users
   repository.py           one-pass catalog builder, log/sidecar merge, model-cell status logic
   cost_estimator.py       local best-effort cost estimate for configured model runs
+  README.md               closed scoring-site auth and user-management operations
   templates/              HTML pages
 
 scripts/
@@ -50,6 +52,7 @@ scripts/
 | `notebooks/` | exploratory/manual workflows | not authoritative |
 | `config/models.env` | non-secret runtime configuration | versioned |
 | `config/server.env` | private SSH/rsync targets | local only |
+| `instance/` | local Flask instance files such as `scorer-auth.sqlite3` | runtime private data, ignored |
 
 ## Canonical problem-set layout
 
@@ -71,3 +74,4 @@ data/competitions/<competition_id>/
 - Shared API policy, result serialization and telemetry helpers: `models/common.py`, `models/base.py` and `models/telemetry.py`.
 - User documentation: root README, `docs/` and provider READMEs.
 - Agent contracts: `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `docs/specs/`.
+- Scoring user accounts: `instance/scorer-auth.sqlite3` by default or `SCORER_AUTH_DB`.

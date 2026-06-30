@@ -3,5 +3,7 @@ anthropic>=0.25
 gigachat>=0.1.39
 requests>=2.31
 flask>=3.0
+Flask-Login>=0.6
+Flask-WTF>=1.2
 python-dotenv>=1.0
 tabulate>=0.9

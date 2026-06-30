@@ -297,6 +297,9 @@ The evaluation key for new writes is `result_id`. Readers use this precedence:
 4. legacy `score`, `scored_by`, `scored_at` and `score_comment` inside the run-log.
 
 Manual scoring must not be written back into run logs. Server-side score validation uses `problem.metadata.max_score`, then `competition.metadata.max_score`, then fallback `10`.
+For new web-scoring writes, `evaluator` is the authenticated
+`current_user.username` from the scoring site session. Older sidecars with any
+string `evaluator` remain valid and readable.
 
 ## Validation
 

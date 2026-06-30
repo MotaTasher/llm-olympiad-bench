@@ -18,8 +18,9 @@
       </div>
       <div class="csv-actions">
         <a class="button secondary" href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">CSV всех проверок задачи</a>
-        <a class="button secondary" data-reviewer-href href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">CSV моих проверок задачи</a>
+        <a class="button secondary" href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id, evaluator=current_user.username) }}">CSV моих проверок задачи</a>
         <form method="post" action="{{ url_for('import_problem_evaluations', competition_id=competition.competition_id, problem_id=problem.problem_id) }}" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input type="file" name="csv_file" accept=".csv,text/csv">
           <button class="secondary" type="submit">Импорт CSV проверок</button>
         </form>
@@ -70,6 +71,7 @@
             {% endif %}
 
             <form class="score-form" method="post" action="{{ url_for('score') }}" data-score-form>
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <input type="hidden" name="mode" value="anonymous">
               <input type="hidden" name="anonymous_seed" value="{{ seed }}">
               <input type="hidden" name="anonymous_index" value="{{ selected_index }}">
@@ -78,7 +80,6 @@
               <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
               <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
               <input type="hidden" name="model_key" value="{{ attempt.model_key }}">
-              <input type="hidden" name="evaluator" value="" data-global-reviewer>
 
               <label>Оценка из {{ "%g"|format(problem.max_score) }}
                 <input
@@ -102,7 +103,6 @@
                 <textarea name="feedback"></textarea>
               </label>
 
-              <div class="form-help" data-reviewer-required-message hidden>Введите имя проверяющего в верхней панели.</div>
               <button type="submit" data-score-submit>Добавить проверку</button>
             </form>
 
@@ -119,6 +119,7 @@
                       <div class="rendered" data-markdown>{{ item.feedback }}</div>
                     {% endif %}
                     <form method="post" action="{{ url_for('delete_score') }}">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                       <input type="hidden" name="mode" value="anonymous">
                       <input type="hidden" name="anonymous_seed" value="{{ seed }}">
                       <input type="hidden" name="anonymous_index" value="{{ selected_index }}">

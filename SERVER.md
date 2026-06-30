@@ -35,9 +35,26 @@ SCORER_REMOTE_RESULTS=user@host:/absolute/path/to/data/results/
 SCORER_REMOTE_LOGS=deploy@example.com:/srv/my-scorer/shared/logs/
 SCORER_REMOTE_RESULTS=deploy@example.com:/srv/my-scorer/data/results/
 SCORER_SSH_PORT=22
+SCORER_SECRET_KEY=
+SCORER_AUTH_DB=
+SCORER_COOKIE_SECURE=1
+SCORER_SESSION_HOURS=12
 ```
 
 `config/server.env` добавлен в `.gitignore`.
+
+Для scoring-сайта на сервере также задайте приватный `SCORER_SECRET_KEY`.
+Сгенерировать значение можно так:
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(48))"
+```
+
+Реальное значение нельзя коммитить. `SCORER_AUTH_DB` можно оставить пустым, тогда
+используется `instance/scorer-auth.sqlite3`, или указать абсолютный приватный
+путь. На HTTPS-сервере оставьте `SCORER_COOKIE_SECURE=1`; сайт должен работать
+за HTTPS reverse proxy, а не публиковаться напрямую через Flask development
+server.
 
 ## Схема
 
@@ -48,6 +65,35 @@ logs/<competition_id>/<problem_id>/<run_id>.json
 ```
 
 На сервере scoring-сайт читает ответы из remote-папки, указанной в `SCORER_REMOTE_LOGS`, и пишет оценки в `SCORER_REMOTE_RESULTS`.
+Доступ к сайту закрыт Flask-Login авторизацией. Без входа доступны только
+страница `/login` и необходимые static-ресурсы.
+
+## Пользователи scoring-сайта
+
+Публичной регистрации нет. Оператор с терминальным доступом создаёт reviewer:
+
+```bash
+flask --app scoring.app user create reviewer-01
+```
+
+Команда генерирует длинный пароль через `secrets.token_urlsafe(32)`, сохраняет
+только hash и показывает plaintext-пароль один раз. Передайте пароль через
+защищённый канал или менеджер паролей. Если пароль утрачен:
+
+```bash
+flask --app scoring.app user reset-password reviewer-01
+```
+
+Отзыв и возврат доступа:
+
+```bash
+flask --app scoring.app user disable reviewer-01
+flask --app scoring.app user enable reviewer-01
+flask --app scoring.app user list
+```
+
+Все пользователи пока равноправны. Оценки записываются с `evaluator`, равным
+username текущего вошедшего пользователя.
 
 ## Push: отправить решения на сервер
 
@@ -140,6 +186,13 @@ evaluations.<result_index>.updated_at
 ```
 
 Ответы моделей остаются в `logs/<competition_id>/<problem_id>/<run_id>.json`. Экспорт датасета объединяет `logs/` и `data/results/`.
+Отдельная auth DB хранит только пользователей и password hashes:
+`instance/scorer-auth.sqlite3` или путь из `SCORER_AUTH_DB`. Для резервной копии
+используйте приватное хранилище, например:
+
+```bash
+sqlite3 instance/scorer-auth.sqlite3 ".backup '/secure/backup/scorer-auth.sqlite3'"
+```
 
 ## Собрать датасет
 

@@ -49,14 +49,12 @@
 
         <form class="score-form" method="post" action="{{ url_for('score') }}">
           <h3>Evaluation</h3>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input type="hidden" name="run_id" value="{{ run.run_id }}">
           <input type="hidden" name="competition_id" value="{{ run.competition_id }}">
           <input type="hidden" name="problem_id" value="{{ run.problem_id }}">
           <input type="hidden" name="result_index" value="{{ loop.index0 }}">
           <input type="hidden" name="model" value="{{ result.model }}">
-
-          <label for="scored-by-{{ loop.index0 }}">Evaluator</label>
-          <input id="scored-by-{{ loop.index0 }}" name="scored_by" value="{{ result.scored_by or '' }}" autocomplete="name">
 
           <label for="score-{{ loop.index0 }}">Score</label>
           <input id="score-{{ loop.index0 }}" name="score" type="number" min="0" max="10" value="{{ result.score if result.score is not none else '' }}" autocomplete="off">

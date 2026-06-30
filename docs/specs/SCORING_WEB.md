@@ -18,6 +18,40 @@ The app is a local Flask/Jinja application. It does not instantiate provider cli
 By default it reads data paths relative to the repository root. Deployments can
 override those paths with `SCORER_LOGS_DIR`, `SCORER_RESULTS_DIR` and
 `SCORER_COMPETITIONS_DIR`.
+The site is closed by default. Without a successful login, only `/login` and
+Flask static resources are public; all current and future scoring routes are
+blocked by a centralized `before_request` rule. HTML GET requests redirect to
+`/login?next=<internal path>`. Unsafe or external `next` values are ignored.
+Unauthenticated POST requests cannot perform actions.
+
+Authentication uses Flask-Login sessions, Flask-WTF CSRF protection and a local
+SQLite user database. The default DB path is:
+
+```text
+instance/scorer-auth.sqlite3
+```
+
+It can be overridden with `SCORER_AUTH_DB`. `SCORER_SECRET_KEY` provides the
+stable Flask session key; without it local development gets a temporary
+per-process key and a warning. Session cookies are HTTP-only, SameSite=Lax, and
+`SESSION_COOKIE_SECURE` is controlled by `SCORER_COOKIE_SECURE`. Session lifetime
+defaults to 12 hours and is configurable with `SCORER_SESSION_HOURS`.
+
+Reviewer accounts are managed only from the Flask CLI:
+
+```bash
+flask --app scoring.app user create <username>
+flask --app scoring.app user reset-password <username>
+flask --app scoring.app user disable <username>
+flask --app scoring.app user enable <username>
+flask --app scoring.app user list
+```
+
+Passwords are generated with `secrets.token_urlsafe(32)`, printed once in the
+terminal, and stored only as Werkzeug password hashes. Disabled users cannot log
+in and existing sessions are rejected on the next request. Password reset and
+enable/disable increment a session version to invalidate old cookies without a
+separate session store.
 
 ## Data layer
 
@@ -47,13 +81,16 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 
 | Method/path | Behavior |
 | --- | --- |
+| `GET /login` | Russian login form; does not display competition/model data; authenticated users redirect to `/` |
+| `POST /login` | CSRF-protected login; unknown user, wrong password and disabled user share the same error |
+| `POST /logout` | CSRF-protected logout; clears the session and redirects to `/login` |
 | `GET /` | Russian competition cards from canonical data plus log/evaluation counts and live cost estimates, grouped by inferred year |
 | `GET /competition/<competition_id>` | live cost estimate plus matrix: rows are tasks, columns are models; task title opens anonymous scoring |
 | `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics and model-task table |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
 | `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
-| `GET /competition/<competition_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for a competition, optionally filtered by reviewer |
-| `GET /competition/<competition_id>/problem/<problem_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for one task, optionally filtered by reviewer |
+| `GET /competition/<competition_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for a competition, optionally filtered by reviewer; "my checks" links use `current_user.username` |
+| `GET /competition/<competition_id>/problem/<problem_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for one task, optionally filtered by reviewer; "my checks" links use `current_user.username` |
 | `POST /competition/<competition_id>/evaluations/import` | import evaluation-pool CSV for the competition |
 | `POST /competition/<competition_id>/problem/<problem_id>/evaluations/import` | import evaluation-pool CSV for one task |
 | `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | compatibility redirect to the task page with a model and attempt selected |
@@ -148,21 +185,22 @@ Read precedence:
 3. old sidecar `evaluations` keyed by string result index;
 4. legacy score fields embedded in the run-log.
 
+Every browser POST form includes a CSRF token. CSRF failures return HTTP 400
+with a short Russian error message. No working `/register` route exists.
+
 `POST /score` validates:
 
 - competition/problem/run IDs;
 - `result_id` belongs to the submitted run;
-- `evaluator = request.form.get("evaluator", "").strip()` is non-empty;
 - `0 <= score <= max_score`;
 - `max_score` from `problem.metadata.max_score`, then `competition.metadata.max_score`, then `10`.
 
 Each submitted score creates a new evaluation entry with its own
 `evaluation_id`. The latest evaluation is also copied to `evaluations[result_id]`
-for backward compatibility with older exporters. The reviewer name is a global
-browser field stored in `localStorage`; score forms send it as a hidden
-`evaluator` input. Browser code disables score-submit buttons while the trimmed
-reviewer name is empty, but server validation is authoritative and rejects an
-empty reviewer without calling `save_evaluation`.
+for backward compatibility with older exporters. The reviewer identity for new
+evaluations is always `current_user.username`; `/score` does not read or trust
+any `evaluator` value submitted by the browser. Old sidecars with arbitrary
+`evaluator` values remain readable without migration.
 
 ## Competition grouping
 
@@ -203,8 +241,19 @@ Smoke test:
 
 ```bash
 python - <<'PY'
+from pathlib import Path
+import tempfile
 from scoring.app import app
+from scoring.auth import create_user
+
+tmp = tempfile.TemporaryDirectory()
+app.config.update(AUTH_DB=Path(tmp.name) / "auth.sqlite3", TESTING=True)
+_, password = create_user(app.config["AUTH_DB"], "smoke-user")
 client = app.test_client()
+login_page = client.get("/login").get_data(as_text=True)
+token = login_page.split('name="csrf_token"')[1].split('value="')[1].split('"')[0]
+response = client.post("/login", data={"username": "smoke-user", "password": password, "csrf_token": token})
+assert response.status_code == 302
 response = client.get("/")
 assert response.status_code == 200
 print("ok")

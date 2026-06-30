@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Вход · Olympiad Scorer{% endblock %}
+{% block crumbs %}Вход{% endblock %}
+{% block content %}
+  <div class="login-screen">
+    <section class="panel login-panel">
+      <div class="login-heading">
+        <div class="login-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <path d="M10 17l5-5-5-5"/>
+            <path d="M15 12H3"/>
+          </svg>
+        </div>
+        <h1>Вход</h1>
+      </div>
+      <form class="score-form" method="post" action="{{ url_for('login') }}">
+        {{ form.csrf_token }}
+        {% if next_url %}
+          <input type="hidden" name="next" value="{{ next_url }}">
+        {% endif %}
+        <label>{{ form.username.label.text }}
+          {{ form.username(autocomplete="username", autofocus=true) }}
+        </label>
+        <label>{{ form.password.label.text }}
+          {{ form.password(autocomplete="current-password") }}
+        </label>
+        {{ form.submit() }}
+      </form>
+    </section>
+  </div>
+{% endblock %}
