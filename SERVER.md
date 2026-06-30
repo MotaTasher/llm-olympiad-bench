@@ -73,6 +73,33 @@ rsync -avz --ignore-existing logs/ "$SCORER_REMOTE_LOGS"
 python scripts/sync_logs.py push --dry-run
 ```
 
+## Server-side retry for Math Cup 2026 final
+
+На сервере можно пересчитать только пары `задача × модель`, где нет успешного
+непустого ответа. Скрипт по умолчанию делает dry-run и показывает список пар и
+оценку максимальной стоимости:
+
+```bash
+cd /opt/olympiad-scorer/app
+python3 scripts/run_missing_math_cup_2026_final.py
+```
+
+Запуск API-вызовов требует явного `--yes`. Чтобы процесс жил после разрыва SSH:
+
+```bash
+cd /opt/olympiad-scorer/app
+mkdir -p run-output/missing-2026-final-320k
+nohup python3 scripts/run_missing_math_cup_2026_final.py \
+  --max-tokens 320000 \
+  --workers 23 \
+  --yes \
+  > run-output/missing-2026-final-320k/launcher.log 2>&1 &
+```
+
+Каждая пара запускается отдельным процессом `runner.py` и пишет отдельный
+schema-v2 run-log прямо в `/opt/olympiad-scorer/shared/logs`. Логи stdout/stderr
+лежат в `run-output/missing-2026-final-320k/`.
+
 ## Pull: забрать оценки с сервера
 
 После вычитки на сайте:
