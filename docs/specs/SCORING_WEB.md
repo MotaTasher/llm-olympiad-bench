@@ -178,6 +178,11 @@ scrollable content containers so wide Markdown tables, code blocks and MathJax
 formulas scroll inside the panel instead of widening the page.
 Markdown image or file links that use relative `assets/...` paths are served
 from the selected competition directory, `data/competitions/<competition_id>/assets/`.
+Rendered Markdown/LaTeX blocks expose copy buttons that copy the original source
+text captured before browser-side Markdown and MathJax rendering. The normal
+task page also exposes a copy button for the cleaned JSON result shown in the
+raw-result details block. Copy controls are browser-only and do not write logs
+or sidecars.
 
 New sidecars use `schema_version: 2` and store an evaluation pool by `result_id`:
 

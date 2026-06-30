@@ -30,9 +30,14 @@
     <div class="review-layout">
       <div class="stack">
         <section class="panel">
-          <h2>Условие</h2>
+          <div class="section-head">
+            <h2>Условие</h2>
+            {% if problem.statement %}
+              <button class="secondary compact" type="button" data-copy-target="problem-statement">Скопировать исходник</button>
+            {% endif %}
+          </div>
           {% if problem.statement %}
-            <div class="rendered scrollable-content" data-markdown>{{ problem.statement }}</div>
+            <div id="problem-statement" class="rendered scrollable-content" data-markdown>{{ problem.statement }}</div>
           {% else %}
             <div class="empty">Условие не найдено.</div>
           {% endif %}
@@ -42,12 +47,18 @@
           <details class="panel">
             <summary>Показать эталонное решение</summary>
             {% if problem.answer %}
-              <h3>Ответ</h3>
-              <div class="rendered scrollable-content" data-markdown>{{ problem.answer }}</div>
+              <div class="section-head">
+                <h3>Ответ</h3>
+                <button class="secondary compact" type="button" data-copy-target="reference-answer">Скопировать исходник</button>
+              </div>
+              <div id="reference-answer" class="rendered scrollable-content" data-markdown>{{ problem.answer }}</div>
             {% endif %}
             {% if problem.solution %}
-              <h3>Решение</h3>
-              <div class="rendered scrollable-content" data-markdown>{{ problem.solution }}</div>
+              <div class="section-head">
+                <h3>Решение</h3>
+                <button class="secondary compact" type="button" data-copy-target="reference-solution">Скопировать исходник</button>
+              </div>
+              <div id="reference-solution" class="rendered scrollable-content" data-markdown>{{ problem.solution }}</div>
             {% endif %}
           </details>
         {% endif %}
@@ -65,7 +76,11 @@
             </div>
 
             {% if result.answer %}
-              <div class="rendered scrollable-content" data-markdown>{{ result.answer }}</div>
+              <div class="section-head">
+                <span></span>
+                <button class="secondary compact" type="button" data-copy-target="model-answer-{{ attempt.result_id }}">Скопировать исходник</button>
+              </div>
+              <div id="model-answer-{{ attempt.result_id }}" class="rendered scrollable-content" data-markdown>{{ result.answer }}</div>
             {% else %}
               <div class="empty">У этого ответа нет текста.</div>
             {% endif %}
@@ -116,7 +131,11 @@
                       <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ item.updated_at or item.created_at or "—" }}</span>
                     </header>
                     {% if item.feedback %}
-                      <div class="rendered" data-markdown>{{ item.feedback }}</div>
+                      <div class="section-head">
+                        <span></span>
+                        <button class="secondary compact" type="button" data-copy-target="feedback-{{ item.evaluation_id }}">Скопировать исходник</button>
+                      </div>
+                      <div id="feedback-{{ item.evaluation_id }}" class="rendered" data-markdown>{{ item.feedback }}</div>
                     {% endif %}
                     <form method="post" action="{{ url_for('delete_score') }}">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

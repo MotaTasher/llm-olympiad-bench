@@ -452,8 +452,23 @@ class ScoringWebTests(unittest.TestCase):
         self.assertLess(html.index("Условие"), html.index("Показать эталонное решение"))
         self.assertLess(html.index("Показать эталонное решение"), html.index("Ответ модели"))
         self.assertLess(html.index("Ответ модели"), html.index("MODEL_ANSWER_TOKEN"))
-        self.assertIn('<div class="rendered scrollable-content" data-markdown>STATEMENT_TOKEN', html)
+        self.assertIn('<div id="problem-statement" class="rendered scrollable-content" data-markdown>STATEMENT_TOKEN', html)
         self.assertIn("data-score-form", html)
+
+    def test_problem_page_has_copy_source_and_json_buttons(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+
+        response = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5")
+        self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+
+        self.assertIn('data-copy-target="problem-statement"', html)
+        self.assertIn('data-copy-target="reference-answer"', html)
+        self.assertIn('data-copy-target="reference-solution"', html)
+        self.assertIn('data-copy-target="model-answer"', html)
+        self.assertIn('data-copy-target="result-json"', html)
+        self.assertIn('id="result-json"', html)
 
     def test_anonymous_page_uses_same_sequence_and_full_width_selector(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -468,6 +483,8 @@ class ScoringWebTests(unittest.TestCase):
         self.assertLess(html.index("Решение 1"), html.index("MODEL_ANSWER_TOKEN"))
         self.assertLess(html.index("MODEL_ANSWER_TOKEN"), html.index("Выбор решения"))
         self.assertIn('<div class="answer-layout">', html)
+        self.assertIn('data-copy-target="problem-statement"', html)
+        self.assertIn('Скопировать исходник', html)
 
     def test_problem_markdown_relative_assets_are_served(self) -> None:
         competition_path = self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

@@ -243,6 +243,15 @@
       margin: 12px 0;
     }
     .rendered code { background: var(--soft); border-radius: 4px; padding: 1px 4px; }
+    .section-head {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      min-width: 0;
+    }
+    .section-head h2, .section-head h3 { min-width: 0; }
     .model-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
     .model-tab {
       display: inline-flex;
@@ -369,6 +378,12 @@
       cursor: not-allowed;
     }
     .button.secondary, button.secondary { background: #ffffff; color: var(--accent); }
+    button.compact, .button.compact {
+      min-height: 30px;
+      padding: 4px 8px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
     .quick { display: flex; flex-wrap: wrap; gap: 6px; }
     .quick button { min-height: 30px; padding: 4px 9px; }
     .csv-actions {
@@ -657,6 +672,7 @@
     }
     document.querySelectorAll('[data-markdown]').forEach((node) => {
       const source = node.textContent || '';
+      node.dataset.sourceText = source;
       const { protectedSource, chunks } = protectMath(source);
       const rendered = window.marked ? marked.parse(protectedSource) : escapeHtml(protectedSource);
       const sanitized = window.DOMPurify ? DOMPurify.sanitize(rendered) : rendered;
@@ -669,6 +685,38 @@
       button.addEventListener('click', () => {
         const target = document.getElementById(button.dataset.scoreTarget);
         if (target) target.value = button.dataset.scoreSet;
+      });
+    });
+    async function copyTextToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+    document.querySelectorAll('[data-copy-target]').forEach((button) => {
+      const originalText = button.textContent;
+      button.addEventListener('click', async () => {
+        const target = document.getElementById(button.dataset.copyTarget || '');
+        if (!target) return;
+        const text = target.dataset.sourceText !== undefined ? target.dataset.sourceText : target.textContent || '';
+        try {
+          await copyTextToClipboard(text);
+          button.textContent = 'Скопировано';
+        } catch (error) {
+          button.textContent = 'Не скопировалось';
+        }
+        window.setTimeout(() => {
+          button.textContent = originalText;
+        }, 1400);
       });
     });
     const costControls = document.querySelector('[data-cost-context]');
