@@ -395,11 +395,15 @@
     }
     .cost-run-grid {
       display: grid;
-      grid-template-columns: minmax(220px, 280px) minmax(260px, 1fr) minmax(520px, 1.35fr);
-      gap: 8px;
+      gap: 12px;
       margin-top: 14px;
       padding-top: 14px;
       border-top: 1px solid var(--line);
+    }
+    .cost-run-summary {
+      display: grid;
+      grid-template-columns: minmax(220px, max-content) minmax(260px, 1fr);
+      gap: 12px;
       align-items: start;
     }
     .cost-run-totals {
@@ -416,7 +420,6 @@
     }
     .cost-run-note {
       margin: 0;
-      max-width: 52ch;
     }
     .cost-run-table {
       max-height: 440px;
@@ -424,13 +427,30 @@
       width: 100%;
     }
     .cost-run-table table {
-      min-width: 640px;
+      min-width: 620px;
       width: 100%;
     }
     .cost-run-table th:first-child,
     .cost-run-table td:first-child {
-      min-width: 230px;
-      max-width: 360px;
+      min-width: 260px;
+      max-width: 520px;
+    }
+    .cost-run-table th:not(:first-child),
+    .cost-run-table td:not(:first-child) {
+      min-width: 110px;
+      white-space: nowrap;
+    }
+    .cost-run-table tfoot th,
+    .cost-run-table tfoot td {
+      position: static;
+      background: #f7f9f9;
+      font-weight: 750;
+    }
+    .cost-run-table tfoot th:first-child {
+      text-align: left;
+    }
+    .cost-run-table .numeric {
+      text-align: right;
     }
     .evaluation-list {
       display: grid;
@@ -484,6 +504,9 @@
         grid-template-columns: 1fr;
       }
       .cost-run-grid {
+        grid-template-columns: 1fr;
+      }
+      .cost-run-summary {
         grid-template-columns: 1fr;
       }
       th:first-child, td:first-child { min-width: 220px; }
@@ -677,9 +700,21 @@
         if (!Number.isFinite(value)) return '—';
         return value < 0.01 ? `$${value.toFixed(4)}` : `$${value.toFixed(2)}`;
       }
+      function formatUsdPer1k(value) {
+        if (!Number.isFinite(value)) return '—';
+        return value < 0.01 ? `$${value.toFixed(4)}` : `$${value.toFixed(2)}`;
+      }
       function formatRub(value) {
         if (!Number.isFinite(value)) return '—';
         return value < 1 ? `${value.toFixed(2)} ₽` : `${Math.round(value).toLocaleString('ru-RU')} ₽`;
+      }
+      function formatModelPrice(modelKey) {
+        const pricing = (context.models || {})[modelKey] || {};
+        if (!pricing.known) return 'нет price table';
+        const input = Number(pricing.inputUsdPer1M || 0) / 1000;
+        const output = Number(pricing.outputUsdPer1M || 0) / 1000;
+        if (pricing.mode === 'total' || input === output) return `${formatUsdPer1k(output)} / 1K`;
+        return `${formatUsdPer1k(input)} вход / ${formatUsdPer1k(output)} ответ`;
       }
       function outputTokens() {
         return costSettings.finalTokens + Math.max(0, costSettings.reasoningBudget);
@@ -741,12 +776,29 @@
         document.querySelectorAll('[data-cost-model]').forEach((row) => {
           const total = computeCompetitionCost(row.dataset.costCompetitionId);
           const modelCost = total.models.find((item) => item.model === row.dataset.costModel) || { pairs: 0, skipped: 0, unknownPairs: 0, usd: 0 };
+          const rateValue = Number((context.exchangeRate || {}).usdRub || 0);
           const amount = row.querySelector('[data-cost-model-amount]');
+          const price = row.querySelector('[data-cost-model-price]');
+          const usd = row.querySelector('[data-cost-model-usd]');
+          const rub = row.querySelector('[data-cost-model-rub]');
           const pairs = row.querySelector('[data-cost-model-pairs]');
+          const skipped = row.querySelector('[data-cost-model-skipped]');
           const unknown = row.querySelector('[data-cost-model-unknown]');
           if (amount) renderCostNode(amount, modelCost);
-          if (pairs) pairs.textContent = `${modelCost.pairs} / ${modelCost.skipped}`;
+          if (price) price.textContent = formatModelPrice(row.dataset.costModel);
+          if (usd) usd.textContent = modelCost.unknownPairs ? '—' : formatUsd(modelCost.usd);
+          if (rub) rub.textContent = modelCost.unknownPairs ? '—' : formatRub(modelCost.usd * rateValue);
+          if (pairs) pairs.textContent = modelCost.pairs.toLocaleString('ru-RU');
+          if (skipped) skipped.textContent = modelCost.skipped.toLocaleString('ru-RU');
           if (unknown) unknown.textContent = modelCost.unknownPairs || '';
+        });
+        document.querySelectorAll('[data-cost-total-row]').forEach((row) => {
+          const total = computeCompetitionCost(row.dataset.costTotalRow);
+          const rateValue = Number((context.exchangeRate || {}).usdRub || 0);
+          const usd = row.querySelector('[data-cost-total-usd]');
+          const rub = row.querySelector('[data-cost-total-rub]');
+          if (usd) usd.textContent = formatUsd(total.usd);
+          if (rub) rub.textContent = formatRub(total.usd * rateValue);
         });
       }
       document.querySelectorAll('[data-cost-range]').forEach((range) => {

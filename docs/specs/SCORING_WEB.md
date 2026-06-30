@@ -102,7 +102,8 @@ at least one successful attempt for that exact model with a non-empty answer.
 API errors and empty answers do not count as solved, and answers from other
 models do not cause a skip. The index shows total estimated cost in USD and
 RUB on each competition card. The competition page also shows per-model costs
-in USD and RUB.
+in a full-width table with model price per 1K tokens, estimated USD/RUB cost
+and a final total row.
 
 ## Cell status
 

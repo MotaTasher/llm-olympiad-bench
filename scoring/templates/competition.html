@@ -32,31 +32,40 @@
     <section class="panel cost-run-panel">
       <h2>Стоимость прогона</h2>
       <div class="cost-run-grid">
-        <div class="cost-run-totals">
-          <span class="pill">итого: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
-          <span class="pill" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
+        <div class="cost-run-summary">
+          <div class="cost-run-totals">
+            <span class="pill">итого: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
+          </div>
+          <p class="meta cost-run-note">Расчёт приблизительный: локальные price tables, грубая оценка токенов, курс USD/RUB из ЦБ. API-вызовы не выполняются, run-log не создаются.</p>
         </div>
-        <p class="meta cost-run-note">Расчёт приблизительный: локальные price tables, грубая оценка токенов, курс USD/RUB из ЦБ. API-вызовы не выполняются, run-log не создаются.</p>
         <div class="table-wrap cost-run-table" role="region" aria-label="Оценка стоимости по моделям" tabindex="0">
           <table>
             <thead>
               <tr>
                 <th>Модель</th>
-                <th>Стоимость</th>
-                <th>Пар / пропущено</th>
-                <th>Без price table</th>
+                <th>Цена за 1K токенов</th>
+                <th class="numeric">USD</th>
+                <th class="numeric">RUB</th>
               </tr>
             </thead>
             <tbody>
               {% for model in competition.model_columns %}
                 <tr data-cost-competition-id="{{ competition.competition_id }}" data-cost-model="{{ model.model_key }}">
                   <td>{{ model.model_key }}</td>
-                  <td data-cost-model-amount>—</td>
-                  <td data-cost-model-pairs>—</td>
-                  <td data-cost-model-unknown></td>
+                  <td data-cost-model-price>—</td>
+                  <td class="numeric" data-cost-model-usd>—</td>
+                  <td class="numeric" data-cost-model-rub>—</td>
                 </tr>
               {% endfor %}
             </tbody>
+            <tfoot>
+              <tr data-cost-total-row="{{ competition.competition_id }}">
+                <th>Сумма</th>
+                <td></td>
+                <td class="numeric" data-cost-total-usd>—</td>
+                <td class="numeric" data-cost-total-rub>—</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
