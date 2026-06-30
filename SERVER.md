@@ -81,7 +81,7 @@ python scripts/sync_logs.py push --dry-run
 
 ```bash
 cd /opt/olympiad-scorer/app
-python3 scripts/run_missing_math_cup_2026_final.py
+.venv/bin/python scripts/run_missing_math_cup_2026_final.py
 ```
 
 Запуск API-вызовов требует явного `--yes`. Чтобы процесс жил после разрыва SSH:
@@ -89,7 +89,7 @@ python3 scripts/run_missing_math_cup_2026_final.py
 ```bash
 cd /opt/olympiad-scorer/app
 mkdir -p run-output/missing-2026-final-320k
-nohup python3 scripts/run_missing_math_cup_2026_final.py \
+nohup .venv/bin/python scripts/run_missing_math_cup_2026_final.py \
   --max-tokens 320000 \
   --workers 23 \
   --yes \
