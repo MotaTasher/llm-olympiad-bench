@@ -406,9 +406,9 @@ class ScoringWebTests(unittest.TestCase):
                             "model_key": "openai:gpt-5.5",
                             "model": "gpt-5.5",
                             "evaluator": "other-reviewer",
-                            "score": 5,
+                            "score": 10,
                             "max_score": 10,
-                            "score_category": "partial",
+                            "score_category": "full",
                             "feedback": "other-hidden-feedback",
                             "created_at": "2026-06-20T00:00:01Z",
                             "updated_at": "2026-06-20T00:00:01Z",
@@ -435,6 +435,11 @@ class ScoringWebTests(unittest.TestCase):
         full_csv = self.client.get("/competition/math_2026/evaluations.csv").get_data(as_text=True)
         self.assertIn("mine-visible-feedback", full_csv)
         self.assertIn("other-hidden-feedback", full_csv)
+
+        competition_html = self.client.get("/competition/math_2026").get_data(as_text=True)
+        self.assertIn("Частично", competition_html)
+        self.assertNotIn("Макс.", competition_html)
+        self.assertNotIn("Максимум", competition_html)
 
     def test_problem_page_is_single_column_statement_reference_answer_order(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

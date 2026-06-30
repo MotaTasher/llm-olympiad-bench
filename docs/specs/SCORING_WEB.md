@@ -166,11 +166,12 @@ The normal task page and anonymous page use a one-column review sequence:
 3. selected LLM answer;
 4. score form, evaluation pool/history, telemetry, raw JSON and navigation.
 
-Authenticated reviewers see only their own evaluation entries, score summaries
-and evaluation counts on task pages and anonymous scoring pages. Evaluation
-entries from other reviewers are intentionally hidden from the in-page UI to
-avoid bias during review. Full cross-reviewer data remains available through
-CSV export/import routes.
+Authenticated reviewers see only their own evaluation entries, score summaries,
+cell statuses, aggregate statistics and evaluation counts in the in-page UI.
+Evaluation entries from other reviewers are intentionally hidden from task
+pages, anonymous scoring pages, competition matrices and statistics to avoid
+bias during review. Full cross-reviewer data remains available through CSV
+export/import routes.
 
 Statement, reference answer/solution and model answer are rendered in reusable
 scrollable content containers so wide Markdown tables, code blocks and MathJax

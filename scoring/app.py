@@ -55,6 +55,7 @@ try:
     from .repository import (
         anonymized_attempts,
         build_catalog,
+        cell_state,
         competition_statistics,
         delete_evaluation,
         find_attempt,
@@ -82,6 +83,7 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
     from scoring.repository import (  # type: ignore
         anonymized_attempts,
         build_catalog,
+        cell_state,
         competition_statistics,
         delete_evaluation,
         find_attempt,
@@ -281,6 +283,12 @@ def catalog() -> dict:
     )
 
 
+def catalog_for_reviewer(reviewer: str) -> dict:
+    data = catalog()
+    scope_catalog_to_reviewer(data, reviewer)
+    return data
+
+
 def clean_id(value: str) -> str:
     try:
         return safe_id(value)
@@ -350,6 +358,34 @@ def attempt_has_reviewer_evaluation(attempt: dict, evaluation_id: str, reviewer:
     )
 
 
+def scope_catalog_to_reviewer(data: dict, reviewer: str) -> None:
+    for competition in data.get("competitions", []):
+        scored_count = 0
+        answer_count = 0
+        model_keys_seen: set[str] = set()
+        latest_run = ""
+        for problem_id in competition.get("problem_order", []):
+            problem = competition["problems"][problem_id]
+            visible_states = []
+            for state in problem.get("model_states", []):
+                visible_attempts = attempts_for_reviewer(state.get("attempts") or [], reviewer)
+                visible_state = cell_state(state, visible_attempts, float(problem["max_score"]))
+                visible_states.append(visible_state)
+                for attempt in visible_attempts:
+                    model_keys_seen.add(state["model_key"])
+                    answer_count += 1
+                    if attempt.get("score") is not None:
+                        scored_count += 1
+                    if attempt.get("run_timestamp") and attempt["run_timestamp"] > latest_run:
+                        latest_run = attempt["run_timestamp"]
+            problem["model_states"] = visible_states
+        competition["model_count"] = len(model_keys_seen)
+        competition["answer_count"] = answer_count
+        competition["scored_count"] = scored_count
+        competition["progress_percent"] = int((scored_count / answer_count) * 100) if answer_count else 0
+        competition["latest_timestamp"] = latest_run
+
+
 def positive_int(value: str | None, default: int = 1) -> int:
     try:
         parsed = int(value or "")
@@ -399,7 +435,7 @@ def parse_optional_float(value: str | None) -> float | int | None:
 
 @app.get("/")
 def index():
-    data = catalog()
+    data = catalog_for_reviewer(current_user.username)
     return render_template(
         "index.html",
         competitions=data["competitions"],
@@ -412,7 +448,7 @@ def index():
 @app.get("/competition/<competition_id>")
 def competition_page(competition_id: str):
     competition_id = clean_id(competition_id)
-    data = catalog()
+    data = catalog_for_reviewer(current_user.username)
     competition = data["competition_map"].get(competition_id)
     if not competition:
         abort(404)
@@ -427,7 +463,7 @@ def competition_page(competition_id: str):
 @app.get("/competition/<competition_id>/stats")
 def competition_stats_page(competition_id: str):
     competition_id = clean_id(competition_id)
-    data = catalog()
+    data = catalog_for_reviewer(current_user.username)
     competition = data["competition_map"].get(competition_id)
     if not competition:
         abort(404)
@@ -446,7 +482,7 @@ def competition_stats_page(competition_id: str):
 def problem_page(competition_id: str, problem_id: str):
     competition_id = clean_id(competition_id)
     problem_id = clean_id(problem_id)
-    data = catalog()
+    data = catalog_for_reviewer(current_user.username)
     competition = data["competition_map"].get(competition_id)
     problem = find_problem(data, competition_id, problem_id)
     if not competition or not problem:
@@ -481,7 +517,7 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
                 n=1,
             )
         )
-    data = catalog()
+    data = catalog_for_reviewer(current_user.username)
     competition = data["competition_map"].get(competition_id)
     problem = find_problem(data, competition_id, problem_id)
     if not competition or not problem:
