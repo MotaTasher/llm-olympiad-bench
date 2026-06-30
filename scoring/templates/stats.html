@@ -11,6 +11,7 @@
       <div class="meta">{{ competition.competition_title }} · {{ competition.competition_id }}</div>
       <div class="nav-row">
         <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Меню соревнования</a>
+        <a class="button" href="{{ url_for('competition_checks_page', competition_id=competition.competition_id) }}">Все проверки</a>
       </div>
     </section>
 

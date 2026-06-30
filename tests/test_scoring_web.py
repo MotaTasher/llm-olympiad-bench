@@ -437,9 +437,22 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("other-hidden-feedback", full_csv)
 
         competition_html = self.client.get("/competition/math_2026").get_data(as_text=True)
+        self.assertIn("Все проверки", competition_html)
         self.assertIn("Частично", competition_html)
         self.assertNotIn("Макс.", competition_html)
         self.assertNotIn("Максимум", competition_html)
+
+        checks_max = self.client.get("/competition/math_2026/checks?mode=max").get_data(as_text=True)
+        self.assertIn("Все проверки", checks_max)
+        self.assertIn("other-reviewer", checks_max)
+        self.assertIn("other-hidden-feedback", checks_max)
+        self.assertIn("10 / 10", checks_max)
+
+        checks_avg = self.client.get("/competition/math_2026/checks?mode=avg").get_data(as_text=True)
+        self.assertIn("8.50 / 10", checks_avg)
+
+        checks_min = self.client.get("/competition/math_2026/checks?mode=min").get_data(as_text=True)
+        self.assertIn("7 / 10", checks_min)
 
     def test_problem_page_is_single_column_statement_reference_answer_order(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

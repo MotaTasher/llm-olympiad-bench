@@ -87,6 +87,7 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `GET /` | Russian competition cards from canonical data plus log/evaluation counts and live cost estimates, grouped by inferred year |
 | `GET /competition/<competition_id>` | live cost estimate plus matrix: rows are tasks, columns are models; task title opens anonymous scoring |
 | `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics and model-task table |
+| `GET /competition/<competition_id>/checks?mode=max|avg|min` | separate all-checks statistics page; shows all reviewers, aggregate model-task scores and the raw evaluation table |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
 | `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
 | `GET /competition/<competition_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for a competition, optionally filtered by reviewer; "my checks" links use `current_user.username` |
@@ -171,7 +172,9 @@ cell statuses, aggregate statistics and evaluation counts in the in-page UI.
 Evaluation entries from other reviewers are intentionally hidden from task
 pages, anonymous scoring pages, competition matrices and statistics to avoid
 bias during review. Full cross-reviewer data remains available through CSV
-export/import routes.
+export/import routes and the separate all-checks statistics page. That page is
+not part of the normal scoring flow and can aggregate every reviewer score per
+model-task cell as maximum, average or minimum.
 
 Statement, reference answer/solution and model answer are rendered in reusable
 scrollable content containers so wide Markdown tables, code blocks and MathJax

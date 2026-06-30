@@ -18,6 +18,7 @@
       </div>
       <div class="nav-row">
         <a class="button" href="{{ url_for('competition_stats_page', competition_id=competition.competition_id) }}">Статистика моделей</a>
+        <a class="button secondary" href="{{ url_for('competition_checks_page', competition_id=competition.competition_id) }}">Все проверки</a>
       </div>
       <div class="csv-actions">
         <a class="button secondary" href="{{ url_for('competition_evaluations_csv', competition_id=competition.competition_id) }}">CSV всех проверок</a>

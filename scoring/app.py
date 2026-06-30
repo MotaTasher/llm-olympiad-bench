@@ -433,6 +433,86 @@ def parse_optional_float(value: str | None) -> float | int | None:
     return int(parsed) if parsed.is_integer() else parsed
 
 
+CHECK_SCORE_MODES = {
+    "max": "Максимум",
+    "avg": "Среднее",
+    "min": "Минимум",
+}
+
+
+def parse_score(value) -> float | None:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def display_number(value: float | None) -> str:
+    if value is None:
+        return "—"
+    return f"{value:g}" if value.is_integer() else f"{value:.2f}"
+
+
+def checks_statistics(competition: dict, rows: list[dict], mode: str) -> dict:
+    selected_mode = mode if mode in CHECK_SCORE_MODES else "max"
+    scores_by_cell: dict[tuple[str, str], list[float]] = {}
+    max_scores_by_cell: dict[tuple[str, str], float] = {}
+    for row in rows:
+        score = parse_score(row.get("score"))
+        if score is None:
+            continue
+        key = (row.get("problem_id") or "", row.get("model_key") or "")
+        scores_by_cell.setdefault(key, []).append(score)
+        max_score = parse_score(row.get("max_score"))
+        if max_score is not None:
+            max_scores_by_cell[key] = max_score
+
+    task_rows = []
+    for problem_id in competition.get("problem_order", []):
+        problem = competition["problems"][problem_id]
+        cells = {}
+        for model in competition.get("model_columns", []):
+            key = (problem_id, model["model_key"])
+            scores = scores_by_cell.get(key, [])
+            value = None
+            if scores:
+                if selected_mode == "min":
+                    value = min(scores)
+                elif selected_mode == "avg":
+                    value = sum(scores) / len(scores)
+                else:
+                    value = max(scores)
+            max_score = max_scores_by_cell.get(key, float(problem.get("max_score") or 10))
+            percent = value / max_score * 100 if value is not None and max_score else None
+            cells[model["model_key"]] = {
+                "score": value,
+                "score_text": display_number(value),
+                "max_score": max_score,
+                "max_score_text": display_number(max_score),
+                "percent": percent,
+                "count": len(scores),
+            }
+        task_rows.append({"problem": problem, "cells": cells})
+
+    sorted_rows = sorted(
+        rows,
+        key=lambda item: (
+            item.get("problem_id") or "",
+            item.get("model_key") or "",
+            item.get("updated_at") or item.get("created_at") or "",
+            item.get("evaluator") or "",
+        ),
+    )
+    return {
+        "mode": selected_mode,
+        "mode_label": CHECK_SCORE_MODES[selected_mode],
+        "modes": CHECK_SCORE_MODES,
+        "tasks": task_rows,
+        "rows": sorted_rows,
+        "row_count": len(sorted_rows),
+    }
+
+
 @app.get("/")
 def index():
     data = catalog_for_reviewer(current_user.username)
@@ -474,6 +554,22 @@ def competition_stats_page(competition_id: str):
         competition=competition,
         stats=stats,
         selected_model=selected_model,
+        warnings=data["warnings"],
+    )
+
+
+@app.get("/competition/<competition_id>/checks")
+def competition_checks_page(competition_id: str):
+    competition_id = clean_id(competition_id)
+    data = catalog()
+    competition = data["competition_map"].get(competition_id)
+    if not competition:
+        abort(404)
+    rows = iter_evaluation_rows(data, competition_id=competition_id)
+    return render_template(
+        "checks.html",
+        competition=competition,
+        checks=checks_statistics(competition, rows, request.args.get("mode") or "max"),
         warnings=data["warnings"],
     )
 
