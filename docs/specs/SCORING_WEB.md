@@ -166,6 +166,12 @@ The normal task page and anonymous page use a one-column review sequence:
 3. selected LLM answer;
 4. score form, evaluation pool/history, telemetry, raw JSON and navigation.
 
+Authenticated reviewers see only their own evaluation entries, score summaries
+and evaluation counts on task pages and anonymous scoring pages. Evaluation
+entries from other reviewers are intentionally hidden from the in-page UI to
+avoid bias during review. Full cross-reviewer data remains available through
+CSV export/import routes.
+
 Statement, reference answer/solution and model answer are rendered in reusable
 scrollable content containers so wide Markdown tables, code blocks and MathJax
 formulas scroll inside the panel instead of widening the page.
@@ -200,7 +206,8 @@ Each submitted score creates a new evaluation entry with its own
 for backward compatibility with older exporters. The reviewer identity for new
 evaluations is always `current_user.username`; `/score` does not read or trust
 any `evaluator` value submitted by the browser. Old sidecars with arbitrary
-`evaluator` values remain readable without migration.
+`evaluator` values remain readable without migration. `/score/delete` only
+deletes evaluations owned by the authenticated reviewer.
 
 ## Competition grouping
 

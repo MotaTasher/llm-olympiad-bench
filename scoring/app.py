@@ -299,6 +299,57 @@ def selected_attempt_for(state: dict | None, attempt_id: str | None) -> dict | N
     return state.get("latest")
 
 
+def evaluation_visible_to_reviewer(evaluation: dict, reviewer: str) -> bool:
+    return evaluation.get("evaluator") == reviewer
+
+
+def attempt_for_reviewer(attempt: dict | None, reviewer: str) -> dict | None:
+    if not attempt:
+        return None
+    visible_evaluations = [
+        evaluation
+        for evaluation in attempt.get("evaluations", [])
+        if evaluation_visible_to_reviewer(evaluation, reviewer)
+    ]
+    visible = {**attempt}
+    visible["evaluations"] = visible_evaluations
+    visible["evaluation_count"] = len(visible_evaluations)
+    latest = visible_evaluations[-1] if visible_evaluations else None
+    visible["evaluation"] = latest
+    visible["score"] = latest.get("score") if latest else None
+    visible["score_category"] = latest.get("score_category") if latest else None
+    return visible
+
+
+def state_for_reviewer(state: dict | None, reviewer: str) -> dict | None:
+    if not state:
+        return None
+    visible_attempts = [attempt_for_reviewer(attempt, reviewer) for attempt in state.get("attempts", [])]
+    latest = state.get("latest")
+    latest_result_id = latest.get("result_id") if latest else None
+    visible_latest = None
+    if latest_result_id:
+        visible_latest = next(
+            (attempt for attempt in visible_attempts if attempt and attempt.get("result_id") == latest_result_id),
+            None,
+        )
+    visible = {**state}
+    visible["attempts"] = visible_attempts
+    visible["latest"] = visible_latest
+    return visible
+
+
+def attempts_for_reviewer(attempts: list[dict], reviewer: str) -> list[dict]:
+    return [attempt for attempt in (attempt_for_reviewer(attempt, reviewer) for attempt in attempts) if attempt]
+
+
+def attempt_has_reviewer_evaluation(attempt: dict, evaluation_id: str, reviewer: str) -> bool:
+    return any(
+        evaluation.get("evaluation_id") == evaluation_id and evaluation_visible_to_reviewer(evaluation, reviewer)
+        for evaluation in attempt.get("evaluations", [])
+    )
+
+
 def positive_int(value: str | None, default: int = 1) -> int:
     try:
         parsed = int(value or "")
@@ -400,7 +451,7 @@ def problem_page(competition_id: str, problem_id: str):
     problem = find_problem(data, competition_id, problem_id)
     if not competition or not problem:
         abort(404)
-    state = selected_state(problem, request.args.get("model"))
+    state = state_for_reviewer(selected_state(problem, request.args.get("model")), current_user.username)
     attempt = selected_attempt_for(state, request.args.get("attempt"))
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
     return render_template(
@@ -436,7 +487,7 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
     if not competition or not problem:
         abort(404)
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
-    attempts = anonymized_attempts(problem, seed)
+    attempts = attempts_for_reviewer(anonymized_attempts(problem, seed), current_user.username)
     selected_index = min(positive_int(request.args.get("n")), len(attempts)) if attempts else 0
     selected_attempt = attempts[selected_index - 1] if selected_index else None
     return render_template(
@@ -618,6 +669,8 @@ def delete_score():
     if not found:
         abort(400, "result_id does not match this run")
     _, attempt = found
+    if evaluation_id and not attempt_has_reviewer_evaluation(attempt, evaluation_id, current_user.username):
+        abort(403)
     if delete_evaluation(
         results_dir=Path(app.config["RESULTS_DIR"]),
         competition_id=competition_id,

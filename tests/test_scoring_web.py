@@ -373,6 +373,69 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("ev_mine", text)
         self.assertNotIn("ev_other", text)
 
+    def test_task_pages_show_only_current_user_evaluations(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+        write_json(
+            self.results_dir / "math_2026" / "task_01" / "run_active.json",
+            {
+                "schema_version": 2,
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "evaluation_pool": {
+                    "res_a": [
+                        {
+                            "evaluation_id": "ev_mine",
+                            "result_id": "res_a",
+                            "result_index": 0,
+                            "model_key": "openai:gpt-5.5",
+                            "model": "gpt-5.5",
+                            "evaluator": self.username,
+                            "score": 7,
+                            "max_score": 10,
+                            "score_category": "partial",
+                            "feedback": "mine-visible-feedback",
+                            "created_at": "2026-06-20T00:00:00Z",
+                            "updated_at": "2026-06-20T00:00:00Z",
+                        },
+                        {
+                            "evaluation_id": "ev_other",
+                            "result_id": "res_a",
+                            "result_index": 0,
+                            "model_key": "openai:gpt-5.5",
+                            "model": "gpt-5.5",
+                            "evaluator": "other-reviewer",
+                            "score": 5,
+                            "max_score": 10,
+                            "score_category": "partial",
+                            "feedback": "other-hidden-feedback",
+                            "created_at": "2026-06-20T00:00:01Z",
+                            "updated_at": "2026-06-20T00:00:01Z",
+                        },
+                    ]
+                },
+            },
+        )
+
+        problem_html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5").get_data(
+            as_text=True
+        )
+        anonymous_html = self.client.get(
+            "/competition/math_2026/problem/task_01/anonymous?seed=fixed&n=1"
+        ).get_data(as_text=True)
+        for html in (problem_html, anonymous_html):
+            self.assertIn("Мои проверки", html)
+            self.assertIn("mine-visible-feedback", html)
+            self.assertIn("проверок: 1", html)
+            self.assertNotIn("other-hidden-feedback", html)
+            self.assertNotIn("other-reviewer", html)
+            self.assertNotIn("проверок: 2", html)
+
+        full_csv = self.client.get("/competition/math_2026/evaluations.csv").get_data(as_text=True)
+        self.assertIn("mine-visible-feedback", full_csv)
+        self.assertIn("other-hidden-feedback", full_csv)
+
     def test_problem_page_is_single_column_statement_reference_answer_order(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run()
