@@ -15,6 +15,9 @@ from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
+ANTHROPIC_NONSTREAMING_MAX_TOKENS = 21333
+
+
 class ClaudeModel(BaseModel):
     def __init__(
         self,
@@ -70,13 +73,17 @@ class ClaudeModel(BaseModel):
             request_payload = {
                 **kwargs,
                 "endpoint": sanitized_base_url("https://api.anthropic.com/v1/messages"),
-                "stream": False,
             }
+            use_streaming = max_tokens > ANTHROPIC_NONSTREAMING_MAX_TOKENS
+            request_payload["stream"] = use_streaming
             ensure_text_only_request(request_payload)
 
-            response, latency_ms = timed(
-                lambda: client.messages.create(**kwargs)
-            )
+            if use_streaming:
+                response, latency_ms = timed(
+                    lambda: self._create_streaming_message(client, kwargs)
+                )
+            else:
+                response, latency_ms = timed(lambda: client.messages.create(**kwargs))
 
             prompt_tokens = int(getattr(response.usage, "input_tokens", 0) or 0)
             completion_tokens = int(getattr(response.usage, "output_tokens", 0) or 0)
@@ -114,3 +121,8 @@ class ClaudeModel(BaseModel):
             )
         except Exception as exc:
             return error_result(self.model_id, exc)
+
+    @staticmethod
+    def _create_streaming_message(client, kwargs):
+        with client.messages.stream(**kwargs) as stream:
+            return stream.get_final_message()

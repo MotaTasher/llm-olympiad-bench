@@ -99,6 +99,11 @@ columns. Individual model specs may be mixed with aliases, for example
 `runner.py --max-tokens N` overrides `RUNNER_MAX_TOKENS` (committed default:
 `8000`) and provider-specific token env vars for all selected adapters in that
 run.
+The Anthropic adapter uses the non-streaming Messages API up to `max_tokens =
+21333`, matching the Anthropic Python SDK's documented long-request threshold.
+For larger Claude requests it automatically switches to Messages streaming and
+collects the final message before returning `SolveResult`; this is still a
+text-only request and does not change API pricing.
 
 Current active set:
 

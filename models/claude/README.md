@@ -71,6 +71,12 @@ ANTHROPIC_MAX_TOKENS=4096
 
 `ANTHROPIC_THINKING_BUDGET_TOKENS` включает extended thinking и задает максимум thinking tokens. `ANTHROPIC_MAX_TOKENS` должен быть больше thinking budget. API не гарантирует минимум thinking tokens.
 
+Anthropic Python SDK требует streaming для запросов с `max_tokens > 21333`,
+потому что такие запросы могут идти дольше non-streaming timeout. Адаптер
+переключается на Messages streaming автоматически выше этого порога и затем
+собирает финальный текст из итогового message. Стоимость API от streaming не
+меняется: тарификация остается по input/output токенам.
+
 `runner.load_env()` специально игнорирует старые `ANTHROPIC_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
 
 ## Проверка
