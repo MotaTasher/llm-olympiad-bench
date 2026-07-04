@@ -9,7 +9,7 @@
 # Scope:
 #   Active OpenAI API model IDs for Olympiad Scorer.
 #   Keep the strongest paid model and the strongest budget model that the
-#   current Chat Completions adapter can call. Image, audio, video, embeddings,
+#   current Responses API adapter can call. Image, audio, video, embeddings,
 #   moderation, realtime, search, and open-weight-only models are intentionally
 #   excluded.
 #
@@ -35,22 +35,12 @@
 #     snapshot IDs instead of stable aliases.
 
 VERSIONS = [
-    # Strongest paid chat-completions-compatible model.
+    # Strongest paid reasoning model.
     "gpt-5.5",
 
     # OpenAI API does not expose a separate free model ID for this adapter.
     # Use the strongest current mini/budget model as the low-cost column.
     "gpt-5.4-mini",
-]
-
-NON_CHAT_COMPLETIONS_VERSIONS = [
-    # These are API model IDs, but the current adapter uses
-    # /v1/chat/completions and they fail there. Use a Responses API adapter
-    # before selecting them.
-    "gpt-5.5-pro",
-    "gpt-5.4-pro",
-    "gpt-5.2-pro",
-    "gpt-5-pro",
 ]
 
 LEGACY_VERSIONS = []

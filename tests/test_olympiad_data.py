@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -12,6 +13,7 @@ from unittest.mock import patch
 
 import runner
 from models.base import SolveResult
+from models.gpt import gpt as gpt_module
 from models.telemetry import normalize_run_log, redact
 from olympiad_data import DataLoadError, list_problems, load_competition
 from scoring.repository import build_catalog, find_attempt, save_evaluation
@@ -257,75 +259,76 @@ class RunnerTests(TempCompetition):
         self.assertEqual(log["runtime"]["cli"]["max_tokens"], 1234)
         self.assertEqual(log["runtime_settings"]["max_tokens"], 1234)
 
-    def test_runner_draft_final_pipeline_uses_two_model_calls(self) -> None:
-        problem_path = self.write_problem("task_01", title="Runner Task", statement="ORIGINAL_PROBLEM")
-        logs_dir = self.tmp / "logs"
+    def test_gpt_responses_continues_empty_output_until_visible_answer(self) -> None:
         calls: list[dict[str, object]] = []
 
-        class FakeModel:
-            @property
-            def model_id(self) -> str:
-                return "fake-model"
+        class UsageDetails:
+            def __init__(self, reasoning_tokens: int | None = None, cached_tokens: int | None = None) -> None:
+                self.reasoning_tokens = reasoning_tokens
+                self.cached_tokens = cached_tokens
 
-            def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
-                calls.append({"problem": problem, "max_tokens": max_tokens})
+        class Usage:
+            def __init__(self, input_tokens: int, output_tokens: int, reasoning_tokens: int) -> None:
+                self.input_tokens = input_tokens
+                self.output_tokens = output_tokens
+                self.total_tokens = input_tokens + output_tokens
+                self.output_tokens_details = UsageDetails(reasoning_tokens=reasoning_tokens)
+                self.input_tokens_details = UsageDetails(cached_tokens=0)
+
+        class FakeResponse:
+            def __init__(self, response_id: str, output_text: str, usage: Usage) -> None:
+                self.id = response_id
+                self.model = "gpt-5.5"
+                self.status = "completed"
+                self.output_text = output_text
+                self.usage = usage
+
+            def model_dump(self) -> dict[str, object]:
+                return {
+                    "id": self.id,
+                    "model": self.model,
+                    "status": self.status,
+                    "output_text": self.output_text,
+                    "usage": {
+                        "input_tokens": self.usage.input_tokens,
+                        "output_tokens": self.usage.output_tokens,
+                        "total_tokens": self.usage.total_tokens,
+                        "output_tokens_details": {
+                            "reasoning_tokens": self.usage.output_tokens_details.reasoning_tokens
+                        },
+                    },
+                }
+
+        class FakeResponses:
+            def create(self, **kwargs: object) -> FakeResponse:
+                calls.append(kwargs)
                 if len(calls) == 1:
-                    return SolveResult(
-                        model="fake-model",
-                        answer="DRAFT_VISIBLE_NOTES",
-                        prompt_tokens=10,
-                        completion_tokens=20,
-                        cost_usd=0.3,
-                        latency_ms=100,
-                        raw_response={"stage": "draft"},
-                    )
-                return SolveResult(
-                    model="fake-model",
-                    answer="FINAL_SOLUTION",
-                    prompt_tokens=30,
-                    completion_tokens=40,
-                    cost_usd=0.7,
-                    latency_ms=200,
-                    raw_response={"stage": "final"},
-                )
+                    return FakeResponse("resp_1", "", Usage(10, 100, 100))
+                return FakeResponse("resp_2", "FINAL_SOLUTION", Usage(3, 20, 5))
 
-        argv = [
-            "runner.py",
-            "--problem",
-            str(problem_path),
-            "--models",
-            "fake",
-            "--run-id",
-            "unit",
-            "--logs-dir",
-            str(logs_dir),
-            "--pipeline",
-            "draft-final",
-            "--draft-max-tokens",
-            "111",
-            "--final-max-tokens",
-            "222",
-        ]
-        with patch.object(sys, "argv", argv), patch.object(runner, "load_env"), patch.object(runner, "create_model", return_value=FakeModel()):
-            self.assertEqual(runner.main(), 0)
+        class FakeClient:
+            def __init__(self, api_key: str) -> None:
+                self.responses = FakeResponses()
 
-        self.assertEqual([call["max_tokens"] for call in calls], [111, 222])
-        self.assertIn("ORIGINAL_PROBLEM", str(calls[0]["problem"]))
-        self.assertIn("DRAFT_VISIBLE_NOTES", str(calls[1]["problem"]))
-        self.assertNotIn("ORIGINAL_PROBLEM", str(calls[1]["problem"]))
+        with (
+            patch("openai.OpenAI", FakeClient),
+            patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}, clear=False),
+            patch.object(gpt_module, "OPENAI_MAX_OUTPUT_TOKENS_BY_MODEL", {"gpt-5.5": 100}),
+        ):
+            result = gpt_module.GPTModel(model="gpt-5.5").solve("ORIGINAL_PROBLEM", max_tokens=250)
 
-        log = json.loads(next(logs_dir.rglob("*.json")).read_text(encoding="utf-8"))
-        result = log["results"][0]
-        self.assertEqual(result["answer"], "FINAL_SOLUTION")
-        self.assertEqual(result["prompt_tokens"], 40)
-        self.assertEqual(result["completion_tokens"], 60)
-        self.assertEqual(result["cost_usd"], 1.0)
-        self.assertEqual(result["request"]["pipeline"], "draft-final")
-        self.assertEqual(result["request"]["finalizer_input"], "draft_answer_only")
-        self.assertEqual(log["runtime_settings"]["pipeline"]["draft_max_tokens"], 111)
-        self.assertEqual(log["runtime_settings"]["pipeline"]["final_max_tokens"], 222)
-        self.assertEqual(result["raw_response"]["pipeline"], "draft-final")
-        self.assertEqual(len(result["raw_response"]["pipeline_steps"]), 2)
+        self.assertIsNone(result.error)
+        self.assertEqual(result.answer, "FINAL_SOLUTION")
+        self.assertEqual([call["max_output_tokens"] for call in calls], [100, 100])
+        self.assertEqual(calls[0]["input"], "ORIGINAL_PROBLEM")
+        self.assertNotIn("previous_response_id", calls[0])
+        self.assertEqual(calls[1]["previous_response_id"], "resp_1")
+        self.assertEqual(calls[1]["input"], gpt_module.OPENAI_CONTINUATION_INPUT)
+        self.assertEqual(result.prompt_tokens, 13)
+        self.assertEqual(result.completion_tokens, 120)
+        self.assertEqual(result.usage["reasoning_tokens"], 105)
+        self.assertTrue(result.raw_response["multi_request"]["stopped_after_visible_output"])
+        self.assertEqual(result.raw_response["multi_request"]["requests"], 2)
 
     def test_redactor_preserves_token_counts_but_removes_credentials(self) -> None:
         data = {

@@ -119,12 +119,13 @@ Explicit CLI `--models` values override `RUNNER_MODELS` for that run.
 adapter. If omitted, runner reads `RUNNER_MAX_TOKENS` from `config/models.env`
 (committed default: `8000`); if that is also omitted, adapters fall back to
 their provider-specific token settings.
-`--pipeline draft-final --draft-max-tokens N1 --final-max-tokens N2` runs a
-two-call recovery flow for each selected model: the first call receives the
-problem statement and writes a visible draft, while the second call receives
-only that draft and assembles a final answer. The run log still contains one
-scorable result per selected model; the displayed `answer` is the finalizer
-output, and step telemetry is nested under `raw_response.pipeline_steps`.
+The OpenAI adapter uses the Responses API. When the requested total
+`--max-tokens` exceeds the per-request output cap configured for that model,
+the adapter splits the budget across multiple text-only Responses requests and
+chains them with `previous_response_id`. It stops on the first non-empty visible
+output; if the budget is exhausted with no visible output, the result is an
+adapter error. Other adapters receive `--max-tokens` as one provider-specific
+output/completion ceiling.
 The active benchmark set includes paid and budget/free-tier models per
 provider. Retired IDs may remain documented as legacy versions but do not
 create scoring UI columns from historical logs.

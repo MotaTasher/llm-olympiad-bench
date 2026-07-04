@@ -155,12 +155,13 @@ New shape written by `runner.py` uses `schema_version: 2`:
       "completed_at": "2026-06-28T12:03:10Z",
       "status": "success",
       "request": {
-        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "endpoint": "https://api.openai.com/v1/responses",
         "model": "gpt-5.5",
-        "messages": [
-          {"role": "system", "content": "Полный system prompt..."},
-          {"role": "user", "content": "Полное условие..."}
-        ],
+        "instructions": "Полный system prompt...",
+        "input": "Полное условие...",
+        "max_output_tokens_total": 128000,
+        "max_output_tokens_per_request": 128000,
+        "store": true,
         "stream": false
       },
       "answer": "Решение модели",
@@ -225,12 +226,12 @@ When runner receives a unified output-token ceiling, the value is recorded as
 `runtime.cli.max_tokens` and `runtime_settings.max_tokens`. Adapter request
 snapshots also include the provider-specific request key used for that ceiling,
 for example `max_completion_tokens`, `max_tokens` or `maxTokens`.
-When runner is invoked with `--pipeline draft-final`, `runtime_settings.pipeline`
-records the pipeline mode plus draft/final token caps. The corresponding result
-remains a single scorable row whose `answer` is the finalizer output. Its
-`request.pipeline` identifies the mode, and `raw_response.pipeline_steps`
-contains the redacted draft and final step logs. The finalizer input is only the
-draft answer text, not the original problem statement as a separate field.
+For OpenAI Responses API runs, `request.max_output_tokens_total` records the
+requested total budget and `request.max_output_tokens_per_request` records the
+adapter's per-request cap for that model. If multiple OpenAI requests were
+needed, `request.steps[]` and `raw_response.responses[]` contain redacted
+per-step snapshots. Continuation steps use `previous_response_id`; they are not
+independent solver passes and do not include tools or browsing.
 
 Do not mutate `results[]` order after a score sidecar exists.
 

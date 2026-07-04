@@ -67,13 +67,6 @@ class RunSettings:
 
 
 @dataclass(frozen=True)
-class PipelineSettings:
-    mode: str | None = None
-    draft_max_tokens: int | None = None
-    final_max_tokens: int | None = None
-
-
-@dataclass(frozen=True)
 class ProblemRunResult:
     run_id: str
     log_path: Path
@@ -271,40 +264,6 @@ def positive_optional_int(value: str | int | None, *, name: str) -> int | None:
     return parsed
 
 
-DRAFT_FINAL_MODE = "draft-final"
-
-DRAFT_PROMPT_TEMPLATE = """\
-Решай задачу в режиме видимого черновика.
-
-Правила:
-- Пиши все полезные идеи, обозначения, леммы, преобразования и проверки явно.
-- Не пытайся сразу делать красивое финальное решение.
-- Если подход не сработал, кратко объясни почему и переходи дальше.
-- Не используй инструменты, поиск, код или калькуляторы.
-- В начале кратко перепиши условие своими словами, чтобы следующий проход мог работать только по этому черновику.
-- В конце напиши раздел "Лучший найденный путь" со списком шагов, которые выглядят пригодными для чистового решения.
-
-Задача:
-{problem}
-"""
-
-FINALIZER_PROMPT_TEMPLATE = """\
-Ниже дан только черновик решения. Собери из него чистовое олимпиадное решение для максимизации балла.
-
-Правила:
-- Не начинай новый независимый поиск решения.
-- Используй максимально близкий к черновику путь.
-- Разрешается заполнять только небольшие логические пропуски и исправлять очевидные локальные ошибки.
-- Игнорируй тупиковые ветки черновика.
-- Напиши только финальное решение без рассказа о черновике.
-- В конце явно сформулируй ответ или вывод.
-- Не используй инструменты, поиск, код или калькуляторы.
-
-Черновик:
-{draft}
-"""
-
-
 def initial_result(
     *,
     run_id: str,
@@ -427,157 +386,6 @@ def finalize_result(
     }
 
 
-def solve_draft_final_pipeline(
-    model: BaseModel,
-    problem_text: str,
-    *,
-    draft_max_tokens: int,
-    final_max_tokens: int,
-) -> SolveResult:
-    draft_prompt = DRAFT_PROMPT_TEMPLATE.format(problem=problem_text)
-    draft = model.solve(draft_prompt, max_tokens=draft_max_tokens)
-    steps = [
-        {
-            "stage": "draft",
-            "max_tokens": draft_max_tokens,
-            "result": draft.to_log_dict(),
-        }
-    ]
-    if draft.error:
-        return aggregate_pipeline_result(
-            model,
-            steps,
-            answer="",
-            error=f"draft step failed: {draft.error}",
-            final_result=draft,
-            draft_max_tokens=draft_max_tokens,
-            final_max_tokens=final_max_tokens,
-        )
-
-    final_prompt = FINALIZER_PROMPT_TEMPLATE.format(draft=draft.answer)
-    final = model.solve(final_prompt, max_tokens=final_max_tokens)
-    steps.append(
-        {
-            "stage": "final",
-            "max_tokens": final_max_tokens,
-            "result": final.to_log_dict(),
-        }
-    )
-    if final.error:
-        return aggregate_pipeline_result(
-            model,
-            steps,
-            answer="",
-            error=f"final step failed: {final.error}",
-            final_result=final,
-            draft_max_tokens=draft_max_tokens,
-            final_max_tokens=final_max_tokens,
-        )
-    return aggregate_pipeline_result(
-        model,
-        steps,
-        answer=final.answer,
-        error=None,
-        final_result=final,
-        draft_max_tokens=draft_max_tokens,
-        final_max_tokens=final_max_tokens,
-    )
-
-
-def aggregate_pipeline_result(
-    model: BaseModel,
-    steps: list[dict[str, Any]],
-    *,
-    answer: str,
-    error: str | None,
-    final_result: SolveResult,
-    draft_max_tokens: int,
-    final_max_tokens: int,
-) -> SolveResult:
-    step_results = [step.get("result", {}) for step in steps]
-    prompt_tokens = sum(int(item.get("prompt_tokens") or 0) for item in step_results)
-    completion_tokens = sum(int(item.get("completion_tokens") or 0) for item in step_results)
-    latency_ms = sum(int(item.get("latency_ms") or 0) for item in step_results)
-    cost_usd = sum(float(item.get("cost_usd") or 0) for item in step_results)
-    cost_total = sum(
-        float((item.get("cost") if isinstance(item.get("cost"), dict) else {}).get("total") or 0)
-        for item in step_results
-    )
-    resolved_model_id = final_result.resolved_model_id or final_result.model or model.model_id
-    return SolveResult(
-        model=final_result.model or model.model_id,
-        answer=answer,
-        prompt_tokens=prompt_tokens,
-        completion_tokens=completion_tokens,
-        cost_usd=round(cost_usd, 8),
-        latency_ms=latency_ms,
-        raw_response={
-            "pipeline": DRAFT_FINAL_MODE,
-            "pipeline_steps": steps,
-        },
-        error=error,
-        provider=final_result.provider,
-        requested_model_id=final_result.requested_model_id or model.model_id,
-        resolved_model_id=resolved_model_id,
-        request={
-            "pipeline": DRAFT_FINAL_MODE,
-            "draft_max_tokens": draft_max_tokens,
-            "final_max_tokens": final_max_tokens,
-            "finalizer_input": "draft_answer_only",
-        },
-        usage={
-            "input_tokens": prompt_tokens,
-            "output_tokens": completion_tokens,
-            "total_tokens": prompt_tokens + completion_tokens,
-            "reasoning_tokens": None,
-            "cached_input_tokens": None,
-            "cache_creation_input_tokens": None,
-            "raw": {
-                "steps": [
-                    {
-                        "stage": step.get("stage"),
-                        "usage": (step.get("result", {}).get("usage") or {}),
-                    }
-                    for step in steps
-                ]
-            },
-            "source": "pipeline_sum",
-        },
-        timing={
-            "wall_ms": latency_ms,
-            "monotonic_ms": latency_ms,
-            "time_to_first_token_ms": None,
-            "reasoning_ms": None,
-            "retry_durations_ms": [],
-            "attempts_total_ms": latency_ms,
-            "source": "pipeline_sum",
-        },
-        cost={
-            "currency": "USD",
-            "input": None,
-            "output": None,
-            "cached_input": None,
-            "reasoning": None,
-            "total": round(cost_total or cost_usd, 8),
-            "pricing_source": "pipeline_sum",
-            "pricing_version": None,
-            "estimated": True,
-            "exchange_rate": None,
-            "steps": [
-                {
-                    "stage": step.get("stage"),
-                    "cost": (step.get("result", {}).get("cost") or {}),
-                }
-                for step in steps
-            ],
-        },
-        finish_reason=final_result.finish_reason,
-        provider_request_id=final_result.provider_request_id,
-        response_id=final_result.response_id,
-        provider_timestamp=final_result.provider_timestamp,
-    )
-
-
 def run_status(results: list[dict[str, Any]]) -> str:
     if any(item.get("status") == "running" for item in results):
         return "running"
@@ -660,28 +468,6 @@ def parse_args() -> argparse.Namespace:
             "Defaults to RUNNER_MAX_TOKENS or provider-specific env settings."
         ),
     )
-    parser.add_argument(
-        "--pipeline",
-        choices=[DRAFT_FINAL_MODE],
-        default=None,
-        help=(
-            "Optional multi-call solving pipeline. 'draft-final' first asks the "
-            "same model for a visible draft, then asks it to assemble a final "
-            "solution from that draft only."
-        ),
-    )
-    parser.add_argument(
-        "--draft-max-tokens",
-        type=int,
-        default=None,
-        help="Draft step output-token cap for --pipeline draft-final.",
-    )
-    parser.add_argument(
-        "--final-max-tokens",
-        type=int,
-        default=None,
-        help="Finalizer step output-token cap for --pipeline draft-final.",
-    )
     return parser.parse_args()
 
 
@@ -696,7 +482,6 @@ def run_problem(
     command: list[str] | None = None,
     cli_metadata: dict[str, Any] | None = None,
     settings: RunSettings | None = None,
-    pipeline: PipelineSettings | None = None,
     max_tokens: int | None = None,
 ) -> ProblemRunResult:
     problem_file = Path(problem_file)
@@ -780,16 +565,6 @@ def run_problem(
             "text_only": True,
             "sequential": True,
             "max_tokens": max_tokens,
-            "pipeline": (
-                {
-                    "mode": pipeline.mode,
-                    "draft_max_tokens": pipeline.draft_max_tokens,
-                    "final_max_tokens": pipeline.final_max_tokens,
-                    "finalizer_input": "draft_answer_only",
-                }
-                if pipeline and pipeline.mode
-                else None
-            ),
             "reasoning_budget_tokens": (
                 settings.reasoning_budget_tokens if settings else None
             ),
@@ -810,11 +585,6 @@ def run_problem(
     print_progress(
         f"Run {run_id}: {competition_id}/{problem_id}, "
         f"{total_models} model(s), max_tokens={max_tokens or 'provider-default'}"
-        + (
-            f", pipeline={pipeline.mode} draft={pipeline.draft_max_tokens} final={pipeline.final_max_tokens}"
-            if pipeline and pipeline.mode
-            else ""
-        )
     )
     for result_index, alias in enumerate(aliases):
         ordinal = f"[{result_index + 1}/{total_models}]"
@@ -857,15 +627,7 @@ def run_problem(
                 competition_id=competition_id,
                 problem_id=problem_id,
             )
-            if pipeline and pipeline.mode == DRAFT_FINAL_MODE:
-                result = solve_draft_final_pipeline(
-                    model,
-                    problem_text,
-                    draft_max_tokens=int(pipeline.draft_max_tokens or 0),
-                    final_max_tokens=int(pipeline.final_max_tokens or 0),
-                )
-            else:
-                result = model.solve(problem_text, max_tokens=max_tokens)
+            result = model.solve(problem_text, max_tokens=max_tokens)
         except Exception as exc:
             result = error_result(skeleton.get("requested_model_id") or alias, exc)
         measured_ms = int((time.monotonic() - call_start) * 1000)
@@ -942,17 +704,6 @@ def main() -> int:
         args.max_tokens if args.max_tokens is not None else os.environ.get("RUNNER_MAX_TOKENS"),
         name="--max-tokens",
     )
-    pipeline = None
-    if args.pipeline == DRAFT_FINAL_MODE:
-        draft_max_tokens = positive_optional_int(args.draft_max_tokens, name="--draft-max-tokens")
-        final_max_tokens = positive_optional_int(args.final_max_tokens, name="--final-max-tokens")
-        if draft_max_tokens is None or final_max_tokens is None:
-            raise SystemExit("--pipeline draft-final requires --draft-max-tokens and --final-max-tokens")
-        pipeline = PipelineSettings(
-            mode=DRAFT_FINAL_MODE,
-            draft_max_tokens=draft_max_tokens,
-            final_max_tokens=final_max_tokens,
-        )
     try:
         run_result = run_problem(
             problem_file=Path(args.problem),
@@ -971,12 +722,8 @@ def main() -> int:
                 "logs_dir": args.logs_dir,
                 "allow_env_model_overrides": args.allow_env_model_overrides,
                 "max_tokens": max_tokens,
-                "pipeline": args.pipeline,
-                "draft_max_tokens": args.draft_max_tokens,
-                "final_max_tokens": args.final_max_tokens,
             },
             max_tokens=max_tokens,
-            pipeline=pipeline,
         )
     except DataLoadError as exc:
         raise SystemExit(str(exc)) from exc

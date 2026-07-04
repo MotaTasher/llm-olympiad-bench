@@ -99,10 +99,11 @@ columns. Individual model specs may be mixed with aliases, for example
 `runner.py --max-tokens N` overrides `RUNNER_MAX_TOKENS` (committed default:
 `8000`) and provider-specific token env vars for all selected adapters in that
 run.
-`runner.py --pipeline draft-final` is provider-agnostic and uses the same
-`BaseModel.solve()` method twice per selected model: once for a visible draft
-and once for a finalizer prompt that receives only that draft. This does not add
-tools, browsing or provider-side execution.
+The OpenAI adapter maps this value to a total Responses API output budget. If
+the total exceeds the configured per-request cap for the model, the adapter
+continues with additional Responses requests linked by `previous_response_id`
+until it receives non-empty visible output or exhausts the budget. This is still
+text-only and does not add tools, browsing or provider-side execution.
 The Anthropic adapter uses the non-streaming Messages API up to `max_tokens =
 21333`, matching the Anthropic Python SDK's documented long-request threshold.
 For larger Claude requests it automatically switches to Messages streaming and

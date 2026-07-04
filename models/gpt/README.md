@@ -1,7 +1,9 @@
 # GPT (OpenAI)
 
-Этот адаптер запускает OpenAI-модели через общий `runner.py` в text-only режиме: без `tools`, поиска, code interpreter и function calling.
-Единый лимит completion-токенов задаётся через `runner.py --max-tokens`; `OPENAI_MAX_COMPLETION_TOKENS` остаётся fallback-настройкой.
+Этот адаптер запускает OpenAI-модели через Responses API в text-only режиме:
+без `tools`, поиска, code interpreter и function calling.
+Единый лимит output-токенов задаётся через `runner.py --max-tokens`;
+`OPENAI_MAX_COMPLETION_TOKENS` остаётся fallback-настройкой.
 
 ## 1. Как получить ключ
 
@@ -65,7 +67,9 @@ OPENAI_MAX_COMPLETION_TOKENS=12000
 
 `runner.load_env()` специально игнорирует старые `OPENAI_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
 
-`OPENAI_REASONING_EFFORT` побуждает reasoning-модель думать больше или меньше. `OPENAI_MAX_COMPLETION_TOKENS` задает hard cap на generated tokens. API не гарантирует минимум thinking tokens.
+`OPENAI_REASONING_EFFORT` побуждает reasoning-модель думать больше или меньше.
+`OPENAI_MAX_COMPLETION_TOKENS` задает общий hard cap на generated tokens, если
+`runner.py --max-tokens` не передан. API не гарантирует минимум thinking tokens.
 
 ## Проверка
 
@@ -79,7 +83,18 @@ python runner.py \
 
 ## Tools и runtime
 
-Адаптер использует Chat Completions и не передает `tools`, web search, code interpreter или function calling. Это важно для честного сравнения олимпиадных решений: модель должна отвечать только текстом, без внешних инструментов.
+Адаптер использует Responses API и не передает `tools`, web search,
+code interpreter или function calling. Это важно для честного сравнения
+олимпиадных решений: модель должна отвечать только текстом, без внешних
+инструментов.
+
+Для reasoning-моделей `max_output_tokens` включает both reasoning tokens and
+visible output tokens. Если общий бюджет больше лимита одного OpenAI-запроса,
+адаптер режет его по `OPENAI_MAX_OUTPUT_TOKENS_BY_MODEL` и делает следующий
+Responses API request только когда предыдущий не вернул непустой visible
+output. Следующий request связывается с предыдущим через `previous_response_id`,
+поэтому модель может использовать сохраненное reasoning state. Как только
+появляется непустой ответ, цепочка останавливается.
 
 Tools не включаются через конфиг. Если в payload случайно появится `tools`, `tool_choice`, `functions`, `function_call` или `web_search_options`, общий guard в `models/common.py` остановит запрос.
 
