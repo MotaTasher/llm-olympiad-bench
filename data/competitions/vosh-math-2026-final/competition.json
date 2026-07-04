@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "vosh-math-2026-final",
+  "title": "Всероссийская олимпиада школьников по математике 2026. Заключительный этап",
+  "description": "Условия, ответы и решения задач для 9–11 классов за первый и второй дни заключительного этапа.",
+  "date": "2026-04-14",
+  "source": "https://cu.ru/events/vseros/math2026",
+  "metadata": {
+    "series": "Всероссийская олимпиада школьников по математике",
+    "organizer": "Центральный университет",
+    "season": "2025–2026 учебный год",
+    "year": 2026,
+    "stage": "Заключительный этап",
+    "document_type": "Решения",
+    "edition": "LII",
+    "location": "Москва",
+    "venue": "Центральный университет",
+    "event_end_date": "2026-04-20",
+    "tour_dates": [
+      "2026-04-15",
+      "2026-04-16"
+    ],
+    "classes": [
+      9,
+      10,
+      11
+    ],
+    "research_sources": [
+      "https://vserosolimp.edsoo.ru/zakluchit_way",
+      "https://cu.ru/events/vseros/math2026",
+      "https://vos.olimpiada.ru/news/7009",
+      "https://vos.olimpiada.ru/news/7015",
+      "https://olympiads.mccme.ru/vmo/2026/final/sol1.pdf",
+      "https://olympiads.mccme.ru/vmo/2026/final/sol2.pdf"
+    ]
+  }
+}
