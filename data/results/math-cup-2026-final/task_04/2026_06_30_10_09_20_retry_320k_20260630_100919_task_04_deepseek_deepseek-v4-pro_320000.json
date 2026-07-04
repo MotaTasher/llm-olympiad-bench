@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_d44d056b9bfb86ef87c3880b": {
+      "evaluation_id": "ev_da18581d99b6494ea7326ba0592c7c65",
+      "result_id": "res_d44d056b9bfb86ef87c3880b",
+      "result_index": 0,
+      "model_key": "deepseek:deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "WA, только скетч",
+      "created_at": "2026-07-01T17:08:40.840109Z",
+      "updated_at": "2026-07-01T17:08:40.840109Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_d44d056b9bfb86ef87c3880b": [
+      {
+        "evaluation_id": "ev_da18581d99b6494ea7326ba0592c7c65",
+        "result_id": "res_d44d056b9bfb86ef87c3880b",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "WA, только скетч",
+        "created_at": "2026-07-01T17:08:40.840109Z",
+        "updated_at": "2026-07-01T17:08:40.840109Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_04",
+  "run_id": "2026_06_30_10_09_20_retry_320k_20260630_100919_task_04_deepseek_deepseek-v4-pro_320000",
+  "updated_at": "2026-07-01T17:08:40.840109Z"
+}

@@ -1,0 +1,311 @@
+{
+  "evaluations": {
+    "res_9a546044f78d5437793e73ac": {
+      "evaluation_id": "ev_c2de919b4f134a6988675cdbbb5649ca",
+      "result_id": "res_9a546044f78d5437793e73ac",
+      "result_index": 9,
+      "model_key": "yandexgpt:yandexgpt-5-lite",
+      "model": "yandexgpt-5-lite",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T18:01:30.737413Z",
+      "updated_at": "2026-06-30T18:01:30.737413Z"
+    },
+    "res_ce715b7f16c0a9624a584be2": {
+      "evaluation_id": "ev_346767028fe54b82b792cd1e1a2cb15d",
+      "result_id": "res_ce715b7f16c0a9624a584be2",
+      "result_index": 7,
+      "model_key": "gigachat:GigaChat-2",
+      "model": "GigaChat-2",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "неверное преобразование/упрощение выражения",
+      "created_at": "2026-06-30T18:16:30.646219Z",
+      "updated_at": "2026-06-30T18:16:30.646219Z"
+    },
+    "res_1a528a6fd0abc6f80add8699": {
+      "evaluation_id": "ev_f7fd025aa38b4a9e8f24b9b1e9331093",
+      "result_id": "res_1a528a6fd0abc6f80add8699",
+      "result_index": 6,
+      "model_key": "gigachat:GigaChat-2-Max",
+      "model": "GigaChat-2-Max",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "2P(x)-P(x+1) имеет степень не более n-1 неверно",
+      "created_at": "2026-06-30T18:21:01.371341Z",
+      "updated_at": "2026-06-30T18:21:01.371341Z"
+    },
+    "res_d4b5237863e41b90996da31a": {
+      "evaluation_id": "ev_3ca187b632bf47f399606cd22b17a32e",
+      "result_id": "res_d4b5237863e41b90996da31a",
+      "result_index": 3,
+      "model_key": "anthropic:claude-haiku-4-5-20251001",
+      "model": "claude-haiku-4-5-20251001",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-01T17:18:39.857744Z",
+      "updated_at": "2026-07-01T17:18:39.857744Z"
+    },
+    "res_477d8d30a62617a041889028": {
+      "evaluation_id": "ev_cbcad69069d94508b67c0ab8dd691e88",
+      "result_id": "res_477d8d30a62617a041889028",
+      "result_index": 5,
+      "model_key": "deepseek:deepseek-v4-flash",
+      "model": "deepseek-v4-flash",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-01T17:19:47.886589Z",
+      "updated_at": "2026-07-01T17:19:47.886589Z"
+    },
+    "res_7fc73aafdf20587036947cfb": {
+      "evaluation_id": "ev_9a209645b49f46b6a04296525fb6b28e",
+      "result_id": "res_7fc73aafdf20587036947cfb",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.5",
+      "model": "gpt-5.5",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-01T17:25:18.814943Z",
+      "updated_at": "2026-07-01T17:25:18.814943Z"
+    },
+    "res_4b7640502cc65a5daa39a2d6": {
+      "evaluation_id": "ev_7b6fee85757d4248985ddfd8dc8449fd",
+      "result_id": "res_4b7640502cc65a5daa39a2d6",
+      "result_index": 8,
+      "model_key": "yandexgpt:yandexgpt-5.1",
+      "model": "yandexgpt-5.1",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "В этом всё решение: Продолжая этот процесс для других целых \r\n, можно заметить,...",
+      "created_at": "2026-07-01T17:29:45.698914Z",
+      "updated_at": "2026-07-01T17:29:45.698914Z"
+    },
+    "res_a27d8f38859b1655194aea9f": {
+      "evaluation_id": "ev_a9d873060c47401eb3ab54e1b7500b55",
+      "result_id": "res_a27d8f38859b1655194aea9f",
+      "result_index": 1,
+      "model_key": "openai:gpt-5.4-mini",
+      "model": "gpt-5.4-mini",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-01T17:31:33.543645Z",
+      "updated_at": "2026-07-01T17:31:33.543645Z"
+    },
+    "res_c36fe23d4ee34a6e203ea1f3": {
+      "evaluation_id": "ev_d160ad5fd4ae46a5bf0be2f81f1fbdae",
+      "result_id": "res_c36fe23d4ee34a6e203ea1f3",
+      "result_index": 4,
+      "model_key": "deepseek:deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-01T17:31:57.422766Z",
+      "updated_at": "2026-07-01T17:31:57.422766Z"
+    },
+    "res_7ef9fb4b52a917c90b8fbb3e": {
+      "evaluation_id": "ev_93ee0c9a374c41b1b42d9e9f2f9b5bc2",
+      "result_id": "res_7ef9fb4b52a917c90b8fbb3e",
+      "result_index": 2,
+      "model_key": "anthropic:claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "evaluator": "b2_maxim",
+      "score": 9,
+      "max_score": 10.0,
+      "score_category": "partial",
+      "feedback": "в 7 опечатка, 2Q(m)-Q(m+1) должно быть (дальше именно этим по сути пользуются)",
+      "created_at": "2026-07-03T22:44:59.144170Z",
+      "updated_at": "2026-07-03T22:44:59.144170Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_9a546044f78d5437793e73ac": [
+      {
+        "evaluation_id": "ev_c2de919b4f134a6988675cdbbb5649ca",
+        "result_id": "res_9a546044f78d5437793e73ac",
+        "result_index": 9,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T18:01:30.737413Z",
+        "updated_at": "2026-06-30T18:01:30.737413Z"
+      }
+    ],
+    "res_ce715b7f16c0a9624a584be2": [
+      {
+        "evaluation_id": "ev_346767028fe54b82b792cd1e1a2cb15d",
+        "result_id": "res_ce715b7f16c0a9624a584be2",
+        "result_index": 7,
+        "model_key": "gigachat:GigaChat-2",
+        "model": "GigaChat-2",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "неверное преобразование/упрощение выражения",
+        "created_at": "2026-06-30T18:16:30.646219Z",
+        "updated_at": "2026-06-30T18:16:30.646219Z"
+      }
+    ],
+    "res_1a528a6fd0abc6f80add8699": [
+      {
+        "evaluation_id": "ev_f7fd025aa38b4a9e8f24b9b1e9331093",
+        "result_id": "res_1a528a6fd0abc6f80add8699",
+        "result_index": 6,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "2P(x)-P(x+1) имеет степень не более n-1 неверно",
+        "created_at": "2026-06-30T18:21:01.371341Z",
+        "updated_at": "2026-06-30T18:21:01.371341Z"
+      }
+    ],
+    "res_d4b5237863e41b90996da31a": [
+      {
+        "evaluation_id": "ev_3ca187b632bf47f399606cd22b17a32e",
+        "result_id": "res_d4b5237863e41b90996da31a",
+        "result_index": 3,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-01T17:18:39.857744Z",
+        "updated_at": "2026-07-01T17:18:39.857744Z"
+      }
+    ],
+    "res_477d8d30a62617a041889028": [
+      {
+        "evaluation_id": "ev_cbcad69069d94508b67c0ab8dd691e88",
+        "result_id": "res_477d8d30a62617a041889028",
+        "result_index": 5,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-01T17:19:47.886589Z",
+        "updated_at": "2026-07-01T17:19:47.886589Z"
+      }
+    ],
+    "res_7fc73aafdf20587036947cfb": [
+      {
+        "evaluation_id": "ev_9a209645b49f46b6a04296525fb6b28e",
+        "result_id": "res_7fc73aafdf20587036947cfb",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "gpt-5.5",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-01T17:25:18.814943Z",
+        "updated_at": "2026-07-01T17:25:18.814943Z"
+      }
+    ],
+    "res_4b7640502cc65a5daa39a2d6": [
+      {
+        "evaluation_id": "ev_7b6fee85757d4248985ddfd8dc8449fd",
+        "result_id": "res_4b7640502cc65a5daa39a2d6",
+        "result_index": 8,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "В этом всё решение: Продолжая этот процесс для других целых \r\n, можно заметить,...",
+        "created_at": "2026-07-01T17:29:45.698914Z",
+        "updated_at": "2026-07-01T17:29:45.698914Z"
+      }
+    ],
+    "res_a27d8f38859b1655194aea9f": [
+      {
+        "evaluation_id": "ev_a9d873060c47401eb3ab54e1b7500b55",
+        "result_id": "res_a27d8f38859b1655194aea9f",
+        "result_index": 1,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-01T17:31:33.543645Z",
+        "updated_at": "2026-07-01T17:31:33.543645Z"
+      }
+    ],
+    "res_c36fe23d4ee34a6e203ea1f3": [
+      {
+        "evaluation_id": "ev_d160ad5fd4ae46a5bf0be2f81f1fbdae",
+        "result_id": "res_c36fe23d4ee34a6e203ea1f3",
+        "result_index": 4,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-01T17:31:57.422766Z",
+        "updated_at": "2026-07-01T17:31:57.422766Z"
+      }
+    ],
+    "res_7ef9fb4b52a917c90b8fbb3e": [
+      {
+        "evaluation_id": "ev_93ee0c9a374c41b1b42d9e9f2f9b5bc2",
+        "result_id": "res_7ef9fb4b52a917c90b8fbb3e",
+        "result_index": 2,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "b2_maxim",
+        "score": 9,
+        "max_score": 10.0,
+        "score_category": "partial",
+        "feedback": "в 7 опечатка, 2Q(m)-Q(m+1) должно быть (дальше именно этим по сути пользуются)",
+        "created_at": "2026-07-03T22:44:59.144170Z",
+        "updated_at": "2026-07-03T22:44:59.144170Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_03",
+  "run_id": "2026_06_29_21_17_43_math_cup_2026_final_task_03_all_models_16192",
+  "updated_at": "2026-07-03T22:44:59.144170Z"
+}

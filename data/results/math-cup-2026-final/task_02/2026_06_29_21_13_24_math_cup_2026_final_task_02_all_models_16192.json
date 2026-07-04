@@ -1,0 +1,311 @@
+{
+  "evaluations": {
+    "res_5b48b9f3a45a5a49c451239b": {
+      "evaluation_id": "ev_ec2d08ce1f8f41d7a5c5f99602c6b5db",
+      "result_id": "res_5b48b9f3a45a5a49c451239b",
+      "result_index": 7,
+      "model_key": "gigachat:GigaChat-2",
+      "model": "GigaChat-2",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "Т^2=0 неверно\r\nВ преобразовании T^2 все 4 слагаемых неверно переписаны",
+      "created_at": "2026-07-01T17:35:02.216839Z",
+      "updated_at": "2026-07-01T17:35:02.216839Z"
+    },
+    "res_79e5256e2246510623fdd11c": {
+      "evaluation_id": "ev_1fd7c3cf871d4bbab302a75cfc227ed4",
+      "result_id": "res_79e5256e2246510623fdd11c",
+      "result_index": 9,
+      "model_key": "yandexgpt:yandexgpt-5-lite",
+      "model": "yandexgpt-5-lite",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "Т^2=0 неверно",
+      "created_at": "2026-07-01T17:53:30.440709Z",
+      "updated_at": "2026-07-01T17:53:30.440709Z"
+    },
+    "res_85cdb6417970149edd42e8d1": {
+      "evaluation_id": "ev_1bfc94fe52f74dcc8a703493beec0905",
+      "result_id": "res_85cdb6417970149edd42e8d1",
+      "result_index": 6,
+      "model_key": "gigachat:GigaChat-2-Max",
+      "model": "GigaChat-2-Max",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "Т^2=0 неверно",
+      "created_at": "2026-07-01T17:54:21.648918Z",
+      "updated_at": "2026-07-01T17:54:21.648918Z"
+    },
+    "res_781704abb41576cf2530ea8f": {
+      "evaluation_id": "ev_681f1d91e42342778b5c9743c4799b14",
+      "result_id": "res_781704abb41576cf2530ea8f",
+      "result_index": 3,
+      "model_key": "anthropic:claude-haiku-4-5-20251001",
+      "model": "claude-haiku-4-5-20251001",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "Т^2=0 неверно. Т^2=Т неверно",
+      "created_at": "2026-07-01T17:54:47.367631Z",
+      "updated_at": "2026-07-01T17:54:47.367631Z"
+    },
+    "res_73130506c60bcb5c60153d89": {
+      "evaluation_id": "ev_5e5a25cd85f54800bb48f95474058a3e",
+      "result_id": "res_73130506c60bcb5c60153d89",
+      "result_index": 8,
+      "model_key": "yandexgpt:yandexgpt-5.1",
+      "model": "yandexgpt-5.1",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "\"Теперь используем условия ABA=A, BAB=B ...\" Тут нерверные выкладки идут.\r\n\"Используя условия A^2=0, B^2=0 ...\" Тут нерверные выкладки идут.",
+      "created_at": "2026-07-03T18:40:22.711078Z",
+      "updated_at": "2026-07-03T18:40:22.711078Z"
+    },
+    "res_b31cbf00f0f5e5ac6ed37518": {
+      "evaluation_id": "ev_d3a87051a128440390b2311598ffa475",
+      "result_id": "res_b31cbf00f0f5e5ac6ed37518",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.5",
+      "model": "gpt-5.5",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-03T18:44:20.056902Z",
+      "updated_at": "2026-07-03T18:44:20.056902Z"
+    },
+    "res_57dad00e62f8da086be4f042": {
+      "evaluation_id": "ev_8e6b96808ac74742a0ac6151174294d1",
+      "result_id": "res_57dad00e62f8da086be4f042",
+      "result_index": 1,
+      "model_key": "openai:gpt-5.4-mini",
+      "model": "gpt-5.4-mini",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-03T18:46:09.037405Z",
+      "updated_at": "2026-07-03T18:46:09.037405Z"
+    },
+    "res_a01d58e6e992abe138c7febb": {
+      "evaluation_id": "ev_c8371e8c222d4bff92434d7f91a8f70d",
+      "result_id": "res_a01d58e6e992abe138c7febb",
+      "result_index": 4,
+      "model_key": "deepseek:deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-03T18:52:07.140593Z",
+      "updated_at": "2026-07-03T18:52:07.140593Z"
+    },
+    "res_b3bf57477730e73d58ba89fd": {
+      "evaluation_id": "ev_ea791223beae4f06abc8c0ffa4dd7ae4",
+      "result_id": "res_b3bf57477730e73d58ba89fd",
+      "result_index": 5,
+      "model_key": "deepseek:deepseek-v4-flash",
+      "model": "deepseek-v4-flash",
+      "evaluator": "b2_maxim",
+      "score": 9,
+      "max_score": 10.0,
+      "score_category": "partial",
+      "feedback": "Те_0(Т)v=0, .... верно(из формулы лагранжа) но не пояснено\r\n6 пункт вообще не нужен, из 5го всё следует(так как сумма в пункте 4 прямая)",
+      "created_at": "2026-07-03T19:13:11.253510Z",
+      "updated_at": "2026-07-03T19:13:11.253510Z"
+    },
+    "res_fc409db3ecef95e0445accc1": {
+      "evaluation_id": "ev_562f32c7d27e4f7db50277507289a9e2",
+      "result_id": "res_fc409db3ecef95e0445accc1",
+      "result_index": 2,
+      "model_key": "anthropic:claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "evaluator": "b2_maxim",
+      "score": 10,
+      "max_score": 10.0,
+      "score_category": "full",
+      "feedback": "пункт А зачем-то 2 раза доказан.\r\n\"Чистое доказательство Утверждения A через\" проще",
+      "created_at": "2026-07-03T19:21:56.089089Z",
+      "updated_at": "2026-07-03T19:21:56.089089Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_5b48b9f3a45a5a49c451239b": [
+      {
+        "evaluation_id": "ev_ec2d08ce1f8f41d7a5c5f99602c6b5db",
+        "result_id": "res_5b48b9f3a45a5a49c451239b",
+        "result_index": 7,
+        "model_key": "gigachat:GigaChat-2",
+        "model": "GigaChat-2",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "Т^2=0 неверно\r\nВ преобразовании T^2 все 4 слагаемых неверно переписаны",
+        "created_at": "2026-07-01T17:35:02.216839Z",
+        "updated_at": "2026-07-01T17:35:02.216839Z"
+      }
+    ],
+    "res_79e5256e2246510623fdd11c": [
+      {
+        "evaluation_id": "ev_1fd7c3cf871d4bbab302a75cfc227ed4",
+        "result_id": "res_79e5256e2246510623fdd11c",
+        "result_index": 9,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "Т^2=0 неверно",
+        "created_at": "2026-07-01T17:53:30.440709Z",
+        "updated_at": "2026-07-01T17:53:30.440709Z"
+      }
+    ],
+    "res_85cdb6417970149edd42e8d1": [
+      {
+        "evaluation_id": "ev_1bfc94fe52f74dcc8a703493beec0905",
+        "result_id": "res_85cdb6417970149edd42e8d1",
+        "result_index": 6,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "Т^2=0 неверно",
+        "created_at": "2026-07-01T17:54:21.648918Z",
+        "updated_at": "2026-07-01T17:54:21.648918Z"
+      }
+    ],
+    "res_781704abb41576cf2530ea8f": [
+      {
+        "evaluation_id": "ev_681f1d91e42342778b5c9743c4799b14",
+        "result_id": "res_781704abb41576cf2530ea8f",
+        "result_index": 3,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "Т^2=0 неверно. Т^2=Т неверно",
+        "created_at": "2026-07-01T17:54:47.367631Z",
+        "updated_at": "2026-07-01T17:54:47.367631Z"
+      }
+    ],
+    "res_73130506c60bcb5c60153d89": [
+      {
+        "evaluation_id": "ev_5e5a25cd85f54800bb48f95474058a3e",
+        "result_id": "res_73130506c60bcb5c60153d89",
+        "result_index": 8,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "\"Теперь используем условия ABA=A, BAB=B ...\" Тут нерверные выкладки идут.\r\n\"Используя условия A^2=0, B^2=0 ...\" Тут нерверные выкладки идут.",
+        "created_at": "2026-07-03T18:40:22.711078Z",
+        "updated_at": "2026-07-03T18:40:22.711078Z"
+      }
+    ],
+    "res_b31cbf00f0f5e5ac6ed37518": [
+      {
+        "evaluation_id": "ev_d3a87051a128440390b2311598ffa475",
+        "result_id": "res_b31cbf00f0f5e5ac6ed37518",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "gpt-5.5",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-03T18:44:20.056902Z",
+        "updated_at": "2026-07-03T18:44:20.056902Z"
+      }
+    ],
+    "res_57dad00e62f8da086be4f042": [
+      {
+        "evaluation_id": "ev_8e6b96808ac74742a0ac6151174294d1",
+        "result_id": "res_57dad00e62f8da086be4f042",
+        "result_index": 1,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-03T18:46:09.037405Z",
+        "updated_at": "2026-07-03T18:46:09.037405Z"
+      }
+    ],
+    "res_a01d58e6e992abe138c7febb": [
+      {
+        "evaluation_id": "ev_c8371e8c222d4bff92434d7f91a8f70d",
+        "result_id": "res_a01d58e6e992abe138c7febb",
+        "result_index": 4,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-03T18:52:07.140593Z",
+        "updated_at": "2026-07-03T18:52:07.140593Z"
+      }
+    ],
+    "res_b3bf57477730e73d58ba89fd": [
+      {
+        "evaluation_id": "ev_ea791223beae4f06abc8c0ffa4dd7ae4",
+        "result_id": "res_b3bf57477730e73d58ba89fd",
+        "result_index": 5,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "b2_maxim",
+        "score": 9,
+        "max_score": 10.0,
+        "score_category": "partial",
+        "feedback": "Те_0(Т)v=0, .... верно(из формулы лагранжа) но не пояснено\r\n6 пункт вообще не нужен, из 5го всё следует(так как сумма в пункте 4 прямая)",
+        "created_at": "2026-07-03T19:13:11.253510Z",
+        "updated_at": "2026-07-03T19:13:11.253510Z"
+      }
+    ],
+    "res_fc409db3ecef95e0445accc1": [
+      {
+        "evaluation_id": "ev_562f32c7d27e4f7db50277507289a9e2",
+        "result_id": "res_fc409db3ecef95e0445accc1",
+        "result_index": 2,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "b2_maxim",
+        "score": 10,
+        "max_score": 10.0,
+        "score_category": "full",
+        "feedback": "пункт А зачем-то 2 раза доказан.\r\n\"Чистое доказательство Утверждения A через\" проще",
+        "created_at": "2026-07-03T19:21:56.089089Z",
+        "updated_at": "2026-07-03T19:21:56.089089Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_02",
+  "run_id": "2026_06_29_21_13_24_math_cup_2026_final_task_02_all_models_16192",
+  "updated_at": "2026-07-03T19:21:56.089089Z"
+}

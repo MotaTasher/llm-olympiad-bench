@@ -1,0 +1,131 @@
+{
+  "evaluations": {
+    "res_2d06274e78d27e86174fc010": {
+      "evaluation_id": "ev_ff2b8f96ed9f464fac41828640099f7b",
+      "result_id": "res_2d06274e78d27e86174fc010",
+      "result_index": 7,
+      "model_key": "yandexgpt:yandexgpt-5-lite",
+      "model": "yandexgpt-5-lite",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T16:03:22.187987Z",
+      "updated_at": "2026-06-30T16:03:22.187987Z"
+    },
+    "res_65b5b868fa67d1b60c2b5673": {
+      "evaluation_id": "ev_47b4d845ab4a4ae4aa4469798d23637b",
+      "result_id": "res_65b5b868fa67d1b60c2b5673",
+      "result_index": 6,
+      "model_key": "yandexgpt:yandexgpt-5.1",
+      "model": "yandexgpt-5.1",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T16:05:46.880626Z",
+      "updated_at": "2026-06-30T16:05:46.880626Z"
+    },
+    "res_e94a057de5c13835d75f1222": {
+      "evaluation_id": "ev_a524dca348a04eed8b176caa53605e2e",
+      "result_id": "res_e94a057de5c13835d75f1222",
+      "result_index": 2,
+      "model_key": "anthropic:claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "Вывод неверен",
+      "created_at": "2026-07-03T22:47:11.949380Z",
+      "updated_at": "2026-07-03T22:47:11.949380Z"
+    },
+    "res_7e13dd62178b644b73cab668": {
+      "evaluation_id": "ev_cc7946db712e41c496f17bb5bd95b8d5",
+      "result_id": "res_7e13dd62178b644b73cab668",
+      "result_index": 3,
+      "model_key": "anthropic:claude-haiku-4-5-20251001",
+      "model": "claude-haiku-4-5-20251001",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "Вывод неверн, смотри картинку",
+      "created_at": "2026-07-03T22:46:52.093276Z",
+      "updated_at": "2026-07-03T22:46:52.093276Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_2d06274e78d27e86174fc010": [
+      {
+        "evaluation_id": "ev_ff2b8f96ed9f464fac41828640099f7b",
+        "result_id": "res_2d06274e78d27e86174fc010",
+        "result_index": 7,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T16:03:22.187987Z",
+        "updated_at": "2026-06-30T16:03:22.187987Z"
+      }
+    ],
+    "res_65b5b868fa67d1b60c2b5673": [
+      {
+        "evaluation_id": "ev_47b4d845ab4a4ae4aa4469798d23637b",
+        "result_id": "res_65b5b868fa67d1b60c2b5673",
+        "result_index": 6,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T16:05:46.880626Z",
+        "updated_at": "2026-06-30T16:05:46.880626Z"
+      }
+    ],
+    "res_e94a057de5c13835d75f1222": [
+      {
+        "evaluation_id": "ev_a524dca348a04eed8b176caa53605e2e",
+        "result_id": "res_e94a057de5c13835d75f1222",
+        "result_index": 2,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "Вывод неверен",
+        "created_at": "2026-07-03T22:47:11.949380Z",
+        "updated_at": "2026-07-03T22:47:11.949380Z"
+      }
+    ],
+    "res_7e13dd62178b644b73cab668": [
+      {
+        "evaluation_id": "ev_cc7946db712e41c496f17bb5bd95b8d5",
+        "result_id": "res_7e13dd62178b644b73cab668",
+        "result_index": 3,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "Вывод неверн, смотри картинку",
+        "created_at": "2026-07-03T22:46:52.093276Z",
+        "updated_at": "2026-07-03T22:46:52.093276Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_06_29_22_09_22_math_cup_2026_final_task_09_no_gigachat_16192",
+  "updated_at": "2026-07-03T23:53:55.310111Z"
+}

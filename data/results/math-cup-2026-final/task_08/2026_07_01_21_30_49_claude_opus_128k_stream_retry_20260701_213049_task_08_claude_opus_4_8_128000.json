@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_9cb4fe1ea80d2221059b1ca2": {
+      "evaluation_id": "ev_8456884e59da4bdcab6de514bd47e2f4",
+      "result_id": "res_9cb4fe1ea80d2221059b1ca2",
+      "result_index": 0,
+      "model_key": "anthropic:claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "доказаны слабые оценки, потом вывод из ниоткуда",
+      "created_at": "2026-07-03T21:48:52.472684Z",
+      "updated_at": "2026-07-03T21:48:52.472684Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_9cb4fe1ea80d2221059b1ca2": [
+      {
+        "evaluation_id": "ev_8456884e59da4bdcab6de514bd47e2f4",
+        "result_id": "res_9cb4fe1ea80d2221059b1ca2",
+        "result_index": 0,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "доказаны слабые оценки, потом вывод из ниоткуда",
+        "created_at": "2026-07-03T21:48:52.472684Z",
+        "updated_at": "2026-07-03T21:48:52.472684Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_08",
+  "run_id": "2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_08_claude_opus_4_8_128000",
+  "updated_at": "2026-07-03T23:34:16.934201Z"
+}

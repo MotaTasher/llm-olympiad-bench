@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_951f1a118f8f2e0d717ba87c": {
+      "evaluation_id": "ev_27082605681341b5a86eb25553d5ce7b",
+      "result_id": "res_951f1a118f8f2e0d717ba87c",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.4-mini",
+      "model": "gpt-5.4-mini",
+      "evaluator": "b2_maxim",
+      "score": 5,
+      "max_score": 10.0,
+      "score_category": "partial",
+      "feedback": "а) ок\r\nб) что за лемма про разделение(что вообще такое разделение). доказательства полного нет(как и чёткой формулировки)\r\nпочему оптимум - биномиальный коэффицент",
+      "created_at": "2026-07-03T21:43:42.657179Z",
+      "updated_at": "2026-07-03T21:43:42.657179Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_951f1a118f8f2e0d717ba87c": [
+      {
+        "evaluation_id": "ev_27082605681341b5a86eb25553d5ce7b",
+        "result_id": "res_951f1a118f8f2e0d717ba87c",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "b2_maxim",
+        "score": 5,
+        "max_score": 10.0,
+        "score_category": "partial",
+        "feedback": "а) ок\r\nб) что за лемма про разделение(что вообще такое разделение). доказательства полного нет(как и чёткой формулировки)\r\nпочему оптимум - биномиальный коэффицент",
+        "created_at": "2026-07-03T21:43:42.657179Z",
+        "updated_at": "2026-07-03T21:43:42.657179Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_08",
+  "run_id": "2026_06_30_10_12_13_retry_320k_20260630_101212_task_08_openai_gpt-5.4-mini_128000",
+  "updated_at": "2026-07-03T21:43:42.657179Z"
+}

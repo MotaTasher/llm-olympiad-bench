@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_4c4b1fdd1efaffdfa524a477": {
+      "evaluation_id": "ev_2572a218984d497b8d14da6dd10a4163",
+      "result_id": "res_4c4b1fdd1efaffdfa524a477",
+      "result_index": 0,
+      "model_key": "deepseek:deepseek-v4-flash",
+      "model": "deepseek-v4-flash",
+      "evaluator": "b2_maxim",
+      "score": 9,
+      "max_score": 10.0,
+      "score_category": "partial",
+      "feedback": "вычисления верны в пункте 6, но их нет в тексте",
+      "created_at": "2026-07-03T23:57:30.089517Z",
+      "updated_at": "2026-07-03T23:57:30.089517Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_4c4b1fdd1efaffdfa524a477": [
+      {
+        "evaluation_id": "ev_2572a218984d497b8d14da6dd10a4163",
+        "result_id": "res_4c4b1fdd1efaffdfa524a477",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "b2_maxim",
+        "score": 9,
+        "max_score": 10.0,
+        "score_category": "partial",
+        "feedback": "вычисления верны в пункте 6, но их нет в тексте",
+        "created_at": "2026-07-03T23:57:30.089517Z",
+        "updated_at": "2026-07-03T23:57:30.089517Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_09_deepseek_deepseek-v4-flash_320000",
+  "updated_at": "2026-07-03T23:57:35.130018Z"
+}

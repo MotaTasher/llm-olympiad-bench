@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_42ed0e74e637c4aaec4ace13": {
+      "evaluation_id": "ev_d60956954ea74c5587488320230ad4f9",
+      "result_id": "res_42ed0e74e637c4aaec4ace13",
+      "result_index": 0,
+      "model_key": "deepseek:deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "то, что пересечение прямый это рад центр w_A, w_B, w_C неверно.",
+      "created_at": "2026-07-03T23:47:19.076364Z",
+      "updated_at": "2026-07-03T23:47:19.076364Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_42ed0e74e637c4aaec4ace13": [
+      {
+        "evaluation_id": "ev_d60956954ea74c5587488320230ad4f9",
+        "result_id": "res_42ed0e74e637c4aaec4ace13",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "то, что пересечение прямый это рад центр w_A, w_B, w_C неверно.",
+        "created_at": "2026-07-03T23:47:19.076364Z",
+        "updated_at": "2026-07-03T23:47:19.076364Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_09_deepseek_deepseek-v4-pro_320000",
+  "updated_at": "2026-07-03T23:47:24.200551Z"
+}

@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_95d08238df2bf34805ce681e": {
+      "evaluation_id": "ev_2e0fb57d44cd4a87ae5691e16893e86b",
+      "result_id": "res_95d08238df2bf34805ce681e",
+      "result_index": 0,
+      "model_key": "anthropic:claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "a) х^2(2+sin(1/x)) при маленьких х имеет отрицательную производную(и в соответствующих точках конечное количество пересечений)\r\nб) WA",
+      "created_at": "2026-07-03T20:43:44.776508Z",
+      "updated_at": "2026-07-03T20:43:44.776508Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_95d08238df2bf34805ce681e": [
+      {
+        "evaluation_id": "ev_2e0fb57d44cd4a87ae5691e16893e86b",
+        "result_id": "res_95d08238df2bf34805ce681e",
+        "result_index": 0,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "a) х^2(2+sin(1/x)) при маленьких х имеет отрицательную производную(и в соответствующих точках конечное количество пересечений)\r\nб) WA",
+        "created_at": "2026-07-03T20:43:44.776508Z",
+        "updated_at": "2026-07-03T20:43:44.776508Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_07",
+  "run_id": "2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_07_claude_opus_4_8_128000",
+  "updated_at": "2026-07-03T20:43:44.776508Z"
+}

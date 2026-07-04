@@ -1,0 +1,191 @@
+{
+  "evaluations": {
+    "res_7f5a772ada445fd209b3342a": {
+      "evaluation_id": "ev_b7226da913a546cabd2055d54667df35",
+      "result_id": "res_7f5a772ada445fd209b3342a",
+      "result_index": 8,
+      "model_key": "yandexgpt:yandexgpt-5.1",
+      "model": "yandexgpt-5.1",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T15:53:32.063002Z",
+      "updated_at": "2026-06-30T15:53:32.063002Z"
+    },
+    "res_1577833e0c17a618c6f731cb": {
+      "evaluation_id": "ev_7879456e22f2402d994e988cc6827e90",
+      "result_id": "res_1577833e0c17a618c6f731cb",
+      "result_index": 9,
+      "model_key": "yandexgpt:yandexgpt-5-lite",
+      "model": "yandexgpt-5-lite",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T15:54:23.093894Z",
+      "updated_at": "2026-06-30T15:54:23.093894Z"
+    },
+    "res_06f393585df509b347a4bcf1": {
+      "evaluation_id": "ev_b3884a23d7ae4b328ea95926687e46d9",
+      "result_id": "res_06f393585df509b347a4bcf1",
+      "result_index": 7,
+      "model_key": "gigachat:GigaChat-2",
+      "model": "GigaChat-2",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T15:55:56.368027Z",
+      "updated_at": "2026-06-30T15:55:56.368027Z"
+    },
+    "res_a62c41e1f4e05995efd9edba": {
+      "evaluation_id": "ev_70227068df1340e1bed1631b732e3969",
+      "result_id": "res_a62c41e1f4e05995efd9edba",
+      "result_index": 3,
+      "model_key": "anthropic:claude-haiku-4-5-20251001",
+      "model": "claude-haiku-4-5-20251001",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T15:56:32.064248Z",
+      "updated_at": "2026-06-30T15:56:32.064248Z"
+    },
+    "res_e1873d7c5f82ea2afcd20b8d": {
+      "evaluation_id": "ev_9a22c0ba0f1542d38d4b9d88bc6e0a51",
+      "result_id": "res_e1873d7c5f82ea2afcd20b8d",
+      "result_index": 6,
+      "model_key": "gigachat:GigaChat-2-Max",
+      "model": "GigaChat-2-Max",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T16:07:02.297307Z",
+      "updated_at": "2026-06-30T16:07:02.297307Z"
+    },
+    "res_d9dd63ceb3b10e15c704d6ce": {
+      "evaluation_id": "ev_3233ab4ce4d24ecfbd595be7ad10d6ba",
+      "result_id": "res_d9dd63ceb3b10e15c704d6ce",
+      "result_index": 2,
+      "model_key": "anthropic:claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T16:13:48.242909Z",
+      "updated_at": "2026-06-30T16:13:48.242909Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_7f5a772ada445fd209b3342a": [
+      {
+        "evaluation_id": "ev_b7226da913a546cabd2055d54667df35",
+        "result_id": "res_7f5a772ada445fd209b3342a",
+        "result_index": 8,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T15:53:32.063002Z",
+        "updated_at": "2026-06-30T15:53:32.063002Z"
+      }
+    ],
+    "res_1577833e0c17a618c6f731cb": [
+      {
+        "evaluation_id": "ev_7879456e22f2402d994e988cc6827e90",
+        "result_id": "res_1577833e0c17a618c6f731cb",
+        "result_index": 9,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T15:54:23.093894Z",
+        "updated_at": "2026-06-30T15:54:23.093894Z"
+      }
+    ],
+    "res_06f393585df509b347a4bcf1": [
+      {
+        "evaluation_id": "ev_b3884a23d7ae4b328ea95926687e46d9",
+        "result_id": "res_06f393585df509b347a4bcf1",
+        "result_index": 7,
+        "model_key": "gigachat:GigaChat-2",
+        "model": "GigaChat-2",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T15:55:56.368027Z",
+        "updated_at": "2026-06-30T15:55:56.368027Z"
+      }
+    ],
+    "res_a62c41e1f4e05995efd9edba": [
+      {
+        "evaluation_id": "ev_70227068df1340e1bed1631b732e3969",
+        "result_id": "res_a62c41e1f4e05995efd9edba",
+        "result_index": 3,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T15:56:32.064248Z",
+        "updated_at": "2026-06-30T15:56:32.064248Z"
+      }
+    ],
+    "res_e1873d7c5f82ea2afcd20b8d": [
+      {
+        "evaluation_id": "ev_9a22c0ba0f1542d38d4b9d88bc6e0a51",
+        "result_id": "res_e1873d7c5f82ea2afcd20b8d",
+        "result_index": 6,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T16:07:02.297307Z",
+        "updated_at": "2026-06-30T16:07:02.297307Z"
+      }
+    ],
+    "res_d9dd63ceb3b10e15c704d6ce": [
+      {
+        "evaluation_id": "ev_3233ab4ce4d24ecfbd595be7ad10d6ba",
+        "result_id": "res_d9dd63ceb3b10e15c704d6ce",
+        "result_index": 2,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T16:13:48.242909Z",
+        "updated_at": "2026-06-30T16:13:48.242909Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_05",
+  "run_id": "2026_06_29_21_38_09_math_cup_2026_final_task_05_all_models_16192",
+  "updated_at": "2026-06-30T16:13:48.242909Z"
+}

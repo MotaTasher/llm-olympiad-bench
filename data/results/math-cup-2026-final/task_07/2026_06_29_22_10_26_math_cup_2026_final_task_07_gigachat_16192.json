@@ -1,0 +1,71 @@
+{
+  "evaluations": {
+    "res_019906425e452777bc0a1f7e": {
+      "evaluation_id": "ev_640c2bacadbd4e30baac3bc2d214d867",
+      "result_id": "res_019906425e452777bc0a1f7e",
+      "result_index": 1,
+      "model_key": "gigachat:GigaChat-2",
+      "model": "GigaChat-2",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T16:16:52.644083Z",
+      "updated_at": "2026-06-30T16:16:52.644083Z"
+    },
+    "res_e2c3c7a6c4f7fe7c597cd838": {
+      "evaluation_id": "ev_a487d4e701ef4315b9ac62200ca20809",
+      "result_id": "res_e2c3c7a6c4f7fe7c597cd838",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-2-Max",
+      "model": "GigaChat-2-Max",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 10.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-06-30T16:37:24.313339Z",
+      "updated_at": "2026-06-30T16:37:24.313339Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_019906425e452777bc0a1f7e": [
+      {
+        "evaluation_id": "ev_640c2bacadbd4e30baac3bc2d214d867",
+        "result_id": "res_019906425e452777bc0a1f7e",
+        "result_index": 1,
+        "model_key": "gigachat:GigaChat-2",
+        "model": "GigaChat-2",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T16:16:52.644083Z",
+        "updated_at": "2026-06-30T16:16:52.644083Z"
+      }
+    ],
+    "res_e2c3c7a6c4f7fe7c597cd838": [
+      {
+        "evaluation_id": "ev_a487d4e701ef4315b9ac62200ca20809",
+        "result_id": "res_e2c3c7a6c4f7fe7c597cd838",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 10.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-06-30T16:37:24.313339Z",
+        "updated_at": "2026-06-30T16:37:24.313339Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_07",
+  "run_id": "2026_06_29_22_10_26_math_cup_2026_final_task_07_gigachat_16192",
+  "updated_at": "2026-06-30T16:37:24.313339Z"
+}
