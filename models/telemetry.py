@@ -46,6 +46,8 @@ SAFE_TOKEN_KEYS = {
     "cache_read_input_tokens",
     "completion_tokens",
     "completiontokens",
+    "draft_max_tokens",
+    "final_max_tokens",
     "input_tokens",
     "inputtexttokens",
     "max_completion_tokens",

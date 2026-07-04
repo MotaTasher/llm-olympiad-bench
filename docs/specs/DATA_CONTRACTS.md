@@ -225,6 +225,12 @@ When runner receives a unified output-token ceiling, the value is recorded as
 `runtime.cli.max_tokens` and `runtime_settings.max_tokens`. Adapter request
 snapshots also include the provider-specific request key used for that ceiling,
 for example `max_completion_tokens`, `max_tokens` or `maxTokens`.
+When runner is invoked with `--pipeline draft-final`, `runtime_settings.pipeline`
+records the pipeline mode plus draft/final token caps. The corresponding result
+remains a single scorable row whose `answer` is the finalizer output. Its
+`request.pipeline` identifies the mode, and `raw_response.pipeline_steps`
+contains the redacted draft and final step logs. The finalizer input is only the
+draft answer text, not the original problem statement as a separate field.
 
 Do not mutate `results[]` order after a score sidecar exists.
 

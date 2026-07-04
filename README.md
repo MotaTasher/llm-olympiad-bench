@@ -86,6 +86,24 @@ python runner.py \
 из `config/models.env` (committed default: `8000`), а затем provider-specific
 настройки вроде `OPENAI_MAX_COMPLETION_TOKENS` или `YANDEX_MAX_TOKENS`.
 
+Для recovery-задач, где один запрос тратит лимит на поиск, есть двухпроходный
+pipeline поверх той же модельной абстракции:
+
+```bash
+python runner.py \
+  --problem data/competitions/local_examples/example.json \
+  --models openai:gpt-5.5 \
+  --pipeline draft-final \
+  --draft-max-tokens 128000 \
+  --final-max-tokens 64000 \
+  --run-id gpt_draft_final
+```
+
+Первый проход просит модель написать видимый черновик. Второй проход получает
+только этот черновик и собирает чистовое решение без независимого нового
+поиска. В scoring UI виден финальный ответ; draft/final telemetry сохраняется
+в очищенном JSON результата.
+
 Runner пишет `schema_version: 2` run-log со статусом `running` до первого API-вызова и атомарно обновляет JSON после каждой модели. Ошибки API не должны останавливать весь запуск: они записываются в `error` и `error_info` соответствующего результата.
 Во время запуска runner печатает live-progress по моделям: `START`, затем
 `DONE` или `ERROR` с длительностью, токенами и оценкой стоимости.
