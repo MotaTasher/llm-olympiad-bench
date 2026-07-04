@@ -1,0 +1,389 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_06_29_22_10_26_math_cup_2026_final_task_07_gigachat_16192",
+  "timestamp": "2026-06-29T22:10:26.225880Z",
+  "started_at": "2026-06-29T22:10:26.225880Z",
+  "completed_at": "2026-06-29T22:10:50.889173Z",
+  "duration_ms": 24626,
+  "status": "completed",
+  "git_hash": "bd11e7f",
+  "git": {
+    "hash": "bd11e7f",
+    "full_hash": "bd11e7fe2acdaa5620f78082cc07ae14f6db8610",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_07.json",
+      "--models",
+      "gigachat:GigaChat-2-Max,gigachat:GigaChat-2",
+      "--max-tokens",
+      "[REDACTED]",
+      "--run-id",
+      "math_cup_2026_final_task_07_gigachat_16192"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_07.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "gigachat:GigaChat-2-Max,gigachat:GigaChat-2",
+      "run_id": "math_cup_2026_final_task_07_gigachat_16192",
+      "logs_dir": "logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 16192
+    },
+    "requested_models": [
+      "gigachat:GigaChat-2-Max",
+      "gigachat:GigaChat-2"
+    ],
+    "python": {
+      "version": "3.13.2",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Darwin",
+      "release": "25.5.0",
+      "machine": "arm64"
+    },
+    "packages": {
+      "anthropic": "0.105.2",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.40.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.32.3"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1"
+    }
+  },
+  "requested_models": [
+    "gigachat:GigaChat-2-Max",
+    "gigachat:GigaChat-2"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_07",
+  "problem_number": 7,
+  "problem_title": "Касательные",
+  "problem_file": "data/competitions/math-cup-2026-final/task_07.json",
+  "problem_text": "Существует ли такая непрерывная функция \\(f\\colon\\mathbb R\\to\\mathbb R\\), непрерывно дифференцируемая на\n\nа) \\(\\mathbb R\\setminus\\{0\\}\\);\n\nб) \\(\\mathbb R\\),\n\nчто любая касательная к графику \\(f\\) в отрицательной точке пересекает график в конечном числе точек, а любая касательная к графику \\(f\\) в положительной точке пересекает график в счётном бесконечном числе точек?",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_07",
+    "number": 7,
+    "title": "Касательные",
+    "statement": "Существует ли такая непрерывная функция \\(f\\colon\\mathbb R\\to\\mathbb R\\), непрерывно дифференцируемая на\n\nа) \\(\\mathbb R\\setminus\\{0\\}\\);\n\nб) \\(\\mathbb R\\),\n\nчто любая касательная к графику \\(f\\) в отрицательной точке пересекает график в конечном числе точек, а любая касательная к графику \\(f\\) в положительной точке пересекает график в счётном бесконечном числе точек?",
+    "answer": null,
+    "solution": "Построим пример для пункта б). Пусть\n\\[\nf(x)=\\int_0^x g(t)\\,dt.\n\\]\nПри \\(x\\le0\\) положим \\(g(x)=2x\\).\n\nДля \\(n\\ge2\\) положим\n\\[\na_n=1-2^{-n},\\qquad b_n=2^{-n},\n\\]\n\\[\nA_n=2^{2^{2n}},\\qquad B_n=2^{2^{2n+1}}.\n\\]\nПоложим \\(x_2=1\\). Если \\(x_n\\) уже задано, то зададим следующий блок точек таблицей:\n\n| \\(t\\) | \\(x_n\\) | \\(x_n+A_n\\) | \\(y_n:=x_n+A_n+1\\) | \\(y_n+B_n\\) | \\(x_{n+1}:=y_n+B_n+1\\) |\n|---|---:|---:|---:|---:|---:|\n| \\(g(t)\\) | \\(a_n\\) | \\(a_{n+1}\\) | \\(b_n\\) | \\(b_{n+1}\\) | \\(a_{n+1}\\) |\n\nНа \\([0,\\infty)\\) зададим \\(g\\) линейной интерполяцией по указанным точкам и значению\n\\[\ng(0)=0.\n\\]\nТогда \\(g\\) непрерывна, кусочно линейна, не постоянна ни на одном интервале линейности, \\(g(0)=0\\) и \\(0<g(x)<1\\) при \\(x>0\\). Поэтому \\(f\\in C^1(\\mathbb R)\\).\n\nЗафиксируем \\(c>0\\) и положим \\(\\lambda=g(c)\\). Тогда \\(0<\\lambda<1\\). Точка \\(x\\ne c\\) лежит на касательной в точке \\(c\\) тогда и только тогда, когда\n\\[\nM_c(x):=\\frac1{x-c}\\int_c^x g(t)\\,dt=\\lambda.\n\\]\nПокажем, что\n\\[\nM_c(x_n+A_n)\\to1,\\qquad M_c(y_n+B_n)\\to0.\n\\]\nИз определения\n\\[\nx_n=1+\\sum_{k=2}^{n-1}(A_k+B_k+2)\\le2n\\cdot B_{n-1}=o(A_n).\n\\]\nС какого-то момента \\(x_n>c\\). Тогда\n\\[\nM_c(x_n+A_n)\\ge\\frac{A_n}{x_n+A_n-c}\\cdot\\frac{a_n+a_{n+1}}2\\to1.\n\\]\nС другой стороны, так как \\(0<g<1\\), имеем \\(M_c(x_n+A_n)<1\\). Значит,\n\\[\nM_c(x_n+A_n)\\to1.\n\\]\nАналогично\n\\[\nM_c(y_n+B_n)\\to0.\n\\]\nПо непрерывности на каждом \\((x_n+A_n,y_n+B_n)\\) есть решение \\(M_c(x)=\\lambda\\). Значит, положительная касательная имеет бесконечно много пересечений с графиком.\n\nЭтих пересечений не более счётного числа: на каждом интервале линейности \\(g\\) функция \\(f\\) квадратична с ненулевым квадратичным коэффициентом, поэтому прямая пересекает её не более чем в двух точках. Самих интервалов линейности счётно много, и концов у них тоже счётно много. Следовательно, пересечений ровно счётно много.\n\nТеперь пусть \\(c<0\\). Слева график есть парабола \\(x^2\\), поэтому касательная пересекает его только в точке касания \\(x=c\\). Справа эта касательная отрицательна, а функция \\(f\\) положительна, так как \\(g(t)>0\\) при \\(t>0\\). Значит, справа пересечений нет.\n\nИтак, при \\(c<0\\) пересечений конечное число, а при \\(c>0\\) — счётно бесконечное число. Пункт а) следует из пункта б).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        12,
+        13
+      ]
+    }
+  },
+  "problem_hash": "6e29b0ed9d4c77c125b3bbe32630a018469e30b8b0f8a8633b57ba129bfddaf9",
+  "problem_text_hash": "cdef680a086ac13ed4afd99ae8030defffa8fb7173c9f4e7e40b0bef26b13eb0",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 16192
+  },
+  "results": [
+    {
+      "result_id": "res_e2c3c7a6c4f7fe7c597cd838",
+      "result_index": 0,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-2-Max",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2-Max",
+      "resolved_model_id": "GigaChat-2-Max:2.0.28.2",
+      "model": "GigaChat-2-Max",
+      "attempt": 1,
+      "started_at": "2026-06-29T22:10:26.272304Z",
+      "completed_at": "2026-06-29T22:10:44.075346Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2-Max",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Существует ли такая непрерывная функция \\(f\\colon\\mathbb R\\to\\mathbb R\\), непрерывно дифференцируемая на\n\nа) \\(\\mathbb R\\setminus\\{0\\}\\);\n\nб) \\(\\mathbb R\\),\n\nчто любая касательная к графику \\(f\\) в отрицательной точке пересекает график в конечном числе точек, а любая касательная к графику \\(f\\) в положительной точке пересекает график в счётном бесконечном числе точек?"
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 16192,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "### Решение:\n\nРассмотрим функцию $ f(x) = x^3 \\sin\\left(\\frac{1}{x}\\right) $, если $ x \\neq 0 $, и $ f(0) = 0 $. Проверим, удовлетворяет ли она условиям задачи.\n\n#### Непрерывность и дифференцируемость:\n\nФункция $ f $ непрерывна на всей прямой, так как предел $ \\lim_{x \\to 0} x^3 \\sin\\left(\\frac{1}{x}\\right) = 0 $ (поскольку $ |\\sin| \\leq 1 $), и $ f(0) = 0 $.\n\nПроизводная функции $ f $ равна:\n- Для $ x \\neq 0 $: $ f'(x) = 3x^2 \\sin\\left(\\frac{1}{x}\\right) - x \\cos\\left(\\frac{1}{x}\\right) $,\n- Для $ x = 0 $: $ f'(0) = \\lim_{h \\to 0} \\frac{f(h) - f(0)}{h} = \\lim_{h \\to 0} h^2 \\sin\\left(\\frac{1}{h}\\right) = 0 $.\n\nТаким образом, $ f $ непрерывно дифференцируема на $ \\mathbb{R} \\setminus \\{0\\} $ и дифференцируема в точке $ 0 $.\n\n#### Касательные в отрицательных точках:\n\nПусть $ x_0 < 0 $. Уравнение касательной в точке $ (x_0, f(x_0)) $ имеет вид:\n\n$$\ny = f(x_0) + f'(x_0)(x - x_0).\n$$\n\nПодставляя $ y = f(x) $, получаем уравнение пересечения:\n\n$$\nf(x) = f(x_0) + f'(x_0)(x - x_0).\n$$\n\nПоскольку $ f(x) $ и $ f'(x) $ ограничены на любом отрезке, включая окрестности отрицательных точек, число пересечений ограничено.\n\n#### Касательные в положительных точках:\n\nПусть $ x_0 > 0 $. Аналогично, уравнение касательной:\n\n$$\nf(x) = f(x_0) + f'(x_0)(x - x_0).\n$$\n\nОднако, из-за осциллирующего характера $ \\sin\\left(\\frac{1}{x}\\right) $ и $ \\cos\\left(\\frac{1}{x}\\right) $, производная $ f'(x) $ будет бесконечно часто менять знак при приближении к нулю, что приводит к бесконечному числу пересечений с графиком $ f(x) $.\n\nТаким образом, функция $ f(x) = x^3 \\sin\\left(\\frac{1}{x}\\right) $ удовлетворяет всем условиям задачи.\n\n### Ответ:\n\na) Да, существует такая функция.\n\nб) Да, существует такая функция.",
+      "prompt_tokens": 215,
+      "completion_tokens": 617,
+      "cost_usd": 0.00600889,
+      "latency_ms": 17633,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "427a5bc1-1397-4500-bee0-053957e6a33a",
+          "x-session-id": "ae5347e9-5360-4540-abda-df09985e4fb0"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "### Решение:\n\nРассмотрим функцию $ f(x) = x^3 \\sin\\left(\\frac{1}{x}\\right) $, если $ x \\neq 0 $, и $ f(0) = 0 $. Проверим, удовлетворяет ли она условиям задачи.\n\n#### Непрерывность и дифференцируемость:\n\nФункция $ f $ непрерывна на всей прямой, так как предел $ \\lim_{x \\to 0} x^3 \\sin\\left(\\frac{1}{x}\\right) = 0 $ (поскольку $ |\\sin| \\leq 1 $), и $ f(0) = 0 $.\n\nПроизводная функции $ f $ равна:\n- Для $ x \\neq 0 $: $ f'(x) = 3x^2 \\sin\\left(\\frac{1}{x}\\right) - x \\cos\\left(\\frac{1}{x}\\right) $,\n- Для $ x = 0 $: $ f'(0) = \\lim_{h \\to 0} \\frac{f(h) - f(0)}{h} = \\lim_{h \\to 0} h^2 \\sin\\left(\\frac{1}{h}\\right) = 0 $.\n\nТаким образом, $ f $ непрерывно дифференцируема на $ \\mathbb{R} \\setminus \\{0\\} $ и дифференцируема в точке $ 0 $.\n\n#### Касательные в отрицательных точках:\n\nПусть $ x_0 < 0 $. Уравнение касательной в точке $ (x_0, f(x_0)) $ имеет вид:\n\n$$\ny = f(x_0) + f'(x_0)(x - x_0).\n$$\n\nПодставляя $ y = f(x) $, получаем уравнение пересечения:\n\n$$\nf(x) = f(x_0) + f'(x_0)(x - x_0).\n$$\n\nПоскольку $ f(x) $ и $ f'(x) $ ограничены на любом отрезке, включая окрестности отрицательных точек, число пересечений ограничено.\n\n#### Касательные в положительных точках:\n\nПусть $ x_0 > 0 $. Аналогично, уравнение касательной:\n\n$$\nf(x) = f(x_0) + f'(x_0)(x - x_0).\n$$\n\nОднако, из-за осциллирующего характера $ \\sin\\left(\\frac{1}{x}\\right) $ и $ \\cos\\left(\\frac{1}{x}\\right) $, производная $ f'(x) $ будет бесконечно часто менять знак при приближении к нулю, что приводит к бесконечному числу пересечений с графиком $ f(x) $.\n\nТаким образом, функция $ f(x) = x^3 \\sin\\left(\\frac{1}{x}\\right) $ удовлетворяет всем условиям задачи.\n\n### Ответ:\n\na) Да, существует такая функция.\n\nб) Да, существует такая функция.",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782771044,
+        "model": "GigaChat-2-Max:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 215,
+          "completion_tokens": 617,
+          "total_tokens": 832,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 215,
+        "output_tokens": 617,
+        "total_tokens": 832,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 215,
+          "completion_tokens": 617,
+          "total_tokens": 832,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 17633,
+        "monotonic_ms": 17633,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 17633,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.5408,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00600889,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat text-generation package price; freemium tokens are not subtracted.",
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "427a5bc1-1397-4500-bee0-053957e6a33a",
+      "response_id": null,
+      "provider_timestamp": 1782771044,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_019906425e452777bc0a1f7e",
+      "result_index": 1,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-2",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2",
+      "resolved_model_id": "GigaChat-2:2.0.28.2",
+      "model": "GigaChat-2",
+      "attempt": 1,
+      "started_at": "2026-06-29T22:10:44.081418Z",
+      "completed_at": "2026-06-29T22:10:50.882356Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Существует ли такая непрерывная функция \\(f\\colon\\mathbb R\\to\\mathbb R\\), непрерывно дифференцируемая на\n\nа) \\(\\mathbb R\\setminus\\{0\\}\\);\n\nб) \\(\\mathbb R\\),\n\nчто любая касательная к графику \\(f\\) в отрицательной точке пересекает график в конечном числе точек, а любая касательная к графику \\(f\\) в положительной точке пересекает график в счётном бесконечном числе точек?"
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 16192,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Рассмотрим задачу подробно.\n\n### Формализация условия\n\nПусть $ f: \\mathbb{R} \\to \\mathbb{R} $ — непрерывно дифференцируемая функция. Необходимо проверить существование такой функции, что:\n- Касательная в любой отрицательной точке графика $ f $ пересекает график конечное число раз.\n- Касательная в любой положительной точке графика $ f $ пересекает график счётное бесконечное число раз.\n\n### Анализ условий\n\n1. **Отрицательные точки**:\n   - Пусть $ x < 0 $. Тогда касательная в точке $ (x, f(x)) $ имеет уравнение $ y = f'(x)(x - x) + f(x) = f(x) $.\n   - Касательная пересекает график $ f $ только в точке $ (x, f(x)) $, так как $ f $ непрерывно дифференцируема и $ f'(x) \\neq 0 $ (иначе касательная была бы горизонтальной).\n\n2. **Положительные точки**:\n   - Пусть $ x > 0 $. Рассмотрим касательную в точке $ (x, f(x)) $ с уравнением $ y = f'(x)(x - x) + f(x) = f(x) + f'(x)(x - x) $.\n   - Для пересечения касательной с графиком $ f $ рассмотрим уравнение $ f'(x)(x - t) + f(x) = f(t) $.\n   - Это уравнение должно иметь счётное бесконечное множество решений $ t $.\n\n### Проверка существования таких функций\n\n#### Случай а) $ \\mathbb{R} \\setminus \\{0\\} $\n\nРассмотрим функцию $ f(x) = \\frac{1}{x} $.\n\n- При $ x < 0 $ касательная в точке $ (x, \\frac{1}{x}) $ имеет уравнение $ y = -\\frac{1}{x^2}(x - x) + \\frac{1}{x} = \\frac{1}{x} $.\n- При $ x > 0 $ касательная в точке $ (x, \\frac{1}{x}) $ имеет уравнение $ y = -\\frac{1}{x^2}(x - x) + \\frac{1}{x} = \\frac{1}{x} + \\frac{1}{x^2}(x - x) = \\frac{1}{x} - \\frac{1}{x^2}x = 0 $.\n- В обоих случаях касательная пересекает график ровно один раз.\n\nТаким образом, функция $ f(x) = \\frac{1}{x} $ удовлетворяет условию задачи на $ \\mathbb{R} \\setminus \\{0\\} $.\n\n#### Случай б) $ \\mathbb{R} $\n\nРассмотрим функцию $ f(x) = \\arctan(x) $.\n\n- При $ x < 0 $ касательная в точке $ (x, \\arctan(x)) $ имеет уравнение $ y = \\frac{1}{1 + x^2}(x - x) + \\arctan(x) = \\arctan(x) $.\n- При $ x > 0 $ касательная в точке $ (x, \\arctan(x)) $ имеет уравнение $ y = \\frac{1}{1 + x^2}(x - x) + \\arctan(x) = \\arctan(x) + \\frac{1}{1 + x^2}(x - x) $.\n- Уравнение пересечения касательной с графиком $ f $ имеет вид $ \\arctan(x) + \\frac{1}{1 + x^2}(x - t) = \\arctan(t) $.\n- Решения этого уравнения образуют счётное бесконечное множество.\n\nТаким образом, функция $ f(x) = \\arctan(x) $ удовлетворяет условию задачи на $ \\mathbb{R} $.\n\n### Заключение\n\nФункции $ f(x) = \\frac{1}{x} $ и $ f(x) = \\arctan(x) $ удовлетворяют условиям задачи соответственно на $ \\mathbb{R} \\setminus \\{0\\} $ и $ \\mathbb{R} $.",
+      "prompt_tokens": 215,
+      "completion_tokens": 861,
+      "cost_usd": 0.00077711,
+      "latency_ms": 6788,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "88d31dbf-135f-4917-a171-d7e0c3688208",
+          "x-session-id": "beadb009-38dc-4c70-b71b-d1d8fcf9f193"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "Рассмотрим задачу подробно.\n\n### Формализация условия\n\nПусть $ f: \\mathbb{R} \\to \\mathbb{R} $ — непрерывно дифференцируемая функция. Необходимо проверить существование такой функции, что:\n- Касательная в любой отрицательной точке графика $ f $ пересекает график конечное число раз.\n- Касательная в любой положительной точке графика $ f $ пересекает график счётное бесконечное число раз.\n\n### Анализ условий\n\n1. **Отрицательные точки**:\n   - Пусть $ x < 0 $. Тогда касательная в точке $ (x, f(x)) $ имеет уравнение $ y = f'(x)(x - x) + f(x) = f(x) $.\n   - Касательная пересекает график $ f $ только в точке $ (x, f(x)) $, так как $ f $ непрерывно дифференцируема и $ f'(x) \\neq 0 $ (иначе касательная была бы горизонтальной).\n\n2. **Положительные точки**:\n   - Пусть $ x > 0 $. Рассмотрим касательную в точке $ (x, f(x)) $ с уравнением $ y = f'(x)(x - x) + f(x) = f(x) + f'(x)(x - x) $.\n   - Для пересечения касательной с графиком $ f $ рассмотрим уравнение $ f'(x)(x - t) + f(x) = f(t) $.\n   - Это уравнение должно иметь счётное бесконечное множество решений $ t $.\n\n### Проверка существования таких функций\n\n#### Случай а) $ \\mathbb{R} \\setminus \\{0\\} $\n\nРассмотрим функцию $ f(x) = \\frac{1}{x} $.\n\n- При $ x < 0 $ касательная в точке $ (x, \\frac{1}{x}) $ имеет уравнение $ y = -\\frac{1}{x^2}(x - x) + \\frac{1}{x} = \\frac{1}{x} $.\n- При $ x > 0 $ касательная в точке $ (x, \\frac{1}{x}) $ имеет уравнение $ y = -\\frac{1}{x^2}(x - x) + \\frac{1}{x} = \\frac{1}{x} + \\frac{1}{x^2}(x - x) = \\frac{1}{x} - \\frac{1}{x^2}x = 0 $.\n- В обоих случаях касательная пересекает график ровно один раз.\n\nТаким образом, функция $ f(x) = \\frac{1}{x} $ удовлетворяет условию задачи на $ \\mathbb{R} \\setminus \\{0\\} $.\n\n#### Случай б) $ \\mathbb{R} $\n\nРассмотрим функцию $ f(x) = \\arctan(x) $.\n\n- При $ x < 0 $ касательная в точке $ (x, \\arctan(x)) $ имеет уравнение $ y = \\frac{1}{1 + x^2}(x - x) + \\arctan(x) = \\arctan(x) $.\n- При $ x > 0 $ касательная в точке $ (x, \\arctan(x)) $ имеет уравнение $ y = \\frac{1}{1 + x^2}(x - x) + \\arctan(x) = \\arctan(x) + \\frac{1}{1 + x^2}(x - x) $.\n- Уравнение пересечения касательной с графиком $ f $ имеет вид $ \\arctan(x) + \\frac{1}{1 + x^2}(x - t) = \\arctan(t) $.\n- Решения этого уравнения образуют счётное бесконечное множество.\n\nТаким образом, функция $ f(x) = \\arctan(x) $ удовлетворяет условию задачи на $ \\mathbb{R} $.\n\n### Заключение\n\nФункции $ f(x) = \\frac{1}{x} $ и $ f(x) = \\arctan(x) $ удовлетворяют условиям задачи соответственно на $ \\mathbb{R} \\setminus \\{0\\} $ и $ \\mathbb{R} $.",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782771051,
+        "model": "GigaChat-2:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 215,
+          "completion_tokens": 861,
+          "total_tokens": 1076,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 215,
+        "output_tokens": 861,
+        "total_tokens": 1076,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 215,
+          "completion_tokens": 861,
+          "total_tokens": 1076,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 6788,
+        "monotonic_ms": 6788,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 6788,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.06994,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00077711,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat text-generation package price; freemium tokens are not subtracted.",
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "88d31dbf-135f-4917-a171-d7e0c3688208",
+      "response_id": null,
+      "provider_timestamp": 1782771051,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

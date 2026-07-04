@@ -1,0 +1,220 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_08_openai_gpt-5.5_320000",
+  "timestamp": "2026-06-30T10:09:21.157998Z",
+  "started_at": "2026-06-30T10:09:21.157998Z",
+  "completed_at": "2026-06-30T10:09:42.098961Z",
+  "duration_ms": 20867,
+  "status": "failed",
+  "git_hash": "bacff41",
+  "git": {
+    "hash": "bacff41",
+    "full_hash": "bacff41d410f48431986d3e6d06a49dc3d8a4363",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_08.json",
+      "--models",
+      "openai:gpt-5.5",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "retry_320k_20260630_100919_task_08_openai_gpt-5.5_320000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_08.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "openai:gpt-5.5",
+      "run_id": "retry_320k_20260630_100919_task_08_openai_gpt-5.5_320000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 320000
+    },
+    "requested_models": [
+      "openai:gpt-5.5"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.113.0",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1"
+    }
+  },
+  "requested_models": [
+    "openai:gpt-5.5"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_08",
+  "problem_number": 8,
+  "problem_title": "Строки",
+  "problem_file": "data/competitions/math-cup-2026-final/task_08.json",
+  "problem_text": "Назовём связанными два множества \\(A,B\\) строк длины \\(n\\), если для любой пары строк \\(a\\in A\\) и \\(b\\in B\\) никакой префикс строки \\(a\\) не является суффиксом строки \\(b\\). Положим\n\\[\nf(n)=\\max_{A,B}[\\min(|A|,|B|)]\n\\]\nсреди всех связанных \\(A,B\\) для данного \\(n\\). Докажите, что\n\nа)\n\\[\n\\frac{f(n)}{2^n}\\ge\\frac1{1000\\sqrt n};\n\\]\n\nб)\n\\[\n\\frac{f(n)}{2^n}\\le\\frac{1000}{\\sqrt n}.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_08",
+    "number": 8,
+    "title": "Строки",
+    "statement": "Назовём связанными два множества \\(A,B\\) строк длины \\(n\\), если для любой пары строк \\(a\\in A\\) и \\(b\\in B\\) никакой префикс строки \\(a\\) не является суффиксом строки \\(b\\). Положим\n\\[\nf(n)=\\max_{A,B}[\\min(|A|,|B|)]\n\\]\nсреди всех связанных \\(A,B\\) для данного \\(n\\). Докажите, что\n\nа)\n\\[\n\\frac{f(n)}{2^n}\\ge\\frac1{1000\\sqrt n};\n\\]\n\nб)\n\\[\n\\frac{f(n)}{2^n}\\le\\frac{1000}{\\sqrt n}.\n\\]",
+    "answer": null,
+    "solution": "Работаем со строками над алфавитом \\(\\{0,1\\}\\). Для строки \\(s\\) положим её вес \\(\\sigma(s)\\) равным числу единиц минус число нулей в \\(s\\); эквивалентно, заменив каждый символ \\(s_t\\) на шаг\n\\[\nx_t=2s_t-1\\in\\{+1,-1\\},\n\\]\nимеем \\(\\sigma(s)=\\sum_t x_t\\), а частичная сумма \\(\\sum_{t=1}^{k}x_t\\) есть вес префикса длины \\(k\\).\n\nУдобна следующая переформулировка. Если префикс строки \\(a\\) длины \\(k\\) равен суффиксу строки \\(b\\) длины \\(k\\), то это одна и та же строка \\(u\\) длины \\(k\\). Поэтому \\(A,B\\) связаны тогда и только тогда, когда для любого \\(k\\in\\{1,\\ldots,n\\}\\) ни одна строка не является одновременно префиксом длины \\(k\\) некоторой строки из \\(A\\) и суффиксом длины \\(k\\) некоторой строки из \\(B\\).\n\n### Пункт а)\n\nПостроим связанные \\(A,B\\) нужного размера. Положим\n\\[\nA=\\left\\{a:\\sum_{t=1}^{k}(2a_t-1)\\ge1\\text{ для всех }1\\le k\\le n\\right\\},\n\\]\n\\[\nB=\\left\\{b:\\sum_{t=j+1}^{n}(2b_t-1)\\le-1\\text{ для всех }0\\le j\\le n-1\\right\\}.\n\\]\nИначе говоря, у строки из \\(A\\) каждый непустой префикс имеет положительный вес, а у строки из \\(B\\) каждый непустой суффикс — отрицательный.\n\n**Связанность.** Пусть для некоторых \\(a\\in A\\), \\(b\\in B\\) и \\(1\\le k\\le n\\) префикс \\(a[1..k]\\) совпал с суффиксом \\(b[n-k+1..n]\\); обозначим эту общую строку \\(u\\). Как префикс строки \\(a\\) она имеет вес\n\\[\n\\sigma(u)=\\sum_{t=1}^{k}(2a_t-1)\\ge1>0,\n\\]\nа как суффикс строки \\(b\\) — вес\n\\[\n\\sigma(u)=\\sum_{t=n-k+1}^{n}(2b_t-1)\\le-1<0.\n\\]\nПротиворечие, значит, \\(A,B\\) связаны.\n\n**Размер.** Подсчитаем \\(|A|\\). Строка из \\(A\\) обязана начинаться с \\(1\\), иначе \\(S_1=-1\\). Отбросив первый шаг \\(+1\\) и понизив высоту на \\(1\\), получаем биекцию между \\(A\\) и путями из \\(\\pm1\\) длины \\(n-1\\), не опускающимися ниже нуля. По классическому тождеству о неотрицательных путях их число равно\n\\[\n\\binom{n-1}{\\lfloor(n-1)/2\\rfloor}.\n\\]\nОтображение \\(b\\mapsto c\\), где \\(c_t=1-b_{n+1-t}\\), разворот с инверсией, — биекция \\(\\{0,1\\}^n\\) на себя, переводящая условие на суффиксы \\(b\\) в точно такое же условие на префиксы \\(c\\); поэтому\n\\[\n|B|=|A|=\\binom{n-1}{\\lfloor(n-1)/2\\rfloor}.\n\\]\n\nВоспользуемся оценкой\n\\[\n\\binom{m}{\\lfloor m/2\\rfloor}\\ge\\frac{2^m}{2\\sqrt m}\n\\]\nдля всех \\(m\\ge1\\). Для чётного \\(m=2k\\) это\n\\[\n\\binom{2k}{k}\\ge\\frac{4^k}{2\\sqrt k}.\n\\]\nПри \\(k=1\\) равенство, а шаг индукции следует из\n\\[\n\\frac{\\binom{2k+2}{k+1}}{\\binom{2k}{k}}=\\frac{2(2k+1)}{k+1}\\ge4\\sqrt{\\frac{k}{k+1}}\n\\iff(2k+1)^2\\ge4k(k+1).\n\\]\nДля нечётного \\(m=2k+1\\):\n\\[\n\\binom{2k+1}{k}=\\frac12\\binom{2k+2}{k+1}\\ge\\frac12\\cdot\\frac{4^{k+1}}{2\\sqrt{k+1}}=\\frac{2^m}{\\sqrt{2(m+1)}}\\ge\\frac{2^m}{2\\sqrt{2m}}.\n\\]\nСледовательно, при \\(n\\ge2\\),\n\\[\n\\frac{f(n)}{2^n}\\ge\\frac{|A|}{2^n}\\ge\\frac{2^{n-1}}{2^n\\cdot2\\sqrt{n-1}}\n=\\frac1{4\\sqrt{n-1}}\\ge\\frac1{4\\sqrt n}\\ge\\frac1{1000\\sqrt n}.\n\\]\nПри \\(n=1\\) имеем \\(A=\\{1\\}\\), \\(B=\\{0\\}\\), \\(\\min(|A|,|B|)=1\\), и неравенство очевидно. Пункт а) доказан с большим запасом.\n\n### Пункт б)\n\nПусть \\(A,B\\) связаны. Каждой паре \\((a,b)\\in A\\times B\\) сопоставим строку \\(w=ba\\) длины \\(2n\\); разным парам отвечают разные строки. Обозначим\n\\[\nV=\\{ba:b\\in B,a\\in A\\},\n\\]\nтак что \\(|V|=|A|\\cdot|B|\\).\n\nРасположим строку длины \\(2n\\) на окружности, индексы по модулю \\(2n\\). Допустимым разрезом в позиции \\(i\\) назовём такой \\(i\\), что строка \\(w[i..i+n-1]\\) лежит в \\(B\\), а дополнительная строка \\(w[i+n..i+2n-1]\\) лежит в \\(A\\).\n\n**Лемма.** У любой циклической строки длины \\(2n\\) не более одного допустимого разреза.\n\n**Доказательство.** Пусть есть два разных допустимых разреза в позициях \\(i\\) и \\(j\\). Из двух дуг окружности между ними одна имеет длину \\(d\\) с \\(1\\le d\\le n\\); переобозначив при необходимости \\(i\\leftrightarrow j\\), считаем, что от \\(i\\) к \\(j\\) ровно \\(d\\) шагов вперёд, \\(j=i+d\\).\n\nВозьмём строку\n\\[\na:=w[i+n..i+2n-1]\\in A\n\\]\nиз разреза в \\(i\\) и строку\n\\[\nb':=w[j..j+n-1]\\in B\n\\]\nиз разреза в \\(j\\). Рассмотрим \\(d\\) позиций \\(i+n,i+n+1,\\ldots,i+n+d-1\\). С одной стороны, они образуют начало блока строки \\(a\\), то есть префикс \\(a[1..d]\\). С другой стороны, при \\(1\\le d\\le n\\) блок \\([i+d,i+d+n-1]\\) строки \\(b'\\) содержит эти позиции своими последними \\(d\\) символами, то есть это суффикс \\(b'[n-d+1..n]\\). Значит,\n\\[\na[1..d]=b'[n-d+1..n],\n\\]\nто есть префикс строки из \\(A\\) совпал с суффиксом строки из \\(B\\), что противоречит связанности.\n\nИз леммы следует, что для любой строки \\(w\\in\\{0,1\\}^{2n}\\) найдётся не более одного сдвига \\(t\\in\\{0,1,\\ldots,2n-1\\}\\), для которого циклический сдвиг \\(\\rho^tw\\) лежит в \\(V\\).\n\nПосчитаем двумя способами число пар \\((w,t)\\), \\(w\\in\\{0,1\\}^{2n}\\), \\(t\\in\\{0,\\ldots,2n-1\\}\\), с условием \\(\\rho^tw\\in V\\). При фиксированном \\(t\\) отображение \\(\\rho^t\\) биективно, поэтому таких \\(w\\) ровно \\(|V|\\); сумма по всем \\(2n\\) значениям \\(t\\) даёт \\(2n|V|\\). С другой стороны, при фиксированном \\(w\\) подходящих \\(t\\) не больше одного, поэтому всё число не превосходит \\(2^{2n}\\). Значит,\n\\[\n2n|A||B|=2n|V|\\le2^{2n},\n\\]\nоткуда\n\\[\n|A||B|\\le\\frac{4^n}{2n}.\n\\]\nПоэтому\n\\[\n\\frac{f(n)}{2^n}\\le\\frac{\\sqrt{|A||B|}}{2^n}\\le\\frac1{\\sqrt{2n}}\\le\\frac{1000}{\\sqrt n}.\n\\]\nПункт б) доказан.\n\n**Замечание.** Доказанные оценки дают\n\\[\n\\frac1{4\\sqrt n}\\le\\frac{f(n)}{2^n}\\le\\frac1{\\sqrt{2n}},\n\\]\nто есть \\(f(n)=\\Theta(2^n/\\sqrt n)\\).\n\nТочная оценка\n\\[\n\\frac{1-o(1)}{\\sqrt{en}}\\le\\frac{f(n)}{2^n}\\le\\frac{1+o(1)}{\\sqrt{en}},\n\\]\nдоказательство этого сложнее. Заинтересованный читатель отсылается к `https://arxiv.org/abs/2602.20143`.",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        14,
+        15,
+        16
+      ]
+    }
+  },
+  "problem_hash": "6dfb787121f1e147e6e4c689dcd7e71d6e541c32f773c45d6075a90841fa35aa",
+  "problem_text_hash": "b0b9b5cf1c988aa14cd52efbde3c9862d9739abce11019946376c7134dde1f47",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 320000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_00dec694270802fe02f56600",
+      "result_index": 0,
+      "provider": "openai",
+      "alias": "openai:gpt-5.5",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.5",
+      "resolved_model_id": "gpt-5.5",
+      "model": "gpt-5.5",
+      "attempt": 1,
+      "started_at": "2026-06-30T10:09:21.379019Z",
+      "completed_at": "2026-06-30T10:09:42.093204Z",
+      "status": "error",
+      "request": {},
+      "answer": "",
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "cost_usd": 0.0,
+      "latency_ms": 20681,
+      "raw_response": {},
+      "usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "legacy_fields"
+      },
+      "timing": {
+        "wall_ms": 20681,
+        "monotonic_ms": 20681,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 20681,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "cached_input": null,
+        "reasoning": null,
+        "total": 0.0,
+        "pricing_source": null,
+        "pricing_version": null,
+        "estimated": false,
+        "exchange_rate": null
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": "Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}",
+      "error_info": {
+        "type": "BadRequestError",
+        "message": "Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}",
+        "http_status": 400,
+        "provider_code": "invalid_value",
+        "request_id": "req_79a3be108fdc47c497b89f7648119d41",
+        "retryable": null,
+        "attempt": 1,
+        "traceback": "Traceback (most recent call last):\n  File \"./models/gpt/gpt.py\", line 64, in solve\n    response, latency_ms = timed(\n                           ^^^^^^\n  File \"./models/common.py\", line 63, in timed\n    result = call()\n             ^^^^^^\n  File \"./models/gpt/gpt.py\", line 65, in <lambda>\n    lambda: client.chat.completions.create(\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"./.venv/lib/python3.12/site-packages/openai/_utils/_utils.py\", line 298, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"./.venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py\", line 1251, in create\n    return self._post(\n           ^^^^^^^^^^^\n  File \"./.venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1332, in post\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"./.venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1105, in request\n    raise self._make_status_error_from_response(err.response) from None\nopenai.BadRequestError: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'invalid_value'}}\n",
+        "provider_response": {
+          "error": {
+            "message": "max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.",
+            "type": "invalid_request_error",
+            "param": "max_tokens",
+            "code": "invalid_value"
+          }
+        },
+        "adapter_notes": []
+      },
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

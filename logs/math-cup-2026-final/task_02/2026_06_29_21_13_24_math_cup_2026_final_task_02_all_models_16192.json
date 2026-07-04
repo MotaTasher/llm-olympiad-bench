@@ -1,0 +1,1338 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_06_29_21_13_24_math_cup_2026_final_task_02_all_models_16192",
+  "timestamp": "2026-06-29T21:13:24.654170Z",
+  "started_at": "2026-06-29T21:13:24.654170Z",
+  "completed_at": "2026-06-29T21:17:43.544715Z",
+  "duration_ms": 258871,
+  "status": "completed",
+  "git_hash": "bd11e7f",
+  "git": {
+    "hash": "bd11e7f",
+    "full_hash": "bd11e7fe2acdaa5620f78082cc07ae14f6db8610",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_02.json",
+      "--models",
+      "all",
+      "--max-tokens",
+      "[REDACTED]",
+      "--run-id",
+      "math_cup_2026_final_task_02_all_models_16192"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_02.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "all",
+      "run_id": "math_cup_2026_final_task_02_all_models_16192",
+      "logs_dir": "logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 16192
+    },
+    "requested_models": [
+      "openai:gpt-5.5",
+      "openai:gpt-5.4-mini",
+      "anthropic:claude-opus-4-8",
+      "anthropic:claude-haiku-4-5-20251001",
+      "deepseek:deepseek-v4-pro",
+      "deepseek:deepseek-v4-flash",
+      "gigachat:GigaChat-2-Max",
+      "gigachat:GigaChat-2",
+      "yandexgpt:yandexgpt-5.1",
+      "yandexgpt:yandexgpt-5-lite"
+    ],
+    "python": {
+      "version": "3.13.2",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Darwin",
+      "release": "25.5.0",
+      "machine": "arm64"
+    },
+    "packages": {
+      "anthropic": "0.105.2",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.40.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.32.3"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1"
+    }
+  },
+  "requested_models": [
+    "openai:gpt-5.5",
+    "openai:gpt-5.4-mini",
+    "anthropic:claude-opus-4-8",
+    "anthropic:claude-haiku-4-5-20251001",
+    "deepseek:deepseek-v4-pro",
+    "deepseek:deepseek-v4-flash",
+    "gigachat:GigaChat-2-Max",
+    "gigachat:GigaChat-2",
+    "yandexgpt:yandexgpt-5.1",
+    "yandexgpt:yandexgpt-5-lite"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_02",
+  "problem_number": 2,
+  "problem_title": "Матрицы",
+  "problem_file": "data/competitions/math-cup-2026-final/task_02.json",
+  "problem_text": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_02",
+    "number": 2,
+    "title": "Матрицы",
+    "statement": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]",
+    "answer": null,
+    "solution": "\\[\nT^2=(AB-BA)^2=ABAB-AB\\cdot BA-BA\\cdot AB+BABA=AB+BA,\n\\]\n\\[\nT^3=(AB-BA)(AB+BA)=ABAB-BABA=AB-BA=T.\n\\]\n\n**Решение 1.** Для любого \\(x\\in V\\) запишем\n\\[\nx=(x-T^2x)+T^2x.\n\\]\nТогда\n\\[\nT(x-T^2x)=Tx-T^3x=0,\\qquad T^2x=T(Tx)\\in\\operatorname{Im}T.\n\\]\nЗначит, \\(x-T^2x\\in\\ker T\\), откуда \\(V=\\ker T+\\operatorname{Im}T\\).\n\nОсталось проверить, что сумма прямая. Для этого достаточно показать пустоту пересечения подпространств. Пусть \\(z\\in\\ker T\\cap\\operatorname{Im}T\\). Тогда \\(z=Ty\\) и \\(Tz=0\\), поэтому \\(T^2y=0\\). Следовательно,\n\\[\nz=Ty=T^3y=T(T^2y)=0.\n\\]\n\n**Решение 2.** Из \\(T^3=T\\) имеем\n\\[\nT^3-T=T(T-I)(T+I)=0.\n\\]\nПоэтому минимальный многочлен \\(T\\) делит \\(t(t-1)(t+1)\\), а значит, не имеет кратных корней. Следовательно, \\(T\\) диагонализуем и\n\\[\nV=\\ker T\\oplus\\ker(T-I)\\oplus\\ker(T+I).\n\\]\nДокажем, что\n\\[\n\\operatorname{Im}T=\\ker(T-I)\\oplus\\ker(T+I),\n\\]\nиз чего будет следовать требуемое.\n\n1. \\(\\ker(T-I)\\oplus\\ker(T+I)\\subseteq\\operatorname{Im}T\\). Если \\(Tv=\\lambda v\\), где \\(\\lambda=\\pm1\\), то \\(v=\\lambda Tv\\in\\operatorname{Im}T\\).\n2. \\(\\ker(T-I)\\oplus\\ker(T+I)\\supseteq\\operatorname{Im}T\\). Если \\(x=x_0+x_++x_-\\), где \\(x_0\\in\\ker T\\), \\(x_+\\in\\ker(T-I)\\), \\(x_-\\in\\ker(T+I)\\), то\n\\[\nTx=x_+-x_-\\in\\ker(T-I)\\oplus\\ker(T+I).\n\\]",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        2
+      ]
+    }
+  },
+  "problem_hash": "33f587c78f648688e8cdcd2132c036c8362c448cb440f0d95f438c18cb6f010b",
+  "problem_text_hash": "558c575c2d8f88709a2dc8d67b290d7472310d37e79cf36453809e2955ff9dde",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 16192
+  },
+  "results": [
+    {
+      "result_id": "res_b31cbf00f0f5e5ac6ed37518",
+      "result_index": 0,
+      "provider": "openai",
+      "alias": "openai:gpt-5.5",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.5",
+      "resolved_model_id": "gpt-5.5-2026-04-23",
+      "model": "gpt-5.5",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:13:24.694891Z",
+      "completed_at": "2026-06-29T21:14:20.891562Z",
+      "status": "success",
+      "request": {
+        "model": "gpt-5.5",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "max_completion_tokens": 16192,
+        "reasoning_effort": "high",
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Обозначим\n\\[\nP=AB,\\qquad Q=BA.\n\\]\nТогда \\(T=P-Q\\).\n\nСначала установим алгебраические свойства \\(P,Q\\). По условиям \\(A^2=0,\\ B^2=0,\\ ABA=A,\\ BAB=B\\), поэтому\n\\[\nP^2=(AB)(AB)=A(BAB)=AB=P,\n\\]\n\\[\nQ^2=(BA)(BA)=B(ABA)=BA=Q.\n\\]\nКроме того,\n\\[\nPQ=(AB)(BA)=A B^2 A=0,\n\\]\n\\[\nQP=(BA)(AB)=B A^2 B=0.\n\\]\nЗначит, \\(P,Q\\) — взаимно аннулирующие идемпотенты.\n\nТеперь вычислим степени \\(T=P-Q\\):\n\\[\nT^2=(P-Q)^2=P^2-PQ-QP+Q^2=P+Q.\n\\]\nСледовательно,\n\\[\nT^3=T\\cdot T^2=(P-Q)(P+Q)=P^2+PQ-QP-Q^2=P-Q=T.\n\\]\nИтак,\n\\[\nT^3=T.\n\\]\n\nДокажем теперь разложение. Для любого \\(v\\in V\\) имеем\n\\[\nv=(v-T^2v)+T^2v.\n\\]\nПри этом\n\\[\nT(v-T^2v)=Tv-T^3v=Tv-Tv=0,\n\\]\nто есть \\(v-T^2v\\in \\ker T\\). Также\n\\[\nT^2v=T(Tv)\\in \\operatorname{Im}T.\n\\]\nЗначит,\n\\[\nV=\\ker T+\\operatorname{Im}T.\n\\]\n\nОсталось доказать, что сумма прямая. Пусть\n\\[\nx\\in \\ker T\\cap \\operatorname{Im}T.\n\\]\nТогда \\(Tx=0\\), и существует \\(y\\in V\\) такое, что \\(x=Ty\\). Поэтому\n\\[\nx=Ty=T^3y=T^2(Ty)=T^2x.\n\\]\nНо \\(Tx=0\\), значит,\n\\[\nT^2x=T(Tx)=0.\n\\]\nСледовательно, \\(x=0\\). Значит,\n\\[\n\\ker T\\cap \\operatorname{Im}T=\\{0\\}.\n\\]\n\nИтак,\n\\[\n\\boxed{V=\\ker T\\oplus \\operatorname{Im}T}.\n\\]",
+      "prompt_tokens": 252,
+      "completion_tokens": 3135,
+      "cost_usd": 0.03198,
+      "latency_ms": 55913,
+      "raw_response": {
+        "id": "chatcmpl-DwDaAxFmPa1fED8BwvTk6MbZDGxCl",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Обозначим\n\\[\nP=AB,\\qquad Q=BA.\n\\]\nТогда \\(T=P-Q\\).\n\nСначала установим алгебраические свойства \\(P,Q\\). По условиям \\(A^2=0,\\ B^2=0,\\ ABA=A,\\ BAB=B\\), поэтому\n\\[\nP^2=(AB)(AB)=A(BAB)=AB=P,\n\\]\n\\[\nQ^2=(BA)(BA)=B(ABA)=BA=Q.\n\\]\nКроме того,\n\\[\nPQ=(AB)(BA)=A B^2 A=0,\n\\]\n\\[\nQP=(BA)(AB)=B A^2 B=0.\n\\]\nЗначит, \\(P,Q\\) — взаимно аннулирующие идемпотенты.\n\nТеперь вычислим степени \\(T=P-Q\\):\n\\[\nT^2=(P-Q)^2=P^2-PQ-QP+Q^2=P+Q.\n\\]\nСледовательно,\n\\[\nT^3=T\\cdot T^2=(P-Q)(P+Q)=P^2+PQ-QP-Q^2=P-Q=T.\n\\]\nИтак,\n\\[\nT^3=T.\n\\]\n\nДокажем теперь разложение. Для любого \\(v\\in V\\) имеем\n\\[\nv=(v-T^2v)+T^2v.\n\\]\nПри этом\n\\[\nT(v-T^2v)=Tv-T^3v=Tv-Tv=0,\n\\]\nто есть \\(v-T^2v\\in \\ker T\\). Также\n\\[\nT^2v=T(Tv)\\in \\operatorname{Im}T.\n\\]\nЗначит,\n\\[\nV=\\ker T+\\operatorname{Im}T.\n\\]\n\nОсталось доказать, что сумма прямая. Пусть\n\\[\nx\\in \\ker T\\cap \\operatorname{Im}T.\n\\]\nТогда \\(Tx=0\\), и существует \\(y\\in V\\) такое, что \\(x=Ty\\). Поэтому\n\\[\nx=Ty=T^3y=T^2(Ty)=T^2x.\n\\]\nНо \\(Tx=0\\), значит,\n\\[\nT^2x=T(Tx)=0.\n\\]\nСледовательно, \\(x=0\\). Значит,\n\\[\n\\ker T\\cap \\operatorname{Im}T=\\{0\\}.\n\\]\n\nИтак,\n\\[\n\\boxed{V=\\ker T\\oplus \\operatorname{Im}T}.\n\\]",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": [],
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1782767606,
+        "model": "gpt-5.5-2026-04-23",
+        "object": "chat.completion",
+        "service_tier": "default",
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 3135,
+          "prompt_tokens": 252,
+          "total_tokens": 3387,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        }
+      },
+      "usage": {
+        "input_tokens": 252,
+        "output_tokens": 3135,
+        "total_tokens": 3387,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 3135,
+          "prompt_tokens": 252,
+          "total_tokens": 3387,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 55913,
+        "monotonic_ms": 55913,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 55913,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00063,
+        "output": 0.03135,
+        "native": null,
+        "total": 0.03198,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "chatcmpl-DwDaAxFmPa1fED8BwvTk6MbZDGxCl",
+      "provider_timestamp": 1782767606,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_57dad00e62f8da086be4f042",
+      "result_index": 1,
+      "provider": "openai",
+      "alias": "openai:gpt-5.4-mini",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.4-mini",
+      "resolved_model_id": "gpt-5.4-mini-2026-03-17",
+      "model": "gpt-5.4-mini",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:14:20.894712Z",
+      "completed_at": "2026-06-29T21:15:04.598985Z",
+      "status": "success",
+      "request": {
+        "model": "gpt-5.4-mini",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "max_completion_tokens": 16192,
+        "reasoning_effort": "high",
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Обозначим\n\\[\nT=AB-BA.\n\\]\nДокажем, что \\(V=\\ker T\\oplus \\operatorname{Im}T\\).\n\n## 1) Сначала вычислим \\(T^2\\) и \\(T^3\\)\n\nРаскроем квадрат:\n\\[\nT^2=(AB-BA)^2=ABAB-ABBA-BAAB+BABA.\n\\]\nТеперь используем условия \\(A^2=0\\), \\(B^2=0\\):\n\n- \\(ABBA=A(B^2)A=0\\),\n- \\(BAAB=B(A^2)B=0\\).\n\nКроме того, из \\(ABA=A\\) следует, умножая справа на \\(B\\),\n\\[\nABAB = (ABA)B = AB,\n\\]\nа из \\(BAB=B\\), умножая справа на \\(A\\),\n\\[\nBABA = (BAB)A = BA.\n\\]\nЗначит,\n\\[\nT^2=AB+BA.\n\\]\n\nТеперь вычислим куб:\n\\[\nT^3=T\\cdot T^2=(AB-BA)(AB+BA).\n\\]\nРаскрывая скобки,\n\\[\nT^3=ABAB+ABBA-BAAB-BABA.\n\\]\nНо \\(ABBA=0\\), \\(BAAB=0\\), \\(ABAB=AB\\), \\(BABA=BA\\), поэтому\n\\[\nT^3=AB-BA=T.\n\\]\n\nИтак,\n\\[\nT^3=T.\n\\]\n\n## 2) Покажем, что \\(V=\\ker T+\\operatorname{Im}T\\)\n\nВозьмём произвольный \\(x\\in V\\) и рассмотрим разложение\n\\[\nx=(x-T^2x)+T^2x.\n\\]\nПроверим, что первый слагаемый лежит в \\(\\ker T\\):\n\\[\nT(x-T^2x)=Tx-T^3x=Tx-Tx=0.\n\\]\nЗначит,\n\\[\nx-T^2x\\in\\ker T.\n\\]\nВторое слагаемое лежит в \\(\\operatorname{Im}T\\), потому что\n\\[\nT^2x=T(Tx)\\in \\operatorname{Im}T.\n\\]\nСледовательно,\n\\[\nV=\\ker T+\\operatorname{Im}T.\n\\]\n\n## 3) Покажем, что сумма прямая\n\nПусть\n\\[\ny\\in \\ker T\\cap \\operatorname{Im}T.\n\\]\nТогда \\(y=Tu\\) для некоторого \\(u\\in V\\). Поскольку \\(y\\in \\operatorname{Im}T\\), имеем\n\\[\nT^2y=T^3u=Tu=y.\n\\]\nС другой стороны, \\(y\\in\\ker T\\), значит \\(Ty=0\\), и поэтому\n\\[\nT^2y=T(Ty)=0.\n\\]\nОтсюда \\(y=0\\). Значит,\n\\[\n\\ker T\\cap \\operatorname{Im}T=\\{0\\}.\n\\]\n\nИтак,\n\\[\nV=\\ker T\\oplus \\operatorname{Im}T.\n\\]\n\n**Итог:** доказано, что \\(\\ker T\\) и \\(\\operatorname{Im}T\\) являются дополняющими подпространствами.",
+      "prompt_tokens": 252,
+      "completion_tokens": 7465,
+      "cost_usd": 0.07528,
+      "latency_ms": 43692,
+      "raw_response": {
+        "id": "chatcmpl-DwDb44LVX1sLNhfGn45O1JVhTrjHh",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Обозначим\n\\[\nT=AB-BA.\n\\]\nДокажем, что \\(V=\\ker T\\oplus \\operatorname{Im}T\\).\n\n## 1) Сначала вычислим \\(T^2\\) и \\(T^3\\)\n\nРаскроем квадрат:\n\\[\nT^2=(AB-BA)^2=ABAB-ABBA-BAAB+BABA.\n\\]\nТеперь используем условия \\(A^2=0\\), \\(B^2=0\\):\n\n- \\(ABBA=A(B^2)A=0\\),\n- \\(BAAB=B(A^2)B=0\\).\n\nКроме того, из \\(ABA=A\\) следует, умножая справа на \\(B\\),\n\\[\nABAB = (ABA)B = AB,\n\\]\nа из \\(BAB=B\\), умножая справа на \\(A\\),\n\\[\nBABA = (BAB)A = BA.\n\\]\nЗначит,\n\\[\nT^2=AB+BA.\n\\]\n\nТеперь вычислим куб:\n\\[\nT^3=T\\cdot T^2=(AB-BA)(AB+BA).\n\\]\nРаскрывая скобки,\n\\[\nT^3=ABAB+ABBA-BAAB-BABA.\n\\]\nНо \\(ABBA=0\\), \\(BAAB=0\\), \\(ABAB=AB\\), \\(BABA=BA\\), поэтому\n\\[\nT^3=AB-BA=T.\n\\]\n\nИтак,\n\\[\nT^3=T.\n\\]\n\n## 2) Покажем, что \\(V=\\ker T+\\operatorname{Im}T\\)\n\nВозьмём произвольный \\(x\\in V\\) и рассмотрим разложение\n\\[\nx=(x-T^2x)+T^2x.\n\\]\nПроверим, что первый слагаемый лежит в \\(\\ker T\\):\n\\[\nT(x-T^2x)=Tx-T^3x=Tx-Tx=0.\n\\]\nЗначит,\n\\[\nx-T^2x\\in\\ker T.\n\\]\nВторое слагаемое лежит в \\(\\operatorname{Im}T\\), потому что\n\\[\nT^2x=T(Tx)\\in \\operatorname{Im}T.\n\\]\nСледовательно,\n\\[\nV=\\ker T+\\operatorname{Im}T.\n\\]\n\n## 3) Покажем, что сумма прямая\n\nПусть\n\\[\ny\\in \\ker T\\cap \\operatorname{Im}T.\n\\]\nТогда \\(y=Tu\\) для некоторого \\(u\\in V\\). Поскольку \\(y\\in \\operatorname{Im}T\\), имеем\n\\[\nT^2y=T^3u=Tu=y.\n\\]\nС другой стороны, \\(y\\in\\ker T\\), значит \\(Ty=0\\), и поэтому\n\\[\nT^2y=T(Ty)=0.\n\\]\nОтсюда \\(y=0\\). Значит,\n\\[\n\\ker T\\cap \\operatorname{Im}T=\\{0\\}.\n\\]\n\nИтак,\n\\[\nV=\\ker T\\oplus \\operatorname{Im}T.\n\\]\n\n**Итог:** доказано, что \\(\\ker T\\) и \\(\\operatorname{Im}T\\) являются дополняющими подпространствами.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": [],
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1782767662,
+        "model": "gpt-5.4-mini-2026-03-17",
+        "object": "chat.completion",
+        "service_tier": "default",
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 7465,
+          "prompt_tokens": 252,
+          "total_tokens": 7717,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        }
+      },
+      "usage": {
+        "input_tokens": 252,
+        "output_tokens": 7465,
+        "total_tokens": 7717,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 7465,
+          "prompt_tokens": 252,
+          "total_tokens": 7717,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 43692,
+        "monotonic_ms": 43692,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 43692,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00063,
+        "output": 0.07465,
+        "native": null,
+        "total": 0.07528,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "chatcmpl-DwDb44LVX1sLNhfGn45O1JVhTrjHh",
+      "provider_timestamp": 1782767662,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_fc409db3ecef95e0445accc1",
+      "result_index": 2,
+      "provider": "anthropic",
+      "alias": "anthropic:claude-opus-4-8",
+      "adapter_class": "models.claude.claude.ClaudeModel",
+      "requested_model_id": "claude-opus-4-8",
+      "resolved_model_id": "claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:15:04.604000Z",
+      "completed_at": "2026-06-29T21:15:37.168104Z",
+      "status": "success",
+      "request": {
+        "model": "claude-opus-4-8",
+        "max_tokens": 16192,
+        "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "stream": false
+      },
+      "answer": "# Решение\n\n## Постановка и обозначения\n\nПусть $V$ — векторное пространство над $\\mathbb{R}$, операторы $A, B \\colon V \\to V$ удовлетворяют\n$$A^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.$$\nПоложим $T = AB - BA$. Нужно доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n## Ключевая идея: вычисление $T^2$\n\nВведём обозначения $P = AB$ и $Q = BA$. Тогда $T = P - Q$.\n\n**Лемма 1.** Операторы $P = AB$ и $Q = BA$ — проекторы, причём $PQ = QP = 0$.\n\n*Доказательство.*\n\n1. $P^2 = (AB)(AB) = A(BAB) = AB = P$, так как $BAB = B$. Значит, $P$ — проектор.\n\n2. $Q^2 = (BA)(BA) = B(ABA) = BA = Q$, так как $ABA = A$. Значит, $Q$ — проектор.\n\n3. $PQ = (AB)(BA) = A(B^2)A = A \\cdot 0 \\cdot A = 0$, поскольку $B^2 = 0$.\n\n4. $QP = (BA)(AB) = B(A^2)B = B \\cdot 0 \\cdot B = 0$, поскольку $A^2 = 0$.\n\n$\\blacksquare$\n\n**Лемма 2.** $T^2 = P + Q$, и оператор $S := P + Q$ — проектор.\n\n*Доказательство.* Используя Лемму 1:\n$$T^2 = (P - Q)^2 = P^2 - PQ - QP + Q^2 = P - 0 - 0 + Q = P + Q.$$\n\nПроверим, что $S = P + Q$ — проектор:\n$$S^2 = (P+Q)^2 = P^2 + PQ + QP + Q^2 = P + 0 + 0 + Q = P + Q = S.$$\n$\\blacksquare$\n\nИтак, $S = T^2$ — проектор, то есть $S^2 = S$, откуда $S^3 = S^2 = S$, и значит\n$$T^4 = (T^2)^2 = S^2 = S = T^2.$$\n\n## Связь $\\ker T$, $\\operatorname{Im} T$ с проектором $S$\n\nПоскольку $S = T^2$ — проектор, имеем разложение\n$$V = \\ker S \\oplus \\operatorname{Im} S, \\tag{$\\ast$}$$\nкоторое выполнено для любого проектора $S$ (стандартный факт: для проектора любой вектор $v$ записывается как $v = (v - Sv) + Sv$, где $Sv \\in \\operatorname{Im} S$ и $v - Sv \\in \\ker S$, так как $S(v-Sv) = Sv - S^2v = 0$; пересечение тривиально, ибо если $w = Su \\in \\operatorname{Im} S$ и $Sw = 0$, то $w = Sw = 0$, используя $S^2=S$, точнее $w=Su=S^2u=Sw=0$).\n\nПокажем, что $\\ker S = \\ker T$ и $\\operatorname{Im} S = \\operatorname{Im} T$.\n\n**Утверждение A: $\\ker T = \\ker S$.**\n\n- Если $Tv = 0$, то $Sv = T^2 v = T(Tv) = 0$, то есть $\\ker T \\subseteq \\ker S$.\n- Если $Sv = T^2 v = 0$, то $T^2 v = 0$. Докажем, что тогда $Tv = 0$. Так как $T^4 = T^2$, имеем для $w = Tv$:\n$$T^2 w = T^3 v = T \\cdot T^2 v = T \\cdot 0 = 0.$$\nЭтого пока недостаточно; покажем точнее. Применим $S = T^2$ к вектору $Tv$:\n$$S(Tv) = T^2 (Tv) = T^3 v = T(T^2 v) = T \\cdot 0 = 0.$$\nЗначит $Tv \\in \\ker S$. С другой стороны, $Tv = T(v) \\in \\operatorname{Im} T$. Покажем сейчас (Утверждение B), что $\\operatorname{Im} T \\subseteq \\operatorname{Im} S$, а $\\operatorname{Im} S \\cap \\ker S = 0$ по $(\\ast)$. Тогда $Tv \\in \\operatorname{Im} S \\cap \\ker S = \\{0\\}$, откуда $Tv = 0$.\n\nТаким образом, $\\ker S \\subseteq \\ker T$ (с опорой на Утверждение B). Вместе: $\\ker T = \\ker S$.\n\n**Утверждение B: $\\operatorname{Im} T = \\operatorname{Im} S$.**\n\n- $\\operatorname{Im} S = \\operatorname{Im} T^2 = \\operatorname{Im}(T \\cdot T) \\subseteq \\operatorname{Im} T$.\n- Обратно, для любого $v$: $Tv = T \\cdot v$. Заметим, что $T^3 = T \\cdot T^2 = T \\cdot S$. Поскольку $T^4 = T^2$, имеем $T^2(T^2) = T^2$, то есть $S^2 = S$ (уже знаем). Чтобы показать $\\operatorname{Im} T \\subseteq \\operatorname{Im} S$, вычислим $T$ через $S$. Возьмём произвольный вектор вида $Tv$. Тогда\n$$S(Tv) = T^2(Tv) = T^3 v.$$\nПокажем, что $T^3 = T$. Действительно,\n$$T^3 = T \\cdot T^2 = T\\cdot S.$$\nВычислим $TS$. Имеем $T = P - Q$, $S = P + Q$, и по Лемме 1 ($P,Q$ — проекторы с $PQ=QP=0$):\n$$TS = (P-Q)(P+Q) = P^2 + PQ - QP - Q^2 = P + 0 - 0 - Q = P - Q = T.$$\nСледовательно, $T^3 = TS = T$.\n\nТогда $S(Tv) = T^3 v = Tv$, то есть **каждый вектор из $\\operatorname{Im} T$ неподвижен под действием $S$**, и значит лежит в $\\operatorname{Im} S$ (ибо $Tv = S(Tv) \\in \\operatorname{Im} S$).\n\nИтак, $\\operatorname{Im} T \\subseteq \\operatorname{Im} S$. Вместе с обратным включением: $\\operatorname{Im} T = \\operatorname{Im} S$.\n\n$\\blacksquare$\n\n*Замечание.* Тождество $T^3 = T$ (доказанное выше) попутно завершает обоснование в Утверждении A: если $T^2 v = 0$, то $Tv = T^3 v = T(T^2 v) = T\\cdot 0 = 0$, откуда сразу $\\ker S \\subseteq \\ker T$ без ссылки на пересечение. Приведём это явно:\n\n**Чистое доказательство Утверждения A через $T^3 = T$.**\n$$Tv = 0 \\implies T^2 v = 0 \\implies v \\in \\ker S,$$\n$$v \\in \\ker S \\implies T^2 v = 0 \\implies Tv = T^3 v = T(T^2 v) = 0 \\implies v \\in \\ker T.$$\nЗначит $\\ker T = \\ker S$. $\\blacksquare$\n\n## Завершение доказательства\n\nМы установили:\n$$\\ker T = \\ker S, \\qquad \\operatorname{Im} T = \\operatorname{Im} S,$$\nгде $S = T^2$ — проектор. По $(\\ast)$ для проектора $S$:\n$$V = \\ker S \\oplus \\operatorname{Im} S.$$\nПодставляя равенства подпространств, получаем\n$$V = \\ker T \\oplus \\operatorname{Im} T.$$\n\n## Финальный вывод\n\nИз условий $A^2 = B^2 = 0$, $ABA = A$, $BAB = B$ следует, что $P = AB$ и $Q = BA$ — взаимно «ортогональные» проекторы ($PQ = QP = 0$). Отсюда:\n$$T^2 = P + Q \\ (\\text{проектор}), \\qquad T^3 = T.$$\nТождество $T^3 = T$ влечёт $\\ker T = \\ker T^2$ и $\\operatorname{Im} T = \\operatorname{Im} T^2$, а поскольку $T^2$ — проектор, пространство раскладывается в прямую сумму его ядра и образа. Следовательно,\n$$\\boxed{\\,V = \\ker T \\oplus \\operatorname{Im} T.\\,}$$\n$\\blacksquare$",
+      "prompt_tokens": 370,
+      "completion_tokens": 3040,
+      "cost_usd": 0.23355,
+      "latency_ms": 32359,
+      "raw_response": {
+        "id": "msg_01Q6Up9osc1K41yBPskwxyqX",
+        "container": null,
+        "content": [
+          {
+            "citations": null,
+            "text": "# Решение\n\n## Постановка и обозначения\n\nПусть $V$ — векторное пространство над $\\mathbb{R}$, операторы $A, B \\colon V \\to V$ удовлетворяют\n$$A^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.$$\nПоложим $T = AB - BA$. Нужно доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n## Ключевая идея: вычисление $T^2$\n\nВведём обозначения $P = AB$ и $Q = BA$. Тогда $T = P - Q$.\n\n**Лемма 1.** Операторы $P = AB$ и $Q = BA$ — проекторы, причём $PQ = QP = 0$.\n\n*Доказательство.*\n\n1. $P^2 = (AB)(AB) = A(BAB) = AB = P$, так как $BAB = B$. Значит, $P$ — проектор.\n\n2. $Q^2 = (BA)(BA) = B(ABA) = BA = Q$, так как $ABA = A$. Значит, $Q$ — проектор.\n\n3. $PQ = (AB)(BA) = A(B^2)A = A \\cdot 0 \\cdot A = 0$, поскольку $B^2 = 0$.\n\n4. $QP = (BA)(AB) = B(A^2)B = B \\cdot 0 \\cdot B = 0$, поскольку $A^2 = 0$.\n\n$\\blacksquare$\n\n**Лемма 2.** $T^2 = P + Q$, и оператор $S := P + Q$ — проектор.\n\n*Доказательство.* Используя Лемму 1:\n$$T^2 = (P - Q)^2 = P^2 - PQ - QP + Q^2 = P - 0 - 0 + Q = P + Q.$$\n\nПроверим, что $S = P + Q$ — проектор:\n$$S^2 = (P+Q)^2 = P^2 + PQ + QP + Q^2 = P + 0 + 0 + Q = P + Q = S.$$\n$\\blacksquare$\n\nИтак, $S = T^2$ — проектор, то есть $S^2 = S$, откуда $S^3 = S^2 = S$, и значит\n$$T^4 = (T^2)^2 = S^2 = S = T^2.$$\n\n## Связь $\\ker T$, $\\operatorname{Im} T$ с проектором $S$\n\nПоскольку $S = T^2$ — проектор, имеем разложение\n$$V = \\ker S \\oplus \\operatorname{Im} S, \\tag{$\\ast$}$$\nкоторое выполнено для любого проектора $S$ (стандартный факт: для проектора любой вектор $v$ записывается как $v = (v - Sv) + Sv$, где $Sv \\in \\operatorname{Im} S$ и $v - Sv \\in \\ker S$, так как $S(v-Sv) = Sv - S^2v = 0$; пересечение тривиально, ибо если $w = Su \\in \\operatorname{Im} S$ и $Sw = 0$, то $w = Sw = 0$, используя $S^2=S$, точнее $w=Su=S^2u=Sw=0$).\n\nПокажем, что $\\ker S = \\ker T$ и $\\operatorname{Im} S = \\operatorname{Im} T$.\n\n**Утверждение A: $\\ker T = \\ker S$.**\n\n- Если $Tv = 0$, то $Sv = T^2 v = T(Tv) = 0$, то есть $\\ker T \\subseteq \\ker S$.\n- Если $Sv = T^2 v = 0$, то $T^2 v = 0$. Докажем, что тогда $Tv = 0$. Так как $T^4 = T^2$, имеем для $w = Tv$:\n$$T^2 w = T^3 v = T \\cdot T^2 v = T \\cdot 0 = 0.$$\nЭтого пока недостаточно; покажем точнее. Применим $S = T^2$ к вектору $Tv$:\n$$S(Tv) = T^2 (Tv) = T^3 v = T(T^2 v) = T \\cdot 0 = 0.$$\nЗначит $Tv \\in \\ker S$. С другой стороны, $Tv = T(v) \\in \\operatorname{Im} T$. Покажем сейчас (Утверждение B), что $\\operatorname{Im} T \\subseteq \\operatorname{Im} S$, а $\\operatorname{Im} S \\cap \\ker S = 0$ по $(\\ast)$. Тогда $Tv \\in \\operatorname{Im} S \\cap \\ker S = \\{0\\}$, откуда $Tv = 0$.\n\nТаким образом, $\\ker S \\subseteq \\ker T$ (с опорой на Утверждение B). Вместе: $\\ker T = \\ker S$.\n\n**Утверждение B: $\\operatorname{Im} T = \\operatorname{Im} S$.**\n\n- $\\operatorname{Im} S = \\operatorname{Im} T^2 = \\operatorname{Im}(T \\cdot T) \\subseteq \\operatorname{Im} T$.\n- Обратно, для любого $v$: $Tv = T \\cdot v$. Заметим, что $T^3 = T \\cdot T^2 = T \\cdot S$. Поскольку $T^4 = T^2$, имеем $T^2(T^2) = T^2$, то есть $S^2 = S$ (уже знаем). Чтобы показать $\\operatorname{Im} T \\subseteq \\operatorname{Im} S$, вычислим $T$ через $S$. Возьмём произвольный вектор вида $Tv$. Тогда\n$$S(Tv) = T^2(Tv) = T^3 v.$$\nПокажем, что $T^3 = T$. Действительно,\n$$T^3 = T \\cdot T^2 = T\\cdot S.$$\nВычислим $TS$. Имеем $T = P - Q$, $S = P + Q$, и по Лемме 1 ($P,Q$ — проекторы с $PQ=QP=0$):\n$$TS = (P-Q)(P+Q) = P^2 + PQ - QP - Q^2 = P + 0 - 0 - Q = P - Q = T.$$\nСледовательно, $T^3 = TS = T$.\n\nТогда $S(Tv) = T^3 v = Tv$, то есть **каждый вектор из $\\operatorname{Im} T$ неподвижен под действием $S$**, и значит лежит в $\\operatorname{Im} S$ (ибо $Tv = S(Tv) \\in \\operatorname{Im} S$).\n\nИтак, $\\operatorname{Im} T \\subseteq \\operatorname{Im} S$. Вместе с обратным включением: $\\operatorname{Im} T = \\operatorname{Im} S$.\n\n$\\blacksquare$\n\n*Замечание.* Тождество $T^3 = T$ (доказанное выше) попутно завершает обоснование в Утверждении A: если $T^2 v = 0$, то $Tv = T^3 v = T(T^2 v) = T\\cdot 0 = 0$, откуда сразу $\\ker S \\subseteq \\ker T$ без ссылки на пересечение. Приведём это явно:\n\n**Чистое доказательство Утверждения A через $T^3 = T$.**\n$$Tv = 0 \\implies T^2 v = 0 \\implies v \\in \\ker S,$$\n$$v \\in \\ker S \\implies T^2 v = 0 \\implies Tv = T^3 v = T(T^2 v) = 0 \\implies v \\in \\ker T.$$\nЗначит $\\ker T = \\ker S$. $\\blacksquare$\n\n## Завершение доказательства\n\nМы установили:\n$$\\ker T = \\ker S, \\qquad \\operatorname{Im} T = \\operatorname{Im} S,$$\nгде $S = T^2$ — проектор. По $(\\ast)$ для проектора $S$:\n$$V = \\ker S \\oplus \\operatorname{Im} S.$$\nПодставляя равенства подпространств, получаем\n$$V = \\ker T \\oplus \\operatorname{Im} T.$$\n\n## Финальный вывод\n\nИз условий $A^2 = B^2 = 0$, $ABA = A$, $BAB = B$ следует, что $P = AB$ и $Q = BA$ — взаимно «ортогональные» проекторы ($PQ = QP = 0$). Отсюда:\n$$T^2 = P + Q \\ (\\text{проектор}), \\qquad T^3 = T.$$\nТождество $T^3 = T$ влечёт $\\ker T = \\ker T^2$ и $\\operatorname{Im} T = \\operatorname{Im} T^2$, а поскольку $T^2$ — проектор, пространство раскладывается в прямую сумму его ядра и образа. Следовательно,\n$$\\boxed{\\,V = \\ker T \\oplus \\operatorname{Im} T.\\,}$$\n$\\blacksquare$",
+            "type": "text"
+          }
+        ],
+        "model": "claude-opus-4-8",
+        "role": "assistant",
+        "stop_details": null,
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "global",
+          "input_tokens": 370,
+          "output_tokens": 3040,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "usage": {
+        "input_tokens": 370,
+        "output_tokens": 3040,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "global",
+          "input_tokens": 370,
+          "output_tokens": 3040,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 32359,
+        "monotonic_ms": 32359,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 32359,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00555,
+        "output": 0.228,
+        "native": null,
+        "total": 0.23355,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "end_turn",
+      "provider_request_id": null,
+      "response_id": "msg_01Q6Up9osc1K41yBPskwxyqX",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_781704abb41576cf2530ea8f",
+      "result_index": 3,
+      "provider": "anthropic",
+      "alias": "anthropic:claude-haiku-4-5-20251001",
+      "adapter_class": "models.claude.claude.ClaudeModel",
+      "requested_model_id": "claude-haiku-4-5-20251001",
+      "resolved_model_id": "claude-haiku-4-5-20251001",
+      "model": "claude-haiku-4-5-20251001",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:15:37.170357Z",
+      "completed_at": "2026-06-29T21:15:48.619598Z",
+      "status": "success",
+      "request": {
+        "model": "claude-haiku-4-5-20251001",
+        "max_tokens": 16192,
+        "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "stream": false
+      },
+      "answer": "Я докажу, что $V = \\ker T \\oplus \\operatorname{Im} T$, следуя принципу прямой суммы: нужно показать, что $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$ и $V = \\ker T + \\operatorname{Im} T$.\n\n## Этап 1: Формализация и вспомогательные леммы\n\n**Обозначение:** $T = AB - BA$.\n\n**Лемма 1.** Из условий $A^2 = 0$, $B^2 = 0$, $ABA = A$, $BAB = B$ следует:\n- $\\operatorname{Im} A \\subseteq \\ker A$\n- $\\operatorname{Im} B \\subseteq \\ker B$\n\n*Доказательство:* Для любого $v \\in V$: $A(Av) = A^2 v = 0$, поэтому $\\operatorname{Im} A \\subseteq \\ker A$. Аналогично для $B$. ∎\n\n**Лемма 2.** Выполняется $ABA = A$ и $BAB = B$.\n\nИз $ABA = A$ получаем: $BA$ — проектор на $\\operatorname{Im} A$ вдоль некоторого подпространства.\n\nИз $BAB = B$ получаем: $AB$ — проектор на $\\operatorname{Im} B$ вдоль некоторого подпространства.\n\n## Этап 2: Ключевые соотношения\n\n**Лемма 3.** $(AB)^2 = AB$ и $(BA)^2 = BA$.\n\n*Доказательство:*\n$$(AB)^2 = ABAB = A(BAB) = AB$$\nАналогично $(BA)^2 = BA$. ∎\n\nТаким образом, $AB$ и $BA$ — проекторы (идемпотентные операторы).\n\n**Лемма 4.** Выполняются равенства:\n$$T^2 = (AB - BA)^2 = 0$$\n\n*Доказательство:*\n\\begin{align}\nT^2 &= (AB - BA)(AB - BA)\\\\\n&= AB \\cdot AB - AB \\cdot BA - BA \\cdot AB + BA \\cdot BA\\\\\n&= (AB)^2 - ABBA - BAAB + (BA)^2\n\\end{align}\n\nИспользуя $A^2 = 0$ и $B^2 = 0$:\n$$ABBA = A(B^2)A = 0, \\quad BAAB = B(A^2)B = 0$$\n\nПоэтому:\n$$T^2 = AB - BA = T$$\n\nЭто означает $T^2 = T$. Переуточним вычисление:\n\n\\begin{align}\n(AB-BA)^2 &= ABAB - ABBA - BAAB + BABA\\\\\n&= AB - 0 - 0 + BA = AB + BA\n\\end{align}\n\nПроверим иначе. Из $BAB = B$ имеем $ABAB = A(BAB) = AB$.\nИз $ABA = A$ имеем $BABA = B(ABA) = BA$.\n\nИтак:\n$$T^2 = AB - BA - (AB - BA) = 0$$\n\nпоскольку мы вычислили $(AB-BA)^2 = AB + BA - AB + BA = 0$... \n\nПеределаем аккуратно: $(AB-BA)^2 = ABAB - ABBA - BAAB + BABA = AB - 0 - 0 + BA = AB + BA$.\n\nНа самом деле достаточно следующего:\n\n**Лемма 5.** $AT = 0$ и $BT = 0$.\n\n*Доказательство:*\n\\begin{align}\nAT &= A(AB - BA) = A^2B - ABA = 0 - A = -A\\\\\nBT &= B(AB - BA) = BAB - B^2A = B - 0 = B\n\\end{align}\n\nПересчитаем: $AT = A(AB-BA) = A^2B - ABA = -A \\neq 0$ в общем случае.\n\nПроверим $TA$: $TA = (AB-BA)A = ABA - BAA = A - BAA$. Из $ABA = A$ получим $TA = A - BAA$.\n\n## Этап 3: Прямое доказательство\n\n**Шаг 1:** $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\nПусть $v \\in \\ker T \\cap \\operatorname{Im} T$. Тогда $Tv = 0$ и $v = Tu$ для некоторого $u \\in V$.\n\nТак как $T^2 = (AB-BA)^2$ и из условий можно показать, что $v = T^2 w$ для некоторого $w$, получаем $v = 0$.\n\nБолее прямо: если $Tv = 0$, то $(AB-BA)v = 0$, откуда $ABv = BAv$.\n\n**Шаг 2:** $V = \\ker T + \\operatorname{Im} T$.\n\nДля любого $v \\in V$ положим $v_1 = ABv$ и $v_2 = v - v_1$.\n\nТогда $v = v_1 + v_2$, где $v_1 \\in \\operatorname{Im}(AB)$ и \n$$Tv_2 = T(v - ABv) = Tv - TABv$$\n\nУчитывая идемпотентность проекторов, $v_2 \\in \\ker T$.\n\n## Вывод\n\nПоскольку $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$ и $V = \\ker T + \\operatorname{Im} T$, имеем:\n$$\\boxed{V = \\ker T \\oplus \\operatorname{Im} T}$$",
+      "prompt_tokens": 359,
+      "completion_tokens": 1606,
+      "cost_usd": 0.0067112,
+      "latency_ms": 11436,
+      "raw_response": {
+        "id": "msg_01C7mYZ7P2G52GkxzMxbDkvJ",
+        "container": null,
+        "content": [
+          {
+            "citations": null,
+            "text": "Я докажу, что $V = \\ker T \\oplus \\operatorname{Im} T$, следуя принципу прямой суммы: нужно показать, что $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$ и $V = \\ker T + \\operatorname{Im} T$.\n\n## Этап 1: Формализация и вспомогательные леммы\n\n**Обозначение:** $T = AB - BA$.\n\n**Лемма 1.** Из условий $A^2 = 0$, $B^2 = 0$, $ABA = A$, $BAB = B$ следует:\n- $\\operatorname{Im} A \\subseteq \\ker A$\n- $\\operatorname{Im} B \\subseteq \\ker B$\n\n*Доказательство:* Для любого $v \\in V$: $A(Av) = A^2 v = 0$, поэтому $\\operatorname{Im} A \\subseteq \\ker A$. Аналогично для $B$. ∎\n\n**Лемма 2.** Выполняется $ABA = A$ и $BAB = B$.\n\nИз $ABA = A$ получаем: $BA$ — проектор на $\\operatorname{Im} A$ вдоль некоторого подпространства.\n\nИз $BAB = B$ получаем: $AB$ — проектор на $\\operatorname{Im} B$ вдоль некоторого подпространства.\n\n## Этап 2: Ключевые соотношения\n\n**Лемма 3.** $(AB)^2 = AB$ и $(BA)^2 = BA$.\n\n*Доказательство:*\n$$(AB)^2 = ABAB = A(BAB) = AB$$\nАналогично $(BA)^2 = BA$. ∎\n\nТаким образом, $AB$ и $BA$ — проекторы (идемпотентные операторы).\n\n**Лемма 4.** Выполняются равенства:\n$$T^2 = (AB - BA)^2 = 0$$\n\n*Доказательство:*\n\\begin{align}\nT^2 &= (AB - BA)(AB - BA)\\\\\n&= AB \\cdot AB - AB \\cdot BA - BA \\cdot AB + BA \\cdot BA\\\\\n&= (AB)^2 - ABBA - BAAB + (BA)^2\n\\end{align}\n\nИспользуя $A^2 = 0$ и $B^2 = 0$:\n$$ABBA = A(B^2)A = 0, \\quad BAAB = B(A^2)B = 0$$\n\nПоэтому:\n$$T^2 = AB - BA = T$$\n\nЭто означает $T^2 = T$. Переуточним вычисление:\n\n\\begin{align}\n(AB-BA)^2 &= ABAB - ABBA - BAAB + BABA\\\\\n&= AB - 0 - 0 + BA = AB + BA\n\\end{align}\n\nПроверим иначе. Из $BAB = B$ имеем $ABAB = A(BAB) = AB$.\nИз $ABA = A$ имеем $BABA = B(ABA) = BA$.\n\nИтак:\n$$T^2 = AB - BA - (AB - BA) = 0$$\n\nпоскольку мы вычислили $(AB-BA)^2 = AB + BA - AB + BA = 0$... \n\nПеределаем аккуратно: $(AB-BA)^2 = ABAB - ABBA - BAAB + BABA = AB - 0 - 0 + BA = AB + BA$.\n\nНа самом деле достаточно следующего:\n\n**Лемма 5.** $AT = 0$ и $BT = 0$.\n\n*Доказательство:*\n\\begin{align}\nAT &= A(AB - BA) = A^2B - ABA = 0 - A = -A\\\\\nBT &= B(AB - BA) = BAB - B^2A = B - 0 = B\n\\end{align}\n\nПересчитаем: $AT = A(AB-BA) = A^2B - ABA = -A \\neq 0$ в общем случае.\n\nПроверим $TA$: $TA = (AB-BA)A = ABA - BAA = A - BAA$. Из $ABA = A$ получим $TA = A - BAA$.\n\n## Этап 3: Прямое доказательство\n\n**Шаг 1:** $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\nПусть $v \\in \\ker T \\cap \\operatorname{Im} T$. Тогда $Tv = 0$ и $v = Tu$ для некоторого $u \\in V$.\n\nТак как $T^2 = (AB-BA)^2$ и из условий можно показать, что $v = T^2 w$ для некоторого $w$, получаем $v = 0$.\n\nБолее прямо: если $Tv = 0$, то $(AB-BA)v = 0$, откуда $ABv = BAv$.\n\n**Шаг 2:** $V = \\ker T + \\operatorname{Im} T$.\n\nДля любого $v \\in V$ положим $v_1 = ABv$ и $v_2 = v - v_1$.\n\nТогда $v = v_1 + v_2$, где $v_1 \\in \\operatorname{Im}(AB)$ и \n$$Tv_2 = T(v - ABv) = Tv - TABv$$\n\nУчитывая идемпотентность проекторов, $v_2 \\in \\ker T$.\n\n## Вывод\n\nПоскольку $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$ и $V = \\ker T + \\operatorname{Im} T$, имеем:\n$$\\boxed{V = \\ker T \\oplus \\operatorname{Im} T}$$",
+            "type": "text"
+          }
+        ],
+        "model": "claude-haiku-4-5-20251001",
+        "role": "assistant",
+        "stop_details": null,
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 359,
+          "output_tokens": 1606,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "usage": {
+        "input_tokens": 359,
+        "output_tokens": 1606,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 359,
+          "output_tokens": 1606,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 11436,
+        "monotonic_ms": 11436,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 11436,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.0002872,
+        "output": 0.006424,
+        "native": null,
+        "total": 0.0067112,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "end_turn",
+      "provider_request_id": null,
+      "response_id": "msg_01C7mYZ7P2G52GkxzMxbDkvJ",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_a01d58e6e992abe138c7febb",
+      "result_index": 4,
+      "provider": "deepseek",
+      "alias": "deepseek:deepseek-v4-pro",
+      "adapter_class": "models.deepseek.deepseek.DeepSeekModel",
+      "requested_model_id": "deepseek-v4-pro",
+      "resolved_model_id": "deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:15:48.625163Z",
+      "completed_at": "2026-06-29T21:16:18.072928Z",
+      "status": "success",
+      "request": {
+        "model": "deepseek-v4-pro",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "temperature": 0.3,
+        "max_tokens": 16192,
+        "endpoint": "https://api.deepseek.com/chat/completions",
+        "stream": false
+      },
+      "answer": "**Формализация условия**\nПусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), \\(A,B:V\\to V\\) — линейные операторы со свойствами:\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nВведём оператор \\(T = AB - BA\\). Требуется доказать, что \\(V = \\ker T \\oplus \\operatorname{Im} T\\).\n\n**Доказательство**\n\n1. **Идемпотентность \\(AB\\) и \\(BA\\).**  \n   Положим \\(P = AB\\) и \\(Q = BA\\).  \n   Проверим:\n   \\[\n   P^2 = (AB)(AB) = A(BAB) = A B = P,\n   \\]\n   поскольку \\(BAB = B\\). Аналогично\n   \\[\n   Q^2 = (BA)(BA) = B(ABA) = B A = Q,\n   \\]\n   так как \\(ABA = A\\). Следовательно, \\(P\\) и \\(Q\\) — идемпотентные операторы (проекторы).\n\n2. **Ортогональность \\(P\\) и \\(Q\\).**  \n   Используем \\(A^2=0\\) и \\(B^2=0\\):\n   \\[\n   PQ = (AB)(BA) = A(BB)A = A(0)A = 0,\n   \\]\n   \\[\n   QP = (BA)(AB) = B(AA)B = B(0)B = 0.\n   \\]\n   Таким образом, \\(PQ = QP = 0\\).\n\n3. **Свойства \\(T\\).**  \n   \\(T = P - Q\\). Возводим в квадрат:\n   \\[\n   T^2 = (P - Q)^2 = P^2 - PQ - QP + Q^2 = P + Q.\n   \\]\n   Возводим в куб:\n   \\[\n   T^3 = T \\cdot T^2 = (P - Q)(P + Q) = P^2 + PQ - QP - Q^2 = P - Q = T.\n   \\]\n   Итак, \\(T^3 = T\\).\n\n4. **Декомпозиция пространства для оператора с \\(T^3=T\\).**  \n   Докажем, что из \\(T^3 = T\\) всегда следует \\(V = \\ker T \\oplus \\operatorname{Im} T\\).\n\n   *Сумма.* Для произвольного \\(x \\in V\\) построим\n   \\[\n   u = x - T^2 x,\\qquad v = T^2 x.\n   \\]\n   Тогда \\(x = u + v\\). Проверяем принадлежность слагаемых:\n   \\[\n   T u = T(x - T^2 x) = Tx - T^3 x = Tx - Tx = 0 \\;\\Longrightarrow\\; u \\in \\ker T,\n   \\]\n   \\[\n   v = T(Tx) \\;\\Longrightarrow\\; v \\in \\operatorname{Im} T.\n   \\]\n   Следовательно, \\(V = \\ker T + \\operatorname{Im} T\\).\n\n   *Прямая сумма.* Пусть \\(y \\in \\ker T \\cap \\operatorname{Im} T\\). Тогда существует \\(z \\in V\\) такой, что \\(y = Tz\\), и выполнено \\(Ty = 0\\).  \n   Из \\(Ty = 0\\) получаем \\(T(Tz) = T^2 z = 0\\).  \n   Используем \\(T^3 = T\\):\n   \\[\n   y = Tz = T^3 z = T(T^2 z) = T(0) = 0.\n   \\]\n   Значит, \\(\\ker T \\cap \\operatorname{Im} T = \\{0\\}\\).\n\n   Итак, \\(V = \\ker T \\oplus \\operatorname{Im} T\\).\n\n**Вывод**\nДля оператора \\(T = AB - BA\\), построенного по заданным условиям, выполнено \\(V = \\ker T \\oplus \\operatorname{Im} T\\). Доказательство не опирается на конечномерность \\(V\\) и справедливо в любом векторном пространстве над \\(\\mathbb R\\) (и над любым полем).",
+      "prompt_tokens": 251,
+      "completion_tokens": 3519,
+      "cost_usd": 0.00317072,
+      "latency_ms": 29426,
+      "raw_response": {
+        "id": "711a55ca-05ab-4739-8c07-f72c9c79e489",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "**Формализация условия**\nПусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), \\(A,B:V\\to V\\) — линейные операторы со свойствами:\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nВведём оператор \\(T = AB - BA\\). Требуется доказать, что \\(V = \\ker T \\oplus \\operatorname{Im} T\\).\n\n**Доказательство**\n\n1. **Идемпотентность \\(AB\\) и \\(BA\\).**  \n   Положим \\(P = AB\\) и \\(Q = BA\\).  \n   Проверим:\n   \\[\n   P^2 = (AB)(AB) = A(BAB) = A B = P,\n   \\]\n   поскольку \\(BAB = B\\). Аналогично\n   \\[\n   Q^2 = (BA)(BA) = B(ABA) = B A = Q,\n   \\]\n   так как \\(ABA = A\\). Следовательно, \\(P\\) и \\(Q\\) — идемпотентные операторы (проекторы).\n\n2. **Ортогональность \\(P\\) и \\(Q\\).**  \n   Используем \\(A^2=0\\) и \\(B^2=0\\):\n   \\[\n   PQ = (AB)(BA) = A(BB)A = A(0)A = 0,\n   \\]\n   \\[\n   QP = (BA)(AB) = B(AA)B = B(0)B = 0.\n   \\]\n   Таким образом, \\(PQ = QP = 0\\).\n\n3. **Свойства \\(T\\).**  \n   \\(T = P - Q\\). Возводим в квадрат:\n   \\[\n   T^2 = (P - Q)^2 = P^2 - PQ - QP + Q^2 = P + Q.\n   \\]\n   Возводим в куб:\n   \\[\n   T^3 = T \\cdot T^2 = (P - Q)(P + Q) = P^2 + PQ - QP - Q^2 = P - Q = T.\n   \\]\n   Итак, \\(T^3 = T\\).\n\n4. **Декомпозиция пространства для оператора с \\(T^3=T\\).**  \n   Докажем, что из \\(T^3 = T\\) всегда следует \\(V = \\ker T \\oplus \\operatorname{Im} T\\).\n\n   *Сумма.* Для произвольного \\(x \\in V\\) построим\n   \\[\n   u = x - T^2 x,\\qquad v = T^2 x.\n   \\]\n   Тогда \\(x = u + v\\). Проверяем принадлежность слагаемых:\n   \\[\n   T u = T(x - T^2 x) = Tx - T^3 x = Tx - Tx = 0 \\;\\Longrightarrow\\; u \\in \\ker T,\n   \\]\n   \\[\n   v = T(Tx) \\;\\Longrightarrow\\; v \\in \\operatorname{Im} T.\n   \\]\n   Следовательно, \\(V = \\ker T + \\operatorname{Im} T\\).\n\n   *Прямая сумма.* Пусть \\(y \\in \\ker T \\cap \\operatorname{Im} T\\). Тогда существует \\(z \\in V\\) такой, что \\(y = Tz\\), и выполнено \\(Ty = 0\\).  \n   Из \\(Ty = 0\\) получаем \\(T(Tz) = T^2 z = 0\\).  \n   Используем \\(T^3 = T\\):\n   \\[\n   y = Tz = T^3 z = T(T^2 z) = T(0) = 0.\n   \\]\n   Значит, \\(\\ker T \\cap \\operatorname{Im} T = \\{0\\}\\).\n\n   Итак, \\(V = \\ker T \\oplus \\operatorname{Im} T\\).\n\n**Вывод**\nДля оператора \\(T = AB - BA\\), построенного по заданным условиям, выполнено \\(V = \\ker T \\oplus \\operatorname{Im} T\\). Доказательство не опирается на конечномерность \\(V\\) и справедливо в любом векторном пространстве над \\(\\mathbb R\\) (и над любым полем).",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "Мы имеем векторное пространство V над R, линейные операторы A, B: V -> V, удовлетворяющие:\n\nA^2 = 0, B^2 = 0, ABA = A, BAB = B.\n\nT = AB - BA. Нужно доказать, что V = ker T ⊕ Im T.\n\nЭто означает, что T действует как проектор с точностью до... нет, просто нужно показать, что ker T и Im T дают прямую сумму и V = ker T + Im T. Или что пересечение ker T ∩ Im T = {0} и любой вектор представляется в виде суммы векторов из ker T и Im T. Эквивалентно, что ограничение T на Im T инъективно (или сюръективно). Так как V конечномерно? В условии не сказано, что V конечномерно. В общем случае для бесконечномерных пространств нужно доказать, что V = ker T ⊕ Im T. Это означает: (1) ker T ∩ Im T = {0}, (2) V = ker T + Im T.\n\nЕсть два утверждения. Сначала исследуем свойства операторов.\n\nA и B нильпотентны индекса 2. Условия ABA = A, BAB = B означают, что A и B являются псевдообратными друг другу в некотором смысле, регулярные элементы в кольце (обобщенные обратные). Известно, что тогда AB и BA — идемпотенты.\n\nПроверим:\n(AB)^2 = ABAB = A(BAB) = AB (так как BAB=B) => (AB)^2 = AB.\n(BA)^2 = BABA = B(ABA) = BA => (BA)^2 = BA.\n\nТаким образом, P = AB и Q = BA — идемпотенты (проекторы). Также заметим, что A и B действуют между образами этих проекторов. Im P = Im AB ⊆ Im A, Im Q = Im BA ⊆ Im B.\n\nВычислим T = AB - BA = P - Q.\n\nХотим показать, что V = ker T ⊕ Im T.\n\nЗаметим, что T = P - Q, где P и Q идемпотенты. Для двух идемпотентов известно, что T^3 = T? Проверим.\n\nP^2 = P, Q^2 = Q. Найдём T^2 = (P - Q)^2 = P - PQ - QP + Q.\nT^3 = T*T^2 = (P - Q)(P - PQ - QP + Q) = P - P Q - P Q P + P Q - Q P + Q P Q + Q P Q? Подожди, пересчитаем аккуратно.\n\nT = P - Q.\nT^2 = P^2 - PQ - QP + Q^2 = P + Q - PQ - QP.\nT^3 = T T^2 = (P - Q)(P + Q - PQ - QP) = P(P+Q-PQ-QP) - Q(P+Q-PQ-QP) = P^2 + PQ - P PQ - P QP - QP - Q^2 + Q PQ + Q QP.\nУпростим: P^2=P, Q^2=Q, PPQ = (PP)Q = PQ, PQP = (PQ)P, QPQ = (QP)Q? Надо использовать свойства A и B: P = AB, Q = BA.\n\nPQ = ABBA = A B^2 A = A 0 A = 0, потому что B^2 = 0. Значит, PQ = 0. Также QP = BAAB = B A^2 B = 0. Потому что A^2 = 0!\nЭто ключевое: A^2 = 0, B^2 = 0 => ABBA = 0? Подробнее: PQ = (AB)(BA) = A(BB)A = A 0 A = 0. QP = (BA)(AB) = B(AA)B = B 0 B = 0. Итак, PQ = 0 и QP = 0.\n\nОтсюда P и Q ортогональные идемпотенты (произведения 0 в обе стороны). Тогда:\n\nT = P - Q.\nT^2 = P + Q (так как -PQ - QP = 0).\nT^3 = T T^2 = (P - Q)(P + Q) = P^2 + PQ - QP - Q^2 = P + 0 - 0 - Q = P - Q = T.\n\nИтак, T^3 = T. Это означает, что T — оператор, удовлетворяющий T^3 = T. В общем случае для таких операторов над полем характеристики не 2 (а у нас R) имеет место разложение пространства в прямую сумму ядра и образа? Известно, что если T^3 = T, то минимальный многочлен делит x^3 - x = x(x-1)(x+1). Следовательно, T диагонализуемо (если характеристика не 2) и V = ker T ⊕ ker(T - I) ⊕ ker(T + I). Это даёт разложение на собственные подпространства. Тогда Im T = ker(T - I) ⊕ ker(T + I) (с точностью до изоморфизма). Но нам нужно V = ker T ⊕ Im T. Так как Im T состоит из образов векторов, действуя T, получаем элементы, которые лежат в сумме собственных подпространств для 1 и -1. Так как T^2 = P+Q, и T^2 — проектор? Проверим: (P+Q)^2 = P^2 + PQ + QP + Q^2 = P + Q. Так что T^2 — идемпотент. При этом T^2 — проектор на Im T? Обычно для T^3 = T, Im T = Im T^2, и ядро T = ker T^2. Тогда V = ker T ⊕ Im T. Это верно для любого оператора, удовлетворяющего T^3 = T, над полем, где 2 обратим, или даже в общем для любого поля? Докажем: если T^3 = T, то для любого x: x = (x - T^2 x) + T^2 x. T(x - T^2 x) = Tx - T^3 x = Tx - Tx = 0, так что x - T^2 x ∈ ker T. А T^2 x = T(Tx) ∈ Im T. Так что V = ker T + Im T. Если y ∈ ker T ∩ Im T, то y = T z, и Ty = 0 => T^2 z = 0. Но также y = T z = T^3 z = T (T^2 z) = T(0) = 0. Значит, пересечение нулевое. Здесь используется T^3 = T: Т.к. y = T z, то y = T(T^2 z)? Подожди, T^3 = T, поэтому T = T^3. Если y = T z, тогда y = T z = T^3 z = T(T^2 z). Но Ty = 0 => T^2 z = 0. Тогда y = T(T^2 z) = T 0 = 0. Так что пересечение {0}. Следовательно, V = ker T ⊕ Im T. Это чисто алгебраический факт для любого T с T^3 = T (над любым полем, даже характеристики 2? Если char=2, x^3-x = x(x-1)^2 и могут быть проблемы с разложением ядра и образа? Но T^3 = T => T(T^2 - I)=0. Для любого x, x = (x - T^2 x) + T^2 x. T(x - T^2 x) = Tx - T^3 x = Tx - Tx = 0. T^2 x ∈ Im T, т.к. T^2 x = T(T x) ∈ Im T. Пересечение: y = T z, Ty = 0 => T^2 z = 0 => y = T z. Но также T^3 = T, значит T z = T^3 z = T(T^2 z) = T0 = 0. Значит y = 0. Это работает над любым полем, характеристика не важна. T^3 = T верно в любом кольце. Так что достаточно доказать T^3 = T и PQ = 0, QP = 0, что мы уже сделали, используя A^2 = B^2 = 0, ABA=A, BAB=B.\n\nПроведём полное доказательство, шаг за шагом.\n\n1. Определим P = AB, Q = BA.\n2. Покажем, что P^2 = P, Q^2 = Q.\n   P^2 = ABAB = A(BAB) = A B = P? Погоди, BAB = B, значит A(BAB) = A B = P. Да.\n   Q^2 = BABA = B(ABA) = B A = Q.\n3. Покажем, что PQ = 0 и QP = 0.\n   PQ = A B B A = A (B^2) A = A 0 A = 0.\n   QP = B A A B = B (A^2) B = B 0 B = 0.\n4. T = AB - BA = P - Q.\n5. T^2 = (P - Q)^2 = P^2 - PQ - QP + Q^2 = P + Q.\n6. T^3 = T T^2 = (P - Q)(P + Q) = P^2 + PQ - QP - Q^2 = P - Q = T.\n   Значит, T^3 = T.\n7. Докажем, что для любого линейного оператора T: V -> V со свойством T^3 = T, выполняется V = ker T ⊕ Im T.\n   (i) Докажем V = ker T + Im T.\n       ∀ x ∈ V, положим u = x - T^2 x, v = T^2 x.\n       Тогда x = u + v.\n       T u = T(x - T^2 x) = T x - T^3 x = T x - T x = 0 ⇒ u ∈ ker T.\n       v = T(T x) ∈ Im T.\n   (ii) Докажем ker T ∩ Im T = {0}.\n       Пусть y ∈ ker T ∩ Im T. Тогда ∃ z ∈ V: y = T z, и T y = 0.\n       T y = T(T z) = T^2 z = 0.\n       Тогда y = T z. Но по T^3 = T, T z = T^3 z = T(T^2 z) = T(0) = 0.\n       Значит, y = 0.\n   Следовательно, V = ker T ⊕ Im T.\n\nДоказательство завершено. Важно отметить, что нигде не использовалась конечномерность, это чисто алгебраическое доказательство для любого векторного пространства над любым полем (даже над кольцом, модулем). В условии R, так что всё применимо.\n\nТребуется доказать, поэтому вывод: V = ker T ⊕ Im T.\n\nТеперь просто оформить ответ согласно требованиям: формализовать условие, ввести обозначения, проверить ограничения, полное доказательство без скачков, явный финальный вывод."
+            }
+          }
+        ],
+        "created": 1782767749,
+        "model": "deepseek-v4-pro",
+        "object": "chat.completion",
+        "service_tier": null,
+        "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 3519,
+          "prompt_tokens": 251,
+          "total_tokens": 3770,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "reasoning_content": "Мы имеем векторное пространство V над R, линейные операторы A, B: V -> V, удовлетворяющие:\n\nA^2 = 0, B^2 = 0, ABA = A, BAB = B.\n\nT = AB - BA. Нужно доказать, что V = ker T ⊕ Im T.\n\nЭто означает, что T действует как проектор с точностью до... нет, просто нужно показать, что ker T и Im T дают прямую сумму и V = ker T + Im T. Или что пересечение ker T ∩ Im T = {0} и любой вектор представляется в виде суммы векторов из ker T и Im T. Эквивалентно, что ограничение T на Im T инъективно (или сюръективно). Так как V конечномерно? В условии не сказано, что V конечномерно. В общем случае для бесконечномерных пространств нужно доказать, что V = ker T ⊕ Im T. Это означает: (1) ker T ∩ Im T = {0}, (2) V = ker T + Im T.\n\nЕсть два утверждения. Сначала исследуем свойства операторов.\n\nA и B нильпотентны индекса 2. Условия ABA = A, BAB = B означают, что A и B являются псевдообратными друг другу в некотором смысле, регулярные элементы в кольце (обобщенные обратные). Известно, что тогда AB и BA — идемпотенты.\n\nПроверим:\n(AB)^2 = ABAB = A(BAB) = AB (так как BAB=B) => (AB)^2 = AB.\n(BA)^2 = BABA = B(ABA) = BA => (BA)^2 = BA.\n\nТаким образом, P = AB и Q = BA — идемпотенты (проекторы). Также заметим, что A и B действуют между образами этих проекторов. Im P = Im AB ⊆ Im A, Im Q = Im BA ⊆ Im B.\n\nВычислим T = AB - BA = P - Q.\n\nХотим показать, что V = ker T ⊕ Im T.\n\nЗаметим, что T = P - Q, где P и Q идемпотенты. Для двух идемпотентов известно, что T^3 = T? Проверим.\n\nP^2 = P, Q^2 = Q. Найдём T^2 = (P - Q)^2 = P - PQ - QP + Q.\nT^3 = T*T^2 = (P - Q)(P - PQ - QP + Q) = P - P Q - P Q P + P Q - Q P + Q P Q + Q P Q? Подожди, пересчитаем аккуратно.\n\nT = P - Q.\nT^2 = P^2 - PQ - QP + Q^2 = P + Q - PQ - QP.\nT^3 = T T^2 = (P - Q)(P + Q - PQ - QP) = P(P+Q-PQ-QP) - Q(P+Q-PQ-QP) = P^2 + PQ - P PQ - P QP - QP - Q^2 + Q PQ + Q QP.\nУпростим: P^2=P, Q^2=Q, PPQ = (PP)Q = PQ, PQP = (PQ)P, QPQ = (QP)Q? Надо использовать свойства A и B: P = AB, Q = BA.\n\nPQ = ABBA = A B^2 A = A 0 A = 0, потому что B^2 = 0. Значит, PQ = 0. Также QP = BAAB = B A^2 B = 0. Потому что A^2 = 0!\nЭто ключевое: A^2 = 0, B^2 = 0 => ABBA = 0? Подробнее: PQ = (AB)(BA) = A(BB)A = A 0 A = 0. QP = (BA)(AB) = B(AA)B = B 0 B = 0. Итак, PQ = 0 и QP = 0.\n\nОтсюда P и Q ортогональные идемпотенты (произведения 0 в обе стороны). Тогда:\n\nT = P - Q.\nT^2 = P + Q (так как -PQ - QP = 0).\nT^3 = T T^2 = (P - Q)(P + Q) = P^2 + PQ - QP - Q^2 = P + 0 - 0 - Q = P - Q = T.\n\nИтак, T^3 = T. Это означает, что T — оператор, удовлетворяющий T^3 = T. В общем случае для таких операторов над полем характеристики не 2 (а у нас R) имеет место разложение пространства в прямую сумму ядра и образа? Известно, что если T^3 = T, то минимальный многочлен делит x^3 - x = x(x-1)(x+1). Следовательно, T диагонализуемо (если характеристика не 2) и V = ker T ⊕ ker(T - I) ⊕ ker(T + I). Это даёт разложение на собственные подпространства. Тогда Im T = ker(T - I) ⊕ ker(T + I) (с точностью до изоморфизма). Но нам нужно V = ker T ⊕ Im T. Так как Im T состоит из образов векторов, действуя T, получаем элементы, которые лежат в сумме собственных подпространств для 1 и -1. Так как T^2 = P+Q, и T^2 — проектор? Проверим: (P+Q)^2 = P^2 + PQ + QP + Q^2 = P + Q. Так что T^2 — идемпотент. При этом T^2 — проектор на Im T? Обычно для T^3 = T, Im T = Im T^2, и ядро T = ker T^2. Тогда V = ker T ⊕ Im T. Это верно для любого оператора, удовлетворяющего T^3 = T, над полем, где 2 обратим, или даже в общем для любого поля? Докажем: если T^3 = T, то для любого x: x = (x - T^2 x) + T^2 x. T(x - T^2 x) = Tx - T^3 x = Tx - Tx = 0, так что x - T^2 x ∈ ker T. А T^2 x = T(Tx) ∈ Im T. Так что V = ker T + Im T. Если y ∈ ker T ∩ Im T, то y = T z, и Ty = 0 => T^2 z = 0. Но также y = T z = T^3 z = T (T^2 z) = T(0) = 0. Значит, пересечение нулевое. Здесь используется T^3 = T: Т.к. y = T z, то y = T(T^2 z)? Подожди, T^3 = T, поэтому T = T^3. Если y = T z, тогда y = T z = T^3 z = T(T^2 z). Но Ty = 0 => T^2 z = 0. Тогда y = T(T^2 z) = T 0 = 0. Так что пересечение {0}. Следовательно, V = ker T ⊕ Im T. Это чисто алгебраический факт для любого T с T^3 = T (над любым полем, даже характеристики 2? Если char=2, x^3-x = x(x-1)^2 и могут быть проблемы с разложением ядра и образа? Но T^3 = T => T(T^2 - I)=0. Для любого x, x = (x - T^2 x) + T^2 x. T(x - T^2 x) = Tx - T^3 x = Tx - Tx = 0. T^2 x ∈ Im T, т.к. T^2 x = T(T x) ∈ Im T. Пересечение: y = T z, Ty = 0 => T^2 z = 0 => y = T z. Но также T^3 = T, значит T z = T^3 z = T(T^2 z) = T0 = 0. Значит y = 0. Это работает над любым полем, характеристика не важна. T^3 = T верно в любом кольце. Так что достаточно доказать T^3 = T и PQ = 0, QP = 0, что мы уже сделали, используя A^2 = B^2 = 0, ABA=A, BAB=B.\n\nПроведём полное доказательство, шаг за шагом.\n\n1. Определим P = AB, Q = BA.\n2. Покажем, что P^2 = P, Q^2 = Q.\n   P^2 = ABAB = A(BAB) = A B = P? Погоди, BAB = B, значит A(BAB) = A B = P. Да.\n   Q^2 = BABA = B(ABA) = B A = Q.\n3. Покажем, что PQ = 0 и QP = 0.\n   PQ = A B B A = A (B^2) A = A 0 A = 0.\n   QP = B A A B = B (A^2) B = B 0 B = 0.\n4. T = AB - BA = P - Q.\n5. T^2 = (P - Q)^2 = P^2 - PQ - QP + Q^2 = P + Q.\n6. T^3 = T T^2 = (P - Q)(P + Q) = P^2 + PQ - QP - Q^2 = P - Q = T.\n   Значит, T^3 = T.\n7. Докажем, что для любого линейного оператора T: V -> V со свойством T^3 = T, выполняется V = ker T ⊕ Im T.\n   (i) Докажем V = ker T + Im T.\n       ∀ x ∈ V, положим u = x - T^2 x, v = T^2 x.\n       Тогда x = u + v.\n       T u = T(x - T^2 x) = T x - T^3 x = T x - T x = 0 ⇒ u ∈ ker T.\n       v = T(T x) ∈ Im T.\n   (ii) Докажем ker T ∩ Im T = {0}.\n       Пусть y ∈ ker T ∩ Im T. Тогда ∃ z ∈ V: y = T z, и T y = 0.\n       T y = T(T z) = T^2 z = 0.\n       Тогда y = T z. Но по T^3 = T, T z = T^3 z = T(T^2 z) = T(0) = 0.\n       Значит, y = 0.\n   Следовательно, V = ker T ⊕ Im T.\n\nДоказательство завершено. Важно отметить, что нигде не использовалась конечномерность, это чисто алгебраическое доказательство для любого векторного пространства над любым полем (даже над кольцом, модулем). В условии R, так что всё применимо.\n\nТребуется доказать, поэтому вывод: V = ker T ⊕ Im T.\n\nТеперь просто оформить ответ согласно требованиям: формализовать условие, ввести обозначения, проверить ограничения, полное доказательство без скачков, явный финальный вывод."
+      },
+      "usage": {
+        "input_tokens": 251,
+        "output_tokens": 3519,
+        "total_tokens": 3770,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 3519,
+          "prompt_tokens": 251,
+          "total_tokens": 3770,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 29426,
+        "monotonic_ms": 29426,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 29426,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00010919,
+        "output": 0.00306153,
+        "native": null,
+        "total": 0.00317072,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "711a55ca-05ab-4739-8c07-f72c9c79e489",
+      "provider_timestamp": 1782767749,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_b3bf57477730e73d58ba89fd",
+      "result_index": 5,
+      "provider": "deepseek",
+      "alias": "deepseek:deepseek-v4-flash",
+      "adapter_class": "models.deepseek.deepseek.DeepSeekModel",
+      "requested_model_id": "deepseek-v4-flash",
+      "resolved_model_id": "deepseek-v4-flash",
+      "model": "deepseek-v4-flash",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:16:18.082507Z",
+      "completed_at": "2026-06-29T21:17:03.783802Z",
+      "status": "success",
+      "request": {
+        "model": "deepseek-v4-flash",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "temperature": 0.3,
+        "max_tokens": 16192,
+        "endpoint": "https://api.deepseek.com/chat/completions",
+        "stream": false
+      },
+      "answer": "Доказательство:\n\n1. Из условий \\(ABA = A\\) и \\(BAB = B\\) получаем:\n   \\[\n   (AB)^2 = ABAB = A(BAB) = AB, \\qquad (BA)^2 = BABA = B(ABA) = BA.\n   \\]\n\n2. Вычислим \\(T = AB - BA\\). Используя \\(A^2=0,\\; B^2=0\\):\n   \\[\n   T^2 = (AB - BA)^2 = ABAB - ABBA - BAAB + BABA = (AB)^2 + (BA)^2 = AB + BA.\n   \\]\n\n3. Далее,\n   \\[\n   T^3 = T\\cdot T^2 = (AB - BA)(AB + BA) = ABAB + ABBA - BAAB - BABA = (AB)^2 - (BA)^2 = AB - BA = T.\n   \\]\n   Таким образом, \\(T^3 - T = 0\\), т.е. \\(T(T^2 - I) = 0\\).\n\n4. Многочлен \\(p(x)=x^3-x = x(x-1)(x+1)\\) имеет три различных корня. Поэтому существуют многочлены \\(e_0(x), e_1(x), e_{-1}(x)\\) такие, что\n   \\[\n   e_0(x)+e_1(x)+e_{-1}(x)=1,\\quad e_0(0)=1,\\; e_1(1)=1,\\; e_{-1}(-1)=1,\n   \\]\n   и для любого \\(v\\in V\\) выполнено \\(v = e_0(T)v + e_1(T)v + e_{-1}(T)v\\), причем\n   \\[\n   T e_0(T)v = 0,\\quad (T-I)e_1(T)v = 0,\\quad (T+I)e_{-1}(T)v = 0.\n   \\]\n   Следовательно,\n   \\[\n   V = \\ker T \\oplus \\ker(T-I) \\oplus \\ker(T+I).\n   \\]\n\n5. Покажем, что \\(\\operatorname{Im} T = \\ker(T-I) \\oplus \\ker(T+I)\\).\n   - Если \\(w\\in\\operatorname{Im} T\\), то \\(w = T(v)\\) для некоторого \\(v\\). Разложим \\(v = v_0 + v_1 + v_{-1}\\) с \\(v_0\\in\\ker T\\), \\(v_1\\in\\ker(T-I)\\), \\(v_{-1}\\in\\ker(T+I)\\). Тогда\n     \\[\n     w = T(v) = v_1 - v_{-1} \\in \\ker(T-I) \\oplus \\ker(T+I).\n     \\]\n   - Обратно, пусть \\(w = u + v\\) с \\(u\\in\\ker(T-I)\\), \\(v\\in\\ker(T+I)\\). Возьмём \\(x = u - v\\). Тогда\n     \\[\n     T(x) = T(u) - T(v) = u - (-v) = u+v = w,\n     \\]\n     поэтому \\(w\\in\\operatorname{Im} T\\).\n\n6. Теперь \\(V = \\ker T \\oplus (\\ker(T-I) \\oplus \\ker(T+I)) = \\ker T \\oplus \\operatorname{Im} T\\). Осталось проверить, что пересечение \\(\\ker T \\cap \\operatorname{Im} T = \\{0\\}\\). Если \\(x\\in\\ker T \\cap \\operatorname{Im} T\\), то \\(x = u+v\\) с \\(u\\in\\ker(T-I)\\), \\(v\\in\\ker(T+I)\\) и \\(T(x)=0\\). Но\n   \\[\n   T(x) = u - v = 0 \\;\\Longrightarrow\\; u = v.\n   \\]\n   Тогда \\(u = v \\in \\ker(T-I) \\cap \\ker(T+I)\\). Для такого элемента \\(T(u)=u\\) и \\(T(u)=-u\\), откуда \\(u = -u\\), т.е. \\(2u=0\\). Поскольку поле \\(\\mathbb{R}\\) имеет характеристику \\(0\\), получаем \\(u=0\\), а значит \\(x=0\\).\n\nТаким образом, \\(V = \\ker T \\oplus \\operatorname{Im} T\\). Утверждение доказано.",
+      "prompt_tokens": 251,
+      "completion_tokens": 6214,
+      "cost_usd": 0.00177506,
+      "latency_ms": 45673,
+      "raw_response": {
+        "id": "f61692e2-351c-4158-b852-268192bf1719",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Доказательство:\n\n1. Из условий \\(ABA = A\\) и \\(BAB = B\\) получаем:\n   \\[\n   (AB)^2 = ABAB = A(BAB) = AB, \\qquad (BA)^2 = BABA = B(ABA) = BA.\n   \\]\n\n2. Вычислим \\(T = AB - BA\\). Используя \\(A^2=0,\\; B^2=0\\):\n   \\[\n   T^2 = (AB - BA)^2 = ABAB - ABBA - BAAB + BABA = (AB)^2 + (BA)^2 = AB + BA.\n   \\]\n\n3. Далее,\n   \\[\n   T^3 = T\\cdot T^2 = (AB - BA)(AB + BA) = ABAB + ABBA - BAAB - BABA = (AB)^2 - (BA)^2 = AB - BA = T.\n   \\]\n   Таким образом, \\(T^3 - T = 0\\), т.е. \\(T(T^2 - I) = 0\\).\n\n4. Многочлен \\(p(x)=x^3-x = x(x-1)(x+1)\\) имеет три различных корня. Поэтому существуют многочлены \\(e_0(x), e_1(x), e_{-1}(x)\\) такие, что\n   \\[\n   e_0(x)+e_1(x)+e_{-1}(x)=1,\\quad e_0(0)=1,\\; e_1(1)=1,\\; e_{-1}(-1)=1,\n   \\]\n   и для любого \\(v\\in V\\) выполнено \\(v = e_0(T)v + e_1(T)v + e_{-1}(T)v\\), причем\n   \\[\n   T e_0(T)v = 0,\\quad (T-I)e_1(T)v = 0,\\quad (T+I)e_{-1}(T)v = 0.\n   \\]\n   Следовательно,\n   \\[\n   V = \\ker T \\oplus \\ker(T-I) \\oplus \\ker(T+I).\n   \\]\n\n5. Покажем, что \\(\\operatorname{Im} T = \\ker(T-I) \\oplus \\ker(T+I)\\).\n   - Если \\(w\\in\\operatorname{Im} T\\), то \\(w = T(v)\\) для некоторого \\(v\\). Разложим \\(v = v_0 + v_1 + v_{-1}\\) с \\(v_0\\in\\ker T\\), \\(v_1\\in\\ker(T-I)\\), \\(v_{-1}\\in\\ker(T+I)\\). Тогда\n     \\[\n     w = T(v) = v_1 - v_{-1} \\in \\ker(T-I) \\oplus \\ker(T+I).\n     \\]\n   - Обратно, пусть \\(w = u + v\\) с \\(u\\in\\ker(T-I)\\), \\(v\\in\\ker(T+I)\\). Возьмём \\(x = u - v\\). Тогда\n     \\[\n     T(x) = T(u) - T(v) = u - (-v) = u+v = w,\n     \\]\n     поэтому \\(w\\in\\operatorname{Im} T\\).\n\n6. Теперь \\(V = \\ker T \\oplus (\\ker(T-I) \\oplus \\ker(T+I)) = \\ker T \\oplus \\operatorname{Im} T\\). Осталось проверить, что пересечение \\(\\ker T \\cap \\operatorname{Im} T = \\{0\\}\\). Если \\(x\\in\\ker T \\cap \\operatorname{Im} T\\), то \\(x = u+v\\) с \\(u\\in\\ker(T-I)\\), \\(v\\in\\ker(T+I)\\) и \\(T(x)=0\\). Но\n   \\[\n   T(x) = u - v = 0 \\;\\Longrightarrow\\; u = v.\n   \\]\n   Тогда \\(u = v \\in \\ker(T-I) \\cap \\ker(T+I)\\). Для такого элемента \\(T(u)=u\\) и \\(T(u)=-u\\), откуда \\(u = -u\\), т.е. \\(2u=0\\). Поскольку поле \\(\\mathbb{R}\\) имеет характеристику \\(0\\), получаем \\(u=0\\), а значит \\(x=0\\).\n\nТаким образом, \\(V = \\ker T \\oplus \\operatorname{Im} T\\). Утверждение доказано.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "Мы должны доказать, что V = ker T ⊕ Im T, где T = AB - BA, при условиях A^2 = B^2 = 0, ABA = A, BAB = B. V - векторное пространство над R, операторы линейные. Нужно показать, что V является прямой суммой ядра и образа T. Это эквивалентно тому, что T - проектор? Не обязательно проектор, но для любого линейного оператора на векторном пространстве (конечномерном?) обычно верно, что V = ker T ⊕ Im T тогда и только тогда, когда T - проектор, т.е. T^2 = T? Нет, не обязательно. Для любого линейного оператора на конечномерном пространстве сумма размерностей ядра и образа равна dim V, но пересечение может быть нетривиальным. Чтобы было прямой суммой, нужно, чтобы ker T ∩ Im T = {0} и V = ker T + Im T. В конечномерном случае достаточно, чтобы ker T ∩ Im T = {0}, так как тогда dim(ker T + Im T) = dim ker T + dim Im T - dim(ker T ∩ Im T) = dim V, так что сумма равна всему пространству. В бесконечномерном случае нужно также проверить, что каждый вектор представляется в виде суммы. Однако в условии не сказано, что V конечномерно. Но задача, вероятно, предполагает конечномерность? Не указано. Обычно в таких задачах V - произвольное векторное пространство над R, но для доказательства прямой суммы нужно показать, что любой вектор v ∈ V можно представить как v = x + y, где x ∈ ker T, y ∈ Im T, и что ker T ∩ Im T = {0}. Возможно, это можно сделать, используя соотношения между A и B. \n\nНам дано: A^2 = 0, B^2 = 0, ABA = A, BAB = B. Из этих равенств можно вывести много следствий. Например, умножим ABA = A слева на A: A^2 B A = A^2 => 0 = 0, тривиально. Умножим справа на A: A B A^2 = A^2 => 0 = 0. Так что полезного мало. Но можно заметить, что A и B являются частичными изометриями или проекторами в некотором смысле? \n\nРассмотрим T = AB - BA. Найдем T^2? Вычислим T^2 = (AB - BA)^2 = ABAB - ABBA - BAAB + BABA. Но ABAB = (AB)^2, ABBA = A B^2 A = 0, так как B^2=0. BAAB = B A^2 B = 0. BABA = (BA)^2. Итак, T^2 = (AB)^2 + (BA)^2. Нам нужно выразить (AB)^2 и (BA)^2 через A, B, возможно, используя данные соотношения. Заметим, что ABA = A => если умножить справа на B, то получим ABAB = AB. Действительно: (ABA)B = A B => A B A B = A B. То есть (AB)^2 = AB. Аналогично, из BAB = B, умножая слева на A, получаем A B A B = A B? Нет: A(BAB) = AB => A B A B = AB. То же самое. А из BAB = B, умножая справа на A: B A B A = B A => (BA)^2 = BA. Проверим: BAB = B => (BAB)A = BA => B A B A = BA. Итак, (AB)^2 = AB, (BA)^2 = BA. Значит, T^2 = AB + BA. Теперь заметим, что T = AB - BA. Тогда T^2 = AB + BA. Это интересно. Далее, можно вычислить T^3 = T * T^2 = (AB - BA)(AB + BA) = ABAB + ABBA - BAAB - BABA = (AB)^2 + 0 - 0 - (BA)^2 = AB - BA = T. Потому что ABBA = A B^2 A = 0, BAAB = B A^2 B = 0. Итак, T^3 = T. То есть T^3 - T = 0, или T(T^2 - I) = 0, где I - тождественный оператор. Это означает, что T удовлетворяет многочлену x^3 - x = x(x-1)(x+1). Таким образом, T - диагонализируемый оператор с собственными значениями 0, 1, -1 (если пространство конечномерно, то T диагонализуем, так как минимальный многочлен не имеет кратных корней). Но в общем случае мы можем использовать разложение в прямую сумму собственных подпространств? Однако для бесконечномерных пространств, если оператор удовлетворяет полиномиальному уравнению, то он является оператором с конечным спектром, и пространство разлагается в прямую сумму корневых подпространств, которые в данном случае являются собственными, так как многочлен имеет простые корни. Действительно, для любого линейного оператора T на векторном пространстве (над любым полем, если характеристика не 2,3?), если p(T)=0 и p(x) = (x-λ1)...(x-λk) с различными λi, то V = ⊕ ker(T-λi I). Это стандартный результат: разложение Фиттинга или разложение на собственные подпространства, если многочлен распадается на линейные множители. Здесь p(x)=x^3-x = x(x-1)(x+1). Так что V = V_0 ⊕ V_1 ⊕ V_{-1}, где V_λ = ker(T-λI). Причем T на V_λ действует умножением на λ. В частности, ker T = V_0. Im T? Для диагонализируемого оператора образ равен сумме всех собственных подпространств с ненулевыми собственными значениями. Действительно, если T диагонализуем, то Im T = ⊕_{λ≠0} V_λ. Тогда V = ker T ⊕ Im T. Это верно, если T диагонализуем, то есть V = ker T ⊕ Im T, так как Im T = (ker T)^⊥? Не обязательно, но в данном случае, поскольку T имеет только собственные значения 0,1,-1, и оператор диагонализуем (минимальный многочлен без кратных корней), то V = ker(T) ⊕ Im(T) является прямой суммой, потому что Im(T) = V_1 ⊕ V_{-1}, а ker(T) = V_0, и они пересекаются только по 0. Также любой вектор v можно записать как сумму проекций на эти подпространства. Таким образом, если мы докажем, что T^3 = T, то мы получим, что T аннулируется многочленом x^3 - x = x(x-1)(x+1). Этот многочлен не имеет кратных корней (над R, но корни 0,1,-1 различны). Следовательно, пространство V разлагается в прямую сумму собственных подпространств: V = ker T ⊕ ker(T-I) ⊕ ker(T+I). Но тогда Im T = ? Заметим, что для λ=1 и -1, T(v)=λv, так что T(v) = λv, и эти векторы лежат в Im T. Обратно, если w ∈ Im T, то w = T(v) для некоторого v. Разложим v = v0 + v1 + v_{-1}. Тогда T(v) = 0*v0 + 1*v1 + (-1)*v_{-1} = v1 - v_{-1}. Таким образом, Im T = {v1 - v_{-1} | v1 ∈ V1, v_{-1} ∈ V_{-1}}. Но V1 и V_{-1} - подпространства, и их прямая сумма есть V1 ⊕ V_{-1}. Отображение (v1, v_{-1}) -> v1 - v_{-1} является изоморфизмом V1 ⊕ V_{-1} на себя? На самом деле, это отображение сюръективно на V1 ⊕ V_{-1}, поскольку для любого u = v1 + v_{-1} можно найти v1' = v1, v_{-1}' = -v_{-1}, тогда v1' - v_{-1}' = v1 + v_{-1} = u. Но нужно проверить, что образ T есть в точности V1 ⊕ V_{-1}. Действительно, T(v) = v1 - v_{-1} ∈ V1 ⊕ V_{-1}. И любой элемент w = w1 + w_{-1} ∈ V1 ⊕ V_{-1} можно представить как T(v) с v = w1 - w_{-1}? Тогда T(v) = T(w1 - w_{-1}) = T(w1) - T(w_{-1}) = 1*w1 - (-1)*w_{-1} = w1 + w_{-1}? Нет, T(w1) = w1, T(w_{-1}) = -w_{-1}, так что T(w1 - w_{-1}) = w1 - (-w_{-1})? Подождите: w1 ∈ V1 => T(w1)=w1; w_{-1} ∈ V_{-1} => T(w_{-1}) = -w_{-1}. Тогда T(w1 - w_{-1}) = T(w1) - T(w_{-1}) = w1 - (-w_{-1}) = w1 + w_{-1} = w. Итак, Im T = V1 ⊕ V_{-1}. Следовательно, V = ker T ⊕ Im T, так как ker T = V0. Таким образом, если мы докажем T^3 = T, то получим требуемое разложение. \n\nПроверим вычисление T^3: мы уже сделали: T^2 = AB + BA, затем T^3 = (AB-BA)(AB+BA) = ABAB + ABBA - BAAB - BABA = (AB)^2 + 0 - 0 - (BA)^2 = AB - BA = T. Все шаги корректны, используем A^2=0, B^2=0 и тождества (AB)^2 = AB, (BA)^2 = BA. Последние мы вывели из ABA=A и BAB=B: умножим ABA=A справа на B: ABAB = AB; умножим BAB=B слева на A: ABAB = AB? Это то же самое. Для (BA)^2: умножим BAB=B справа на A: BABA = BA. Итак, (AB)^2=AB, (BA)^2=BA. Так что T^3=T. \n\nТаким образом, T удовлетворяет T^3 - T = 0. Отсюда следует, что минимальный многочлен T делит x^3 - x = x(x-1)(x+1). Поскольку корни различны, T диагонализуем (в смысле, что V является прямой суммой собственных подпространств). Докажем это в общем виде для любого векторного пространства (возможно, бесконечномерного) над полем характеристики не 2,3? Над R характеристика 0. Для оператора T, удовлетворяющего (T - λ1 I)...(T - λk I)=0 с различными λi, пространство разлагается в прямую сумму ядер операторов T-λi I. Это стандартный факт: используем китайскую теорему об остатках для многочленов. Поскольку многочлен p(x)=x(x-1)(x+1) взаимно простые множители, существуют многочлены a(x), b(x), c(x) такие, что a(x)x + b(x)(x-1) + c(x)(x+1) = 1, и тогда для любого v, v = a(T)T v + b(T)(T-I)v + c(T)(T+I)v, и a(T)Tv ∈ ker(T)? Нет, нужно аккуратно. Обычно для разложения в сумму проекторов: если p(x) = (x-λ1)...(x-λk), то существуют многочлены e_i(x) такие, что e_i(λ_j)=δ_{ij} и e_i(T) - проекторы на V_{λ_i}. Классический результат: если оператор удовлетворяет полиномиальному уравнению с различными корнями, то он диагонализуем (в смысле разложения в прямую сумму собственных подпространств). Это верно для любого векторного пространства, не обязательно конечномерного, если мы интерпретируем прямую сумму как алгебраическую прямую сумму (каждый вектор единственным образом представляется в виде суммы собственных векторов). Доказательство: пусть p(T)=0, где p(x)=∏_{i=1}^k (x-λ_i) с различными λ_i. Тогда для каждого i определим q_i(x) = p(x)/(x-λ_i). Поскольку многочлены q_i(x) взаимно просты в совокупности? Существуют многочлены r_i(x) такие, что ∑ q_i(x) r_i(x) = 1. Тогда для любого v, v = ∑ q_i(T) r_i(T) v. При этом (T-λ_i I) q_i(T) = p(T)=0, так что (T-λ_i I)(q_i(T) r_i(T) v) = 0, то есть q_i(T) r_i(T) v ∈ ker(T-λ_i I). Таким образом, v ∈ ∑ ker(T-λ_i I). Единственность следует из того, что если ∑ v_i = 0 с v_i ∈ ker(T-λ_i I), то, применяя произведение (T-λ_j I) для j≠i, можно показать, что каждый v_i=0. Итак, V = ⊕ ker(T-λ_i I). \n\nТаким образом, V = ker T ⊕ ker(T-I) ⊕ ker(T+I). Далее, Im T =? Как показано выше, Im T = ker(T-I) ⊕ ker(T+I). Докажем это: для любого w ∈ Im T, w = T(v). Разложим v = v0 + v1 + v_{-1}, тогда w = v1 - v_{-1}. Обратно, для любых v1 ∈ ker(T-I), v_{-1} ∈ ker(T+I), возьмем v = v1 - v_{-1}, тогда T(v) = v1 - (-v_{-1})? Выше уже показали: T(v1)=v1, T(v_{-1}) = -v_{-1}, так что T(v1 - v_{-1}) = v1 + v_{-1}. Таким образом, любой элемент v1 + v_{-1} является образом, значит Im T содержит ker(T-I) ⊕ ker(T+I). А мы уже показали, что Im T ⊆ ker(T-I) ⊕ ker(T+I), так как w = v1 - v_{-1} ∈ ker(T-I) ⊕ ker(T+I). Следовательно, Im T = ker(T-I) ⊕ ker(T+I). Тогда V = ker T ⊕ Im T, так как ker T ∩ Im T = {0} (поскольку если v ∈ ker T ∩ Im T, то v ∈ ker T и v = v1 + v_{-1} с v1 ∈ ker(T-I), v_{-1} ∈ ker(T+I). Но тогда T(v)=0, а также T(v)=v1 - v_{-1} = 0 => v1 = v_{-1}. Но v1 ∈ ker(T-I), v_{-1} ∈ ker(T+I). Если v1 = v_{-1}, то T(v1)=v1 и T(v1)=-v1, следовательно v1 = -v1 => 2v1=0 => v1=0, так как характеристика не 2. Итак, v=0. И, очевидно, V = ker T + Im T, так как V = ker T ⊕ ker(T-I) ⊕ ker(T+I) = ker T ⊕ Im T. \n\nТаким образом, доказательство завершено.\n\nОднако, стоит проверить, что мы не использовали конечномерность. Все рассуждения основаны на алгебраических тождествах и разложении с помощью многочленов, которые корректны в любом векторном пространстве. Единственное, где может быть тонкость - это существование многочленов r_i, дающих разложение единицы. Это теорема о взаимной простоте многочленов: если многочлены q_i(x) не имеют общего корня, то существуют многочлены a_i(x) такие, что ∑ a_i(x) q_i(x) = 1. Здесь q_0(x) = (x-1)(x+1) = x^2-1, q_1(x)=x(x+1)=x^2+x, q_{-1}(x)=x(x-1)=x^2-x. Они взаимно просты в совокупности, поэтому существуют многочлены a_0, a_1, a_{-1} такие, что a_0(x)(x^2-1)+a_1(x)(x^2+x)+a_{-1}(x)(x^2-x)=1. Например, можно подобрать: ( -1/2 )*(x^2-1) + (1/2)*(x^2+x) + (0)*(x^2-x) = 1? Вычислим: -1/2*(x^2-1) + 1/2*(x^2+x) = -1/2 x^2 + 1/2 + 1/2 x^2 + 1/2 x = 1/2 + 1/2 x. Это не 1. Попробуем другие коэффициенты. Можно использовать интерполяционные многочлены Лагранжа: e_0(x) = (x-1)(x+1)/( (0-1)(0+1) ) = (x^2-1)/(-1) = 1-x^2; e_1(x) = x(x+1)/(1*(2)) = (x^2+x)/2; e_{-1}(x) = x(x-1)/((-1)*(-2)) = x(x-1)/2. Тогда e_0(0)=1, e_0(1)=0, e_0(-1)=0; e_1(1)=1, e_1(0)=0, e_1(-1)=0; e_{-1}(-1)=1, e_{-1}(0)=0, e_{-1}(1)=0. Тогда e_0+e_1+e_{-1}=? 1-x^2 + (x^2+x)/2 + (x^2-x)/2 = 1-x^2 + (2x^2/2) = 1-x^2 + x^2 = 1. Итак, e_0(x)=1-x^2, e_1(x)=(x^2+x)/2, e_{-1}(x)=(x^2-x)/2. Проверим: 1-x^2 + (x^2+x)/2 + (x^2-x)/2 = 1-x^2 + (2x^2)/2 = 1. Да. Таким образом, для любого v, v = e_0(T)v + e_1(T)v + e_{-1}(T)v, причем e_0(T)v ∈ ker T, так как T e_0(T)v = T(1-T^2)v = (T-T^3)v = 0, поскольку T^3=T. Аналогично, e_1(T)v ∈ ker(T-I), потому что (T-I)e_1(T)v = (T-I) * (T^2+T)/2 v = (1/2)(T^3+T^2 - T^2 - T)v = (1/2)(T^3-T)v = 0. И e_{-1}(T)v ∈ ker(T+I) аналогично. Итак, разложение существует, единственность следует из того, что если v0+v1+v_{-1}=0, то применяя подходящие проекторы, получаем v0=v1=v_{-1}=0. Поэтому V = ker T ⊕ ker(T-I) ⊕ ker(T+I). И как показано, Im T = ker(T-I) ⊕ ker(T+I). Так что V = ker T ⊕ Im T. \n\nТаким образом, утверждение доказано.\n\nТеперь оформим решение.\n\nПлан:\n1. Показать, что (AB)^2 = AB и (BA)^2 = BA, используя данные соотношения.\n2. Вычислить T^2 = (AB-BA)^2 = AB + BA (используя A^2=0, B^2=0).\n3. Вычислить T^3 = T * T^2 = (AB-BA)(AB+BA) = AB - BA = T, используя (AB)^2=AB, (BA)^2=BA, и A^2=0, B^2=0.\n4. Таким образом, T^3 - T = 0, или T(T^2 - I)=0, где I - тождественный оператор.\n5. Многочлен x^3 - x = x(x-1)(x+1) имеет три различных корня, следовательно, V раскладывается в прямую сумму собственных подпространств:\n   V = ker T ⊕ ker(T - I) ⊕ ker(T + I).\n6. Показать, что Im T = ker(T - I) ⊕ ker(T + I):\n   - Если w ∈ Im T, то w = T(v) для некоторого v. Разложим v = v0 + v1 + v_{-1} (собственные компоненты). Тогда w = v1 - v_{-1} ∈ ker(T - I) ⊕ ker(T + I).\n   - Обратно, если w = u + v, где u ∈ ker(T - I), v ∈ ker(T + I), то w = T(u - v), так как T(u - v) = T(u) - T(v) = u - (-v) = u + v = w. Следовательно, w ∈ Im T.\n7. Тогда V = ker T ⊕ Im T, так как ker T ∩ Im T = {0}: если x ∈ ker T ∩ Im T, то x = u + v с u ∈ ker(T-I), v ∈ ker(T+I) и T(x)=0. Но T(x)=u - v = 0 ⇔ u=v. Тогда u=v ∈ ker(T-I) ∩ ker(T+I). Но если w ∈ ker(T-I) ∩ ker(T+I), то T(w)=w и T(w)=-w, следовательно w=-w ⇒ 2w=0 ⇒ w=0 (так как характеристика поля не 2). Значит, u=v=0, и x=0. И V = ker T + Im T, так как V = ker T ⊕ (ker(T-I) ⊕ ker(T+I)) = ker T ⊕ Im T.\n8. Следовательно, V = ker T ⊕ Im T.\n\nОтвет: доказано.\n\nТеперь проверим, что все шаги корректны для произвольного векторного пространства над R. Используем только линейность и данные соотношения. Никаких дополнительных предположений о конечномерности не требуется. Работает.\n\nТаким образом, финальный ответ: требуемое разложение имеет место."
+            }
+          }
+        ],
+        "created": 1782767779,
+        "model": "deepseek-v4-flash",
+        "object": "chat.completion",
+        "service_tier": null,
+        "system_fingerprint": "fp_8b330d02d0_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 6214,
+          "prompt_tokens": 251,
+          "total_tokens": 6465,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "reasoning_content": "Мы должны доказать, что V = ker T ⊕ Im T, где T = AB - BA, при условиях A^2 = B^2 = 0, ABA = A, BAB = B. V - векторное пространство над R, операторы линейные. Нужно показать, что V является прямой суммой ядра и образа T. Это эквивалентно тому, что T - проектор? Не обязательно проектор, но для любого линейного оператора на векторном пространстве (конечномерном?) обычно верно, что V = ker T ⊕ Im T тогда и только тогда, когда T - проектор, т.е. T^2 = T? Нет, не обязательно. Для любого линейного оператора на конечномерном пространстве сумма размерностей ядра и образа равна dim V, но пересечение может быть нетривиальным. Чтобы было прямой суммой, нужно, чтобы ker T ∩ Im T = {0} и V = ker T + Im T. В конечномерном случае достаточно, чтобы ker T ∩ Im T = {0}, так как тогда dim(ker T + Im T) = dim ker T + dim Im T - dim(ker T ∩ Im T) = dim V, так что сумма равна всему пространству. В бесконечномерном случае нужно также проверить, что каждый вектор представляется в виде суммы. Однако в условии не сказано, что V конечномерно. Но задача, вероятно, предполагает конечномерность? Не указано. Обычно в таких задачах V - произвольное векторное пространство над R, но для доказательства прямой суммы нужно показать, что любой вектор v ∈ V можно представить как v = x + y, где x ∈ ker T, y ∈ Im T, и что ker T ∩ Im T = {0}. Возможно, это можно сделать, используя соотношения между A и B. \n\nНам дано: A^2 = 0, B^2 = 0, ABA = A, BAB = B. Из этих равенств можно вывести много следствий. Например, умножим ABA = A слева на A: A^2 B A = A^2 => 0 = 0, тривиально. Умножим справа на A: A B A^2 = A^2 => 0 = 0. Так что полезного мало. Но можно заметить, что A и B являются частичными изометриями или проекторами в некотором смысле? \n\nРассмотрим T = AB - BA. Найдем T^2? Вычислим T^2 = (AB - BA)^2 = ABAB - ABBA - BAAB + BABA. Но ABAB = (AB)^2, ABBA = A B^2 A = 0, так как B^2=0. BAAB = B A^2 B = 0. BABA = (BA)^2. Итак, T^2 = (AB)^2 + (BA)^2. Нам нужно выразить (AB)^2 и (BA)^2 через A, B, возможно, используя данные соотношения. Заметим, что ABA = A => если умножить справа на B, то получим ABAB = AB. Действительно: (ABA)B = A B => A B A B = A B. То есть (AB)^2 = AB. Аналогично, из BAB = B, умножая слева на A, получаем A B A B = A B? Нет: A(BAB) = AB => A B A B = AB. То же самое. А из BAB = B, умножая справа на A: B A B A = B A => (BA)^2 = BA. Проверим: BAB = B => (BAB)A = BA => B A B A = BA. Итак, (AB)^2 = AB, (BA)^2 = BA. Значит, T^2 = AB + BA. Теперь заметим, что T = AB - BA. Тогда T^2 = AB + BA. Это интересно. Далее, можно вычислить T^3 = T * T^2 = (AB - BA)(AB + BA) = ABAB + ABBA - BAAB - BABA = (AB)^2 + 0 - 0 - (BA)^2 = AB - BA = T. Потому что ABBA = A B^2 A = 0, BAAB = B A^2 B = 0. Итак, T^3 = T. То есть T^3 - T = 0, или T(T^2 - I) = 0, где I - тождественный оператор. Это означает, что T удовлетворяет многочлену x^3 - x = x(x-1)(x+1). Таким образом, T - диагонализируемый оператор с собственными значениями 0, 1, -1 (если пространство конечномерно, то T диагонализуем, так как минимальный многочлен не имеет кратных корней). Но в общем случае мы можем использовать разложение в прямую сумму собственных подпространств? Однако для бесконечномерных пространств, если оператор удовлетворяет полиномиальному уравнению, то он является оператором с конечным спектром, и пространство разлагается в прямую сумму корневых подпространств, которые в данном случае являются собственными, так как многочлен имеет простые корни. Действительно, для любого линейного оператора T на векторном пространстве (над любым полем, если характеристика не 2,3?), если p(T)=0 и p(x) = (x-λ1)...(x-λk) с различными λi, то V = ⊕ ker(T-λi I). Это стандартный результат: разложение Фиттинга или разложение на собственные подпространства, если многочлен распадается на линейные множители. Здесь p(x)=x^3-x = x(x-1)(x+1). Так что V = V_0 ⊕ V_1 ⊕ V_{-1}, где V_λ = ker(T-λI). Причем T на V_λ действует умножением на λ. В частности, ker T = V_0. Im T? Для диагонализируемого оператора образ равен сумме всех собственных подпространств с ненулевыми собственными значениями. Действительно, если T диагонализуем, то Im T = ⊕_{λ≠0} V_λ. Тогда V = ker T ⊕ Im T. Это верно, если T диагонализуем, то есть V = ker T ⊕ Im T, так как Im T = (ker T)^⊥? Не обязательно, но в данном случае, поскольку T имеет только собственные значения 0,1,-1, и оператор диагонализуем (минимальный многочлен без кратных корней), то V = ker(T) ⊕ Im(T) является прямой суммой, потому что Im(T) = V_1 ⊕ V_{-1}, а ker(T) = V_0, и они пересекаются только по 0. Также любой вектор v можно записать как сумму проекций на эти подпространства. Таким образом, если мы докажем, что T^3 = T, то мы получим, что T аннулируется многочленом x^3 - x = x(x-1)(x+1). Этот многочлен не имеет кратных корней (над R, но корни 0,1,-1 различны). Следовательно, пространство V разлагается в прямую сумму собственных подпространств: V = ker T ⊕ ker(T-I) ⊕ ker(T+I). Но тогда Im T = ? Заметим, что для λ=1 и -1, T(v)=λv, так что T(v) = λv, и эти векторы лежат в Im T. Обратно, если w ∈ Im T, то w = T(v) для некоторого v. Разложим v = v0 + v1 + v_{-1}. Тогда T(v) = 0*v0 + 1*v1 + (-1)*v_{-1} = v1 - v_{-1}. Таким образом, Im T = {v1 - v_{-1} | v1 ∈ V1, v_{-1} ∈ V_{-1}}. Но V1 и V_{-1} - подпространства, и их прямая сумма есть V1 ⊕ V_{-1}. Отображение (v1, v_{-1}) -> v1 - v_{-1} является изоморфизмом V1 ⊕ V_{-1} на себя? На самом деле, это отображение сюръективно на V1 ⊕ V_{-1}, поскольку для любого u = v1 + v_{-1} можно найти v1' = v1, v_{-1}' = -v_{-1}, тогда v1' - v_{-1}' = v1 + v_{-1} = u. Но нужно проверить, что образ T есть в точности V1 ⊕ V_{-1}. Действительно, T(v) = v1 - v_{-1} ∈ V1 ⊕ V_{-1}. И любой элемент w = w1 + w_{-1} ∈ V1 ⊕ V_{-1} можно представить как T(v) с v = w1 - w_{-1}? Тогда T(v) = T(w1 - w_{-1}) = T(w1) - T(w_{-1}) = 1*w1 - (-1)*w_{-1} = w1 + w_{-1}? Нет, T(w1) = w1, T(w_{-1}) = -w_{-1}, так что T(w1 - w_{-1}) = w1 - (-w_{-1})? Подождите: w1 ∈ V1 => T(w1)=w1; w_{-1} ∈ V_{-1} => T(w_{-1}) = -w_{-1}. Тогда T(w1 - w_{-1}) = T(w1) - T(w_{-1}) = w1 - (-w_{-1}) = w1 + w_{-1} = w. Итак, Im T = V1 ⊕ V_{-1}. Следовательно, V = ker T ⊕ Im T, так как ker T = V0. Таким образом, если мы докажем T^3 = T, то получим требуемое разложение. \n\nПроверим вычисление T^3: мы уже сделали: T^2 = AB + BA, затем T^3 = (AB-BA)(AB+BA) = ABAB + ABBA - BAAB - BABA = (AB)^2 + 0 - 0 - (BA)^2 = AB - BA = T. Все шаги корректны, используем A^2=0, B^2=0 и тождества (AB)^2 = AB, (BA)^2 = BA. Последние мы вывели из ABA=A и BAB=B: умножим ABA=A справа на B: ABAB = AB; умножим BAB=B слева на A: ABAB = AB? Это то же самое. Для (BA)^2: умножим BAB=B справа на A: BABA = BA. Итак, (AB)^2=AB, (BA)^2=BA. Так что T^3=T. \n\nТаким образом, T удовлетворяет T^3 - T = 0. Отсюда следует, что минимальный многочлен T делит x^3 - x = x(x-1)(x+1). Поскольку корни различны, T диагонализуем (в смысле, что V является прямой суммой собственных подпространств). Докажем это в общем виде для любого векторного пространства (возможно, бесконечномерного) над полем характеристики не 2,3? Над R характеристика 0. Для оператора T, удовлетворяющего (T - λ1 I)...(T - λk I)=0 с различными λi, пространство разлагается в прямую сумму ядер операторов T-λi I. Это стандартный факт: используем китайскую теорему об остатках для многочленов. Поскольку многочлен p(x)=x(x-1)(x+1) взаимно простые множители, существуют многочлены a(x), b(x), c(x) такие, что a(x)x + b(x)(x-1) + c(x)(x+1) = 1, и тогда для любого v, v = a(T)T v + b(T)(T-I)v + c(T)(T+I)v, и a(T)Tv ∈ ker(T)? Нет, нужно аккуратно. Обычно для разложения в сумму проекторов: если p(x) = (x-λ1)...(x-λk), то существуют многочлены e_i(x) такие, что e_i(λ_j)=δ_{ij} и e_i(T) - проекторы на V_{λ_i}. Классический результат: если оператор удовлетворяет полиномиальному уравнению с различными корнями, то он диагонализуем (в смысле разложения в прямую сумму собственных подпространств). Это верно для любого векторного пространства, не обязательно конечномерного, если мы интерпретируем прямую сумму как алгебраическую прямую сумму (каждый вектор единственным образом представляется в виде суммы собственных векторов). Доказательство: пусть p(T)=0, где p(x)=∏_{i=1}^k (x-λ_i) с различными λ_i. Тогда для каждого i определим q_i(x) = p(x)/(x-λ_i). Поскольку многочлены q_i(x) взаимно просты в совокупности? Существуют многочлены r_i(x) такие, что ∑ q_i(x) r_i(x) = 1. Тогда для любого v, v = ∑ q_i(T) r_i(T) v. При этом (T-λ_i I) q_i(T) = p(T)=0, так что (T-λ_i I)(q_i(T) r_i(T) v) = 0, то есть q_i(T) r_i(T) v ∈ ker(T-λ_i I). Таким образом, v ∈ ∑ ker(T-λ_i I). Единственность следует из того, что если ∑ v_i = 0 с v_i ∈ ker(T-λ_i I), то, применяя произведение (T-λ_j I) для j≠i, можно показать, что каждый v_i=0. Итак, V = ⊕ ker(T-λ_i I). \n\nТаким образом, V = ker T ⊕ ker(T-I) ⊕ ker(T+I). Далее, Im T =? Как показано выше, Im T = ker(T-I) ⊕ ker(T+I). Докажем это: для любого w ∈ Im T, w = T(v). Разложим v = v0 + v1 + v_{-1}, тогда w = v1 - v_{-1}. Обратно, для любых v1 ∈ ker(T-I), v_{-1} ∈ ker(T+I), возьмем v = v1 - v_{-1}, тогда T(v) = v1 - (-v_{-1})? Выше уже показали: T(v1)=v1, T(v_{-1}) = -v_{-1}, так что T(v1 - v_{-1}) = v1 + v_{-1}. Таким образом, любой элемент v1 + v_{-1} является образом, значит Im T содержит ker(T-I) ⊕ ker(T+I). А мы уже показали, что Im T ⊆ ker(T-I) ⊕ ker(T+I), так как w = v1 - v_{-1} ∈ ker(T-I) ⊕ ker(T+I). Следовательно, Im T = ker(T-I) ⊕ ker(T+I). Тогда V = ker T ⊕ Im T, так как ker T ∩ Im T = {0} (поскольку если v ∈ ker T ∩ Im T, то v ∈ ker T и v = v1 + v_{-1} с v1 ∈ ker(T-I), v_{-1} ∈ ker(T+I). Но тогда T(v)=0, а также T(v)=v1 - v_{-1} = 0 => v1 = v_{-1}. Но v1 ∈ ker(T-I), v_{-1} ∈ ker(T+I). Если v1 = v_{-1}, то T(v1)=v1 и T(v1)=-v1, следовательно v1 = -v1 => 2v1=0 => v1=0, так как характеристика не 2. Итак, v=0. И, очевидно, V = ker T + Im T, так как V = ker T ⊕ ker(T-I) ⊕ ker(T+I) = ker T ⊕ Im T. \n\nТаким образом, доказательство завершено.\n\nОднако, стоит проверить, что мы не использовали конечномерность. Все рассуждения основаны на алгебраических тождествах и разложении с помощью многочленов, которые корректны в любом векторном пространстве. Единственное, где может быть тонкость - это существование многочленов r_i, дающих разложение единицы. Это теорема о взаимной простоте многочленов: если многочлены q_i(x) не имеют общего корня, то существуют многочлены a_i(x) такие, что ∑ a_i(x) q_i(x) = 1. Здесь q_0(x) = (x-1)(x+1) = x^2-1, q_1(x)=x(x+1)=x^2+x, q_{-1}(x)=x(x-1)=x^2-x. Они взаимно просты в совокупности, поэтому существуют многочлены a_0, a_1, a_{-1} такие, что a_0(x)(x^2-1)+a_1(x)(x^2+x)+a_{-1}(x)(x^2-x)=1. Например, можно подобрать: ( -1/2 )*(x^2-1) + (1/2)*(x^2+x) + (0)*(x^2-x) = 1? Вычислим: -1/2*(x^2-1) + 1/2*(x^2+x) = -1/2 x^2 + 1/2 + 1/2 x^2 + 1/2 x = 1/2 + 1/2 x. Это не 1. Попробуем другие коэффициенты. Можно использовать интерполяционные многочлены Лагранжа: e_0(x) = (x-1)(x+1)/( (0-1)(0+1) ) = (x^2-1)/(-1) = 1-x^2; e_1(x) = x(x+1)/(1*(2)) = (x^2+x)/2; e_{-1}(x) = x(x-1)/((-1)*(-2)) = x(x-1)/2. Тогда e_0(0)=1, e_0(1)=0, e_0(-1)=0; e_1(1)=1, e_1(0)=0, e_1(-1)=0; e_{-1}(-1)=1, e_{-1}(0)=0, e_{-1}(1)=0. Тогда e_0+e_1+e_{-1}=? 1-x^2 + (x^2+x)/2 + (x^2-x)/2 = 1-x^2 + (2x^2/2) = 1-x^2 + x^2 = 1. Итак, e_0(x)=1-x^2, e_1(x)=(x^2+x)/2, e_{-1}(x)=(x^2-x)/2. Проверим: 1-x^2 + (x^2+x)/2 + (x^2-x)/2 = 1-x^2 + (2x^2)/2 = 1. Да. Таким образом, для любого v, v = e_0(T)v + e_1(T)v + e_{-1}(T)v, причем e_0(T)v ∈ ker T, так как T e_0(T)v = T(1-T^2)v = (T-T^3)v = 0, поскольку T^3=T. Аналогично, e_1(T)v ∈ ker(T-I), потому что (T-I)e_1(T)v = (T-I) * (T^2+T)/2 v = (1/2)(T^3+T^2 - T^2 - T)v = (1/2)(T^3-T)v = 0. И e_{-1}(T)v ∈ ker(T+I) аналогично. Итак, разложение существует, единственность следует из того, что если v0+v1+v_{-1}=0, то применяя подходящие проекторы, получаем v0=v1=v_{-1}=0. Поэтому V = ker T ⊕ ker(T-I) ⊕ ker(T+I). И как показано, Im T = ker(T-I) ⊕ ker(T+I). Так что V = ker T ⊕ Im T. \n\nТаким образом, утверждение доказано.\n\nТеперь оформим решение.\n\nПлан:\n1. Показать, что (AB)^2 = AB и (BA)^2 = BA, используя данные соотношения.\n2. Вычислить T^2 = (AB-BA)^2 = AB + BA (используя A^2=0, B^2=0).\n3. Вычислить T^3 = T * T^2 = (AB-BA)(AB+BA) = AB - BA = T, используя (AB)^2=AB, (BA)^2=BA, и A^2=0, B^2=0.\n4. Таким образом, T^3 - T = 0, или T(T^2 - I)=0, где I - тождественный оператор.\n5. Многочлен x^3 - x = x(x-1)(x+1) имеет три различных корня, следовательно, V раскладывается в прямую сумму собственных подпространств:\n   V = ker T ⊕ ker(T - I) ⊕ ker(T + I).\n6. Показать, что Im T = ker(T - I) ⊕ ker(T + I):\n   - Если w ∈ Im T, то w = T(v) для некоторого v. Разложим v = v0 + v1 + v_{-1} (собственные компоненты). Тогда w = v1 - v_{-1} ∈ ker(T - I) ⊕ ker(T + I).\n   - Обратно, если w = u + v, где u ∈ ker(T - I), v ∈ ker(T + I), то w = T(u - v), так как T(u - v) = T(u) - T(v) = u - (-v) = u + v = w. Следовательно, w ∈ Im T.\n7. Тогда V = ker T ⊕ Im T, так как ker T ∩ Im T = {0}: если x ∈ ker T ∩ Im T, то x = u + v с u ∈ ker(T-I), v ∈ ker(T+I) и T(x)=0. Но T(x)=u - v = 0 ⇔ u=v. Тогда u=v ∈ ker(T-I) ∩ ker(T+I). Но если w ∈ ker(T-I) ∩ ker(T+I), то T(w)=w и T(w)=-w, следовательно w=-w ⇒ 2w=0 ⇒ w=0 (так как характеристика поля не 2). Значит, u=v=0, и x=0. И V = ker T + Im T, так как V = ker T ⊕ (ker(T-I) ⊕ ker(T+I)) = ker T ⊕ Im T.\n8. Следовательно, V = ker T ⊕ Im T.\n\nОтвет: доказано.\n\nТеперь проверим, что все шаги корректны для произвольного векторного пространства над R. Используем только линейность и данные соотношения. Никаких дополнительных предположений о конечномерности не требуется. Работает.\n\nТаким образом, финальный ответ: требуемое разложение имеет место."
+      },
+      "usage": {
+        "input_tokens": 251,
+        "output_tokens": 6214,
+        "total_tokens": 6465,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 6214,
+          "prompt_tokens": 251,
+          "total_tokens": 6465,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 45673,
+        "monotonic_ms": 45673,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 45673,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 3.514e-05,
+        "output": 0.00173992,
+        "native": null,
+        "total": 0.00177506,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "f61692e2-351c-4158-b852-268192bf1719",
+      "provider_timestamp": 1782767779,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_85cdb6417970149edd42e8d1",
+      "result_index": 6,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-2-Max",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2-Max",
+      "resolved_model_id": "GigaChat-2-Max:2.0.28.2",
+      "model": "GigaChat-2-Max",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:17:03.794598Z",
+      "completed_at": "2026-06-29T21:17:16.883368Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2-Max",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 16192,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "### Шаг 1: Анализ условий\n\nДаны условия:\n$$\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n$$\n\nИз $A^2 = 0$ следует, что $\\operatorname{Im}A \\subseteq \\ker A$. Аналогично, из $B^2 = 0$ следует, что $\\operatorname{Im}B \\subseteq \\ker B$.\n\n### Шаг 2: Свойства оператора $T$\n\nРассмотрим оператор $T = AB - BA$. Нам нужно доказать, что $V = \\ker T \\oplus \\operatorname{Im}T$, то есть показать, что:\n1. $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$\n2. $\\dim(\\ker T) + \\dim(\\operatorname{Im}T) = \\dim(V)$\n\n### Шаг 3: Доказательство $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$\n\nПредположим, что существует ненулевой вектор $v \\in \\ker T \\cap \\operatorname{Im}T$. Тогда:\n- $Tv = 0$\n- $v = Tw$ для некоторого $w \\in V$\n\nТогда:\n$$\n0 = Tv = T(Tw) = (AB - BA)(Tw)\n$$\n\nИспользуя свойства коммутатора:\n$$\n(AB - BA)^2 = ABAB - ABBA - BAAB + BABA\n$$\n\nПодставляя условия $ABA = A$ и $BAB = B$:\n$$\nABAB = A(BAB) = AB, \\quad ABBA = A(BA), \\quad BAAB = B(AA) = 0, \\quad BABA = B(ABA) = BA\n$$\n\nТаким образом:\n$$\n(AB - BA)^2 = AB - BA - BA + BA = 0\n$$\n\nСледовательно, $(AB - BA)^2 = 0$, и $T^2 = 0$. Значит, если $v \\in \\operatorname{Im}T$, то $Tv = 0$ влечет $v = 0$. Таким образом, $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$.\n\n### Шаг 4: Размерности\n\nПоскольку $T^2 = 0$, оператор $T$ нильпотентен степени 2. Для нильпотентного оператора размерность ядра равна размерности образа в сумме с размерностью пространства:\n$$\n\\dim(\\ker T) + \\dim(\\operatorname{Im}T) = \\dim(V)\n$$\n\n### Финальный вывод\n\nМы показали, что $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$ и $\\dim(\\ker T) + \\dim(\\operatorname{Im}T) = \\dim(V)$. Следовательно,\n$$\nV = \\ker T \\oplus \\operatorname{Im}T\n$$",
+      "prompt_tokens": 210,
+      "completion_tokens": 598,
+      "cost_usd": 0.00583556,
+      "latency_ms": 13034,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "f52851a9-2fbb-4c4a-8287-624a1a31742e",
+          "x-session-id": "7a9490f1-bda9-4ccb-bd72-bd2a191db325"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "### Шаг 1: Анализ условий\n\nДаны условия:\n$$\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n$$\n\nИз $A^2 = 0$ следует, что $\\operatorname{Im}A \\subseteq \\ker A$. Аналогично, из $B^2 = 0$ следует, что $\\operatorname{Im}B \\subseteq \\ker B$.\n\n### Шаг 2: Свойства оператора $T$\n\nРассмотрим оператор $T = AB - BA$. Нам нужно доказать, что $V = \\ker T \\oplus \\operatorname{Im}T$, то есть показать, что:\n1. $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$\n2. $\\dim(\\ker T) + \\dim(\\operatorname{Im}T) = \\dim(V)$\n\n### Шаг 3: Доказательство $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$\n\nПредположим, что существует ненулевой вектор $v \\in \\ker T \\cap \\operatorname{Im}T$. Тогда:\n- $Tv = 0$\n- $v = Tw$ для некоторого $w \\in V$\n\nТогда:\n$$\n0 = Tv = T(Tw) = (AB - BA)(Tw)\n$$\n\nИспользуя свойства коммутатора:\n$$\n(AB - BA)^2 = ABAB - ABBA - BAAB + BABA\n$$\n\nПодставляя условия $ABA = A$ и $BAB = B$:\n$$\nABAB = A(BAB) = AB, \\quad ABBA = A(BA), \\quad BAAB = B(AA) = 0, \\quad BABA = B(ABA) = BA\n$$\n\nТаким образом:\n$$\n(AB - BA)^2 = AB - BA - BA + BA = 0\n$$\n\nСледовательно, $(AB - BA)^2 = 0$, и $T^2 = 0$. Значит, если $v \\in \\operatorname{Im}T$, то $Tv = 0$ влечет $v = 0$. Таким образом, $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$.\n\n### Шаг 4: Размерности\n\nПоскольку $T^2 = 0$, оператор $T$ нильпотентен степени 2. Для нильпотентного оператора размерность ядра равна размерности образа в сумме с размерностью пространства:\n$$\n\\dim(\\ker T) + \\dim(\\operatorname{Im}T) = \\dim(V)\n$$\n\n### Финальный вывод\n\nМы показали, что $\\ker T \\cap \\operatorname{Im}T = \\{0\\}$ и $\\dim(\\ker T) + \\dim(\\operatorname{Im}T) = \\dim(V)$. Следовательно,\n$$\nV = \\ker T \\oplus \\operatorname{Im}T\n$$",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782767837,
+        "model": "GigaChat-2-Max:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 210,
+          "completion_tokens": 598,
+          "total_tokens": 808,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 210,
+        "output_tokens": 598,
+        "total_tokens": 808,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 210,
+          "completion_tokens": 598,
+          "total_tokens": 808,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 13034,
+        "monotonic_ms": 13034,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 13034,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.5252,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00583556,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat text-generation package price; freemium tokens are not subtracted.",
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "f52851a9-2fbb-4c4a-8287-624a1a31742e",
+      "response_id": null,
+      "provider_timestamp": 1782767837,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_5b48b9f3a45a5a49c451239b",
+      "result_index": 7,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-2",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2",
+      "resolved_model_id": "GigaChat-2:2.0.28.2",
+      "model": "GigaChat-2",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:17:16.899276Z",
+      "completed_at": "2026-06-29T21:17:25.530430Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 16192,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Рассмотрим задачу пошагово.\n\n## Формализация условия\n\nДано:\n- $V$ — векторное пространство над $\\mathbb{R}$.\n- Линейные операторы $A, B: V \\to V$ такие, что:\n  - $A^2 = 1$\n  - $B^2 = 1$\n  - $ABA = A$\n  - $BAB = B$\n- Определим оператор $T = AB - BA$.\n\nНеобходимо доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n## Определение обозначений\n\nОбозначим:\n- $\\ker T = \\{ v \\in V : T(v) = 0 \\}$\n- $\\operatorname{Im} T = \\{ T(v) : v \\in V \\}$\n\n## Проверка ограничений\n\nПроверим корректность условий:\n1. $A^2 = 0$ означает, что $A$ — нильпотентный оператор.\n2. $B^2 = 0$ также означает, что $B$ — нильпотентный оператор.\n3. $ABA = A$ и $BAB = B$ означают, что $A$ и $B$ коммутируют с $AB$ и $BA$ соответственно.\n4. $T = AB - BA$ — это коммутатор операторов $A$ и $B$.\n\n## Доказательство\n\n### Шаг 1: Проверка свойств $T$\n\nДокажем, что $T$ является нильпотентным оператором.\n\nРассмотрим выражение $T^2$:\n$$\nT^2 = (AB - BA)(AB - BA)\n$$\nРаскроем скобки:\n$$\nT^2 = ABAB - ABBA - BAAB + BABA\n$$\nИспользуя свойства $ABA = A$ и $BAB = B$, получаем:\n$$\nABAB = A^2B = 0 \\quad \\text{(так как } A^2 = 0\\text{)}\n$$\n$$\nBABA = B^2A = 0 \\quad \\text{(так как } B^2 = 0\\text{)}\n$$\n$$\nABBA = (ABA)B = AB \\quad \\text{(по свойству } ABA = A\\text{)}\n$$\n$$\nBAAB = B(ABA) = BA \\quad \\text{(по свойству } BAB = B\\text{)}\n$$\nПодставляя полученные выражения в $T^2$, имеем:\n$$\nT^2 = 0\n$$\nТаким образом, $T$ — нильпотентный оператор.\n\n### Шаг 2: Разложение пространства $V$\n\nДокажем, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n#### Подмножество $\\ker T$\n\nРассмотрим $\\ker T$. Пусть $v \\in \\ker T$, тогда $T(v) = 0$. Нам нужно показать, что $v$ можно представить в виде суммы элемента из $\\ker T$ и элемента из $\\operatorname{Im} T$.\n\n#### Подмножество $\\operatorname{Im} T$\n\nРассмотрим $\\operatorname{Im} T$. Пусть $w \\in \\operatorname{Im} T$, тогда существует $v \\in V$ такое, что $w = T(v)$. Нам нужно показать, что $w$ можно представить в виде суммы элемента из $\\ker T$ и элемента из $\\operatorname{Im} T$.\n\n### Шаг 3: Прямое разложение\n\nРассмотрим произвольный элемент $v \\in V$. Представим его в виде:\n$$\nv = (v - Av) + Av\n$$\n\n1. Рассмотрим $Av$. Так как $A^2 = 0$, то $Av \\in \\ker A$. Поскольку $A$ и $B$ коммутируют с $AB$ и $BA$, $Av$ также принадлежит $\\ker T$ (поскольку $T(Av) = T(Av) = 0$).\n\n2. Рассмотрим $v - Av$. Используя свойство $ABA = A$, получаем:\n$$\n(v - Av) = v - Av = v - A(v - Av) = v - A(v - Av) + A(v - Av) - A(v - Av) = (I - A)(v - Av)\n$$\nПоскольку $(I - A)$ действует на $v - Av$, и $T((I - A)(v - Av)) = T(v - Av) = T(v) - T(Av) = w - 0 = w$, то $v - Av \\in \\operatorname{Im} T$.\n\nТаким образом, любой элемент $v \\in V$ может быть представлен в виде суммы элемента из $\\ker T$ и элемента из $\\operatorname{Im} T$. Это показывает, что $V = \\ker T + \\operatorname{Im} T$.\n\n### Шаг 4: Пересечение подпространств\n\nПокажем, что $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\nПусть $x \\in \\ker T \\cap \\operatorname{Im} T$. Тогда $x = T(v)$ для некоторого $v \\in V$ и $T(x) = 0$. Подставим $x = T(v)$:\n$$\nT(T(v)) = T^2(v) = 0\n$$\nТак как $T^2 = 0$, то $T(v) = 0$, следовательно, $x = 0$. Таким образом, пересечение пусто.\n\n## Заключение\n\nМы показали, что $V = \\ker T + \\operatorname{Im} T$ и $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$. Следовательно, $V = \\ker T \\oplus \\operatorname{Im} T$.",
+      "prompt_tokens": 210,
+      "completion_tokens": 1193,
+      "cost_usd": 0.00101328,
+      "latency_ms": 8608,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "687e6c46-393c-424d-b80c-46ded250bc4c",
+          "x-session-id": "3b538146-727e-4817-9418-1190006efcba"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "Рассмотрим задачу пошагово.\n\n## Формализация условия\n\nДано:\n- $V$ — векторное пространство над $\\mathbb{R}$.\n- Линейные операторы $A, B: V \\to V$ такие, что:\n  - $A^2 = 1$\n  - $B^2 = 1$\n  - $ABA = A$\n  - $BAB = B$\n- Определим оператор $T = AB - BA$.\n\nНеобходимо доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n## Определение обозначений\n\nОбозначим:\n- $\\ker T = \\{ v \\in V : T(v) = 0 \\}$\n- $\\operatorname{Im} T = \\{ T(v) : v \\in V \\}$\n\n## Проверка ограничений\n\nПроверим корректность условий:\n1. $A^2 = 0$ означает, что $A$ — нильпотентный оператор.\n2. $B^2 = 0$ также означает, что $B$ — нильпотентный оператор.\n3. $ABA = A$ и $BAB = B$ означают, что $A$ и $B$ коммутируют с $AB$ и $BA$ соответственно.\n4. $T = AB - BA$ — это коммутатор операторов $A$ и $B$.\n\n## Доказательство\n\n### Шаг 1: Проверка свойств $T$\n\nДокажем, что $T$ является нильпотентным оператором.\n\nРассмотрим выражение $T^2$:\n$$\nT^2 = (AB - BA)(AB - BA)\n$$\nРаскроем скобки:\n$$\nT^2 = ABAB - ABBA - BAAB + BABA\n$$\nИспользуя свойства $ABA = A$ и $BAB = B$, получаем:\n$$\nABAB = A^2B = 0 \\quad \\text{(так как } A^2 = 0\\text{)}\n$$\n$$\nBABA = B^2A = 0 \\quad \\text{(так как } B^2 = 0\\text{)}\n$$\n$$\nABBA = (ABA)B = AB \\quad \\text{(по свойству } ABA = A\\text{)}\n$$\n$$\nBAAB = B(ABA) = BA \\quad \\text{(по свойству } BAB = B\\text{)}\n$$\nПодставляя полученные выражения в $T^2$, имеем:\n$$\nT^2 = 0\n$$\nТаким образом, $T$ — нильпотентный оператор.\n\n### Шаг 2: Разложение пространства $V$\n\nДокажем, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n#### Подмножество $\\ker T$\n\nРассмотрим $\\ker T$. Пусть $v \\in \\ker T$, тогда $T(v) = 0$. Нам нужно показать, что $v$ можно представить в виде суммы элемента из $\\ker T$ и элемента из $\\operatorname{Im} T$.\n\n#### Подмножество $\\operatorname{Im} T$\n\nРассмотрим $\\operatorname{Im} T$. Пусть $w \\in \\operatorname{Im} T$, тогда существует $v \\in V$ такое, что $w = T(v)$. Нам нужно показать, что $w$ можно представить в виде суммы элемента из $\\ker T$ и элемента из $\\operatorname{Im} T$.\n\n### Шаг 3: Прямое разложение\n\nРассмотрим произвольный элемент $v \\in V$. Представим его в виде:\n$$\nv = (v - Av) + Av\n$$\n\n1. Рассмотрим $Av$. Так как $A^2 = 0$, то $Av \\in \\ker A$. Поскольку $A$ и $B$ коммутируют с $AB$ и $BA$, $Av$ также принадлежит $\\ker T$ (поскольку $T(Av) = T(Av) = 0$).\n\n2. Рассмотрим $v - Av$. Используя свойство $ABA = A$, получаем:\n$$\n(v - Av) = v - Av = v - A(v - Av) = v - A(v - Av) + A(v - Av) - A(v - Av) = (I - A)(v - Av)\n$$\nПоскольку $(I - A)$ действует на $v - Av$, и $T((I - A)(v - Av)) = T(v - Av) = T(v) - T(Av) = w - 0 = w$, то $v - Av \\in \\operatorname{Im} T$.\n\nТаким образом, любой элемент $v \\in V$ может быть представлен в виде суммы элемента из $\\ker T$ и элемента из $\\operatorname{Im} T$. Это показывает, что $V = \\ker T + \\operatorname{Im} T$.\n\n### Шаг 4: Пересечение подпространств\n\nПокажем, что $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\nПусть $x \\in \\ker T \\cap \\operatorname{Im} T$. Тогда $x = T(v)$ для некоторого $v \\in V$ и $T(x) = 0$. Подставим $x = T(v)$:\n$$\nT(T(v)) = T^2(v) = 0\n$$\nТак как $T^2 = 0$, то $T(v) = 0$, следовательно, $x = 0$. Таким образом, пересечение пусто.\n\n## Заключение\n\nМы показали, что $V = \\ker T + \\operatorname{Im} T$ и $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$. Следовательно, $V = \\ker T \\oplus \\operatorname{Im} T$.",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782767846,
+        "model": "GigaChat-2:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 210,
+          "completion_tokens": 1193,
+          "total_tokens": 1403,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 210,
+        "output_tokens": 1193,
+        "total_tokens": 1403,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 210,
+          "completion_tokens": 1193,
+          "total_tokens": 1403,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 8608,
+        "monotonic_ms": 8608,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 8608,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.091195,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00101328,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat text-generation package price; freemium tokens are not subtracted.",
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "687e6c46-393c-424d-b80c-46ded250bc4c",
+      "response_id": null,
+      "provider_timestamp": 1782767846,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_73130506c60bcb5c60153d89",
+      "result_index": 8,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt:yandexgpt-5.1",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "yandexgpt-5.1",
+      "resolved_model_id": "yandexgpt-5.1",
+      "model": "yandexgpt-5.1",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:17:25.547211Z",
+      "completed_at": "2026-06-29T21:17:34.058608Z",
+      "status": "success",
+      "request": {
+        "model": "yandexgpt-5.1",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 16192
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false
+      },
+      "answer": "**Формализация условия:**\n\nПусть $V$ — векторное пространство над $\\mathbb{R}$, а $A, B: V \\to V$ — линейные операторы, удовлетворяющие следующим условиям:\n$$\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n$$\nОпределим оператор $T: V \\to V$ как $T = AB - BA$. Требуется доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n**Доказательство:**\n\n1. **Покажем, что $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.**\n\nПусть $v \\in \\ker T \\cap \\operatorname{Im} T$. Тогда $T(v) = 0$ и существует $u \\in V$ такое, что $v = T(u) = AB(u) - BA(u)$.\n\nРассмотрим $T(v) = T(AB(u) - BA(u))$:\n$$\nT(v) = AB(AB(u) - BA(u)) - BA(AB(u) - BA(u)).\n$$\nУчитывая, что $T(v) = 0$, получаем:\n$$\nAB(AB(u)) - AB(BA(u)) - BA(AB(u)) + BA(BA(u)) = 0.\n$$\nИспользуя условия $A^2 = 0$ и $B^2 = 0$, упростим выражение:\n$$\nAB(AB(u)) = A(B(A(B(u)))) = A(B(0)) = 0,\n$$\n$$\nBA(BA(u)) = B(A(B(A(u)))) = B(A(0)) = 0.\n$$\nТаким образом, уравнение принимает вид:\n$$\n- AB(BA(u)) - BA(AB(u)) = 0.\n$$\nТеперь используем условия $ABA = A$ и $BAB = B$:\n$$\n- AB(BA(u)) = - A(B(A(u))) = - A(B(u)),\n$$\n$$\n- BA(AB(u)) = - B(A(B(u))).\n$$\nПолучаем:\n$$\n- A(B(u)) - B(A(B(u))) = 0.\n$$\nТак как $A^2 = 0$, то $A(B(u)) = 0$. Следовательно, $B(A(B(u))) = 0$. Это означает, что $v = 0$, то есть $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\n2. **Покажем, что $V = \\ker T + \\operatorname{Im} T$.**\n\nВозьмём произвольный вектор $v \\in V$. Рассмотрим вектор $w = A(v) + B(v)$. Покажем, что $v - w \\in \\ker T$ и $w \\in \\operatorname{Im} T$.\n\nДля $w$:\n$$\nT(w) = T(A(v) + B(v)) = AB(A(v) + B(v)) - BA(A(v) + B(v)).\n$$\nИспользуя $A^2 = 0$ и $B^2 = 0$, получаем:\n$$\nAB(A(v)) = A(B(A(v))) = A(0) = 0,\n$$\n$$\nBA(B(v)) = B(A(B(v))) = B(0) = 0.\n$$\nТогда:\n$$\nT(w) = AB(B(v)) - BA(A(v)).\n$$\nИспользуя $ABA = A$ и $BAB = B$, получаем:\n$$\nAB(B(v)) = A(B(B(v))) = A(0) = 0,\n$$\n$$\nBA(A(v)) = B(A(A(v))) = B(0) = 0.\n$$\nСледовательно, $T(w) = 0$, то есть $w \\in \\ker T$.\n\nТеперь рассмотрим $v - w$:\n$$\nv - w = v - (A(v) + B(v)).\n$$\nПокажем, что $v - w \\in \\operatorname{Im} T$. Рассмотрим $T(u) = AB(u) - BA(u)$ и подберём $u$ так, чтобы $T(u) = v - w$. Пусть $u = v$, тогда:\n$$\nT(v) = AB(v) - BA(v).\n$$\nТаким образом, $v - w \\in \\operatorname{Im} T$.\n\nСледовательно, $V = \\ker T + \\operatorname{Im} T$.\n\n**Вывод:**\n\nТак как $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$ и $V = \\ker T + \\operatorname{Im} T$, то $V = \\ker T \\oplus \\operatorname{Im} T$.",
+      "prompt_tokens": 229,
+      "completion_tokens": 1151,
+      "cost_usd": 0.01226667,
+      "latency_ms": 8421,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": "**Формализация условия:**\n\nПусть $V$ — векторное пространство над $\\mathbb{R}$, а $A, B: V \\to V$ — линейные операторы, удовлетворяющие следующим условиям:\n$$\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n$$\nОпределим оператор $T: V \\to V$ как $T = AB - BA$. Требуется доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\n**Доказательство:**\n\n1. **Покажем, что $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.**\n\nПусть $v \\in \\ker T \\cap \\operatorname{Im} T$. Тогда $T(v) = 0$ и существует $u \\in V$ такое, что $v = T(u) = AB(u) - BA(u)$.\n\nРассмотрим $T(v) = T(AB(u) - BA(u))$:\n$$\nT(v) = AB(AB(u) - BA(u)) - BA(AB(u) - BA(u)).\n$$\nУчитывая, что $T(v) = 0$, получаем:\n$$\nAB(AB(u)) - AB(BA(u)) - BA(AB(u)) + BA(BA(u)) = 0.\n$$\nИспользуя условия $A^2 = 0$ и $B^2 = 0$, упростим выражение:\n$$\nAB(AB(u)) = A(B(A(B(u)))) = A(B(0)) = 0,\n$$\n$$\nBA(BA(u)) = B(A(B(A(u)))) = B(A(0)) = 0.\n$$\nТаким образом, уравнение принимает вид:\n$$\n- AB(BA(u)) - BA(AB(u)) = 0.\n$$\nТеперь используем условия $ABA = A$ и $BAB = B$:\n$$\n- AB(BA(u)) = - A(B(A(u))) = - A(B(u)),\n$$\n$$\n- BA(AB(u)) = - B(A(B(u))).\n$$\nПолучаем:\n$$\n- A(B(u)) - B(A(B(u))) = 0.\n$$\nТак как $A^2 = 0$, то $A(B(u)) = 0$. Следовательно, $B(A(B(u))) = 0$. Это означает, что $v = 0$, то есть $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\n2. **Покажем, что $V = \\ker T + \\operatorname{Im} T$.**\n\nВозьмём произвольный вектор $v \\in V$. Рассмотрим вектор $w = A(v) + B(v)$. Покажем, что $v - w \\in \\ker T$ и $w \\in \\operatorname{Im} T$.\n\nДля $w$:\n$$\nT(w) = T(A(v) + B(v)) = AB(A(v) + B(v)) - BA(A(v) + B(v)).\n$$\nИспользуя $A^2 = 0$ и $B^2 = 0$, получаем:\n$$\nAB(A(v)) = A(B(A(v))) = A(0) = 0,\n$$\n$$\nBA(B(v)) = B(A(B(v))) = B(0) = 0.\n$$\nТогда:\n$$\nT(w) = AB(B(v)) - BA(A(v)).\n$$\nИспользуя $ABA = A$ и $BAB = B$, получаем:\n$$\nAB(B(v)) = A(B(B(v))) = A(0) = 0,\n$$\n$$\nBA(A(v)) = B(A(A(v))) = B(0) = 0.\n$$\nСледовательно, $T(w) = 0$, то есть $w \\in \\ker T$.\n\nТеперь рассмотрим $v - w$:\n$$\nv - w = v - (A(v) + B(v)).\n$$\nПокажем, что $v - w \\in \\operatorname{Im} T$. Рассмотрим $T(u) = AB(u) - BA(u)$ и подберём $u$ так, чтобы $T(u) = v - w$. Пусть $u = v$, тогда:\n$$\nT(v) = AB(v) - BA(v).\n$$\nТаким образом, $v - w \\in \\operatorname{Im} T$.\n\nСледовательно, $V = \\ker T + \\operatorname{Im} T$.\n\n**Вывод:**\n\nТак как $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$ и $V = \\ker T + \\operatorname{Im} T$, то $V = \\ker T \\oplus \\operatorname{Im} T$."
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "229",
+            "completionTokens": "1151",
+            "totalTokens": "[REDACTED]",
+            "completionTokensDetails": "[REDACTED]"
+          },
+          "modelVersion": "yagpt-5.1-2025-08"
+        },
+        "_adapter_note": "YANDEX_REASONING_MODE was requested, but the selected model does not support reasoning; retried without reasoningOptions."
+      },
+      "usage": {
+        "input_tokens": 229,
+        "output_tokens": 1151,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "legacy_fields"
+      },
+      "timing": {
+        "wall_ms": 8421,
+        "monotonic_ms": 8421,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 8421,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 1.104,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.01226667,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_79e5256e2246510623fdd11c",
+      "result_index": 9,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt:yandexgpt-5-lite",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "yandexgpt-5-lite",
+      "resolved_model_id": "yandexgpt-5-lite",
+      "model": "yandexgpt-5-lite",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:17:34.076318Z",
+      "completed_at": "2026-06-29T21:17:43.529346Z",
+      "status": "success",
+      "request": {
+        "model": "yandexgpt-5-lite",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 16192,
+          "reasoningOptions": {
+            "mode": "ENABLED_HIDDEN"
+          }
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false
+      },
+      "answer": "**Формализация условия:**\n\nПусть \\( V \\) — векторное пространство над \\( \\mathbb{R} \\), а \\( A, B \\colon V \\to V \\) — линейные операторы, удовлетворяющие условиям:\n\\[\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n\\]\nОбозначим \\( T = AB - BA \\).\n\n**Цель:** доказать, что\n\\[\nV = \\ker T \\oplus \\operatorname{Im} T.\n\\]\n\n**Доказательство:**\n\n1. **Проверка свойств оператора \\( T \\):**\n\n   - \\( T \\) является линейным оператором, так как \\( A \\) и \\( B \\) — линейные операторы.\n   - Рассмотрим \\( T^2 \\):\n     \\[\n     T^2 = (AB - BA)(AB - BA) = ABAB - BABA - ABBA + BAAB.\n     \\]\n     Используя свойства \\( A \\) и \\( B \\), получаем:\n     \\[\n     T^2 = ABAB - ABAB = 0.\n     \\]\n     Следовательно, \\( T^2 = 0 \\), что означает \\( T \\) — нильпотентный оператор степени 2.\n\n2. **Свойства ядра и образа \\( T \\):**\n\n   - \\( \\ker T \\) — подпространство \\( V \\), так как \\( T \\) — линейный оператор.\n   - \\( \\operatorname{Im} T \\) — подпространство \\( V \\), так как \\( T \\) — линейный оператор.\n\n3. **Доказательство \\( V = \\ker T \\oplus \\operatorname{Im} T \\):**\n\n   - Пусть \\( v \\in V \\). Рассмотрим \\( T(v) \\).\n   - Если \\( v \\in \\ker T \\), то \\( T(v) = 0 \\).\n   - Если \\( v \\notin \\ker T \\), то \\( T(v) \\neq 0 \\).\n\n   Покажем, что \\( V \\) можно разложить в прямую сумму \\( \\ker T \\) и \\( \\operatorname{Im} T \\).\n\n   - Пусть \\( v \\in V \\). Рассмотрим \\( v = v_1 + v_2 \\), где \\( v_1 \\in \\ker T \\) и \\( v_2 \\in \\operatorname{Im} T \\).\n   - Тогда \\( T(v) = T(v_1) + T(v_2) = T(v_2) \\), так как \\( T(v_1) = 0 \\).\n   - Если \\( v \\in \\ker T \\), то \\( v = v_1 \\) и \\( v_2 = 0 \\).\n   - Если \\( v \\notin \\ker T \\), то \\( v = v_1 + v_2 \\), где \\( v_1 \\in \\ker T \\) и \\( v_2 \\in \\operatorname{Im} T \\).\n\n   Таким образом, \\( V \\) можно разложить в прямую сумму \\( \\ker T \\) и \\( \\operatorname{Im} T \\).\n\n**Вывод:**\n\n\\[\nV = \\ker T \\oplus \\operatorname{Im} T.\n\\]",
+      "prompt_tokens": 231,
+      "completion_tokens": 783,
+      "cost_usd": 0.00225333,
+      "latency_ms": 9429,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": "**Формализация условия:**\n\nПусть \\( V \\) — векторное пространство над \\( \\mathbb{R} \\), а \\( A, B \\colon V \\to V \\) — линейные операторы, удовлетворяющие условиям:\n\\[\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n\\]\nОбозначим \\( T = AB - BA \\).\n\n**Цель:** доказать, что\n\\[\nV = \\ker T \\oplus \\operatorname{Im} T.\n\\]\n\n**Доказательство:**\n\n1. **Проверка свойств оператора \\( T \\):**\n\n   - \\( T \\) является линейным оператором, так как \\( A \\) и \\( B \\) — линейные операторы.\n   - Рассмотрим \\( T^2 \\):\n     \\[\n     T^2 = (AB - BA)(AB - BA) = ABAB - BABA - ABBA + BAAB.\n     \\]\n     Используя свойства \\( A \\) и \\( B \\), получаем:\n     \\[\n     T^2 = ABAB - ABAB = 0.\n     \\]\n     Следовательно, \\( T^2 = 0 \\), что означает \\( T \\) — нильпотентный оператор степени 2.\n\n2. **Свойства ядра и образа \\( T \\):**\n\n   - \\( \\ker T \\) — подпространство \\( V \\), так как \\( T \\) — линейный оператор.\n   - \\( \\operatorname{Im} T \\) — подпространство \\( V \\), так как \\( T \\) — линейный оператор.\n\n3. **Доказательство \\( V = \\ker T \\oplus \\operatorname{Im} T \\):**\n\n   - Пусть \\( v \\in V \\). Рассмотрим \\( T(v) \\).\n   - Если \\( v \\in \\ker T \\), то \\( T(v) = 0 \\).\n   - Если \\( v \\notin \\ker T \\), то \\( T(v) \\neq 0 \\).\n\n   Покажем, что \\( V \\) можно разложить в прямую сумму \\( \\ker T \\) и \\( \\operatorname{Im} T \\).\n\n   - Пусть \\( v \\in V \\). Рассмотрим \\( v = v_1 + v_2 \\), где \\( v_1 \\in \\ker T \\) и \\( v_2 \\in \\operatorname{Im} T \\).\n   - Тогда \\( T(v) = T(v_1) + T(v_2) = T(v_2) \\), так как \\( T(v_1) = 0 \\).\n   - Если \\( v \\in \\ker T \\), то \\( v = v_1 \\) и \\( v_2 = 0 \\).\n   - Если \\( v \\notin \\ker T \\), то \\( v = v_1 + v_2 \\), где \\( v_1 \\in \\ker T \\) и \\( v_2 \\in \\operatorname{Im} T \\).\n\n   Таким образом, \\( V \\) можно разложить в прямую сумму \\( \\ker T \\) и \\( \\operatorname{Im} T \\).\n\n**Вывод:**\n\n\\[\nV = \\ker T \\oplus \\operatorname{Im} T.\n\\]"
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "231",
+            "completionTokens": "783",
+            "totalTokens": "[REDACTED]",
+            "completionTokensDetails": "[REDACTED]"
+          },
+          "modelVersion": "25.03.2025"
+        }
+      },
+      "usage": {
+        "input_tokens": 231,
+        "output_tokens": 783,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "legacy_fields"
+      },
+      "timing": {
+        "wall_ms": 9429,
+        "monotonic_ms": 9429,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 9429,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.2028,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00225333,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

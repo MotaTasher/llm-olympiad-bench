@@ -1,0 +1,1338 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_06_29_21_17_43_math_cup_2026_final_task_03_all_models_16192",
+  "timestamp": "2026-06-29T21:17:43.750520Z",
+  "started_at": "2026-06-29T21:17:43.750520Z",
+  "completed_at": "2026-06-29T21:22:54.018816Z",
+  "duration_ms": 310188,
+  "status": "completed",
+  "git_hash": "bd11e7f",
+  "git": {
+    "hash": "bd11e7f",
+    "full_hash": "bd11e7fe2acdaa5620f78082cc07ae14f6db8610",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_03.json",
+      "--models",
+      "all",
+      "--max-tokens",
+      "[REDACTED]",
+      "--run-id",
+      "math_cup_2026_final_task_03_all_models_16192"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_03.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "all",
+      "run_id": "math_cup_2026_final_task_03_all_models_16192",
+      "logs_dir": "logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 16192
+    },
+    "requested_models": [
+      "openai:gpt-5.5",
+      "openai:gpt-5.4-mini",
+      "anthropic:claude-opus-4-8",
+      "anthropic:claude-haiku-4-5-20251001",
+      "deepseek:deepseek-v4-pro",
+      "deepseek:deepseek-v4-flash",
+      "gigachat:GigaChat-2-Max",
+      "gigachat:GigaChat-2",
+      "yandexgpt:yandexgpt-5.1",
+      "yandexgpt:yandexgpt-5-lite"
+    ],
+    "python": {
+      "version": "3.13.2",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Darwin",
+      "release": "25.5.0",
+      "machine": "arm64"
+    },
+    "packages": {
+      "anthropic": "0.105.2",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.40.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.32.3"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1"
+    }
+  },
+  "requested_models": [
+    "openai:gpt-5.5",
+    "openai:gpt-5.4-mini",
+    "anthropic:claude-opus-4-8",
+    "anthropic:claude-haiku-4-5-20251001",
+    "deepseek:deepseek-v4-pro",
+    "deepseek:deepseek-v4-flash",
+    "gigachat:GigaChat-2-Max",
+    "gigachat:GigaChat-2",
+    "yandexgpt:yandexgpt-5.1",
+    "yandexgpt:yandexgpt-5-lite"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_03",
+  "problem_number": 3,
+  "problem_title": "Многочлен",
+  "problem_file": "data/competitions/math-cup-2026-final/task_03.json",
+  "problem_text": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_03",
+    "number": 3,
+    "title": "Многочлен",
+    "statement": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+    "answer": null,
+    "solution": "Обозначим \\(\\Delta P(x)=P(x+1)-P(x)\\). Условие переписывается как\n\\[\nQ(x):=2P(x)-P(x+1)=P(x)-\\Delta P(x),\n\\]\nпричём \\(Q(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n**Решение 1.** Пусть \\(\\deg P=n\\), тогда \\(\\Delta^{n+1}P\\equiv0\\). Применяя оператор \\(\\Delta^k\\) к тождеству \\(Q=P-\\Delta P\\), получаем\n\\[\n\\Delta^kQ=\\Delta^kP-\\Delta^{k+1}P\n\\]\nпри каждом \\(k\\ge0\\). Складывая эти равенства для \\(k=0,1,\\ldots,n\\), телескопическая сумма даёт\n\\[\n\\sum_{k=0}^{n}\\Delta^kQ=P-\\Delta^{n+1}P=P.\n\\]\nПоскольку \\(Q(m)\\in\\mathbb Z\\), целыми будут и все его конечные разности \\(\\Delta^kQ(m)\\), а значит, \\(P(m)\\) — сумма целых чисел, то есть \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).\n\n**Решение 2.** Индукция по \\(n=\\deg P\\).\n\nПри \\(n=0\\) многочлен \\(P\\equiv c\\) и \\(c=Q(0)\\in\\mathbb Z\\).\n\nПусть \\(n\\ge1\\) и утверждение верно для меньших степеней. Применяя \\(\\Delta\\) к \\(Q=P-\\Delta P\\), видим, что \\(\\Delta Q\\) — результат той же операции \\(R\\mapsto R-\\Delta R\\), применённой к \\(\\Delta P\\). При этом \\(\\Delta Q(m)\\in\\mathbb Z\\) и \\(\\deg\\Delta P=n-1\\), поэтому по предположению индукции \\(\\Delta P(m)\\in\\mathbb Z\\) для всех \\(m\\), и тогда\n\\[\nP(m)=Q(m)+\\Delta P(m)\\in\\mathbb Z.\n\\]\n\n**Решение 3.** Запишем \\(P\\) в биномиальном базисе\n\\[\n\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!}:\n\\qquad\nP(x)=\\sum_{k=0}^{d}a_k\\binom{x}{k},\\qquad d=\\deg P.\n\\]\nИз\n\\[\n\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}\n\\]\nследует\n\\[\n2\\binom{x}{k}-\\binom{x+1}{k}=\\binom{x}{k}-\\binom{x}{k-1},\n\\]\nпоэтому, при \\(a_{d+1}:=0\\),\n\\[\nQ(x)=\\sum_{k=0}^{d}(a_k-a_{k+1})\\binom{x}{k}.\n\\]\nМногочлен принимает целые значения во всех целых точках в точности тогда, когда все его коэффициенты в этом базисе целые. Применяя это к \\(Q\\), получаем \\(a_k-a_{k+1}\\in\\mathbb Z\\); по нисходящей индукции \\(a_d,a_{d-1},\\ldots,a_0\\in\\mathbb Z\\), значит и \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        3
+      ]
+    }
+  },
+  "problem_hash": "7a5e50dac44dcb190bcabfb5d0c8e73153034bebfd2d9eae8a6a0ffdcb70443a",
+  "problem_text_hash": "2694d9f4dfd3b1683539e7f30b3150aaf1824b7cb028637d07e5b79d2d88c470",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 16192
+  },
+  "results": [
+    {
+      "result_id": "res_7fc73aafdf20587036947cfb",
+      "result_index": 0,
+      "provider": "openai",
+      "alias": "openai:gpt-5.5",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.5",
+      "resolved_model_id": "gpt-5.5-2026-04-23",
+      "model": "gpt-5.5",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:17:43.790215Z",
+      "completed_at": "2026-06-29T21:18:40.820005Z",
+      "status": "success",
+      "request": {
+        "model": "gpt-5.5",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "max_completion_tokens": 16192,
+        "reasoning_effort": "high",
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Обозначим для вещественных чисел\n\\[\na\\equiv b \\pmod 1 \\quad \\Longleftrightarrow \\quad a-b\\in\\mathbb Z.\n\\]\n\nПо условию для любого \\(m\\in\\mathbb Z\\)\n\\[\n2P(m)-P(m+1)\\in\\mathbb Z,\n\\]\nто есть\n\\[\nP(m+1)\\equiv 2P(m)\\pmod 1.\n\\]\n\nЕсли \\(P\\equiv 0\\), утверждение очевидно. Пусть теперь \\(\\deg P=n\\). Тогда для любого \\(x\\) конечная разность порядка \\(n+1\\) равна нулю:\n\\[\n\\Delta^{n+1}P(x)=0.\n\\]\nВ явном виде это означает, что для любого \\(m\\in\\mathbb Z\\)\n\\[\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}P(m+i)=0.\n\\]\n\nЗафиксируем произвольное \\(m\\in\\mathbb Z\\). Из сравнения\n\\[\nP(k+1)\\equiv 2P(k)\\pmod 1\n\\]\nиндукцией по \\(i\\ge 0\\) получаем\n\\[\nP(m+i)\\equiv 2^iP(m)\\pmod 1.\n\\]\n\nПодставим это в сумму конечных разностей по модулю \\(1\\):\n\\[\n0\n=\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}P(m+i)\n\\equiv\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}2^iP(m)\n\\pmod 1.\n\\]\nВынесем \\(P(m)\\):\n\\[\n0\\equiv\nP(m)\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}2^i\n\\pmod 1.\n\\]\nНо по формуле бинома Ньютона\n\\[\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}2^i\n=(2-1)^{n+1}=1.\n\\]\nСледовательно,\n\\[\n0\\equiv P(m)\\pmod 1,\n\\]\nто есть\n\\[\nP(m)\\in\\mathbb Z.\n\\]\n\nТак как \\(m\\in\\mathbb Z\\) было выбрано произвольно, получаем\n\\[\n\\boxed{P(m)\\in\\mathbb Z\\text{ для любого }m\\in\\mathbb Z.}\n\\]",
+      "prompt_tokens": 222,
+      "completion_tokens": 3202,
+      "cost_usd": 0.032575,
+      "latency_ms": 56745,
+      "raw_response": {
+        "id": "chatcmpl-DwDeLxSfoddnawi0ZcCGDidT6Jm3Z",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Обозначим для вещественных чисел\n\\[\na\\equiv b \\pmod 1 \\quad \\Longleftrightarrow \\quad a-b\\in\\mathbb Z.\n\\]\n\nПо условию для любого \\(m\\in\\mathbb Z\\)\n\\[\n2P(m)-P(m+1)\\in\\mathbb Z,\n\\]\nто есть\n\\[\nP(m+1)\\equiv 2P(m)\\pmod 1.\n\\]\n\nЕсли \\(P\\equiv 0\\), утверждение очевидно. Пусть теперь \\(\\deg P=n\\). Тогда для любого \\(x\\) конечная разность порядка \\(n+1\\) равна нулю:\n\\[\n\\Delta^{n+1}P(x)=0.\n\\]\nВ явном виде это означает, что для любого \\(m\\in\\mathbb Z\\)\n\\[\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}P(m+i)=0.\n\\]\n\nЗафиксируем произвольное \\(m\\in\\mathbb Z\\). Из сравнения\n\\[\nP(k+1)\\equiv 2P(k)\\pmod 1\n\\]\nиндукцией по \\(i\\ge 0\\) получаем\n\\[\nP(m+i)\\equiv 2^iP(m)\\pmod 1.\n\\]\n\nПодставим это в сумму конечных разностей по модулю \\(1\\):\n\\[\n0\n=\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}P(m+i)\n\\equiv\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}2^iP(m)\n\\pmod 1.\n\\]\nВынесем \\(P(m)\\):\n\\[\n0\\equiv\nP(m)\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}2^i\n\\pmod 1.\n\\]\nНо по формуле бинома Ньютона\n\\[\n\\sum_{i=0}^{n+1}(-1)^{n+1-i}\\binom{n+1}{i}2^i\n=(2-1)^{n+1}=1.\n\\]\nСледовательно,\n\\[\n0\\equiv P(m)\\pmod 1,\n\\]\nто есть\n\\[\nP(m)\\in\\mathbb Z.\n\\]\n\nТак как \\(m\\in\\mathbb Z\\) было выбрано произвольно, получаем\n\\[\n\\boxed{P(m)\\in\\mathbb Z\\text{ для любого }m\\in\\mathbb Z.}\n\\]",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": [],
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1782767865,
+        "model": "gpt-5.5-2026-04-23",
+        "object": "chat.completion",
+        "service_tier": "default",
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 3202,
+          "prompt_tokens": 222,
+          "total_tokens": 3424,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        }
+      },
+      "usage": {
+        "input_tokens": 222,
+        "output_tokens": 3202,
+        "total_tokens": 3424,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 3202,
+          "prompt_tokens": 222,
+          "total_tokens": 3424,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 56745,
+        "monotonic_ms": 56745,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 56745,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.000555,
+        "output": 0.03202,
+        "native": null,
+        "total": 0.032575,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "chatcmpl-DwDeLxSfoddnawi0ZcCGDidT6Jm3Z",
+      "provider_timestamp": 1782767865,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_a27d8f38859b1655194aea9f",
+      "result_index": 1,
+      "provider": "openai",
+      "alias": "openai:gpt-5.4-mini",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.4-mini",
+      "resolved_model_id": "gpt-5.4-mini-2026-03-17",
+      "model": "gpt-5.4-mini",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:18:40.823112Z",
+      "completed_at": "2026-06-29T21:20:09.939159Z",
+      "status": "success",
+      "request": {
+        "model": "gpt-5.4-mini",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "max_completion_tokens": 16192,
+        "reasoning_effort": "high",
+        "endpoint": "https://api.openai.com/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Обозначим  \n\\[\nQ(x)=2P(x)-P(x+1).\n\\]\nПо условию \\(Q(m)\\in \\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\). Нужно доказать, что тогда и \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n---\n\n## 1. Биномиальный базис\n\nВведём\n\\[\nE_k(x)=\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!}\\qquad (k\\ge 0).\n\\]\nЭто полиномы степеней \\(0,1,2,\\dots\\), значит для каждого \\(d\\) они образуют базис пространства полиномов степени \\(\\le d\\). Поэтому, если \\(\\deg P=d\\), то\n\\[\nP(x)=\\sum_{k=0}^d c_k E_k(x)\n\\]\nдля некоторых вещественных \\(c_k\\).\n\n---\n\n## 2. Лемма об integer-valued полиномах\n\n**Лемма.** Если\n\\[\nF(x)=\\sum_{k=0}^d a_k E_k(x)\n\\]\nи \\(F(n)\\in\\mathbb Z\\) для всех \\(n\\in\\mathbb Z\\), то все \\(a_k\\in\\mathbb Z\\).\n\n### Доказательство\nРассмотрим разностный оператор \\(\\Delta F(x)=F(x+1)-F(x)\\). Для \\(E_k\\) верно:\n\\[\n\\Delta E_k(x)=E_{k-1}(x)\\qquad (k\\ge 1),\n\\]\nа \\(\\Delta E_0=0\\).\n\nТак как \\(F(n)\\) — целые числа при всех целых \\(n\\), то и все разности \\(\\Delta^rF(0)\\) целые.\n\nНо\n\\[\n\\Delta^d F(x)=a_d,\n\\]\nпотому что при каждом применении \\(\\Delta\\) степень в базисе \\(E_k\\) понижается на 1. Следовательно,\n\\[\na_d=\\Delta^dF(0)\\in\\mathbb Z.\n\\]\nТогда \\(F-a_dE_d\\) снова принимает целые значения на всех целых \\(n\\), и имеет степень \\(\\le d-1\\). По индукции получаем, что все \\(a_k\\in\\mathbb Z\\). Лемма доказана.\n\n---\n\n## 3. Применим лемму к \\(Q\\)\n\nИз формулы\n\\[\nE_k(x+1)=\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}=E_k(x)+E_{k-1}(x)\n\\]\n(с соглашением \\(E_{-1}=0\\)) получаем:\n\\[\n\\begin{aligned}\nQ(x)\n&=2\\sum_{k=0}^d c_kE_k(x)-\\sum_{k=0}^d c_kE_k(x+1)\\\\\n&=\\sum_{k=0}^d c_kE_k(x)-\\sum_{k=1}^d c_kE_{k-1}(x)\\\\\n&=\\sum_{k=0}^{d-1}(c_k-c_{k+1})E_k(x)+c_dE_d(x).\n\\end{aligned}\n\\]\nТо есть в базисе \\(E_k\\) коэффициенты у \\(Q\\) равны\n\\[\nq_d=c_d,\\qquad q_k=c_k-c_{k+1}\\quad(0\\le k<d).\n\\]\n\nНо \\(Q(n)\\in\\mathbb Z\\) для всех целых \\(n\\), значит по лемме все \\(q_k\\) — целые. Тогда:\n- \\(c_d=q_d\\in\\mathbb Z\\),\n- \\(c_{d-1}=q_{d-1}+c_d\\in\\mathbb Z\\),\n- \\(\\dots\\)\n- \\(c_0=q_0+c_1\\in\\mathbb Z\\).\n\nСледовательно, все \\(c_k\\in\\mathbb Z\\).\n\n---\n\n## 4. Заключение\n\nТеперь для любого \\(m\\in\\mathbb Z\\)\n\\[\nP(m)=\\sum_{k=0}^d c_k\\binom{m}{k}.\n\\]\nДля целого \\(m\\) каждое \\(\\binom{m}{k}\\) — целое число; действительно, при \\(m\\ge 0\\) это очевидно, а при \\(m=-r<0\\)\n\\[\n\\binom{-r}{k}=(-1)^k\\binom{r+k-1}{k}\\in\\mathbb Z.\n\\]\nЗначит, \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n**Итак, доказано, что \\(P(m)\\in\\mathbb Z\\) для любого целого \\(m\\).**",
+      "prompt_tokens": 222,
+      "completion_tokens": 14470,
+      "cost_usd": 0.145255,
+      "latency_ms": 89103,
+      "raw_response": {
+        "id": "chatcmpl-DwDfGemBiH42heqYUgSwdpbCqb7Bx",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Обозначим  \n\\[\nQ(x)=2P(x)-P(x+1).\n\\]\nПо условию \\(Q(m)\\in \\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\). Нужно доказать, что тогда и \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n---\n\n## 1. Биномиальный базис\n\nВведём\n\\[\nE_k(x)=\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!}\\qquad (k\\ge 0).\n\\]\nЭто полиномы степеней \\(0,1,2,\\dots\\), значит для каждого \\(d\\) они образуют базис пространства полиномов степени \\(\\le d\\). Поэтому, если \\(\\deg P=d\\), то\n\\[\nP(x)=\\sum_{k=0}^d c_k E_k(x)\n\\]\nдля некоторых вещественных \\(c_k\\).\n\n---\n\n## 2. Лемма об integer-valued полиномах\n\n**Лемма.** Если\n\\[\nF(x)=\\sum_{k=0}^d a_k E_k(x)\n\\]\nи \\(F(n)\\in\\mathbb Z\\) для всех \\(n\\in\\mathbb Z\\), то все \\(a_k\\in\\mathbb Z\\).\n\n### Доказательство\nРассмотрим разностный оператор \\(\\Delta F(x)=F(x+1)-F(x)\\). Для \\(E_k\\) верно:\n\\[\n\\Delta E_k(x)=E_{k-1}(x)\\qquad (k\\ge 1),\n\\]\nа \\(\\Delta E_0=0\\).\n\nТак как \\(F(n)\\) — целые числа при всех целых \\(n\\), то и все разности \\(\\Delta^rF(0)\\) целые.\n\nНо\n\\[\n\\Delta^d F(x)=a_d,\n\\]\nпотому что при каждом применении \\(\\Delta\\) степень в базисе \\(E_k\\) понижается на 1. Следовательно,\n\\[\na_d=\\Delta^dF(0)\\in\\mathbb Z.\n\\]\nТогда \\(F-a_dE_d\\) снова принимает целые значения на всех целых \\(n\\), и имеет степень \\(\\le d-1\\). По индукции получаем, что все \\(a_k\\in\\mathbb Z\\). Лемма доказана.\n\n---\n\n## 3. Применим лемму к \\(Q\\)\n\nИз формулы\n\\[\nE_k(x+1)=\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}=E_k(x)+E_{k-1}(x)\n\\]\n(с соглашением \\(E_{-1}=0\\)) получаем:\n\\[\n\\begin{aligned}\nQ(x)\n&=2\\sum_{k=0}^d c_kE_k(x)-\\sum_{k=0}^d c_kE_k(x+1)\\\\\n&=\\sum_{k=0}^d c_kE_k(x)-\\sum_{k=1}^d c_kE_{k-1}(x)\\\\\n&=\\sum_{k=0}^{d-1}(c_k-c_{k+1})E_k(x)+c_dE_d(x).\n\\end{aligned}\n\\]\nТо есть в базисе \\(E_k\\) коэффициенты у \\(Q\\) равны\n\\[\nq_d=c_d,\\qquad q_k=c_k-c_{k+1}\\quad(0\\le k<d).\n\\]\n\nНо \\(Q(n)\\in\\mathbb Z\\) для всех целых \\(n\\), значит по лемме все \\(q_k\\) — целые. Тогда:\n- \\(c_d=q_d\\in\\mathbb Z\\),\n- \\(c_{d-1}=q_{d-1}+c_d\\in\\mathbb Z\\),\n- \\(\\dots\\)\n- \\(c_0=q_0+c_1\\in\\mathbb Z\\).\n\nСледовательно, все \\(c_k\\in\\mathbb Z\\).\n\n---\n\n## 4. Заключение\n\nТеперь для любого \\(m\\in\\mathbb Z\\)\n\\[\nP(m)=\\sum_{k=0}^d c_k\\binom{m}{k}.\n\\]\nДля целого \\(m\\) каждое \\(\\binom{m}{k}\\) — целое число; действительно, при \\(m\\ge 0\\) это очевидно, а при \\(m=-r<0\\)\n\\[\n\\binom{-r}{k}=(-1)^k\\binom{r+k-1}{k}\\in\\mathbb Z.\n\\]\nЗначит, \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n**Итак, доказано, что \\(P(m)\\in\\mathbb Z\\) для любого целого \\(m\\).**",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": [],
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1782767922,
+        "model": "gpt-5.4-mini-2026-03-17",
+        "object": "chat.completion",
+        "service_tier": "default",
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 14470,
+          "prompt_tokens": 222,
+          "total_tokens": 14692,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        }
+      },
+      "usage": {
+        "input_tokens": 222,
+        "output_tokens": 14470,
+        "total_tokens": 14692,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 14470,
+          "prompt_tokens": 222,
+          "total_tokens": 14692,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 89103,
+        "monotonic_ms": 89103,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 89103,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.000555,
+        "output": 0.1447,
+        "native": null,
+        "total": 0.145255,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "chatcmpl-DwDfGemBiH42heqYUgSwdpbCqb7Bx",
+      "provider_timestamp": 1782767922,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_7ef9fb4b52a917c90b8fbb3e",
+      "result_index": 2,
+      "provider": "anthropic",
+      "alias": "anthropic:claude-opus-4-8",
+      "adapter_class": "models.claude.claude.ClaudeModel",
+      "requested_model_id": "claude-opus-4-8",
+      "resolved_model_id": "claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:20:09.943418Z",
+      "completed_at": "2026-06-29T21:20:58.008642Z",
+      "status": "success",
+      "request": {
+        "model": "claude-opus-4-8",
+        "max_tokens": 16192,
+        "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "stream": false
+      },
+      "answer": "## Решение\n\n**Обозначения.** Пусть $P(x)$ — многочлен с вещественными коэффициентами, такой что для любого целого $m$ число\n$$Q(m) := 2P(m) - P(m+1)$$\nявляется целым.\n\n**Цель.** Доказать, что $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\n---\n\n### Ключевое наблюдение\n\nИз условия $2P(m) - P(m+1) \\in \\mathbb{Z}$ выразим $P(m+1)$:\n$$P(m+1) = 2P(m) - Q(m), \\qquad Q(m) \\in \\mathbb{Z}.$$\n\nПоложим $a_m := P(m)$ для $m \\in \\mathbb{Z}$. Тогда имеем рекуррентное соотношение\n$$a_{m+1} = 2a_m - Q(m), \\qquad Q(m) \\in \\mathbb{Z}. \\tag{1}$$\n\nИз $(1)$ сразу следует, что **дробные части** $\\{a_m\\}$ связаны просто. Обозначим $r_m := a_m - \\lfloor a_m \\rfloor \\in [0,1)$ — дробную часть числа $a_m$. Поскольку $Q(m)$ целое, из $(1)$:\n$$a_{m+1} = 2a_m - Q(m) \\equiv 2a_m \\pmod{1},$$\nто есть\n$$r_{m+1} = \\{2 r_m\\}. \\tag{2}$$\n\nЗдесь $\\{x\\}$ обозначает дробную часть $x$.\n\n---\n\n### Анализ дробных частей\n\nНам достаточно доказать, что $r_m = 0$ для всех $m \\in \\mathbb{Z}$.\n\nРассмотрим последовательность $r_0, r_1, r_2, \\dots$, заданную соотношением $(2)$ при движении в сторону возрастания $m$. Это в точности **удвоение по модулю 1** (отображение Бернулли). Запишем $r_0$ в двоичной системе:\n$$r_0 = 0.b_1 b_2 b_3 \\dots \\quad (b_i \\in \\{0,1\\}).$$\nТогда удвоение даёт сдвиг:\n$$r_n = 0.b_{n+1} b_{n+2} b_{n+3} \\dots \\tag{3}$$\n(дробная часть отбрасывает целую часть, появляющуюся от первой цифры).\n\n**Лемма (ограниченность).** Так как $P(x)$ — многочлен, значения $a_m = P(m)$ растут не быстрее, чем полиномиально. Однако нам важнее другое свойство, выводимое непосредственно.\n\nВоспользуемся тем, что $r_m$ удовлетворяет $(2)$ и при этом $r_m$ есть дробная часть значения **фиксированного многочлена** в целой точке. Рассмотрим многочлен\n$$R(x) := 2P(x) - P(x+1).$$\nПо условию $R(m) \\in \\mathbb{Z}$ для всех целых $m$. Многочлен, принимающий целые значения во всех целых точках, разумеется, может иметь нецелые коэффициенты, но это не мешает: важно лишь, что $R(m)\\in\\mathbb Z$.\n\nРассмотрим теперь поведение последовательности при движении **в обратную сторону**. Из $(1)$:\n$$a_m = \\frac{a_{m+1} + Q(m)}{2}. \\tag{4}$$\n\nТо есть в обратную сторону каждый шаг — это **деление пополам** с добавлением целого. Запишем это для дробных частей: из $(2)$ получаем\n$$r_m = \\frac{r_{m+1} + \\varepsilon_m}{2}, \\qquad \\varepsilon_m \\in \\{0,1\\}, \\tag{5}$$\nгде $\\varepsilon_m$ — это цифра, \"потерянная\" при удвоении (то есть $\\varepsilon_m = b_{m+1}$ в обозначениях $(3)$, но переиндексируем аккуратно).\n\n---\n\n### Завершающий аргумент через ограниченность\n\nПредположим противное: пусть $r_{m_0} \\neq 0$ для некоторого $m_0$.\n\nИз $(2)$ величины $r_m$ лежат в $[0,1)$ для всех $m$, в частности они **ограничены**. С другой стороны, значения $a_m = P(m)$ — это значения многочлена в целых точках. Рассмотрим разность\n$$a_{m+1} - 2a_m = -Q(m) \\in \\mathbb{Z}. \\tag{6}$$\n\nЛевая часть $(6)$ есть значение многочлена $S(x) := P(x+1) - 2P(x)$. Это многочлен, и он принимает целые значения во всех целых точках.\n\nТеперь ключевой момент. Рассмотрим\n$$a_m = P(m).$$\nИз $(2)$ дробные части подчиняются удвоению. Но дробная часть значения **многочлена** $P$ не может вести себя как настоящее удвоение по модулю 1, если она ненулевая — поскольку это привело бы к иррегулярному (непериодическому либо неполиномиальному) поведению. Уточним это строго.\n\nИз $(3)$: для двоичной записи $r_0 = 0.b_1b_2b_3\\dots$ имеем $r_n = 0.b_{n+1}b_{n+2}\\dots$. Рассмотрим разности\n$$a_{n} - a_{n-1} = P(n) - P(n-1).$$\nЭто значения многочлена степени $\\deg P - 1$, и они растут полиномиально по $n$. Их дробные части равны\n$$\\{a_n - a_{n-1}\\} \\in \\{ \\{r_n - r_{n-1}\\}, \\dots\\}$$\n— величина, определяемая последовательностью цифр $b_i$.\n\nЧтобы избежать неопределённости, применим прямой и строгий приём.\n\n---\n\n### Строгое доказательство\n\nРассмотрим многочлен\n$$D(x) := P(x) - P(x-1).$$\nПо условию $2P(x-1) - P(x) = Q(x-1) \\in \\mathbb Z$ при целом $x$, то есть\n$$P(x) = 2P(x-1) - Q(x-1).$$\nОтсюда\n$$D(x) = P(x) - P(x-1) = P(x-1) - Q(x-1).$$\nСледовательно\n$$D(x) + Q(x-1) = P(x-1), \\quad\\text{т.е.}\\quad P(x-1) - D(x) = Q(x-1) \\in \\mathbb Z.$$\nНо $D(x) = P(x) - P(x-1)$, поэтому\n$$P(x-1) - \\big(P(x) - P(x-1)\\big) = 2P(x-1) - P(x) \\in \\mathbb Z,$$\nчто лишь повторяет условие. Значит, такой путь требует индукции по степени.\n\n---\n\n### Индукция по степени многочлена\n\nПроведём индукцию по $n = \\deg P$.\n\n**База: $\\deg P \\le 0$.** Тогда $P(x) \\equiv c$ — константа. Условие даёт $2c - c = c \\in \\mathbb{Z}$. Значит $P(m) = c \\in \\mathbb{Z}$.\n\n**Шаг.** Пусть утверждение доказано для всех многочленов степени меньше $n$. Пусть $\\deg P = n \\ge 1$.\n\nРассмотрим разностный многочлен\n$$\\Delta P(x) := P(x+1) - P(x),$$\nимеющий степень $n - 1$.\n\nПроверим для $\\Delta P$ условие задачи. Для целого $m$:\n$$2\\,\\Delta P(m) - \\Delta P(m+1) = 2\\big(P(m+1)-P(m)\\big) - \\big(P(m+2)-P(m+1)\\big).$$\nПерегруппируем:\n$$= -\\big(2P(m)-P(m+1)\\big) + 2\\big(2P(m+1)-P(m+2)\\big) - P(m+1)\\cdot 0 + \\dots$$\n\nАккуратно распишем:\n$$2\\Delta P(m) - \\Delta P(m+1) = 2P(m+1) - 2P(m) - P(m+2) + P(m+1).$$\nСгруппируем по тройкам, используя $Q(k) = 2P(k) - P(k+1)$:\n$$= -\\underbrace{\\big(2P(m) - P(m+1)\\big)}_{=Q(m)} + \\big(2P(m+1) - P(m+2)\\big)\\cdot 1 + \\big(2P(m+1)-2P(m+1)\\big)$$\n\nПерепишем строго:\n$$2\\Delta P(m) - \\Delta P(m+1) = \\big(2P(m+1) - P(m+2)\\big) - \\big(2P(m) - P(m+1)\\big) = Q(m+1) - Q(m).$$\n\nПоскольку $Q(m), Q(m+1) \\in \\mathbb{Z}$, получаем\n$$2\\,\\Delta P(m) - \\Delta P(m+1) = Q(m+1) - Q(m) \\in \\mathbb{Z}. \\tag{7}$$\n\nТаким образом, многочлен $\\Delta P$ степени $n-1$ удовлетворяет тому же условию задачи. По предположению индукции\n$$\\Delta P(m) = P(m+1) - P(m) \\in \\mathbb{Z} \\quad \\text{для всех } m \\in \\mathbb{Z}. \\tag{8}$$\n\n**Завершение.** Из $(8)$ значения $P(m)$ при движении по целым точкам меняются на целое число при каждом шаге $m \\to m+1$. То есть дробная часть $\\{P(m)\\}$ постоянна:\n$$\\{P(m)\\} = \\{P(0)\\} =: r \\quad \\text{для всех } m \\in \\mathbb{Z}. \\tag{9}$$\n\nОсталось показать $r = 0$. Из исходного условия при $m=0$:\n$$2P(0) - P(1) \\in \\mathbb{Z}.$$\nПо $(9)$ имеем $P(0) = k_0 + r$, $P(1) = k_1 + r$ с $k_0, k_1 \\in \\mathbb{Z}$. Тогда\n$$2P(0) - P(1) = (2k_0 - k_1) + (2r - r) = (2k_0 - k_1) + r.$$\nПоскольку это число целое, а $2k_0 - k_1 \\in \\mathbb{Z}$, получаем $r \\in \\mathbb{Z}$. Но $r = \\{P(0)\\} \\in [0,1)$, поэтому\n$$r = 0.$$\n\nСледовательно $\\{P(m)\\} = 0$ для всех $m$, то есть $P(m) \\in \\mathbb{Z}$ для всех целых $m$.\n\nЭто завершает шаг индукции. $\\blacksquare$\n\n---\n\n### Финальный вывод\n\nИндукцией по степени многочлена $P$ доказано: если $2P(m) - P(m+1) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$, то $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$. \n\n$$\\boxed{P(m)\\in\\mathbb Z \\text{ для всех } m\\in\\mathbb Z.}$$",
+      "prompt_tokens": 330,
+      "completion_tokens": 3904,
+      "cost_usd": 0.29775,
+      "latency_ms": 47857,
+      "raw_response": {
+        "id": "msg_01KMBnU7GzogXuxYUb66eLiK",
+        "container": null,
+        "content": [
+          {
+            "citations": null,
+            "text": "## Решение\n\n**Обозначения.** Пусть $P(x)$ — многочлен с вещественными коэффициентами, такой что для любого целого $m$ число\n$$Q(m) := 2P(m) - P(m+1)$$\nявляется целым.\n\n**Цель.** Доказать, что $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\n---\n\n### Ключевое наблюдение\n\nИз условия $2P(m) - P(m+1) \\in \\mathbb{Z}$ выразим $P(m+1)$:\n$$P(m+1) = 2P(m) - Q(m), \\qquad Q(m) \\in \\mathbb{Z}.$$\n\nПоложим $a_m := P(m)$ для $m \\in \\mathbb{Z}$. Тогда имеем рекуррентное соотношение\n$$a_{m+1} = 2a_m - Q(m), \\qquad Q(m) \\in \\mathbb{Z}. \\tag{1}$$\n\nИз $(1)$ сразу следует, что **дробные части** $\\{a_m\\}$ связаны просто. Обозначим $r_m := a_m - \\lfloor a_m \\rfloor \\in [0,1)$ — дробную часть числа $a_m$. Поскольку $Q(m)$ целое, из $(1)$:\n$$a_{m+1} = 2a_m - Q(m) \\equiv 2a_m \\pmod{1},$$\nто есть\n$$r_{m+1} = \\{2 r_m\\}. \\tag{2}$$\n\nЗдесь $\\{x\\}$ обозначает дробную часть $x$.\n\n---\n\n### Анализ дробных частей\n\nНам достаточно доказать, что $r_m = 0$ для всех $m \\in \\mathbb{Z}$.\n\nРассмотрим последовательность $r_0, r_1, r_2, \\dots$, заданную соотношением $(2)$ при движении в сторону возрастания $m$. Это в точности **удвоение по модулю 1** (отображение Бернулли). Запишем $r_0$ в двоичной системе:\n$$r_0 = 0.b_1 b_2 b_3 \\dots \\quad (b_i \\in \\{0,1\\}).$$\nТогда удвоение даёт сдвиг:\n$$r_n = 0.b_{n+1} b_{n+2} b_{n+3} \\dots \\tag{3}$$\n(дробная часть отбрасывает целую часть, появляющуюся от первой цифры).\n\n**Лемма (ограниченность).** Так как $P(x)$ — многочлен, значения $a_m = P(m)$ растут не быстрее, чем полиномиально. Однако нам важнее другое свойство, выводимое непосредственно.\n\nВоспользуемся тем, что $r_m$ удовлетворяет $(2)$ и при этом $r_m$ есть дробная часть значения **фиксированного многочлена** в целой точке. Рассмотрим многочлен\n$$R(x) := 2P(x) - P(x+1).$$\nПо условию $R(m) \\in \\mathbb{Z}$ для всех целых $m$. Многочлен, принимающий целые значения во всех целых точках, разумеется, может иметь нецелые коэффициенты, но это не мешает: важно лишь, что $R(m)\\in\\mathbb Z$.\n\nРассмотрим теперь поведение последовательности при движении **в обратную сторону**. Из $(1)$:\n$$a_m = \\frac{a_{m+1} + Q(m)}{2}. \\tag{4}$$\n\nТо есть в обратную сторону каждый шаг — это **деление пополам** с добавлением целого. Запишем это для дробных частей: из $(2)$ получаем\n$$r_m = \\frac{r_{m+1} + \\varepsilon_m}{2}, \\qquad \\varepsilon_m \\in \\{0,1\\}, \\tag{5}$$\nгде $\\varepsilon_m$ — это цифра, \"потерянная\" при удвоении (то есть $\\varepsilon_m = b_{m+1}$ в обозначениях $(3)$, но переиндексируем аккуратно).\n\n---\n\n### Завершающий аргумент через ограниченность\n\nПредположим противное: пусть $r_{m_0} \\neq 0$ для некоторого $m_0$.\n\nИз $(2)$ величины $r_m$ лежат в $[0,1)$ для всех $m$, в частности они **ограничены**. С другой стороны, значения $a_m = P(m)$ — это значения многочлена в целых точках. Рассмотрим разность\n$$a_{m+1} - 2a_m = -Q(m) \\in \\mathbb{Z}. \\tag{6}$$\n\nЛевая часть $(6)$ есть значение многочлена $S(x) := P(x+1) - 2P(x)$. Это многочлен, и он принимает целые значения во всех целых точках.\n\nТеперь ключевой момент. Рассмотрим\n$$a_m = P(m).$$\nИз $(2)$ дробные части подчиняются удвоению. Но дробная часть значения **многочлена** $P$ не может вести себя как настоящее удвоение по модулю 1, если она ненулевая — поскольку это привело бы к иррегулярному (непериодическому либо неполиномиальному) поведению. Уточним это строго.\n\nИз $(3)$: для двоичной записи $r_0 = 0.b_1b_2b_3\\dots$ имеем $r_n = 0.b_{n+1}b_{n+2}\\dots$. Рассмотрим разности\n$$a_{n} - a_{n-1} = P(n) - P(n-1).$$\nЭто значения многочлена степени $\\deg P - 1$, и они растут полиномиально по $n$. Их дробные части равны\n$$\\{a_n - a_{n-1}\\} \\in \\{ \\{r_n - r_{n-1}\\}, \\dots\\}$$\n— величина, определяемая последовательностью цифр $b_i$.\n\nЧтобы избежать неопределённости, применим прямой и строгий приём.\n\n---\n\n### Строгое доказательство\n\nРассмотрим многочлен\n$$D(x) := P(x) - P(x-1).$$\nПо условию $2P(x-1) - P(x) = Q(x-1) \\in \\mathbb Z$ при целом $x$, то есть\n$$P(x) = 2P(x-1) - Q(x-1).$$\nОтсюда\n$$D(x) = P(x) - P(x-1) = P(x-1) - Q(x-1).$$\nСледовательно\n$$D(x) + Q(x-1) = P(x-1), \\quad\\text{т.е.}\\quad P(x-1) - D(x) = Q(x-1) \\in \\mathbb Z.$$\nНо $D(x) = P(x) - P(x-1)$, поэтому\n$$P(x-1) - \\big(P(x) - P(x-1)\\big) = 2P(x-1) - P(x) \\in \\mathbb Z,$$\nчто лишь повторяет условие. Значит, такой путь требует индукции по степени.\n\n---\n\n### Индукция по степени многочлена\n\nПроведём индукцию по $n = \\deg P$.\n\n**База: $\\deg P \\le 0$.** Тогда $P(x) \\equiv c$ — константа. Условие даёт $2c - c = c \\in \\mathbb{Z}$. Значит $P(m) = c \\in \\mathbb{Z}$.\n\n**Шаг.** Пусть утверждение доказано для всех многочленов степени меньше $n$. Пусть $\\deg P = n \\ge 1$.\n\nРассмотрим разностный многочлен\n$$\\Delta P(x) := P(x+1) - P(x),$$\nимеющий степень $n - 1$.\n\nПроверим для $\\Delta P$ условие задачи. Для целого $m$:\n$$2\\,\\Delta P(m) - \\Delta P(m+1) = 2\\big(P(m+1)-P(m)\\big) - \\big(P(m+2)-P(m+1)\\big).$$\nПерегруппируем:\n$$= -\\big(2P(m)-P(m+1)\\big) + 2\\big(2P(m+1)-P(m+2)\\big) - P(m+1)\\cdot 0 + \\dots$$\n\nАккуратно распишем:\n$$2\\Delta P(m) - \\Delta P(m+1) = 2P(m+1) - 2P(m) - P(m+2) + P(m+1).$$\nСгруппируем по тройкам, используя $Q(k) = 2P(k) - P(k+1)$:\n$$= -\\underbrace{\\big(2P(m) - P(m+1)\\big)}_{=Q(m)} + \\big(2P(m+1) - P(m+2)\\big)\\cdot 1 + \\big(2P(m+1)-2P(m+1)\\big)$$\n\nПерепишем строго:\n$$2\\Delta P(m) - \\Delta P(m+1) = \\big(2P(m+1) - P(m+2)\\big) - \\big(2P(m) - P(m+1)\\big) = Q(m+1) - Q(m).$$\n\nПоскольку $Q(m), Q(m+1) \\in \\mathbb{Z}$, получаем\n$$2\\,\\Delta P(m) - \\Delta P(m+1) = Q(m+1) - Q(m) \\in \\mathbb{Z}. \\tag{7}$$\n\nТаким образом, многочлен $\\Delta P$ степени $n-1$ удовлетворяет тому же условию задачи. По предположению индукции\n$$\\Delta P(m) = P(m+1) - P(m) \\in \\mathbb{Z} \\quad \\text{для всех } m \\in \\mathbb{Z}. \\tag{8}$$\n\n**Завершение.** Из $(8)$ значения $P(m)$ при движении по целым точкам меняются на целое число при каждом шаге $m \\to m+1$. То есть дробная часть $\\{P(m)\\}$ постоянна:\n$$\\{P(m)\\} = \\{P(0)\\} =: r \\quad \\text{для всех } m \\in \\mathbb{Z}. \\tag{9}$$\n\nОсталось показать $r = 0$. Из исходного условия при $m=0$:\n$$2P(0) - P(1) \\in \\mathbb{Z}.$$\nПо $(9)$ имеем $P(0) = k_0 + r$, $P(1) = k_1 + r$ с $k_0, k_1 \\in \\mathbb{Z}$. Тогда\n$$2P(0) - P(1) = (2k_0 - k_1) + (2r - r) = (2k_0 - k_1) + r.$$\nПоскольку это число целое, а $2k_0 - k_1 \\in \\mathbb{Z}$, получаем $r \\in \\mathbb{Z}$. Но $r = \\{P(0)\\} \\in [0,1)$, поэтому\n$$r = 0.$$\n\nСледовательно $\\{P(m)\\} = 0$ для всех $m$, то есть $P(m) \\in \\mathbb{Z}$ для всех целых $m$.\n\nЭто завершает шаг индукции. $\\blacksquare$\n\n---\n\n### Финальный вывод\n\nИндукцией по степени многочлена $P$ доказано: если $2P(m) - P(m+1) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$, то $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$. \n\n$$\\boxed{P(m)\\in\\mathbb Z \\text{ для всех } m\\in\\mathbb Z.}$$",
+            "type": "text"
+          }
+        ],
+        "model": "claude-opus-4-8",
+        "role": "assistant",
+        "stop_details": null,
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "global",
+          "input_tokens": 330,
+          "output_tokens": 3904,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "usage": {
+        "input_tokens": 330,
+        "output_tokens": 3904,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "global",
+          "input_tokens": 330,
+          "output_tokens": 3904,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 47857,
+        "monotonic_ms": 47857,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 47857,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00495,
+        "output": 0.2928,
+        "native": null,
+        "total": 0.29775,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "end_turn",
+      "provider_request_id": null,
+      "response_id": "msg_01KMBnU7GzogXuxYUb66eLiK",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_d4b5237863e41b90996da31a",
+      "result_index": 3,
+      "provider": "anthropic",
+      "alias": "anthropic:claude-haiku-4-5-20251001",
+      "adapter_class": "models.claude.claude.ClaudeModel",
+      "requested_model_id": "claude-haiku-4-5-20251001",
+      "resolved_model_id": "claude-haiku-4-5-20251001",
+      "model": "claude-haiku-4-5-20251001",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:20:58.013146Z",
+      "completed_at": "2026-06-29T21:21:09.124414Z",
+      "status": "success",
+      "request": {
+        "model": "claude-haiku-4-5-20251001",
+        "max_tokens": 16192,
+        "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "stream": false
+      },
+      "answer": "Я докажу это утверждение строго и полностью.\n\n**Формализация условия**\n\nДано:\n- $P(x)$ — многочлен с вещественными коэффициентами\n- Для любого $m \\in \\mathbb{Z}$: $2P(m) - P(m+1) \\in \\mathbb{Z}$\n\nТребуется доказать: $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$\n\n**Введение обозначений и вспомогательные определения**\n\nОбозначим $\\deg P = n$. Запишем $P(x) = \\sum_{k=0}^{n} a_k x^k$.\n\nДля произвольного многочлена $Q(x)$ определим **оператор разности**:\n$$\\Delta Q(x) = Q(x+1) - Q(x)$$\n\n**Лемма 1.** Если $Q(x)$ — многочлен степени $n$, то $\\Delta Q(x)$ — многочлен степени $n-1$.\n\n*Доказательство:* При $x^n$ коэффициент в $\\Delta Q$ равен $(x+1)^n - x^n$, что дает степень $n-1$. □\n\n**Основное доказательство**\n\nПереформулируем условие. Для любого $m \\in \\mathbb{Z}$:\n$$2P(m) - P(m+1) \\in \\mathbb{Z}$$\n\nЭто эквивалентно:\n$$P(m) - (P(m+1) - P(m)) \\in \\mathbb{Z}$$\n$$P(m) - \\Delta P(m) \\in \\mathbb{Z}$$\n\n**Шаг 1.** Применим оператор $\\Delta$ к исходному условию.\n\nОбозначим $Q(x) = 2P(x) - P(x+1)$. По условию, $Q(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\nРассмотрим:\n$$\\Delta Q(m) = Q(m+1) - Q(m) = [2P(m+1) - P(m+2)] - [2P(m) - P(m+1)]$$\n$$= 2[P(m+1) - P(m)] - [P(m+2) - P(m+1)]$$\n$$= 2\\Delta P(m) - \\Delta P(m+1)$$\n\n**Шаг 2.** Поскольку $Q(m) \\in \\mathbb{Z}$ для всех целых $m$, имеем $\\Delta Q(m) \\in \\mathbb{Z}$.\n\nСледовательно:\n$$2\\Delta P(m) - \\Delta P(m+1) \\in \\mathbb{Z} \\text{ для всех } m \\in \\mathbb{Z}$$\n\n**Шаг 3.** Применим этот процесс рекурсивно.\n\nПусть $P^{(0)}(x) = P(x)$ и $P^{(i+1)}(x) = \\Delta P^{(i)}(x)$ — $i$-я конечная разность.\n\nИз условия: для $P^{(0)}$,\n$$2P^{(0)}(m) - P^{(0)}(m+1) \\in \\mathbb{Z}$$\n\nПрименяя оператор разности, получаем для $P^{(1)} = \\Delta P$:\n$$2P^{(1)}(m) - P^{(1)}(m+1) \\in \\mathbb{Z}$$\n\nПо индукции, это свойство сохраняется для всех $P^{(i)}$.\n\n**Шаг 4.** Для многочлена степени $n$, $P^{(n)}(x) = n! \\cdot a_n$ — константа (где $a_n$ — старший коэффициент).\n\nПрименяя условие к $P^{(n)}$ (константе $c = n! \\cdot a_n$):\n$$2c - c = c \\in \\mathbb{Z}$$\n\nСледовательно, $a_n \\in \\frac{1}{n!}\\mathbb{Z}$.\n\n**Шаг 5.** Обратное применение разностей.\n\nЗная, что $P^{(n)} \\in \\mathbb{Z}$ и $2P^{(n-1)}(m) - P^{(n-1)}(m+1) \\in \\mathbb{Z}$ для всех $m$, получаем:\n$$P^{(n-1)}(m) \\in \\frac{1}{2}\\mathbb{Z} \\text{ для всех } m \\in \\mathbb{Z}$$\n\nНо $P^{(n-1)}$ — многочлен степени 1, вида $P^{(n-1)}(x) = c_1 x + c_0$.\n\nИз того, что все значения в целых точках принадлежат $\\frac{1}{2}\\mathbb{Z}$, следует $P^{(n-1)}(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\nПродолжая по индукции (каждый уровень добавляет множитель $\\frac{1}{i}$ к коэффициентам, но условие на целых точках остается), получаем:\n\n$$P(m) \\in \\mathbb{Z} \\text{ для всех } m \\in \\mathbb{Z}$$\n\n**Финальный вывод**\n\nПрименяя метод конечных разностей рекурсивно и используя то, что условие $2P^{(i)}(m) - P^{(i)}(m+1) \\in \\mathbb{Z}$ наследуется на каждом уровне, мы заключаем, что **все значения $P(m)$ являются целыми числами для любого целого $m$**.",
+      "prompt_tokens": 317,
+      "completion_tokens": 1589,
+      "cost_usd": 0.0066096,
+      "latency_ms": 11096,
+      "raw_response": {
+        "id": "msg_01SsPbNdGYDLzP9HHkvjmdh4",
+        "container": null,
+        "content": [
+          {
+            "citations": null,
+            "text": "Я докажу это утверждение строго и полностью.\n\n**Формализация условия**\n\nДано:\n- $P(x)$ — многочлен с вещественными коэффициентами\n- Для любого $m \\in \\mathbb{Z}$: $2P(m) - P(m+1) \\in \\mathbb{Z}$\n\nТребуется доказать: $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$\n\n**Введение обозначений и вспомогательные определения**\n\nОбозначим $\\deg P = n$. Запишем $P(x) = \\sum_{k=0}^{n} a_k x^k$.\n\nДля произвольного многочлена $Q(x)$ определим **оператор разности**:\n$$\\Delta Q(x) = Q(x+1) - Q(x)$$\n\n**Лемма 1.** Если $Q(x)$ — многочлен степени $n$, то $\\Delta Q(x)$ — многочлен степени $n-1$.\n\n*Доказательство:* При $x^n$ коэффициент в $\\Delta Q$ равен $(x+1)^n - x^n$, что дает степень $n-1$. □\n\n**Основное доказательство**\n\nПереформулируем условие. Для любого $m \\in \\mathbb{Z}$:\n$$2P(m) - P(m+1) \\in \\mathbb{Z}$$\n\nЭто эквивалентно:\n$$P(m) - (P(m+1) - P(m)) \\in \\mathbb{Z}$$\n$$P(m) - \\Delta P(m) \\in \\mathbb{Z}$$\n\n**Шаг 1.** Применим оператор $\\Delta$ к исходному условию.\n\nОбозначим $Q(x) = 2P(x) - P(x+1)$. По условию, $Q(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\nРассмотрим:\n$$\\Delta Q(m) = Q(m+1) - Q(m) = [2P(m+1) - P(m+2)] - [2P(m) - P(m+1)]$$\n$$= 2[P(m+1) - P(m)] - [P(m+2) - P(m+1)]$$\n$$= 2\\Delta P(m) - \\Delta P(m+1)$$\n\n**Шаг 2.** Поскольку $Q(m) \\in \\mathbb{Z}$ для всех целых $m$, имеем $\\Delta Q(m) \\in \\mathbb{Z}$.\n\nСледовательно:\n$$2\\Delta P(m) - \\Delta P(m+1) \\in \\mathbb{Z} \\text{ для всех } m \\in \\mathbb{Z}$$\n\n**Шаг 3.** Применим этот процесс рекурсивно.\n\nПусть $P^{(0)}(x) = P(x)$ и $P^{(i+1)}(x) = \\Delta P^{(i)}(x)$ — $i$-я конечная разность.\n\nИз условия: для $P^{(0)}$,\n$$2P^{(0)}(m) - P^{(0)}(m+1) \\in \\mathbb{Z}$$\n\nПрименяя оператор разности, получаем для $P^{(1)} = \\Delta P$:\n$$2P^{(1)}(m) - P^{(1)}(m+1) \\in \\mathbb{Z}$$\n\nПо индукции, это свойство сохраняется для всех $P^{(i)}$.\n\n**Шаг 4.** Для многочлена степени $n$, $P^{(n)}(x) = n! \\cdot a_n$ — константа (где $a_n$ — старший коэффициент).\n\nПрименяя условие к $P^{(n)}$ (константе $c = n! \\cdot a_n$):\n$$2c - c = c \\in \\mathbb{Z}$$\n\nСледовательно, $a_n \\in \\frac{1}{n!}\\mathbb{Z}$.\n\n**Шаг 5.** Обратное применение разностей.\n\nЗная, что $P^{(n)} \\in \\mathbb{Z}$ и $2P^{(n-1)}(m) - P^{(n-1)}(m+1) \\in \\mathbb{Z}$ для всех $m$, получаем:\n$$P^{(n-1)}(m) \\in \\frac{1}{2}\\mathbb{Z} \\text{ для всех } m \\in \\mathbb{Z}$$\n\nНо $P^{(n-1)}$ — многочлен степени 1, вида $P^{(n-1)}(x) = c_1 x + c_0$.\n\nИз того, что все значения в целых точках принадлежат $\\frac{1}{2}\\mathbb{Z}$, следует $P^{(n-1)}(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\nПродолжая по индукции (каждый уровень добавляет множитель $\\frac{1}{i}$ к коэффициентам, но условие на целых точках остается), получаем:\n\n$$P(m) \\in \\mathbb{Z} \\text{ для всех } m \\in \\mathbb{Z}$$\n\n**Финальный вывод**\n\nПрименяя метод конечных разностей рекурсивно и используя то, что условие $2P^{(i)}(m) - P^{(i)}(m+1) \\in \\mathbb{Z}$ наследуется на каждом уровне, мы заключаем, что **все значения $P(m)$ являются целыми числами для любого целого $m$**.",
+            "type": "text"
+          }
+        ],
+        "model": "claude-haiku-4-5-20251001",
+        "role": "assistant",
+        "stop_details": null,
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 317,
+          "output_tokens": 1589,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "usage": {
+        "input_tokens": 317,
+        "output_tokens": 1589,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": "[REDACTED]",
+            "ephemeral_5m_input_tokens": "[REDACTED]"
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 317,
+          "output_tokens": 1589,
+          "output_tokens_details": "[REDACTED]",
+          "server_tool_use": null,
+          "service_tier": "standard"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 11096,
+        "monotonic_ms": 11096,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 11096,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.0002536,
+        "output": 0.006356,
+        "native": null,
+        "total": 0.0066096,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "end_turn",
+      "provider_request_id": null,
+      "response_id": "msg_01SsPbNdGYDLzP9HHkvjmdh4",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_c36fe23d4ee34a6e203ea1f3",
+      "result_index": 4,
+      "provider": "deepseek",
+      "alias": "deepseek:deepseek-v4-pro",
+      "adapter_class": "models.deepseek.deepseek.DeepSeekModel",
+      "requested_model_id": "deepseek-v4-pro",
+      "resolved_model_id": "deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:21:09.130277Z",
+      "completed_at": "2026-06-29T21:21:52.943574Z",
+      "status": "success",
+      "request": {
+        "model": "deepseek-v4-pro",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "temperature": 0.3,
+        "max_tokens": 16192,
+        "endpoint": "https://api.deepseek.com/chat/completions",
+        "stream": false
+      },
+      "answer": "**Формализация условия**\nПусть \\(P(x)\\in\\mathbb{R}[x]\\) — многочлен с вещественными коэффициентами. Дано, что для любого целого \\(m\\) выполняется\n\\[\n2P(m)-P(m+1)\\in\\mathbb{Z}.\n\\]\nТребуется доказать, что для всех целых \\(m\\) выполнено \\(P(m)\\in\\mathbb{Z}\\).\n\n**Доказательство**\nВоспользуемся базисом пространства многочленов, состоящим из биномиальных коэффициентов\n\\[\n\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!},\\qquad k=0,1,2,\\dots\n\\]\nЛюбой многочлен \\(P(x)\\) степени \\(n\\) можно единственным образом представить в виде\n\\[\nP(x)=\\sum_{k=0}^{n} p_k\\binom{x}{k},\\qquad p_k\\in\\mathbb{R}.\n\\]\nРассмотрим многочлен \\(Q(x)=2P(x)-P(x+1)\\). По условию \\(Q(m)\\in\\mathbb{Z}\\) для всех \\(m\\in\\mathbb{Z}\\). Выразим \\(Q(x)\\) в том же базисе. С помощью известного тождества\n\\[\n\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}\\quad(k\\ge 1),\\qquad \\binom{x+1}{0}=\\binom{x}{0},\n\\]\nполучаем\n\\[\n\\begin{aligned}\nQ(x)&=2\\sum_{k=0}^{n} p_k\\binom{x}{k}-\\sum_{k=0}^{n} p_k\\binom{x+1}{k} \\\\\n&=\\sum_{k=0}^{n} p_k\\binom{x}{k}-\\sum_{k=0}^{n} p_k\\binom{x}{k-1} \\quad (\\text{где } \\binom{x}{-1}=0) \\\\\n&=\\sum_{k=0}^{n} p_k\\binom{x}{k}-\\sum_{j=0}^{n-1} p_{j+1}\\binom{x}{j} \\\\\n&=p_n\\binom{x}{n}+\\sum_{k=0}^{n-1} (p_k-p_{k+1})\\binom{x}{k}.\n\\end{aligned}\n\\]\nТаким образом, коэффициенты разложения \\(Q(x)\\) по базису \\(\\binom{x}{k}\\) равны\n\\[\na_n=p_n,\\qquad a_k=p_k-p_{k+1}\\;\\;(0\\le k\\le n-1).\n\\]\nЧисла \\(a_k\\) вещественны, и для любого \\(m\\in\\mathbb{Z}\\)\n\\[\nQ(m)=\\sum_{k=0}^{n} a_k\\binom{m}{k}\\in\\mathbb{Z}.\n\\]\nПокажем, что из целозначности \\(Q(x)\\) следует целость всех \\(a_k\\). Применим индукцию по степени. При \\(m=0\\) имеем \\(Q(0)=a_0\\in\\mathbb{Z}\\). Рассмотрим разность \\(\\Delta Q(x)=Q(x+1)-Q(x)\\). Поскольку \\(\\binom{x+1}{k}-\\binom{x}{k}=\\binom{x}{k-1}\\), получаем\n\\[\n\\Delta Q(x)=\\sum_{k=1}^{n} a_k\\binom{x}{k-1}=\\sum_{j=0}^{n-1} a_{j+1}\\binom{x}{j},\n\\]\nпричём \\(\\Delta Q(m)\\in\\mathbb{Z}\\) для всех целых \\(m\\) как разность целых чисел. Следовательно, многочлен \\(\\Delta Q(x)\\) также целозначен; его степень меньше \\(n\\). По индукционному предположению все его коэффициенты \\(a_1,a_2,\\dots,a_n\\) целые. База индукции (степень 0) очевидна: константа, принимающая целые значения, сама целая.\n\nИтак, \\(a_n\\in\\mathbb{Z}\\) и \\(a_k=p_k-p_{k+1}\\in\\mathbb{Z}\\) для \\(0\\le k\\le n-1\\). Отсюда последовательно получаем\n\\[\np_n=a_n\\in\\mathbb{Z},\n\\]\n\\[\np_{n-1}=a_{n-1}+p_n\\in\\mathbb{Z},\n\\]\n\\[\n\\dots\n\\]\n\\[\np_0=a_0+p_1\\in\\mathbb{Z}.\n\\]\nВсе коэффициенты \\(p_k\\) оказались целыми. Следовательно, для любого целого \\(m\\)\n\\[\nP(m)=\\sum_{k=0}^{n} p_k\\binom{m}{k}\\in\\mathbb{Z},\n\\]\nтак как биномиальные коэффициенты \\(\\binom{m}{k}\\) целые.\n\n**Вывод**\nДоказано, что если \\(2P(m)-P(m+1)\\in\\mathbb{Z}\\) для всех \\(m\\in\\mathbb{Z}\\), то все значения \\(P(m)\\) также являются целыми числами.",
+      "prompt_tokens": 226,
+      "completion_tokens": 5285,
+      "cost_usd": 0.00469626,
+      "latency_ms": 43727,
+      "raw_response": {
+        "id": "1fce62c2-f317-41a6-a814-ef692f65819d",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "**Формализация условия**\nПусть \\(P(x)\\in\\mathbb{R}[x]\\) — многочлен с вещественными коэффициентами. Дано, что для любого целого \\(m\\) выполняется\n\\[\n2P(m)-P(m+1)\\in\\mathbb{Z}.\n\\]\nТребуется доказать, что для всех целых \\(m\\) выполнено \\(P(m)\\in\\mathbb{Z}\\).\n\n**Доказательство**\nВоспользуемся базисом пространства многочленов, состоящим из биномиальных коэффициентов\n\\[\n\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!},\\qquad k=0,1,2,\\dots\n\\]\nЛюбой многочлен \\(P(x)\\) степени \\(n\\) можно единственным образом представить в виде\n\\[\nP(x)=\\sum_{k=0}^{n} p_k\\binom{x}{k},\\qquad p_k\\in\\mathbb{R}.\n\\]\nРассмотрим многочлен \\(Q(x)=2P(x)-P(x+1)\\). По условию \\(Q(m)\\in\\mathbb{Z}\\) для всех \\(m\\in\\mathbb{Z}\\). Выразим \\(Q(x)\\) в том же базисе. С помощью известного тождества\n\\[\n\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}\\quad(k\\ge 1),\\qquad \\binom{x+1}{0}=\\binom{x}{0},\n\\]\nполучаем\n\\[\n\\begin{aligned}\nQ(x)&=2\\sum_{k=0}^{n} p_k\\binom{x}{k}-\\sum_{k=0}^{n} p_k\\binom{x+1}{k} \\\\\n&=\\sum_{k=0}^{n} p_k\\binom{x}{k}-\\sum_{k=0}^{n} p_k\\binom{x}{k-1} \\quad (\\text{где } \\binom{x}{-1}=0) \\\\\n&=\\sum_{k=0}^{n} p_k\\binom{x}{k}-\\sum_{j=0}^{n-1} p_{j+1}\\binom{x}{j} \\\\\n&=p_n\\binom{x}{n}+\\sum_{k=0}^{n-1} (p_k-p_{k+1})\\binom{x}{k}.\n\\end{aligned}\n\\]\nТаким образом, коэффициенты разложения \\(Q(x)\\) по базису \\(\\binom{x}{k}\\) равны\n\\[\na_n=p_n,\\qquad a_k=p_k-p_{k+1}\\;\\;(0\\le k\\le n-1).\n\\]\nЧисла \\(a_k\\) вещественны, и для любого \\(m\\in\\mathbb{Z}\\)\n\\[\nQ(m)=\\sum_{k=0}^{n} a_k\\binom{m}{k}\\in\\mathbb{Z}.\n\\]\nПокажем, что из целозначности \\(Q(x)\\) следует целость всех \\(a_k\\). Применим индукцию по степени. При \\(m=0\\) имеем \\(Q(0)=a_0\\in\\mathbb{Z}\\). Рассмотрим разность \\(\\Delta Q(x)=Q(x+1)-Q(x)\\). Поскольку \\(\\binom{x+1}{k}-\\binom{x}{k}=\\binom{x}{k-1}\\), получаем\n\\[\n\\Delta Q(x)=\\sum_{k=1}^{n} a_k\\binom{x}{k-1}=\\sum_{j=0}^{n-1} a_{j+1}\\binom{x}{j},\n\\]\nпричём \\(\\Delta Q(m)\\in\\mathbb{Z}\\) для всех целых \\(m\\) как разность целых чисел. Следовательно, многочлен \\(\\Delta Q(x)\\) также целозначен; его степень меньше \\(n\\). По индукционному предположению все его коэффициенты \\(a_1,a_2,\\dots,a_n\\) целые. База индукции (степень 0) очевидна: константа, принимающая целые значения, сама целая.\n\nИтак, \\(a_n\\in\\mathbb{Z}\\) и \\(a_k=p_k-p_{k+1}\\in\\mathbb{Z}\\) для \\(0\\le k\\le n-1\\). Отсюда последовательно получаем\n\\[\np_n=a_n\\in\\mathbb{Z},\n\\]\n\\[\np_{n-1}=a_{n-1}+p_n\\in\\mathbb{Z},\n\\]\n\\[\n\\dots\n\\]\n\\[\np_0=a_0+p_1\\in\\mathbb{Z}.\n\\]\nВсе коэффициенты \\(p_k\\) оказались целыми. Следовательно, для любого целого \\(m\\)\n\\[\nP(m)=\\sum_{k=0}^{n} p_k\\binom{m}{k}\\in\\mathbb{Z},\n\\]\nтак как биномиальные коэффициенты \\(\\binom{m}{k}\\) целые.\n\n**Вывод**\nДоказано, что если \\(2P(m)-P(m+1)\\in\\mathbb{Z}\\) для всех \\(m\\in\\mathbb{Z}\\), то все значения \\(P(m)\\) также являются целыми числами.",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "Мы должны доказать: пусть P(x) — многочлен с вещественными коэффициентами, и для всех целых m выполнено: 2P(m) - P(m+1) ∈ ℤ. Тогда P(m) ∈ ℤ для всех целых m.\n\nДано: P ∈ ℝ[x]. ∀ m ∈ ℤ: 2P(m) - P(m+1) ∈ ℤ.\nТребуется: ∀ m ∈ ℤ: P(m) ∈ ℤ.\n\nПопробуем доказать. Заметим, что это напоминает свойство целозначных многочленов. Но здесь условие немного слабее: целочисленная линейная комбинация значений многочлена в последовательных целых точках, а не сами значения.\n\nОбозначим a_m = P(m). Тогда a_m — вещественные числа. Условие: 2a_m - a_{m+1} ∈ ℤ для всех целых m.\n\nЦель: доказать, что a_m ∈ ℤ для всех m.\n\nЭто довольно простое рекуррентное соотношение. Можно переписать:\na_{m+1} = 2 a_m - k_m, где k_m = 2a_m - a_{m+1} ∈ ℤ.\n\nТогда a_{m+1} выражается через a_m: a_{m+1} ≡ 2 a_m (mod ℤ) в смысле, что их разность принадлежит ℤ? Нет: a_{m+1} = 2a_m - k_m, k_m ∈ ℤ. Следовательно, a_{m+1} mod ℤ = 2(a_m mod ℤ). Иными словами, если мы рассмотрим дробные части (или классы по модулю 1), то a_{m+1} ≡ 2 a_m (mod 1).\n\nПусть x_m = {a_m} — дробная часть a_m (в [0,1)). Тогда x_{m+1} = {2 a_m} = {2 x_m} (поскольку k_m целое). Следовательно, x_{m+1} ≡ 2 x_m (mod 1). Но a_m — вещественное число, и последовательность дробных частей должна быть ограничена (все в [0,1)). Однако многочлен P(x) — это многочлен, а не произвольная последовательность. Мы знаем, что последовательность a_m = P(m) имеет определенную асимптотику. Надо использовать, что a_m — значения многочлена.\n\nМы можем применить метод конечных разностей. Для многочлена степени d, ΔP(n) = P(n+1) - P(n) — многочлен степени d-1 и т.д. У нас есть информация о 2P(m) - P(m+1). Это не совсем разность, но можно выразить P(m+1) = 2P(m) - c_m, c_m ∈ ℤ.\n\nЕсли P — многочлен, то разности высокого порядка становятся нулевыми. Но тут у нас цепочка с целыми числами. Возможно, можно доказать по индукции, что P(n) ∈ ℤ для всех n, используя то, что для достаточно больших n (или малых) значения многочлена должны быть «почти целыми».\n\nРассмотрим более общий подход: пусть P(x) — многочлен степени d. Тогда P(x) = a_d x^d + ... + a_0. Мы хотим показать, что a_k ∈ ℚ, а потом и целые значения в целых точках. Но условие даёт нам не сразу целость коэффициентов. Давайте попробуем прямое доказательство.\n\nМожно попробовать рассмотреть последовательность b_m = P(m). Тогда b_{m+1} - 2b_m ∈ ℤ. Это линейное неоднородное рекуррентное соотношение. Общее решение однородного b_{m+1} = 2b_m есть b_m = C * 2^m. Неоднородное решение — какой-то многочлен от m, потому что P(m) — многочлен. Если P(m) — многочлен, и он удовлетворяет такому соотношению: P(m+1) - 2P(m) = -c_m, где c_m ∈ ℤ. Но c_m — это многочлен от m? Вообще-то c_m = 2P(m) - P(m+1), и это разность значений многочленов, т.е. многочлен от m? Да, 2P(x) - P(x+1) — это многочлен от x с вещественными коэффициентами. И по условию он принимает целые значения во всех целых x. Так как многочлен, принимающий целые значения на всех целых точках, не обязан иметь целые коэффициенты, но он является целозначным. Известно, что любой целозначный многочлен можно представить как целочисленную комбинацию биномиальных коэффициентов C(x, k). В любом случае, пусть Q(x) = 2P(x) - P(x+1). Тогда Q — многочлен с вещественными коэффициентами, и Q(m) ∈ ℤ ∀ m ∈ ℤ.\n\nТогда P(x+1) - 2P(x) = -Q(x).\nМы можем решить это уравнение относительно P. Оператор сдвига E: P(x+1) = E P(x). Тогда (E - 2)P = -Q.\nФормально, можно выразить P = -(E - 2)^{-1} Q. Но E - 2 можно обратить, раскладывая: (E - 2)^{-1} = -1/2 * (1 - E/2)^{-1} = -1/2 ∑ (E/2)^k. Это даёт P(x) = 1/2 ∑_{k=0}^∞ Q(x+k) / 2^k. Но сумма конечна для многочленов? Поскольку Q — многочлен, то ряд ∑ Q(x+k)/2^k сходится и определяет некоторую целую функцию, но мы ищем многочлен P, удовлетворяющий уравнению. В общем случае есть единственное многочленовое решение? Уравнение P(x+1) - 2P(x) = -Q(x). Если deg(P) = d, то deg(Q) = d (если коэффициент не сокращается), потому что старший член: a_d(x+1)^d - 2a_d x^d = a_d x^d + d a_d x^{d-1} + ... - 2a_d x^d = -a_d x^d + ... Так что Q имеет степень d с старшим коэффициентом -a_d. Следовательно, d — степень Q.\n\nМы знаем, что Q целозначный. Надо доказать, что P целозначный. Из P(x+1) = 2P(x) - Q(x). Если Q целозначный и P(x) для какого-то x целое, то по рекурсии все P(m) целые. Но мы не знаем, что P(x) целое хотя бы в одной точке. Нужно доказать это.\n\nМожно пытаться показать, что P(m) целые для всех m, используя конечные разности. Пусть ΔP(m) = P(m+1) - P(m). Тогда 2P(m) - P(m+1) = P(m) - ΔP(m). Это равно целому числу. Значит, P(m) ≡ ΔP(m) mod 1. Тогда ΔP(m) ≡ P(m) mod 1. А также Δ^k P(m) ≡ что-то.\n\nИли так: Поскольку Q целозначный многочлен, его можно записать как ∑ c_k C(x, k) с целыми c_k. Тогда можно найти P.\n\nВспомним классический результат: Если многочлен с вещественными коэффициентами принимает целые значения в целых точках, то он представляется как ∑ a_k C(x, k) с целыми a_k. Это известный факт. Тогда Q ∈ ℤ[x] в смысле целых значений. Давайте искать P в виде линейной комбинации биномиальных коэффициентов: пусть P(x) = ∑_{k=0}^d p_k C(x, k). Нам нужно доказать, что p_k ∈ ℤ. Условие: Q(x) = 2P(x) - P(x+1) = ∑ p_k (2C(x,k) - C(x+1,k)). Пользуясь тождеством C(x+1,k) = C(x,k) + C(x,k-1). Тогда Q(x) = ∑ p_k (2C(x,k) - C(x,k) - C(x,k-1)) = ∑ p_k (C(x,k) - C(x,k-1)) (считая C(x,-1)=0). Перегруппируем: Q(x) = ∑_{k=0}^d p_k C(x,k) - ∑_{k=0}^d p_k C(x,k-1). Во втором сумме сдвинем индекс: ∑_{j=0}^{d-1} p_{j+1} C(x,j). Получаем: Q(x) = p_0 C(x,0) + ∑_{k=1}^d (p_k - p_{k})? Подожди, точнее:\nQ(x) = ∑_{k=0}^d p_k C(x,k) - ∑_{k=-1}^{d-1} p_{k+1} C(x,k) (где p_{d+1}=0).\nТогда коэффициенты при C(x,k): для k=0: p_0 - p_1;\nдля 1 ≤ k ≤ d-1: p_k - p_{k+1};\nдля k=d: p_d - 0 = p_d.\nТо есть Q(x) = p_d C(x,d) + ∑_{k=0}^{d-1} (p_k - p_{k+1}) C(x,k).\n\nТак как Q целозначный, все коэффициенты в разложении по C(x,k) должны быть целыми. Значит:\np_d ∈ ℤ,\np_k - p_{k+1} ∈ ℤ для всех k = 0,1,...,d-1.\n\nОтсюда следует, что все p_k ∈ ℤ (так как p_d целое, затем p_{d-1} = целое + p_d ∈ ℤ и т.д.). Но это верно, если мы знаем, что P можно представить в виде линейной комбинации C(x,k) с вещественными коэффициентами p_k. Это всегда верно для любого многочлена с вещественными коэффициентами: C(x,k) образуют базис в ℝ[x] (как векторном пространстве над ℝ). Действительно, любой многочлен можно единственным образом разложить по базису {C(x,k)}, где коэффициенты будут вещественными (просто потому что C(x,k) — многочлены степени k с рациональными коэффициентами и с старшим коэффициентом 1/k!). Так что это разложение существует и единственно. Тогда мы доказали, что коэффициенты p_k целые, и следовательно P(x) = ∑ p_k C(x,k) с целыми p_k, что означает, что P(m) ∈ ℤ для всех целых m.\n\nЭто завершает доказательство. Но нужно проверить детали: пусть P(x) ∈ ℝ[x] степени d. Существуют вещественные числа p_0,...,p_d, такие что P(x) = ∑_{k=0}^d p_k C(x,k). (C(x,k) = x(x-1)...(x-k+1)/k! — стандартный биномиальный коэффициент, многочлен степени k). Тогда Q(x) = 2P(x) - P(x+1). Как мы вывели: C(x+1,k) = C(x,k) + C(x,k-1) для k ≥ 1, C(x+1,0) = 1 = C(x,0). Поэтому:\nP(x+1) = ∑ p_k C(x+1,k) = ∑ p_k (C(x,k) + C(x,k-1)) (где C(x,-1)=0).\nТогда 2P(x) - P(x+1) = 2∑ p_k C(x,k) - ∑ p_k C(x,k) - ∑ p_k C(x,k-1) = ∑ p_k C(x,k) - ∑ p_k C(x,k-1).\nПерепишем вторую сумму: ∑_{k=0}^d p_k C(x,k-1) = ∑_{j=-1}^{d-1} p_{j+1} C(x,j) = ∑_{j=0}^{d-1} p_{j+1} C(x,j) (поскольку C(x,-1)=0). Тогда Q(x) = p_0 C(x,0) + ∑_{k=1}^d p_k C(x,k) - ∑_{j=0}^{d-1} p_{j+1} C(x,j) = (p_0 - p_1) C(x,0) + ∑_{k=1}^{d-1} (p_k - p_{k+1}) C(x,k) + p_d C(x,d).\n\nПо условию Q(m) ∈ ℤ для всех m ∈ ℤ. Известно, что многочлен Q(x) ∈ ℝ[x] принимает целые значения на ℤ тогда и только тогда, когда его коэффициенты в разложении по C(x,k) целые. Это следует из того, что разложение единственно, и при подстановке целых x, значения C(m,k) целые, и обратно: если ∑ a_k C(x,k) принимает целые значения, то a_k ∈ ℤ (это можно доказать индукцией по степени: значение в 0 даёт a_0 ∈ ℤ; потом рассмотреть разность и т.д.). Следовательно, коэффициенты:\nc_d = p_d ∈ ℤ,\nc_k = p_k - p_{k+1} ∈ ℤ для k=0,...,d-1.\nОтсюда p_d ∈ ℤ, p_{d-1} = c_{d-1} + p_d ∈ ℤ, ..., p_0 ∈ ℤ.\nТаким образом, все p_k ∈ ℤ, и P(x) = ∑ p_k C(x,k) — многочлен с целыми p_k, а значит P(m) ∈ ℤ для всех целых m.\n\nВсё доказано.\n\nПроверим: действительно ли любой многочлен принимающий целые значения на целых аргументах имеет целые коэффициенты в базисе C(x,k)? Да, это классический факт. Но мы использовали его для Q. Нужно ли его доказывать отдельно? Можно в решении упомянуть это известное свойство или доказать кратко. Но так как задача олимпиадная, можно сослаться или доказать. Лучше включить короткое доказательство: пусть Q(x) = ∑_{k=0}^d a_k C(x,k). Тогда Q(0) = a_0 ∈ ℤ. Далее, Q(x+1)-Q(x) = ∑ a_k (C(x+1,k)-C(x,k)) = ∑ a_k C(x,k-1) = ∑_{k=1}^d a_k C(x,k-1) = ∑_{j=0}^{d-1} a_{j+1} C(x,j). По индукции, если многочлен Q(x+1)-Q(x) принимает целые значения на целых числах, то a_{j+1} целые. Так что индукцией по степени доказывается, что все a_k целые. Это стандартный аргумент. В нашем решении можно явно это проделать, чтобы не ссылаться на известный факт без доказательства.\n\nИтак, полное доказательство:\n1. Представим многочлен P в виде P(x) = ∑_{k=0}^n p_k C(x,k), где p_k ∈ ℝ, n = deg P (или больше, но можно считать n=deg P). Такое представление существует и единственно, так как C(x,k) — многочлены степени k.\n2. Определим Q(x) = 2P(x) - P(x+1). Раскроем:\nQ(x) = ∑ p_k (2C(x,k) - C(x+1,k)).\nИспользуя тождество C(x+1,k) = C(x,k) + C(x,k-1), получаем:\n2C(x,k) - C(x+1,k) = C(x,k) - C(x,k-1).\nТогда Q(x) = ∑_{k=0}^n p_k C(x,k) - ∑_{k=0}^n p_k C(x,k-1) = ∑_{k=0}^n p_k C(x,k) - ∑_{j=0}^{n-1} p_{j+1} C(x,j).\nОтсюда коэффициенты Q(x) в базисе C(x,k): при k=n коэффициент p_n, при 0 ≤ k ≤ n-1 коэффициент p_k - p_{k+1}.\n3. По условию Q(m) ∈ ℤ для всех m ∈ ℤ. Докажем, что все коэффициенты Q в этом базисе — целые числа. Действительно, Q(0) = a_0 ∈ ℤ. Затем R(x) = Q(x+1) - Q(x) = ∑_{k=1}^n a_k C(x,k-1) — тоже целозначный многочлен степени n-1 с коэффициентами a_1,...,a_n в базисе C(x, k-1). По индукции заключаем, что все a_k ∈ ℤ.\n4. Следовательно, p_n ∈ ℤ, и p_k - p_{k+1} ∈ ℤ для всех k = 0,...,n-1.\nОтсюда индукцией вниз: p_n ∈ ℤ ⇒ p_{n-1} = (p_{n-1} - p_n) + p_n ∈ ℤ ⇒ ... ⇒ p_0 ∈ ℤ.\n5. Так как все p_k ∈ ℤ, а C(m,k) ∈ ℤ для любых целых m, k ≥ 0, получаем, что P(m) = ∑ p_k C(m,k) ∈ ℤ для всех m ∈ ℤ. Доказательство завершено.\n\nНеобходимо также убедиться, что deg P определена. Если P — константа, то P(x) = p_0. Тогда Q(x) = 2p_0 - p_0 = p_0 ∈ ℤ, значит p_0 ∈ ℤ, и P(m) ∈ ℤ. В общем случае работает.\n\nТаким образом, решение полное и строгое.\n\nОтвет: доказано."
+            }
+          }
+        ],
+        "created": 1782768070,
+        "model": "deepseek-v4-pro",
+        "object": "chat.completion",
+        "service_tier": null,
+        "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 5285,
+          "prompt_tokens": 226,
+          "total_tokens": 5511,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "reasoning_content": "Мы должны доказать: пусть P(x) — многочлен с вещественными коэффициентами, и для всех целых m выполнено: 2P(m) - P(m+1) ∈ ℤ. Тогда P(m) ∈ ℤ для всех целых m.\n\nДано: P ∈ ℝ[x]. ∀ m ∈ ℤ: 2P(m) - P(m+1) ∈ ℤ.\nТребуется: ∀ m ∈ ℤ: P(m) ∈ ℤ.\n\nПопробуем доказать. Заметим, что это напоминает свойство целозначных многочленов. Но здесь условие немного слабее: целочисленная линейная комбинация значений многочлена в последовательных целых точках, а не сами значения.\n\nОбозначим a_m = P(m). Тогда a_m — вещественные числа. Условие: 2a_m - a_{m+1} ∈ ℤ для всех целых m.\n\nЦель: доказать, что a_m ∈ ℤ для всех m.\n\nЭто довольно простое рекуррентное соотношение. Можно переписать:\na_{m+1} = 2 a_m - k_m, где k_m = 2a_m - a_{m+1} ∈ ℤ.\n\nТогда a_{m+1} выражается через a_m: a_{m+1} ≡ 2 a_m (mod ℤ) в смысле, что их разность принадлежит ℤ? Нет: a_{m+1} = 2a_m - k_m, k_m ∈ ℤ. Следовательно, a_{m+1} mod ℤ = 2(a_m mod ℤ). Иными словами, если мы рассмотрим дробные части (или классы по модулю 1), то a_{m+1} ≡ 2 a_m (mod 1).\n\nПусть x_m = {a_m} — дробная часть a_m (в [0,1)). Тогда x_{m+1} = {2 a_m} = {2 x_m} (поскольку k_m целое). Следовательно, x_{m+1} ≡ 2 x_m (mod 1). Но a_m — вещественное число, и последовательность дробных частей должна быть ограничена (все в [0,1)). Однако многочлен P(x) — это многочлен, а не произвольная последовательность. Мы знаем, что последовательность a_m = P(m) имеет определенную асимптотику. Надо использовать, что a_m — значения многочлена.\n\nМы можем применить метод конечных разностей. Для многочлена степени d, ΔP(n) = P(n+1) - P(n) — многочлен степени d-1 и т.д. У нас есть информация о 2P(m) - P(m+1). Это не совсем разность, но можно выразить P(m+1) = 2P(m) - c_m, c_m ∈ ℤ.\n\nЕсли P — многочлен, то разности высокого порядка становятся нулевыми. Но тут у нас цепочка с целыми числами. Возможно, можно доказать по индукции, что P(n) ∈ ℤ для всех n, используя то, что для достаточно больших n (или малых) значения многочлена должны быть «почти целыми».\n\nРассмотрим более общий подход: пусть P(x) — многочлен степени d. Тогда P(x) = a_d x^d + ... + a_0. Мы хотим показать, что a_k ∈ ℚ, а потом и целые значения в целых точках. Но условие даёт нам не сразу целость коэффициентов. Давайте попробуем прямое доказательство.\n\nМожно попробовать рассмотреть последовательность b_m = P(m). Тогда b_{m+1} - 2b_m ∈ ℤ. Это линейное неоднородное рекуррентное соотношение. Общее решение однородного b_{m+1} = 2b_m есть b_m = C * 2^m. Неоднородное решение — какой-то многочлен от m, потому что P(m) — многочлен. Если P(m) — многочлен, и он удовлетворяет такому соотношению: P(m+1) - 2P(m) = -c_m, где c_m ∈ ℤ. Но c_m — это многочлен от m? Вообще-то c_m = 2P(m) - P(m+1), и это разность значений многочленов, т.е. многочлен от m? Да, 2P(x) - P(x+1) — это многочлен от x с вещественными коэффициентами. И по условию он принимает целые значения во всех целых x. Так как многочлен, принимающий целые значения на всех целых точках, не обязан иметь целые коэффициенты, но он является целозначным. Известно, что любой целозначный многочлен можно представить как целочисленную комбинацию биномиальных коэффициентов C(x, k). В любом случае, пусть Q(x) = 2P(x) - P(x+1). Тогда Q — многочлен с вещественными коэффициентами, и Q(m) ∈ ℤ ∀ m ∈ ℤ.\n\nТогда P(x+1) - 2P(x) = -Q(x).\nМы можем решить это уравнение относительно P. Оператор сдвига E: P(x+1) = E P(x). Тогда (E - 2)P = -Q.\nФормально, можно выразить P = -(E - 2)^{-1} Q. Но E - 2 можно обратить, раскладывая: (E - 2)^{-1} = -1/2 * (1 - E/2)^{-1} = -1/2 ∑ (E/2)^k. Это даёт P(x) = 1/2 ∑_{k=0}^∞ Q(x+k) / 2^k. Но сумма конечна для многочленов? Поскольку Q — многочлен, то ряд ∑ Q(x+k)/2^k сходится и определяет некоторую целую функцию, но мы ищем многочлен P, удовлетворяющий уравнению. В общем случае есть единственное многочленовое решение? Уравнение P(x+1) - 2P(x) = -Q(x). Если deg(P) = d, то deg(Q) = d (если коэффициент не сокращается), потому что старший член: a_d(x+1)^d - 2a_d x^d = a_d x^d + d a_d x^{d-1} + ... - 2a_d x^d = -a_d x^d + ... Так что Q имеет степень d с старшим коэффициентом -a_d. Следовательно, d — степень Q.\n\nМы знаем, что Q целозначный. Надо доказать, что P целозначный. Из P(x+1) = 2P(x) - Q(x). Если Q целозначный и P(x) для какого-то x целое, то по рекурсии все P(m) целые. Но мы не знаем, что P(x) целое хотя бы в одной точке. Нужно доказать это.\n\nМожно пытаться показать, что P(m) целые для всех m, используя конечные разности. Пусть ΔP(m) = P(m+1) - P(m). Тогда 2P(m) - P(m+1) = P(m) - ΔP(m). Это равно целому числу. Значит, P(m) ≡ ΔP(m) mod 1. Тогда ΔP(m) ≡ P(m) mod 1. А также Δ^k P(m) ≡ что-то.\n\nИли так: Поскольку Q целозначный многочлен, его можно записать как ∑ c_k C(x, k) с целыми c_k. Тогда можно найти P.\n\nВспомним классический результат: Если многочлен с вещественными коэффициентами принимает целые значения в целых точках, то он представляется как ∑ a_k C(x, k) с целыми a_k. Это известный факт. Тогда Q ∈ ℤ[x] в смысле целых значений. Давайте искать P в виде линейной комбинации биномиальных коэффициентов: пусть P(x) = ∑_{k=0}^d p_k C(x, k). Нам нужно доказать, что p_k ∈ ℤ. Условие: Q(x) = 2P(x) - P(x+1) = ∑ p_k (2C(x,k) - C(x+1,k)). Пользуясь тождеством C(x+1,k) = C(x,k) + C(x,k-1). Тогда Q(x) = ∑ p_k (2C(x,k) - C(x,k) - C(x,k-1)) = ∑ p_k (C(x,k) - C(x,k-1)) (считая C(x,-1)=0). Перегруппируем: Q(x) = ∑_{k=0}^d p_k C(x,k) - ∑_{k=0}^d p_k C(x,k-1). Во втором сумме сдвинем индекс: ∑_{j=0}^{d-1} p_{j+1} C(x,j). Получаем: Q(x) = p_0 C(x,0) + ∑_{k=1}^d (p_k - p_{k})? Подожди, точнее:\nQ(x) = ∑_{k=0}^d p_k C(x,k) - ∑_{k=-1}^{d-1} p_{k+1} C(x,k) (где p_{d+1}=0).\nТогда коэффициенты при C(x,k): для k=0: p_0 - p_1;\nдля 1 ≤ k ≤ d-1: p_k - p_{k+1};\nдля k=d: p_d - 0 = p_d.\nТо есть Q(x) = p_d C(x,d) + ∑_{k=0}^{d-1} (p_k - p_{k+1}) C(x,k).\n\nТак как Q целозначный, все коэффициенты в разложении по C(x,k) должны быть целыми. Значит:\np_d ∈ ℤ,\np_k - p_{k+1} ∈ ℤ для всех k = 0,1,...,d-1.\n\nОтсюда следует, что все p_k ∈ ℤ (так как p_d целое, затем p_{d-1} = целое + p_d ∈ ℤ и т.д.). Но это верно, если мы знаем, что P можно представить в виде линейной комбинации C(x,k) с вещественными коэффициентами p_k. Это всегда верно для любого многочлена с вещественными коэффициентами: C(x,k) образуют базис в ℝ[x] (как векторном пространстве над ℝ). Действительно, любой многочлен можно единственным образом разложить по базису {C(x,k)}, где коэффициенты будут вещественными (просто потому что C(x,k) — многочлены степени k с рациональными коэффициентами и с старшим коэффициентом 1/k!). Так что это разложение существует и единственно. Тогда мы доказали, что коэффициенты p_k целые, и следовательно P(x) = ∑ p_k C(x,k) с целыми p_k, что означает, что P(m) ∈ ℤ для всех целых m.\n\nЭто завершает доказательство. Но нужно проверить детали: пусть P(x) ∈ ℝ[x] степени d. Существуют вещественные числа p_0,...,p_d, такие что P(x) = ∑_{k=0}^d p_k C(x,k). (C(x,k) = x(x-1)...(x-k+1)/k! — стандартный биномиальный коэффициент, многочлен степени k). Тогда Q(x) = 2P(x) - P(x+1). Как мы вывели: C(x+1,k) = C(x,k) + C(x,k-1) для k ≥ 1, C(x+1,0) = 1 = C(x,0). Поэтому:\nP(x+1) = ∑ p_k C(x+1,k) = ∑ p_k (C(x,k) + C(x,k-1)) (где C(x,-1)=0).\nТогда 2P(x) - P(x+1) = 2∑ p_k C(x,k) - ∑ p_k C(x,k) - ∑ p_k C(x,k-1) = ∑ p_k C(x,k) - ∑ p_k C(x,k-1).\nПерепишем вторую сумму: ∑_{k=0}^d p_k C(x,k-1) = ∑_{j=-1}^{d-1} p_{j+1} C(x,j) = ∑_{j=0}^{d-1} p_{j+1} C(x,j) (поскольку C(x,-1)=0). Тогда Q(x) = p_0 C(x,0) + ∑_{k=1}^d p_k C(x,k) - ∑_{j=0}^{d-1} p_{j+1} C(x,j) = (p_0 - p_1) C(x,0) + ∑_{k=1}^{d-1} (p_k - p_{k+1}) C(x,k) + p_d C(x,d).\n\nПо условию Q(m) ∈ ℤ для всех m ∈ ℤ. Известно, что многочлен Q(x) ∈ ℝ[x] принимает целые значения на ℤ тогда и только тогда, когда его коэффициенты в разложении по C(x,k) целые. Это следует из того, что разложение единственно, и при подстановке целых x, значения C(m,k) целые, и обратно: если ∑ a_k C(x,k) принимает целые значения, то a_k ∈ ℤ (это можно доказать индукцией по степени: значение в 0 даёт a_0 ∈ ℤ; потом рассмотреть разность и т.д.). Следовательно, коэффициенты:\nc_d = p_d ∈ ℤ,\nc_k = p_k - p_{k+1} ∈ ℤ для k=0,...,d-1.\nОтсюда p_d ∈ ℤ, p_{d-1} = c_{d-1} + p_d ∈ ℤ, ..., p_0 ∈ ℤ.\nТаким образом, все p_k ∈ ℤ, и P(x) = ∑ p_k C(x,k) — многочлен с целыми p_k, а значит P(m) ∈ ℤ для всех целых m.\n\nВсё доказано.\n\nПроверим: действительно ли любой многочлен принимающий целые значения на целых аргументах имеет целые коэффициенты в базисе C(x,k)? Да, это классический факт. Но мы использовали его для Q. Нужно ли его доказывать отдельно? Можно в решении упомянуть это известное свойство или доказать кратко. Но так как задача олимпиадная, можно сослаться или доказать. Лучше включить короткое доказательство: пусть Q(x) = ∑_{k=0}^d a_k C(x,k). Тогда Q(0) = a_0 ∈ ℤ. Далее, Q(x+1)-Q(x) = ∑ a_k (C(x+1,k)-C(x,k)) = ∑ a_k C(x,k-1) = ∑_{k=1}^d a_k C(x,k-1) = ∑_{j=0}^{d-1} a_{j+1} C(x,j). По индукции, если многочлен Q(x+1)-Q(x) принимает целые значения на целых числах, то a_{j+1} целые. Так что индукцией по степени доказывается, что все a_k целые. Это стандартный аргумент. В нашем решении можно явно это проделать, чтобы не ссылаться на известный факт без доказательства.\n\nИтак, полное доказательство:\n1. Представим многочлен P в виде P(x) = ∑_{k=0}^n p_k C(x,k), где p_k ∈ ℝ, n = deg P (или больше, но можно считать n=deg P). Такое представление существует и единственно, так как C(x,k) — многочлены степени k.\n2. Определим Q(x) = 2P(x) - P(x+1). Раскроем:\nQ(x) = ∑ p_k (2C(x,k) - C(x+1,k)).\nИспользуя тождество C(x+1,k) = C(x,k) + C(x,k-1), получаем:\n2C(x,k) - C(x+1,k) = C(x,k) - C(x,k-1).\nТогда Q(x) = ∑_{k=0}^n p_k C(x,k) - ∑_{k=0}^n p_k C(x,k-1) = ∑_{k=0}^n p_k C(x,k) - ∑_{j=0}^{n-1} p_{j+1} C(x,j).\nОтсюда коэффициенты Q(x) в базисе C(x,k): при k=n коэффициент p_n, при 0 ≤ k ≤ n-1 коэффициент p_k - p_{k+1}.\n3. По условию Q(m) ∈ ℤ для всех m ∈ ℤ. Докажем, что все коэффициенты Q в этом базисе — целые числа. Действительно, Q(0) = a_0 ∈ ℤ. Затем R(x) = Q(x+1) - Q(x) = ∑_{k=1}^n a_k C(x,k-1) — тоже целозначный многочлен степени n-1 с коэффициентами a_1,...,a_n в базисе C(x, k-1). По индукции заключаем, что все a_k ∈ ℤ.\n4. Следовательно, p_n ∈ ℤ, и p_k - p_{k+1} ∈ ℤ для всех k = 0,...,n-1.\nОтсюда индукцией вниз: p_n ∈ ℤ ⇒ p_{n-1} = (p_{n-1} - p_n) + p_n ∈ ℤ ⇒ ... ⇒ p_0 ∈ ℤ.\n5. Так как все p_k ∈ ℤ, а C(m,k) ∈ ℤ для любых целых m, k ≥ 0, получаем, что P(m) = ∑ p_k C(m,k) ∈ ℤ для всех m ∈ ℤ. Доказательство завершено.\n\nНеобходимо также убедиться, что deg P определена. Если P — константа, то P(x) = p_0. Тогда Q(x) = 2p_0 - p_0 = p_0 ∈ ℤ, значит p_0 ∈ ℤ, и P(m) ∈ ℤ. В общем случае работает.\n\nТаким образом, решение полное и строгое.\n\nОтвет: доказано."
+      },
+      "usage": {
+        "input_tokens": 226,
+        "output_tokens": 5285,
+        "total_tokens": 5511,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 5285,
+          "prompt_tokens": 226,
+          "total_tokens": 5511,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 43727,
+        "monotonic_ms": 43727,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 43727,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 9.831e-05,
+        "output": 0.00459795,
+        "native": null,
+        "total": 0.00469626,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "1fce62c2-f317-41a6-a814-ef692f65819d",
+      "provider_timestamp": 1782768070,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_477d8d30a62617a041889028",
+      "result_index": 5,
+      "provider": "deepseek",
+      "alias": "deepseek:deepseek-v4-flash",
+      "adapter_class": "models.deepseek.deepseek.DeepSeekModel",
+      "requested_model_id": "deepseek-v4-flash",
+      "resolved_model_id": "deepseek-v4-flash",
+      "model": "deepseek-v4-flash",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:21:52.953457Z",
+      "completed_at": "2026-06-29T21:22:11.624127Z",
+      "status": "success",
+      "request": {
+        "model": "deepseek-v4-flash",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "temperature": 0.3,
+        "max_tokens": 16192,
+        "endpoint": "https://api.deepseek.com/chat/completions",
+        "stream": false
+      },
+      "answer": "Пусть \\(P(x)\\) — многочлен с вещественными коэффициентами, и для каждого целого \\(m\\) число \\(2P(m)-P(m+1)\\) является целым. Докажем, что \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\nДоказательство проведём индукцией по степени \\(n\\) многочлена \\(P\\).\n\n**База:** \\(n=0\\). Тогда \\(P(x)=c\\) — константа. Условие даёт \\(2c-c=c\\in\\mathbb Z\\), поэтому \\(c\\in\\mathbb Z\\) и \\(P(m)=c\\in\\mathbb Z\\) для всех \\(m\\).\n\n**Индукционный переход:** пусть утверждение верно для всех многочленов степени меньше \\(n\\) (\\(n\\ge 1\\)). Рассмотрим многочлен \\(P\\) степени \\(n\\), удовлетворяющий условию. Определим многочлен \\(Q(x)=P(x+1)-P(x)\\). Степень \\(Q\\) равна \\(n-1\\), коэффициенты вещественные. Покажем, что \\(Q\\) также удовлетворяет условию: для любого \\(m\\in\\mathbb Z\\) число \\(2Q(m)-Q(m+1)\\) целое.\n\nИз условия для \\(P\\) имеем:\n\\[\n2P(m)-P(m+1)\\in\\mathbb Z,\\qquad 2P(m+1)-P(m+2)\\in\\mathbb Z.\n\\]\nВычтем из второго равенства первое:\n\\[\n(2P(m+1)-P(m+2))-(2P(m)-P(m+1))=2(P(m+1)-P(m))-(P(m+2)-P(m+1))=2Q(m)-Q(m+1)\\in\\mathbb Z.\n\\]\nТаким образом, \\(Q\\) удовлетворяет тому же свойству. По индукционному предположению (так как степень \\(Q\\) меньше \\(n\\)) получаем \\(Q(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\). Тогда из первого условия \\(2P(m)-P(m+1)=P(m)-Q(m)\\in\\mathbb Z\\) следует, что \\(P(m)=(P(m)-Q(m))+Q(m)\\in\\mathbb Z\\) для всех \\(m\\). Индукционный переход завершён.\n\nСледовательно, для любого многочлена \\(P\\) с вещественными коэффициентами, такого что \\(2P(m)-P(m+1)\\in\\mathbb Z\\) при всех \\(m\\in\\mathbb Z\\), значения \\(P(m)\\) являются целыми числами для всех \\(m\\in\\mathbb Z\\).",
+      "prompt_tokens": 226,
+      "completion_tokens": 2353,
+      "cost_usd": 0.00069048,
+      "latency_ms": 18644,
+      "raw_response": {
+        "id": "5483d7bc-2ec1-43a7-83d3-aeece20cecda",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Пусть \\(P(x)\\) — многочлен с вещественными коэффициентами, и для каждого целого \\(m\\) число \\(2P(m)-P(m+1)\\) является целым. Докажем, что \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\nДоказательство проведём индукцией по степени \\(n\\) многочлена \\(P\\).\n\n**База:** \\(n=0\\). Тогда \\(P(x)=c\\) — константа. Условие даёт \\(2c-c=c\\in\\mathbb Z\\), поэтому \\(c\\in\\mathbb Z\\) и \\(P(m)=c\\in\\mathbb Z\\) для всех \\(m\\).\n\n**Индукционный переход:** пусть утверждение верно для всех многочленов степени меньше \\(n\\) (\\(n\\ge 1\\)). Рассмотрим многочлен \\(P\\) степени \\(n\\), удовлетворяющий условию. Определим многочлен \\(Q(x)=P(x+1)-P(x)\\). Степень \\(Q\\) равна \\(n-1\\), коэффициенты вещественные. Покажем, что \\(Q\\) также удовлетворяет условию: для любого \\(m\\in\\mathbb Z\\) число \\(2Q(m)-Q(m+1)\\) целое.\n\nИз условия для \\(P\\) имеем:\n\\[\n2P(m)-P(m+1)\\in\\mathbb Z,\\qquad 2P(m+1)-P(m+2)\\in\\mathbb Z.\n\\]\nВычтем из второго равенства первое:\n\\[\n(2P(m+1)-P(m+2))-(2P(m)-P(m+1))=2(P(m+1)-P(m))-(P(m+2)-P(m+1))=2Q(m)-Q(m+1)\\in\\mathbb Z.\n\\]\nТаким образом, \\(Q\\) удовлетворяет тому же свойству. По индукционному предположению (так как степень \\(Q\\) меньше \\(n\\)) получаем \\(Q(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\). Тогда из первого условия \\(2P(m)-P(m+1)=P(m)-Q(m)\\in\\mathbb Z\\) следует, что \\(P(m)=(P(m)-Q(m))+Q(m)\\in\\mathbb Z\\) для всех \\(m\\). Индукционный переход завершён.\n\nСледовательно, для любого многочлена \\(P\\) с вещественными коэффициентами, такого что \\(2P(m)-P(m+1)\\in\\mathbb Z\\) при всех \\(m\\in\\mathbb Z\\), значения \\(P(m)\\) являются целыми числами для всех \\(m\\in\\mathbb Z\\).",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "Мы должны доказать, что если многочлен P(x) с действительными коэффициентами удовлетворяет условию: для любого целого m число 2P(m) - P(m+1) является целым, то P(m) целое для всех целых m.\n\nИдея: рассмотреть разностные операторы. Условие можно переписать как: ΔP(m) = P(m+1) - P(m) = P(m) - (2P(m)-P(m+1)) = P(m) - целое число? Не совсем. Имеем: 2P(m)-P(m+1) ∈ Z. Тогда P(m+1) = 2P(m) - k_m, где k_m ∈ Z. Отсюда P(m+1) ≡ P(m) mod 1? P(m+1) = 2P(m) - integer, поэтому дробная часть P(m+1) равна дробной части 2P(m) (поскольку вычитание целого не меняет дробную часть). Если обозначить {x} дробную часть, то {P(m+1)} = {2P(m)}. Это рекуррентное соотношение на дробные части. Если мы докажем, что {P(m)} = 0 для всех m, то задача решена.\n\nМы знаем, что P(x) - многочлен. Рассмотрим последовательность a_m = P(m). Условие: 2a_m - a_{m+1} ∈ Z для всех m ∈ Z. Нужно доказать, что a_m ∈ Z для всех m.\n\nМожно применить метод математической индукции. Но нужно знать начальное значение? Неизвестно. Может быть, воспользоваться тем, что разности высших порядков от многочлена становятся константами. Рассмотрим конечные разности.\n\nОпределим ΔP(m) = P(m+1)-P(m). Тогда условие: 2P(m)-P(m+1) = P(m) - (P(m+1)-P(m)) = P(m)-ΔP(m) ∈ Z. То есть P(m) - ΔP(m) целое. Если бы мы могли показать, что ΔP(m) тоже целое, то и P(m) целое. Но ΔP(m) - многочлен степени на 1 меньше. Возможно, применить индукцию по степени.\n\nПусть степень P равна n. Если n=0, P(x)=c - константа. Тогда условие: 2c - c = c ∈ Z, следовательно c целое, и P(m) целое для всех m. База доказана.\n\nПредположим, что утверждение верно для всех многочленов степени < n. Пусть P степени n. Рассмотрим многочлен Q(x) = P(x+1)-P(x) (это многочлен степени n-1). Нам нужно показать, что Q(m) целые? Или что-то другое.\n\nИз условия: 2P(m)-P(m+1) ∈ Z. Выразим: P(m) - (P(m+1)-P(m)) = P(m)-Q(m) ∈ Z. Тогда P(m) ≡ Q(m) (mod 1). То есть дробные части P(m) и Q(m) совпадают.\n\nТакже для следующего шага: 2P(m+1)-P(m+2) ∈ Z ⇒ P(m+1)-Q(m+1) ∈ Z. Но P(m+1)=P(m)+Q(m). Тогда P(m+1)-Q(m+1)=P(m)+Q(m)-Q(m+1) ∈ Z. Следовательно, P(m) + Q(m) - Q(m+1) ∈ Z. Но мы знаем, что P(m) - Q(m) ∈ Z (из первого). Вычтем: (P(m)+Q(m)-Q(m+1)) - (P(m)-Q(m)) = 2Q(m)-Q(m+1) ∈ Z. Так как разность двух целых чисел целая. То есть мы получили: 2Q(m)-Q(m+1) ∈ Z для всех m. Значит, Q(x) удовлетворяет тому же условию! И степень Q на 1 меньше. По индукционному предположению, Q(m) ∈ Z для всех целых m. Но тогда из P(m)-Q(m) ∈ Z следует, что P(m) ∈ Z. И все. \n\nПроверим: действительно, из того, что 2Q(m)-Q(m+1) ∈ Z, и Q степень n-1, по индукции Q(m) целые. Но нужно убедиться, что Q - многочлен с вещественными коэффициентами? Да, P с вещественными, разность тоже. И условие выполняется для всех целых m, что мы вывели. Значит, индукция работает.\n\nОднако нужно аккуратно проверить переход: мы предполагаем, что для любого многочлена степени < n, удовлетворяющего условию, его значения в целых точках целые. Для Q мы показали, что 2Q(m)-Q(m+1) ∈ Z для всех m. Но нужно также, чтобы Q был определен на всех целых m, и что он многочлен с вещественными коэффициентами. Это так. Значит, по индукции Q(m) ∈ Z. Тогда из P(m)-Q(m) ∈ Z (по условию) получаем P(m) ∈ Z.\n\nНо есть тонкость: индукция по степени. Для n=0 уже доказано. Для n>0: пусть P степени n и удовлетворяет условию. Тогда Q(x)=P(x+1)-P(x) - многочлен степени n-1 (если n>0). Мы показали, что Q удовлетворяет тому же условию. Следовательно, по индукции Q(m) ∈ Z для всех m. Далее, из условия 2P(m)-P(m+1)=P(m)-Q(m) ∈ Z, значит P(m) = (P(m)-Q(m)) + Q(m) ∈ Z, так как сумма целых чисел. Все.\n\nТаким образом, доказательство завершено.\n\nТеперь формально запишем решение.\n\nПусть P(x) - многочлен с вещественными коэффициентами, и для любого целого m число 2P(m)-P(m+1) целое.\n\nДокажем индукцией по степени n многочлена P, что P(m) целое для всех целых m.\n\nБаза: n=0, P(x)=c. Тогда 2c-c=c целое, значит c∈Z, и P(m)=c∈Z.\n\nИндукционный переход: пусть утверждение верно для всех многочленов степени меньше n, где n≥1. Рассмотрим многочлен P степени n, удовлетворяющий условию. Определим Q(x)=P(x+1)-P(x). Q - многочлен степени n-1 (коэффициенты вещественные). Покажем, что Q удовлетворяет тому же условию: для любого целого m число 2Q(m)-Q(m+1) целое. Действительно, из условия для P имеем:\n\n(1) 2P(m)-P(m+1) ∈ Z.\n(2) 2P(m+1)-P(m+2) ∈ Z.\n\nВычтем (2)-(1): (2P(m+1)-P(m+2)) - (2P(m)-P(m+1)) = 2(P(m+1)-P(m)) - (P(m+2)-P(m+1)) = 2Q(m) - Q(m+1) ∈ Z.\n\nТаким образом, для Q выполнено условие. По индукционному предположению Q(m) ∈ Z для всех m∈Z. Тогда из (1) имеем P(m)-Q(m) ∈ Z, следовательно P(m) = (P(m)-Q(m)) + Q(m) ∈ Z. Индукционный переход доказан.\n\nСледовательно, для любого многочлена P с вещественными коэффициентами, такого что 2P(m)-P(m+1)∈Z для всех m∈Z, значения P(m) целые для всех целых m.\n\nВот и все."
+            }
+          }
+        ],
+        "created": 1782768114,
+        "model": "deepseek-v4-flash",
+        "object": "chat.completion",
+        "service_tier": null,
+        "system_fingerprint": "fp_8b330d02d0_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 2353,
+          "prompt_tokens": 226,
+          "total_tokens": 2579,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "reasoning_content": "Мы должны доказать, что если многочлен P(x) с действительными коэффициентами удовлетворяет условию: для любого целого m число 2P(m) - P(m+1) является целым, то P(m) целое для всех целых m.\n\nИдея: рассмотреть разностные операторы. Условие можно переписать как: ΔP(m) = P(m+1) - P(m) = P(m) - (2P(m)-P(m+1)) = P(m) - целое число? Не совсем. Имеем: 2P(m)-P(m+1) ∈ Z. Тогда P(m+1) = 2P(m) - k_m, где k_m ∈ Z. Отсюда P(m+1) ≡ P(m) mod 1? P(m+1) = 2P(m) - integer, поэтому дробная часть P(m+1) равна дробной части 2P(m) (поскольку вычитание целого не меняет дробную часть). Если обозначить {x} дробную часть, то {P(m+1)} = {2P(m)}. Это рекуррентное соотношение на дробные части. Если мы докажем, что {P(m)} = 0 для всех m, то задача решена.\n\nМы знаем, что P(x) - многочлен. Рассмотрим последовательность a_m = P(m). Условие: 2a_m - a_{m+1} ∈ Z для всех m ∈ Z. Нужно доказать, что a_m ∈ Z для всех m.\n\nМожно применить метод математической индукции. Но нужно знать начальное значение? Неизвестно. Может быть, воспользоваться тем, что разности высших порядков от многочлена становятся константами. Рассмотрим конечные разности.\n\nОпределим ΔP(m) = P(m+1)-P(m). Тогда условие: 2P(m)-P(m+1) = P(m) - (P(m+1)-P(m)) = P(m)-ΔP(m) ∈ Z. То есть P(m) - ΔP(m) целое. Если бы мы могли показать, что ΔP(m) тоже целое, то и P(m) целое. Но ΔP(m) - многочлен степени на 1 меньше. Возможно, применить индукцию по степени.\n\nПусть степень P равна n. Если n=0, P(x)=c - константа. Тогда условие: 2c - c = c ∈ Z, следовательно c целое, и P(m) целое для всех m. База доказана.\n\nПредположим, что утверждение верно для всех многочленов степени < n. Пусть P степени n. Рассмотрим многочлен Q(x) = P(x+1)-P(x) (это многочлен степени n-1). Нам нужно показать, что Q(m) целые? Или что-то другое.\n\nИз условия: 2P(m)-P(m+1) ∈ Z. Выразим: P(m) - (P(m+1)-P(m)) = P(m)-Q(m) ∈ Z. Тогда P(m) ≡ Q(m) (mod 1). То есть дробные части P(m) и Q(m) совпадают.\n\nТакже для следующего шага: 2P(m+1)-P(m+2) ∈ Z ⇒ P(m+1)-Q(m+1) ∈ Z. Но P(m+1)=P(m)+Q(m). Тогда P(m+1)-Q(m+1)=P(m)+Q(m)-Q(m+1) ∈ Z. Следовательно, P(m) + Q(m) - Q(m+1) ∈ Z. Но мы знаем, что P(m) - Q(m) ∈ Z (из первого). Вычтем: (P(m)+Q(m)-Q(m+1)) - (P(m)-Q(m)) = 2Q(m)-Q(m+1) ∈ Z. Так как разность двух целых чисел целая. То есть мы получили: 2Q(m)-Q(m+1) ∈ Z для всех m. Значит, Q(x) удовлетворяет тому же условию! И степень Q на 1 меньше. По индукционному предположению, Q(m) ∈ Z для всех целых m. Но тогда из P(m)-Q(m) ∈ Z следует, что P(m) ∈ Z. И все. \n\nПроверим: действительно, из того, что 2Q(m)-Q(m+1) ∈ Z, и Q степень n-1, по индукции Q(m) целые. Но нужно убедиться, что Q - многочлен с вещественными коэффициентами? Да, P с вещественными, разность тоже. И условие выполняется для всех целых m, что мы вывели. Значит, индукция работает.\n\nОднако нужно аккуратно проверить переход: мы предполагаем, что для любого многочлена степени < n, удовлетворяющего условию, его значения в целых точках целые. Для Q мы показали, что 2Q(m)-Q(m+1) ∈ Z для всех m. Но нужно также, чтобы Q был определен на всех целых m, и что он многочлен с вещественными коэффициентами. Это так. Значит, по индукции Q(m) ∈ Z. Тогда из P(m)-Q(m) ∈ Z (по условию) получаем P(m) ∈ Z.\n\nНо есть тонкость: индукция по степени. Для n=0 уже доказано. Для n>0: пусть P степени n и удовлетворяет условию. Тогда Q(x)=P(x+1)-P(x) - многочлен степени n-1 (если n>0). Мы показали, что Q удовлетворяет тому же условию. Следовательно, по индукции Q(m) ∈ Z для всех m. Далее, из условия 2P(m)-P(m+1)=P(m)-Q(m) ∈ Z, значит P(m) = (P(m)-Q(m)) + Q(m) ∈ Z, так как сумма целых чисел. Все.\n\nТаким образом, доказательство завершено.\n\nТеперь формально запишем решение.\n\nПусть P(x) - многочлен с вещественными коэффициентами, и для любого целого m число 2P(m)-P(m+1) целое.\n\nДокажем индукцией по степени n многочлена P, что P(m) целое для всех целых m.\n\nБаза: n=0, P(x)=c. Тогда 2c-c=c целое, значит c∈Z, и P(m)=c∈Z.\n\nИндукционный переход: пусть утверждение верно для всех многочленов степени меньше n, где n≥1. Рассмотрим многочлен P степени n, удовлетворяющий условию. Определим Q(x)=P(x+1)-P(x). Q - многочлен степени n-1 (коэффициенты вещественные). Покажем, что Q удовлетворяет тому же условию: для любого целого m число 2Q(m)-Q(m+1) целое. Действительно, из условия для P имеем:\n\n(1) 2P(m)-P(m+1) ∈ Z.\n(2) 2P(m+1)-P(m+2) ∈ Z.\n\nВычтем (2)-(1): (2P(m+1)-P(m+2)) - (2P(m)-P(m+1)) = 2(P(m+1)-P(m)) - (P(m+2)-P(m+1)) = 2Q(m) - Q(m+1) ∈ Z.\n\nТаким образом, для Q выполнено условие. По индукционному предположению Q(m) ∈ Z для всех m∈Z. Тогда из (1) имеем P(m)-Q(m) ∈ Z, следовательно P(m) = (P(m)-Q(m)) + Q(m) ∈ Z. Индукционный переход доказан.\n\nСледовательно, для любого многочлена P с вещественными коэффициентами, такого что 2P(m)-P(m+1)∈Z для всех m∈Z, значения P(m) целые для всех целых m.\n\nВот и все."
+      },
+      "usage": {
+        "input_tokens": 226,
+        "output_tokens": 2353,
+        "total_tokens": 2579,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 2353,
+          "prompt_tokens": 226,
+          "total_tokens": 2579,
+          "completion_tokens_details": "[REDACTED]",
+          "prompt_tokens_details": "[REDACTED]",
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 18644,
+        "monotonic_ms": 18644,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 18644,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 3.164e-05,
+        "output": 0.00065884,
+        "native": null,
+        "total": 0.00069048,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "5483d7bc-2ec1-43a7-83d3-aeece20cecda",
+      "provider_timestamp": 1782768114,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_1a528a6fd0abc6f80add8699",
+      "result_index": 6,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-2-Max",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2-Max",
+      "resolved_model_id": "GigaChat-2-Max:2.0.28.2",
+      "model": "GigaChat-2-Max",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:22:11.636493Z",
+      "completed_at": "2026-06-29T21:22:33.250152Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2-Max",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 16192,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "### Шаг 1: Формализация условия\n\nПусть $ P(x) = a_n x^n + a_{n-1} x^{n-1} + \\dots + a_1 x + a_0 $, где $ a_i \\in \\mathbb{R} $. Условие задачи гласит, что для любого целого числа $ m $ выражение $ 2P(m) - P(m+1) $ является целым числом.\n\n### Шаг 2: Анализ степени многочлена\n\nРассмотрим степень многочлена $ P(x) $. Пусть $ n $ — степень многочлена $ P(x) $. Тогда:\n\n$$\n2P(m) - P(m+1) = 2(a_n m^n + \\dots + a_0) - (a_n (m+1)^n + \\dots + a_0)\n$$\n\nРаскрывая скобки и группируя члены, получаем:\n\n$$\n2P(m) - P(m+1) = a_n(2m^n - (m+1)^n) + \\text{члены меньшей степени}\n$$\n\nЗаметим, что $ 2m^n - (m+1)^n $ имеет степень $ n-1 $, так как старший член в $ (m+1)^n $ равен $ m^n $, который сокращается с $ 2m^n $. Таким образом, выражение $ 2P(m) - P(m+1) $ имеет степень не выше $ n-1 $.\n\n### Шаг 3: Доказательство индукцией по степени многочлена\n\nДокажем утверждение индукцией по степени многочлена $ P(x) $.\n\n#### База индукции ($ n=0 $):\n\nЕсли $ n=0 $, то $ P(x) = a_0 $ — константа. Тогда $ 2P(m) - P(m+1) = 2a_0 - a_0 = a_0 $, и по условию $ a_0 \\in \\mathbb{Z} $. Следовательно, $ P(m) = a_0 \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\n#### Индукционный переход:\n\nПредположим, что утверждение верно для всех многочленов степени меньше $ k $. Рассмотрим многочлен $ P(x) $ степени $ k $. По условию, $ 2P(m) - P(m+1) $ — целое число для любого $ m \\in \\mathbb{Z} $. Обозначим этот многочлен как $ Q(m) = 2P(m) - P(m+1) $. Так как $ Q(m) $ имеет степень не выше $ k-1 $, по индуктивному предположению $ Q(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\nТеперь рассмотрим разность $ P(m+1) - P(m) $. Имеем:\n\n$$\nP(m+1) - P(m) = (2P(m) - Q(m)) - P(m) = P(m) - Q(m)\n$$\n\nТак как $ Q(m) \\in \\mathbb{Z} $, то $ P(m+1) - P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $. Это означает, что разность значений многочлена на соседних целых числах всегда целая.\n\nРассмотрим последовательность $ P(0), P(1), P(2), \\dots $. Так как $ P(1) - P(0) \\in \\mathbb{Z} $, $ P(2) - P(1) \\in \\mathbb{Z} $, и т.д., то все значения $ P(m) $ отличаются от $ P(0) $ на целые числа. Но $ P(0) $ также должно быть целым числом, так как $ 2P(0) - P(1) \\in \\mathbb{Z} $ и $ P(1) - P(0) \\in \\mathbb{Z} $. Следовательно, $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\n### Шаг 4: Финальный вывод\n\nТаким образом, мы доказали, что если $ 2P(m) - P(m+1) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $, то $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.",
+      "prompt_tokens": 188,
+      "completion_tokens": 934,
+      "cost_usd": 0.00810333,
+      "latency_ms": 21554,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "81736b64-09ee-4199-bddf-af3c7cad5236",
+          "x-session-id": "971a9d2e-0529-47ba-8856-a5e516be0c04"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "### Шаг 1: Формализация условия\n\nПусть $ P(x) = a_n x^n + a_{n-1} x^{n-1} + \\dots + a_1 x + a_0 $, где $ a_i \\in \\mathbb{R} $. Условие задачи гласит, что для любого целого числа $ m $ выражение $ 2P(m) - P(m+1) $ является целым числом.\n\n### Шаг 2: Анализ степени многочлена\n\nРассмотрим степень многочлена $ P(x) $. Пусть $ n $ — степень многочлена $ P(x) $. Тогда:\n\n$$\n2P(m) - P(m+1) = 2(a_n m^n + \\dots + a_0) - (a_n (m+1)^n + \\dots + a_0)\n$$\n\nРаскрывая скобки и группируя члены, получаем:\n\n$$\n2P(m) - P(m+1) = a_n(2m^n - (m+1)^n) + \\text{члены меньшей степени}\n$$\n\nЗаметим, что $ 2m^n - (m+1)^n $ имеет степень $ n-1 $, так как старший член в $ (m+1)^n $ равен $ m^n $, который сокращается с $ 2m^n $. Таким образом, выражение $ 2P(m) - P(m+1) $ имеет степень не выше $ n-1 $.\n\n### Шаг 3: Доказательство индукцией по степени многочлена\n\nДокажем утверждение индукцией по степени многочлена $ P(x) $.\n\n#### База индукции ($ n=0 $):\n\nЕсли $ n=0 $, то $ P(x) = a_0 $ — константа. Тогда $ 2P(m) - P(m+1) = 2a_0 - a_0 = a_0 $, и по условию $ a_0 \\in \\mathbb{Z} $. Следовательно, $ P(m) = a_0 \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\n#### Индукционный переход:\n\nПредположим, что утверждение верно для всех многочленов степени меньше $ k $. Рассмотрим многочлен $ P(x) $ степени $ k $. По условию, $ 2P(m) - P(m+1) $ — целое число для любого $ m \\in \\mathbb{Z} $. Обозначим этот многочлен как $ Q(m) = 2P(m) - P(m+1) $. Так как $ Q(m) $ имеет степень не выше $ k-1 $, по индуктивному предположению $ Q(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\nТеперь рассмотрим разность $ P(m+1) - P(m) $. Имеем:\n\n$$\nP(m+1) - P(m) = (2P(m) - Q(m)) - P(m) = P(m) - Q(m)\n$$\n\nТак как $ Q(m) \\in \\mathbb{Z} $, то $ P(m+1) - P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $. Это означает, что разность значений многочлена на соседних целых числах всегда целая.\n\nРассмотрим последовательность $ P(0), P(1), P(2), \\dots $. Так как $ P(1) - P(0) \\in \\mathbb{Z} $, $ P(2) - P(1) \\in \\mathbb{Z} $, и т.д., то все значения $ P(m) $ отличаются от $ P(0) $ на целые числа. Но $ P(0) $ также должно быть целым числом, так как $ 2P(0) - P(1) \\in \\mathbb{Z} $ и $ P(1) - P(0) \\in \\mathbb{Z} $. Следовательно, $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\n### Шаг 4: Финальный вывод\n\nТаким образом, мы доказали, что если $ 2P(m) - P(m+1) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $, то $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782768154,
+        "model": "GigaChat-2-Max:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 188,
+          "completion_tokens": 934,
+          "total_tokens": 1122,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 188,
+        "output_tokens": 934,
+        "total_tokens": 1122,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 188,
+          "completion_tokens": 934,
+          "total_tokens": 1122,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 21554,
+        "monotonic_ms": 21554,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 21554,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.7293,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00810333,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat text-generation package price; freemium tokens are not subtracted.",
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "81736b64-09ee-4199-bddf-af3c7cad5236",
+      "response_id": null,
+      "provider_timestamp": 1782768154,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_ce715b7f16c0a9624a584be2",
+      "result_index": 7,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-2",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2",
+      "resolved_model_id": "GigaChat-2:2.0.28.2",
+      "model": "GigaChat-2",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:22:33.266115Z",
+      "completed_at": "2026-06-29T21:22:39.451427Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 16192,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "Рассмотрим задачу подробно.\n1. **Формализация условия:**\n   Пусть $ P(x) $ — многочлен с вещественными коэффициентами, такой что $ 2P(m) - P(m+1) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\n2. **Введение обозначений:**\n   Пусть $ P(x) = a_n x^n + a_{n-1} x^{n-1} + \\dots + a_0 $, где $ a_i \\in \\mathbb{R} $.\n\n3. **Проверка ограничений:**\n   Условие задачи требует доказать, что $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $. \n\n4. **Доказательство:**\n   Рассмотрим выражение $ 2P(m) - P(m+1) $:\n   \n\n$$\n   2P(m) - P(m+1) = 2(a_n m^n + a_{n-1} m^{n-1} + \\dots + a_0) - (a_n (m+1)^n + a_{n-1} (m+1)^{n-1} + \\dots + a_0)\n   $$\n\n   Раскроем скобки и упростим выражение:\n   \n\n$$\n   2P(m) - P(m+1) = 2a_n m^n + 2a_{n-1} m^{n-1} + \\dots + 2a_0 - (a_n (m^n + n m^{n-1} + \\dots + 1) + a_{n-1} (m^{n-1} + \\dots) + \\dots + a_0)\n   $$\n\n   \n\n$$\n   = 2a_n m^n + 2a_{n-1} m^{n-1} + \\dots + 2a_0 - a_n m^n - n a_n m^{n-1} - \\dots - a_n - a_{n-1} m^{n-1} - \\dots - a_0\n   $$\n\n   \n\n$$\n   = (2a_n - a_n) m^n + (2a_{n-1} - a_{n-1}) m^{n-1} + \\dots + (2a_0 - a_0)\n   $$\n\n   \n\n$$\n   = a_n (m^n - m^n) + a_{n-1} (2m^{n-1} - m^{n-1}) + \\dots + (2a_0 - a_0)\n   $$\n\n   \n\n$$\n   = a_{n-1} m^{n-1} + a_{n-2} m^{n-2} + \\dots + (2a_0 - a_0)\n   $$\n\n   \n\n$$\n   = a_{n-1} m^{n-1} + a_{n-2} m^{n-2} + \\dots + a_0\n   $$\n\n   Поскольку это выражение целое число для любого $ m \\in \\mathbb{Z} $, коэффициенты $ a_i $ должны быть такими, чтобы каждый член выражения был целым числом независимо от $ m $. Это возможно только в том случае, если $ a_i \\in \\mathbb{Z} $ для всех $ i $.\n\n5. **Проверка существования объектов:**\n   Так как $ a_i \\in \\mathbb{Z} $, то $ P(m) = a_n m^n + a_{n-1} m^{n-1} + \\dots + a_0 $ будет целым числом для любого $ m \\in \\mathbb{Z} $.\n\n6. **Финальный вывод:**\n   Мы доказали, что $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.",
+      "prompt_tokens": 188,
+      "completion_tokens": 819,
+      "cost_usd": 0.00072728,
+      "latency_ms": 6165,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "25a28005-bf03-438e-83d6-bbdb14ea2dc1",
+          "x-session-id": "60a1c1fa-e5ab-46f2-bee4-f23e3d00a3c7"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "Рассмотрим задачу подробно.\n1. **Формализация условия:**\n   Пусть $ P(x) $ — многочлен с вещественными коэффициентами, такой что $ 2P(m) - P(m+1) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.\n\n2. **Введение обозначений:**\n   Пусть $ P(x) = a_n x^n + a_{n-1} x^{n-1} + \\dots + a_0 $, где $ a_i \\in \\mathbb{R} $.\n\n3. **Проверка ограничений:**\n   Условие задачи требует доказать, что $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $. \n\n4. **Доказательство:**\n   Рассмотрим выражение $ 2P(m) - P(m+1) $:\n   \n\n$$\n   2P(m) - P(m+1) = 2(a_n m^n + a_{n-1} m^{n-1} + \\dots + a_0) - (a_n (m+1)^n + a_{n-1} (m+1)^{n-1} + \\dots + a_0)\n   $$\n\n   Раскроем скобки и упростим выражение:\n   \n\n$$\n   2P(m) - P(m+1) = 2a_n m^n + 2a_{n-1} m^{n-1} + \\dots + 2a_0 - (a_n (m^n + n m^{n-1} + \\dots + 1) + a_{n-1} (m^{n-1} + \\dots) + \\dots + a_0)\n   $$\n\n   \n\n$$\n   = 2a_n m^n + 2a_{n-1} m^{n-1} + \\dots + 2a_0 - a_n m^n - n a_n m^{n-1} - \\dots - a_n - a_{n-1} m^{n-1} - \\dots - a_0\n   $$\n\n   \n\n$$\n   = (2a_n - a_n) m^n + (2a_{n-1} - a_{n-1}) m^{n-1} + \\dots + (2a_0 - a_0)\n   $$\n\n   \n\n$$\n   = a_n (m^n - m^n) + a_{n-1} (2m^{n-1} - m^{n-1}) + \\dots + (2a_0 - a_0)\n   $$\n\n   \n\n$$\n   = a_{n-1} m^{n-1} + a_{n-2} m^{n-2} + \\dots + (2a_0 - a_0)\n   $$\n\n   \n\n$$\n   = a_{n-1} m^{n-1} + a_{n-2} m^{n-2} + \\dots + a_0\n   $$\n\n   Поскольку это выражение целое число для любого $ m \\in \\mathbb{Z} $, коэффициенты $ a_i $ должны быть такими, чтобы каждый член выражения был целым числом независимо от $ m $. Это возможно только в том случае, если $ a_i \\in \\mathbb{Z} $ для всех $ i $.\n\n5. **Проверка существования объектов:**\n   Так как $ a_i \\in \\mathbb{Z} $, то $ P(m) = a_n m^n + a_{n-1} m^{n-1} + \\dots + a_0 $ будет целым числом для любого $ m \\in \\mathbb{Z} $.\n\n6. **Финальный вывод:**\n   Мы доказали, что $ P(m) \\in \\mathbb{Z} $ для любого $ m \\in \\mathbb{Z} $.",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1782768160,
+        "model": "GigaChat-2:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 188,
+          "completion_tokens": 819,
+          "total_tokens": 1007,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 188,
+        "output_tokens": 819,
+        "total_tokens": 1007,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 188,
+          "completion_tokens": 819,
+          "total_tokens": 1007,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 6165,
+        "monotonic_ms": 6165,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 6165,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.065455,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00072728,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat text-generation package price; freemium tokens are not subtracted.",
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "25a28005-bf03-438e-83d6-bbdb14ea2dc1",
+      "response_id": null,
+      "provider_timestamp": 1782768160,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_4b7640502cc65a5daa39a2d6",
+      "result_index": 8,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt:yandexgpt-5.1",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "yandexgpt-5.1",
+      "resolved_model_id": "yandexgpt-5.1",
+      "model": "yandexgpt-5.1",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:22:39.463723Z",
+      "completed_at": "2026-06-29T21:22:46.207763Z",
+      "status": "success",
+      "request": {
+        "model": "yandexgpt-5.1",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 16192
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false
+      },
+      "answer": "**Формализация условия:**\n\nПусть $P(x)$ — многочлен с вещественными коэффициентами, такой что для любого $m \\in \\mathbb{Z}$ выражение $2P(m) - P(m+1)$ является целым числом. Необходимо доказать, что $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$.\n\n**Обозначения:**\n\n- $P(x) = a_n x^n + a_{n-1} x^{n-1} + \\ldots + a_1 x + a_0$, где $a_i \\in \\mathbb{R}$ — коэффициенты многочлена.\n- $m$ — произвольное целое число.\n\n**Доказательство:**\n\nРассмотрим разность $2P(m) - P(m+1)$. По условию эта разность является целым числом для любого $m \\in \\mathbb{Z}$. Запишем эту разность в виде:\n\n$$\n2P(m) - P(m+1) = 2(a_n m^n + a_{n-1} m^{n-1} + \\ldots + a_1 m + a_0) - (a_n (m+1)^n + a_{n-1} (m+1)^{n-1} + \\ldots + a_1 (m+1) + a_0).\n$$\n\nРаскроем скобки и сгруппируем члены с одинаковыми степенями $m$:\n\n$$\n2P(m) - P(m+1) = 2a_n m^n + 2a_{n-1} m^{n-1} + \\ldots + 2a_1 m + 2a_0 - (a_n (m^n + n m^{n-1} + \\ldots + 1) + a_{n-1} (m^{n-1} + (n-1) m^{n-2} + \\ldots + 1) + \\ldots + a_1 (m + 1) + a_0).\n$$\n\nПосле упрощения получим выражение, которое является многочленом от $m$ с некоторыми коэффициентами. Поскольку $2P(m) - P(m+1)$ — целое число для любого $m \\in \\mathbb{Z}$, то коэффициенты при степенях $m$ в этом многочлене должны быть такими, чтобы при любом целом $m$ результат был целым числом.\n\nРассмотрим $m = 0$:\n\n$$\n2P(0) - P(1) = 2a_0 - (a_n + a_{n-1} + \\ldots + a_1 + a_0) = k, \\quad k \\in \\mathbb{Z}.\n$$\n\nОтсюда:\n\n$$\nP(0) = a_0 = \\frac{k + P(1)}{2}.\n$$\n\nТак как $k$ — целое число, а $P(0)$ — вещественное, то $P(1)$ должно быть таким, чтобы $a_0$ было целым числом.\n\nТеперь рассмотрим $m = -1$:\n\n$$\n2P(-1) - P(0) = 2(a_n (-1)^n + a_{n-1} (-1)^{n-1} + \\ldots + a_1 (-1) + a_0) - a_0 = l, \\quad l \\in \\mathbb{Z}.\n$$\n\nОтсюда:\n\n$$\nP(-1) = \\frac{l + a_0}{2}.\n$$\n\nАналогично, $a_0$ и $P(-1)$ должны быть такими, чтобы результат был целым числом.\n\nПродолжая этот процесс для других целых $m$, можно заметить, что для сохранения целочисленности выражения $2P(m) - P(m+1)$ при всех $m \\in \\mathbb{Z}$, коэффициенты многочлена $P(x)$ должны быть подобраны так, чтобы $P(m)$ было целым числом для любого целого $m$.\n\n**Финальный вывод:**\n\nТаким образом, из условия, что $2P(m) - P(m+1)$ является целым числом для любого $m \\in \\mathbb{Z}$, следует, что $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$.",
+      "prompt_tokens": 196,
+      "completion_tokens": 957,
+      "cost_usd": 0.01024889,
+      "latency_ms": 6657,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": "**Формализация условия:**\n\nПусть $P(x)$ — многочлен с вещественными коэффициентами, такой что для любого $m \\in \\mathbb{Z}$ выражение $2P(m) - P(m+1)$ является целым числом. Необходимо доказать, что $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$.\n\n**Обозначения:**\n\n- $P(x) = a_n x^n + a_{n-1} x^{n-1} + \\ldots + a_1 x + a_0$, где $a_i \\in \\mathbb{R}$ — коэффициенты многочлена.\n- $m$ — произвольное целое число.\n\n**Доказательство:**\n\nРассмотрим разность $2P(m) - P(m+1)$. По условию эта разность является целым числом для любого $m \\in \\mathbb{Z}$. Запишем эту разность в виде:\n\n$$\n2P(m) - P(m+1) = 2(a_n m^n + a_{n-1} m^{n-1} + \\ldots + a_1 m + a_0) - (a_n (m+1)^n + a_{n-1} (m+1)^{n-1} + \\ldots + a_1 (m+1) + a_0).\n$$\n\nРаскроем скобки и сгруппируем члены с одинаковыми степенями $m$:\n\n$$\n2P(m) - P(m+1) = 2a_n m^n + 2a_{n-1} m^{n-1} + \\ldots + 2a_1 m + 2a_0 - (a_n (m^n + n m^{n-1} + \\ldots + 1) + a_{n-1} (m^{n-1} + (n-1) m^{n-2} + \\ldots + 1) + \\ldots + a_1 (m + 1) + a_0).\n$$\n\nПосле упрощения получим выражение, которое является многочленом от $m$ с некоторыми коэффициентами. Поскольку $2P(m) - P(m+1)$ — целое число для любого $m \\in \\mathbb{Z}$, то коэффициенты при степенях $m$ в этом многочлене должны быть такими, чтобы при любом целом $m$ результат был целым числом.\n\nРассмотрим $m = 0$:\n\n$$\n2P(0) - P(1) = 2a_0 - (a_n + a_{n-1} + \\ldots + a_1 + a_0) = k, \\quad k \\in \\mathbb{Z}.\n$$\n\nОтсюда:\n\n$$\nP(0) = a_0 = \\frac{k + P(1)}{2}.\n$$\n\nТак как $k$ — целое число, а $P(0)$ — вещественное, то $P(1)$ должно быть таким, чтобы $a_0$ было целым числом.\n\nТеперь рассмотрим $m = -1$:\n\n$$\n2P(-1) - P(0) = 2(a_n (-1)^n + a_{n-1} (-1)^{n-1} + \\ldots + a_1 (-1) + a_0) - a_0 = l, \\quad l \\in \\mathbb{Z}.\n$$\n\nОтсюда:\n\n$$\nP(-1) = \\frac{l + a_0}{2}.\n$$\n\nАналогично, $a_0$ и $P(-1)$ должны быть такими, чтобы результат был целым числом.\n\nПродолжая этот процесс для других целых $m$, можно заметить, что для сохранения целочисленности выражения $2P(m) - P(m+1)$ при всех $m \\in \\mathbb{Z}$, коэффициенты многочлена $P(x)$ должны быть подобраны так, чтобы $P(m)$ было целым числом для любого целого $m$.\n\n**Финальный вывод:**\n\nТаким образом, из условия, что $2P(m) - P(m+1)$ является целым числом для любого $m \\in \\mathbb{Z}$, следует, что $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$."
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "196",
+            "completionTokens": "957",
+            "totalTokens": "[REDACTED]",
+            "completionTokensDetails": "[REDACTED]"
+          },
+          "modelVersion": "yagpt-5.1-2025-08"
+        },
+        "_adapter_note": "YANDEX_REASONING_MODE was requested, but the selected model does not support reasoning; retried without reasoningOptions."
+      },
+      "usage": {
+        "input_tokens": 196,
+        "output_tokens": 957,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "legacy_fields"
+      },
+      "timing": {
+        "wall_ms": 6657,
+        "monotonic_ms": 6657,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 6657,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.9224,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.01024889,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    },
+    {
+      "result_id": "res_9a546044f78d5437793e73ac",
+      "result_index": 9,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt:yandexgpt-5-lite",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "yandexgpt-5-lite",
+      "resolved_model_id": "yandexgpt-5-lite",
+      "model": "yandexgpt-5-lite",
+      "attempt": 1,
+      "started_at": "2026-06-29T21:22:46.225234Z",
+      "completed_at": "2026-06-29T21:22:54.001218Z",
+      "status": "success",
+      "request": {
+        "model": "yandexgpt-5-lite",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 16192,
+          "reasoningOptions": {
+            "mode": "ENABLED_HIDDEN"
+          }
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false
+      },
+      "answer": "**Формализация условия:**\n\nПусть \\( P(x) \\) — многочлен с вещественными коэффициентами. Для любого целого \\( m \\) выражение \\( 2P(m) - P(m+1) \\) является целым числом.\n\n**Цель:** доказать, что \\( P(m) \\in \\mathbb{Z} \\) для любого \\( m \\in \\mathbb{Z} \\).\n\n**Доказательство:**\n\n1. **База индукции:**\n\n   Проверим, что утверждение верно для \\( m = 0 \\).\n\n   По условию, \\( 2P(0) - P(1) \\) — целое число. Обозначим это число как \\( k \\). Тогда:\n   \\[\n   2P(0) - P(1) = k \\quad \\text{(1)}\n   \\]\n\n2. **Индукционный переход:**\n\n   Предположим, что \\( P(n) \\in \\mathbb{Z} \\) для некоторого целого \\( n \\). Докажем, что \\( P(n+1) \\in \\mathbb{Z} \\).\n\n   Из условия задачи следует, что:\n   \\[\n   2P(n) - P(n+1) \\in \\mathbb{Z}\n   \\]\n\n   Обозначим это целое число как \\( k' \\). Тогда:\n   \\[\n   2P(n) - P(n+1) = k' \\quad \\text{(2)}\n   \\]\n\n   Из (1) и (2) можно выразить \\( P(n+1) \\):\n   \\[\n   P(n+1) = 2P(n) - k'\n   \\]\n\n   Поскольку \\( P(n) \\in \\mathbb{Z} \\) и \\( k' \\in \\mathbb{Z} \\), то \\( P(n+1) \\in \\mathbb{Z} \\).\n\n3. **Заключение:**\n\n   По принципу математической индукции, если утверждение верно для \\( m = 0 \\), то оно верно для всех целых \\( m \\).\n\n   Таким образом, \\( P(m) \\in \\mathbb{Z} \\) для любого \\( m \\in \\mathbb{Z} \\).\n\n**Финальный вывод:**\n\nМы доказали, что если \\( 2P(m) - P(m+1) \\) является целым числом для любого целого \\( m \\), то \\( P(m) \\) также является целым числом для любого целого \\( m \\).",
+      "prompt_tokens": 198,
+      "completion_tokens": 582,
+      "cost_usd": 0.00173333,
+      "latency_ms": 7753,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": "**Формализация условия:**\n\nПусть \\( P(x) \\) — многочлен с вещественными коэффициентами. Для любого целого \\( m \\) выражение \\( 2P(m) - P(m+1) \\) является целым числом.\n\n**Цель:** доказать, что \\( P(m) \\in \\mathbb{Z} \\) для любого \\( m \\in \\mathbb{Z} \\).\n\n**Доказательство:**\n\n1. **База индукции:**\n\n   Проверим, что утверждение верно для \\( m = 0 \\).\n\n   По условию, \\( 2P(0) - P(1) \\) — целое число. Обозначим это число как \\( k \\). Тогда:\n   \\[\n   2P(0) - P(1) = k \\quad \\text{(1)}\n   \\]\n\n2. **Индукционный переход:**\n\n   Предположим, что \\( P(n) \\in \\mathbb{Z} \\) для некоторого целого \\( n \\). Докажем, что \\( P(n+1) \\in \\mathbb{Z} \\).\n\n   Из условия задачи следует, что:\n   \\[\n   2P(n) - P(n+1) \\in \\mathbb{Z}\n   \\]\n\n   Обозначим это целое число как \\( k' \\). Тогда:\n   \\[\n   2P(n) - P(n+1) = k' \\quad \\text{(2)}\n   \\]\n\n   Из (1) и (2) можно выразить \\( P(n+1) \\):\n   \\[\n   P(n+1) = 2P(n) - k'\n   \\]\n\n   Поскольку \\( P(n) \\in \\mathbb{Z} \\) и \\( k' \\in \\mathbb{Z} \\), то \\( P(n+1) \\in \\mathbb{Z} \\).\n\n3. **Заключение:**\n\n   По принципу математической индукции, если утверждение верно для \\( m = 0 \\), то оно верно для всех целых \\( m \\).\n\n   Таким образом, \\( P(m) \\in \\mathbb{Z} \\) для любого \\( m \\in \\mathbb{Z} \\).\n\n**Финальный вывод:**\n\nМы доказали, что если \\( 2P(m) - P(m+1) \\) является целым числом для любого целого \\( m \\), то \\( P(m) \\) также является целым числом для любого целого \\( m \\)."
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "198",
+            "completionTokens": "582",
+            "totalTokens": "[REDACTED]",
+            "completionTokensDetails": "[REDACTED]"
+          },
+          "modelVersion": "25.03.2025"
+        }
+      },
+      "usage": {
+        "input_tokens": 198,
+        "output_tokens": 582,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "legacy_fields"
+      },
+      "timing": {
+        "wall_ms": 7753,
+        "monotonic_ms": 7753,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 7753,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.156,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00173333,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-06-29",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": null,
+        "cached_input": null,
+        "reasoning": null
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}
