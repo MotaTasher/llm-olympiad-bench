@@ -203,6 +203,7 @@ def atomic_write_json(path: Path, payload: dict[str, Any]) -> Path:
             file.flush()
             os.fsync(file.fileno())
         os.replace(temp_name, path)
+        os.chmod(path, 0o664)
     finally:
         try:
             if os.path.exists(temp_name):
