@@ -7,5 +7,7 @@
   "answer": null,
   "solution": "Для многочлена \\(f\\) рассмотрим величину \\(N(f) = \\sum_{j=0}^n \\left| C^j_nf \\left( \\frac{j}{n+1} \\right)\\right|\\). Докажем, что когда Иван меняет многочлен \\(f\\) на \\(h\\), значение этой величины не увеличивается, из этого будет следовать требуемое.\n\nОбозначим \\(b_j = (-1)^jf\\left(\\frac{j}{n+1}\\right), c_j = (-1)^jf\\left(\\frac{j}{n+1}\\right)\\). По волнистости \\(xf-h\\), все значения чисел \\(d_j = b_j - \\frac{j}{n+1}c_j\\) имеют одинаковый знак.\n\nТогда\n\n\\[\n\\sum d_jC^j_n = -\\sum C^j_n\\frac{j}{n+1}c_j =\\sum C^j_n\\left(1-\\frac{j}{n+1}\\right)c_j.\n\\]\n\nОтсюда\n\n\\[\nN(h) = \\sum \\left|b_jC^j_n\\right| =\\sum C^j_n\\left|\\frac{j}{n+1}c_j+d_j\\right| \\le \\sum C^j_n \\left|\\frac{j}{n+1}c_j \\right|+ C^j_n|d_j| =\n\\]\n\n\\[\n\\sum C^j_n\\left|\\frac{j}{n+1}c_j\\right| + \\left|\\sum C^j_n(1-\\frac{j}{n+1})c_j\\right| \\le N(f).\n\\]",
   "tags": [],
-  "metadata": {}
+  "metadata": {
+    "max_score": 3
+  }
 }

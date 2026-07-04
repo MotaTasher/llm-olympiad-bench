@@ -8,6 +8,6 @@
   "solution": "Заметим, что\n\\[\nR=S_n-m=\\max_{0\\le k\\le n}(S_n-S_k).\n\\]\nВведём «перевёрнутую» траекторию\n\\[\n\\widetilde S_j:=S_n-S_{n-j},\\qquad j=0,1,\\dots,n.\n\\]\nТогда \\(R=\\max_{0\\le j\\le n}\\widetilde S_j\\). Так как шаги \\(\\pm1\\) независимы и равновероятны,\nто чтение шагов с конца ничего не меняет: распределение \\(R\\) совпадает с распределением\nмаксимума \\(M=\\max_{0\\le j\\le n}S_j\\).\n\nПусть \\(a\\ge1\\) --- целое. Рассмотрим траектории, для которых \\(M\\ge a\\), но \\(S_n<a\\),\nи пусть \\(\\tau\\) --- первый момент, когда \\(S_\\tau=a\\).\nОставим траекторию до \\(\\tau\\) как есть, а все шаги после \\(\\tau\\) поменяем на противоположные.\nТогда\n\\[\nS_n'=2a-S_n,\n\\]\nпоэтому из \\(S_n\\le a-1\\) следует \\(S_n'\\ge a+1\\).\nПреобразование обратимо, значит\n\\[\n\\mathbb P(M\\ge a,\\ S_n<a)=\\mathbb P(S_n\\ge a+1),\n\\]\nи потому\n\\[\n\\mathbb P(M\\ge a)=\\mathbb P(S_n\\ge a)+\\mathbb P(S_n\\ge a+1).\n\\]\nОтсюда для \\(r=0,1,\\dots,n\\)\n\\[\n\\mathbb P(R=r)=\\mathbb P(M=r)=\\mathbb P(M\\ge r)-\\mathbb P(M\\ge r+1)\n=\\mathbb P(S_n=r)+\\mathbb P(S_n=r+1).\n\\]\n\nНаконец,\n\\[\n\\mathbb P(S_n=j)=2^{-n}\\binom{n}{\\frac{n+j}{2}}\n\\quad\\text{если }n+j\\text{ чётно, иначе }0,\n\\]\nи значит\n\\[\n\\boxed{\n\\mathbb P(R=r)=2^{-n}\\binom{n}{\\left\\lfloor \\frac{n+r+1}{2}\\right\\rfloor},\n\\qquad r=0,1,\\dots,n.\n}\n\\]",
   "tags": [],
   "metadata": {
-    "max_score": 3
+    "max_score": 4
   }
 }
