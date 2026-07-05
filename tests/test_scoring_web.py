@@ -121,6 +121,7 @@ class ScoringWebTests(unittest.TestCase):
         answer: str = "MODEL_ANSWER_TOKEN",
         run_id: str = "run_active",
         timestamp: str = "2026-06-20T00:00:00Z",
+        cost_usd: float = 0.0,
     ) -> None:
         write_json(
             self.logs_dir / competition_id / "task_01" / f"{run_id}.json",
@@ -146,7 +147,7 @@ class ScoringWebTests(unittest.TestCase):
                         "status": "success",
                         "prompt_tokens": 1,
                         "completion_tokens": 2,
-                        "cost_usd": 0,
+                        "cost_usd": cost_usd,
                         "latency_ms": 3,
                         "raw_response": {},
                     }
@@ -567,6 +568,26 @@ class ScoringWebTests(unittest.TestCase):
         self.assertNotIn("Пересчитать", html)
         self.assertNotIn("calculator-form", html)
 
+    def test_cost_estimates_are_always_visible_metrics(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+
+        index_html = self.client.get("/").get_data(as_text=True)
+        competition_html = self.client.get("/competition/math_2026").get_data(as_text=True)
+
+        self.assertNotIn('<details class="cost-disclosure">', index_html)
+        for html in (index_html, competition_html):
+            self.assertNotIn("<summary>Стоимость прогона</summary>", html)
+            self.assertIn("Последние:", html)
+            self.assertIn("Все логи:", html)
+            self.assertIn("Прогон:", html)
+            self.assertIn('data-cost-actual="latest"', html)
+            self.assertIn('data-cost-actual="all"', html)
+            self.assertIn('data-cost-competition="math_2026"', html)
+            self.assertIn('data-cost-competition-pairs="math_2026"', html)
+            self.assertNotIn("стоимость:", html)
+        self.assertIn('<details class="cost-disclosure">', competition_html)
+        self.assertIn("<summary>Калькулятор стоимости задач</summary>", competition_html)
+
     def test_active_budget_model_creates_scoring_column(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(model_id="gpt-5.4-mini", result_id="res_budget", run_id="run_budget")
@@ -635,6 +656,42 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(context["defaults"]["reasoningBudget"], 8000)
         self.assertEqual(context["competitions"][0]["competitionId"], "math_2026")
         self.assertTrue(context["competitions"][0]["models"])
+        self.assertEqual(context["models"]["openai:gpt-5.5"]["reasoningUsdPer1M"], 30.0)
+        self.assertEqual(context["models"]["anthropic:claude-opus-4-8"]["reasoningUsdPer1M"], 25.0)
+        self.assertEqual(context["spent"]["latestUsd"], 0.0)
+        self.assertEqual(context["spent"]["allUsd"], 0.0)
+
+    def test_cost_context_sums_latest_and_all_log_spend(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run(
+            competition_id="math_2026",
+            run_id="run_old",
+            result_id="res_old",
+            timestamp="2026-06-20T00:00:00Z",
+            cost_usd=0.25,
+        )
+        self.write_run(
+            competition_id="math_2026",
+            run_id="run_latest",
+            result_id="res_latest",
+            timestamp="2026-06-21T00:00:00Z",
+            cost_usd=0.5,
+        )
+
+        catalog = build_catalog(
+            competitions_dir=self.competitions_dir,
+            logs_dir=self.logs_dir,
+            results_dir=self.results_dir,
+        )
+        context = cost_context(catalog["competitions"])
+        spent = context["competitions"][0]["spent"]
+
+        self.assertEqual(spent["latestUsd"], 0.5)
+        self.assertEqual(spent["latestResults"], 1)
+        self.assertEqual(spent["allUsd"], 0.75)
+        self.assertEqual(spent["allResults"], 2)
+        self.assertEqual(context["spent"]["latestUsd"], 0.5)
+        self.assertEqual(context["spent"]["allUsd"], 0.75)
 
     def test_competition_page_shows_cost_without_launch_routes(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -643,19 +700,27 @@ class ScoringWebTests(unittest.TestCase):
         response = self.client.get("/competition/math_2026")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
-        self.assertIn("Стоимость прогона", html)
+        self.assertIn("Калькулятор стоимости задач", html)
         self.assertIn("data-cost-context", html)
         self.assertIn("data-cost-range=\"reasoningBudget\"", html)
         self.assertIn("data-cost-number=\"finalTokens\"", html)
         self.assertIn("data-cost-competition=\"math_2026\"", html)
+        self.assertIn("data-cost-actual=\"latest\"", html)
+        self.assertIn("data-cost-actual=\"all\"", html)
         self.assertIn("data-cost-model=\"openai:gpt-5.5\"", html)
         self.assertIn("cost-run-grid", html)
         self.assertIn("cost-run-summary", html)
-        self.assertIn("Цена за 1K токенов", html)
+        self.assertIn("Логи USD", html)
+        self.assertIn("Логи RUB", html)
+        self.assertIn("data-cost-model-spent-usd", html)
+        self.assertIn("data-cost-model-spent-rub", html)
+        self.assertIn("Цена за 1M токенов", html)
         self.assertIn("data-cost-model-price", html)
         self.assertIn("data-cost-model-usd", html)
         self.assertIn("data-cost-model-rub", html)
         self.assertIn("data-cost-total-row=\"math_2026\"", html)
+        self.assertIn("data-cost-total-spent-usd", html)
+        self.assertIn("data-cost-total-spent-rub", html)
         self.assertIn("data-cost-total-usd", html)
         self.assertIn("Сумма", html)
         self.assertIn("API-вызовы не выполняются", html)

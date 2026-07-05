@@ -336,7 +336,12 @@ class RunnerTests(TempCompetition):
             "api_key": "abc",
             "prompt_tokens": 10,
             "max_tokens": 20,
-            "nested": {"client_secret": "hidden", "completion_tokens": 30},
+            "nested": {
+                "client_secret": "hidden",
+                "completion_tokens": 30,
+                "output_tokens_details": {"reasoning_tokens": 40},
+                "completionTokensDetails": {"reasoningTokens": 50},
+            },
         }
         redacted = redact(data)
         self.assertEqual(redacted["Authorization"], "[REDACTED]")
@@ -344,6 +349,49 @@ class RunnerTests(TempCompetition):
         self.assertEqual(redacted["prompt_tokens"], 10)
         self.assertEqual(redacted["max_tokens"], 20)
         self.assertEqual(redacted["nested"]["completion_tokens"], 30)
+        self.assertEqual(redacted["nested"]["output_tokens_details"]["reasoning_tokens"], 40)
+        self.assertEqual(redacted["nested"]["completionTokensDetails"]["reasoningTokens"], 50)
+
+    def test_solve_result_extracts_reasoning_usage_before_redaction(self) -> None:
+        openai_style = SolveResult(
+            model="fake-model",
+            answer="ok",
+            prompt_tokens=0,
+            completion_tokens=0,
+            cost_usd=0.0,
+            latency_ms=1,
+            raw_response={
+                "usage": {
+                    "input_tokens": 11,
+                    "output_tokens": 22,
+                    "output_tokens_details": {"reasoning_tokens": 7},
+                }
+            },
+        ).to_log_dict()
+        yandex_style = SolveResult(
+            model="fake-model",
+            answer="ok",
+            prompt_tokens=0,
+            completion_tokens=0,
+            cost_usd=0.0,
+            latency_ms=1,
+            raw_response={
+                "result": {
+                    "usage": {
+                        "inputTextTokens": 12,
+                        "completionTokens": 23,
+                        "completionTokensDetails": {"reasoningTokens": 8},
+                    }
+                }
+            },
+        ).to_log_dict()
+
+        self.assertEqual(openai_style["usage"]["reasoning_tokens"], 7)
+        self.assertEqual(openai_style["usage"]["raw"]["output_tokens_details"]["reasoning_tokens"], 7)
+        self.assertEqual(yandex_style["usage"]["input_tokens"], 12)
+        self.assertEqual(yandex_style["usage"]["output_tokens"], 23)
+        self.assertEqual(yandex_style["usage"]["reasoning_tokens"], 8)
+        self.assertEqual(yandex_style["usage"]["raw"]["completionTokensDetails"]["reasoningTokens"], 8)
 
     def test_old_log_normalizes_without_mutating_schema(self) -> None:
         old = {

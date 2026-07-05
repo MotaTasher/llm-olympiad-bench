@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-PRICING_VERSION = "2026-06-29"
+PRICING_VERSION = "2026-07-05"
 DEFAULT_RUB_PER_USD = 90.0
 
 
@@ -32,10 +32,10 @@ OPENAI_USD_PER_1M = {
 }
 
 ANTHROPIC_USD_PER_1M = {
-    "claude-opus-4-8": (15.00, 75.00),
-    "claude-opus-4-5": (15.00, 75.00),
+    "claude-opus-4-8": (5.00, 25.00),
+    "claude-opus-4-5": (5.00, 25.00),
     "claude-sonnet-4-5": (3.00, 15.00),
-    "claude-haiku-4-5": (0.80, 4.00),
+    "claude-haiku-4-5": (1.00, 5.00),
 }
 
 DEEPSEEK_USD_PER_1M = {
@@ -144,6 +144,7 @@ def estimate_cost(
     *,
     input_tokens: int,
     output_tokens: int,
+    reasoning_tokens: int | None = None,
 ) -> dict[str, Any]:
     price = token_price(provider, model_id)
     if not price:
@@ -163,10 +164,16 @@ def estimate_cost(
     if price.currency == "USD":
         input_cost = input_tokens * float(price.input_per_1m or 0) / 1_000_000
         output_cost = output_tokens * float(price.output_per_1m or 0) / 1_000_000
+        reasoning_cost = (
+            reasoning_tokens * float(price.output_per_1m or 0) / 1_000_000
+            if reasoning_tokens is not None
+            else None
+        )
         return {
             "currency": "USD",
             "input": round(input_cost, 8),
             "output": round(output_cost, 8),
+            "reasoning": round(reasoning_cost, 8) if reasoning_cost is not None else None,
             "native": None,
             "total": round(input_cost + output_cost, 8),
             "pricing_source": price.source,
@@ -178,13 +185,20 @@ def estimate_cost(
 
     native_total = ((input_tokens + output_tokens) / 1000) * float(price.total_per_1k or 0)
     usd_total = native_total / rub_per_usd()
+    native_reasoning = (
+        (reasoning_tokens / 1000) * float(price.total_per_1k or 0)
+        if reasoning_tokens is not None
+        else None
+    )
     return {
         "currency": "USD",
         "input": None,
         "output": None,
+        "reasoning": round(native_reasoning / rub_per_usd(), 8) if native_reasoning is not None else None,
         "native": {
             "currency": price.currency,
             "total": round(native_total, 8),
+            "reasoning": round(native_reasoning, 8) if native_reasoning is not None else None,
             "price_per_1k_total_tokens": price.total_per_1k,
         },
         "total": round(usd_total, 8),

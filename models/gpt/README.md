@@ -70,6 +70,9 @@ OPENAI_MAX_COMPLETION_TOKENS=12000
 `OPENAI_REASONING_EFFORT` побуждает reasoning-модель думать больше или меньше.
 `OPENAI_MAX_COMPLETION_TOKENS` задает общий hard cap на generated tokens, если
 `runner.py --max-tokens` не передан. API не гарантирует минимум thinking tokens.
+Если Responses API возвращает `output_tokens_details.reasoning_tokens`, адаптер
+сохраняет это число в `usage.reasoning_tokens`; `cost.reasoning` является
+поддолей уже учтенной output-стоимости, а не дополнительной надбавкой.
 
 ## Проверка
 

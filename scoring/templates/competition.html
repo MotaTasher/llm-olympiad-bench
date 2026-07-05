@@ -13,8 +13,12 @@
         <span class="pill">{{ competition.model_count }} моделей с попытками</span>
         <span class="pill">{{ competition.answer_count }} ответов</span>
         <span class="pill">{{ competition.scored_count }} проверено</span>
-        <span class="pill">стоимость: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
-        <span class="pill" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
+      </div>
+      <div class="cost-strip" aria-label="Стоимость">
+        <span class="cost-metric cost-metric-latest">Последние: <b data-cost-actual="latest" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+        <span class="cost-metric cost-metric-all">Все логи: <b data-cost-actual="all" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+        <span class="cost-metric cost-metric-estimate">Прогон: <b data-cost-competition="{{ competition.competition_id }}">—</b></span>
+        <span class="meta cost-pair-note" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
       </div>
       <div class="nav-row">
         <a class="button" href="{{ url_for('competition_stats_page', competition_id=competition.competition_id) }}">Статистика моделей</a>
@@ -32,45 +36,58 @@
     </section>
 
     <section class="panel cost-run-panel">
-      <h2>Стоимость прогона</h2>
-      <div class="cost-run-grid">
-        <div class="cost-run-summary">
-          <div class="cost-run-totals">
-            <span class="pill">итого: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
+      <details class="cost-disclosure">
+        <summary>Калькулятор стоимости задач</summary>
+        <div class="cost-disclosure-body">
+          <div class="cost-run-grid">
+            <div class="cost-run-summary">
+              <div class="cost-run-totals">
+                <span class="cost-metric cost-metric-latest">Последние: <b data-cost-actual="latest" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+                <span class="cost-metric cost-metric-all">Все логи: <b data-cost-actual="all" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+                <span class="cost-metric cost-metric-estimate">Прогон: <b data-cost-competition="{{ competition.competition_id }}">—</b></span>
+                <span class="meta cost-pair-note" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
+              </div>
+              <p class="meta cost-run-note">Расчёт приблизительный: локальные price tables, грубая оценка токенов, курс USD/RUB из ЦБ. API-вызовы не выполняются, run-log не создаются.</p>
+            </div>
+            <div class="table-wrap cost-run-table" role="region" aria-label="Оценка стоимости по моделям" tabindex="0">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Модель</th>
+                    <th class="numeric">Логи USD</th>
+                    <th class="numeric">Логи RUB</th>
+                    <th>Цена за 1M токенов</th>
+                    <th class="numeric">Расчёт USD</th>
+                    <th class="numeric">Расчёт RUB</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for model in competition.model_columns %}
+                    <tr data-cost-competition-id="{{ competition.competition_id }}" data-cost-model="{{ model.model_key }}">
+                      <td>{{ model.model_key }}</td>
+                      <td class="numeric" data-cost-model-spent-usd>—</td>
+                      <td class="numeric" data-cost-model-spent-rub>—</td>
+                      <td data-cost-model-price>—</td>
+                      <td class="numeric" data-cost-model-usd>—</td>
+                      <td class="numeric" data-cost-model-rub>—</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                  <tr data-cost-total-row="{{ competition.competition_id }}">
+                    <th>Сумма</th>
+                    <td class="numeric" data-cost-total-spent-usd>—</td>
+                    <td class="numeric" data-cost-total-spent-rub>—</td>
+                    <td></td>
+                    <td class="numeric" data-cost-total-usd>—</td>
+                    <td class="numeric" data-cost-total-rub>—</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
-          <p class="meta cost-run-note">Расчёт приблизительный: локальные price tables, грубая оценка токенов, курс USD/RUB из ЦБ. API-вызовы не выполняются, run-log не создаются.</p>
         </div>
-        <div class="table-wrap cost-run-table" role="region" aria-label="Оценка стоимости по моделям" tabindex="0">
-          <table>
-            <thead>
-              <tr>
-                <th>Модель</th>
-                <th>Цена за 1K токенов</th>
-                <th class="numeric">USD</th>
-                <th class="numeric">RUB</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for model in competition.model_columns %}
-                <tr data-cost-competition-id="{{ competition.competition_id }}" data-cost-model="{{ model.model_key }}">
-                  <td>{{ model.model_key }}</td>
-                  <td data-cost-model-price>—</td>
-                  <td class="numeric" data-cost-model-usd>—</td>
-                  <td class="numeric" data-cost-model-rub>—</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-            <tfoot>
-              <tr data-cost-total-row="{{ competition.competition_id }}">
-                <th>Сумма</th>
-                <td></td>
-                <td class="numeric" data-cost-total-usd>—</td>
-                <td class="numeric" data-cost-total-rub>—</td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
+      </details>
     </section>
 
     {% if competition.problem_order %}

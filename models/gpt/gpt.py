@@ -214,6 +214,7 @@ class GPTModel(BaseModel):
                 self.model_id,
                 input_tokens=prompt_tokens,
                 output_tokens=completion_tokens,
+                reasoning_tokens=reasoning_tokens or None,
             )
             raw_response = {
                 "endpoint": sanitized_base_url(OPENAI_RESPONSES_ENDPOINT),
@@ -264,7 +265,7 @@ class GPTModel(BaseModel):
                     "raw": raw_response["usage"],
                     "source": "provider_response",
                 },
-                cost={**cost, "cached_input": None, "reasoning": None},
+                cost={**cost, "cached_input": None},
                 finish_reason=finish_reason(last_raw_response),
                 response_id=last_raw_response.get("id"),
                 provider_timestamp=last_raw_response.get("created_at") or last_raw_response.get("created"),

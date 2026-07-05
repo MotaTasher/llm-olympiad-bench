@@ -32,7 +32,7 @@ class BaseModel(abc.ABC):
 - `finish_reason`, `provider_request_id`, `response_id`, `provider_timestamp`;
 - structured `error_info`.
 
-Adapters should fill provider-specific fields when the API exposes them, but must not invent missing metrics. If reasoning/cache usage or time-to-first-token is not returned or measured, leave it `null`/absent. `SolveResult.to_log_dict()` preserves legacy fields while adding normalized telemetry and redacting unsafe data.
+Adapters should fill provider-specific fields when the API exposes them, but must not invent missing metrics. If reasoning/cache usage or time-to-first-token is not returned or measured, leave it `null`/absent. Provider token-detail containers such as `output_tokens_details`, `completion_tokens_details`, `input_tokens_details`, Yandex `completionTokensDetails` and their `reasoningTokens`/`reasoning_tokens` counts are safe telemetry, not credentials. `SolveResult.to_log_dict()` preserves legacy fields while adding normalized telemetry and redacting unsafe data.
 
 `max_tokens` is the runner-wide output/completion-token ceiling. Adapters map it
 to the provider's text completion field (`max_completion_tokens`, `max_tokens`,

@@ -113,6 +113,14 @@
       text-decoration: none;
     }
     .card:hover { border-color: #9fb5b8; }
+    .card-heading-link {
+      color: inherit;
+      text-decoration: none;
+    }
+    .card-heading-link:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
     .card-title { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
     .stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .pill {
@@ -415,7 +423,7 @@
       width: min(1440px, calc(100% - 32px));
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(190px, 1fr) minmax(190px, 1fr) auto auto;
+      grid-template-columns: minmax(190px, 1fr) minmax(190px, 1fr) auto auto minmax(330px, max-content);
       gap: 8px;
       align-items: center;
       padding: 8px 0 10px;
@@ -447,6 +455,42 @@
     }
     .inline-check input {
       width: auto;
+    }
+    .cost-header-stats,
+    .cost-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+    .cost-header-stats {
+      justify-content: flex-end;
+    }
+    .cost-strip {
+      margin-top: 12px;
+    }
+    .cost-metric {
+      display: inline-flex;
+      gap: 5px;
+      align-items: baseline;
+      min-height: 26px;
+      max-width: 100%;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #344047;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .cost-metric b {
+      font-weight: 750;
+    }
+    .cost-metric-latest { background: #edf4f6; border-color: #c7dadd; }
+    .cost-metric-all { background: #f4f1e8; border-color: #ded5bd; }
+    .cost-metric-estimate { background: #eef4ed; border-color: #cbdcc8; }
+    .cost-pair-note {
+      flex-basis: 100%;
     }
     .cost-run-grid {
       display: grid;
@@ -482,7 +526,7 @@
       width: 100%;
     }
     .cost-run-table table {
-      min-width: 620px;
+      min-width: 920px;
       width: 100%;
     }
     .cost-run-table th:first-child,
@@ -506,6 +550,62 @@
     }
     .cost-run-table .numeric {
       text-align: right;
+    }
+    .cost-disclosure {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fafbfb;
+    }
+    .cost-disclosure summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 10px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 750;
+      list-style: none;
+    }
+    .cost-disclosure summary::-webkit-details-marker {
+      display: none;
+    }
+    .cost-disclosure summary::after {
+      content: "↓";
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 13px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .cost-disclosure[open] summary {
+      border-bottom: 1px solid var(--line);
+    }
+    .cost-disclosure[open] summary::after {
+      content: "↑";
+    }
+    .cost-disclosure-body {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+    }
+    .cost-disclosure-body .stats {
+      margin-top: 0;
+    }
+    .cost-run-panel .cost-disclosure,
+    .cost-disclosure .cost-run-grid {
+      margin-top: 0;
+    }
+    .cost-disclosure .cost-run-grid {
+      padding-top: 0;
+      border-top: 0;
     }
     .evaluation-list {
       display: grid;
@@ -557,6 +657,9 @@
       .cost-controls {
         width: min(100% - 20px, 1440px);
         grid-template-columns: 1fr;
+      }
+      .cost-header-stats {
+        justify-content: flex-start;
       }
       .cost-run-grid {
         grid-template-columns: 1fr;
@@ -624,6 +727,11 @@
           учитывать решённые
         </label>
         <span class="meta" data-cost-rate></span>
+        <div class="cost-header-stats" aria-label="Сводка стоимости">
+          <span class="cost-metric cost-metric-latest">Последние: <b data-cost-actual="latest">—</b></span>
+          <span class="cost-metric cost-metric-all">Все логи: <b data-cost-actual="all">—</b></span>
+          <span class="cost-metric cost-metric-estimate">Расчёт: <b data-cost-scope-estimate>—</b></span>
+        </div>
       </div>
     {% endif %}
   </header>
@@ -754,26 +862,45 @@
         if (!Number.isFinite(value)) return '—';
         return value < 1 ? `${value.toFixed(2)} ₽` : `${Math.round(value).toLocaleString('ru-RU')} ₽`;
       }
+      function renderUsdRubNode(node, usd) {
+        const rate = Number((context.exchangeRate || {}).usdRub || 0);
+        const rub = usd * rate;
+        node.textContent = `${formatUsd(usd)} / ${formatRub(rub)}`;
+      }
       function formatModelPrice(modelKey) {
         const pricing = (context.models || {})[modelKey] || {};
         if (!pricing.known) return 'нет price table';
-        const input = Number(pricing.inputUsdPer1M || 0) / 1000;
-        const output = Number(pricing.outputUsdPer1M || 0) / 1000;
-        if (pricing.mode === 'total' || input === output) return `${formatUsdPer1k(output)} / 1K`;
-        return `${formatUsdPer1k(input)} вход / ${formatUsdPer1k(output)} ответ`;
+        const input = priceValue(pricing.inputUsdPer1M);
+        const output = priceValue(pricing.outputUsdPer1M);
+        const reasoning = priceValue(pricing.reasoningUsdPer1M);
+        const reasoningText = Number.isFinite(reasoning)
+          ? `; разм. ${formatUsdPer1k(reasoning)}`
+          : '';
+        if (pricing.mode === 'total' || input === output) return `${formatUsdPer1k(output)} / 1M${reasoningText}`;
+        return `${formatUsdPer1k(input)} вход / ${formatUsdPer1k(output)} ответ${reasoningText}`;
       }
-      function outputTokens() {
-        return costSettings.finalTokens + Math.max(0, costSettings.reasoningBudget);
+      function priceValue(value) {
+        if (value === null || value === undefined || value === '') return NaN;
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : NaN;
       }
       function computeModelCost(modelData) {
         const pricing = (context.models || {})[modelData.model] || {};
         const pairs = costSettings.includeSolved ? modelData.pairs : modelData.pairs - modelData.solvedPairs;
         const inputTokens = costSettings.includeSolved ? modelData.inputTokens : modelData.unsolvedInputTokens;
         if (!pricing.known) return { pairs, unknownPairs: pairs, usd: 0 };
-        const outTokens = pairs * outputTokens();
+        const finalOutputTokens = pairs * costSettings.finalTokens;
+        const reasoningPer1M = priceValue(pricing.reasoningUsdPer1M);
+        const reasoningTokens = Number.isFinite(reasoningPer1M)
+          ? pairs * Math.max(0, costSettings.reasoningBudget)
+          : 0;
+        const reasoningUsd = Number.isFinite(reasoningPer1M)
+          ? reasoningTokens * reasoningPer1M / 1000000
+          : 0;
         const usd = (
           inputTokens * Number(pricing.inputUsdPer1M || 0) / 1000000
-          + outTokens * Number(pricing.outputUsdPer1M || 0) / 1000000
+          + finalOutputTokens * Number(pricing.outputUsdPer1M || 0) / 1000000
+          + reasoningUsd
         );
         return { pairs, unknownPairs: 0, usd };
       }
@@ -792,10 +919,24 @@
         });
         return result;
       }
+      function computeScopeCost() {
+        const result = { pairs: 0, skipped: 0, unknownPairs: 0, usd: 0 };
+        (context.competitions || []).forEach((competition) => {
+          const cost = computeCompetitionCost(competition.competitionId);
+          result.pairs += cost.pairs;
+          result.skipped += cost.skipped;
+          result.unknownPairs += cost.unknownPairs;
+          result.usd += cost.usd;
+        });
+        return result;
+      }
+      function actualSpend(competitionId) {
+        if (!competitionId) return context.spent || {};
+        const competition = (context.competitions || []).find((item) => item.competitionId === competitionId);
+        return (competition && competition.spent) || {};
+      }
       function renderCostNode(node, cost) {
-        const rate = Number((context.exchangeRate || {}).usdRub || 0);
-        const rub = cost.usd * rate;
-        node.textContent = `${formatUsd(cost.usd)} / ${formatRub(rub)}`;
+        renderUsdRubNode(node, cost.usd);
       }
       function updateCosts() {
         document.querySelectorAll('[data-cost-range]').forEach((input) => {
@@ -815,6 +956,14 @@
           const cost = computeCompetitionCost(node.dataset.costCompetition);
           renderCostNode(node, cost);
         });
+        document.querySelectorAll('[data-cost-scope-estimate]').forEach((node) => {
+          renderCostNode(node, computeScopeCost());
+        });
+        document.querySelectorAll('[data-cost-actual]').forEach((node) => {
+          const spent = actualSpend(node.dataset.costActualCompetition);
+          const key = node.dataset.costActual === 'all' ? 'allUsd' : 'latestUsd';
+          renderUsdRubNode(node, Number(spent[key] || 0));
+        });
         document.querySelectorAll('[data-cost-competition-pairs]').forEach((node) => {
           const cost = computeCompetitionCost(node.dataset.costCompetitionPairs);
           node.textContent = `${cost.pairs} пар, ${cost.skipped} пропущено`;
@@ -830,6 +979,8 @@
           const pairs = row.querySelector('[data-cost-model-pairs]');
           const skipped = row.querySelector('[data-cost-model-skipped]');
           const unknown = row.querySelector('[data-cost-model-unknown]');
+          const spentUsd = row.querySelector('[data-cost-model-spent-usd]');
+          const spentRub = row.querySelector('[data-cost-model-spent-rub]');
           if (amount) renderCostNode(amount, modelCost);
           if (price) price.textContent = formatModelPrice(row.dataset.costModel);
           if (usd) usd.textContent = modelCost.unknownPairs ? '—' : formatUsd(modelCost.usd);
@@ -837,15 +988,32 @@
           if (pairs) pairs.textContent = modelCost.pairs.toLocaleString('ru-RU');
           if (skipped) skipped.textContent = modelCost.skipped.toLocaleString('ru-RU');
           if (unknown) unknown.textContent = modelCost.unknownPairs || '';
+          const spentValue = Number(modelDataValue(row.dataset.costCompetitionId, row.dataset.costModel, 'spentUsd') || 0);
+          if (spentUsd) spentUsd.textContent = formatUsd(spentValue);
+          if (spentRub) spentRub.textContent = formatRub(spentValue * rateValue);
         });
         document.querySelectorAll('[data-cost-total-row]').forEach((row) => {
           const total = computeCompetitionCost(row.dataset.costTotalRow);
           const rateValue = Number((context.exchangeRate || {}).usdRub || 0);
+          const spentUsdNode = row.querySelector('[data-cost-total-spent-usd]');
+          const spentRubNode = row.querySelector('[data-cost-total-spent-rub]');
           const usd = row.querySelector('[data-cost-total-usd]');
           const rub = row.querySelector('[data-cost-total-rub]');
+          const spentValue = displayedModelSpend(row.dataset.costTotalRow);
+          if (spentUsdNode) spentUsdNode.textContent = formatUsd(spentValue);
+          if (spentRubNode) spentRubNode.textContent = formatRub(spentValue * rateValue);
           if (usd) usd.textContent = formatUsd(total.usd);
           if (rub) rub.textContent = formatRub(total.usd * rateValue);
         });
+      }
+      function modelDataValue(competitionId, modelKey, key) {
+        const competition = (context.competitions || []).find((item) => item.competitionId === competitionId);
+        const model = competition ? (competition.models || []).find((item) => item.model === modelKey) : null;
+        return model ? model[key] : null;
+      }
+      function displayedModelSpend(competitionId) {
+        const competition = (context.competitions || []).find((item) => item.competitionId === competitionId);
+        return competition ? (competition.models || []).reduce((sum, item) => sum + Number(item.spentUsd || 0), 0) : 0;
       }
       document.querySelectorAll('[data-cost-range]').forEach((range) => {
         range.addEventListener('input', () => {

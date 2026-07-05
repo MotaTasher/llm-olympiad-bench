@@ -111,6 +111,13 @@ class YandexGPTModel(BaseModel):
             usage = result.get("usage", {})
             prompt_tokens = int(usage.get("inputTextTokens") or usage.get("inputTokens") or 0)
             completion_tokens = int(usage.get("completionTokens") or 0)
+            completion_details = usage.get("completionTokensDetails")
+            if not isinstance(completion_details, dict):
+                completion_details = {}
+            try:
+                reasoning_tokens = int(completion_details.get("reasoningTokens") or 0)
+            except (TypeError, ValueError):
+                reasoning_tokens = 0
             answer = (
                 result.get("alternatives", [{}])[0]
                 .get("message", {})
@@ -126,6 +133,7 @@ class YandexGPTModel(BaseModel):
                 self.model_id,
                 input_tokens=prompt_tokens,
                 output_tokens=completion_tokens,
+                reasoning_tokens=reasoning_tokens or None,
             )
             raw_response = safe_dict(data)
 
@@ -141,7 +149,17 @@ class YandexGPTModel(BaseModel):
                 requested_model_id=self.model_id,
                 resolved_model_id=self.model_id,
                 request=request_payload,
-                cost={**cost, "cached_input": None, "reasoning": None},
+                usage={
+                    "input_tokens": prompt_tokens,
+                    "output_tokens": completion_tokens,
+                    "total_tokens": usage.get("totalTokens") or total_tokens,
+                    "reasoning_tokens": reasoning_tokens or None,
+                    "cached_input_tokens": None,
+                    "cache_creation_input_tokens": None,
+                    "raw": raw_response.get("result", {}).get("usage") or {},
+                    "source": "provider_response",
+                },
+                cost={**cost, "cached_input": None},
             )
         except Exception as exc:
             return error_result(self.model_id, exc)

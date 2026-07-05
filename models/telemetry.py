@@ -45,10 +45,15 @@ SAFE_TOKEN_KEYS = {
     "cache_creation_input_tokens",
     "cache_read_input_tokens",
     "completion_tokens",
+    "completion_tokens_details",
     "completiontokens",
+    "completiontokensdetails",
     "draft_max_tokens",
     "final_max_tokens",
     "input_tokens",
+    "input_tokens_details",
+    "inputtokens",
+    "inputtokensdetails",
     "inputtexttokens",
     "max_completion_tokens",
     "max_output_tokens",
@@ -57,10 +62,17 @@ SAFE_TOKEN_KEYS = {
     "max_tokens",
     "maxtokens",
     "output_tokens",
+    "output_tokens_details",
+    "outputtokens",
+    "outputtokensdetails",
     "prompt_tokens",
+    "prompt_tokens_details",
+    "prompttokensdetails",
     "reasoning_tokens",
+    "reasoningtokens",
     "time_to_first_token_ms",
     "total_tokens",
+    "totaltokens",
 }
 
 SAFE_ENV_ALLOWLIST = {
@@ -362,16 +374,37 @@ def _first_present(mapping: dict[str, Any], keys: list[str]) -> Any:
     return None
 
 
+def _raw_usage_from_response(raw_response: dict[str, Any]) -> dict[str, Any]:
+    usage = raw_response.get("usage")
+    if isinstance(usage, dict):
+        return usage
+    result = raw_response.get("result")
+    if isinstance(result, dict) and isinstance(result.get("usage"), dict):
+        return result["usage"]
+    last_response = raw_response.get("last_response")
+    if isinstance(last_response, dict) and isinstance(last_response.get("usage"), dict):
+        return last_response["usage"]
+    return {}
+
+
 def extract_usage(raw_response: dict[str, Any], prompt_tokens: int | None, completion_tokens: int | None) -> dict[str, Any]:
-    raw_usage = raw_response.get("usage") if isinstance(raw_response.get("usage"), dict) else {}
+    raw_usage = _raw_usage_from_response(raw_response)
     prompt_details = raw_usage.get("prompt_tokens_details")
     if not isinstance(prompt_details, dict):
         prompt_details = raw_usage.get("input_tokens_details")
+    if not isinstance(prompt_details, dict):
+        prompt_details = raw_usage.get("promptTokensDetails")
+    if not isinstance(prompt_details, dict):
+        prompt_details = raw_usage.get("inputTokensDetails")
     if not isinstance(prompt_details, dict):
         prompt_details = {}
     completion_details = raw_usage.get("completion_tokens_details")
     if not isinstance(completion_details, dict):
         completion_details = raw_usage.get("output_tokens_details")
+    if not isinstance(completion_details, dict):
+        completion_details = raw_usage.get("completionTokensDetails")
+    if not isinstance(completion_details, dict):
+        completion_details = raw_usage.get("outputTokensDetails")
     if not isinstance(completion_details, dict):
         completion_details = {}
 
@@ -394,10 +427,10 @@ def extract_usage(raw_response: dict[str, Any], prompt_tokens: int | None, compl
     )
     reasoning_tokens = _first_present(
         completion_details,
-        ["reasoning_tokens"],
+        ["reasoning_tokens", "reasoningTokens"],
     )
     if reasoning_tokens is None:
-        reasoning_tokens = _first_present(raw_usage, ["reasoning_tokens"])
+        reasoning_tokens = _first_present(raw_usage, ["reasoning_tokens", "reasoningTokens"])
 
     return {
         "input_tokens": input_tokens,

@@ -29,6 +29,9 @@ Required fields:
 - `title`: human-readable non-empty string.
 
 Optional fields may be omitted or set to `null` where appropriate. Unknown additional fields are allowed. `metadata` is the place for arbitrary extra structured data.
+For long official competition names, `title` may be a compact display title
+used by the scoring UI. Keep the full official name in `description` and, when
+useful for structured consumers, in `metadata.official_title`.
 
 ## Problem file
 
@@ -80,7 +83,9 @@ Problem listing order is stable:
 1. by `number` when present;
 2. then by `id`.
 
-Displayed competition titles come from `competition.json.title`. Displayed problem titles come from `title`; if it is missing, the safe fallback is `Задача <number>` or the problem `id`.
+Displayed competition titles come from `competition.json.title`, which may be a
+compact display title. Displayed problem titles come from `title`; if it is
+missing, the safe fallback is `Задача <number>` or the problem `id`.
 
 ## Run log
 
@@ -235,7 +240,7 @@ independent solver passes and do not include tools or browsing.
 
 Do not mutate `results[]` order after a score sidecar exists.
 
-Requests, raw responses, errors and tracebacks are recursively redacted before persistence. API keys, Authorization headers, cookies, client secrets, credentials and token values that are credentials must not be stored. Token-count fields such as `prompt_tokens`, `completion_tokens`, `total_tokens`, `reasoning_tokens`, `max_tokens` and `time_to_first_token_ms` are not secrets.
+Requests, raw responses, errors and tracebacks are recursively redacted before persistence. API keys, Authorization headers, cookies, client secrets, credentials and token values that are credentials must not be stored. Token-count fields such as `prompt_tokens`, `completion_tokens`, `total_tokens`, `reasoning_tokens`, `max_tokens` and `time_to_first_token_ms` are not secrets. Nested usage containers that only hold token accounting, including `output_tokens_details`, `completion_tokens_details`, `input_tokens_details`, `completionTokensDetails` and `reasoningTokens`, must also remain available so schema v2 logs can normalize reasoning/cache telemetry. Historical logs where those nested containers were already persisted as `[REDACTED]` cannot recover the lost reasoning count without the original provider response.
 
 ## Scoring sidecar
 

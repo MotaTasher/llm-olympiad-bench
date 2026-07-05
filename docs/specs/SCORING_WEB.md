@@ -131,17 +131,34 @@ numbers; there is no recalculation button or HTTP request. Different APIs split
 hidden reasoning and visible answer tokens differently, so the estimate is best
 effort. The calculation uses local price tables, rough token estimates and the
 current USD/RUB rate fetched from the Central Bank of Russia XML daily endpoint
-with a local fallback. It must not instantiate provider clients, call model
-APIs, create background jobs or write run logs.
+with a local fallback. For models with configured reasoning support, reasoning
+budget tokens are charged at the provider's output-token rate, or at the
+provider's total-token rate for total-priced RUB models. Models without a
+reasoning price do not receive the reasoning-budget add-on. It must not
+instantiate provider clients, call model APIs, create background jobs or write
+run logs.
+
+The UI also shows realized spending read from immutable run logs. The first
+static value is the sum for the latest attempt in each currently displayed
+`problem × active model` cell; this matches the attempts normally presented for
+scoring. The second static value is the sum for every result stored in logs for
+the competition. Log costs are read from `result.cost.total` when available and
+fall back to legacy `result.cost_usd`; RUB-native costs are converted through
+the same USD/RUB rate used by the calculator. Missing cost telemetry is treated
+as zero for totals and counted internally, without mutating logs.
 
 When `include_solved` is off, skip logic is evaluated independently for every
 `problem × model` pair. A pair is already solved only when existing logs contain
 at least one successful attempt for that exact model with a non-empty answer.
 API errors and empty answers do not count as solved, and answers from other
-models do not cause a skip. The index shows total estimated cost in USD and
-RUB on each competition card. The competition page also shows per-model costs
-in a full-width table with model price per 1K tokens, estimated USD/RUB cost
-and a final total row.
+models do not cause a skip. Index cards show three always-visible cost metrics:
+latest displayed attempts, all log results and the potential calculator result.
+The sticky header shows the same three metrics aggregated over the current page
+scope: all competitions on `/`, or the selected competition on the competition
+page. The competition summary card also keeps the three metrics always visible.
+The competition page shows the detailed calculator in a collapsible per-model
+table with all-log spending split into USD and RUB columns, model price per 1M
+input/output/reasoning tokens, estimated USD/RUB cost and a final total row.
 
 ## Cell status
 

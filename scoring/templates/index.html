@@ -18,10 +18,14 @@
           <h2>{{ group.year if group.year else "Без года" }}</h2>
           <div class="grid">
             {% for competition in group.competitions %}
-              <a class="card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+              <article class="card">
                 <div class="card-title">
                   <div>
-                    <h3>{{ competition.competition_title }}</h3>
+                    <h3>
+                      <a class="card-heading-link" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+                        {{ competition.competition_title }}
+                      </a>
+                    </h3>
                     <div class="meta">{{ competition.competition_id }}</div>
                   </div>
                   {% if competition.date %}<span class="pill">{{ competition.date }}</span>{% endif %}
@@ -34,7 +38,12 @@
                   <span class="pill">{{ competition.model_count }} моделей</span>
                   <span class="pill">{{ competition.answer_count }} ответов</span>
                   <span class="pill">{{ competition.scored_count }} проверено</span>
-                  <span class="pill">стоимость: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
+                </div>
+                <div class="cost-strip" aria-label="Стоимость">
+                  <span class="cost-metric cost-metric-latest">Последние: <b data-cost-actual="latest" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+                  <span class="cost-metric cost-metric-all">Все логи: <b data-cost-actual="all" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+                  <span class="cost-metric cost-metric-estimate">Прогон: <b data-cost-competition="{{ competition.competition_id }}">—</b></span>
+                  <span class="meta cost-pair-note" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
                 </div>
                 <div class="progress" aria-label="Прогресс проверки {{ competition.progress_percent }}%">
                   <span style="width: {{ competition.progress_percent }}%"></span>
@@ -42,7 +51,7 @@
                 {% if competition.latest_timestamp %}
                   <div class="meta">Последний запуск: {{ competition.latest_timestamp }}</div>
                 {% endif %}
-              </a>
+              </article>
             {% endfor %}
           </div>
         </section>
@@ -50,10 +59,14 @@
     {% elif competitions %}
       <div class="grid">
         {% for competition in competitions %}
-          <a class="card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+          <article class="card">
             <div class="card-title">
               <div>
-                <h2>{{ competition.competition_title }}</h2>
+                <h2>
+                  <a class="card-heading-link" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
+                    {{ competition.competition_title }}
+                  </a>
+                </h2>
                 <div class="meta">{{ competition.competition_id }}</div>
               </div>
               {% if competition.date %}<span class="pill">{{ competition.date }}</span>{% endif %}
@@ -66,7 +79,12 @@
               <span class="pill">{{ competition.model_count }} моделей</span>
               <span class="pill">{{ competition.answer_count }} ответов</span>
               <span class="pill">{{ competition.scored_count }} проверено</span>
-              <span class="pill">стоимость: <span data-cost-competition="{{ competition.competition_id }}">—</span></span>
+            </div>
+            <div class="cost-strip" aria-label="Стоимость">
+              <span class="cost-metric cost-metric-latest">Последние: <b data-cost-actual="latest" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+              <span class="cost-metric cost-metric-all">Все логи: <b data-cost-actual="all" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
+              <span class="cost-metric cost-metric-estimate">Прогон: <b data-cost-competition="{{ competition.competition_id }}">—</b></span>
+              <span class="meta cost-pair-note" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
             </div>
             <div class="progress" aria-label="Прогресс проверки {{ competition.progress_percent }}%">
               <span style="width: {{ competition.progress_percent }}%"></span>
@@ -74,7 +92,7 @@
             {% if competition.latest_timestamp %}
               <div class="meta">Последний запуск: {{ competition.latest_timestamp }}</div>
             {% endif %}
-          </a>
+          </article>
         {% endfor %}
       </div>
     {% else %}

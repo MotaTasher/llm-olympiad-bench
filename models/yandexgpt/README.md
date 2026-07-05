@@ -90,7 +90,7 @@ YANDEX_TIMEOUT=120
 RUB_PER_USD=90
 ```
 
-`YANDEX_REASONING_MODE` поддерживает значения `ENABLED_HIDDEN` и `DISABLED`. Если выбранная модель не поддерживает hidden reasoning, адаптер повторит запрос без `reasoningOptions` и запишет это в `raw_response`.
+`YANDEX_REASONING_MODE` поддерживает значения `ENABLED_HIDDEN` и `DISABLED`. Если выбранная модель не поддерживает hidden reasoning, адаптер повторит запрос без `reasoningOptions` и запишет это в `raw_response`. Когда API возвращает `completionTokensDetails.reasoningTokens`, адаптер сохраняет это число в `usage.reasoning_tokens`; `cost.reasoning` является поддолей total-priced стоимости, а не дополнительной надбавкой.
 
 `runner.load_env()` специально игнорирует старые `YANDEX_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
 

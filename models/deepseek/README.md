@@ -70,7 +70,7 @@ DEEPSEEK_TEMPERATURE=0.3
 DEEPSEEK_MAX_TOKENS=8192
 ```
 
-`DEEPSEEK_MAX_TOKENS` ограничивает output. Для reasoning-моделей DeepSeek этот лимит включает reasoning content там, где провайдер считает его частью output. API не гарантирует минимум thinking tokens.
+`DEEPSEEK_MAX_TOKENS` ограничивает output. Для reasoning-моделей DeepSeek этот лимит включает reasoning content там, где провайдер считает его частью output. API не гарантирует минимум thinking tokens. В калькуляторе стоимости reasoning для DeepSeek V4 считается по обычной output-ставке модели.
 
 `runner.load_env()` специально игнорирует старые `DEEPSEEK_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
 
