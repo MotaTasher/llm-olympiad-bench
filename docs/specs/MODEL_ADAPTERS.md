@@ -104,6 +104,10 @@ the total exceeds the configured per-request cap for the model, the adapter
 continues with additional Responses requests linked by `previous_response_id`
 until it receives non-empty visible output or exhausts the budget. This is still
 text-only and does not add tools, browsing or provider-side execution.
+OpenAI long Responses requests use `OPENAI_TIMEOUT_SECONDS` for the per-request
+HTTP timeout, defaulting to 7200 seconds so 128K reasoning/output calls are not
+cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override
+the SDK retry count when operators want to avoid or allow replaying long calls.
 The Anthropic adapter uses the non-streaming Messages API up to `max_tokens =
 21333`, matching the Anthropic Python SDK's documented long-request threshold.
 For larger Claude requests it automatically switches to Messages streaming and

@@ -22,6 +22,29 @@ OPENAI_MAX_OUTPUT_TOKENS_BY_MODEL = {
     "gpt-5.4-mini": 128_000,
 }
 OPENAI_DEFAULT_MAX_OUTPUT_TOKENS = 128_000
+OPENAI_DEFAULT_TIMEOUT_SECONDS = 7_200.0
+
+
+def positive_float_env(name: str, default: float) -> float:
+    value = env(name)
+    if value is None:
+        return default
+    try:
+        parsed = float(value)
+    except ValueError:
+        return default
+    return parsed if parsed > 0 else default
+
+
+def optional_nonnegative_int_env(name: str) -> int | None:
+    value = env(name)
+    if value is None:
+        return None
+    try:
+        parsed = int(value)
+    except ValueError:
+        return None
+    return parsed if parsed >= 0 else None
 
 
 def max_output_tokens_for_model(model_id: str) -> int:
@@ -93,10 +116,21 @@ class GPTModel(BaseModel):
         return self._model
 
     def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
+        request_payload = {}
+        last_raw_response: dict = {}
+        latency_ms = 0
         try:
             from openai import OpenAI
 
-            client = OpenAI(api_key=require_env("OPENAI_API_KEY"))
+            timeout_seconds = positive_float_env("OPENAI_TIMEOUT_SECONDS", OPENAI_DEFAULT_TIMEOUT_SECONDS)
+            max_retries = optional_nonnegative_int_env("OPENAI_MAX_RETRIES")
+            client_kwargs = {
+                "api_key": require_env("OPENAI_API_KEY"),
+                "timeout": timeout_seconds,
+            }
+            if max_retries is not None:
+                client_kwargs["max_retries"] = max_retries
+            client = OpenAI(**client_kwargs)
             total_budget = None
             if max_tokens is not None:
                 total_budget = int(max_tokens)
@@ -120,6 +154,8 @@ class GPTModel(BaseModel):
                 "store": True,
                 "max_output_tokens_total": total_budget,
                 "max_output_tokens_per_request": per_request_limit,
+                "timeout_seconds": timeout_seconds,
+                "max_retries": max_retries,
             }
             if reasoning is not None:
                 request_payload["reasoning"] = reasoning
@@ -131,10 +167,8 @@ class GPTModel(BaseModel):
             completion_tokens = 0
             reasoning_tokens = 0
             cached_input_tokens = 0
-            latency_ms = 0
             previous_response_id = None
             answer = ""
-            last_raw_response: dict = {}
 
             while remaining_budget > 0:
                 step_max_tokens = min(remaining_budget, per_request_limit)
@@ -161,6 +195,7 @@ class GPTModel(BaseModel):
                     "max_output_tokens": step_max_tokens,
                     "store": True,
                     "stream": False,
+                    "timeout_seconds": timeout_seconds,
                 }
                 if reasoning is not None:
                     step_request["reasoning"] = reasoning
@@ -271,4 +306,10 @@ class GPTModel(BaseModel):
                 provider_timestamp=last_raw_response.get("created_at") or last_raw_response.get("created"),
             )
         except Exception as exc:
-            return error_result(self.model_id, exc)
+            result = error_result(self.model_id, exc, latency_ms=latency_ms)
+            result.provider = "openai"
+            result.requested_model_id = self.model_id
+            result.resolved_model_id = last_raw_response.get("model") or self.model_id
+            result.request = request_payload or None
+            result.raw_response = last_raw_response or {}
+            return result

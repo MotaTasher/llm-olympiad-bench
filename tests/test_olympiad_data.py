@@ -307,7 +307,9 @@ class RunnerTests(TempCompetition):
                 return FakeResponse("resp_2", "FINAL_SOLUTION", Usage(3, 20, 5))
 
         class FakeClient:
-            def __init__(self, api_key: str) -> None:
+            def __init__(self, api_key: str, **kwargs: object) -> None:
+                self.api_key = api_key
+                self.kwargs = kwargs
                 self.responses = FakeResponses()
 
         with (
@@ -319,6 +321,7 @@ class RunnerTests(TempCompetition):
 
         self.assertIsNone(result.error)
         self.assertEqual(result.answer, "FINAL_SOLUTION")
+        self.assertEqual(result.request["timeout_seconds"], gpt_module.OPENAI_DEFAULT_TIMEOUT_SECONDS)
         self.assertEqual([call["max_output_tokens"] for call in calls], [100, 100])
         self.assertEqual(calls[0]["input"], "ORIGINAL_PROBLEM")
         self.assertNotIn("previous_response_id", calls[0])
