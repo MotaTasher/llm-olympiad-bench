@@ -15,9 +15,12 @@ from scoring.app import app as scoring_app, competition_card_description, compet
 from scoring.auth import create_user, get_user_by_username, set_user_active
 from scoring.presentation import format_datetime_parts
 from scoring.repository import (
+    aggregate_scores,
     build_catalog,
+    checks_statistics,
     competition_statistics,
     configured_model_columns,
+    format_score_value,
     half_score_for,
     model_presentation,
     score_ticks_for,
@@ -112,6 +115,7 @@ class CompetitionMatrixParser(HTMLParser):
         self.tooltips: dict[str, str] = {}
         self.model_links: list[dict] = []
         self.task_links: list[dict] = []
+        self.matrix_cells: list[dict] = []
 
         self._table_depth = 0
         self._in_table = False
@@ -121,6 +125,7 @@ class CompetitionMatrixParser(HTMLParser):
         self._current_th: dict | None = None
         self._current_tooltip: dict | None = None
         self._current_link: dict | None = None
+        self._current_matrix_cell: dict | None = None
         self._current_body_row: dict | None = None
         self._current_body_cell: dict | None = None
 
@@ -146,11 +151,11 @@ class CompetitionMatrixParser(HTMLParser):
         elif tag == "tr" and self._in_thead:
             self._current_header_row = []
         elif tag == "tr" and self._in_tbody:
-            self._current_body_row = {"cells": [], "model_cell_hrefs": [], "texts": []}
+            self._current_body_row = {"cells": [], "model_cell_hrefs": [], "texts": [], "matrix_cells": []}
         elif tag == "th" and self._current_header_row is not None:
             self._current_th = {"attrs": attr_map, "text": [], "links": [], "tooltips": []}
         elif tag == "td" and self._current_body_row is not None:
-            self._current_body_cell = {"text": [], "links": []}
+            self._current_body_cell = {"text": [], "links": [], "matrix_cells": []}
         elif tag == "a" and self._current_th is not None:
             link = {"attrs": attr_map, "text": []}
             self._current_th["links"].append(link)
@@ -162,9 +167,21 @@ class CompetitionMatrixParser(HTMLParser):
             self._current_body_cell["links"].append(link)
             if "matrix-cell" in classes and self._current_body_row is not None:
                 self._current_body_row["model_cell_hrefs"].append(attr_map.get("href", ""))
+                matrix_cell = {"tag": tag, "attrs": attr_map, "text": []}
+                self._current_body_cell["matrix_cells"].append(matrix_cell)
+                self._current_body_row["matrix_cells"].append(matrix_cell)
+                self.matrix_cells.append(matrix_cell)
+                self._current_matrix_cell = matrix_cell
             if "problem-link" in classes:
                 self.task_links.append(link)
             self._current_link = link
+        elif tag == "span" and self._current_body_cell is not None and "matrix-cell" in classes:
+            matrix_cell = {"tag": tag, "attrs": attr_map, "text": []}
+            self._current_body_cell["matrix_cells"].append(matrix_cell)
+            if self._current_body_row is not None:
+                self._current_body_row["matrix_cells"].append(matrix_cell)
+            self.matrix_cells.append(matrix_cell)
+            self._current_matrix_cell = matrix_cell
         elif tag == "span" and attr_map.get("role") == "tooltip" and self._current_th is not None:
             self._current_tooltip = {"attrs": attr_map, "text": []}
             self._current_th["tooltips"].append(self._current_tooltip)
@@ -172,9 +189,16 @@ class CompetitionMatrixParser(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if not self._in_table:
             return
+        if tag == "table":
+            self._in_table = False
+            self._table_depth = 0
+            return
         if tag == "a" and self._current_link is not None:
             self._current_link["text"] = compact_text(self._current_link["text"])
             self._current_link = None
+            if self._current_matrix_cell is not None and self._current_matrix_cell["tag"] == "a":
+                self._current_matrix_cell["text"] = compact_text(self._current_matrix_cell["text"])
+                self._current_matrix_cell = None
         elif tag == "span" and self._current_tooltip is not None:
             text = compact_text(self._current_tooltip["text"])
             tooltip_id = self._current_tooltip["attrs"].get("id", "")
@@ -182,6 +206,9 @@ class CompetitionMatrixParser(HTMLParser):
                 self.tooltips[tooltip_id] = text
             self._current_tooltip["text"] = text
             self._current_tooltip = None
+        elif tag == "span" and self._current_matrix_cell is not None:
+            self._current_matrix_cell["text"] = compact_text(self._current_matrix_cell["text"])
+            self._current_matrix_cell = None
         elif tag == "th" and self._current_th is not None and self._current_header_row is not None:
             self._current_th["text"] = compact_text(self._current_th["text"])
             self._current_header_row.append(self._current_th)
@@ -209,12 +236,115 @@ class CompetitionMatrixParser(HTMLParser):
     def handle_data(self, data: str) -> None:
         if self._current_link is not None:
             self._current_link["text"].append(data)
+        if self._current_matrix_cell is not None:
+            self._current_matrix_cell["text"].append(data)
         if self._current_tooltip is not None:
             self._current_tooltip["text"].append(data)
         elif self._current_th is not None:
             self._current_th["text"].append(data)
         elif self._current_body_cell is not None:
             self._current_body_cell["text"].append(data)
+
+
+class CompetitionNavParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.navs: list[dict] = []
+        self.onclick_count = 0
+        self.nav_row_count = 0
+        self._current: dict | None = None
+        self._current_link: dict | None = None
+        self._depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = {key: value or "" for key, value in attrs}
+        classes = set(attr_map.get("class", "").split())
+        if "onclick" in attr_map:
+            self.onclick_count += 1
+        if "nav-row" in classes:
+            self.nav_row_count += 1
+        if tag == "nav" and "competition-tabs" in classes:
+            self._current = {"attrs": attr_map, "links": []}
+            self._depth = 1
+            return
+        if self._current is None:
+            return
+        if tag not in {"br", "hr", "img", "input", "meta", "link"}:
+            self._depth += 1
+        if tag == "a":
+            self._current_link = {"attrs": attr_map, "text": []}
+            self._current["links"].append(self._current_link)
+
+    def handle_endtag(self, tag: str) -> None:
+        if self._current is None:
+            return
+        if tag == "a" and self._current_link is not None:
+            self._current_link["text"] = compact_text(self._current_link["text"])
+            self._current_link = None
+        if tag not in {"br", "hr", "img", "input", "meta", "link"}:
+            self._depth -= 1
+        if self._depth == 0:
+            self.navs.append(self._current)
+            self._current = None
+
+    def handle_data(self, data: str) -> None:
+        if self._current_link is not None:
+            self._current_link["text"].append(data)
+
+
+class AggregateSwitcherParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.containers = 0
+        self.inputs: list[dict] = []
+        self.labels: list[dict] = []
+        self.cells: list[dict] = []
+        self.anchors: list[dict] = []
+        self._in_switcher = False
+        self._switcher_depth = 0
+        self._current_label: dict | None = None
+        self._current_cell: dict | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = {key: value or "" for key, value in attrs}
+        classes = set(attr_map.get("class", "").split())
+        if "data-checks-aggregate" in attr_map:
+            self.containers += 1
+        if tag == "fieldset" and "aggregate-switcher" in classes:
+            self._in_switcher = True
+            self._switcher_depth = 1
+            return
+        if self._in_switcher:
+            if tag not in {"br", "hr", "img", "input", "meta", "link"}:
+                self._switcher_depth += 1
+            if tag == "input":
+                self.inputs.append(attr_map)
+            elif tag == "label":
+                self._current_label = {"attrs": attr_map, "text": []}
+                self.labels.append(self._current_label)
+            elif tag == "a":
+                self.anchors.append(attr_map)
+        if "data-aggregate-cell" in attr_map:
+            self._current_cell = {"attrs": attr_map, "text": []}
+            self.cells.append(self._current_cell)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "label" and self._current_label is not None:
+            self._current_label["text"] = compact_text(self._current_label["text"])
+            self._current_label = None
+        elif tag == "span" and self._current_cell is not None:
+            self._current_cell["text"] = compact_text(self._current_cell["text"])
+            self._current_cell = None
+        if self._in_switcher and tag not in {"br", "hr", "img", "input", "meta", "link"}:
+            self._switcher_depth -= 1
+            if self._switcher_depth == 0:
+                self._in_switcher = False
+
+    def handle_data(self, data: str) -> None:
+        if self._current_label is not None:
+            self._current_label["text"].append(data)
+        if self._current_cell is not None:
+            self._current_cell["text"].append(data)
 
 
 class ScoreControlParser(HTMLParser):
@@ -414,6 +544,7 @@ class ScoringWebTests(unittest.TestCase):
         self,
         *,
         competition_id: str = "math_2026",
+        problem_id: str = "task_01",
         run_id: str = "run_active",
         result_id: str = "res_a",
         score: float = 7,
@@ -421,11 +552,11 @@ class ScoringWebTests(unittest.TestCase):
         evaluator: str | None = None,
     ) -> None:
         write_json(
-            self.results_dir / competition_id / "task_01" / f"{run_id}.json",
+            self.results_dir / competition_id / problem_id / f"{run_id}.json",
             {
                 "schema_version": 2,
                 "competition_id": competition_id,
-                "problem_id": "task_01",
+                "problem_id": problem_id,
                 "run_id": run_id,
                 "evaluation_pool": {
                     result_id: [
@@ -452,16 +583,18 @@ class ScoringWebTests(unittest.TestCase):
         self,
         *,
         competition_id: str = "math_2026",
+        problem_id: str = "task_01",
         model_id: str = "gpt-5.5",
         provider: str = "openai",
         result_id: str = "res_a",
-        answer: str = "MODEL_ANSWER_TOKEN",
+        answer: str | None = "MODEL_ANSWER_TOKEN",
+        error: str | None = None,
         run_id: str = "run_active",
         timestamp: str = "2026-06-20T00:00:00Z",
         cost_usd: float = 0.0,
     ) -> None:
         write_json(
-            self.logs_dir / competition_id / "task_01" / f"{run_id}.json",
+            self.logs_dir / competition_id / problem_id / f"{run_id}.json",
             {
                 "schema_version": 2,
                 "run_id": run_id,
@@ -469,7 +602,7 @@ class ScoringWebTests(unittest.TestCase):
                 "completed_at": timestamp,
                 "competition_id": competition_id,
                 "competition_title": "Math 2026",
-                "problem_id": "task_01",
+                "problem_id": problem_id,
                 "problem_title": "Task One",
                 "results": [
                     {
@@ -480,8 +613,8 @@ class ScoringWebTests(unittest.TestCase):
                         "requested_model_id": model_id,
                         "resolved_model_id": model_id,
                         "answer": answer,
-                        "error": None,
-                        "status": "success",
+                        "error": error,
+                        "status": "error" if error else "success",
                         "prompt_tokens": 1,
                         "completion_tokens": 2,
                         "cost_usd": cost_usd,
@@ -776,21 +909,84 @@ class ScoringWebTests(unittest.TestCase):
 
         competition_html = self.client.get("/competition/math_2026").get_data(as_text=True)
         self.assertIn("Все проверки", competition_html)
-        self.assertIn("Частично", competition_html)
+        competition_matrix = CompetitionMatrixParser()
+        competition_matrix.feed(competition_html)
+        scored_cell = next(cell for cell in competition_matrix.matrix_cells if "cell-partial" in cell["attrs"].get("class", ""))
+        self.assertEqual(scored_cell["text"], "7")
+        self.assertNotIn("Частично", scored_cell["text"])
         self.assertNotIn("Макс.", competition_html)
-        self.assertNotIn("Максимум", competition_html)
+        self.assertNotIn(">Макс.<", competition_html)
 
         checks_max = self.client.get("/competition/math_2026/checks?mode=max").get_data(as_text=True)
         self.assertIn("Все проверки", checks_max)
         self.assertIn("other-reviewer", checks_max)
         self.assertIn("other-hidden-feedback", checks_max)
-        self.assertIn("10 / 10", checks_max)
+        self.assertNotIn("?mode=", checks_max)
+        checks_matrix = CompetitionMatrixParser()
+        checks_matrix.feed(checks_max)
+        aggregate_cell = next(cell for cell in checks_matrix.matrix_cells if cell["attrs"].get("data-median-text"))
+        self.assertEqual(aggregate_cell["text"], "8.5")
+        self.assertEqual(aggregate_cell["attrs"].get("data-median-text"), "8.5")
+        self.assertEqual(aggregate_cell["attrs"].get("data-avg-text"), "8.5")
+        self.assertEqual(aggregate_cell["attrs"].get("data-max-text"), "10")
+        self.assertEqual(aggregate_cell["attrs"].get("data-min-text"), "7")
 
-        checks_avg = self.client.get("/competition/math_2026/checks?mode=avg").get_data(as_text=True)
-        self.assertIn("8.50 / 10", checks_avg)
+    def assert_competition_tabs(self, html: str, active_label: str) -> None:
+        parser = CompetitionNavParser()
+        parser.feed(html)
+        self.assertEqual(len(parser.navs), 1)
+        self.assertEqual(parser.navs[0]["attrs"].get("aria-label"), "Разделы соревнования")
+        self.assertEqual(parser.nav_row_count, 0)
+        self.assertEqual(parser.onclick_count, 0)
+        links = parser.navs[0]["links"]
+        self.assertEqual([link["text"] for link in links], ["Меню соревнования", "Статистика моделей", "Все проверки"])
+        self.assertEqual(
+            [link["attrs"].get("href") for link in links],
+            ["/competition/math_2026", "/competition/math_2026/stats", "/competition/math_2026/checks"],
+        )
+        active = [link for link in links if link["attrs"].get("aria-current") == "page"]
+        self.assertEqual(len(active), 1)
+        self.assertEqual(active[0]["text"], active_label)
 
-        checks_min = self.client.get("/competition/math_2026/checks?mode=min").get_data(as_text=True)
-        self.assertIn("7 / 10", checks_min)
+    def test_competition_routes_share_accessible_tabs(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+        routes = [
+            ("/competition/math_2026", "Меню соревнования"),
+            ("/competition/math_2026/stats", "Статистика моделей"),
+            ("/competition/math_2026/checks", "Все проверки"),
+        ]
+        for path, active_label in routes:
+            with self.subTest(path=path):
+                response = self.client.get(path)
+                self.assertEqual(response.status_code, 200)
+                self.assert_competition_tabs(response.get_data(as_text=True), active_label)
+
+    def test_checks_aggregate_selector_is_radio_control_without_mode_links(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+        self.write_score(score=0, result_id="res_a")
+        html = self.client.get("/competition/math_2026/checks?mode=max").get_data(as_text=True)
+        parser = AggregateSwitcherParser()
+        parser.feed(html)
+
+        self.assertEqual(parser.containers, 1)
+        self.assertEqual([item.get("type") for item in parser.inputs], ["radio"] * 4)
+        self.assertEqual([item.get("value") for item in parser.inputs], ["median", "avg", "max", "min"])
+        self.assertEqual([label["text"] for label in parser.labels], ["Медиана", "Среднее", "Максимум", "Минимум"])
+        self.assertEqual(parser.inputs[0].get("checked"), "")
+        self.assertFalse(parser.anchors)
+        self.assertNotIn("?mode=", html)
+        self.assertNotIn("mode=max", html)
+        self.assertNotIn("mode=avg", html)
+        self.assertNotIn("mode=min", html)
+        self.assertTrue(parser.cells)
+        scored = next(cell for cell in parser.cells if cell["attrs"].get("data-median-text") == "0")
+        for mode in ("median", "avg", "max", "min"):
+            self.assertIn(f"data-{mode}-text", scored["attrs"])
+            self.assertIn(f"data-{mode}-class", scored["attrs"])
+            self.assertIn(f"data-{mode}-label", scored["attrs"])
+        self.assertEqual(scored["text"], "0")
 
     def test_problem_page_is_single_column_statement_reference_answer_order(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -1042,6 +1238,20 @@ class ScoringWebTests(unittest.TestCase):
         html = self.client.get("/competition/math_2026/stats").get_data(as_text=True)
         self.assertIn("80.0", html)
         self.assertIn(">2</td>", html)
+
+    def test_aggregate_scores_math_and_formatting(self) -> None:
+        self.assertEqual(aggregate_scores([0, 10, 5])["median"], 5)
+        self.assertEqual(aggregate_scores([0, 10])["median"], 5)
+        self.assertEqual(aggregate_scores([0, 0, 9])["avg"], 3)
+        minmax = aggregate_scores([2, 7, 4])
+        self.assertEqual(minmax["max"], 7)
+        self.assertEqual(minmax["min"], 2)
+        self.assertEqual(aggregate_scores([0, 10, 5]), aggregate_scores([5, 0, 10]))
+        self.assertEqual(aggregate_scores([]), {"median": None, "avg": None, "max": None, "min": None})
+        self.assertEqual(format_score_value(0.0), "0")
+        self.assertEqual(format_score_value(5.0), "5")
+        self.assertEqual(format_score_value(2.5), "2.5")
+        self.assertEqual(format_score_value(3.333333), "3.33")
 
     def test_score_step_resolver_and_catalog_fields(self) -> None:
         self.assertEqual(
@@ -1391,6 +1601,112 @@ class ScoringWebTests(unittest.TestCase):
         self.assertRegex(css, r"\.competition-matrix \.matrix-cell\s*\{[^}]*min-height:\s*44px")
         self.assertRegex(css, r"\.model-header:hover \.model-header-tooltip")
         self.assertRegex(css, r"\.model-header-link:focus-visible \+ \.model-header-tooltip")
+
+    def test_checks_matrix_uses_common_markup_and_compact_cells(self) -> None:
+        competition_dir = self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        problem_specs = [
+            ("task_02", 2, "Only Error"),
+            ("task_03", 3, "Unscored"),
+            ("task_04", 4, "Zero Score"),
+            ("task_05", 5, "Partial Score"),
+            ("task_06", 6, "Full Score"),
+        ]
+        for problem_id, number, title in problem_specs:
+            write_json(
+                competition_dir / f"{problem_id}.json",
+                {
+                    "schema_version": 1,
+                    "id": problem_id,
+                    "number": number,
+                    "title": title,
+                    "statement": title,
+                    "metadata": {"max_score": 10},
+                },
+            )
+        self.write_run(problem_id="task_02", run_id="run_error", result_id="res_error", answer="", error="provider failed")
+        self.write_run(problem_id="task_03", run_id="run_unscored", result_id="res_unscored")
+        self.write_run(problem_id="task_04", run_id="run_zero", result_id="res_zero")
+        self.write_score(problem_id="task_04", run_id="run_zero", result_id="res_zero", score=0)
+        self.write_run(problem_id="task_05", run_id="run_partial", result_id="res_partial")
+        self.write_score(problem_id="task_05", run_id="run_partial", result_id="res_partial", score=5)
+        self.write_run(problem_id="task_06", run_id="run_full", result_id="res_full")
+        self.write_score(problem_id="task_06", run_id="run_full", result_id="res_full", score=10)
+
+        overview_html = self.client.get("/competition/math_2026").get_data(as_text=True)
+        overview = CompetitionMatrixParser()
+        overview.feed(overview_html)
+        checks_html = self.client.get("/competition/math_2026/checks").get_data(as_text=True)
+        checks = CompetitionMatrixParser()
+        checks.feed(checks_html)
+
+        self.assertEqual([cell["text"] for cell in checks.header_rows[0]], [cell["text"] for cell in overview.header_rows[0]])
+        self.assertEqual([link["text"] for link in checks.model_links], [link["text"] for link in overview.model_links])
+        self.assertEqual(
+            [link["attrs"].get("href") for link in checks.model_links],
+            [link["attrs"].get("href") for link in overview.model_links],
+        )
+        self.assertIn("competition-matrix-wrap", checks.wrapper_classes)
+        self.assertIn("competition-matrix", checks.table_attrs.get("class", ""))
+        self.assertEqual(sum("competition-matrix-problem-column" in classes for classes in checks.cols), 1)
+        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in checks.cols), 10)
+
+        catalog = build_catalog(
+            competitions_dir=self.competitions_dir,
+            logs_dir=self.logs_dir,
+            results_dir=self.results_dir,
+        )
+        model_keys = [column["model_key"] for column in catalog["competition_map"]["math_2026"]["model_columns"]]
+        openai_index = model_keys.index("openai:gpt-5.5")
+        self.assertTrue(all(len(row["matrix_cells"]) == len(model_keys) for row in checks.body_rows))
+        self.assertEqual([link["text"] for link in checks.task_links], ["Task One", "Only Error", "Unscored", "Zero Score", "Partial Score", "Full Score"])
+        self.assertTrue(all(link["attrs"].get("href", "").endswith("/anonymous") for link in checks.task_links))
+        aggregate_problem_text = " ".join(row["cells"][0]["text"] for row in checks.body_rows)
+        self.assertNotIn("task_01", aggregate_problem_text)
+        self.assertNotIn("1. Task One", aggregate_problem_text)
+
+        not_run_cell = checks.body_rows[0]["matrix_cells"][0]
+        error_cell = checks.body_rows[1]["matrix_cells"][openai_index]
+        unscored_cell = checks.body_rows[2]["matrix_cells"][openai_index]
+        zero_cell = checks.body_rows[3]["matrix_cells"][openai_index]
+        partial_cell = checks.body_rows[4]["matrix_cells"][openai_index]
+        full_cell = checks.body_rows[5]["matrix_cells"][openai_index]
+
+        expectations = [
+            (not_run_cell, "cell-not-run", ""),
+            (error_cell, "cell-error", ""),
+            (unscored_cell, "cell-unscored", "?"),
+            (zero_cell, "cell-zero", "0"),
+            (partial_cell, "cell-partial", "5"),
+            (full_cell, "cell-full", "10"),
+        ]
+        for cell, css_class, text in expectations:
+            with self.subTest(css_class=css_class):
+                self.assertIn(css_class, cell["attrs"].get("class", ""))
+                self.assertEqual(cell["text"], text)
+                self.assertNotIn("/ 10", cell["text"])
+                self.assertNotIn("проверок", cell["text"])
+                self.assertNotIn("%", cell["text"])
+                self.assertIn("data-avg-class", cell["attrs"])
+                self.assertIn("data-max-class", cell["attrs"])
+                self.assertIn("data-min-class", cell["attrs"])
+        self.assertNotIn("Ждёт", checks_html)
+        self.assertNotIn("Макс.", checks_html)
+
+        overview_expectations = [
+            (overview.body_rows[0]["matrix_cells"][0], "cell-not-run", ""),
+            (overview.body_rows[1]["matrix_cells"][openai_index], "cell-error", ""),
+            (overview.body_rows[2]["matrix_cells"][openai_index], "cell-unscored", "?"),
+            (overview.body_rows[3]["matrix_cells"][openai_index], "cell-zero", "0"),
+            (overview.body_rows[4]["matrix_cells"][openai_index], "cell-partial", "5"),
+            (overview.body_rows[5]["matrix_cells"][openai_index], "cell-full", "10"),
+        ]
+        for cell, css_class, text in overview_expectations:
+            with self.subTest(overview_class=css_class):
+                self.assertIn(css_class, cell["attrs"].get("class", ""))
+                self.assertEqual(cell["text"], text)
+        self.assertNotIn("Ждёт", overview_html)
+        self.assertNotIn(">Частично<", overview_html)
+        self.assertNotIn("Макс.", overview_html)
 
     def test_problem_page_does_not_show_legacy_cost_calculator(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

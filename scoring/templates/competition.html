@@ -1,22 +1,22 @@
 {% extends "base.html" %}
+{% import "_competition_shell.html" as shell %}
+{% import "_matrix.html" as matrix %}
 {% block crumbs %}
   <a href="{{ url_for('index') }}">Соревнования</a> / {{ competition.competition_title }}
 {% endblock %}
 {% block content %}
   <div class="stack">
+    {{ shell.render_competition_shell(competition, "overview") }}
+
     <section class="panel">
-      <h1>{{ competition.competition_title }}</h1>
-      <div class="meta">{{ competition.competition_id }}</div>
-      {% if competition.description %}<p>{{ competition.description }}</p>{% endif %}
+      <div class="section-head">
+        <h2>Матрица задач и моделей</h2>
+      </div>
       <div class="stats">
         <span class="pill">{{ competition.problem_count }} задач</span>
         <span class="pill">{{ competition.model_count }} моделей с попытками</span>
         <span class="pill">{{ competition.answer_count }} ответов</span>
         <span class="pill">{{ competition.scored_count }} проверено</span>
-      </div>
-      <div class="nav-row">
-        <a class="button" href="{{ url_for('competition_stats_page', competition_id=competition.competition_id) }}">Статистика моделей</a>
-        <a class="button secondary" href="{{ url_for('competition_checks_page', competition_id=competition.competition_id) }}">Все проверки</a>
       </div>
       <div class="csv-actions">
         <a class="button secondary" href="{{ url_for('competition_evaluations_csv', competition_id=competition.competition_id) }}">CSV всех проверок</a>
@@ -32,62 +32,18 @@
     {% if competition.problem_order %}
       <div class="table-wrap competition-matrix-wrap" role="region" aria-label="Матрица задач и моделей" tabindex="0">
         <table class="competition-matrix">
-          <colgroup>
-            <col class="competition-matrix-problem-column">
-            {% for model in competition.model_columns %}
-              <col class="competition-matrix-model-column">
-            {% endfor %}
-          </colgroup>
-          <thead>
-            <tr>
-              <th rowspan="2" scope="col">Задача</th>
-              {% for group in competition.model_groups %}
-                <th colspan="{{ group.models|length }}" scope="colgroup" class="competition-matrix-provider">
-                  {{ group.label }}
-                </th>
-              {% endfor %}
-            </tr>
-            <tr>
-              {% for group in competition.model_groups %}
-                {% for model in group.models %}
-                  {% set tooltip_id = "model-tooltip-" ~ model.model_key|replace(":", "-")|replace(".", "-")|replace("/", "-")|replace("_", "-") %}
-                  <th scope="col" class="competition-matrix-model-header">
-                    <span class="model-header">
-                      <a
-                        class="model-header-link"
-                        href="{{ url_for('competition_stats_page', competition_id=competition.competition_id, model=model.model_key) }}"
-                        title="{{ model.model_id }}"
-                        aria-describedby="{{ tooltip_id }}"
-                        aria-label="{{ model.provider_label }} {{ model.short_label }}: {{ model.model_id }}"
-                      >{{ model.short_label }}</a>
-                      <span class="model-header-tooltip" id="{{ tooltip_id }}" role="tooltip">
-                        {{ model.provider_label }} · {{ model.model_id }}
-                      </span>
-                    </span>
-                  </th>
-                {% endfor %}
-              {% endfor %}
-            </tr>
-          </thead>
+          {{ matrix.render_model_colgroup(competition) }}
+          {{ matrix.render_model_header(competition) }}
           <tbody>
             {% for problem_id in competition.problem_order %}
               {% set problem = competition.problems[problem_id] %}
               <tr>
                 <td>
-                  <a class="problem-link" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">
-                    {% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}
-                  </a>
+                  {{ matrix.render_problem_cell(competition, problem, true) }}
                 </td>
                 {% for state in problem.model_states %}
                   <td>
-                    <a
-                      class="matrix-cell {{ state.css_class }}"
-                      href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=state.model_key) }}"
-                      title="{{ state.tooltip }}"
-                      aria-label="{{ state.aria_label }}"
-                    >
-                      {{ state.symbol }}
-                    </a>
+                    {{ matrix.render_overview_score_cell(competition, problem, state) }}
                   </td>
                 {% endfor %}
               </tr>

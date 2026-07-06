@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "_macros.html" as ui %}
+{% import "_competition_shell.html" as shell %}
 {% block crumbs %}
   <a href="{{ url_for('index') }}">Соревнования</a> /
   <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
@@ -7,14 +8,7 @@
 {% endblock %}
 {% block content %}
   <div class="stack">
-    <section class="panel">
-      <h1>Статистика моделей</h1>
-      <div class="meta">{{ competition.competition_title }} · {{ competition.competition_id }}</div>
-      <div class="nav-row">
-        <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Меню соревнования</a>
-        <a class="button" href="{{ url_for('competition_checks_page', competition_id=competition.competition_id) }}">Все проверки</a>
-      </div>
-    </section>
+    {{ shell.render_competition_shell(competition, "stats") }}
 
     {% if selected_model %}
       {% for model in stats.models %}

@@ -1,0 +1,33 @@
+{% macro render_competition_shell(competition, active_tab) -%}
+  <section class="panel competition-shell">
+    <div class="competition-shell-head">
+      <div>
+        <h1>{{ competition.competition_title }}</h1>
+        {% if competition.date or competition.description %}
+          <div class="meta">
+            {%- if competition.date -%}{{ competition.date|competition_date }}{%- endif -%}
+            {%- if competition.date and competition.description %} · {% endif -%}
+            {%- if competition.description -%}{{ competition.description }}{%- endif -%}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <nav class="competition-tabs" aria-label="Разделы соревнования">
+      <a
+        class="competition-tab"
+        href="{{ url_for('competition_page', competition_id=competition.competition_id) }}"
+        {% if active_tab == "overview" %}aria-current="page"{% endif %}
+      >Меню соревнования</a>
+      <a
+        class="competition-tab"
+        href="{{ url_for('competition_stats_page', competition_id=competition.competition_id) }}"
+        {% if active_tab == "stats" %}aria-current="page"{% endif %}
+      >Статистика моделей</a>
+      <a
+        class="competition-tab"
+        href="{{ url_for('competition_checks_page', competition_id=competition.competition_id) }}"
+        {% if active_tab == "checks" %}aria-current="page"{% endif %}
+      >Все проверки</a>
+    </nav>
+  </section>
+{%- endmacro %}

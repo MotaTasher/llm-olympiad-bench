@@ -5,6 +5,7 @@ import importlib
 import json
 import math
 import re
+import statistics
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
@@ -59,13 +60,31 @@ PROVIDER_MODULES = {
 }
 
 STATUS_META = {
-    "not_run": ("Не запускалась", "cell-not-run", "Пусто"),
-    "error": ("Ошибка", "cell-error", "!"),
-    "unscored": ("Не проверено", "cell-unscored", "Ждёт"),
-    "zero": ("0 баллов", "cell-zero", "0"),
-    "partial": ("Частично", "cell-partial", "Частично"),
-    "full": ("Максимум", "cell-full", "Макс."),
+    "not_run": ("Не запускалась", "cell-not-run", ""),
+    "error": ("Ошибка", "cell-error", ""),
+    "unscored": ("Ожидает проверки", "cell-unscored", "?"),
+    "zero": ("0 баллов", "cell-zero", ""),
+    "partial": ("Частичный балл", "cell-partial", ""),
+    "full": ("Максимальный балл", "cell-full", ""),
 }
+
+SCORE_CLASS_BY_CATEGORY = {
+    "not_run": "cell-not-run",
+    "error": "cell-error",
+    "unscored": "cell-unscored",
+    "zero": "cell-zero",
+    "partial": "cell-partial",
+    "full": "cell-full",
+}
+
+AGGREGATE_MODES = {
+    "median": "Медиана",
+    "avg": "Среднее",
+    "max": "Максимум",
+    "min": "Минимум",
+}
+
+DEFAULT_AGGREGATE_MODE = "median"
 
 YEAR_PATTERN = re.compile(r"(?<!\d)((?:19|20)\d{2})(?!\d)")
 MONTH_NAMES = {
@@ -196,18 +215,20 @@ def score_ticks_for(max_score: float, score_step: float, *, tolerance: float = 1
     return ticks
 
 
-def score_category(score: Any, max_score: float) -> str | None:
+def score_category(score: Any, max_score: float, *, tolerance: float = 1e-9) -> str | None:
     if score is None or score == "":
         return None
     try:
         value = float(score)
     except (TypeError, ValueError):
         return None
-    if value == 0:
+    if not math.isfinite(value):
+        return None
+    if abs(value) <= tolerance:
         return "zero"
-    if value >= max_score:
+    if value >= max_score - tolerance:
         return "full"
-    if 0 < value < max_score:
+    if value > 0:
         return "partial"
     return None
 
@@ -319,9 +340,41 @@ def canonical_model_key(provider: str | None, model_id: str | None) -> str:
 def display_score(value: Any) -> str:
     if value is None or value == "":
         return "—"
-    if isinstance(value, float) and value.is_integer():
-        return str(int(value))
-    return str(value)
+    parsed = parse_score(value)
+    if parsed is None:
+        return str(value)
+    return format_score_value(parsed)
+
+
+def parse_score(value: Any) -> float | None:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if math.isfinite(parsed) else None
+
+
+def format_score_value(value: float | int | None) -> str:
+    if value is None:
+        return ""
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        return ""
+    if math.isclose(parsed, round(parsed), rel_tol=1e-9, abs_tol=1e-9):
+        return str(int(round(parsed)))
+    return f"{parsed:.2f}".rstrip("0").rstrip(".")
+
+
+def aggregate_scores(scores: list[float]) -> dict[str, float | None]:
+    if not scores:
+        return {mode: None for mode in AGGREGATE_MODES}
+    ordered = [float(score) for score in scores]
+    return {
+        "median": float(statistics.median(ordered)),
+        "avg": sum(ordered) / len(ordered),
+        "max": max(ordered),
+        "min": min(ordered),
+    }
 
 
 def timestamp_key(value: str | None) -> str:
@@ -559,6 +612,7 @@ def cell_state(column: dict[str, Any], attempts: list[dict[str, Any]], max_score
         **state,
         "attempts": sorted(attempts, key=lambda item: item["sort_key"], reverse=True),
         "score": score,
+        "cell_text": format_score_value(score) if score is not None else state["symbol"],
         "max_score": max_score,
         "tooltip": "\n".join(details),
         "aria_label": "; ".join(details),
@@ -1008,6 +1062,125 @@ def competition_statistics(competition: dict[str, Any]) -> dict[str, Any]:
     return {
         "models": model_rows,
         "model_columns": competition.get("model_columns", []),
+    }
+
+
+def attempt_state_for_aggregate(state: dict[str, Any] | None) -> tuple[str, str, str]:
+    if not state or not state.get("attempt_count"):
+        return "not_run", SCORE_CLASS_BY_CATEGORY["not_run"], "Модель не запускалась"
+    status = str(state.get("status") or "not_run")
+    if status == "error":
+        return "error", SCORE_CLASS_BY_CATEGORY["error"], state.get("aria_label") or "Ошибка ответа модели"
+    if status == "unscored":
+        return "unscored", SCORE_CLASS_BY_CATEGORY["unscored"], "Ожидает проверки"
+    return status, SCORE_CLASS_BY_CATEGORY.get(status, "cell-unscored"), state.get("aria_label") or ""
+
+
+def aggregate_payload(
+    *,
+    mode: str,
+    value: float | None,
+    max_score: float,
+    problem_title: str,
+    model_label: str,
+    evaluation_count: int,
+    fallback_class: str,
+    fallback_text: str,
+    fallback_label: str,
+) -> dict[str, Any]:
+    label = AGGREGATE_MODES[mode]
+    if value is None:
+        return {
+            "value": None,
+            "text": fallback_text,
+            "category": None,
+            "css_class": fallback_class,
+            "aria_label": f"{problem_title}; {model_label}; {fallback_label}",
+        }
+    category = score_category(value, max_score) or "partial"
+    text = format_score_value(value)
+    return {
+        "value": value,
+        "text": text,
+        "category": category,
+        "css_class": SCORE_CLASS_BY_CATEGORY[category],
+        "aria_label": (
+            f"{problem_title}; {model_label}; {label}: {text}; "
+            f"проверок: {evaluation_count}; максимум: {format_score_value(max_score)}"
+        ),
+    }
+
+
+def checks_statistics(competition: dict[str, Any], rows: list[dict[str, Any]]) -> dict[str, Any]:
+    scores_by_cell: dict[tuple[str, str], list[float]] = {}
+    max_scores_by_cell: dict[tuple[str, str], float] = {}
+    for row in rows:
+        score = parse_score(row.get("score"))
+        if score is None:
+            continue
+        key = (row.get("problem_id") or "", row.get("model_key") or "")
+        scores_by_cell.setdefault(key, []).append(score)
+        max_score = parse_score(row.get("max_score"))
+        if max_score is not None:
+            max_scores_by_cell[key] = max_score
+
+    task_rows = []
+    for problem_id in competition.get("problem_order", []):
+        problem = competition["problems"][problem_id]
+        states_by_model = {
+            state.get("model_key"): state
+            for state in problem.get("model_states", [])
+        }
+        cells = {}
+        for model in competition.get("model_columns", []):
+            model_key_value = model["model_key"]
+            key = (problem_id, model_key_value)
+            scores = scores_by_cell.get(key, [])
+            max_score = max_scores_by_cell.get(key, float(problem.get("max_score") or 10))
+            attempt_state, fallback_class, fallback_label = attempt_state_for_aggregate(states_by_model.get(model_key_value))
+            fallback_text = "?" if attempt_state == "unscored" else ""
+            values = aggregate_scores(scores)
+            aggregates = {
+                mode: aggregate_payload(
+                    mode=mode,
+                    value=values[mode],
+                    max_score=max_score,
+                    problem_title=problem.get("problem_title") or problem_id,
+                    model_label=f"{model.get('provider_label') or model.get('provider')} {model.get('short_label') or model.get('label')}",
+                    evaluation_count=len(scores),
+                    fallback_class=fallback_class,
+                    fallback_text=fallback_text,
+                    fallback_label=fallback_label,
+                )
+                for mode in AGGREGATE_MODES
+            }
+            cells[model_key_value] = {
+                "problem_id": problem_id,
+                "model_key": model_key_value,
+                "max_score": max_score,
+                "attempt_state": attempt_state,
+                "evaluation_count": len(scores),
+                "aggregates": aggregates,
+                "initial": aggregates[DEFAULT_AGGREGATE_MODE],
+            }
+        task_rows.append({"problem": problem, "cells": cells})
+
+    sorted_rows = sorted(
+        rows,
+        key=lambda item: (
+            item.get("problem_id") or "",
+            item.get("model_key") or "",
+            item.get("updated_at") or item.get("created_at") or "",
+            item.get("evaluator") or "",
+        ),
+    )
+    return {
+        "mode": DEFAULT_AGGREGATE_MODE,
+        "mode_label": AGGREGATE_MODES[DEFAULT_AGGREGATE_MODE],
+        "modes": AGGREGATE_MODES,
+        "tasks": task_rows,
+        "rows": sorted_rows,
+        "row_count": len(sorted_rows),
     }
 
 

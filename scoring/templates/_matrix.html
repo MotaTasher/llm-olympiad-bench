@@ -1,0 +1,77 @@
+{% macro render_model_colgroup(competition) -%}
+  <colgroup>
+    <col class="competition-matrix-problem-column">
+    {% for model in competition.model_columns %}
+      <col class="competition-matrix-model-column">
+    {% endfor %}
+  </colgroup>
+{%- endmacro %}
+
+{% macro render_model_header(competition) -%}
+  <thead>
+    <tr>
+      <th rowspan="2" scope="col">Задача</th>
+      {% for group in competition.model_groups %}
+        <th colspan="{{ group.models|length }}" scope="colgroup" class="competition-matrix-provider">
+          {{ group.label }}
+        </th>
+      {% endfor %}
+    </tr>
+    <tr>
+      {% for group in competition.model_groups %}
+        {% for model in group.models %}
+          {% set tooltip_id = "model-tooltip-" ~ model.model_key|replace(":", "-")|replace(".", "-")|replace("/", "-")|replace("_", "-") %}
+          <th scope="col" class="competition-matrix-model-header">
+            <span class="model-header">
+              <a
+                class="model-header-link"
+                href="{{ url_for('competition_stats_page', competition_id=competition.competition_id, model=model.model_key) }}"
+                title="{{ model.model_id }}"
+                aria-describedby="{{ tooltip_id }}"
+                aria-label="{{ model.provider_label }} {{ model.short_label }}: {{ model.model_id }}"
+              >{{ model.short_label }}</a>
+              <span class="model-header-tooltip" id="{{ tooltip_id }}" role="tooltip">
+                {{ model.provider_label }} · {{ model.model_id }}
+              </span>
+            </span>
+          </th>
+        {% endfor %}
+      {% endfor %}
+    </tr>
+  </thead>
+{%- endmacro %}
+
+{% macro render_problem_cell(competition, problem, include_number=true) -%}
+  <a class="problem-link" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">
+    {%- if include_number and problem.number is not none -%}{{ problem.number }}. {% endif -%}{{ problem.problem_title }}
+  </a>
+{%- endmacro %}
+
+{% macro render_overview_score_cell(competition, problem, state) -%}
+  <a
+    class="matrix-cell {{ state.css_class }}"
+    href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=state.model_key) }}"
+    title="{{ state.tooltip }}"
+    aria-label="{{ state.aria_label }}"
+  >{{ state.cell_text }}</a>
+{%- endmacro %}
+
+{% macro render_aggregate_score_cell(cell) -%}
+  <span
+    class="matrix-cell {{ cell.initial.css_class }}"
+    data-aggregate-cell
+    data-median-text="{{ cell.aggregates.median.text }}"
+    data-median-class="{{ cell.aggregates.median.css_class }}"
+    data-median-label="{{ cell.aggregates.median.aria_label }}"
+    data-avg-text="{{ cell.aggregates.avg.text }}"
+    data-avg-class="{{ cell.aggregates.avg.css_class }}"
+    data-avg-label="{{ cell.aggregates.avg.aria_label }}"
+    data-max-text="{{ cell.aggregates.max.text }}"
+    data-max-class="{{ cell.aggregates.max.css_class }}"
+    data-max-label="{{ cell.aggregates.max.aria_label }}"
+    data-min-text="{{ cell.aggregates.min.text }}"
+    data-min-class="{{ cell.aggregates.min.css_class }}"
+    data-min-label="{{ cell.aggregates.min.aria_label }}"
+    aria-label="{{ cell.initial.aria_label }}"
+  >{{ cell.initial.text }}</span>
+{%- endmacro %}

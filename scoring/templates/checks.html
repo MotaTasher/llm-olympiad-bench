@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as ui %}
+{% import "_competition_shell.html" as shell %}
+{% import "_matrix.html" as matrix %}
 {% block crumbs %}
   <a href="{{ url_for('index') }}">Соревнования</a> /
   <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
@@ -7,55 +9,43 @@
 {% endblock %}
 {% block content %}
   <div class="stack">
-    <section class="panel">
-      <h1>Все проверки</h1>
-      <div class="meta">{{ competition.competition_title }} · {{ competition.competition_id }} · {{ checks.row_count }} записей</div>
-      <div class="nav-row">
-        <a class="button secondary" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">Меню соревнования</a>
-        <a class="button secondary" href="{{ url_for('competition_stats_page', competition_id=competition.competition_id) }}">Статистика моделей</a>
-      </div>
-      <div class="csv-actions">
-        {% for mode, label in checks.modes.items() %}
-          <a
-            class="button {{ 'secondary' if checks.mode != mode else '' }}"
-            href="{{ url_for('competition_checks_page', competition_id=competition.competition_id, mode=mode) }}"
-          >{{ label }}</a>
-        {% endfor %}
-        <a class="button secondary" href="{{ url_for('competition_evaluations_csv', competition_id=competition.competition_id) }}">CSV всех проверок</a>
-      </div>
-    </section>
+    {{ shell.render_competition_shell(competition, "checks") }}
 
-    <section class="panel">
-      <h2>{{ checks.mode_label }} по всем проверкам</h2>
-      <div class="table-wrap" role="region" aria-label="Агрегаты всех проверок" tabindex="0">
-        <table>
-          <thead>
-            <tr>
-              <th>Задача</th>
-              {% for model in competition.model_columns %}
-                <th title="{{ model.provider }}: {{ model.model_id }}">{{ model.label }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
+    <section class="panel" data-checks-aggregate>
+      <div class="section-head aggregate-head">
+        <h2><span data-aggregate-heading>{{ checks.mode_label }}</span> по всем проверкам</h2>
+        <a class="button secondary compact" href="{{ url_for('competition_evaluations_csv', competition_id=competition.competition_id) }}">CSV всех проверок</a>
+      </div>
+      <fieldset class="aggregate-switcher">
+        <legend>Показывать в таблице</legend>
+        <div class="aggregate-options">
+          {% for mode, label in checks.modes.items() %}
+            <input
+              type="radio"
+              name="aggregate_mode"
+              id="aggregate-{{ mode }}"
+              value="{{ mode }}"
+              {% if mode == checks.mode %}checked{% endif %}
+            >
+            <label for="aggregate-{{ mode }}">{{ label }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <div class="table-wrap competition-matrix-wrap" role="region" aria-label="Агрегаты всех проверок" tabindex="0">
+        <table class="competition-matrix">
+          {{ matrix.render_model_colgroup(competition) }}
+          {{ matrix.render_model_header(competition) }}
           <tbody>
             {% for row in checks.tasks %}
               {% set problem = row.problem %}
               <tr>
                 <td>
-                  <a class="problem-link" href="{{ url_for('anonymous_problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">
-                    {% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}
-                  </a>
-                  <div class="meta">{{ problem.problem_id }}</div>
+                  {{ matrix.render_problem_cell(competition, problem, false) }}
                 </td>
                 {% for model in competition.model_columns %}
                   {% set cell = row.cells.get(model.model_key) %}
                   <td>
-                    {% if cell and cell.count %}
-                      <b>{{ cell.score_text }} / {{ cell.max_score_text }}</b>
-                      <div class="meta">{{ cell.count }} проверок{% if cell.percent is not none %} · {{ "%.1f"|format(cell.percent) }}%{% endif %}</div>
-                    {% else %}
-                      <span class="meta">—</span>
-                    {% endif %}
+                    {{ matrix.render_aggregate_score_cell(cell) }}
                   </td>
                 {% endfor %}
               </tr>

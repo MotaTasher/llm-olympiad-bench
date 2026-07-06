@@ -89,7 +89,7 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `GET /` | Russian competition cards for competitions with an inferred year, grouped by year |
 | `GET /competition/<competition_id>` | matrix: rows are tasks, columns are models; task title opens anonymous scoring |
 | `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics across all reviewers, with optional model detail |
-| `GET /competition/<competition_id>/checks?mode=max|avg|min` | separate all-checks statistics page; shows all reviewers, aggregate model-task scores and the raw evaluation table |
+| `GET /competition/<competition_id>/checks` | separate all-checks statistics page; shows all reviewers, aggregate model-task scores and the raw evaluation table |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
 | `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
 | `GET /competition/<competition_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for a competition, optionally filtered by reviewer; "my checks" links use `current_user.username` |
@@ -102,6 +102,14 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `POST /score/delete` | deletes one evaluation from a result's evaluation pool |
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
+
+The competition overview, model statistics and all-checks pages share a single
+competition shell. The shell renders the competition title and the three
+server-side navigation links: `Меню соревнования`, `Статистика моделей` and
+`Все проверки`. The active link is marked with `aria-current="page"`. The
+navigation is a normal `<nav class="competition-tabs">`; it is not a JavaScript
+tablist, because each section is a separate HTTP page. The same Jinja component
+is reused by `competition.html`, `stats.html` and `checks.html`.
 
 The competition matrix presents active model columns in fixed provider groups:
 `anthropic`, `deepseek`, `gigachat`, `openai`, `yandexgpt`. Unknown future
@@ -169,11 +177,39 @@ count, raw evaluation count, average percent and full-solution count. It does
 not show a cross-task average absolute score, because task maximums can differ.
 The old "Модель-задача" matrix was removed from `/stats`; the separate
 `/checks` page remains the place for raw evaluation records, reviewers,
-comments, CSV actions and max/avg/min model-task aggregates. The optional
+comments, CSV actions and model-task aggregates. The optional
 `?model=<model_key>` detail section remains and shows per-task solution counts,
 reviewed solution counts, evaluation counts, average absolute score, task
 maximum, average percent and latest solution time. Unknown `model` query values
 must not fail the page; the main table still renders.
+
+## All-checks matrix
+
+`GET /competition/<competition_id>/checks` builds aggregate cells from all
+evaluation records by every reviewer. For each `problem_id × model_key` pair it
+precomputes four values in Python:
+
+- median;
+- average;
+- maximum;
+- minimum.
+
+Median is the default visible mode. The page renders a compact radio-based
+segmented control in this order: `Медиана`, `Среднее`, `Максимум`, `Минимум`.
+Changing the radio selection updates already-rendered `data-*` values in the
+browser; it does not navigate, reload, send HTTP requests, alter browser
+history or use `?mode=` links. The legacy `mode` query parameter is not required
+for rendering and is ignored by the UI.
+
+The aggregate table reuses the same matrix presentation as the overview matrix:
+two-level provider/model headers, provider grouping, short model labels,
+model-ID tooltips, first task column, score-cell base markup and cell color
+classes. The first task column shows only the problem title as a link to
+anonymous scoring; it does not show problem IDs, problem numbers, maximum
+scores or metadata. Compact aggregate cells show only the selected score text.
+They do not show `/ max_score`, evaluation counts, percentages or aggregate
+mode labels. The raw evaluation log remains a separate table below the matrix
+and keeps task, model, reviewer, score, comment, time, links and CSV actions.
 
 ## Index page
 
@@ -229,9 +265,22 @@ Rules:
 - `unscored`: latest attempt has a successful non-empty answer and no score;
 - `zero`: latest successful answer score is `0`;
 - `partial`: `0 < score < max_score`;
-- `full`: `score == max_score`.
+- `full`: score is equal to `max_score` within float tolerance.
 
 The primary status is based on the latest attempt timestamp. If the latest attempt is an error but an earlier successful answer was scored, the cell remains `error` while tooltip text reports the earlier scored answer. Tooltips and `aria-label` include model, state, score, latest attempt, attempt count, latency, tokens and error summary where available.
+Overview and all-checks matrices share one compact color contract:
+
+- gray: the model was not run;
+- gray dashed/error: the latest attempt has no successful answer;
+- white: a successful answer exists and is waiting for a visible evaluation;
+- red: score is zero;
+- yellow: score is between zero and the maximum;
+- green: score equals the maximum within tolerance.
+
+Compact cells show only `?`, an empty string or the formatted numeric score.
+White unscored cells use `?`; gray error and not-run cells are empty. Textual
+status names remain in `title`, tooltips and `aria-label` metadata, not as
+visible cell text.
 
 ## Score persistence
 
@@ -249,7 +298,7 @@ hidden there to avoid bias during review. `/stats` is the exception: it is
 competition-level analytics across all reviewers. Full cross-reviewer row data
 also remains available through CSV export/import routes and the separate
 all-checks page, which can aggregate every reviewer score per model-task cell as
-maximum, average or minimum.
+median, average, maximum or minimum.
 
 Statement, reference answer/solution and model answer are rendered in reusable
 scrollable content containers so wide Markdown tables, code blocks and MathJax
