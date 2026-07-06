@@ -88,6 +88,23 @@ python scripts/sync_logs.py pull --dry-run
 
 The script requires local `rsync` and SSH access. Push uses `--ignore-existing`; this protects existing remote files but does not implement conflict resolution. Detailed user instructions are in root `SERVER.md`.
 
+## Server-side new-model final run
+
+Gemini/Grok/GLM final runs can be launched from the server with live tqdm
+progress:
+
+```bash
+python scripts/run_new_models_math_cup_2026_final.py
+python scripts/run_new_models_math_cup_2026_final.py --yes
+```
+
+The script defaults to Math Cup 2026 final tasks and the six new active models:
+`google:gemini-3.1-pro-preview`, `google:gemini-3.5-flash`, `xai:grok-4.3`,
+`xai:grok-build-0.1`, `zai:glm-5.2` and `zai:glm-4.7-flash`. It is dry-run by
+default, prints a cost estimate, and writes each `runner.py` stdout/stderr log
+under `run-output/new-models-2026-final/`. Run logs themselves go to the
+configured `--logs-dir`, normally `/opt/olympiad-scorer/shared/logs`.
+
 ## Generated artifacts
 
 Model runs and review results are project data and are versioned:

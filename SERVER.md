@@ -146,6 +146,44 @@ nohup .venv/bin/python scripts/run_missing_math_cup_2026_final.py \
 schema-v2 run-log прямо в `/opt/olympiad-scorer/shared/logs`. Логи stdout/stderr
 лежат в `run-output/missing-2026-final-320k/`.
 
+## Server-side run for new 2026 final models
+
+Для новых Gemini/Grok/GLM моделей есть отдельный launcher с live progress через
+`tqdm`. По умолчанию он делает dry-run, показывает пары и максимальную оценку
+стоимости:
+
+```bash
+cd /opt/olympiad-scorer/app
+/opt/olympiad-scorer/venv/bin/python scripts/run_new_models_math_cup_2026_final.py
+```
+
+Запуск API-вызовов:
+
+```bash
+cd /opt/olympiad-scorer/app
+/opt/olympiad-scorer/venv/bin/python scripts/run_new_models_math_cup_2026_final.py --yes
+```
+
+Чтобы процесс жил после разрыва SSH:
+
+```bash
+cd /opt/olympiad-scorer/app
+mkdir -p run-output/new-models-2026-final
+nohup /opt/olympiad-scorer/venv/bin/python scripts/run_new_models_math_cup_2026_final.py \
+  --yes \
+  > run-output/new-models-2026-final/launcher.log 2>&1 &
+```
+
+Логи прогресса:
+
+```bash
+tail -f /opt/olympiad-scorer/app/run-output/new-models-2026-final/launcher.log
+```
+
+По умолчанию caps применяются так: Gemini `256000` total budget через chained
+Interactions requests, Grok `256000`, GLM `128000`. Concurrency по умолчанию:
+`google=2,xai=2,zai=2`, общий лимит процессов `--workers 6`.
+
 ## Pull: забрать оценки с сервера
 
 После вычитки на сайте:
