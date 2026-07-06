@@ -60,8 +60,11 @@ try:
         delete_evaluation,
         find_attempt,
         find_problem,
+        format_score_value,
         iter_evaluation_rows,
+        model_states_for_review,
         neighbor_problem_ids,
+        next_unscored_attempt,
         safe_id,
         save_evaluation,
         selected_state,
@@ -87,8 +90,11 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
         delete_evaluation,
         find_attempt,
         find_problem,
+        format_score_value,
         iter_evaluation_rows,
+        model_states_for_review,
         neighbor_problem_ids,
+        next_unscored_attempt,
         safe_id,
         save_evaluation,
         selected_state,
@@ -316,6 +322,7 @@ def competition_card_description(value) -> str:
 
 
 app.jinja_env.globals["datetime_parts"] = format_datetime_parts
+app.jinja_env.filters["score_value"] = format_score_value
 
 
 def clean_id(value: str) -> str:
@@ -455,6 +462,64 @@ def score_redirect(
     )
 
 
+def first_unscored_attempt_index(attempts: list[dict]) -> int | None:
+    for index, attempt in enumerate(attempts, start=1):
+        if attempt.get("score") is None:
+            return index
+    return None
+
+
+def anonymous_index_for_attempt(problem: dict, seed: str | None, result_id: str | None, reviewer: str) -> int | None:
+    if not seed or not result_id:
+        return None
+    attempts = attempts_for_reviewer(anonymized_attempts(problem, seed), reviewer)
+    for index, attempt in enumerate(attempts, start=1):
+        if attempt.get("result_id") == result_id:
+            return index
+    return None
+
+
+def redirect_to_next_unscored_after_save(
+    *,
+    mode: str | None,
+    competition_id: str,
+    problem_id: str,
+    current_model_key: str,
+    anonymous_seed: str | None,
+    reviewer: str,
+):
+    data = catalog_for_reviewer(reviewer)
+    problem = find_problem(data, competition_id, problem_id)
+    if not problem:
+        return None
+    attempt = next_unscored_attempt(problem, current_model_key)
+    if not attempt:
+        return None
+    if mode == "anonymous":
+        index = anonymous_index_for_attempt(problem, anonymous_seed, attempt.get("result_id"), reviewer)
+        if index is None:
+            return None
+        return redirect(
+            url_for(
+                "anonymous_problem_page",
+                competition_id=competition_id,
+                problem_id=problem_id,
+                seed=anonymous_seed,
+                n=index,
+                _anchor=f"attempt-{attempt['result_id']}",
+            )
+        )
+    return redirect(
+        url_for(
+            "problem_page",
+            competition_id=competition_id,
+            problem_id=problem_id,
+            model=attempt["model_key"],
+            attempt=attempt["result_id"],
+        )
+    )
+
+
 def parse_optional_float(value: str | None) -> float | int | None:
     if value is None or value == "":
         return None
@@ -547,6 +612,7 @@ def problem_page(competition_id: str, problem_id: str):
         "problem.html",
         competition=competition,
         problem=problem,
+        model_tabs=model_states_for_review(problem),
         selected_state=state,
         selected_attempt=attempt,
         previous_id=previous_id,
@@ -561,13 +627,20 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
     problem_id = clean_id(problem_id)
     seed = request.args.get("seed")
     if not seed:
+        seed = secrets.token_urlsafe(8)
+        data = catalog_for_reviewer(current_user.username)
+        problem = find_problem(data, competition_id, problem_id)
+        index = 1
+        if problem:
+            attempts = attempts_for_reviewer(anonymized_attempts(problem, seed), current_user.username)
+            index = first_unscored_attempt_index(attempts) or 1
         return redirect(
             url_for(
                 "anonymous_problem_page",
                 competition_id=competition_id,
                 problem_id=problem_id,
-                seed=secrets.token_urlsafe(8),
-                n=1,
+                seed=seed,
+                n=index,
             )
         )
     data = catalog_for_reviewer(current_user.username)
@@ -578,7 +651,25 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
     attempts = attempts_for_reviewer(anonymized_attempts(problem, seed), current_user.username)
     selected_index = min(positive_int(request.args.get("n")), len(attempts)) if attempts else 0
+    preferred_index = first_unscored_attempt_index(attempts)
+    if preferred_index and selected_index and attempts[selected_index - 1].get("score") is not None:
+        return redirect(
+            url_for(
+                "anonymous_problem_page",
+                competition_id=competition_id,
+                problem_id=problem_id,
+                seed=seed,
+                n=preferred_index,
+            )
+        )
     selected_attempt = attempts[selected_index - 1] if selected_index else None
+    next_unscored_index = None
+    if attempts and selected_index:
+        for offset in range(1, len(attempts) + 1):
+            index = (selected_index - 1 + offset) % len(attempts) + 1
+            if attempts[index - 1].get("score") is None:
+                next_unscored_index = index
+                break
     return render_template(
         "anonymous_problem.html",
         competition=competition,
@@ -586,7 +677,7 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
         attempts=attempts,
         selected_attempt=selected_attempt,
         selected_index=selected_index,
-        next_index=(selected_index % len(attempts) + 1) if attempts else None,
+        next_index=next_unscored_index or ((selected_index % len(attempts) + 1) if attempts else None),
         seed=seed,
         previous_id=previous_id,
         next_id=next_id,
@@ -725,6 +816,16 @@ def score():
         feedback=request.form.get("feedback"),
     )
     flash("Проверка добавлена.", "info")
+    next_redirect = redirect_to_next_unscored_after_save(
+        mode=mode,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        current_model_key=attempt["model_key"],
+        anonymous_seed=anonymous_seed,
+        reviewer=evaluator,
+    )
+    if next_redirect is not None:
+        return next_redirect
     return score_redirect(
         mode=mode,
         competition_id=competition_id,

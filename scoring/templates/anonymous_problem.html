@@ -154,7 +154,7 @@
                   <div class="evaluation-card">
                     <header>
                       <strong>{{ item.evaluator or "Без имени" }}</strong>
-                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ ui.human_datetime(item.updated_at or item.created_at) }}</span>
+                      <span class="meta">{{ item.score|score_value }} / {{ (item.max_score or problem.max_score)|score_value }} · {{ ui.human_datetime(item.updated_at or item.created_at) }}</span>
                     </header>
                     {% if item.feedback %}
                       <div class="section-head">

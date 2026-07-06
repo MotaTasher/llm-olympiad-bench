@@ -154,10 +154,23 @@ the reviewer UI. It displays one answer at a time, followed by a full-width
 answer-selection panel with numbered navigation and a "next solution" control.
 On first entry the app redirects to the same page with a
 random `seed`; answer order is shuffled from that seed and remains stable while
-the reviewer moves between answer numbers. The page still submits the underlying
-`run_id`, `result_id` and `model_key` as hidden form fields so evaluations are
-written to the same sidecar format. This is UI-level anonymity, not a security
-boundary against inspecting page source.
+the reviewer moves between answer numbers. Initial anonymous entry selects the
+first unreviewed successful answer in that deterministic order. Reviewed answers
+are skipped while unreviewed answers for the task still exist, and models that
+have not produced a successful answer are not included. The page still submits
+the underlying `run_id`, `result_id` and `model_key` as hidden form fields so
+evaluations are written to the same sidecar format. This is UI-level anonymity,
+not a security boundary against inspecting page source.
+
+On the non-anonymous problem page, model selector buttons are grouped
+stably relative to the configured model order: run but unreviewed, then
+reviewed, then not run. The visible button text is only the model short label;
+status remains encoded by the existing cell color and by the `title`/ARIA text.
+After a successful `/score` save, the app redirects to the next existing
+successful unreviewed answer from a different model for the same task. Search
+starts after the current model in the configured model order and wraps to the
+start. If no other unreviewed answer exists, the existing post-save redirect is
+used.
 
 ## Statistics
 

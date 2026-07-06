@@ -267,7 +267,7 @@
       position: absolute;
       top: calc(100% + 8px);
       left: 50%;
-      z-index: 30;
+      z-index: 1000;
       width: max-content;
       max-width: 260px;
       padding: 6px 8px;
@@ -286,6 +286,10 @@
       transition: opacity 120ms ease, transform 120ms ease;
       visibility: hidden;
       white-space: normal;
+    }
+    .model-header-tooltip.is-portal {
+      position: fixed;
+      z-index: 1000;
     }
     .model-header:hover .model-header-tooltip,
     .model-header-link:focus-visible + .model-header-tooltip,
@@ -685,12 +689,39 @@
       font-weight: 700;
       text-decoration: none;
       cursor: pointer;
+      box-shadow: 0 1px 2px rgba(32, 36, 40, 0.08);
+      transition:
+        background-color 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease,
+        color 140ms ease,
+        filter 140ms ease,
+        transform 120ms ease;
     }
-    button:disabled {
+    button:hover, .button:hover {
+      filter: brightness(1.04);
+      box-shadow: 0 4px 12px rgba(32, 36, 40, 0.14);
+      transform: translateY(-1px);
+    }
+    button:active, .button:active {
+      box-shadow: 0 1px 3px rgba(32, 36, 40, 0.12);
+      filter: brightness(0.98);
+      transform: translateY(1px);
+    }
+    button:focus-visible, .button:focus-visible {
+      outline: 3px solid rgba(23, 108, 114, 0.35);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 1px var(--accent), 0 4px 12px rgba(32, 36, 40, 0.12);
+    }
+    button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] {
       opacity: 0.55;
       cursor: not-allowed;
+      box-shadow: none;
+      filter: none;
+      transform: none;
     }
     .button.secondary, button.secondary { background: #ffffff; color: var(--accent); }
+    .button.secondary:hover, button.secondary:hover { background: #f6f9f9; }
     button.compact, .button.compact {
       min-height: 30px;
       padding: 4px 8px;
@@ -912,23 +943,47 @@
     document.querySelectorAll('.model-header-link[aria-describedby]').forEach((link) => {
       const tooltip = document.getElementById(link.getAttribute('aria-describedby') || '');
       if (!tooltip) return;
+      const home = tooltip.parentElement;
+      const nextSibling = tooltip.nextSibling;
+      const margin = 8;
+      const restoreTooltip = () => {
+        if (!home || tooltip.parentElement === home) return;
+        home.insertBefore(tooltip, nextSibling);
+        tooltip.classList.remove('is-portal');
+      };
       const showTooltip = () => {
+        if (tooltip.parentElement !== document.body) {
+          document.body.appendChild(tooltip);
+        }
         const rect = link.getBoundingClientRect();
-        tooltip.style.position = 'fixed';
-        tooltip.style.left = `${rect.left + rect.width / 2}px`;
-        tooltip.style.top = `${rect.bottom + 8}px`;
+        tooltip.classList.add('is-portal');
         tooltip.classList.add('is-visible');
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const centeredLeft = rect.left + rect.width / 2 - tooltipRect.width / 2;
+        const maxLeft = window.innerWidth - tooltipRect.width - margin;
+        const left = Math.max(margin, Math.min(centeredLeft, maxLeft));
+        const belowTop = rect.bottom + margin;
+        const aboveTop = rect.top - tooltipRect.height - margin;
+        const top = belowTop + tooltipRect.height + margin <= window.innerHeight
+          ? belowTop
+          : Math.max(margin, aboveTop);
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+        tooltip.style.transform = 'translate(0, 0)';
       };
       const hideTooltip = () => {
         tooltip.classList.remove('is-visible');
-        tooltip.style.position = '';
         tooltip.style.left = '';
         tooltip.style.top = '';
+        tooltip.style.transform = '';
+        restoreTooltip();
       };
       link.addEventListener('mouseenter', showTooltip);
       link.addEventListener('focus', showTooltip);
       link.addEventListener('mouseleave', hideTooltip);
       link.addEventListener('blur', hideTooltip);
+      window.addEventListener('scroll', hideTooltip, true);
+      window.addEventListener('resize', hideTooltip);
     });
     document.querySelectorAll('[data-checks-aggregate]').forEach((container) => {
       const radios = container.querySelectorAll('input[type="radio"][name="aggregate_mode"]');

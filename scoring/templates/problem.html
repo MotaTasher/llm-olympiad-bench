@@ -34,14 +34,14 @@
     </section>
 
     <nav class="model-tabs" aria-label="Выбор модели">
-      {% for state in problem.model_states %}
+      {% for state in model_tabs %}
         <a
           class="model-tab {{ state.css_class }}"
           href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=state.model_key) }}"
           aria-current="{{ 'true' if selected_state and state.model_key == selected_state.model_key else 'false' }}"
           title="{{ state.tooltip }}"
         >
-          {{ state.label }} · {{ state.status_label }}
+          {{ state.short_label or state.label }}
         </a>
       {% endfor %}
     </nav>
@@ -107,7 +107,7 @@
                   >
                     <b>{{ loop.index }}</b>
                     <span>{{ ui.human_datetime(attempt.run_timestamp) }}</span>
-                    <em>{% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }} · {{ attempt.score }} / {{ "%g"|format(problem.max_score) }}{% else %}без оценки{% endif %}</em>
+                    <em>{% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }} · {{ attempt.score|score_value }} / {{ problem.max_score|score_value }}{% else %}без оценки{% endif %}</em>
                   </a>
                 {% endfor %}
               </nav>
@@ -194,7 +194,7 @@
                   <div class="evaluation-card">
                     <header>
                       <strong>{{ item.evaluator or "Без имени" }}</strong>
-                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ ui.human_datetime(item.updated_at or item.created_at) }}</span>
+                      <span class="meta">{{ item.score|score_value }} / {{ (item.max_score or problem.max_score)|score_value }} · {{ ui.human_datetime(item.updated_at or item.created_at) }}</span>
                     </header>
                     {% if item.feedback %}
                       <div class="section-head">
@@ -260,7 +260,7 @@
                   <b>{{ loop.index }}. {{ ui.human_datetime(attempt.run_timestamp) }}</b>
                   <div class="meta">
                     run_id: {{ attempt.run_id }} · result_id: {{ attempt.result_id }} ·
-                    {% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }}, последняя {{ attempt.score }}{% else %}без оценки{% endif %}
+                    {% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }}, последняя {{ attempt.score|score_value }}{% else %}без оценки{% endif %}
                   </div>
                   {% if attempt.error %}<div>Ошибка: {{ attempt.error[:180] }}</div>{% endif %}
                 </a>

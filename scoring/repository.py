@@ -975,6 +975,32 @@ def selected_state(problem: dict[str, Any], model_key_value: str | None) -> dict
     return states[0] if states else None
 
 
+def model_states_for_review(problem: dict[str, Any]) -> list[dict[str, Any]]:
+    states = list(problem.get("model_states") or [])
+    pending = [state for state in states if state.get("attempt_count") and state.get("score") is None]
+    reviewed = [state for state in states if state.get("attempt_count") and state.get("score") is not None]
+    not_run = [state for state in states if not state.get("attempt_count")]
+    return [*pending, *reviewed, *not_run]
+
+
+def next_unscored_attempt(problem: dict[str, Any], current_model_key: str | None) -> dict[str, Any] | None:
+    states = list(problem.get("model_states") or [])
+    if not states:
+        return None
+    start_index = next(
+        (index for index, state in enumerate(states) if state.get("model_key") == current_model_key),
+        -1,
+    )
+    ordered_states = states[start_index + 1 :] + states[: start_index + 1] if start_index >= 0 else states
+    for state in ordered_states:
+        if state.get("model_key") == current_model_key:
+            continue
+        for attempt in state.get("attempts") or []:
+            if attempt.get("successful_answer") and attempt.get("score") is None:
+                return attempt
+    return None
+
+
 def anonymized_attempts(problem: dict[str, Any], seed: str) -> list[dict[str, Any]]:
     attempts = []
     for state in problem.get("model_states", []):

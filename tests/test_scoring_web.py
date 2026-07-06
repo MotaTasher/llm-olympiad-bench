@@ -22,6 +22,7 @@ from scoring.repository import (
     configured_model_columns,
     format_score_value,
     half_score_for,
+    model_states_for_review,
     model_presentation,
     score_ticks_for,
     score_step_for,
@@ -398,6 +399,45 @@ class ScoreControlParser(HTMLParser):
             self._button["text"].append(data)
         elif self._in_tick and self._current is not None and self._current["ticks"]:
             self._current["ticks"][-1].append(data)
+
+
+class ModelTabsParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.links: list[dict] = []
+        self._in_tabs = False
+        self._tabs_depth = 0
+        self._current: dict | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = {key: value or "" for key, value in attrs}
+        classes = set(attr_map.get("class", "").split())
+        if tag == "nav" and "model-tabs" in classes:
+            self._in_tabs = True
+            self._tabs_depth = 1
+            return
+        if not self._in_tabs:
+            return
+        if tag not in {"br", "hr", "img", "input", "meta", "link"}:
+            self._tabs_depth += 1
+        if tag == "a" and "model-tab" in classes:
+            self._current = {"attrs": attr_map, "text": []}
+            self.links.append(self._current)
+
+    def handle_endtag(self, tag: str) -> None:
+        if not self._in_tabs:
+            return
+        if tag == "a" and self._current is not None:
+            self._current["text"] = compact_text(self._current["text"])
+            self._current = None
+        if tag not in {"br", "hr", "img", "input", "meta", "link"}:
+            self._tabs_depth -= 1
+            if self._tabs_depth == 0:
+                self._in_tabs = False
+
+    def handle_data(self, data: str) -> None:
+        if self._current is not None:
+            self._current["text"].append(data)
 
 
 class HumanTimeParser(HTMLParser):
@@ -1073,6 +1113,133 @@ class ScoringWebTests(unittest.TestCase):
         payload = json.loads(sidecar_path.read_text(encoding="utf-8"))
         self.assertEqual(payload["evaluation_pool"]["res_a"][0]["evaluator"], self.username)
 
+    def test_model_tabs_are_compact_and_stably_grouped_by_review_status(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run(
+            provider="anthropic",
+            model_id="claude-opus-4-8",
+            run_id="run_scored",
+            result_id="res_scored",
+            answer="SCORED",
+        )
+        self.write_score(run_id="run_scored", result_id="res_scored", score=8)
+        self.write_run(
+            provider="anthropic",
+            model_id="claude-haiku-4-5-20251001",
+            run_id="run_pending_first",
+            result_id="res_pending_first",
+            answer="PENDING_FIRST",
+        )
+        self.write_run(
+            provider="openai",
+            model_id="gpt-5.5",
+            run_id="run_pending_second",
+            result_id="res_pending_second",
+            answer="PENDING_SECOND",
+        )
+
+        catalog = build_catalog(
+            competitions_dir=self.competitions_dir,
+            logs_dir=self.logs_dir,
+            results_dir=self.results_dir,
+        )
+        states = model_states_for_review(catalog["competition_map"]["math_2026"]["problems"]["task_01"])
+        self.assertEqual(
+            [state["model_key"] for state in states[:3]],
+            [
+                "anthropic:claude-haiku-4-5-20251001",
+                "openai:gpt-5.5",
+                "anthropic:claude-opus-4-8",
+            ],
+        )
+
+        html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5").get_data(
+            as_text=True
+        )
+        parser = ModelTabsParser()
+        parser.feed(html)
+        self.assertEqual([link["text"] for link in parser.links[:3]], ["Haiku 4.5", "GPT-5.5", "Opus 4.8"])
+        self.assertNotIn("Ожидает проверки", [link["text"] for link in parser.links])
+        self.assertNotIn("Максимальный балл", [link["text"] for link in parser.links])
+        self.assertNotIn("0 баллов", [link["text"] for link in parser.links])
+
+    def test_score_redirects_to_next_unscored_existing_model_attempt_after_save(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run(provider="anthropic", model_id="claude-opus-4-8", run_id="run_wrap", result_id="res_wrap")
+        self.write_run(provider="openai", model_id="gpt-5.5", run_id="run_current", result_id="res_current")
+        self.write_run(
+            provider="yandexgpt",
+            model_id="yandexgpt-5.1",
+            run_id="run_next",
+            result_id="res_next",
+        )
+
+        response = self.authorized_post(
+            "/score",
+            {
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_current",
+                "result_id": "res_current",
+                "model_key": "openai:gpt-5.5",
+                "score": "7",
+                "feedback": "",
+            },
+            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.5",
+            follow_redirects=False,
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response.headers["Location"],
+            "/competition/math_2026/problem/task_01?model=yandexgpt:yandexgpt-5.1&attempt=res_next",
+        )
+
+    def test_anonymous_entry_starts_with_unscored_solution_when_reviewed_exists(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run(
+            provider="anthropic",
+            model_id="claude-opus-4-8",
+            run_id="run_scored",
+            result_id="res_scored",
+            answer="REVIEWED_ANSWER_TOKEN",
+        )
+        self.write_score(run_id="run_scored", result_id="res_scored", score=10)
+        self.write_run(
+            provider="openai",
+            model_id="gpt-5.5",
+            run_id="run_unscored",
+            result_id="res_unscored",
+            answer="PENDING_ANSWER_TOKEN",
+        )
+
+        entry = self.client.get("/competition/math_2026/problem/task_01/anonymous")
+        self.assertEqual(entry.status_code, 302)
+        location = entry.headers["Location"]
+        self.assertRegex(location, r"/competition/math_2026/problem/task_01/anonymous\?seed=[^&]+&n=\d+")
+
+        html = self.client.get(location).get_data(as_text=True)
+        self.assertIn("PENDING_ANSWER_TOKEN", html)
+        self.assertNotIn("REVIEWED_ANSWER_TOKEN", html)
+        self.assertIn("без оценки", html)
+
+    def test_integer_scores_render_without_trailing_zero_in_review_tables(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+        self.write_score(score=2, max_score=2.0)
+
+        problem_html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5").get_data(
+            as_text=True
+        )
+        checks_html = self.client.get("/competition/math_2026/checks").get_data(as_text=True)
+
+        self.assertIn("2 / 2", problem_html)
+        self.assertNotIn("2 / 2.0", problem_html)
+        self.assertIn("2 / 2", checks_html)
+        self.assertNotIn("2 / 2.0", checks_html)
+        self.assertEqual(format_score_value(2.0), "2")
+        self.assertEqual(format_score_value(2.5), "2.5")
+
     def test_stats_aggregate_all_reviewers_by_solution_weight(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(run_id="run_a", result_id="res_a", timestamp="2026-06-20T10:20:30.123456Z")
@@ -1658,6 +1825,13 @@ class ScoringWebTests(unittest.TestCase):
         self.assertRegex(css, r"\.competition-matrix \.matrix-cell\s*\{[^}]*min-height:\s*44px")
         self.assertRegex(css, r"\.model-header:hover \.model-header-tooltip")
         self.assertRegex(css, r"\.model-header-link:focus-visible \+ \.model-header-tooltip")
+        self.assertRegex(css, r"button,\s*\.button\s*\{[^}]*transition:")
+        self.assertRegex(css, r"button:hover,\s*\.button:hover")
+        self.assertRegex(css, r"button:active,\s*\.button:active")
+        self.assertRegex(css, r"button:focus-visible,\s*\.button:focus-visible")
+        self.assertRegex(css, r"button:disabled,\s*button\[aria-disabled=\"true\"\],\s*\.button\[aria-disabled=\"true\"\]")
+        self.assertIn("document.body.appendChild(tooltip)", css)
+        self.assertIn("model-header-tooltip.is-portal", css)
 
     def test_checks_matrix_uses_common_markup_and_compact_cells(self) -> None:
         competition_dir = self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
