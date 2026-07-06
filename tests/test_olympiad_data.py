@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -313,7 +314,7 @@ class RunnerTests(TempCompetition):
                 self.responses = FakeResponses()
 
         with (
-            patch("openai.OpenAI", FakeClient),
+            patch.dict(sys.modules, {"openai": types.SimpleNamespace(OpenAI=FakeClient)}),
             patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}, clear=False),
             patch.object(gpt_module, "OPENAI_MAX_OUTPUT_TOKENS_BY_MODEL", {"gpt-5.5": 100}),
         ):
@@ -601,9 +602,9 @@ class ScoringRepositoryTests(TempCompetition):
             self.assertEqual(login.status_code, 302)
             response = client.get("/")
             self.assertEqual(response.status_code, 200)
-            self.assertIn("Sample Competition".encode(), response.data)
             response = client.get("/competition/sample_competition")
             self.assertEqual(response.status_code, 200)
+            self.assertIn("Sample Competition".encode(), response.data)
             self.assertIn('aria-label="'.encode(), response.data)
             response = client.get("/competition/sample_competition/problem/task_01?model=openai:gpt-5.5")
             self.assertEqual(response.status_code, 200)

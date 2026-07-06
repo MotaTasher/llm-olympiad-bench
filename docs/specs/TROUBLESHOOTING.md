@@ -14,6 +14,8 @@ Start from the first missing or incorrect persisted artifact, not from the UI sy
 | score appears then disappears | sidecar path/write/sync issue | `data/results/`, `save_result_sidecar` | write permissions, matching IDs, remote pull overwrite |
 | export omits an evaluated answer | join-key mismatch | run log, sidecar, `export_scoring.py` | competition/problem/run IDs and result_id, then legacy result index |
 | wrong model version runs | env precedence | `versions.py`, `config/models.env`, shell | inherited env and `--allow-env-model-overrides` |
+| new provider column missing | configured model registry | `models/<provider>/versions.py`, `scoring/repository.py`, `runner.py` | active `VERSIONS`, canonical provider ID, `--models all` active set |
+| legacy Grok code run appears as a separate column | model canonicalization | `scoring/repository.py` | `grok-code-fast-1` must canonicalize to `xai:grok-build-0.1` |
 | task text is empty or truncated | import/data contract | problem JSON, source PDF | `statement`, JSON escaping, import report |
 | sync command fails immediately | local config/tooling | `sync_logs.py`, `config/server.env` | remote value, `rsync` installed, SSH port |
 | sync connects but cannot write | server permissions/path | remote target | SSH user, absolute path, directory permissions |
@@ -23,7 +25,7 @@ Start from the first missing or incorrect persisted artifact, not from the UI sy
 ```bash
 python -m compileall -q runner.py models scripts scoring
 python scripts/validate_problem_data.py data/competitions --all --strict
-python scripts/check_secrets.py --models gpt,claude,deepseek,gigachat,yandexgpt
+python scripts/check_secrets.py --models gpt,claude,deepseek,gemini,gigachat,grok,glm,yandexgpt
 find logs -type f -name '*.json' | sort
 find data/results -type f -name '*.json' | sort
 ```

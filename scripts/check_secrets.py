@@ -49,9 +49,37 @@ REQUIRED = {
         "all": [],
         "one_of": [("DEEPSEEK_API_KEY",)],
     },
+    "gemini": {
+        "all": [],
+        "one_of": [("GEMINI_API_KEY",)],
+    },
+    "google": {
+        "all": [],
+        "one_of": [("GEMINI_API_KEY",)],
+    },
+    "grok": {
+        "all": [],
+        "one_of": [("XAI_API_KEY",)],
+    },
+    "xai": {
+        "all": [],
+        "one_of": [("XAI_API_KEY",)],
+    },
     "yandexgpt": {
         "all": [("YANDEX_FOLDER_ID",)],
         "one_of": [("YANDEX_API_KEY",), ("YANDEX_IAM_TOKEN",)],
+    },
+    "glm": {
+        "all": [],
+        "one_of": [("ZAI_API_KEY",)],
+    },
+    "zai": {
+        "all": [],
+        "one_of": [("ZAI_API_KEY",)],
+    },
+    "zhipu": {
+        "all": [],
+        "one_of": [("ZAI_API_KEY",)],
     },
 }
 
@@ -90,7 +118,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Check model-local secrets without printing values.")
     parser.add_argument(
         "--models",
-        default="gpt,gigachat,yandexgpt,deepseek",
+        default="gpt,gigachat,yandexgpt,deepseek,gemini,grok,glm",
         help="Comma-separated model aliases to check",
     )
     args = parser.parse_args()

@@ -81,6 +81,10 @@ SAFE_ENV_ALLOWLIST = {
     "DEEPSEEK_BASE_URL",
     "DEEPSEEK_MAX_TOKENS",
     "DEEPSEEK_TEMPERATURE",
+    "GEMINI_MAX_OUTPUT_TOKENS",
+    "GEMINI_TEMPERATURE",
+    "GEMINI_THINKING_LEVEL",
+    "GEMINI_TIMEOUT_SECONDS",
     "GIGACHAT_MAX_TOKENS",
     "GIGACHAT_REPETITION_PENALTY",
     "GIGACHAT_SCOPE",
@@ -92,10 +96,22 @@ SAFE_ENV_ALLOWLIST = {
     "OPENAI_REASONING_EFFORT",
     "OPENAI_TIMEOUT_SECONDS",
     "RUB_PER_USD",
+    "XAI_BASE_URL",
+    "XAI_MAX_OUTPUT_TOKENS",
+    "XAI_MAX_RETRIES",
+    "XAI_REASONING_EFFORT",
+    "XAI_TIMEOUT_SECONDS",
     "YANDEX_MAX_TOKENS",
     "YANDEX_REASONING_MODE",
     "YANDEX_TEMPERATURE",
     "YANDEX_TIMEOUT",
+    "ZAI_BASE_URL",
+    "ZAI_MAX_RETRIES",
+    "ZAI_MAX_TOKENS",
+    "ZAI_REASONING_EFFORT",
+    "ZAI_TEMPERATURE",
+    "ZAI_THINKING",
+    "ZAI_TIMEOUT_SECONDS",
 }
 
 SAFE_RESPONSE_HEADERS = {
@@ -275,7 +291,7 @@ def git_metadata() -> dict[str, Any]:
 
 
 def package_versions() -> dict[str, str]:
-    names = ["anthropic", "flask", "gigachat", "openai", "python-dotenv", "requests"]
+    names = ["anthropic", "flask", "gigachat", "google-genai", "openai", "python-dotenv", "requests"]
     versions: dict[str, str] = {}
     for name in names:
         try:

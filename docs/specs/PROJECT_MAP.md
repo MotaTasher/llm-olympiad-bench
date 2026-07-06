@@ -41,6 +41,11 @@ scripts/
   sync_logs.py            rsync push/pull for logs and score sidecars
 ```
 
+Current provider directories are `gpt`, `claude`, `deepseek`, `gemini`,
+`gigachat`, `grok`, `glm` and `yandexgpt`. The canonical provider IDs added for
+the 16-column benchmark are `google`, `xai` and `zai`; their source directories
+are `models/gemini/`, `models/grok/` and `models/glm/`.
+
 ## Data directories
 
 | Path | Contents | Mutability |

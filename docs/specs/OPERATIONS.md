@@ -3,10 +3,12 @@
 ## Secret preflight
 
 ```bash
-python scripts/check_secrets.py --models gpt,claude,deepseek,gigachat,yandexgpt
+python scripts/check_secrets.py --models gpt,claude,deepseek,gemini,gigachat,grok,glm,yandexgpt
 ```
 
-The command checks required variable presence and must never print values.
+The command checks required variable presence and must never print values or
+make network calls. New aliases accepted by the preflight are
+`gemini`/`google`, `grok`/`xai` and `glm`/`zai`/`zhipu`.
 
 ## Problem-data validation
 

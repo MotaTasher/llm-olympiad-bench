@@ -188,6 +188,16 @@ models/deepseek/secrets/.env
 DEEPSEEK_API_KEY=...
 ```
 
+### Gemini
+
+```text
+models/gemini/secrets/.env
+```
+
+```env
+GEMINI_API_KEY=...
+```
+
 ### GigaChat
 
 ```text
@@ -197,6 +207,26 @@ models/gigachat/secrets/.env
 ```env
 GIGACHAT_CLIENT_ID=...
 GIGACHAT_CLIENT_SECRET=...
+```
+
+### Grok / xAI
+
+```text
+models/grok/secrets/.env
+```
+
+```env
+XAI_API_KEY=...
+```
+
+### GLM / Z.AI
+
+```text
+models/glm/secrets/.env
+```
+
+```env
+ZAI_API_KEY=...
 ```
 
 ### YandexGPT
@@ -213,7 +243,7 @@ YANDEX_FOLDER_ID=...
 Проверка без печати значений:
 
 ```bash
-python scripts/check_secrets.py --models gpt,claude,deepseek,gigachat,yandexgpt
+python scripts/check_secrets.py --models gpt,claude,deepseek,gemini,gigachat,grok,glm,yandexgpt
 ```
 
 ## 6. Выбрать модели и лимиты
@@ -241,14 +271,15 @@ RUNNER_MODELS=all
 ```
 
 `all` разворачивается в активные `VERSIONS` из `models/*/versions.py`, то есть
-в те же пять моделей, которые показаны колонками scoring UI. Исторические логи
+в те же 16 моделей и 8 provider groups, которые показаны колонками scoring UI.
+Исторические логи
 с удаленными слабым моделями не добавляют отдельные колонки на сайте. Можно
 запускать конкретную версию через `provider:model_id`, например:
 
 ```bash
 python runner.py \
   --problem data/competitions/local_examples/example.json \
-  --models openai:gpt-5.5,anthropic:claude-opus-4-8 \
+  --models openai:gpt-5.5,google:gemini-3.1-pro-preview,anthropic:claude-opus-4-8 \
   --max-tokens 4096 \
   --run-id strong_pair
 ```
@@ -259,7 +290,12 @@ python runner.py \
 над `RUNNER_MAX_TOKENS`, а они вместе имеют приоритет над provider-specific
 переменными (`ANTHROPIC_MAX_TOKENS`,
 `OPENAI_MAX_COMPLETION_TOKENS`, `DEEPSEEK_MAX_TOKENS`, `GIGACHAT_MAX_TOKENS`,
+`GEMINI_MAX_OUTPUT_TOKENS`, `XAI_MAX_OUTPUT_TOKENS`, `ZAI_MAX_TOKENS`,
 `YANDEX_MAX_TOKENS`).
+
+В scoring matrix полный model ID остаётся в tooltip/title/aria-label, а видимые
+колонки используют короткие подписи. При 16 колонках таблица прокручивается
+горизонтально; столбец задач sticky, вертикальный scroll остаётся у страницы.
 
 Не помещайте runtime-настройки в `models/*/secrets/.env`.
 

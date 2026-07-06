@@ -64,7 +64,7 @@ logs/<competition_id>/<problem_id>/<run_id>.json
 ```bash
 python runner.py \
   --problem data/competitions/local_examples/example.json \
-  --models gpt,claude,deepseek,gigachat,yandexgpt \
+  --models gpt,claude,deepseek,gemini,gigachat,grok,glm,yandexgpt \
   --run-id comparison
 ```
 
@@ -164,7 +164,10 @@ model adapters → logs/.../run.json (schema_version 2)
 models/gpt/secrets/.env
 models/claude/secrets/.env
 models/deepseek/secrets/.env
+models/gemini/secrets/.env
 models/gigachat/secrets/.env
+models/grok/secrets/.env
+models/glm/secrets/.env
 models/yandexgpt/secrets/.env
 ```
 
@@ -182,7 +185,8 @@ RUNNER_MODELS=all
 
 `all` разворачивается в те же активные модели, что используются как колонки
 scoring UI. Точечный запуск конкретной версии можно задать через
-`provider:model_id`, например `openai:gpt-5.5,anthropic:claude-opus-4-8`.
+`provider:model_id`, например
+`openai:gpt-5.5,google:gemini-3.1-pro-preview,anthropic:claude-opus-4-8`.
 
 **Версии моделей по умолчанию**:
 
@@ -191,13 +195,34 @@ models/<provider>/versions.py
 ```
 
 Эти файлы также задают активные колонки в scoring UI. Сейчас в активном
-бенчмарке по каждому провайдеру оставлены paid и budget/free-tier модели:
-`claude-opus-4-8`, `claude-haiku-4-5-20251001`, `deepseek-v4-pro`,
-`deepseek-v4-flash`, `GigaChat-2-Max`, `GigaChat-2`, `gpt-5.5`,
-`gpt-5.4-mini`, `yandexgpt-5.1`, `yandexgpt-5-lite`. Исторические логи моделей
-вне `VERSIONS` не создают отдельные колонки на сайте.
+бенчмарке 8 provider groups и 16 active model columns: `claude-opus-4-8`,
+`claude-haiku-4-5-20251001`, `deepseek-v4-pro`, `deepseek-v4-flash`,
+`gemini-3.1-pro-preview`, `gemini-3.5-flash`, `GigaChat-2-Max`,
+`GigaChat-2`, `grok-4.3`, `grok-build-0.1`, `glm-5.2`,
+`glm-4.7-flash`, `gpt-5.5`, `gpt-5.4-mini`, `yandexgpt-5.1`,
+`yandexgpt-5-lite`. Исторические логи моделей вне `VERSIONS` не создают
+отдельные колонки на сайте.
+
+Canonical provider IDs for new adapters are `google`, `xai` and `zai`.
+Accepted aliases: `gemini`/`google`, `grok`/`xai`, `glm`/`zai`/`zhipu`.
+Gemini uses the official `google-genai` SDK. Grok uses xAI's hosted
+OpenAI-compatible API at `https://api.x.ai/v1`. GLM uses Z.AI's
+OpenAI-compatible API at `https://api.z.ai/api/paas/v4/`.
+
+Gemini 3.1 Pro is a Preview Pro model with paid-list tiered pricing by prompt
+length; Gemini 3.5 Flash may have Free Tier/API Studio allowance, but run-log
+telemetry uses paid-list estimates. Grok 4.3 is the general-purpose xAI
+baseline; Grok Build 0.1 is a coding-specialized baseline that still receives
+only the shared text olympiad prompt. Grok-1 is intentionally excluded because
+self-hosted inference is outside the benchmark contract. GLM-5.2 is the paid
+Z.AI flagship; GLM-4.7-Flash is the official free hosted lightweight model.
 
 `runner.load_env()` загружает корневой `.env` для обратной совместимости, затем provider secrets, затем `config/models.env`. Не храните выбор модели, temperature или лимиты токенов в secret-файлах.
+
+Матрицы scoring UI используют короткие подписи моделей и tooltip/title/aria-label
+с полным model ID. При 16 колонках таблицы нормально прокручиваются
+горизонтально; столбец задач остаётся sticky, а страница отвечает за
+вертикальный scroll.
 
 ## Формат новой задачи
 
@@ -253,7 +278,7 @@ python scripts/export_scoring.py --all
 
 ## Важные ограничения
 
-- Модели работают в режиме text-only: без tools, поиска, function calling и исполнения кода.
+- Модели работают в режиме text-only: без tools, поиска, function calling и исполнения кода. Provider-side Google Search, X search, code execution, managed agents and remote MCP are not enabled.
 - Локальный Flask-сервер запускается с debug-режимом и предназначен только для разработки на `127.0.0.1`; серверный сайт должен работать за HTTPS reverse proxy.
 - Реальные API-ключи, `config/server.env`, кэши Python и системные файлы не должны попадать в Git или архивы.
 - Auth DB (`instance/scorer-auth.sqlite3` или `SCORER_AUTH_DB`) содержит password hashes и не должна попадать в Git.

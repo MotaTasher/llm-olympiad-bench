@@ -252,6 +252,11 @@ When runner receives a unified output-token ceiling, the value is recorded as
 `runtime.cli.max_tokens` and `runtime_settings.max_tokens`. Adapter request
 snapshots also include the provider-specific request key used for that ceiling,
 for example `max_completion_tokens`, `max_tokens` or `maxTokens`.
+Canonical provider IDs used by schema-v2 results include existing providers
+plus `google` for Gemini, `xai` for Grok and `zai` for GLM. Stable model keys in
+sidecars and export use `provider:model_id`, for example
+`google:gemini-3.1-pro-preview`, `xai:grok-build-0.1` and
+`zai:glm-4.7-flash`.
 For OpenAI Responses API runs, `request.max_output_tokens_total` records the
 requested total budget and `request.max_output_tokens_per_request` records the
 adapter's per-request cap for that model. If multiple OpenAI requests were

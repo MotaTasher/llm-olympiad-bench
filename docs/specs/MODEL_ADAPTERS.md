@@ -121,7 +121,10 @@ Current active set:
 | OpenAI | `gpt-5.5`, `gpt-5.4-mini` |
 | Anthropic | `claude-opus-4-8`, `claude-haiku-4-5-20251001` |
 | DeepSeek | `deepseek-v4-pro`, `deepseek-v4-flash` |
+| Gemini | `gemini-3.1-pro-preview`, `gemini-3.5-flash` |
 | GigaChat | `GigaChat-2-Max`, `GigaChat-2` |
+| Grok | `grok-4.3`, `grok-build-0.1` |
+| GLM | `glm-5.2`, `glm-4.7-flash` |
 | YandexGPT | `yandexgpt-5.1`, `yandexgpt-5-lite` |
 
 Retired IDs may be listed in provider `LEGACY_VERSIONS` for operator context,
@@ -137,11 +140,39 @@ explicit; for example `yandexgpt-5.1/latest` is canonicalized to
 | `gpt`, `openai` | `models.gpt.GPTModel` |
 | `claude`, `anthropic` | `models.claude.ClaudeModel` |
 | `deepseek`, `ds` | `models.deepseek.DeepSeekModel` |
+| `gemini`, `google` | `models.gemini.GeminiModel` |
 | `gigachat`, `sber` | `models.gigachat.GigaChatModel` |
+| `grok`, `xai` | `models.grok.GrokModel` |
+| `glm`, `zai`, `zhipu` | `models.glm.GLMModel` |
 | `yandex`, `yandexgpt` | `models.yandexgpt.YandexGPTModel` |
 | `alice` | `models.yandexgpt.AliceModel` |
 
 Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README examples.
+
+## Current provider notes
+
+- Gemini uses the official `google-genai` package and the Gemini Developer API.
+  `gemini-3.1-pro-preview` is a Preview Pro model; `gemini-3.5-flash` may have
+  Free Tier/API Studio allowance, but benchmark cost telemetry uses paid-list
+  estimates. Thinking is configured by provider thinking level
+  (`GEMINI_THINKING_LEVEL=high` by default), not by inventing a token-budget
+  conversion.
+- Grok uses xAI's hosted OpenAI-compatible endpoint
+  `https://api.x.ai/v1`. `grok-4.3` is the general-purpose model and receives
+  `XAI_REASONING_EFFORT=high` by default. `grok-build-0.1` is the
+  coding-specialized baseline but still receives only the text olympiad prompt;
+  it must not get shell, repository tools, code execution or unsupported
+  reasoning parameters. `grok-code-fast-1` canonicalizes to
+  `grok-build-0.1`; Grok-1 is intentionally excluded because self-hosted
+  inference is outside the project contract.
+- GLM uses Z.AI's OpenAI-compatible endpoint
+  `https://api.z.ai/api/paas/v4/`. `glm-5.2` is the paid flagship and gets
+  thinking plus `reasoning_effort=max`; `glm-4.7-flash` is the official free
+  hosted model and gets thinking when supported, but not the GLM-5.2-only
+  reasoning effort field. `glm-4.7-flashx` is not part of the active benchmark.
+
+All provider-side tools remain disabled: no Google Search, X search, web
+search, code execution, function calling, files, managed agents or remote MCP.
 
 ## Adding a provider
 

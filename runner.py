@@ -36,18 +36,28 @@ MODEL_CLASSES = {
     "anthropic": ("models.claude", "ClaudeModel"),
     "deepseek": ("models.deepseek", "DeepSeekModel"),
     "ds": ("models.deepseek", "DeepSeekModel"),
+    "gemini": ("models.gemini", "GeminiModel"),
+    "google": ("models.gemini", "GeminiModel"),
     "gigachat": ("models.gigachat", "GigaChatModel"),
     "sber": ("models.gigachat", "GigaChatModel"),
+    "grok": ("models.grok", "GrokModel"),
+    "xai": ("models.grok", "GrokModel"),
     "alice": ("models.yandexgpt", "AliceModel"),
     "yandex": ("models.yandexgpt", "YandexGPTModel"),
     "yandexgpt": ("models.yandexgpt", "YandexGPTModel"),
+    "glm": ("models.glm", "GLMModel"),
+    "zai": ("models.glm", "GLMModel"),
+    "zhipu": ("models.glm", "GLMModel"),
 }
 
 MODEL_VERSION_MODULES = {
-    "openai": "models.gpt.versions",
     "anthropic": "models.claude.versions",
     "deepseek": "models.deepseek.versions",
+    "google": "models.gemini.versions",
     "gigachat": "models.gigachat.versions",
+    "xai": "models.grok.versions",
+    "zai": "models.glm.versions",
+    "openai": "models.gpt.versions",
     "yandexgpt": "models.yandexgpt.versions",
 }
 
@@ -57,6 +67,9 @@ MODEL_ENV_VARS = {
     "GIGACHAT_MODEL",
     "YANDEX_MODEL",
     "DEEPSEEK_MODEL",
+    "GEMINI_MODEL",
+    "XAI_MODEL",
+    "ZAI_MODEL",
 }
 
 
@@ -220,10 +233,16 @@ def provider_for_alias(alias: str) -> str:
         return "anthropic"
     if key in {"deepseek", "ds"}:
         return "deepseek"
+    if key in {"gemini", "google"}:
+        return "google"
     if key in {"gigachat", "sber"}:
         return "gigachat"
+    if key in {"grok", "xai"}:
+        return "xai"
     if key in {"alice", "yandex", "yandexgpt"}:
         return "yandexgpt"
+    if key in {"glm", "zai", "zhipu"}:
+        return "zai"
     return "unknown"
 
 

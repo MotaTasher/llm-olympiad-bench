@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-PRICING_VERSION = "2026-07-05"
+PRICING_VERSION = "2026-07-06"
 DEFAULT_RUB_PER_USD = 90.0
 
 
@@ -17,7 +17,24 @@ class TokenPrice:
     currency: str
     input_per_1m: float | None = None
     output_per_1m: float | None = None
+    cached_input_per_1m: float | None = None
     total_per_1k: float | None = None
+    source: str = "models/pricing.py"
+    note: str | None = None
+
+
+@dataclass(frozen=True)
+class TieredTokenPrice:
+    provider: str
+    model_id: str
+    currency: str
+    threshold_input_tokens: int
+    short_input_per_1m: float
+    short_cached_input_per_1m: float | None
+    short_output_per_1m: float
+    long_input_per_1m: float
+    long_cached_input_per_1m: float | None
+    long_output_per_1m: float
     source: str = "models/pricing.py"
     note: str | None = None
 
@@ -43,6 +60,36 @@ DEEPSEEK_USD_PER_1M = {
     "deepseek-v4-pro": (0.435, 0.87),
     "deepseek-chat": (0.14, 0.28),
     "deepseek-reasoner": (0.14, 0.28),
+}
+
+GEMINI_STANDARD_USD_PER_1M = {
+    "gemini-3.5-flash": (0.75, 0.0, 4.50),
+}
+
+GEMINI_TIERED_USD_PER_1M = {
+    "gemini-3.1-pro-preview": TieredTokenPrice(
+        provider="google",
+        model_id="gemini-3.1-pro-preview",
+        currency="USD",
+        threshold_input_tokens=200_000,
+        short_input_per_1m=2.00,
+        short_cached_input_per_1m=0.20,
+        short_output_per_1m=12.00,
+        long_input_per_1m=4.00,
+        long_cached_input_per_1m=0.40,
+        long_output_per_1m=18.00,
+        note="Gemini 3.1 Pro Preview Standard paid-list estimate; tier is selected by actual prompt/input tokens.",
+    ),
+}
+
+XAI_USD_PER_1M = {
+    "grok-4.3": (1.25, 0.20, 2.50),
+    "grok-build-0.1": (1.00, 0.20, 2.00),
+}
+
+ZAI_USD_PER_1M = {
+    "glm-5.2": (1.40, 0.26, 4.40),
+    "glm-4.7-flash": (0.0, 0.0, 0.0),
 }
 
 YANDEX_RUB_PER_1K = {
@@ -115,6 +162,58 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
             DEEPSEEK_USD_PER_1M["deepseek-v4-pro"],
         )
         return TokenPrice(provider, model_id, "USD", input_price, output_price)
+    if provider == "google":
+        normalized = model_id.lower()
+        if normalized in GEMINI_TIERED_USD_PER_1M:
+            return None
+        input_price, cached_input_price, output_price = price_for(
+            model_id,
+            GEMINI_STANDARD_USD_PER_1M,
+            GEMINI_STANDARD_USD_PER_1M["gemini-3.5-flash"],
+        )
+        return TokenPrice(
+            provider,
+            model_id,
+            "USD",
+            input_per_1m=input_price,
+            cached_input_per_1m=cached_input_price,
+            output_per_1m=output_price,
+            note=(
+                "Gemini 3.5 Flash Standard paid-list estimate; Free Tier/API Studio "
+                "allowances are not assumed for benchmark telemetry."
+            ),
+        )
+    if provider == "xai":
+        input_price, cached_input_price, output_price = price_for(
+            model_id,
+            XAI_USD_PER_1M,
+            XAI_USD_PER_1M["grok-4.3"],
+        )
+        return TokenPrice(
+            provider,
+            model_id,
+            "USD",
+            input_per_1m=input_price,
+            cached_input_per_1m=cached_input_price,
+            output_per_1m=output_price,
+            note="Provider-reported cost_in_usd_ticks overrides this local estimate when present.",
+        )
+    if provider == "zai":
+        normalized = model_id.lower()
+        input_price, cached_input_price, output_price = ZAI_USD_PER_1M.get(
+            normalized,
+            ZAI_USD_PER_1M["glm-5.2"],
+        )
+        note = "Official free hosted model rate." if normalized == "glm-4.7-flash" else None
+        return TokenPrice(
+            provider,
+            model_id,
+            "USD",
+            input_per_1m=input_price,
+            cached_input_per_1m=cached_input_price,
+            output_per_1m=output_price,
+            note=note,
+        )
     if provider == "yandexgpt":
         return TokenPrice(
             provider,
@@ -145,7 +244,42 @@ def estimate_cost(
     input_tokens: int,
     output_tokens: int,
     reasoning_tokens: int | None = None,
+    cached_input_tokens: int | None = None,
 ) -> dict[str, Any]:
+    provider = provider.lower()
+    normalized_model = model_id.lower()
+    if provider == "google" and normalized_model in GEMINI_TIERED_USD_PER_1M:
+        tier = GEMINI_TIERED_USD_PER_1M[normalized_model]
+        long_context = input_tokens > tier.threshold_input_tokens
+        input_per_1m = tier.long_input_per_1m if long_context else tier.short_input_per_1m
+        cached_input_per_1m = (
+            tier.long_cached_input_per_1m
+            if long_context
+            else tier.short_cached_input_per_1m
+        )
+        output_per_1m = tier.long_output_per_1m if long_context else tier.short_output_per_1m
+        cached_tokens = int(cached_input_tokens or 0)
+        billable_input_tokens = max(0, int(input_tokens or 0) - cached_tokens)
+        input_cost = billable_input_tokens * input_per_1m / 1_000_000
+        cached_input_cost = cached_tokens * float(cached_input_per_1m or 0) / 1_000_000
+        output_cost = output_tokens * output_per_1m / 1_000_000
+        return {
+            "currency": "USD",
+            "input": round(input_cost, 8),
+            "output": round(output_cost, 8),
+            "cached_input": round(cached_input_cost, 8) if cached_tokens else None,
+            "reasoning": None,
+            "native": None,
+            "total": round(input_cost + cached_input_cost + output_cost, 8),
+            "pricing_source": tier.source,
+            "pricing_version": PRICING_VERSION,
+            "estimated": True,
+            "exchange_rate": None,
+            "tier": "long_context" if long_context else "short_context",
+            "tier_threshold_input_tokens": tier.threshold_input_tokens,
+            "note": tier.note,
+        }
+
     price = token_price(provider, model_id)
     if not price:
         return {
@@ -162,7 +296,10 @@ def estimate_cost(
         }
 
     if price.currency == "USD":
-        input_cost = input_tokens * float(price.input_per_1m or 0) / 1_000_000
+        cached_tokens = int(cached_input_tokens or 0)
+        billable_input_tokens = max(0, int(input_tokens or 0) - cached_tokens)
+        input_cost = billable_input_tokens * float(price.input_per_1m or 0) / 1_000_000
+        cached_input_cost = cached_tokens * float(price.cached_input_per_1m if price.cached_input_per_1m is not None else price.input_per_1m or 0) / 1_000_000
         output_cost = output_tokens * float(price.output_per_1m or 0) / 1_000_000
         reasoning_cost = (
             reasoning_tokens * float(price.output_per_1m or 0) / 1_000_000
@@ -173,9 +310,10 @@ def estimate_cost(
             "currency": "USD",
             "input": round(input_cost, 8),
             "output": round(output_cost, 8),
+            "cached_input": round(cached_input_cost, 8) if cached_tokens else None,
             "reasoning": round(reasoning_cost, 8) if reasoning_cost is not None else None,
             "native": None,
-            "total": round(input_cost + output_cost, 8),
+            "total": round(input_cost + cached_input_cost + output_cost, 8),
             "pricing_source": price.source,
             "pricing_version": PRICING_VERSION,
             "estimated": True,

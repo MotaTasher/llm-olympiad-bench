@@ -13,6 +13,8 @@ if str(ROOT_DIR) not in sys.path:
 
 from models.telemetry import normalize_run_log
 from scoring.repository import (
+    canonical_model_key,
+    canonical_provider,
     evaluation_for_result,
     max_score_for,
     read_sidecars,
@@ -82,6 +84,9 @@ def rows_from_logs(logs_dir: Path, results_dir: Path, only_scored: bool) -> list
             usage = result.get("usage") if isinstance(result.get("usage"), dict) else {}
             timing = result.get("timing") if isinstance(result.get("timing"), dict) else {}
             cost = result.get("cost") if isinstance(result.get("cost"), dict) else {}
+            requested_model_id = result.get("requested_model_id") or result.get("model")
+            provider = canonical_provider(result.get("provider"), requested_model_id)
+            model_key_value = canonical_model_key(provider, requested_model_id)
             rows.append(
                 {
                     "competition_id": competition_id,
@@ -109,7 +114,8 @@ def rows_from_logs(logs_dir: Path, results_dir: Path, only_scored: bool) -> list
                     "result_path": str(sidecar_path(results_dir, competition_id, problem_id, run_id)),
                     "schema_version": run.get("schema_version"),
                     "result_id": result.get("result_id"),
-                    "provider": result.get("provider"),
+                    "provider": provider,
+                    "model_key": model_key_value,
                     "requested_model_id": result.get("requested_model_id"),
                     "resolved_model_id": result.get("resolved_model_id"),
                     "result_status": result.get("status"),

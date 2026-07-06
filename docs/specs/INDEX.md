@@ -48,6 +48,11 @@ The following are cross-subsystem contracts and require coordinated updates:
 - text-only request policy;
 - `logs/` and `data/results/` directory layout.
 
+Current active benchmark columns are documented in
+[`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) and
+[`SCORING_WEB.md`](SCORING_WEB.md); after adding Gemini/Grok/GLM the configured
+set is 8 provider groups and 16 active model columns.
+
 ## Documentation maintenance rule
 
 Every implementation change must review the update matrix in root [`AGENTS.md`](../../AGENTS.md). Update the relevant spec in the same change. When a new recurring failure is discovered, add it to `TROUBLESHOOTING.md`.

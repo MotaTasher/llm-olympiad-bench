@@ -106,8 +106,11 @@ output; if the budget is exhausted with no visible output, the result is an
 adapter error. Other adapters receive `--max-tokens` as one provider-specific
 output/completion ceiling.
 The active benchmark set includes paid and budget/free-tier models per
-provider. Retired IDs may remain documented as legacy versions but do not
-create scoring UI columns from historical logs.
+provider. The current site/runner configured set is 8 provider groups and 16
+active model columns: Claude, DeepSeek, Gemini, GigaChat, Grok, GLM, OpenAI and
+Yandex. Retired IDs may remain documented as legacy versions but do not create
+scoring UI columns from historical logs. Legacy `grok-code-fast-1` results are
+canonicalized into `xai:grok-build-0.1`; they do not create a separate column.
 
 ## Identity rules
 

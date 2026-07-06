@@ -27,15 +27,27 @@ from olympiad_data import (
 from scoring.presentation import format_datetime_parts
 
 
-PROVIDER_ORDER = ["anthropic", "deepseek", "gigachat", "openai", "yandexgpt"]
+PROVIDER_ORDER = [
+    "anthropic",
+    "deepseek",
+    "google",
+    "gigachat",
+    "xai",
+    "zai",
+    "openai",
+    "yandexgpt",
+]
 
 PROVIDER_LABELS = {
     "anthropic": "Claude",
     "deepseek": "DeepSeek",
+    "google": "Gemini",
     "gigachat": "GigaChat",
     "openai": "OpenAI",
     "unknown": "unknown",
+    "xai": "Grok",
     "yandexgpt": "Яндекс",
+    "zai": "GLM",
 }
 
 SHORT_MODEL_LABELS = {
@@ -43,8 +55,14 @@ SHORT_MODEL_LABELS = {
     ("anthropic", "claude-haiku-4-5-20251001"): "Haiku 4.5",
     ("deepseek", "deepseek-v4-pro"): "V4 Pro",
     ("deepseek", "deepseek-v4-flash"): "V4 Flash",
+    ("google", "gemini-3.1-pro-preview"): "3.1 Pro",
+    ("google", "gemini-3.5-flash"): "3.5 Flash",
     ("gigachat", "GigaChat-2-Max"): "2 Max",
     ("gigachat", "GigaChat-2"): "2",
+    ("xai", "grok-4.3"): "4.3",
+    ("xai", "grok-build-0.1"): "Build 0.1",
+    ("zai", "glm-5.2"): "5.2",
+    ("zai", "glm-4.7-flash"): "4.7 Flash",
     ("openai", "gpt-5.5"): "GPT-5.5",
     ("openai", "gpt-5.4-mini"): "GPT-5.4 mini",
     ("yandexgpt", "yandexgpt-5.1"): "5.1",
@@ -54,7 +72,10 @@ SHORT_MODEL_LABELS = {
 PROVIDER_MODULES = {
     "anthropic": "models.claude.versions",
     "deepseek": "models.deepseek.versions",
+    "google": "models.gemini.versions",
     "gigachat": "models.gigachat.versions",
+    "xai": "models.grok.versions",
+    "zai": "models.glm.versions",
     "openai": "models.gpt.versions",
     "yandexgpt": "models.yandexgpt.versions",
 }
@@ -314,25 +335,46 @@ def infer_provider(model_id: str) -> str:
         return "anthropic"
     if lower.startswith("deepseek"):
         return "deepseek"
+    if lower.startswith("gemini-"):
+        return "google"
     if "gigachat" in lower:
         return "gigachat"
+    if lower.startswith("grok-"):
+        return "xai"
+    if lower.startswith("glm-"):
+        return "zai"
     if "yandex" in lower or "alice" in lower:
         return "yandexgpt"
     return "unknown"
 
 
+def canonical_provider(provider: str | None, model_id: str | None = None) -> str:
+    value = (provider or "").lower()
+    if value in {"gemini", "google"}:
+        return "google"
+    if value in {"grok", "xai"}:
+        return "xai"
+    if value in {"glm", "zai", "zhipu"}:
+        return "zai"
+    if value:
+        return value
+    return infer_provider(str(model_id or ""))
+
+
 def model_key(provider: str | None, model_id: str | None) -> str:
-    provider = provider or "unknown"
+    provider = canonical_provider(provider, model_id) or "unknown"
     model_id = model_id or "unknown"
     return f"{provider}:{model_id}"
 
 
 ACTIVE_MODEL_ALIASES = {
     model_key("yandexgpt", "yandexgpt-5.1/latest"): model_key("yandexgpt", "yandexgpt-5.1"),
+    model_key("xai", "grok-code-fast-1"): model_key("xai", "grok-build-0.1"),
 }
 
 
 def canonical_model_key(provider: str | None, model_id: str | None) -> str:
+    provider = canonical_provider(provider, model_id)
     key = model_key(provider, model_id)
     return ACTIVE_MODEL_ALIASES.get(key, key)
 
@@ -433,15 +475,21 @@ def normalize_evaluation(
     updated_at = entry.get("updated_at") or entry.get("scored_at") or ""
     created_at = entry.get("created_at") or updated_at
     evaluation_id = entry.get("evaluation_id") or stable_legacy_evaluation_id(run_id, result_id, source)
+    entry_model_key = entry.get("model_key")
+    if entry_model_key and ":" in str(entry_model_key):
+        entry_provider, entry_model_id = str(entry_model_key).split(":", 1)
+        normalized_model_key = canonical_model_key(entry_provider, entry_model_id)
+    else:
+        normalized_model_key = canonical_model_key(
+            entry.get("provider") or result.get("provider") or infer_provider(str(result.get("model") or "")),
+            entry.get("model") or result.get("requested_model_id") or result.get("model") or "unknown",
+        )
     return {
         **entry,
         "evaluation_id": str(evaluation_id),
         "result_id": result_id,
         "result_index": entry.get("result_index", result.get("result_index")),
-        "model_key": entry.get("model_key") or model_key(
-            entry.get("provider") or result.get("provider") or infer_provider(str(result.get("model") or "")),
-            entry.get("model") or result.get("requested_model_id") or result.get("model") or "unknown",
-        ),
+        "model_key": normalized_model_key,
         "model": entry.get("model") or result.get("requested_model_id") or result.get("model") or "unknown",
         "evaluator": entry.get("evaluator") or entry.get("scored_by") or "",
         "score": entry.get("score"),
@@ -520,12 +568,12 @@ def run_attempt(
     evaluation: dict[str, Any] | None,
     max_score: float,
 ) -> dict[str, Any]:
-    provider = result.get("provider") or infer_provider(str(result.get("model") or ""))
+    provider = canonical_provider(result.get("provider"), str(result.get("model") or ""))
     requested_model = result.get("requested_model_id") or result.get("model") or "unknown"
     key = canonical_model_key(str(provider), str(requested_model))
     return {
         "model_key": key,
-        "provider": str(provider),
+        "provider": provider,
         "model_id": str(requested_model),
         "run_id": run.get("run_id"),
         "run_timestamp": run.get("completed_at") or run.get("timestamp") or run.get("started_at"),

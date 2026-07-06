@@ -1447,18 +1447,59 @@ class ScoringWebTests(unittest.TestCase):
             "anthropic:claude-haiku-4-5-20251001",
             "deepseek:deepseek-v4-pro",
             "deepseek:deepseek-v4-flash",
+            "google:gemini-3.1-pro-preview",
+            "google:gemini-3.5-flash",
             "gigachat:GigaChat-2-Max",
             "gigachat:GigaChat-2",
+            "xai:grok-4.3",
+            "xai:grok-build-0.1",
+            "zai:glm-5.2",
+            "zai:glm-4.7-flash",
             "yandexgpt:yandexgpt-5.1",
             "yandexgpt:yandexgpt-5-lite",
         }
+        expected_order = [
+            "anthropic:claude-opus-4-8",
+            "anthropic:claude-haiku-4-5-20251001",
+            "deepseek:deepseek-v4-pro",
+            "deepseek:deepseek-v4-flash",
+            "google:gemini-3.1-pro-preview",
+            "google:gemini-3.5-flash",
+            "gigachat:GigaChat-2-Max",
+            "gigachat:GigaChat-2",
+            "xai:grok-4.3",
+            "xai:grok-build-0.1",
+            "zai:glm-5.2",
+            "zai:glm-4.7-flash",
+            "openai:gpt-5.5",
+            "openai:gpt-5.4-mini",
+            "yandexgpt:yandexgpt-5.1",
+            "yandexgpt:yandexgpt-5-lite",
+        ]
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
+        self.assertEqual(runner.active_model_specs(), expected_order)
+        self.assertEqual(runner.requested_aliases("all"), expected_order)
+        self.assertEqual(len(runner.requested_aliases("all")), 16)
+        self.assertEqual(len(set(runner.requested_aliases("all"))), 16)
+        for alias, provider in {
+            "gemini": "google",
+            "google": "google",
+            "grok": "xai",
+            "xai": "xai",
+            "glm": "zai",
+            "zai": "zai",
+            "zhipu": "zai",
+        }.items():
+            self.assertEqual(runner.provider_for_alias(alias), provider)
 
     def test_competition_catalog_groups_model_columns_by_provider_order(self) -> None:
         from models.claude.versions import VERSIONS as CLAUDE_VERSIONS
         from models.deepseek.versions import VERSIONS as DEEPSEEK_VERSIONS
+        from models.gemini.versions import VERSIONS as GEMINI_VERSIONS
         from models.gigachat.versions import VERSIONS as GIGACHAT_VERSIONS
+        from models.grok.versions import VERSIONS as GROK_VERSIONS
+        from models.glm.versions import VERSIONS as GLM_VERSIONS
         from models.gpt.versions import VERSIONS as GPT_VERSIONS
         from models.yandexgpt.versions import VERSIONS as YANDEX_VERSIONS
 
@@ -1473,7 +1514,10 @@ class ScoringWebTests(unittest.TestCase):
         expected_groups = [
             ("anthropic", "Claude", list(CLAUDE_VERSIONS)),
             ("deepseek", "DeepSeek", list(DEEPSEEK_VERSIONS)),
+            ("google", "Gemini", list(GEMINI_VERSIONS)),
             ("gigachat", "GigaChat", list(GIGACHAT_VERSIONS)),
+            ("xai", "Grok", list(GROK_VERSIONS)),
+            ("zai", "GLM", list(GLM_VERSIONS)),
             ("openai", "OpenAI", list(GPT_VERSIONS)),
             ("yandexgpt", "Яндекс", list(YANDEX_VERSIONS)),
         ]
@@ -1497,8 +1541,14 @@ class ScoringWebTests(unittest.TestCase):
             "claude-haiku-4-5-20251001": "Haiku 4.5",
             "deepseek-v4-pro": "V4 Pro",
             "deepseek-v4-flash": "V4 Flash",
+            "gemini-3.1-pro-preview": "3.1 Pro",
+            "gemini-3.5-flash": "3.5 Flash",
             "GigaChat-2-Max": "2 Max",
             "GigaChat-2": "2",
+            "grok-4.3": "4.3",
+            "grok-build-0.1": "Build 0.1",
+            "glm-5.2": "5.2",
+            "glm-4.7-flash": "4.7 Flash",
             "gpt-5.5": "GPT-5.5",
             "gpt-5.4-mini": "GPT-5.4 mini",
             "yandexgpt-5.1": "5.1",
@@ -1510,7 +1560,7 @@ class ScoringWebTests(unittest.TestCase):
 
         fallback = model_presentation("future_provider", "future-model_x")
         self.assertEqual(fallback["provider_label"], "future_provider")
-        self.assertEqual(fallback["provider_order"], 5)
+        self.assertEqual(fallback["provider_order"], 8)
         self.assertEqual(fallback["model_order"], 10000)
         self.assertTrue(fallback["short_label"])
         self.assertEqual(fallback["short_label"], "future model x")
@@ -1523,17 +1573,23 @@ class ScoringWebTests(unittest.TestCase):
 
         self.assertEqual(len(parser.header_rows), 2)
         provider_headers = parser.header_rows[0][1:]
-        self.assertEqual([cell["attrs"].get("scope") for cell in provider_headers], ["colgroup"] * 5)
-        self.assertEqual([cell["attrs"].get("colspan") for cell in provider_headers], ["2"] * 5)
-        self.assertEqual([cell["text"] for cell in provider_headers], ["Claude", "DeepSeek", "GigaChat", "OpenAI", "Яндекс"])
+        self.assertEqual([cell["attrs"].get("scope") for cell in provider_headers], ["colgroup"] * 8)
+        self.assertEqual([cell["attrs"].get("colspan") for cell in provider_headers], ["2"] * 8)
+        self.assertEqual([cell["text"] for cell in provider_headers], ["Claude", "DeepSeek", "Gemini", "GigaChat", "Grok", "GLM", "OpenAI", "Яндекс"])
 
         expected_links = [
             ("anthropic:claude-opus-4-8", "claude-opus-4-8", "Opus 4.8"),
             ("anthropic:claude-haiku-4-5-20251001", "claude-haiku-4-5-20251001", "Haiku 4.5"),
             ("deepseek:deepseek-v4-pro", "deepseek-v4-pro", "V4 Pro"),
             ("deepseek:deepseek-v4-flash", "deepseek-v4-flash", "V4 Flash"),
+            ("google:gemini-3.1-pro-preview", "gemini-3.1-pro-preview", "3.1 Pro"),
+            ("google:gemini-3.5-flash", "gemini-3.5-flash", "3.5 Flash"),
             ("gigachat:GigaChat-2-Max", "GigaChat-2-Max", "2 Max"),
             ("gigachat:GigaChat-2", "GigaChat-2", "2"),
+            ("xai:grok-4.3", "grok-4.3", "4.3"),
+            ("xai:grok-build-0.1", "grok-build-0.1", "Build 0.1"),
+            ("zai:glm-5.2", "glm-5.2", "5.2"),
+            ("zai:glm-4.7-flash", "glm-4.7-flash", "4.7 Flash"),
             ("openai:gpt-5.5", "gpt-5.5", "GPT-5.5"),
             ("openai:gpt-5.4-mini", "gpt-5.4-mini", "GPT-5.4 mini"),
             ("yandexgpt:yandexgpt-5.1", "yandexgpt-5.1", "5.1"),
@@ -1576,10 +1632,10 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("competition-matrix-wrap", parser.wrapper_classes)
         self.assertIn("competition-matrix", parser.table_attrs.get("class", ""))
         self.assertEqual(sum("competition-matrix-problem-column" in classes for classes in parser.cols), 1)
-        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in parser.cols), 10)
+        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in parser.cols), 16)
         self.assertNotIn("max-height", parser.table_attrs.get("style", ""))
         self.assertEqual(len(parser.body_rows), 1)
-        self.assertEqual(len(parser.body_rows[0]["model_cell_hrefs"]), 10)
+        self.assertEqual(len(parser.body_rows[0]["model_cell_hrefs"]), 16)
 
         catalog = build_catalog(
             competitions_dir=self.competitions_dir,
@@ -1594,7 +1650,8 @@ class ScoringWebTests(unittest.TestCase):
 
         css = Path("scoring/templates/base.html").read_text(encoding="utf-8")
         self.assertRegex(css, r"\.competition-matrix-wrap\s*\{[^}]*max-height:\s*none")
-        self.assertRegex(css, r"\.competition-matrix\s*\{[^}]*width:\s*100%")
+        self.assertRegex(css, r"\.competition-matrix\s*\{[^}]*width:\s*max-content")
+        self.assertRegex(css, r"\.competition-matrix\s*\{[^}]*86px \* 16")
         self.assertRegex(css, r"\.competition-matrix th:first-child,\s*\.competition-matrix td:first-child\s*\{[^}]*min-width:\s*200px")
         self.assertRegex(css, r"\.competition-matrix-model-column\s*\{[^}]*width:\s*86px")
         self.assertRegex(css, r"\.competition-matrix \.matrix-cell\s*\{[^}]*min-width:\s*0")
@@ -1648,7 +1705,7 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("competition-matrix-wrap", checks.wrapper_classes)
         self.assertIn("competition-matrix", checks.table_attrs.get("class", ""))
         self.assertEqual(sum("competition-matrix-problem-column" in classes for classes in checks.cols), 1)
-        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in checks.cols), 10)
+        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in checks.cols), 16)
 
         catalog = build_catalog(
             competitions_dir=self.competitions_dir,
@@ -1802,6 +1859,66 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(budget_link["text"], "GPT-5.4 mini")
         self.assertIn("gpt-5.4-mini", budget_link["attrs"].get("aria-label", ""))
         self.assertIn("gpt-5.4-mini", parser.tooltips[budget_link["attrs"]["aria-describedby"]])
+
+    def test_new_provider_columns_exist_without_logs_and_fake_logs_do_not_merge(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        new_models = [
+            ("google", "gemini-3.1-pro-preview", "res_gemini_pro"),
+            ("google", "gemini-3.5-flash", "res_gemini_flash"),
+            ("xai", "grok-4.3", "res_grok"),
+            ("xai", "grok-build-0.1", "res_grok_build"),
+            ("zai", "glm-5.2", "res_glm_paid"),
+            ("zai", "glm-4.7-flash", "res_glm_free"),
+        ]
+        empty_catalog = build_catalog(
+            competitions_dir=self.competitions_dir,
+            logs_dir=self.logs_dir,
+            results_dir=self.results_dir,
+        )
+        empty_problem = empty_catalog["competition_map"]["math_2026"]["problems"]["task_01"]
+        empty_states = {state["model_key"]: state for state in empty_problem["model_states"]}
+        for provider, model_id, _result_id in new_models:
+            key = f"{provider}:{model_id}"
+            self.assertIn(key, empty_states)
+            self.assertTrue(empty_states[key]["configured"])
+            self.assertEqual(empty_states[key]["status"], "not_run")
+            self.assertEqual(empty_states[key]["cell_text"], "")
+
+        for index, (provider, model_id, result_id) in enumerate(new_models, start=1):
+            self.write_run(
+                provider=provider,
+                model_id=model_id,
+                result_id=result_id,
+                run_id=f"run_new_{index}",
+                answer=f"ANSWER_{result_id}",
+            )
+        self.write_run(
+            provider="xai",
+            model_id="grok-code-fast-1",
+            result_id="res_grok_legacy",
+            run_id="run_grok_legacy",
+            answer="ANSWER_GROK_LEGACY_ALIAS",
+        )
+
+        catalog = build_catalog(
+            competitions_dir=self.competitions_dir,
+            logs_dir=self.logs_dir,
+            results_dir=self.results_dir,
+        )
+        problem = catalog["competition_map"]["math_2026"]["problems"]["task_01"]
+        states = {state["model_key"]: state for state in problem["model_states"]}
+        for provider, model_id, result_id in new_models:
+            key = f"{provider}:{model_id}"
+            self.assertEqual(states[key]["attempt_count"], 1 if model_id != "grok-build-0.1" else 2)
+            answers = [attempt["result"]["answer"] for attempt in states[key]["attempts"]]
+            if model_id == "grok-build-0.1":
+                self.assertIn("ANSWER_GROK_LEGACY_ALIAS", answers)
+            self.assertTrue(any(result_id in attempt["result_id"] for attempt in states[key]["attempts"]))
+        self.assertNotIn("xai:grok-code-fast-1", states)
+
+        for key in states:
+            response = self.client.get(f"/competition/math_2026/stats?model={key}")
+            self.assertEqual(response.status_code, 200, key)
 
     def test_competitions_group_by_year_and_sort_chronologically_inside_year(self) -> None:
         self.write_competition("2026_05_math_cup_cs_space", title="May Cup", date=None)

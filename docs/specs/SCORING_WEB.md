@@ -112,11 +112,12 @@ tablist, because each section is a separate HTTP page. The same Jinja component
 is reused by `competition.html`, `stats.html` and `checks.html`.
 
 The competition matrix presents active model columns in fixed provider groups:
-`anthropic`, `deepseek`, `gigachat`, `openai`, `yandexgpt`. Unknown future
-providers sort after these groups. The `model_columns` order follows this
-provider order, and the order inside each provider follows the provider
-`VERSIONS` list instead of alphabetic model IDs. Every problem's
-`model_states` list is built in the same order as `model_columns`.
+`anthropic`, `deepseek`, `google`, `gigachat`, `xai`, `zai`, `openai`,
+`yandexgpt`. Unknown future providers sort after these groups. The
+`model_columns` order follows this provider order, and the order inside each
+provider follows the provider `VERSIONS` list instead of alphabetic model IDs.
+Every problem's `model_states` list is built in the same order as
+`model_columns`.
 
 Each model column carries display metadata in addition to stable identifiers:
 `provider_label`, `provider_order`, `model_order`, `short_label` and `label`.
@@ -129,7 +130,10 @@ available as:
 competition["model_groups"] = [
   {"provider": "anthropic", "label": "Claude", "models": [...]},
   {"provider": "deepseek", "label": "DeepSeek", "models": [...]},
+  {"provider": "google", "label": "Gemini", "models": [...]},
   {"provider": "gigachat", "label": "GigaChat", "models": [...]},
+  {"provider": "xai", "label": "Grok", "models": [...]},
+  {"provider": "zai", "label": "GLM", "models": [...]},
   {"provider": "openai", "label": "OpenAI", "models": [...]},
   {"provider": "yandexgpt", "label": "Яндекс", "models": [...]},
 ]
@@ -138,12 +142,12 @@ competition["model_groups"] = [
 On `/competition/<competition_id>`, the matrix wrapper uses scoped
 `competition-matrix-wrap` / `competition-matrix` classes. It does not impose a
 fixed or viewport-derived vertical height; the page scrolls vertically, while
-the wrapper keeps horizontal scrolling for narrow screens. The table fills the
-available page width on desktop and keeps normal table padding/status-cell
-height instead of shrinking the matrix text and cells. The first column is
-scoped for long wrapping task titles and shows only the problem title as the
-anonymous-scoring link, prefixed by the problem number when one exists. It does
-not render problem ID, `анонимная проверка`, or maximum-score metadata.
+the wrapper keeps horizontal scrolling for narrow screens and for the current
+16 active columns. The table uses compact fixed model columns and must not
+expand from full model IDs in tooltips. The first column is scoped for long
+wrapping task titles and shows only the problem title as the anonymous-scoring
+link, prefixed by the problem number when one exists. It does not render problem
+ID, `анонимная проверка`, or maximum-score metadata.
 
 The anonymous scoring page hides model/provider names, metrics and raw JSON from
 the reviewer UI. It displays one answer at a time, followed by a full-width
