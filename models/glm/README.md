@@ -13,6 +13,19 @@ Active models:
 
 `glm-4.7-flashx` is not part of the active benchmark and does not receive the free pricing rule.
 
+## 1. How to get an API key
+
+1. Open the Z.AI API platform: [z.ai/model-api](https://z.ai/model-api).
+2. Register or log in to the Z.AI Open Platform.
+3. Open API Keys management and create a new key.
+4. Copy the key immediately.
+5. Check account balance, model access and rate limits before large benchmark runs.
+
+Z.AI's HTTP API guide documents the same flow:
+[docs.z.ai/guides/develop/http/introduction](https://docs.z.ai/guides/develop/http/introduction).
+
+## 2. How to store the key
+
 Secrets go only in:
 
 ```text
@@ -22,6 +35,10 @@ models/glm/secrets/.env
 ```env
 ZAI_API_KEY=...
 ```
+
+Do not commit this file and do not put model/runtime settings in the secrets file.
+
+## 3. Runtime settings
 
 Public runtime settings belong in `config/models.env`:
 

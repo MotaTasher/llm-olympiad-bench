@@ -13,6 +13,19 @@ Active models:
 
 `grok-code-fast-1` is treated only as a legacy alias and canonicalizes to `grok-build-0.1`; it is not a separate benchmark column.
 
+## 1. How to get an API key
+
+1. Open [console.x.ai](https://console.x.ai/) and sign in or create an xAI account.
+2. Add credits or configure billing for the account/team that will run benchmarks.
+3. Open the API Keys page and create a new API key.
+4. Copy the key immediately; provider consoles usually do not show the full secret again.
+5. Check model access, quota and rate limits before large benchmark runs.
+
+xAI's current quickstart documents account creation and API key generation:
+[docs.x.ai/developers/quickstart](https://docs.x.ai/developers/quickstart).
+
+## 2. How to store the key
+
 Secrets go only in:
 
 ```text
@@ -22,6 +35,10 @@ models/grok/secrets/.env
 ```env
 XAI_API_KEY=...
 ```
+
+Do not commit this file and do not put model/runtime settings in the secrets file.
+
+## 3. Runtime settings
 
 Public runtime settings belong in `config/models.env`:
 

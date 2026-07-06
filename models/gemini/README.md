@@ -7,6 +7,18 @@ Active models:
 - `gemini-3.1-pro-preview` — preview Pro model, default high thinking level.
 - `gemini-3.5-flash` — Flash model that may have Free Tier/API Studio allowance, but runner telemetry uses paid-list estimates.
 
+## 1. How to get an API key
+
+1. Open [Google AI Studio](https://aistudio.google.com/app/apikey) with the Google account that should own billing and quota.
+2. Open the API keys page and click **Create API key**.
+3. Copy the generated Gemini API key immediately.
+4. Check project billing, quotas and any spend controls before running large benchmarks.
+
+Google's current Gemini API key guide is here:
+[ai.google.dev/gemini-api/docs/api-key](https://ai.google.dev/gemini-api/docs/api-key).
+
+## 2. How to store the key
+
 Secrets go only in:
 
 ```text
@@ -16,6 +28,10 @@ models/gemini/secrets/.env
 ```env
 GEMINI_API_KEY=...
 ```
+
+Do not commit this file and do not put model/runtime settings in the secrets file.
+
+## 3. Runtime settings
 
 Public runtime settings belong in `config/models.env`:
 
