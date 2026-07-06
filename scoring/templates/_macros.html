@@ -1,0 +1,15 @@
+{% macro human_datetime(value, compact=false) -%}
+  {%- set dt = datetime_parts(value) -%}
+  {%- if dt.text -%}
+    <time class="human-datetime {{ 'human-datetime-compact' if compact else '' }}" datetime="{{ dt.iso }}" title="{{ dt.iso }}">
+      {%- if compact -%}
+        {{ dt.text }}
+      {%- else -%}
+        <span class="human-date">{{ dt.date }}</span>
+        {%- if dt.time -%}<span class="human-time">{{ dt.time }}</span>{%- endif -%}
+      {%- endif -%}
+    </time>
+  {%- else -%}
+    —
+  {%- endif -%}
+{%- endmacro %}

@@ -17,6 +17,7 @@
     "round_index": 1,
     "location": "Москва",
     "document_type": "Условия, решения и критерии проверки",
+    "score_step": 5,
     "research_sources": [
       "https://vserosinf.ru/iskusstvennyj-intellekt/",
       "https://vos.olimpiada.ru/news/6934",

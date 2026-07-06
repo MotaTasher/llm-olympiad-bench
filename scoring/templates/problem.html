@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.html" as ui %}
 {% block crumbs %}
   <a href="{{ url_for('index') }}">Соревнования</a> /
   <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
@@ -8,7 +9,7 @@
   <div class="stack">
     <section class="panel">
       <h1>{% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}</h1>
-      <div class="meta">{{ problem.problem_id }} · максимум {{ "%g"|format(problem.max_score) }} баллов</div>
+      <div class="meta">{{ problem.problem_id }} · максимум {{ "%g"|format(problem.max_score) }} баллов · шаг {{ "%g"|format(problem.score_step) }}</div>
       <div class="nav-row">
         <div>
           {% if previous_id %}
@@ -105,7 +106,7 @@
                     title="run_id: {{ attempt.run_id }} · result_id: {{ attempt.result_id }}"
                   >
                     <b>{{ loop.index }}</b>
-                    <span>{{ attempt.run_timestamp or "—" }}</span>
+                    <span>{{ ui.human_datetime(attempt.run_timestamp) }}</span>
                     <em>{% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }} · {{ attempt.score }} / {{ "%g"|format(problem.max_score) }}{% else %}без оценки{% endif %}</em>
                   </a>
                 {% endfor %}
@@ -136,22 +137,47 @@
               <input type="hidden" name="result_id" value="{{ selected_attempt.result_id }}">
               <input type="hidden" name="model_key" value="{{ selected_attempt.model_key }}">
 
-              <label>Оценка из {{ "%g"|format(problem.max_score) }}
+              <div class="score-control" data-score-control data-score-intervals="{{ problem.score_interval_count }}" style="--score-intervals: {{ problem.score_interval_count }}">
+                <label for="score-range-{{ selected_attempt.result_id }}">Оценка</label>
                 <input
-                  id="score-input"
-                  name="score"
-                  type="number"
+                  id="score-range-{{ selected_attempt.result_id }}"
+                  class="score-range"
+                  type="range"
                   min="0"
                   max="{{ "%g"|format(problem.max_score) }}"
-                  step="0.5"
-                  value=""
-                  autocomplete="off"
+                  step="{{ "%g"|format(problem.score_step) }}"
+                  value="0"
+                  data-score-range
+                  aria-label="Оценка по официальной шкале"
                 >
-              </label>
-              <div class="quick" aria-label="Быстрый выбор оценки">
-                <button class="secondary" type="button" data-score-target="score-input" data-score-set="0">0</button>
-                <button class="secondary" type="button" data-score-target="score-input" data-score-set="{{ "%g"|format(problem.max_score / 2) }}">Половина</button>
-                <button class="secondary" type="button" data-score-target="score-input" data-score-set="{{ "%g"|format(problem.max_score) }}">Максимум</button>
+                <div class="score-ticks" aria-hidden="true">
+                  {% for tick in problem.score_ticks %}
+                    <span class="score-tick">{{ "%g"|format(tick) }}</span>
+                  {% endfor %}
+                </div>
+                <div class="score-number-row">
+                  <input
+                    id="score-input-{{ selected_attempt.result_id }}"
+                    name="score"
+                    type="number"
+                    min="0"
+                    max="{{ "%g"|format(problem.max_score) }}"
+                    step="any"
+                    value=""
+                    autocomplete="off"
+                    data-score-number
+                    aria-label="Оценка вручную"
+                  >
+                  <span class="meta">из {{ "%g"|format(problem.max_score) }}</span>
+                </div>
+                <div class="score-step-hint">Шаг ползунка: {{ "%g"|format(problem.score_step) }}</div>
+                <div class="quick" aria-label="Быстрый выбор оценки">
+                  <button class="secondary" type="button" data-score-value="0">0</button>
+                  {% if problem.half_score is not none %}
+                    <button class="secondary" type="button" data-score-value="{{ "%g"|format(problem.half_score) }}">Половина</button>
+                  {% endif %}
+                  <button class="secondary" type="button" data-score-value="{{ "%g"|format(problem.max_score) }}">Максимум</button>
+                </div>
               </div>
 
               <label>Комментарий
@@ -168,7 +194,7 @@
                   <div class="evaluation-card">
                     <header>
                       <strong>{{ item.evaluator or "Без имени" }}</strong>
-                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ item.updated_at or item.created_at or "—" }}</span>
+                      <span class="meta">{{ item.score }} / {{ item.max_score or ("%g"|format(problem.max_score)) }} · {{ ui.human_datetime(item.updated_at or item.created_at) }}</span>
                     </header>
                     {% if item.feedback %}
                       <div class="section-head">
@@ -195,7 +221,7 @@
             <div class="metric-grid" aria-label="Метрики ответа">
               <div class="metric"><b>Provider</b>{{ selected_attempt.provider or "—" }}</div>
               <div class="metric"><b>Model</b>{{ result.resolved_model_id or selected_attempt.model_id or "—" }}</div>
-              <div class="metric"><b>Run timestamp</b>{{ selected_attempt.run_timestamp or "—" }}</div>
+              <div class="metric"><b>Время запуска</b>{{ ui.human_datetime(selected_attempt.run_timestamp) }}</div>
               <div class="metric"><b>Status</b>{{ result.status or "—" }}</div>
               <div class="metric"><b>Prompt tokens</b>{{ result.prompt_tokens if result.prompt_tokens is not none else "—" }}</div>
               <div class="metric"><b>Completion tokens</b>{{ result.completion_tokens if result.completion_tokens is not none else "—" }}</div>
@@ -231,7 +257,7 @@
                   href="{{ url_for('problem_page', competition_id=competition.competition_id, problem_id=problem.problem_id, model=selected_state.model_key, attempt=attempt.result_id) }}"
                   aria-current="{{ 'true' if selected_attempt and attempt.result_id == selected_attempt.result_id else 'false' }}"
                 >
-                  <b>{{ loop.index }}. {{ attempt.run_timestamp or "—" }}</b>
+                  <b>{{ loop.index }}. {{ ui.human_datetime(attempt.run_timestamp) }}</b>
                   <div class="meta">
                     run_id: {{ attempt.run_id }} · result_id: {{ attempt.result_id }} ·
                     {% if attempt.evaluation_count %}проверок: {{ attempt.evaluation_count }}, последняя {{ attempt.score }}{% else %}без оценки{% endif %}

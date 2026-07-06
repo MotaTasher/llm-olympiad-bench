@@ -13,6 +13,7 @@
     "stage": "Финал",
     "stage_index": 2,
     "document_type": "Решения",
-    "max_score": 3
+    "max_score": 3,
+    "score_step": 4
   }
 }

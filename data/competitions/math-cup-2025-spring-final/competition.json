@@ -12,6 +12,7 @@
     "year": 2025,
     "stage": "Финал",
     "stage_index": 2,
-    "document_type": "Решения"
+    "document_type": "Решения",
+    "score_step": 3
   }
 }

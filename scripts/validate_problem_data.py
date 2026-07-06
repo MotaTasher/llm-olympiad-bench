@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -60,10 +61,49 @@ def validate_optional_string(
         findings.append(Finding("ERROR", path, f"{field} must be a string or null"))
 
 
-def validate_competition_manifest(path: Path, findings: list[Finding]) -> str | None:
+def parse_positive_finite_number(value: Any) -> float | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        parsed = float(value)
+    elif isinstance(value, str):
+        try:
+            parsed = float(value)
+        except ValueError:
+            return None
+    else:
+        return None
+    if not math.isfinite(parsed) or parsed <= 0:
+        return None
+    return parsed
+
+
+def validate_score_step_value(path: Path, value: Any, findings: list[Finding], *, max_score: float | None) -> None:
+    parsed = parse_positive_finite_number(value)
+    if parsed is None:
+        findings.append(Finding("ERROR", path, "metadata.score_step must be a finite number greater than 0"))
+        return
+    if max_score is not None and parsed > max_score:
+        findings.append(Finding("ERROR", path, "metadata.score_step must be less than or equal to max_score"))
+
+
+def metadata_for(data: dict[str, Any] | None) -> dict[str, Any]:
+    metadata = data.get("metadata") if isinstance(data, dict) else None
+    return metadata if isinstance(metadata, dict) else {}
+
+
+def effective_max_score(competition: dict[str, Any] | None, problem: dict[str, Any] | None) -> float:
+    for data in (problem, competition):
+        parsed = parse_positive_finite_number(metadata_for(data).get("max_score"))
+        if parsed is not None:
+            return parsed
+    return 10.0
+
+
+def validate_competition_manifest(path: Path, findings: list[Finding]) -> tuple[str | None, dict[str, Any] | None]:
     data = read_json(path, findings)
     if data is None:
-        return None
+        return None, None
 
     if not isinstance(data.get("schema_version"), int):
         findings.append(Finding("ERROR", path, "schema_version must be an integer"))
@@ -89,14 +129,16 @@ def validate_competition_manifest(path: Path, findings: list[Finding]) -> str | 
     metadata = data.get("metadata")
     if metadata is not None and not isinstance(metadata, dict):
         findings.append(Finding("ERROR", path, "metadata must be an object when present"))
+    elif isinstance(metadata, dict) and "score_step" in metadata:
+        validate_score_step_value(path, metadata.get("score_step"), findings, max_score=None)
 
-    return competition_id.strip() if isinstance(competition_id, str) else None
+    return competition_id.strip() if isinstance(competition_id, str) else None, data
 
 
-def validate_problem_file(path: Path, findings: list[Finding]) -> tuple[str | None, Any]:
+def validate_problem_file(path: Path, findings: list[Finding]) -> tuple[str | None, Any, dict[str, Any] | None]:
     data = read_json(path, findings)
     if data is None:
-        return None, None
+        return None, None, None
 
     if not isinstance(data.get("schema_version"), int):
         findings.append(Finding("ERROR", path, "schema_version must be an integer"))
@@ -140,7 +182,7 @@ def validate_problem_file(path: Path, findings: list[Finding]) -> tuple[str | No
     if metadata is not None and not isinstance(metadata, dict):
         findings.append(Finding("ERROR", path, "metadata must be an object when present"))
 
-    return problem_id.strip() if isinstance(problem_id, str) else None, number
+    return problem_id.strip() if isinstance(problem_id, str) else None, number, data
 
 
 def should_ignore_child(path: Path) -> bool:
@@ -179,8 +221,9 @@ def validate_competition_dir(path: Path, findings: list[Finding]) -> tuple[int, 
     if not manifest.exists():
         findings.append(Finding("ERROR", manifest, "competition.json is required"))
         competition_id = None
+        competition_data = None
     else:
-        competition_id = validate_competition_manifest(manifest, findings)
+        competition_id, competition_data = validate_competition_manifest(manifest, findings)
 
     paths = problem_paths(path, findings)
     if not paths:
@@ -190,7 +233,14 @@ def validate_competition_dir(path: Path, findings: list[Finding]) -> tuple[int, 
     seen_numbers: dict[Any, Path] = {}
     valid_problem_ids = 0
     for problem_path in paths:
-        problem_id, number = validate_problem_file(problem_path, findings)
+        problem_id, number, problem_data = validate_problem_file(problem_path, findings)
+        max_score = effective_max_score(competition_data, problem_data)
+        problem_metadata = metadata_for(problem_data)
+        competition_metadata = metadata_for(competition_data)
+        if "score_step" in problem_metadata:
+            validate_score_step_value(problem_path, problem_metadata.get("score_step"), findings, max_score=max_score)
+        if "score_step" in competition_metadata:
+            validate_score_step_value(manifest, competition_metadata.get("score_step"), findings, max_score=max_score)
         if problem_id:
             valid_problem_ids += 1
             previous = seen_ids.get(problem_id)

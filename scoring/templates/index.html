@@ -15,86 +15,46 @@
     {% if competition_groups %}
       {% for group in competition_groups %}
         <section class="stack">
-          <h2>{{ group.year if group.year else "Без года" }}</h2>
+          <h2>{{ group.year }}</h2>
           <div class="grid">
             {% for competition in group.competitions %}
-              <article class="card">
+              <a class="card competition-card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
                 <div class="card-title">
                   <div>
-                    <h3>
-                      <a class="card-heading-link" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
-                        {{ competition.competition_title }}
-                      </a>
-                    </h3>
-                    <div class="meta">{{ competition.competition_id }}</div>
+                    <h3>{{ competition.competition_title }}</h3>
                   </div>
-                  {% if competition.date %}<span class="pill">{{ competition.date }}</span>{% endif %}
+                  {% set display_date = competition.date|competition_date %}
+                  {% if display_date %}<span class="pill">{{ display_date }}</span>{% endif %}
                 </div>
-                {% if competition.description %}
-                  <p class="muted">{{ competition.description }}</p>
+                {% set card_description = competition.description|competition_card_description %}
+                {% if card_description %}
+                  <p class="muted">{{ card_description }}</p>
                 {% endif %}
                 <div class="stats">
                   <span class="pill">{{ competition.problem_count }} задач</span>
-                  <span class="pill">{{ competition.model_count }} моделей</span>
-                  <span class="pill">{{ competition.answer_count }} ответов</span>
-                  <span class="pill">{{ competition.scored_count }} проверено</span>
                 </div>
-                <div class="cost-strip" aria-label="Стоимость">
-                  <span class="cost-metric cost-metric-latest">Последние: <b data-cost-actual="latest" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
-                  <span class="cost-metric cost-metric-all">Все логи: <b data-cost-actual="all" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
-                  <span class="cost-metric cost-metric-estimate">Прогон: <b data-cost-competition="{{ competition.competition_id }}">—</b></span>
-                  <span class="meta cost-pair-note" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
-                </div>
-                <div class="progress" aria-label="Прогресс проверки {{ competition.progress_percent }}%">
-                  <span style="width: {{ competition.progress_percent }}%"></span>
-                </div>
-                {% if competition.latest_timestamp %}
-                  <div class="meta">Последний запуск: {{ competition.latest_timestamp }}</div>
+                {% if competition.answer_count == 0 %}
+                  <div class="competition-progress competition-progress-empty" aria-label="Запусков пока нет">
+                    <span class="competition-progress-label">Запусков пока нет</span>
+                  </div>
+                {% else %}
+                  <div
+                    class="competition-progress competition-progress-active{% if competition.scored_count == competition.answer_count %} competition-progress-reviewed{% endif %}"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="{{ competition.answer_count }}"
+                    aria-valuenow="{{ competition.scored_count }}"
+                    aria-valuetext="Проверено {{ competition.scored_count }} из {{ competition.answer_count }}"
+                  >
+                    <span class="competition-progress-fill" style="width: {{ competition.progress_percent }}%"></span>
+                    <span class="competition-progress-label">Проверено {{ competition.scored_count }} из {{ competition.answer_count }}</span>
+                  </div>
                 {% endif %}
-              </article>
+              </a>
             {% endfor %}
           </div>
         </section>
       {% endfor %}
-    {% elif competitions %}
-      <div class="grid">
-        {% for competition in competitions %}
-          <article class="card">
-            <div class="card-title">
-              <div>
-                <h2>
-                  <a class="card-heading-link" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
-                    {{ competition.competition_title }}
-                  </a>
-                </h2>
-                <div class="meta">{{ competition.competition_id }}</div>
-              </div>
-              {% if competition.date %}<span class="pill">{{ competition.date }}</span>{% endif %}
-            </div>
-            {% if competition.description %}
-              <p class="muted">{{ competition.description }}</p>
-            {% endif %}
-            <div class="stats">
-              <span class="pill">{{ competition.problem_count }} задач</span>
-              <span class="pill">{{ competition.model_count }} моделей</span>
-              <span class="pill">{{ competition.answer_count }} ответов</span>
-              <span class="pill">{{ competition.scored_count }} проверено</span>
-            </div>
-            <div class="cost-strip" aria-label="Стоимость">
-              <span class="cost-metric cost-metric-latest">Последние: <b data-cost-actual="latest" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
-              <span class="cost-metric cost-metric-all">Все логи: <b data-cost-actual="all" data-cost-actual-competition="{{ competition.competition_id }}">—</b></span>
-              <span class="cost-metric cost-metric-estimate">Прогон: <b data-cost-competition="{{ competition.competition_id }}">—</b></span>
-              <span class="meta cost-pair-note" data-cost-competition-pairs="{{ competition.competition_id }}">— пар</span>
-            </div>
-            <div class="progress" aria-label="Прогресс проверки {{ competition.progress_percent }}%">
-              <span style="width: {{ competition.progress_percent }}%"></span>
-            </div>
-            {% if competition.latest_timestamp %}
-              <div class="meta">Последний запуск: {{ competition.latest_timestamp }}</div>
-            {% endif %}
-          </article>
-        {% endfor %}
-      </div>
     {% else %}
       <div class="empty">Соревнования не найдены.</div>
     {% endif %}

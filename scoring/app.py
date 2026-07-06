@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import csv
-from datetime import timedelta
+from datetime import date, timedelta
 import io
+import math
 import os
 from pathlib import Path
 import secrets
@@ -49,9 +50,7 @@ try:
         reset_password,
         set_user_active,
     )
-    from .cost_estimator import (
-        cost_context,
-    )
+    from .presentation import MONTHS_GENITIVE, format_datetime_parts
     from .repository import (
         anonymized_attempts,
         build_catalog,
@@ -77,9 +76,7 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
         reset_password,
         set_user_active,
     )
-    from scoring.cost_estimator import (  # type: ignore
-        cost_context,
-    )
+    from scoring.presentation import MONTHS_GENITIVE, format_datetime_parts  # type: ignore
     from scoring.repository import (  # type: ignore
         anonymized_attempts,
         build_catalog,
@@ -101,7 +98,6 @@ RESULTS_DIR = BASE_DIR / "data" / "results"
 COMPETITIONS_DIR = BASE_DIR / "data" / "competitions"
 
 app = Flask(__name__)
-
 
 def env_bool(name: str, default: bool = False) -> bool:
     value = os.environ.get(name)
@@ -287,6 +283,37 @@ def catalog_for_reviewer(reviewer: str) -> dict:
     data = catalog()
     scope_catalog_to_reviewer(data, reviewer)
     return data
+
+
+@app.template_filter("competition_date")
+def competition_date(value) -> str:
+    if not value:
+        return ""
+    if not isinstance(value, str):
+        return str(value)
+    try:
+        parsed = date.fromisoformat(value)
+    except ValueError:
+        return value
+    return f"{parsed.day} {MONTHS_GENITIVE[parsed.month - 1]}"
+
+
+@app.template_filter("competition_card_description")
+def competition_card_description(value) -> str:
+    if not value:
+        return ""
+    text = str(value).strip()
+    prefix = "Полное название:"
+    if not text.startswith(prefix):
+        return text
+    remainder = text[len(prefix):].strip()
+    _, separator, tail = remainder.partition(".")
+    if not separator:
+        return ""
+    return tail.strip()
+
+
+app.jinja_env.globals["datetime_parts"] = format_datetime_parts
 
 
 def clean_id(value: str) -> str:
@@ -516,12 +543,21 @@ def checks_statistics(competition: dict, rows: list[dict], mode: str) -> dict:
 @app.get("/")
 def index():
     data = catalog_for_reviewer(current_user.username)
+    visible_groups = [
+        group
+        for group in data.get("competition_groups", [])
+        if group.get("year") is not None
+    ]
+    visible_competitions = [
+        competition
+        for group in visible_groups
+        for competition in group.get("competitions", [])
+    ]
     return render_template(
         "index.html",
-        competitions=data["competitions"],
-        competition_groups=data.get("competition_groups", []),
+        competitions=visible_competitions,
+        competition_groups=visible_groups,
         warnings=data["warnings"],
-        cost_context=cost_context(data["competitions"]),
     )
 
 
@@ -536,14 +572,13 @@ def competition_page(competition_id: str):
         "competition.html",
         competition=competition,
         warnings=data["warnings"],
-        cost_context=cost_context([competition]),
     )
 
 
 @app.get("/competition/<competition_id>/stats")
 def competition_stats_page(competition_id: str):
     competition_id = clean_id(competition_id)
-    data = catalog_for_reviewer(current_user.username)
+    data = catalog()
     competition = data["competition_map"].get(competition_id)
     if not competition:
         abort(404)
@@ -738,7 +773,7 @@ def score():
             anonymous_index=anonymous_index,
         )
     max_score = float(problem["max_score"])
-    if not (0 <= score_value <= max_score):
+    if not math.isfinite(score_value) or not (0 <= score_value <= max_score):
         flash(f"Оценка должна быть в диапазоне от 0 до {max_score:g}.", "error")
         return score_redirect(
             mode=mode,

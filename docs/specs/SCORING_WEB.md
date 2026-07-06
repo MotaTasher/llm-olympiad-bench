@@ -67,6 +67,8 @@ The catalog shape is:
 
 ```text
 competition
+  model_columns
+  model_groups
   problems
     model_states
       attempts/results
@@ -84,9 +86,9 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `GET /login` | Russian login form; does not display competition/model data; authenticated users redirect to `/` |
 | `POST /login` | CSRF-protected login; unknown user, wrong password and disabled user share the same error |
 | `POST /logout` | CSRF-protected logout; clears the session and redirects to `/login` |
-| `GET /` | Russian competition cards from canonical data plus log/evaluation counts and live cost estimates, grouped by inferred year |
-| `GET /competition/<competition_id>` | live cost estimate plus matrix: rows are tasks, columns are models; task title opens anonymous scoring |
-| `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics and model-task table |
+| `GET /` | Russian competition cards for competitions with an inferred year, grouped by year |
+| `GET /competition/<competition_id>` | matrix: rows are tasks, columns are models; task title opens anonymous scoring |
+| `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics across all reviewers, with optional model detail |
 | `GET /competition/<competition_id>/checks?mode=max|avg|min` | separate all-checks statistics page; shows all reviewers, aggregate model-task scores and the raw evaluation table |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
 | `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
@@ -101,6 +103,40 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
 
+The competition matrix presents active model columns in fixed provider groups:
+`anthropic`, `deepseek`, `gigachat`, `openai`, `yandexgpt`. Unknown future
+providers sort after these groups. The `model_columns` order follows this
+provider order, and the order inside each provider follows the provider
+`VERSIONS` list instead of alphabetic model IDs. Every problem's
+`model_states` list is built in the same order as `model_columns`.
+
+Each model column carries display metadata in addition to stable identifiers:
+`provider_label`, `provider_order`, `model_order`, `short_label` and `label`.
+`label` remains the full technical model ID. Known short labels are used in the
+matrix header, while the full model ID remains available through the link
+`title`, `aria-label` and a hover/focus tooltip. The grouped header data is also
+available as:
+
+```text
+competition["model_groups"] = [
+  {"provider": "anthropic", "label": "Claude", "models": [...]},
+  {"provider": "deepseek", "label": "DeepSeek", "models": [...]},
+  {"provider": "gigachat", "label": "GigaChat", "models": [...]},
+  {"provider": "openai", "label": "OpenAI", "models": [...]},
+  {"provider": "yandexgpt", "label": "Яндекс", "models": [...]},
+]
+```
+
+On `/competition/<competition_id>`, the matrix wrapper uses scoped
+`competition-matrix-wrap` / `competition-matrix` classes. It does not impose a
+fixed or viewport-derived vertical height; the page scrolls vertically, while
+the wrapper keeps horizontal scrolling for narrow screens. The table fills the
+available page width on desktop and keeps normal table padding/status-cell
+height instead of shrinking the matrix text and cells. The first column is
+scoped for long wrapping task titles and shows only the problem title as the
+anonymous-scoring link, prefixed by the problem number when one exists. It does
+not render problem ID, `анонимная проверка`, or maximum-score metadata.
+
 The anonymous scoring page hides model/provider names, metrics and raw JSON from
 the reviewer UI. It displays one answer at a time, followed by a full-width
 answer-selection panel with numbered navigation and a "next solution" control.
@@ -111,54 +147,76 @@ the reviewer moves between answer numbers. The page still submits the underlying
 written to the same sidecar format. This is UI-level anonymity, not a security
 boundary against inspecting page source.
 
-## Cost Estimate
+## Statistics
 
-Index and competition pages share one compact local cost control in the page
-header. It never launches model calls. By default it estimates every active
-model from provider `VERSIONS`, matching the set used by `runner.py --models
-all`. The same slider/checkbox settings are stored in browser `localStorage`
-and apply to every competition card and competition page.
+`GET /competition/<competition_id>/stats` uses the full catalog, not
+`catalog_for_reviewer()`. It is global analytics for the competition and
+includes evaluations from every reviewer, including legacy evaluations that the
+repository normalizes into the evaluation pool. Task pages, anonymous scoring,
+competition matrix statuses, delete permissions and "my checks" CSV links remain
+reviewer-scoped.
 
-Controls:
+Statistics are aggregated in two levels. First, every successful model solution
+is identified by stable `result_id`; all valid evaluations for that solution are
+converted to normalized percentages with `score / max_score * 100`, then averaged
+into one solution percentage. An unreviewed solution contributes to
+`solution_count`, but not to model averages. Second, each model averages these
+per-solution percentages, so a solution with ten human evaluations has the same
+weight as a solution with one evaluation.
 
-- reasoning budget: integer `0..64000`, default `8000`; `0` means no separate reasoning budget is requested;
-- final-answer token cap: integer `512..32000`, default `8000`;
-- `include_solved` checkbox defaults to off.
+The main model table shows solution count, problem count, reviewed solution
+count, raw evaluation count, average percent and full-solution count. It does
+not show a cross-task average absolute score, because task maximums can differ.
+The old "Модель-задача" matrix was removed from `/stats`; the separate
+`/checks` page remains the place for raw evaluation records, reviewers,
+comments, CSV actions and max/avg/min model-task aggregates. The optional
+`?model=<model_key>` detail section remains and shows per-task solution counts,
+reviewed solution counts, evaluation counts, average absolute score, task
+maximum, average percent and latest solution time. Unknown `model` query values
+must not fail the page; the main table still renders.
 
-Browser range and number inputs are synchronized for both numeric settings.
-Changing a slider, manual input or checkbox immediately recalculates displayed
-numbers; there is no recalculation button or HTTP request. Different APIs split
-hidden reasoning and visible answer tokens differently, so the estimate is best
-effort. The calculation uses local price tables, rough token estimates and the
-current USD/RUB rate fetched from the Central Bank of Russia XML daily endpoint
-with a local fallback. For models with configured reasoning support, reasoning
-budget tokens are charged at the provider's output-token rate, or at the
-provider's total-token rate for total-priced RUB models. Models without a
-reasoning price do not receive the reasoning-budget add-on. It must not
-instantiate provider clients, call model APIs, create background jobs or write
-run logs.
+## Index page
 
-The UI also shows realized spending read from immutable run logs. The first
-static value is the sum for the latest attempt in each currently displayed
-`problem × active model` cell; this matches the attempts normally presented for
-scoring. The second static value is the sum for every result stored in logs for
-the competition. Log costs are read from `result.cost.total` when available and
-fall back to legacy `result.cost_usd`; RUB-native costs are converted through
-the same USD/RUB rate used by the calculator. Missing cost telemetry is treated
-as zero for totals and counted internally, without mutating logs.
+The index is a simple competition gallery. It passes only visible
+`competition_groups` to `index.html`; groups with `year is None` are hidden on
+`/` without mutating the catalog returned by `build_catalog()`. Those
+competitions remain in `competition_map`, remain on disk and continue to open
+through direct `/competition/<competition_id>` URLs. The index never renders a
+`Без года` heading. If no visible competitions remain after filtering, it shows:
 
-When `include_solved` is off, skip logic is evaluated independently for every
-`problem × model` pair. A pair is already solved only when existing logs contain
-at least one successful attempt for that exact model with a non-empty answer.
-API errors and empty answers do not count as solved, and answers from other
-models do not cause a skip. Index cards show three always-visible cost metrics:
-latest displayed attempts, all log results and the potential calculator result.
-The sticky header shows the same three metrics aggregated over the current page
-scope: all competitions on `/`, or the selected competition on the competition
-page. The competition summary card also keeps the three metrics always visible.
-The competition page shows the detailed calculator in a collapsible per-model
-table with all-log spending split into USD and RUB columns, model price per 1M
-input/output/reasoning tokens, estimated USD/RUB cost and a final total row.
+```text
+Соревнования не найдены.
+```
+
+Each card is one real `<a class="card competition-card">` link, with no nested
+links and no JavaScript navigation. Standard keyboard focus and browser link
+actions, including opening in a new tab, must keep working.
+
+Card content is intentionally compact:
+
+- competition title;
+- competition date formatted as day plus Russian month name, without the year;
+- optional description;
+- problem count;
+- reviewer-scoped progress.
+
+If a description starts with `Полное название:`, that leading full-name sentence
+is not rendered on the index card. The card may still render the remaining
+description text after that sentence.
+
+The date formatter uses fixed Russian month names and does not depend on the
+system locale. Empty dates render as an empty string. Invalid non-empty date
+strings are allowed to render as the original value instead of breaking the
+page.
+
+Progress is based only on existing attempts visible to the current reviewer:
+`answer_count`, `scored_count` and `progress_percent`. It does not use the
+theoretical `problem × model` matrix size as the denominator. When there are no
+attempts, the progress bar is gray and labeled `Запусков пока нет`. When
+attempts exist, the unreviewed portion is red and the reviewed portion is green.
+The active bar exposes `role="progressbar"`, `aria-valuemin="0"`,
+`aria-valuemax="<answer_count>"`, `aria-valuenow="<scored_count>"` and
+`aria-valuetext="Проверено X из N"`.
 
 ## Cell status
 
@@ -185,13 +243,13 @@ The normal task page and anonymous page use a one-column review sequence:
 4. score form, evaluation pool/history, telemetry, raw JSON and navigation.
 
 Authenticated reviewers see only their own evaluation entries, score summaries,
-cell statuses, aggregate statistics and evaluation counts in the in-page UI.
-Evaluation entries from other reviewers are intentionally hidden from task
-pages, anonymous scoring pages, competition matrices and statistics to avoid
-bias during review. Full cross-reviewer data remains available through CSV
-export/import routes and the separate all-checks statistics page. That page is
-not part of the normal scoring flow and can aggregate every reviewer score per
-model-task cell as maximum, average or minimum.
+cell statuses and evaluation counts on task pages, anonymous scoring pages and
+competition matrices. Evaluation entries from other reviewers are intentionally
+hidden there to avoid bias during review. `/stats` is the exception: it is
+competition-level analytics across all reviewers. Full cross-reviewer row data
+also remains available through CSV export/import routes and the separate
+all-checks page, which can aggregate every reviewer score per model-task cell as
+maximum, average or minimum.
 
 Statement, reference answer/solution and model answer are rendered in reusable
 scrollable content containers so wide Markdown tables, code blocks and MathJax
@@ -224,8 +282,20 @@ with a short Russian error message. No working `/register` route exists.
 
 - competition/problem/run IDs;
 - `result_id` belongs to the submitted run;
-- `0 <= score <= max_score`;
+- score is a finite number and `0 <= score <= max_score`;
 - `max_score` from `problem.metadata.max_score`, then `competition.metadata.max_score`, then `10`.
+
+The score form shows both an official-scale range input and a manual number
+input. The range uses `score_step` from problem metadata, then competition
+metadata, then fallback `1`; the same arithmetic progression from `0` to
+`max_score` is rendered as visible tick labels under the slider. The slider/tick
+row width scales from the number of intervals, with bounded per-interval sizing,
+so a binary scale such as `0..2` does not stretch across the full form. The range
+also drives the quick buttons `0`, conditional `Половина` and `Максимум`. The
+manual number input uses `step="any"` and can submit a non-grid fractional score
+such as `12.5`; `score_step` is a UI scale, not a server-side divisibility
+constraint. The `Половина` button is rendered only when `max_score / 2` lies on
+the official range grid.
 
 Each submitted score creates a new evaluation entry with its own
 `evaluation_id`. The latest evaluation is also copied to `evaluations[result_id]`
@@ -237,7 +307,7 @@ deletes evaluations owned by the authenticated reviewer.
 
 ## Competition grouping
 
-The index route passes `competition_groups` to `index.html`:
+`build_catalog()` returns `competition_groups` with this shape:
 
 ```text
 [
@@ -254,13 +324,23 @@ year group sort chronologically from earlier to later. The order source is:
 full date from `competition.json.date`, then date or month parsed from
 `competition_id`, then stable title and ID ordering. Competitions without a
 determinable date are placed at the end of their year group. `latest_timestamp`
-from model runs is displayed but does not affect historical ordering.
+from model runs does not affect historical ordering.
+
+The index route filters this list before rendering and passes only groups whose
+`year` is not `None`. The unfiltered catalog contract remains available to
+other routes and callers.
 
 CSV import/export uses these columns:
 
 ```text
 competition_id,competition_title,problem_id,problem_title,run_id,result_id,result_index,evaluation_id,evaluator,score,max_score,score_category,feedback,created_at,updated_at,model_key,model
 ```
+
+Visible timestamps in active scoring templates are formatted with fixed Russian
+month names to day and minute precision, for example `29 июня 2026` and `13:24`
+on separate lines in main UI blocks. Raw timestamp strings remain unchanged in
+logs, sidecars, CSV, hidden fields and machine-readable `datetime`/`title`
+attributes.
 
 ## Web-change validation
 

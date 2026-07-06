@@ -33,6 +33,17 @@ For long official competition names, `title` may be a compact display title
 used by the scoring UI. Keep the full official name in `description` and, when
 useful for structured consumers, in `metadata.official_title`.
 
+Known scoring metadata:
+
+- `metadata.max_score`: positive finite number used as the fallback maximum
+  score for tasks that do not define their own maximum;
+- `metadata.score_step`: positive finite number used as the fallback official
+  UI scoring step for tasks that do not define their own step.
+
+Task-level metadata overrides competition-level metadata. If no `max_score` is
+available, the scoring UI falls back to `10`; if no `score_step` is available,
+it falls back to `1`.
+
 ## Problem file
 
 Canonical path:
@@ -73,6 +84,16 @@ Optional known fields:
 - `metadata`: object.
 
 Problem files must not contain `competition_id` or `competition_title`; ownership is determined by the parent directory. Unknown additional fields are allowed and must be preserved by migrations and import workflows.
+
+Known scoring metadata:
+
+- `metadata.max_score`: maximum allowed manual score for this task;
+- `metadata.score_step`: official scoring step used by the range input and
+  quick-score controls for this task.
+
+`score_step` controls the official browser scale only. It does not prohibit a
+reviewer from manually entering a non-grid finite fractional score in the number
+field, as long as `0 <= score <= max_score`.
 
 `competition.json` is not a problem. `assets/`, hidden files, temporary files, directories and unknown non-JSON files are ignored by normal problem discovery.
 
@@ -308,7 +329,7 @@ The evaluation key for new writes is `result_id`. Readers use this precedence:
 3. old sidecar `evaluations` keyed by string result index, for example `"0"`;
 4. legacy `score`, `scored_by`, `scored_at` and `score_comment` inside the run-log.
 
-Manual scoring must not be written back into run logs. Server-side score validation uses `problem.metadata.max_score`, then `competition.metadata.max_score`, then fallback `10`.
+Manual scoring must not be written back into run logs. Server-side score validation uses `problem.metadata.max_score`, then `competition.metadata.max_score`, then fallback `10`. The UI scoring step uses `problem.metadata.score_step`, then `competition.metadata.score_step`, then fallback `1`; it is not stored in evaluation records.
 For new web-scoring writes, `evaluator` is the authenticated
 `current_user.username` from the scoring site session. Older sidecars with any
 string `evaluator` remain valid and readable.

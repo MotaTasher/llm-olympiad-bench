@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.html" as ui %}
 {% block crumbs %}
   <a href="{{ url_for('index') }}">Соревнования</a> /
   <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
@@ -92,7 +93,7 @@
                   <td>{{ row.evaluator or "—" }}</td>
                   <td>{{ row.score }} / {{ row.max_score }}</td>
                   <td>{% if row.feedback %}<div class="rendered" data-markdown>{{ row.feedback }}</div>{% else %}<span class="meta">—</span>{% endif %}</td>
-                  <td class="meta">{{ row.updated_at or row.created_at or "—" }}</td>
+                  <td class="meta">{{ ui.human_datetime(row.updated_at or row.created_at) }}</td>
                 </tr>
               {% endfor %}
             </tbody>
