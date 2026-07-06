@@ -156,7 +156,11 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   Free Tier/API Studio allowance, but benchmark cost telemetry uses paid-list
   estimates. Thinking is configured by provider thinking level
   (`GEMINI_THINKING_LEVEL=high` by default), not by inventing a token-budget
-  conversion.
+  conversion. `runner.py --max-tokens` is a total Gemini output/thinking budget:
+  the adapter caps each Interactions API request at 65,536 output tokens and
+  continues with `previous_interaction_id` when the total budget is larger. This
+  preserves Gemini server-side conversation history and thought signatures
+  without adding tools, search or code execution.
 - Grok uses xAI's hosted OpenAI-compatible endpoint
   `https://api.x.ai/v1`. `grok-4.3` is the general-purpose model and receives
   `XAI_REASONING_EFFORT=high` by default. `grok-build-0.1` is the

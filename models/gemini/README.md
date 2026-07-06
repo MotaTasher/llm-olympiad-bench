@@ -42,6 +42,13 @@ GEMINI_MAX_OUTPUT_TOKENS=8192
 GEMINI_TIMEOUT_SECONDS=3600
 ```
 
+`runner.py --max-tokens N` is treated as a total Gemini output/thinking budget.
+Gemini's per-request output cap is 65,536 tokens, so the adapter splits larger
+budgets into multiple Interactions API requests and links them with
+`previous_interaction_id`. This preserves Gemini's server-side reasoning context
+and thought signatures while keeping the request text-only. For example,
+`--max-tokens 256000` can use up to four Gemini requests.
+
 Credential-free smoke:
 
 ```bash

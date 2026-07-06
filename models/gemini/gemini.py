@@ -17,9 +17,10 @@ from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
-GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models"
+GEMINI_INTERACTIONS_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/interactions"
 GEMINI_DEFAULT_TEMPERATURE = 0.2
 GEMINI_DEFAULT_THINKING_LEVEL = "high"
+GEMINI_DEFAULT_MAX_OUTPUT_TOKENS_PER_REQUEST = 65_536
 
 
 def optional_positive_int(name: str) -> int | None:
@@ -62,9 +63,17 @@ def usage_detail_value(usage: Any, detail_name: str, *names: str) -> int | None:
 
 
 def response_text(response: Any) -> str:
+    output_text = getattr(response, "output_text", None)
+    if isinstance(output_text, str):
+        return output_text
     text = getattr(response, "text", None)
     if isinstance(text, str):
         return text
+    if isinstance(response, dict):
+        for key in ("output_text", "outputText", "text"):
+            value = response.get(key)
+            if isinstance(value, str):
+                return value
     parts: list[str] = []
     candidates = getattr(response, "candidates", None)
     if candidates is None and isinstance(response, dict):
@@ -82,6 +91,17 @@ def response_text(response: Any) -> str:
     return "\n".join(parts)
 
 
+def interaction_usage(response: Any, raw_response: dict[str, Any]) -> Any:
+    for name in ("usage_metadata", "usageMetadata", "usage"):
+        value = getattr(response, name, None)
+        if value:
+            return value
+        value = raw_response.get(name)
+        if value:
+            return value
+    return {}
+
+
 def finish_reason(raw_response: dict[str, Any]) -> str | None:
     candidates = raw_response.get("candidates")
     if isinstance(candidates, list) and candidates:
@@ -90,7 +110,32 @@ def finish_reason(raw_response: dict[str, Any]) -> str | None:
             return str(first["finish_reason"])
         if isinstance(first, dict) and first.get("finishReason"):
             return str(first["finishReason"])
-    return raw_response.get("finish_reason") or raw_response.get("finishReason")
+    direct = raw_response.get("finish_reason") or raw_response.get("finishReason")
+    if direct:
+        return str(direct)
+    for step in reversed(raw_response.get("steps") or []):
+        if not isinstance(step, dict):
+            continue
+        for key in ("finish_reason", "finishReason", "status"):
+            value = step.get(key)
+            if value:
+                return str(value)
+        for nested_key in ("model_output", "modelOutput", "output"):
+            nested = step.get(nested_key)
+            if isinstance(nested, dict):
+                for key in ("finish_reason", "finishReason", "status"):
+                    value = nested.get(key)
+                    if value:
+                        return str(value)
+    status = raw_response.get("status")
+    return str(status) if status else None
+
+
+def is_length_limited(value: str | None) -> bool:
+    if not value:
+        return False
+    normalized = value.upper()
+    return normalized in {"MAX_TOKENS", "MAX_OUTPUT_TOKENS", "LENGTH"} or "MAX" in normalized or "LENGTH" in normalized
 
 
 class GeminiModel(BaseModel):
@@ -124,61 +169,159 @@ class GeminiModel(BaseModel):
                 client_kwargs["http_options"] = types.HttpOptions(timeout=int(timeout_seconds * 1000))
             client = genai.Client(**client_kwargs)
 
-            max_output_tokens = (
+            total_budget = (
                 int(max_tokens)
                 if max_tokens is not None
                 else int(self._max_final_tokens)
                 if self._max_final_tokens is not None
                 else optional_positive_int("GEMINI_MAX_OUTPUT_TOKENS")
             )
+            per_request_limit = min(
+                int(total_budget or GEMINI_DEFAULT_MAX_OUTPUT_TOKENS_PER_REQUEST),
+                GEMINI_DEFAULT_MAX_OUTPUT_TOKENS_PER_REQUEST,
+            )
             temperature = float(env("GEMINI_TEMPERATURE", str(GEMINI_DEFAULT_TEMPERATURE)) or GEMINI_DEFAULT_TEMPERATURE)
-            thinking_level = (env("GEMINI_THINKING_LEVEL", GEMINI_DEFAULT_THINKING_LEVEL) or GEMINI_DEFAULT_THINKING_LEVEL).upper()
-            thinking_enum = getattr(getattr(types, "ThinkingLevel", object), thinking_level, thinking_level)
-            thinking_config = types.ThinkingConfig(thinking_level=thinking_enum)
-            config_kwargs: dict[str, Any] = {
-                "system_instruction": SYSTEM_PROMPT,
+            thinking_level = (env("GEMINI_THINKING_LEVEL", GEMINI_DEFAULT_THINKING_LEVEL) or GEMINI_DEFAULT_THINKING_LEVEL).lower()
+            generation_config: dict[str, Any] = {
+                "thinking_level": thinking_level,
                 "temperature": temperature,
-                "thinking_config": thinking_config,
             }
-            if max_output_tokens is not None:
-                config_kwargs["max_output_tokens"] = int(max_output_tokens)
-            config = types.GenerateContentConfig(**config_kwargs)
-
+            if per_request_limit is not None:
+                generation_config["max_output_tokens"] = int(per_request_limit)
             request_payload = {
-                "endpoint": sanitized_base_url(f"{GEMINI_ENDPOINT}/{self.model_id}:generateContent"),
+                "endpoint": sanitized_base_url(GEMINI_INTERACTIONS_ENDPOINT),
                 "model": self.model_id,
                 "system_instruction": SYSTEM_PROMPT,
-                "contents": problem,
-                "max_output_tokens": max_output_tokens,
+                "input": problem,
+                "max_output_tokens_total": total_budget,
+                "max_output_tokens_per_request": per_request_limit,
                 "temperature": temperature,
-                "thinking_config": {"thinking_level": thinking_level},
-                "store": False,
+                "thinking_config": {"thinking_level": thinking_level.upper()},
+                "store": True,
             }
             ensure_text_only_request(request_payload)
 
-            response, latency_ms = timed(
-                lambda: client.models.generate_content(
-                    model=self.model_id,
-                    contents=problem,
-                    config=config,
+            remaining_budget = int(total_budget or per_request_limit)
+            previous_interaction_id: str | None = None
+            responses: list[dict[str, Any]] = []
+            request_steps: list[dict[str, Any]] = []
+            answer_parts: list[str] = []
+            prompt_tokens = 0
+            completion_tokens = 0
+            total_tokens = 0
+            reasoning_tokens = 0
+            cached_input_tokens = 0
+            last_finish_reason: str | None = None
+            resolved_model = self.model_id
+
+            while remaining_budget > 0:
+                step_max_tokens = min(per_request_limit, remaining_budget)
+                step_input = (
+                    problem
+                    if previous_interaction_id is None
+                    else "Continue from the previous reasoning and provide the final visible solution. Do not restart."
                 )
-            )
-            raw_response = safe_dict(response)
-            usage = getattr(response, "usage_metadata", None) or raw_response.get("usage_metadata") or raw_response.get("usageMetadata")
-            prompt_tokens = usage_value(usage, "prompt_token_count", "promptTokenCount", "input_tokens", "inputTokens")
-            completion_tokens = usage_value(usage, "candidates_token_count", "candidatesTokenCount", "output_tokens", "outputTokens")
-            total_tokens = usage_value(usage, "total_token_count", "totalTokenCount", "total_tokens", "totalTokens")
-            reasoning_tokens = usage_value(usage, "thoughts_token_count", "thoughtsTokenCount", "reasoning_tokens", "reasoningTokens") or None
-            cached_input_tokens = usage_detail_value(usage, "cache_tokens_details", "cached_tokens", "cachedTokens") or usage_value(usage, "cached_content_token_count", "cachedContentTokenCount") or None
-            answer = response_text(response)
+                step_generation_config = {
+                    **generation_config,
+                    "max_output_tokens": int(step_max_tokens),
+                }
+                step_request = {
+                    "model": self.model_id,
+                    "input": step_input,
+                    "system_instruction": SYSTEM_PROMPT,
+                    "generation_config": step_generation_config,
+                    "previous_interaction_id": previous_interaction_id,
+                    "store": True,
+                }
+                request_steps.append(step_request)
+                interaction_kwargs: dict[str, Any] = {
+                    "model": self.model_id,
+                    "input": step_input,
+                    "system_instruction": SYSTEM_PROMPT,
+                    "generation_config": step_generation_config,
+                    "store": True,
+                }
+                if previous_interaction_id:
+                    interaction_kwargs["previous_interaction_id"] = previous_interaction_id
+                response, step_latency_ms = timed(
+                    lambda: client.interactions.create(**interaction_kwargs)
+                )
+                latency_ms += step_latency_ms
+                step_raw_response = safe_dict(response)
+                raw_response = step_raw_response
+                usage = interaction_usage(response, step_raw_response)
+                step_prompt_tokens = usage_value(usage, "prompt_token_count", "promptTokenCount", "input_tokens", "inputTokens")
+                step_completion_tokens = usage_value(usage, "candidates_token_count", "candidatesTokenCount", "output_tokens", "outputTokens")
+                step_total_tokens = usage_value(usage, "total_token_count", "totalTokenCount", "total_tokens", "totalTokens")
+                step_reasoning_tokens = usage_value(usage, "thoughts_token_count", "thoughtsTokenCount", "reasoning_tokens", "reasoningTokens") or 0
+                step_cached_tokens = usage_detail_value(usage, "cache_tokens_details", "cached_tokens", "cachedTokens") or usage_value(usage, "cached_content_token_count", "cachedContentTokenCount") or 0
+                prompt_tokens += step_prompt_tokens
+                completion_tokens += step_completion_tokens
+                total_tokens += step_total_tokens
+                reasoning_tokens += step_reasoning_tokens
+                cached_input_tokens += step_cached_tokens
+                text = response_text(response)
+                if text.strip():
+                    answer_parts.append(text)
+                step_finish_reason = finish_reason(step_raw_response)
+                last_finish_reason = step_finish_reason or last_finish_reason
+                interaction_id = getattr(response, "id", None) or step_raw_response.get("id")
+                resolved_model = (
+                    step_raw_response.get("model_version")
+                    or step_raw_response.get("modelVersion")
+                    or step_raw_response.get("model")
+                    or resolved_model
+                )
+                responses.append(
+                    {
+                        "request": step_request,
+                        "response": step_raw_response,
+                        "latency_ms": step_latency_ms,
+                        "answer_chars": len(text.strip()),
+                    }
+                )
+                previous_interaction_id = str(interaction_id) if interaction_id else None
+                remaining_budget -= step_max_tokens
+                if not is_length_limited(step_finish_reason) and text.strip():
+                    break
+                if not previous_interaction_id:
+                    break
+
+            answer = "\n\n".join(part.strip() for part in answer_parts if part.strip())
+            billable_output_tokens = completion_tokens + reasoning_tokens
             cost = estimate_cost(
                 "google",
                 self.model_id,
                 input_tokens=prompt_tokens,
-                output_tokens=completion_tokens,
-                cached_input_tokens=cached_input_tokens,
+                output_tokens=billable_output_tokens,
+                cached_input_tokens=cached_input_tokens or None,
             )
-            resolved_model = raw_response.get("model_version") or raw_response.get("modelVersion") or raw_response.get("model") or self.model_id
+            raw_response = {
+                "endpoint": sanitized_base_url(GEMINI_INTERACTIONS_ENDPOINT),
+                "multi_request": {
+                    "enabled": len(responses) > 1 or bool(total_budget and total_budget > per_request_limit),
+                    "requests": len(responses),
+                    "max_output_tokens_total": total_budget,
+                    "max_output_tokens_per_request": per_request_limit,
+                    "stopped_after_non_limited_visible_output": bool(answer.strip() and not is_length_limited(last_finish_reason)),
+                },
+                "responses": responses,
+                "last_response": raw_response,
+                "usage": {
+                    "input_tokens": prompt_tokens,
+                    "output_tokens": completion_tokens,
+                    "total_tokens": total_tokens or prompt_tokens + billable_output_tokens,
+                    "output_tokens_details": {"reasoning_tokens": reasoning_tokens or None},
+                    "input_tokens_details": {"cached_tokens": cached_input_tokens or None},
+                    "billable_output_tokens": billable_output_tokens,
+                },
+            }
+            error = None
+            if not answer.strip():
+                error = (
+                    "Gemini Interactions API returned no visible output after "
+                    f"{len(responses)} request(s) and {billable_output_tokens} generated tokens"
+                )
 
             return SolveResult(
                 model=self.model_id,
@@ -191,21 +334,22 @@ class GeminiModel(BaseModel):
                 provider="google",
                 requested_model_id=self.model_id,
                 resolved_model_id=resolved_model,
-                request=request_payload,
+                request={**request_payload, "steps": request_steps},
                 usage={
                     "input_tokens": prompt_tokens,
                     "output_tokens": completion_tokens,
-                    "total_tokens": total_tokens or prompt_tokens + completion_tokens,
-                    "reasoning_tokens": reasoning_tokens,
-                    "cached_input_tokens": cached_input_tokens,
+                    "total_tokens": total_tokens or prompt_tokens + billable_output_tokens,
+                    "reasoning_tokens": reasoning_tokens or None,
+                    "cached_input_tokens": cached_input_tokens or None,
                     "cache_creation_input_tokens": None,
-                    "raw": safe_dict(usage),
-                    "source": "provider_response" if usage else "legacy_fields",
+                    "raw": raw_response["usage"],
+                    "source": "provider_response" if responses else "legacy_fields",
                 },
                 cost={**cost, "reasoning": None},
-                finish_reason=finish_reason(raw_response),
-                response_id=raw_response.get("id") or raw_response.get("response_id"),
-                provider_timestamp=raw_response.get("create_time") or raw_response.get("createTime"),
+                finish_reason=last_finish_reason,
+                response_id=(raw_response.get("last_response") or {}).get("id"),
+                provider_timestamp=(raw_response.get("last_response") or {}).get("create_time") or (raw_response.get("last_response") or {}).get("createTime"),
+                error=error,
             )
         except Exception as exc:
             result = error_result(self.model_id, exc, latency_ms=latency_ms)
