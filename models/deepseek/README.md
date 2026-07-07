@@ -104,6 +104,9 @@ DEEPSEEK_TEMPERATURE=0.3
 DEEPSEEK_MAX_TOKENS=8192
 ```
 
+Если API вернул usage и finish reason, но не вернул видимый текстовый ответ,
+адаптер записывает `SolveResult.error`, а не успешное пустое решение.
+
 ## Полезные ссылки
 
 - [DeepSeek platform](https://platform.deepseek.com)

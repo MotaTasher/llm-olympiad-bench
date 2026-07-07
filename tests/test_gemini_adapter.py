@@ -204,6 +204,64 @@ class GeminiAdapterTests(unittest.TestCase):
         self.assertTrue(result.raw_response["multi_request"]["enabled"])
         self.assertEqual(result.raw_response["multi_request"]["requests"], 2)
 
+    def test_interactions_usage_fields_are_logged_and_priced(self) -> None:
+        class InteractionUsage:
+            total_input_tokens = 13
+            total_output_tokens = 17
+            total_thought_tokens = 19
+            total_cached_tokens = 5
+            total_tokens = 49
+
+        class InteractionResponse:
+            id = "interactions-usage-id"
+            output_text = "FINAL"
+            usage = InteractionUsage()
+
+            def model_dump(self):
+                return {
+                    "id": self.id,
+                    "model": "gemini-3.5-flash",
+                    "status": "completed",
+                    "output_text": self.output_text,
+                    "usage": {
+                        "total_input_tokens": 13,
+                        "total_output_tokens": 17,
+                        "total_thought_tokens": 19,
+                        "total_cached_tokens": 5,
+                        "total_tokens": 49,
+                    },
+                }
+
+        class InteractionsUsageClient(FakeClient):
+            def __init__(self, **kwargs) -> None:
+                super().__init__(**kwargs)
+
+                class Interactions(FakeInteractions):
+                    def create(self, **kwargs):
+                        self.calls.append(kwargs)
+                        return InteractionResponse()
+
+                self.interactions = Interactions()
+                FakeClient.last_client = self
+
+        fake_types = types.SimpleNamespace(HttpOptions=FakeHttpOptions)
+        fake_genai = types.SimpleNamespace(Client=InteractionsUsageClient, types=fake_types)
+        with patch.dict(sys.modules, {"google": types.SimpleNamespace(genai=fake_genai), "google.genai": fake_genai, "google.genai.types": fake_types}), patch.dict("os.environ", {"GEMINI_API_KEY": "test-key"}, clear=True):
+            result = GeminiModel("gemini-3.5-flash").solve("problem", max_tokens=256)
+
+        self.assertIsNone(result.error)
+        self.assertEqual(result.prompt_tokens, 13)
+        self.assertEqual(result.completion_tokens, 17)
+        self.assertEqual(result.usage["reasoning_tokens"], 19)
+        self.assertEqual(result.usage["cached_input_tokens"], 5)
+        self.assertEqual(result.raw_response["usage"]["total_thought_tokens"], 19)
+        self.assertEqual(result.raw_response["usage"]["billable_output_tokens"], 36)
+        self.assertGreater(result.cost_usd, 0)
+        logged = result.to_log_dict()
+        last_usage = logged["raw_response"]["last_response"]["usage"]
+        self.assertEqual(last_usage["total_thought_tokens"], 19)
+        self.assertEqual(last_usage["total_output_tokens"], 17)
+
     def test_provider_exception_and_missing_key_return_error_result(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
             missing = GeminiModel("gemini-3.5-flash").solve("problem")

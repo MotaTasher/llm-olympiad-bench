@@ -48,6 +48,11 @@ budgets into multiple Interactions API requests and links them with
 `previous_interaction_id`. This preserves Gemini's server-side reasoning context
 and thought signatures while keeping the request text-only. For example,
 `--max-tokens 256000` can use up to four Gemini requests.
+Usage telemetry is read from the Interactions API `usage` fields:
+`total_input_tokens`, `total_output_tokens`, `total_thought_tokens`,
+`total_cached_tokens` and `total_tokens`. Thinking tokens are billed as output
+telemetry by the local benchmark estimator. A response with no visible text is
+logged as an adapter error even when the provider HTTP request succeeds.
 
 Credential-free smoke:
 

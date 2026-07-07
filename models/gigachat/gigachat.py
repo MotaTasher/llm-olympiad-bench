@@ -4,7 +4,7 @@ import base64
 import binascii
 
 from ..base import BaseModel, SolveResult
-from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
+from ..common import SYSTEM_PROMPT, empty_answer_error, ensure_text_only_request, env, error_result, safe_dict, timed
 from ..pricing import estimate_cost
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
@@ -125,12 +125,23 @@ class GigaChatModel(BaseModel):
             completion_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
             answer = response.choices[0].message.content or ""
             raw_response = safe_dict(response)
+            finish = None
+            choices = raw_response.get("choices")
+            if isinstance(choices, list) and choices and isinstance(choices[0], dict):
+                finish = choices[0].get("finish_reason") or choices[0].get("finishReason")
             cost = estimate_cost(
                 "gigachat",
                 self.model_id,
                 input_tokens=prompt_tokens,
                 output_tokens=completion_tokens,
             )
+            error = None
+            if not answer.strip():
+                error = empty_answer_error(
+                    "GigaChat API",
+                    generated_tokens=completion_tokens,
+                    finish_reason=str(finish) if finish else None,
+                )
 
             return SolveResult(
                 model=self.model_id,
@@ -140,11 +151,17 @@ class GigaChatModel(BaseModel):
                 cost_usd=cost.get("total") or 0.0,
                 latency_ms=latency_ms,
                 raw_response=raw_response,
+                error=error,
                 provider="gigachat",
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
                 request=request_payload,
                 cost={**cost, "cached_input": None, "reasoning": None},
+                finish_reason=str(finish) if finish else None,
             )
         except Exception as exc:
-            return error_result(self.model_id, exc)
+            result = error_result(self.model_id, exc)
+            result.provider = "gigachat"
+            result.requested_model_id = self.model_id
+            result.resolved_model_id = self.model_id
+            return result

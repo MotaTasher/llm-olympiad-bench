@@ -5,6 +5,7 @@ from typing import Any
 from ..base import BaseModel, SolveResult
 from ..common import (
     SYSTEM_PROMPT,
+    empty_answer_error,
     ensure_text_only_request,
     env,
     error_result,
@@ -88,14 +89,14 @@ def choice_finish_reason(raw_response: dict[str, Any]) -> str | None:
     return raw_response.get("finish_reason") or raw_response.get("status")
 
 
-def provider_cost_from_ticks(raw_response: dict[str, Any]) -> float | None:
+def provider_cost_ticks(raw_response: dict[str, Any]) -> int | None:
     value = raw_response.get("cost_in_usd_ticks")
     if value is None and isinstance(raw_response.get("usage"), dict):
         value = raw_response["usage"].get("cost_in_usd_ticks")
     if value in {None, ""}:
         return None
     try:
-        return int(value) / 10_000_000_000
+        return int(value)
     except (TypeError, ValueError):
         return None
 
@@ -188,15 +189,24 @@ class GrokModel(BaseModel):
                 output_tokens=completion_tokens,
                 cached_input_tokens=cached_input_tokens,
             )
-            provider_cost = provider_cost_from_ticks(raw_response)
-            if provider_cost is not None:
+            provider_ticks = provider_cost_ticks(raw_response)
+            if provider_ticks is not None:
+                provider_cost = provider_ticks / 10_000_000_000
                 cost = {
                     **cost,
                     "total": round(provider_cost, 10),
                     "estimated": False,
-                    "provider_reported": {"cost_in_usd_ticks": raw_response.get("cost_in_usd_ticks")},
+                    "provider_reported": {"cost_in_usd_ticks": provider_ticks},
                     "pricing_source": "provider_response",
                 }
+            finish = choice_finish_reason(raw_response)
+            error = None
+            if not answer.strip():
+                error = empty_answer_error(
+                    "xAI Chat Completions API",
+                    generated_tokens=completion_tokens + int(reasoning_tokens or 0),
+                    finish_reason=finish,
+                )
 
             return SolveResult(
                 model=self.model_id,
@@ -206,6 +216,7 @@ class GrokModel(BaseModel):
                 cost_usd=cost.get("total") or 0.0,
                 latency_ms=latency_ms,
                 raw_response=raw_response,
+                error=error,
                 provider="xai",
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
@@ -221,7 +232,7 @@ class GrokModel(BaseModel):
                     "source": "provider_response" if usage else "legacy_fields",
                 },
                 cost={**cost, "reasoning": None},
-                finish_reason=choice_finish_reason(raw_response),
+                finish_reason=finish,
                 response_id=raw_response.get("id"),
                 provider_timestamp=raw_response.get("created"),
             )

@@ -5,6 +5,7 @@ from typing import Any
 from ..base import BaseModel, SolveResult
 from ..common import (
     SYSTEM_PROMPT,
+    empty_answer_error,
     ensure_text_only_request,
     env,
     error_result,
@@ -183,6 +184,14 @@ class GLMModel(BaseModel):
                 output_tokens=completion_tokens,
                 cached_input_tokens=cached_input_tokens,
             )
+            finish = choice_finish_reason(raw_response)
+            error = None
+            if not answer.strip():
+                error = empty_answer_error(
+                    "Z.AI Chat Completions API",
+                    generated_tokens=completion_tokens + int(reasoning_tokens or 0),
+                    finish_reason=finish,
+                )
 
             return SolveResult(
                 model=self.model_id,
@@ -192,6 +201,7 @@ class GLMModel(BaseModel):
                 cost_usd=cost.get("total") or 0.0,
                 latency_ms=latency_ms,
                 raw_response=raw_response,
+                error=error,
                 provider="zai",
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
@@ -207,7 +217,7 @@ class GLMModel(BaseModel):
                     "source": "provider_response" if usage else "legacy_fields",
                 },
                 cost={**cost, "reasoning": None},
-                finish_reason=choice_finish_reason(raw_response),
+                finish_reason=finish,
                 response_id=raw_response.get("id"),
                 provider_timestamp=raw_response.get("created"),
             )

@@ -3,6 +3,7 @@ from __future__ import annotations
 from ..base import BaseModel, SolveResult
 from ..common import (
     SYSTEM_PROMPT,
+    empty_answer_error,
     ensure_text_only_request,
     env,
     error_result,
@@ -94,6 +95,17 @@ class DeepSeekModel(BaseModel):
             raw_response = safe_dict(response)
             if reasoning:
                 raw_response["reasoning_content"] = reasoning
+            finish = None
+            choices = raw_response.get("choices")
+            if isinstance(choices, list) and choices and isinstance(choices[0], dict):
+                finish = choices[0].get("finish_reason") or choices[0].get("finishReason")
+            error = None
+            if not answer.strip():
+                error = empty_answer_error(
+                    "DeepSeek Chat Completions API",
+                    generated_tokens=completion_tokens,
+                    finish_reason=str(finish) if finish else None,
+                )
 
             return SolveResult(
                 model=self.model_id,
@@ -103,11 +115,17 @@ class DeepSeekModel(BaseModel):
                 cost_usd=round(cost_usd, 8),
                 latency_ms=latency_ms,
                 raw_response=raw_response,
+                error=error,
                 provider="deepseek",
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
                 request=request_payload,
                 cost={**cost, "cached_input": None, "reasoning": None},
+                finish_reason=str(finish) if finish else None,
             )
         except Exception as exc:
-            return error_result(self.model_id, exc)
+            result = error_result(self.model_id, exc)
+            result.provider = "deepseek"
+            result.requested_model_id = self.model_id
+            result.resolved_model_id = self.model_id
+            return result

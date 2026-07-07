@@ -63,4 +63,4 @@ for model_id in ["glm-5.2", "glm-4.7-flash"]:
 PY
 ```
 
-The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files, managed agents or code execution. Provider `reasoning_content` may be retained in redacted raw telemetry but is never included in the visible answer.
+The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files, managed agents or code execution. Provider `reasoning_content` may be retained in redacted raw telemetry but is never included in the visible answer. A response with no visible text is logged as an adapter error even when Z.AI returns token usage.

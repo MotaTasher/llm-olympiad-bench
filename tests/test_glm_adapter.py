@@ -128,6 +128,49 @@ class GLMAdapterTests(unittest.TestCase):
             0.0,
         )
 
+    def test_empty_visible_answer_is_error(self) -> None:
+        class EmptyMessage:
+            content = ""
+            reasoning_content = "hidden"
+
+        class EmptyChoice:
+            message = EmptyMessage()
+            finish_reason = "length"
+
+        class EmptyResponse(FakeResponse):
+            choices = [EmptyChoice()]
+
+            def model_dump(self) -> dict:
+                data = super().model_dump()
+                data["choices"] = [
+                    {
+                        "finish_reason": "length",
+                        "message": {"content": "", "reasoning_content": "hidden"},
+                    }
+                ]
+                return data
+
+        class EmptyCompletions(FakeCompletions):
+            def create(self, **kwargs):
+                self.calls.append(kwargs)
+                return EmptyResponse()
+
+        class EmptyChat:
+            def __init__(self) -> None:
+                self.completions = EmptyCompletions()
+
+        class EmptyOpenAI(FakeOpenAI):
+            def __init__(self, **kwargs) -> None:
+                super().__init__(**kwargs)
+                self.chat = EmptyChat()
+
+        with self.fake_openai_module(EmptyOpenAI), patch.dict("os.environ", {"ZAI_API_KEY": "test-key"}, clear=True):
+            result = GLMModel("glm-5.2").solve("problem", max_tokens=64)
+
+        self.assertTrue(result.error)
+        self.assertIn("no visible output", result.error)
+        self.assertEqual(result.finish_reason, "length")
+
     def test_exception_and_missing_key_return_error_result(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
             missing = GLMModel("glm-5.2").solve("problem")

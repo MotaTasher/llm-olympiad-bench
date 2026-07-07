@@ -95,6 +95,34 @@ class ClaudeAdapterTests(unittest.TestCase):
         self.assertEqual(result.answer, "ok")
         self.assertTrue(result.request["stream"])
 
+    def test_empty_visible_answer_is_error(self) -> None:
+        class EmptyBlock:
+            type = "text"
+            text = ""
+
+        class EmptyMessage(FakeMessage):
+            content = [EmptyBlock()]
+            stop_reason = "max_tokens"
+
+        class EmptyMessages(FakeMessages):
+            def create(self, **kwargs):
+                self.create_called = True
+                self.kwargs = kwargs
+                return EmptyMessage()
+
+        class EmptyAnthropicClient(FakeAnthropicClient):
+            def __init__(self, api_key):
+                self.api_key = api_key
+                self.messages = EmptyMessages()
+                FakeAnthropicClient.last_messages = self.messages
+
+        module = types.SimpleNamespace(Anthropic=EmptyAnthropicClient)
+        with patch.dict(sys.modules, {"anthropic": module}), patch.dict("os.environ", {"ANTHROPIC_API_KEY": "test"}, clear=False):
+            result = ClaudeModel("claude-opus-4-8").solve("problem", max_tokens=64)
+
+        self.assertTrue(result.error)
+        self.assertIn("no visible output", result.error)
+
 
 if __name__ == "__main__":
     unittest.main()

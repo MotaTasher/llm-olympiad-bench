@@ -5,6 +5,7 @@ from typing import Any
 from ..base import BaseModel, SolveResult
 from ..common import (
     SYSTEM_PROMPT,
+    empty_answer_error,
     ensure_text_only_request,
     env,
     error_result,
@@ -250,11 +251,46 @@ class GeminiModel(BaseModel):
                 step_raw_response = safe_dict(response)
                 raw_response = step_raw_response
                 usage = interaction_usage(response, step_raw_response)
-                step_prompt_tokens = usage_value(usage, "prompt_token_count", "promptTokenCount", "input_tokens", "inputTokens")
-                step_completion_tokens = usage_value(usage, "candidates_token_count", "candidatesTokenCount", "output_tokens", "outputTokens")
+                step_prompt_tokens = usage_value(
+                    usage,
+                    "total_input_tokens",
+                    "totalInputTokens",
+                    "prompt_token_count",
+                    "promptTokenCount",
+                    "input_tokens",
+                    "inputTokens",
+                )
+                step_completion_tokens = usage_value(
+                    usage,
+                    "total_output_tokens",
+                    "totalOutputTokens",
+                    "candidates_token_count",
+                    "candidatesTokenCount",
+                    "output_tokens",
+                    "outputTokens",
+                )
                 step_total_tokens = usage_value(usage, "total_token_count", "totalTokenCount", "total_tokens", "totalTokens")
-                step_reasoning_tokens = usage_value(usage, "thoughts_token_count", "thoughtsTokenCount", "reasoning_tokens", "reasoningTokens") or 0
-                step_cached_tokens = usage_detail_value(usage, "cache_tokens_details", "cached_tokens", "cachedTokens") or usage_value(usage, "cached_content_token_count", "cachedContentTokenCount") or 0
+                step_reasoning_tokens = usage_value(
+                    usage,
+                    "total_thought_tokens",
+                    "totalThoughtTokens",
+                    "thoughts_token_count",
+                    "thoughtsTokenCount",
+                    "reasoning_tokens",
+                    "reasoningTokens",
+                ) or 0
+                step_cached_tokens = usage_detail_value(
+                    usage,
+                    "cache_tokens_details",
+                    "cached_tokens",
+                    "cachedTokens",
+                ) or usage_value(
+                    usage,
+                    "total_cached_tokens",
+                    "totalCachedTokens",
+                    "cached_content_token_count",
+                    "cachedContentTokenCount",
+                ) or 0
                 prompt_tokens += step_prompt_tokens
                 completion_tokens += step_completion_tokens
                 total_tokens += step_total_tokens
@@ -311,6 +347,10 @@ class GeminiModel(BaseModel):
                     "input_tokens": prompt_tokens,
                     "output_tokens": completion_tokens,
                     "total_tokens": total_tokens or prompt_tokens + billable_output_tokens,
+                    "total_input_tokens": prompt_tokens,
+                    "total_output_tokens": completion_tokens,
+                    "total_thought_tokens": reasoning_tokens or None,
+                    "total_cached_tokens": cached_input_tokens or None,
                     "output_tokens_details": {"reasoning_tokens": reasoning_tokens or None},
                     "input_tokens_details": {"cached_tokens": cached_input_tokens or None},
                     "billable_output_tokens": billable_output_tokens,
@@ -318,9 +358,11 @@ class GeminiModel(BaseModel):
             }
             error = None
             if not answer.strip():
-                error = (
-                    "Gemini Interactions API returned no visible output after "
-                    f"{len(responses)} request(s) and {billable_output_tokens} generated tokens"
+                error = empty_answer_error(
+                    "Gemini Interactions API",
+                    generated_tokens=billable_output_tokens,
+                    finish_reason=last_finish_reason,
+                    request_count=len(responses),
                 )
 
             return SolveResult(

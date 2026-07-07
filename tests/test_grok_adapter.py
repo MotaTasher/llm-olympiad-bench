@@ -122,6 +122,59 @@ class GrokAdapterTests(unittest.TestCase):
         self.assertIn("xai:grok-build-0.1", configured_model_columns())
         self.assertNotIn("xai:grok-code-fast-1", configured_model_columns())
 
+    def test_empty_visible_answer_is_error(self) -> None:
+        class EmptyUsageDetails:
+            reasoning_tokens = 255
+            cached_tokens = 4
+
+        class EmptyUsage:
+            prompt_tokens = 10
+            completion_tokens = 1
+            total_tokens = 266
+            completion_tokens_details = EmptyUsageDetails()
+            prompt_tokens_details = EmptyUsageDetails()
+
+        class EmptyMessage:
+            content = ""
+
+        class EmptyChoice:
+            message = EmptyMessage()
+            finish_reason = "length"
+
+        class EmptyResponse(FakeResponse):
+            choices = [EmptyChoice()]
+            usage = EmptyUsage()
+
+            def model_dump(self) -> dict:
+                data = super().model_dump()
+                data["choices"] = [{"finish_reason": "length", "message": {"content": ""}}]
+                data["usage"]["completion_tokens"] = 1
+                data["usage"]["completion_tokens_details"]["reasoning_tokens"] = 255
+                data["usage"]["total_tokens"] = 266
+                return data
+
+        class EmptyCompletions(FakeCompletions):
+            def create(self, **kwargs):
+                self.calls.append(kwargs)
+                return EmptyResponse()
+
+        class EmptyChat:
+            def __init__(self) -> None:
+                self.completions = EmptyCompletions()
+
+        class EmptyOpenAI(FakeOpenAI):
+            def __init__(self, **kwargs) -> None:
+                super().__init__(**kwargs)
+                self.chat = EmptyChat()
+
+        with self.fake_openai_module(EmptyOpenAI), patch.dict("os.environ", {"XAI_API_KEY": "test-key"}, clear=True):
+            result = GrokModel("grok-build-0.1").solve("problem", max_tokens=256)
+
+        self.assertTrue(result.error)
+        self.assertIn("no visible output", result.error)
+        self.assertEqual(result.finish_reason, "length")
+        self.assertEqual(result.usage["reasoning_tokens"], 255)
+
     def test_exception_and_missing_key_return_error_result(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
             missing = GrokModel("grok-4.3").solve("problem")

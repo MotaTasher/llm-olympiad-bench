@@ -62,4 +62,4 @@ for model_id in ["grok-4.3", "grok-build-0.1"]:
 PY
 ```
 
-The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files, managed agents or code execution. If xAI returns `cost_in_usd_ticks`, that provider-reported cost overrides the local pricing estimate.
+The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files, managed agents or code execution. If xAI returns `cost_in_usd_ticks`, that provider-reported cost overrides the local pricing estimate. A response with no visible text is logged as an adapter error even when xAI returns token usage and `finish_reason=length`.

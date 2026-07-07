@@ -52,6 +52,7 @@ SAFE_TOKEN_KEYS = {
     "final_max_tokens",
     "input_tokens",
     "input_tokens_details",
+    "input_tokens_by_modality",
     "inputtokens",
     "inputtokensdetails",
     "inputtexttokens",
@@ -63,6 +64,7 @@ SAFE_TOKEN_KEYS = {
     "maxtokens",
     "output_tokens",
     "output_tokens_details",
+    "output_tokens_by_modality",
     "outputtokens",
     "outputtokensdetails",
     "prompt_tokens",
@@ -71,8 +73,18 @@ SAFE_TOKEN_KEYS = {
     "reasoning_tokens",
     "reasoningtokens",
     "time_to_first_token_ms",
+    "total_cached_tokens",
+    "total_input_tokens",
+    "total_output_tokens",
+    "total_thought_tokens",
+    "total_tool_use_tokens",
     "total_tokens",
+    "totalcachedtokens",
+    "totalinputtokens",
+    "totaloutputtokens",
+    "totalthoughttokens",
     "totaltokens",
+    "totaltoolusetokens",
 }
 
 SAFE_ENV_ALLOWLIST = {
@@ -427,10 +439,10 @@ def extract_usage(raw_response: dict[str, Any], prompt_tokens: int | None, compl
         completion_details = {}
 
     input_tokens = prompt_tokens if prompt_tokens not in {None, 0} else _first_present(
-        raw_usage, ["prompt_tokens", "input_tokens", "inputTextTokens", "inputTokens"]
+        raw_usage, ["prompt_tokens", "input_tokens", "inputTextTokens", "inputTokens", "total_input_tokens"]
     )
     output_tokens = completion_tokens if completion_tokens not in {None, 0} else _first_present(
-        raw_usage, ["completion_tokens", "output_tokens", "completionTokens"]
+        raw_usage, ["completion_tokens", "output_tokens", "completionTokens", "total_output_tokens"]
     )
     total_tokens = _first_present(raw_usage, ["total_tokens", "totalTokens"])
     cached_input_tokens = _first_present(
@@ -438,7 +450,10 @@ def extract_usage(raw_response: dict[str, Any], prompt_tokens: int | None, compl
         ["cached_tokens", "cached_input_tokens", "cache_read_input_tokens"],
     )
     if cached_input_tokens is None:
-        cached_input_tokens = _first_present(raw_usage, ["cached_input_tokens", "precached_prompt_tokens"])
+        cached_input_tokens = _first_present(
+            raw_usage,
+            ["cached_input_tokens", "precached_prompt_tokens", "total_cached_tokens"],
+        )
     cache_creation_tokens = _first_present(
         prompt_details,
         ["cache_creation_input_tokens", "cache_write_input_tokens"],
@@ -448,7 +463,10 @@ def extract_usage(raw_response: dict[str, Any], prompt_tokens: int | None, compl
         ["reasoning_tokens", "reasoningTokens"],
     )
     if reasoning_tokens is None:
-        reasoning_tokens = _first_present(raw_usage, ["reasoning_tokens", "reasoningTokens"])
+        reasoning_tokens = _first_present(
+            raw_usage,
+            ["reasoning_tokens", "reasoningTokens", "total_thought_tokens"],
+        )
 
     return {
         "input_tokens": input_tokens,

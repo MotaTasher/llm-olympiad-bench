@@ -1,7 +1,15 @@
 from __future__ import annotations
 
 from ..base import BaseModel, SolveResult
-from ..common import SYSTEM_PROMPT, ensure_text_only_request, env, error_result, safe_dict, timed
+from ..common import (
+    SYSTEM_PROMPT,
+    empty_answer_error,
+    ensure_text_only_request,
+    env,
+    error_result,
+    safe_dict,
+    timed,
+)
 from ..pricing import YANDEX_RUB_PER_1K as PRICES_RUB_PER_1K, estimate_cost
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
@@ -136,6 +144,17 @@ class YandexGPTModel(BaseModel):
                 reasoning_tokens=reasoning_tokens or None,
             )
             raw_response = safe_dict(data)
+            alternatives = result.get("alternatives") if isinstance(result, dict) else None
+            finish = None
+            if isinstance(alternatives, list) and alternatives and isinstance(alternatives[0], dict):
+                finish = alternatives[0].get("status") or alternatives[0].get("finishReason")
+            error = None
+            if not answer.strip():
+                error = empty_answer_error(
+                    "YandexGPT Completion API",
+                    generated_tokens=completion_tokens + reasoning_tokens,
+                    finish_reason=str(finish) if finish else None,
+                )
 
             return SolveResult(
                 model=self.model_id,
@@ -145,6 +164,7 @@ class YandexGPTModel(BaseModel):
                 cost_usd=round(cost_usd, 8),
                 latency_ms=latency_ms,
                 raw_response=raw_response,
+                error=error,
                 provider="yandexgpt",
                 requested_model_id=self.model_id,
                 resolved_model_id=self.model_id,
@@ -160,6 +180,11 @@ class YandexGPTModel(BaseModel):
                     "source": "provider_response",
                 },
                 cost={**cost, "cached_input": None},
+                finish_reason=str(finish) if finish else None,
             )
         except Exception as exc:
-            return error_result(self.model_id, exc)
+            result = error_result(self.model_id, exc)
+            result.provider = "yandexgpt"
+            result.requested_model_id = self.model_id
+            result.resolved_model_id = self.model_id
+            return result

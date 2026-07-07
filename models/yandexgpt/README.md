@@ -124,6 +124,9 @@ YANDEX_TIMEOUT=120
 RUB_PER_USD=90
 ```
 
+Если API вернул usage/status, но не вернул видимый текстовый ответ,
+адаптер записывает `SolveResult.error`, а не успешное пустое решение.
+
 ## Полезные ссылки
 
 - [Yandex Cloud Console](https://console.yandex.cloud)

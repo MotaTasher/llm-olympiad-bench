@@ -32,7 +32,7 @@ class BaseModel(abc.ABC):
 - `finish_reason`, `provider_request_id`, `response_id`, `provider_timestamp`;
 - structured `error_info`.
 
-Adapters should fill provider-specific fields when the API exposes them, but must not invent missing metrics. If reasoning/cache usage or time-to-first-token is not returned or measured, leave it `null`/absent. Provider token-detail containers such as `output_tokens_details`, `completion_tokens_details`, `input_tokens_details`, Yandex `completionTokensDetails` and their `reasoningTokens`/`reasoning_tokens` counts are safe telemetry, not credentials. `SolveResult.to_log_dict()` preserves legacy fields while adding normalized telemetry and redacting unsafe data.
+Adapters should fill provider-specific fields when the API exposes them, but must not invent missing metrics. If reasoning/cache usage or time-to-first-token is not returned or measured, leave it `null`/absent. Provider token-detail containers such as `output_tokens_details`, `completion_tokens_details`, `input_tokens_details`, Gemini Interactions `total_input_tokens`/`total_output_tokens`/`total_thought_tokens`/`total_cached_tokens`, Yandex `completionTokensDetails` and their `reasoningTokens`/`reasoning_tokens` counts are safe telemetry, not credentials. `SolveResult.to_log_dict()` preserves legacy fields while adding normalized telemetry and redacting unsafe data.
 
 `max_tokens` is the runner-wide output/completion-token ceiling. Adapters map it
 to the provider's text completion field (`max_completion_tokens`, `max_tokens`,
@@ -42,6 +42,9 @@ to the provider's text completion field (`max_completion_tokens`, `max_tokens`,
 ## Failure behavior
 
 `solve()` must catch provider, credential, parsing and network exceptions and return `error_result(...)`. It must not abort the outer runner.
+If a provider returns a successful HTTP/API response but no visible answer text,
+the adapter must return a `SolveResult` with `error` populated. Reasoning-only
+or length-limited responses are not successful olympiad solutions.
 
 `raw_response` must be JSON-serializable and redacted. Use `safe_dict()` for SDK objects. Request snapshots must not include API keys, Authorization headers, cookies, credentials, full secret `.env` contents, full environment dumps, hostnames or user/home-directory identifiers.
 
@@ -160,7 +163,9 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   the adapter caps each Interactions API request at 65,536 output tokens and
   continues with `previous_interaction_id` when the total budget is larger. This
   preserves Gemini server-side conversation history and thought signatures
-  without adding tools, search or code execution.
+  without adding tools, search or code execution. Interactions API usage is
+  normalized from `total_input_tokens`, `total_output_tokens`,
+  `total_thought_tokens`, `total_cached_tokens` and `total_tokens`.
 - Grok uses xAI's hosted OpenAI-compatible endpoint
   `https://api.x.ai/v1`. `grok-4.3` is the general-purpose model and receives
   `XAI_REASONING_EFFORT=high` by default. `grok-build-0.1` is the

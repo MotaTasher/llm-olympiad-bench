@@ -94,3 +94,21 @@ def error_result(model_id: str, error: Exception | str, latency_ms: int = 0) -> 
         error=safe_error,
         error_info=structured_error(error),
     )
+
+
+def empty_answer_error(
+    provider: str,
+    *,
+    generated_tokens: int | None = None,
+    finish_reason: str | None = None,
+    request_count: int | None = None,
+) -> str:
+    details = []
+    if request_count is not None:
+        details.append(f"{request_count} request(s)")
+    if generated_tokens is not None:
+        details.append(f"{generated_tokens} generated token(s)")
+    if finish_reason:
+        details.append(f"finish_reason={finish_reason}")
+    suffix = f" after {', '.join(details)}" if details else ""
+    return f"{provider} returned no visible output{suffix}"

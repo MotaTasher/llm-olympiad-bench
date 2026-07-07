@@ -102,6 +102,9 @@ ANTHROPIC_MAX_TOKENS=12000
 # ANTHROPIC_THINKING_BUDGET_TOKENS=8000
 ```
 
+Если API вернул usage и stop reason, но не вернул видимый текстовый ответ,
+адаптер записывает `SolveResult.error`, а не успешное пустое решение.
+
 ## Полезные ссылки
 
 - [Anthropic API keys](https://console.anthropic.com/settings/keys)

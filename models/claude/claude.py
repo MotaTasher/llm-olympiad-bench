@@ -3,6 +3,7 @@ from __future__ import annotations
 from ..base import BaseModel, SolveResult
 from ..common import (
     SYSTEM_PROMPT,
+    empty_answer_error,
     ensure_text_only_request,
     env,
     error_result,
@@ -104,6 +105,14 @@ class ClaudeModel(BaseModel):
                 block.text for block in response.content if getattr(block, "type", None) == "text"
             )
             raw_response = safe_dict(response)
+            finish = raw_response.get("stop_reason") or raw_response.get("stopReason")
+            error = None
+            if not answer.strip():
+                error = empty_answer_error(
+                    "Anthropic Messages API",
+                    generated_tokens=completion_tokens,
+                    finish_reason=str(finish) if finish else None,
+                )
 
             return SolveResult(
                 model=self.model_id,
@@ -113,6 +122,7 @@ class ClaudeModel(BaseModel):
                 cost_usd=round(cost_usd, 8),
                 latency_ms=latency_ms,
                 raw_response=raw_response,
+                error=error,
                 provider="anthropic",
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
@@ -120,7 +130,11 @@ class ClaudeModel(BaseModel):
                 cost={**cost, "cached_input": None, "reasoning": None},
             )
         except Exception as exc:
-            return error_result(self.model_id, exc)
+            result = error_result(self.model_id, exc)
+            result.provider = "anthropic"
+            result.requested_model_id = self.model_id
+            result.resolved_model_id = self.model_id
+            return result
 
     @staticmethod
     def _create_streaming_message(client, kwargs):
