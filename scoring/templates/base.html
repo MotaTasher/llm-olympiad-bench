@@ -142,29 +142,22 @@
       white-space: nowrap;
     }
     .competition-progress {
+      display: flex;
       height: 10px;
       margin-top: 12px;
       border-radius: 999px;
       overflow: hidden;
-      background: var(--progress-unreviewed);
+      background: var(--progress-empty);
     }
-    .competition-progress-empty { background: var(--progress-empty); }
-    .competition-progress-reviewed { background: var(--progress-reviewed); }
-    .competition-progress-fill {
-      display: block;
-      height: 100%;
-      background: var(--progress-reviewed);
-    }
-    .competition-progress-label {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+    .competition-progress-segment { min-width: 0; }
+    .competition-progress-segment-reviewed { background: var(--progress-reviewed); }
+    .competition-progress-segment-unreviewed { background: var(--progress-unreviewed); }
+    .competition-progress-segment-empty { background: var(--progress-empty); }
+    .competition-progress-summary {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
     }
     .empty, .warning {
       padding: 14px;

@@ -33,7 +33,7 @@ from flask_login import (
 )
 from flask_wtf import CSRFProtect, FlaskForm
 from flask_wtf.csrf import CSRFError
-from wtforms import PasswordField, StringField, SubmitField
+from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -65,6 +65,7 @@ try:
         model_states_for_review,
         neighbor_problem_ids,
         next_unscored_attempt,
+        progress_counts_for_model_states,
         safe_id,
         save_evaluation,
         selected_state,
@@ -95,6 +96,7 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
         model_states_for_review,
         neighbor_problem_ids,
         next_unscored_attempt,
+        progress_counts_for_model_states,
         safe_id,
         save_evaluation,
         selected_state,
@@ -152,7 +154,6 @@ csrf = CSRFProtect(app)
 class LoginForm(FlaskForm):
     username = StringField("Логин", validators=[DataRequired()])
     password = PasswordField("Пароль", validators=[DataRequired()])
-    submit = SubmitField("Войти")
 
 
 @login_manager.user_loader
@@ -419,6 +420,7 @@ def scope_catalog_to_reviewer(data: dict, reviewer: str) -> None:
         competition["answer_count"] = answer_count
         competition["scored_count"] = scored_count
         competition["progress_percent"] = int((scored_count / answer_count) * 100) if answer_count else 0
+        competition.update(progress_counts_for_model_states(competition["problems"], competition["problem_order"]))
         competition["latest_timestamp"] = latest_run
 
 

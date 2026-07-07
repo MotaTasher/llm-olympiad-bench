@@ -78,6 +78,37 @@ class CompetitionCardParser(HTMLParser):
             self._current["text"].append(data)
 
 
+class CompetitionProgressParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.bars: list[dict] = []
+        self.summaries: list[str] = []
+        self._current_bar: dict | None = None
+        self._current_summary: list[str] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = {key: value or "" for key, value in attrs}
+        classes = set(attr_map.get("class", "").split())
+        if tag == "div" and "competition-progress" in classes:
+            self._current_bar = {"attrs": attr_map, "segments": []}
+            self.bars.append(self._current_bar)
+        elif tag == "span" and self._current_bar is not None and "competition-progress-segment" in classes:
+            self._current_bar["segments"].append(attr_map)
+        elif tag == "div" and "competition-progress-summary" in classes:
+            self._current_summary = []
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "div" and self._current_summary is not None:
+            self.summaries.append(compact_text(self._current_summary))
+            self._current_summary = None
+        elif tag == "div" and self._current_bar is not None:
+            self._current_bar = None
+
+    def handle_data(self, data: str) -> None:
+        if self._current_summary is not None:
+            self._current_summary.append(data)
+
+
 def compact_text(parts: list[str]) -> str:
     return " ".join("".join(parts).split())
 
@@ -587,6 +618,8 @@ class ScoringWebTests(unittest.TestCase):
         problem_id: str = "task_01",
         run_id: str = "run_active",
         result_id: str = "res_a",
+        model_key: str = "openai:gpt-5.5",
+        model: str = "gpt-5.5",
         score: float = 7,
         max_score: float = 10,
         evaluator: str | None = None,
@@ -604,8 +637,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": f"ev_{result_id}",
                             "result_id": result_id,
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": model_key,
+                            "model": model,
                             "evaluator": evaluator or self.username,
                             "score": score,
                             "max_score": max_score,
@@ -664,6 +697,24 @@ class ScoringWebTests(unittest.TestCase):
                 ],
             },
         )
+
+    def active_model_columns(self) -> list[dict]:
+        return list(configured_model_columns().values())
+
+    def total_matrix_cells(self, problem_count: int = 1) -> int:
+        return len(self.active_model_columns()) * problem_count
+
+    def index_progress(self) -> dict:
+        html = self.client.get("/").get_data(as_text=True)
+        parser = CompetitionProgressParser()
+        parser.feed(html)
+        self.assertEqual(len(parser.bars), 1, html)
+        bar = parser.bars[0]
+        counts = {
+            segment["data-progress-state"]: int(segment["data-progress-count"])
+            for segment in bar["segments"]
+        }
+        return {"bar": bar, "counts": counts, "summaries": parser.summaries, "html": html}
 
     def test_unauthenticated_get_routes_redirect_to_login(self) -> None:
         competition_path = self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -740,6 +791,8 @@ class ScoringWebTests(unittest.TestCase):
         self.assertNotIn("STATEMENT_TOKEN", html)
         self.assertNotIn("MODEL_SECRET_TOKEN", html)
         self.assertNotIn(joined("Стоимость ", "прогона"), html)
+        self.assertRegex(html, r"<button\s+type=\"submit\">\s*Войти\s*</button>")
+        self.assertNotRegex(html, r"<input[^>]+type=\"submit\"")
 
         token = self.csrf_token("/login?next=https://example.com/steal", client=anon)
         response = anon.post(
@@ -2207,49 +2260,138 @@ class ScoringWebTests(unittest.TestCase):
     def test_index_progress_empty_state(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
 
-        html = self.client.get("/").get_data(as_text=True)
-        self.assertIn("competition-progress-empty", html)
-        self.assertIn('aria-label="Запусков пока нет"', html)
-        self.assertIn("Запусков пока нет", html)
-        self.assertNotIn('<span class="competition-progress-fill"', html)
-        self.assertNotIn("width: 0%", html)
+        progress = self.index_progress()
+        total = self.total_matrix_cells()
+        self.assertEqual(
+            progress["counts"],
+            {"reviewed": 0, "unreviewed": 0, "not_run": total},
+        )
+        self.assertEqual(progress["bar"]["attrs"]["aria-valuemax"], str(total))
+        self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], "0")
+        self.assertIn(
+            f"Проверено 0 · ожидает проверки 0 · не запущено {total}",
+            progress["bar"]["attrs"]["aria-valuetext"],
+        )
+        self.assertIn(f"Запусков пока нет · Проверено 0 · ожидает проверки 0 · не запущено {total}", progress["summaries"])
+        self.assertNotIn("competition-progress-fill", progress["html"])
 
     def test_index_progress_unreviewed_state(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run()
 
-        html = self.client.get("/").get_data(as_text=True)
-        self.assertIn("competition-progress-active", html)
-        self.assertIn('style="width: 0%"', html)
-        self.assertIn('aria-valuenow="0"', html)
-        self.assertIn('aria-valuetext="Проверено 0 из 1"', html)
-        self.assertIn("Проверено 0 из 1", html)
+        progress = self.index_progress()
+        total = self.total_matrix_cells()
+        self.assertEqual(
+            progress["counts"],
+            {"reviewed": 0, "unreviewed": 1, "not_run": total - 1},
+        )
+        self.assertEqual(sum(progress["counts"].values()), total)
+        self.assertEqual(progress["bar"]["attrs"]["aria-valuemax"], str(total))
+        self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], "0")
+        self.assertIn(f"Проверено 0 · ожидает проверки 1 · не запущено {total - 1}", progress["summaries"])
+
+    def test_index_progress_empty_answer_counts_as_not_run(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run(answer="", error="provider returned no visible output")
+
+        progress = self.index_progress()
+        total = self.total_matrix_cells()
+        self.assertEqual(
+            progress["counts"],
+            {"reviewed": 0, "unreviewed": 0, "not_run": total},
+        )
+        self.assertEqual(sum(progress["counts"].values()), total)
+        self.assertIn(f"Проверено 0 · ожидает проверки 0 · не запущено {total}", progress["summaries"])
 
     def test_index_progress_partially_reviewed_state(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
-        self.write_run(run_id="run_a", result_id="res_a", timestamp="2026-06-20T00:00:00Z")
-        self.write_run(run_id="run_b", result_id="res_b", timestamp="2026-06-21T00:00:00Z")
-        self.write_score(run_id="run_a", result_id="res_a")
+        columns = self.active_model_columns()
+        reviewed_column, unreviewed_column = columns[0], columns[1]
+        self.write_run(
+            run_id="run_reviewed",
+            result_id="res_reviewed",
+            provider=reviewed_column["provider"],
+            model_id=reviewed_column["model_id"],
+            timestamp="2026-06-20T00:00:00Z",
+        )
+        self.write_score(
+            run_id="run_reviewed",
+            result_id="res_reviewed",
+            model_key=reviewed_column["model_key"],
+            model=reviewed_column["model_id"],
+        )
+        self.write_run(
+            run_id="run_unreviewed",
+            result_id="res_unreviewed",
+            provider=unreviewed_column["provider"],
+            model_id=unreviewed_column["model_id"],
+            timestamp="2026-06-21T00:00:00Z",
+        )
 
-        html = self.client.get("/").get_data(as_text=True)
-        self.assertIn('style="width: 50%"', html)
-        self.assertIn('aria-valuenow="1"', html)
-        self.assertIn('aria-valuetext="Проверено 1 из 2"', html)
-        self.assertIn("Проверено 1 из 2", html)
+        progress = self.index_progress()
+        total = self.total_matrix_cells()
+        self.assertEqual(
+            progress["counts"],
+            {"reviewed": 1, "unreviewed": 1, "not_run": total - 2},
+        )
+        self.assertEqual(sum(progress["counts"].values()), total)
+        self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], "1")
+        self.assertIn(f"Проверено 1 · ожидает проверки 1 · не запущено {total - 2}", progress["summaries"])
 
     def test_index_progress_fully_reviewed_state(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        for index, column in enumerate(self.active_model_columns()):
+            run_id = f"run_{index}"
+            result_id = f"res_{index}"
+            self.write_run(
+                run_id=run_id,
+                result_id=result_id,
+                provider=column["provider"],
+                model_id=column["model_id"],
+                timestamp=f"2026-06-20T00:00:{index:02d}Z",
+            )
+            self.write_score(
+                run_id=run_id,
+                result_id=result_id,
+                model_key=column["model_key"],
+                model=column["model_id"],
+            )
+
+        progress = self.index_progress()
+        total = self.total_matrix_cells()
+        self.assertEqual(
+            progress["counts"],
+            {"reviewed": total, "unreviewed": 0, "not_run": 0},
+        )
+        self.assertEqual(sum(progress["counts"].values()), total)
+        self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], str(total))
+        self.assertIn(f"Проверено {total} · ожидает проверки 0 · не запущено 0", progress["summaries"])
+
+    def test_index_progress_multiple_attempts_count_as_one_cell(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(run_id="run_a", result_id="res_a", timestamp="2026-06-20T00:00:00Z")
         self.write_run(run_id="run_b", result_id="res_b", timestamp="2026-06-21T00:00:00Z")
-        self.write_score(run_id="run_a", result_id="res_a")
-        self.write_score(run_id="run_b", result_id="res_b")
 
-        html = self.client.get("/").get_data(as_text=True)
-        self.assertIn("competition-progress-reviewed", html)
-        self.assertIn('style="width: 100%"', html)
-        self.assertIn('aria-valuenow="2"', html)
-        self.assertIn('aria-valuetext="Проверено 2 из 2"', html)
-        self.assertIn("Проверено 2 из 2", html)
+        progress = self.index_progress()
+        total = self.total_matrix_cells()
+        self.assertEqual(
+            progress["counts"],
+            {"reviewed": 0, "unreviewed": 1, "not_run": total - 1},
+        )
+        self.assertEqual(sum(progress["counts"].values()), total)
+
+    def test_index_progress_other_reviewer_score_does_not_review_for_current_user(self) -> None:
+        self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
+        self.write_run()
+        self.write_score(evaluator="other-reviewer")
+
+        progress = self.index_progress()
+        total = self.total_matrix_cells()
+        self.assertEqual(
+            progress["counts"],
+            {"reviewed": 0, "unreviewed": 1, "not_run": total - 1},
+        )
+        self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], "0")
 
 
 if __name__ == "__main__":

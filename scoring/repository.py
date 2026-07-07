@@ -667,6 +667,29 @@ def cell_state(column: dict[str, Any], attempts: list[dict[str, Any]], max_score
     }
 
 
+def progress_counts_for_model_states(
+    problems: dict[str, dict[str, Any]],
+    problem_order: list[str],
+) -> dict[str, int]:
+    counts = {
+        "reviewed_count": 0,
+        "unreviewed_count": 0,
+        "not_run_count": 0,
+        "total_cell_count": 0,
+    }
+    for problem_id in problem_order:
+        problem = problems.get(problem_id) or {}
+        for state in problem.get("model_states", []):
+            counts["total_cell_count"] += 1
+            if state.get("status") in {"not_run", "error"}:
+                counts["not_run_count"] += 1
+            elif state.get("score") is not None:
+                counts["reviewed_count"] += 1
+            else:
+                counts["unreviewed_count"] += 1
+    return counts
+
+
 def canonical_competitions(competitions_dir: Path, warnings: list[str]) -> dict[str, dict[str, Any]]:
     competitions: dict[str, dict[str, Any]] = {}
     if not competitions_dir.exists():
@@ -839,6 +862,7 @@ def finalize_catalog(competitions: dict[str, dict[str, Any]], warnings: list[str
         competition["answer_count"] = answer_count
         competition["scored_count"] = scored_count
         competition["progress_percent"] = int((scored_count / answer_count) * 100) if answer_count else 0
+        competition.update(progress_counts_for_model_states(competition["problems"], competition["problem_order"]))
         competition["latest_timestamp"] = latest_run
     competition_list = sorted(competitions.values(), key=competition_sort_key)
     return {

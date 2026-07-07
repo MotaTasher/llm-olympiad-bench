@@ -262,14 +262,27 @@ system locale. Empty dates render as an empty string. Invalid non-empty date
 strings are allowed to render as the original value instead of breaking the
 page.
 
-Progress is based only on existing attempts visible to the current reviewer:
-`answer_count`, `scored_count` and `progress_percent`. It does not use the
-theoretical `problem × model` matrix size as the denominator. When there are no
-attempts, the progress bar is gray and labeled `Запусков пока нет`. When
-attempts exist, the unreviewed portion is red and the reviewed portion is green.
-The active bar exposes `role="progressbar"`, `aria-valuemin="0"`,
-`aria-valuemax="<answer_count>"`, `aria-valuenow="<scored_count>"` and
-`aria-valuetext="Проверено X из N"`.
+Progress is reviewer-scoped and uses the full `problem × configured model`
+matrix as the denominator. Each model/problem cell contributes once regardless
+of how many attempts it has. After filtering evaluations to the current
+reviewer, cells are counted as `reviewed_count` when at least one run exists and
+the current cell state has a score, `unreviewed_count` when at least one run
+exists but the current reviewer has not scored the current cell state, and
+`not_run_count` when the current cell state has no non-empty successful answer.
+That includes cells with no attempts and fake/error attempts whose answer text
+is empty, matching the gray cells in the competition matrix. The invariant is:
+
+```text
+reviewed_count + unreviewed_count + not_run_count == total_cell_count
+```
+
+The progress bar always renders three flex segments in this order: green
+reviewed, red unreviewed and gray not-run. When there are no runs, the bar is
+fully gray and the card may still say `Запусков пока нет`. Cards also show the
+compact visible summary `Проверено X · ожидает проверки Y · не запущено Z`.
+The bar exposes `role="progressbar"`, `aria-valuemin="0"`,
+`aria-valuemax="<total_cell_count>"`, `aria-valuenow="<reviewed_count>"` and
+`aria-valuetext` with all three counts.
 
 ## Cell status
 
