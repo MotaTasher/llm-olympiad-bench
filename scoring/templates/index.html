@@ -16,7 +16,7 @@
       {% for group in competition_groups %}
         <section class="stack">
           <h2>{{ group.year }}</h2>
-          <div class="grid">
+          <div class="competition-grid">
             {% for competition in group.competitions %}
               <a class="card competition-card" href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">
                 <div class="card-title">
@@ -28,46 +28,43 @@
                 </div>
                 {% set card_description = competition.description|competition_card_description %}
                 {% if card_description %}
-                  <p class="muted">{{ card_description }}</p>
+                  <p class="muted competition-card-description">{{ card_description }}</p>
                 {% endif %}
                 <div class="stats">
                   <span class="pill">{{ competition.problem_count }} задач</span>
                 </div>
-                <div
-                  class="competition-progress"
-                  role="progressbar"
-                  aria-valuemin="0"
-                  aria-valuemax="{{ competition.total_cell_count }}"
-                  aria-valuenow="{{ competition.reviewed_count }}"
-                  aria-valuetext="Проверено {{ competition.reviewed_count }} · ожидает проверки {{ competition.unreviewed_count }} · не запущено {{ competition.not_run_count }}"
-                >
-                  <span
-                    class="competition-progress-segment competition-progress-segment-reviewed"
-                    style="flex-grow: {{ competition.reviewed_count }}"
-                    data-progress-state="reviewed"
-                    data-progress-count="{{ competition.reviewed_count }}"
-                    aria-hidden="true"
-                  ></span>
-                  <span
-                    class="competition-progress-segment competition-progress-segment-unreviewed"
-                    style="flex-grow: {{ competition.unreviewed_count }}"
-                    data-progress-state="unreviewed"
-                    data-progress-count="{{ competition.unreviewed_count }}"
-                    aria-hidden="true"
-                  ></span>
-                  <span
-                    class="competition-progress-segment competition-progress-segment-empty"
-                    style="flex-grow: {{ competition.not_run_count if competition.total_cell_count else 1 }}"
-                    data-progress-state="not_run"
-                    data-progress-count="{{ competition.not_run_count }}"
-                    aria-hidden="true"
-                  ></span>
-                </div>
-                <div class="competition-progress-summary">
-                  {% if competition.answer_count == 0 %}
-                    Запусков пока нет ·
-                  {% endif %}
-                  Проверено {{ competition.reviewed_count }} · ожидает проверки {{ competition.unreviewed_count }} · не запущено {{ competition.not_run_count }}
+                <div class="competition-card-footer">
+                  <div
+                    class="competition-progress"
+                    role="progressbar"
+                    aria-label="Прогресс проверки"
+                    aria-valuemin="0"
+                    aria-valuemax="{{ competition.total_cell_count }}"
+                    aria-valuenow="{{ competition.reviewed_count }}"
+                    aria-valuetext="Проверено {{ competition.reviewed_count }}, ожидает проверки {{ competition.unreviewed_count }}, не запущено {{ competition.not_run_count }}"
+                  >
+                    <span
+                      class="competition-progress-segment competition-progress-segment-reviewed"
+                      style="flex-grow: {{ competition.reviewed_count }}"
+                      data-progress-state="reviewed"
+                      data-progress-count="{{ competition.reviewed_count }}"
+                      aria-hidden="true"
+                    ></span>
+                    <span
+                      class="competition-progress-segment competition-progress-segment-unreviewed"
+                      style="flex-grow: {{ competition.unreviewed_count }}"
+                      data-progress-state="unreviewed"
+                      data-progress-count="{{ competition.unreviewed_count }}"
+                      aria-hidden="true"
+                    ></span>
+                    <span
+                      class="competition-progress-segment competition-progress-segment-empty"
+                      style="flex-grow: {{ competition.not_run_count if competition.total_cell_count else 1 }}"
+                      data-progress-state="not_run"
+                      data-progress-count="{{ competition.not_run_count }}"
+                      aria-hidden="true"
+                    ></span>
+                  </div>
                 </div>
               </a>
             {% endfor %}

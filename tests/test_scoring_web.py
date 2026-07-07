@@ -708,13 +708,21 @@ class ScoringWebTests(unittest.TestCase):
         html = self.client.get("/").get_data(as_text=True)
         parser = CompetitionProgressParser()
         parser.feed(html)
+        visible = VisibleTextParser()
+        visible.feed(html)
         self.assertEqual(len(parser.bars), 1, html)
         bar = parser.bars[0]
         counts = {
             segment["data-progress-state"]: int(segment["data-progress-count"])
             for segment in bar["segments"]
         }
-        return {"bar": bar, "counts": counts, "summaries": parser.summaries, "html": html}
+        return {
+            "bar": bar,
+            "counts": counts,
+            "summaries": parser.summaries,
+            "visible_text": visible.text,
+            "html": html,
+        }
 
     def test_unauthenticated_get_routes_redirect_to_login(self) -> None:
         competition_path = self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -2192,10 +2200,14 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("Main card description", text)
         self.assertIn("1 задач", text)
         self.assertIn("1 июня", text)
+        self.assertIn('class="competition-grid"', html)
+        self.assertIn('class="muted competition-card-description"', html)
         self.assertNotIn("math_2026", text)
         self.assertNotIn("моделей", text)
         self.assertNotIn("ответов", text)
         self.assertNotIn("0 проверено", text)
+        self.assertNotIn("Проверено", text)
+        self.assertNotIn("Запусков пока нет", text)
         self.assertNotIn("Последний запуск", text)
         self.assertNotIn("2026-06-20T00:00:00Z", html)
 
@@ -2269,10 +2281,14 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(progress["bar"]["attrs"]["aria-valuemax"], str(total))
         self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], "0")
         self.assertIn(
-            f"Проверено 0 · ожидает проверки 0 · не запущено {total}",
+            f"Проверено 0, ожидает проверки 0, не запущено {total}",
             progress["bar"]["attrs"]["aria-valuetext"],
         )
-        self.assertIn(f"Запусков пока нет · Проверено 0 · ожидает проверки 0 · не запущено {total}", progress["summaries"])
+        self.assertEqual(progress["bar"]["attrs"]["aria-label"], "Прогресс проверки")
+        self.assertEqual(progress["summaries"], [])
+        self.assertNotIn(f"Проверено 0, ожидает проверки 0, не запущено {total}", progress["visible_text"])
+        self.assertNotIn("competition-progress-summary", progress["html"])
+        self.assertNotIn("Запусков пока нет", progress["html"])
         self.assertNotIn("competition-progress-fill", progress["html"])
 
     def test_index_progress_unreviewed_state(self) -> None:
@@ -2288,7 +2304,12 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(sum(progress["counts"].values()), total)
         self.assertEqual(progress["bar"]["attrs"]["aria-valuemax"], str(total))
         self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], "0")
-        self.assertIn(f"Проверено 0 · ожидает проверки 1 · не запущено {total - 1}", progress["summaries"])
+        self.assertIn(
+            f"Проверено 0, ожидает проверки 1, не запущено {total - 1}",
+            progress["bar"]["attrs"]["aria-valuetext"],
+        )
+        self.assertEqual(progress["summaries"], [])
+        self.assertNotIn(f"Проверено 0, ожидает проверки 1, не запущено {total - 1}", progress["visible_text"])
 
     def test_index_progress_empty_answer_counts_as_not_run(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -2301,7 +2322,12 @@ class ScoringWebTests(unittest.TestCase):
             {"reviewed": 0, "unreviewed": 0, "not_run": total},
         )
         self.assertEqual(sum(progress["counts"].values()), total)
-        self.assertIn(f"Проверено 0 · ожидает проверки 0 · не запущено {total}", progress["summaries"])
+        self.assertIn(
+            f"Проверено 0, ожидает проверки 0, не запущено {total}",
+            progress["bar"]["attrs"]["aria-valuetext"],
+        )
+        self.assertEqual(progress["summaries"], [])
+        self.assertNotIn(f"Проверено 0, ожидает проверки 0, не запущено {total}", progress["visible_text"])
 
     def test_index_progress_partially_reviewed_state(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -2336,7 +2362,12 @@ class ScoringWebTests(unittest.TestCase):
         )
         self.assertEqual(sum(progress["counts"].values()), total)
         self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], "1")
-        self.assertIn(f"Проверено 1 · ожидает проверки 1 · не запущено {total - 2}", progress["summaries"])
+        self.assertIn(
+            f"Проверено 1, ожидает проверки 1, не запущено {total - 2}",
+            progress["bar"]["attrs"]["aria-valuetext"],
+        )
+        self.assertEqual(progress["summaries"], [])
+        self.assertNotIn(f"Проверено 1, ожидает проверки 1, не запущено {total - 2}", progress["visible_text"])
 
     def test_index_progress_fully_reviewed_state(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
@@ -2365,7 +2396,12 @@ class ScoringWebTests(unittest.TestCase):
         )
         self.assertEqual(sum(progress["counts"].values()), total)
         self.assertEqual(progress["bar"]["attrs"]["aria-valuenow"], str(total))
-        self.assertIn(f"Проверено {total} · ожидает проверки 0 · не запущено 0", progress["summaries"])
+        self.assertIn(
+            f"Проверено {total}, ожидает проверки 0, не запущено 0",
+            progress["bar"]["attrs"]["aria-valuetext"],
+        )
+        self.assertEqual(progress["summaries"], [])
+        self.assertNotIn(f"Проверено {total}, ожидает проверки 0, не запущено 0", progress["visible_text"])
 
     def test_index_progress_multiple_attempts_count_as_one_cell(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

@@ -278,11 +278,21 @@ reviewed_count + unreviewed_count + not_run_count == total_cell_count
 
 The progress bar always renders three flex segments in this order: green
 reviewed, red unreviewed and gray not-run. When there are no runs, the bar is
-fully gray and the card may still say `Запусков пока нет`. Cards also show the
-compact visible summary `Проверено X · ожидает проверки Y · не запущено Z`.
-The bar exposes `role="progressbar"`, `aria-valuemin="0"`,
+fully gray. Cards do not render a visible progress legend, segment counts or a
+visible `Запусков пока нет` message; progress text is exposed only through the
+bar's accessible metadata. The bar exposes `role="progressbar"`,
+`aria-label="Прогресс проверки"`, `aria-valuemin="0"`,
 `aria-valuemax="<total_cell_count>"`, `aria-valuenow="<reviewed_count>"` and
 `aria-valuetext` with all three counts.
+
+The index gallery uses a page-specific `competition-grid` rather than the
+global `.grid`: four equal columns on wide screens, then three, two and one
+column at narrower breakpoints. Column count is determined by viewport width,
+not by how many cards are present in a year group. Competition cards are
+vertical flex containers with the progress bar in a footer, so bars align at
+the bottom of cards in the same grid row. Descriptions remain full text in the
+HTML but are visually clamped to at most two lines and can wrap long words or
+URLs without widening the card.
 
 ## Cell status
 
