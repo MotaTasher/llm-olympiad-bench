@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_d7ed96f12dd4ac9f9805eec7": {
-      "evaluation_id": "ev_4077a482b7db451198f2513b00a3acb2",
+      "evaluation_id": "ev_abc76dd24cfe478983407bad3786b865",
       "result_id": "res_d7ed96f12dd4ac9f9805eec7",
       "result_index": 7,
       "model_key": "gigachat:GigaChat-2",
       "model": "GigaChat-2",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
       "feedback": "",
-      "created_at": "2026-06-30T17:58:21.326496Z",
-      "updated_at": "2026-06-30T17:58:21.326496Z"
+      "created_at": "2026-07-06T15:44:26.440117Z",
+      "updated_at": "2026-07-06T15:44:26.440117Z"
     },
     "res_df0d6cfb5ec4518e8f8805af": {
       "evaluation_id": "ev_d0ffc7375da0414e9b78cf325d5c18d2",
@@ -43,74 +43,74 @@
       "updated_at": "2026-06-30T17:59:03.394103Z"
     },
     "res_c1f47bee70c6c8d97b878887": {
-      "evaluation_id": "ev_d270713a870c4fd4bb69edff7b7cff14",
+      "evaluation_id": "ev_c36bf08a5d5f4f85891c1cf80c2a0936",
       "result_id": "res_c1f47bee70c6c8d97b878887",
       "result_index": 3,
       "model_key": "anthropic:claude-haiku-4-5-20251001",
       "model": "claude-haiku-4-5-20251001",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
-      "feedback": "",
-      "created_at": "2026-07-01T17:14:22.836919Z",
-      "updated_at": "2026-07-01T17:14:22.836919Z"
+      "feedback": "Всё верно",
+      "created_at": "2026-07-05T19:59:02.453673Z",
+      "updated_at": "2026-07-05T19:59:02.453673Z"
     },
     "res_16f535fbd5d5bda2bfadb8bf": {
-      "evaluation_id": "ev_189b68d225fc451cb8a10955e0b3fa63",
+      "evaluation_id": "ev_0d1199927a5c478c80491ef88978d37d",
       "result_id": "res_16f535fbd5d5bda2bfadb8bf",
       "result_index": 2,
       "model_key": "anthropic:claude-opus-4-8",
       "model": "claude-opus-4-8",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-01T17:14:43.185372Z",
-      "updated_at": "2026-07-01T17:14:43.185372Z"
+      "created_at": "2026-07-06T00:39:59.567417Z",
+      "updated_at": "2026-07-06T00:39:59.567417Z"
     },
     "res_bbbe31feb2256de0bf48225b": {
-      "evaluation_id": "ev_5ceae1f335ea47b79d3d1d9c1895cb77",
+      "evaluation_id": "ev_6d4f20aa96db47beaa386dc29ca505e8",
       "result_id": "res_bbbe31feb2256de0bf48225b",
       "result_index": 5,
       "model_key": "deepseek:deepseek-v4-flash",
       "model": "deepseek-v4-flash",
-      "evaluator": "b2_maxim",
-      "score": 0.2,
-      "max_score": 2,
-      "score_category": "partial",
-      "feedback": "нет выкладок\r\n\r\n",
-      "created_at": "2026-07-03T23:10:18.503114Z",
-      "updated_at": "2026-07-03T23:10:18.503114Z"
+      "evaluator": "mofeyTEA",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-07-06T15:26:02.612001Z",
+      "updated_at": "2026-07-06T15:26:02.612001Z"
     },
     "res_3961196ed6eceb8622540235": {
-      "evaluation_id": "ev_37b4f28cade748218d15172831d65618",
+      "evaluation_id": "ev_d7e3a01891144d518f82f9e66e7291c9",
       "result_id": "res_3961196ed6eceb8622540235",
       "result_index": 4,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-01T17:15:28.423283Z",
-      "updated_at": "2026-07-01T17:15:28.423283Z"
+      "created_at": "2026-07-06T15:24:38.234657Z",
+      "updated_at": "2026-07-06T15:24:38.234657Z"
     },
     "res_59d4d449dcb3133c94b20706": {
-      "evaluation_id": "ev_a1405d0f1dba438293da892f6651a67d",
+      "evaluation_id": "ev_f2b64d24b98d4fcdbbbf38c3d4705974",
       "result_id": "res_59d4d449dcb3133c94b20706",
       "result_index": 6,
       "model_key": "gigachat:GigaChat-2-Max",
       "model": "GigaChat-2-Max",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-01T17:16:12.307575Z",
-      "updated_at": "2026-07-01T17:16:12.307575Z"
+      "created_at": "2026-07-06T15:31:44.270437Z",
+      "updated_at": "2026-07-06T15:31:44.270437Z"
     },
     "res_bb75bb1d967db29197b860d9": {
       "evaluation_id": "ev_054310dc60854f5d8ff897b9a2311e04",
@@ -127,18 +127,18 @@
       "updated_at": "2026-07-01T17:16:41.007289Z"
     },
     "res_75c125e14bc63a0243c67cad": {
-      "evaluation_id": "ev_db457e3639ce40ef9ca9ac55ca784897",
+      "evaluation_id": "ev_2f8a1085427c4c40b611e3cbc80e0bab",
       "result_id": "res_75c125e14bc63a0243c67cad",
       "result_index": 0,
       "model_key": "openai:gpt-5.5",
       "model": "gpt-5.5",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-01T17:16:57.978577Z",
-      "updated_at": "2026-07-01T17:16:57.978577Z"
+      "created_at": "2026-07-06T15:44:44.614991Z",
+      "updated_at": "2026-07-06T15:44:44.614991Z"
     }
   },
   "evaluation_pool": {
@@ -156,6 +156,20 @@
         "feedback": "",
         "created_at": "2026-06-30T17:58:21.326496Z",
         "updated_at": "2026-06-30T17:58:21.326496Z"
+      },
+      {
+        "evaluation_id": "ev_abc76dd24cfe478983407bad3786b865",
+        "result_id": "res_d7ed96f12dd4ac9f9805eec7",
+        "result_index": 7,
+        "model_key": "gigachat:GigaChat-2",
+        "model": "GigaChat-2",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-06T15:44:26.440117Z",
+        "updated_at": "2026-07-06T15:44:26.440117Z"
       }
     ],
     "res_df0d6cfb5ec4518e8f8805af": [
@@ -204,6 +218,20 @@
         "feedback": "",
         "created_at": "2026-07-01T17:14:22.836919Z",
         "updated_at": "2026-07-01T17:14:22.836919Z"
+      },
+      {
+        "evaluation_id": "ev_c36bf08a5d5f4f85891c1cf80c2a0936",
+        "result_id": "res_c1f47bee70c6c8d97b878887",
+        "result_index": 3,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "Всё верно",
+        "created_at": "2026-07-05T19:59:02.453673Z",
+        "updated_at": "2026-07-05T19:59:02.453673Z"
       }
     ],
     "res_16f535fbd5d5bda2bfadb8bf": [
@@ -220,6 +248,20 @@
         "feedback": "",
         "created_at": "2026-07-01T17:14:43.185372Z",
         "updated_at": "2026-07-01T17:14:43.185372Z"
+      },
+      {
+        "evaluation_id": "ev_0d1199927a5c478c80491ef88978d37d",
+        "result_id": "res_16f535fbd5d5bda2bfadb8bf",
+        "result_index": 2,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-06T00:39:59.567417Z",
+        "updated_at": "2026-07-06T00:39:59.567417Z"
       }
     ],
     "res_bbbe31feb2256de0bf48225b": [
@@ -236,6 +278,20 @@
         "feedback": "нет выкладок\r\n\r\n",
         "created_at": "2026-07-03T23:10:18.503114Z",
         "updated_at": "2026-07-03T23:10:18.503114Z"
+      },
+      {
+        "evaluation_id": "ev_6d4f20aa96db47beaa386dc29ca505e8",
+        "result_id": "res_bbbe31feb2256de0bf48225b",
+        "result_index": 5,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-06T15:26:02.612001Z",
+        "updated_at": "2026-07-06T15:26:02.612001Z"
       }
     ],
     "res_3961196ed6eceb8622540235": [
@@ -252,6 +308,20 @@
         "feedback": "",
         "created_at": "2026-07-01T17:15:28.423283Z",
         "updated_at": "2026-07-01T17:15:28.423283Z"
+      },
+      {
+        "evaluation_id": "ev_d7e3a01891144d518f82f9e66e7291c9",
+        "result_id": "res_3961196ed6eceb8622540235",
+        "result_index": 4,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-06T15:24:38.234657Z",
+        "updated_at": "2026-07-06T15:24:38.234657Z"
       }
     ],
     "res_59d4d449dcb3133c94b20706": [
@@ -268,6 +338,20 @@
         "feedback": "",
         "created_at": "2026-07-01T17:16:12.307575Z",
         "updated_at": "2026-07-01T17:16:12.307575Z"
+      },
+      {
+        "evaluation_id": "ev_f2b64d24b98d4fcdbbbf38c3d4705974",
+        "result_id": "res_59d4d449dcb3133c94b20706",
+        "result_index": 6,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-06T15:31:44.270437Z",
+        "updated_at": "2026-07-06T15:31:44.270437Z"
       }
     ],
     "res_bb75bb1d967db29197b860d9": [
@@ -300,6 +384,20 @@
         "feedback": "",
         "created_at": "2026-07-01T17:16:57.978577Z",
         "updated_at": "2026-07-01T17:16:57.978577Z"
+      },
+      {
+        "evaluation_id": "ev_2f8a1085427c4c40b611e3cbc80e0bab",
+        "result_id": "res_75c125e14bc63a0243c67cad",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "gpt-5.5",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-06T15:44:44.614991Z",
+        "updated_at": "2026-07-06T15:44:44.614991Z"
       }
     ]
   },
@@ -307,5 +405,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_01",
   "run_id": "2026_06_29_21_11_22_math_cup_2026_final_task_01_all_models_16192",
-  "updated_at": "2026-07-03T23:10:22.629512Z"
+  "updated_at": "2026-07-06T15:44:44.614991Z"
 }
