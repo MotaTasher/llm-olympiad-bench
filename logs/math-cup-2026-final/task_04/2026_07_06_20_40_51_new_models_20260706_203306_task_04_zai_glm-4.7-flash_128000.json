@@ -1,0 +1,218 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_06_20_40_51_new_models_20260706_203306_task_04_zai_glm-4.7-flash_128000",
+  "timestamp": "2026-07-06T20:40:51.489171Z",
+  "started_at": "2026-07-06T20:40:51.489171Z",
+  "completed_at": null,
+  "duration_ms": null,
+  "status": "running",
+  "git_hash": "3ffa87e",
+  "git": {
+    "hash": "3ffa87e",
+    "full_hash": "3ffa87eccf1c01358c1d0d65f9cb6e140c8f3a24",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_04.json",
+      "--models",
+      "zai:glm-4.7-flash",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "new_models_20260706_203306_task_04_zai_glm-4.7-flash_128000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_04.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "zai:glm-4.7-flash",
+      "run_id": "new_models_20260706_203306_task_04_zai_glm-4.7-flash_128000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 128000
+    },
+    "requested_models": [
+      "zai:glm-4.7-flash"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "zai:glm-4.7-flash"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_04",
+  "problem_number": 4,
+  "problem_title": "Блуждание по плоскости",
+  "problem_file": "data/competitions/math-cup-2026-final/task_04.json",
+  "problem_text": "Фишка стоит на бесконечной клетчатой плоскости в клетке \\((1,0)\\) и начинает движение по следующим правилам:\n\n- за ход выбирается одна из двух координат \\(x,y\\) с вероятностью \\(\\frac12\\);\n- если выбранная координата не равна нулю, то она с вероятностью \\(\\frac23\\) изменяется на \\(1\\) в сторону нуля, а с вероятностью \\(\\frac13\\) — на \\(1\\) от нуля;\n- если выбранная координата равна нулю, то она становится равной \\(1\\) или \\(-1\\) с равными вероятностями.\n\nНайдите математическое ожидание числа ходов до первого попадания в \\((0,0)\\).",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_04",
+    "number": 4,
+    "title": "Блуждание по плоскости",
+    "statement": "Фишка стоит на бесконечной клетчатой плоскости в клетке \\((1,0)\\) и начинает движение по следующим правилам:\n\n- за ход выбирается одна из двух координат \\(x,y\\) с вероятностью \\(\\frac12\\);\n- если выбранная координата не равна нулю, то она с вероятностью \\(\\frac23\\) изменяется на \\(1\\) в сторону нуля, а с вероятностью \\(\\frac13\\) — на \\(1\\) от нуля;\n- если выбранная координата равна нулю, то она становится равной \\(1\\) или \\(-1\\) с равными вероятностями.\n\nНайдите математическое ожидание числа ходов до первого попадания в \\((0,0)\\).",
+    "answer": "\\(E=15\\).",
+    "solution": "Рассмотрим цепь \\(Z_n=(|X_n|,|Y_n|)\\). Искомое матожидание равно времени первого попадания \\(Z_n\\) в \\((0,0)\\).\n\nДля одной координаты имеем марковскую цепь \\(Q\\):\n\\[\n0\\to1,\\qquad k\\to k-1\\text{ с вероятностью }\\frac23,\\qquad k\\to k+1\\text{ с вероятностью }\\frac13.\n\\]\nЕё стационарное распределение \\(\\pi\\) можно найти из уравнений:\n\\[\n\\begin{cases}\n\\pi_0=\\frac23\\pi_1,\\\\\n\\frac13\\pi_k=\\frac23\\pi_{k+1},\\quad k\\ge1,\n\\end{cases}\n\\iff\n\\begin{cases}\n\\pi_1=\\frac32\\pi_0,\\\\\n\\pi_{k+1}=\\frac12\\pi_k,\\quad k\\ge1,\n\\end{cases}\n\\]\nоткуда\n\\[\n\\pi_k=\\frac32\\pi_0\\left(\\frac12\\right)^{k-1},\\qquad k\\ge1.\n\\]\nСумма всех вероятностей должна быть равна единице. Поэтому\n\\[\n\\sum_{k=0}^{\\infty}\\pi_k=\\pi_0+\\frac32\\pi_0\\sum_{m=0}^{\\infty}\\frac1{2^m}=4\\pi_0=1,\n\\]\nследовательно, \\(\\pi_0=\\frac14\\).\n\nДвумерная цепь обновляет за ход одну из координат, поэтому её стационарное распределение равно произведению \\(\\Pi_{i,j}=\\pi_i\\pi_j\\). В частности,\n\\[\n\\Pi_{0,0}=\\pi_0^2=\\frac1{16}.\n\\]\nПо лемме Каца среднее время возвращения в \\((0,0)\\), если стартовать из \\((0,0)\\), равно\n\\[\n\\frac1{\\Pi_{0,0}}=16.\n\\]\nПосле первого хода из \\((0,0)\\) цепь попадает в \\((1,0)\\) или \\((0,1)\\); по симметрии ожидания из них равны. Если искомое ожидание равно \\(E\\), то \\(16=1+E\\), откуда \\(E=15\\).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        4
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "3cd7c0e88c325a5804646a8721613596a5964116ce44a95fb639ebf5edaaa6d5",
+  "problem_text_hash": "0a0ce43d536abdb29610d12240ca42a9d4f11e1c11a691af6724ff16ab551087",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 128000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_537fc3433393e50b6e370f16",
+      "result_index": 0,
+      "provider": "zai",
+      "alias": "zai:glm-4.7-flash",
+      "adapter_class": "models.glm.glm.GLMModel",
+      "requested_model_id": "glm-4.7-flash",
+      "resolved_model_id": null,
+      "model": "glm-4.7-flash",
+      "attempt": 1,
+      "started_at": "2026-07-06T20:40:51.510246Z",
+      "completed_at": null,
+      "status": "running",
+      "request": {},
+      "answer": "",
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "cost_usd": 0.0,
+      "latency_ms": 0,
+      "raw_response": {},
+      "usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": null
+      },
+      "timing": {
+        "wall_ms": null,
+        "monotonic_ms": null,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": null,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "cached_input": null,
+        "reasoning": null,
+        "total": null,
+        "pricing_source": null,
+        "pricing_version": null,
+        "estimated": null,
+        "exchange_rate": null
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

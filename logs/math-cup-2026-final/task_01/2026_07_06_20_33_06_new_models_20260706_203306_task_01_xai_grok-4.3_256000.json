@@ -1,0 +1,303 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_06_20_33_06_new_models_20260706_203306_task_01_xai_grok-4.3_256000",
+  "timestamp": "2026-07-06T20:33:06.666245Z",
+  "started_at": "2026-07-06T20:33:06.666245Z",
+  "completed_at": "2026-07-06T20:33:27.998045Z",
+  "duration_ms": 21301,
+  "status": "completed",
+  "git_hash": "3ffa87e",
+  "git": {
+    "hash": "3ffa87e",
+    "full_hash": "3ffa87eccf1c01358c1d0d65f9cb6e140c8f3a24",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_01.json",
+      "--models",
+      "xai:grok-4.3",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "new_models_20260706_203306_task_01_xai_grok-4.3_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_01.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "xai:grok-4.3",
+      "run_id": "new_models_20260706_203306_task_01_xai_grok-4.3_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "xai:grok-4.3"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "xai:grok-4.3"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_01",
+  "problem_number": 1,
+  "problem_title": "Произведение",
+  "problem_file": "data/competitions/math-cup-2026-final/task_01.json",
+  "problem_text": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_01",
+    "number": 1,
+    "title": "Произведение",
+    "statement": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]",
+    "answer": "\\(2e^{\\frac{\\pi}{2}-2}\\).",
+    "solution": "Обозначим искомый предел за \\(L\\). Прологарифмировав произведение, получаем риманову сумму:\n\\[\n\\ln L=\\lim_{n\\to\\infty}\\frac1n\\sum_{k=1}^{n}\\ln\\left(1+\\left(\\frac{k}{n}\\right)^2\\right)=\\int_0^1\\ln(1+x^2)\\,dx.\n\\]\n\n**Решение 1.** Интегрируем по частям:\n\\[\n\\int_0^1\\ln(1+x^2)\\,dx=[x\\ln(1+x^2)]_0^1-2\\int_0^1\\frac{x^2}{1+x^2}\\,dx\n=\\ln2-2\\int_0^1\\frac{x^2}{1+x^2}\\,dx.\n\\]\nТак как \\(\\frac{x^2}{1+x^2}=1-\\frac1{1+x^2}\\), имеем\n\\[\n\\int_0^1\\frac{x^2}{1+x^2}\\,dx=[x-\\arctan x]_0^1=1-\\frac\\pi4,\n\\]\nпоэтому\n\\[\n\\ln L=\\ln2-2\\left(1-\\frac\\pi4\\right)=\\ln2+\\frac\\pi2-2.\n\\]\n\n**Решение 2.** При \\(|x|\\le1\\) равномерно сходится разложение\n\\[\n\\ln(1+x^2)=\\sum_{m\\ge1}\\frac{(-1)^{m-1}x^{2m}}m,\n\\]\nпоэтому его можно интегрировать почленно:\n\\[\n\\int_0^1\\ln(1+x^2)\\,dx\n=\\sum_{m=1}^{\\infty}\\frac{(-1)^{m-1}}{m(2m+1)}\n=\\sum_{m=1}^{\\infty}\\frac{(-1)^{m-1}}m-2\\sum_{m=1}^{\\infty}\\frac{(-1)^{m-1}}{2m+1}\n=\\ln2+2\\left(1-\\frac\\pi4\\right).\n\\]\n\n**Решение 3.** Введём параметр: пусть\n\\[\nI(a)=\\int_0^1\\ln(1+ax^2)\\,dx,\n\\]\nтогда \\(I(0)=0\\), а нужное значение равно \\(I(1)\\). Дифференцируя,\n\\[\nI'(a)=\\int_0^1\\frac{x^2}{1+ax^2}\\,dx=\\frac1a-\\frac{\\arctan\\sqrt a}{a\\sqrt a}.\n\\]\nИнтегрируя по \\(a\\) от \\(0\\) до \\(1\\), получаем то же значение \\(\\ln2+\\frac\\pi2-2\\).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        1
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "afab7e3a2b45034cf528e0cef74409c7067672549965ecf127107232918f65b1",
+  "problem_text_hash": "2ebbf1944484036ab406c0c5e5e9355b7f9d7f1341319829348eea7ef45a724a",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_16d087c65da8523643e8fa43",
+      "result_index": 0,
+      "provider": "xai",
+      "alias": "xai:grok-4.3",
+      "adapter_class": "models.grok.grok.GrokModel",
+      "requested_model_id": "grok-4.3",
+      "resolved_model_id": "grok-4.3",
+      "model": "grok-4.3",
+      "attempt": 1,
+      "started_at": "2026-07-06T20:33:06.740088Z",
+      "completed_at": "2026-07-06T20:33:27.992949Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.x.ai/v1/chat/completions",
+        "model": "grok-4.3",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Вычислите\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}}.\n\\]"
+          }
+        ],
+        "stream": false,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_tokens": 256000,
+        "reasoning_effort": "high"
+      },
+      "answer": "### Формализация условия и обозначения.\n\nПусть \\( P_n = \\prod_{k=1}^n \\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} \\). Требуется вычислить \\( \\lim_{n \\to \\infty} P_n \\). Заметим, что каждый сомножитель можно переписать в виде\n\\[\n\\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right)^{1/n}.\n\\]\nТаким образом,\n\\[\nP_n = \\prod_{k=1}^n \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right)^{1/n}.\n\\]\n(Все сомножители положительны при \\( n \\geq 1 \\), \\( k \\geq 1 \\), так что выражение корректно определено.)\n\n### Представление в экспоненциальной форме.\n\nВозьмём натуральный логарифм:\n\\[\n\\log P_n = \\frac{1}{n} \\sum_{k=1}^n \\log \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right).\n\\]\nСледовательно,\n\\[\nP_n = \\exp \\left( \\frac{1}{n} \\sum_{k=1}^n \\log \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right) \\right).\n\\]\nОбозначим \\( f(x) = \\log(1 + x^2) \\). Тогда выражение под экспонентой есть среднее значение \\( f(k/n) \\) по \\( k = 1, \\dots, n \\).\n\n### Предельный переход и интеграл.\n\nПри \\( n \\to \\infty \\) величина \\( \\frac{1}{n} \\sum_{k=1}^n f(k/n) \\) является римановой суммой для интеграла \\( \\int_0^1 f(x) \\, dx \\), поскольку точки \\( k/n \\) (при \\( k = 1, \\dots, n \\)) заполняют отрезок \\( [1/n, 1] \\), который в пределе совпадает с \\( [0, 1] \\), а функция \\( f \\) непрерывна на \\( [0, 1] \\). Таким образом,\n\\[\n\\lim_{n \\to \\infty} \\log P_n = \\int_0^1 \\log(1 + x^2) \\, dx,\n\\]\nи (при условии, что интеграл конечен, что будет проверено ниже)\n\\[\n\\lim_{n \\to \\infty} P_n = \\exp \\left( \\int_0^1 \\log(1 + x^2) \\, dx \\right).\n\\]\n\n### Вычисление интеграла.\n\nОбозначим \\( I = \\int_0^1 \\log(1 + x^2) \\, dx \\). Применим интегрирование по частям: положим \\( u = \\log(1 + x^2) \\), \\( dv = dx \\), так что \\( du = \\frac{2x}{1 + x^2} \\, dx \\), \\( v = x \\). Тогда\n\\[\nI = \\bigl[ x \\log(1 + x^2) \\bigr]_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1 + x^2} \\, dx = \\bigl[ 1 \\cdot \\log 2 - 0 \\bigr] - 2 \\int_0^1 \\frac{x^2}{1 + x^2} \\, dx = \\log 2 - 2 \\int_0^1 \\frac{x^2}{1 + x^2} \\, dx.\n\\]\nТеперь преобразуем подынтегральное выражение:\n\\[\n\\frac{x^2}{1 + x^2} = 1 - \\frac{1}{1 + x^2}.\n\\]\nОтсюда\n\\[\n\\int_0^1 \\frac{x^2}{1 + x^2} \\, dx = \\int_0^1 \\left( 1 - \\frac{1}{1 + x^2} \\right) \\, dx = \\bigl[ x - \\arctan x \\bigr]_0^1 = \\bigl( 1 - \\arctan 1 \\bigr) - \\bigl( 0 - \\arctan 0 \\bigr) = 1 - \\frac{\\pi}{4}.\n\\]\nПодставляя обратно, получаем\n\\[\nI = \\log 2 - 2 \\left( 1 - \\frac{\\pi}{4} \\right) = \\log 2 - 2 + \\frac{\\pi}{2}.\n\\]\n(Интеграл конечен, поскольку подынтегральная функция непрерывна на компакте \\( [0, 1] \\).)\n\n### Финальный предел.\n\nТаким образом,\n\\[\n\\lim_{n \\to \\infty} P_n = \\exp \\bigl( \\log 2 - 2 + \\frac{\\pi}{2} \\bigr) = e^{\\log 2} \\cdot e^{-2} \\cdot e^{\\pi/2} = 2 \\cdot e^{-2} \\cdot e^{\\pi/2} = 2 e^{\\pi/2 - 2}.\n\\]\n(Все объекты в выражениях существуют при любых допустимых \\( n \\geq 1 \\).)\n\n### Вывод.\n\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = 2e^{\\pi/2-2}.\n\\]",
+      "prompt_tokens": 300,
+      "completion_tokens": 1224,
+      "cost_usd": 0.0059828,
+      "latency_ms": 18911,
+      "raw_response": {
+        "id": "4ac3f0a2-723f-9c2c-adb1-7a7ac857a136",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "### Формализация условия и обозначения.\n\nПусть \\( P_n = \\prod_{k=1}^n \\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} \\). Требуется вычислить \\( \\lim_{n \\to \\infty} P_n \\). Заметим, что каждый сомножитель можно переписать в виде\n\\[\n\\left( \\frac{n^2 + k^2}{n^2} \\right)^{1/n} = \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right)^{1/n}.\n\\]\nТаким образом,\n\\[\nP_n = \\prod_{k=1}^n \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right)^{1/n}.\n\\]\n(Все сомножители положительны при \\( n \\geq 1 \\), \\( k \\geq 1 \\), так что выражение корректно определено.)\n\n### Представление в экспоненциальной форме.\n\nВозьмём натуральный логарифм:\n\\[\n\\log P_n = \\frac{1}{n} \\sum_{k=1}^n \\log \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right).\n\\]\nСледовательно,\n\\[\nP_n = \\exp \\left( \\frac{1}{n} \\sum_{k=1}^n \\log \\left( 1 + \\left( \\frac{k}{n} \\right)^2 \\right) \\right).\n\\]\nОбозначим \\( f(x) = \\log(1 + x^2) \\). Тогда выражение под экспонентой есть среднее значение \\( f(k/n) \\) по \\( k = 1, \\dots, n \\).\n\n### Предельный переход и интеграл.\n\nПри \\( n \\to \\infty \\) величина \\( \\frac{1}{n} \\sum_{k=1}^n f(k/n) \\) является римановой суммой для интеграла \\( \\int_0^1 f(x) \\, dx \\), поскольку точки \\( k/n \\) (при \\( k = 1, \\dots, n \\)) заполняют отрезок \\( [1/n, 1] \\), который в пределе совпадает с \\( [0, 1] \\), а функция \\( f \\) непрерывна на \\( [0, 1] \\). Таким образом,\n\\[\n\\lim_{n \\to \\infty} \\log P_n = \\int_0^1 \\log(1 + x^2) \\, dx,\n\\]\nи (при условии, что интеграл конечен, что будет проверено ниже)\n\\[\n\\lim_{n \\to \\infty} P_n = \\exp \\left( \\int_0^1 \\log(1 + x^2) \\, dx \\right).\n\\]\n\n### Вычисление интеграла.\n\nОбозначим \\( I = \\int_0^1 \\log(1 + x^2) \\, dx \\). Применим интегрирование по частям: положим \\( u = \\log(1 + x^2) \\), \\( dv = dx \\), так что \\( du = \\frac{2x}{1 + x^2} \\, dx \\), \\( v = x \\). Тогда\n\\[\nI = \\bigl[ x \\log(1 + x^2) \\bigr]_0^1 - \\int_0^1 x \\cdot \\frac{2x}{1 + x^2} \\, dx = \\bigl[ 1 \\cdot \\log 2 - 0 \\bigr] - 2 \\int_0^1 \\frac{x^2}{1 + x^2} \\, dx = \\log 2 - 2 \\int_0^1 \\frac{x^2}{1 + x^2} \\, dx.\n\\]\nТеперь преобразуем подынтегральное выражение:\n\\[\n\\frac{x^2}{1 + x^2} = 1 - \\frac{1}{1 + x^2}.\n\\]\nОтсюда\n\\[\n\\int_0^1 \\frac{x^2}{1 + x^2} \\, dx = \\int_0^1 \\left( 1 - \\frac{1}{1 + x^2} \\right) \\, dx = \\bigl[ x - \\arctan x \\bigr]_0^1 = \\bigl( 1 - \\arctan 1 \\bigr) - \\bigl( 0 - \\arctan 0 \\bigr) = 1 - \\frac{\\pi}{4}.\n\\]\nПодставляя обратно, получаем\n\\[\nI = \\log 2 - 2 \\left( 1 - \\frac{\\pi}{4} \\right) = \\log 2 - 2 + \\frac{\\pi}{2}.\n\\]\n(Интеграл конечен, поскольку подынтегральная функция непрерывна на компакте \\( [0, 1] \\).)\n\n### Финальный предел.\n\nТаким образом,\n\\[\n\\lim_{n \\to \\infty} P_n = \\exp \\bigl( \\log 2 - 2 + \\frac{\\pi}{2} \\bigr) = e^{\\log 2} \\cdot e^{-2} \\cdot e^{\\pi/2} = 2 \\cdot e^{-2} \\cdot e^{\\pi/2} = 2 e^{\\pi/2 - 2}.\n\\]\n(Все объекты в выражениях существуют при любых допустимых \\( n \\geq 1 \\).)\n\n### Вывод.\n\n\\[\n\\lim_{n\\to\\infty}\\prod_{k=1}^{n}\\sqrt[n]{\\frac{n^2+k^2}{n^2}} = 2e^{\\pi/2-2}.\n\\]",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "The problem is to compute the limit:\nThe limit is exp of that integral.\n\nI need to compute ∫_0^1 log(1+x²) dx.\n\nLet me calculate that integral.\n\n∫ log(1+x²) dx."
+            }
+          }
+        ],
+        "created": 1783369990,
+        "model": "grok-4.3",
+        "object": "chat.completion",
+        "moderation": null,
+        "service_tier": "default",
+        "system_fingerprint": "fp_eb3c003fc66c14ed",
+        "usage": {
+          "completion_tokens": 1224,
+          "prompt_tokens": 300,
+          "total_tokens": 2570,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 1046,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 64,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 59828000
+        }
+      },
+      "usage": {
+        "input_tokens": 300,
+        "output_tokens": 1224,
+        "total_tokens": 2570,
+        "reasoning_tokens": 1046,
+        "cached_input_tokens": 64,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 1224,
+          "prompt_tokens": 300,
+          "total_tokens": 2570,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 1046,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 64,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 59828000
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 18911,
+        "monotonic_ms": 18911,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 18911,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.000295,
+        "output": 0.00306,
+        "cached_input": 1.28e-05,
+        "reasoning": null,
+        "native": null,
+        "total": 0.0059828,
+        "pricing_source": "provider_response",
+        "pricing_version": "2026-07-06",
+        "estimated": false,
+        "exchange_rate": null,
+        "note": "Provider-reported cost_in_usd_ticks overrides this local estimate when present.",
+        "provider_reported": {
+          "cost_in_usd_ticks": null
+        }
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "4ac3f0a2-723f-9c2c-adb1-7a7ac857a136",
+      "provider_timestamp": 1783369990,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

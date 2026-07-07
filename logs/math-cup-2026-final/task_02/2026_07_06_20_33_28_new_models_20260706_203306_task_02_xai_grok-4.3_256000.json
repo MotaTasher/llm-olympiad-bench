@@ -1,0 +1,303 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_06_20_33_28_new_models_20260706_203306_task_02_xai_grok-4.3_256000",
+  "timestamp": "2026-07-06T20:33:28.426083Z",
+  "started_at": "2026-07-06T20:33:28.426083Z",
+  "completed_at": "2026-07-06T20:34:28.298300Z",
+  "duration_ms": 59860,
+  "status": "completed",
+  "git_hash": "3ffa87e",
+  "git": {
+    "hash": "3ffa87e",
+    "full_hash": "3ffa87eccf1c01358c1d0d65f9cb6e140c8f3a24",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_02.json",
+      "--models",
+      "xai:grok-4.3",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "new_models_20260706_203306_task_02_xai_grok-4.3_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_02.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "xai:grok-4.3",
+      "run_id": "new_models_20260706_203306_task_02_xai_grok-4.3_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "xai:grok-4.3"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "xai:grok-4.3"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_02",
+  "problem_number": 2,
+  "problem_title": "Матрицы",
+  "problem_file": "data/competitions/math-cup-2026-final/task_02.json",
+  "problem_text": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_02",
+    "number": 2,
+    "title": "Матрицы",
+    "statement": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]",
+    "answer": null,
+    "solution": "\\[\nT^2=(AB-BA)^2=ABAB-AB\\cdot BA-BA\\cdot AB+BABA=AB+BA,\n\\]\n\\[\nT^3=(AB-BA)(AB+BA)=ABAB-BABA=AB-BA=T.\n\\]\n\n**Решение 1.** Для любого \\(x\\in V\\) запишем\n\\[\nx=(x-T^2x)+T^2x.\n\\]\nТогда\n\\[\nT(x-T^2x)=Tx-T^3x=0,\\qquad T^2x=T(Tx)\\in\\operatorname{Im}T.\n\\]\nЗначит, \\(x-T^2x\\in\\ker T\\), откуда \\(V=\\ker T+\\operatorname{Im}T\\).\n\nОсталось проверить, что сумма прямая. Для этого достаточно показать пустоту пересечения подпространств. Пусть \\(z\\in\\ker T\\cap\\operatorname{Im}T\\). Тогда \\(z=Ty\\) и \\(Tz=0\\), поэтому \\(T^2y=0\\). Следовательно,\n\\[\nz=Ty=T^3y=T(T^2y)=0.\n\\]\n\n**Решение 2.** Из \\(T^3=T\\) имеем\n\\[\nT^3-T=T(T-I)(T+I)=0.\n\\]\nПоэтому минимальный многочлен \\(T\\) делит \\(t(t-1)(t+1)\\), а значит, не имеет кратных корней. Следовательно, \\(T\\) диагонализуем и\n\\[\nV=\\ker T\\oplus\\ker(T-I)\\oplus\\ker(T+I).\n\\]\nДокажем, что\n\\[\n\\operatorname{Im}T=\\ker(T-I)\\oplus\\ker(T+I),\n\\]\nиз чего будет следовать требуемое.\n\n1. \\(\\ker(T-I)\\oplus\\ker(T+I)\\subseteq\\operatorname{Im}T\\). Если \\(Tv=\\lambda v\\), где \\(\\lambda=\\pm1\\), то \\(v=\\lambda Tv\\in\\operatorname{Im}T\\).\n2. \\(\\ker(T-I)\\oplus\\ker(T+I)\\supseteq\\operatorname{Im}T\\). Если \\(x=x_0+x_++x_-\\), где \\(x_0\\in\\ker T\\), \\(x_+\\in\\ker(T-I)\\), \\(x_-\\in\\ker(T+I)\\), то\n\\[\nTx=x_+-x_-\\in\\ker(T-I)\\oplus\\ker(T+I).\n\\]",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        2
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "c7ad8347b060d48892e78f687f671ffd488b153850264bd904fd965c6ec6ea05",
+  "problem_text_hash": "558c575c2d8f88709a2dc8d67b290d7472310d37e79cf36453809e2955ff9dde",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_680635e5eb397415e7ad8558",
+      "result_index": 0,
+      "provider": "xai",
+      "alias": "xai:grok-4.3",
+      "adapter_class": "models.grok.grok.GrokModel",
+      "requested_model_id": "grok-4.3",
+      "resolved_model_id": "grok-4.3",
+      "model": "grok-4.3",
+      "attempt": 1,
+      "started_at": "2026-07-06T20:33:28.451096Z",
+      "completed_at": "2026-07-06T20:34:28.288149Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.x.ai/v1/chat/completions",
+        "model": "grok-4.3",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "stream": false,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_tokens": 256000,
+        "reasoning_effort": "high"
+      },
+      "answer": "### Постановка и обозначения.\n\nПусть \\( V \\) — векторное пространство над \\( \\mathbb{R} \\), а \\( A, B \\colon V \\to V \\) — линейные операторы, удовлетворяющие условиям \\( A^2 = 0 \\), \\( B^2 = 0 \\), \\( ABA = A \\), \\( BAB = B \\). Положим \\( T = AB - BA \\). Наша цель — доказать, что \\( V = \\ker T \\oplus \\operatorname{Im} T \\). Для этого достаточно установить, что \\( \\ker T \\cap \\operatorname{Im} T = \\{0\\} \\) и \\( V = \\ker T + \\operatorname{Im} T \\).\n\n### Вспомогательные соотношения.\n\nПрежде всего вычислим действие \\( T \\) на \\( A \\) и \\( B \\). Имеем\n\\[\nTA = (AB - BA)A = ABA - BA^2 = A,\n\\]\nпоскольку \\( A^2 = 0 \\). Далее,\n\\[\nAT = A(AB - BA) = A^2 B - ABA = -A,\n\\]\nпоскольку \\( ABA = A \\). Аналогично,\n\\[\nTB = (AB - BA)B = AB^2 - BAB = -B,\n\\]\nпоскольку \\( B^2 = 0 \\) и \\( BAB = B \\), а\n\\[\nBT = B(AB - BA) = BAB - B^2 A = B.\n\\]\n\nДалее вычислим \\( T^2 \\). Разлагая, получаем \\( T^2 = (AB - BA)^2 = ABAB - ABBA - BAAB + BABA \\). Заметим, что \\( ABBA = AB^2 A = 0 \\) и \\( BAAB = BA^2 B = 0 \\). Кроме того, \\( ABAB = A(BAB) = AB \\) (ввиду \\( BAB = B \\)) и \\( BABA = B(ABA) = BA \\) (ввиду \\( ABA = A \\)). Таким образом, \\( T^2 = AB + BA \\).\n\nНаконец, вычислим \\( T^3 = T \\cdot T^2 = T(AB + BA) \\). Разлагая, получаем \\( T(AB + BA) = ABAB + ABBA - BAAB - BABA \\). Как и выше, члены \\( ABBA \\) и \\( BAAB \\) обращаются в нуль, а \\( ABAB = AB \\), \\( BABA = BA \\), так что \\( T^3 = AB - BA = T \\).\n\n### Доказательство тривиальности пересечения.\n\nПусть \\( v \\in \\ker T \\cap \\operatorname{Im} T \\). Тогда \\( Tv = 0 \\) и \\( v = Tw \\) для некоторого \\( w \\in V \\). Применяя \\( T \\) к последнему равенству, получаем \\( T^2 w = 0 \\). С другой стороны, из \\( Tv = 0 \\) следует \\( (AB - BA)w = 0 \\), т.е. \\( ABw = BAw \\). Поскольку \\( T^2 = AB + BA \\), условие \\( T^2 w = 0 \\) даёт \\( ABw + BAw = 0 \\). Подставляя сюда равенство \\( ABw = BAw \\), приходим к \\( 2 \\cdot ABw = 0 \\). Поскольку пространство векторное над \\( \\mathbb{R} \\), отсюда следует \\( ABw = 0 \\), а значит и \\( BAw = 0 \\). Но тогда \\( v = Tw = ABw - BAw = 0 \\). Таким образом, \\( \\ker T \\cap \\operatorname{Im} T = \\{0\\} \\).\n\n### Доказательство равенства суммы пространству.\n\nПусть теперь \\( v \\in V \\) — произвольный вектор. Рассмотрим разложение \\( v = (v - T^2 v) + T^2 v \\). Прежде всего, \\( T^2 v = T(Tv) \\), так что \\( T^2 v \\in \\operatorname{Im} T \\). Положим \\( k = v - T^2 v \\). Тогда\n\\[\nTk = Tv - T^3 v = Tv - Tv = 0,\n\\]\nпоскольку \\( T^3 = T \\). Таким образом, \\( k \\in \\ker T \\), и мы получаем \\( v \\in \\ker T + \\operatorname{Im} T \\). Поскольку \\( v \\) было произвольным, заключаем, что \\( V = \\ker T + \\operatorname{Im} T \\).\n\n### Заключение.\n\nПоскольку мы установили как тривиальность пересечения \\( \\ker T \\cap \\operatorname{Im} T \\), так и равенство суммы \\( \\ker T + \\operatorname{Im} T \\) всему пространству \\( V \\), отсюда следует, что \\( V = \\ker T \\oplus \\operatorname{Im} T \\). \n\n(Заметим, что все построения и вычисления носят операторный характер и не зависят от размерности пространства \\( V \\).)",
+      "prompt_tokens": 354,
+      "completion_tokens": 1091,
+      "cost_usd": 0.0167712,
+      "latency_ms": 59226,
+      "raw_response": {
+        "id": "3592c651-ef66-906d-9e1f-21d12ef560eb",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "### Постановка и обозначения.\n\nПусть \\( V \\) — векторное пространство над \\( \\mathbb{R} \\), а \\( A, B \\colon V \\to V \\) — линейные операторы, удовлетворяющие условиям \\( A^2 = 0 \\), \\( B^2 = 0 \\), \\( ABA = A \\), \\( BAB = B \\). Положим \\( T = AB - BA \\). Наша цель — доказать, что \\( V = \\ker T \\oplus \\operatorname{Im} T \\). Для этого достаточно установить, что \\( \\ker T \\cap \\operatorname{Im} T = \\{0\\} \\) и \\( V = \\ker T + \\operatorname{Im} T \\).\n\n### Вспомогательные соотношения.\n\nПрежде всего вычислим действие \\( T \\) на \\( A \\) и \\( B \\). Имеем\n\\[\nTA = (AB - BA)A = ABA - BA^2 = A,\n\\]\nпоскольку \\( A^2 = 0 \\). Далее,\n\\[\nAT = A(AB - BA) = A^2 B - ABA = -A,\n\\]\nпоскольку \\( ABA = A \\). Аналогично,\n\\[\nTB = (AB - BA)B = AB^2 - BAB = -B,\n\\]\nпоскольку \\( B^2 = 0 \\) и \\( BAB = B \\), а\n\\[\nBT = B(AB - BA) = BAB - B^2 A = B.\n\\]\n\nДалее вычислим \\( T^2 \\). Разлагая, получаем \\( T^2 = (AB - BA)^2 = ABAB - ABBA - BAAB + BABA \\). Заметим, что \\( ABBA = AB^2 A = 0 \\) и \\( BAAB = BA^2 B = 0 \\). Кроме того, \\( ABAB = A(BAB) = AB \\) (ввиду \\( BAB = B \\)) и \\( BABA = B(ABA) = BA \\) (ввиду \\( ABA = A \\)). Таким образом, \\( T^2 = AB + BA \\).\n\nНаконец, вычислим \\( T^3 = T \\cdot T^2 = T(AB + BA) \\). Разлагая, получаем \\( T(AB + BA) = ABAB + ABBA - BAAB - BABA \\). Как и выше, члены \\( ABBA \\) и \\( BAAB \\) обращаются в нуль, а \\( ABAB = AB \\), \\( BABA = BA \\), так что \\( T^3 = AB - BA = T \\).\n\n### Доказательство тривиальности пересечения.\n\nПусть \\( v \\in \\ker T \\cap \\operatorname{Im} T \\). Тогда \\( Tv = 0 \\) и \\( v = Tw \\) для некоторого \\( w \\in V \\). Применяя \\( T \\) к последнему равенству, получаем \\( T^2 w = 0 \\). С другой стороны, из \\( Tv = 0 \\) следует \\( (AB - BA)w = 0 \\), т.е. \\( ABw = BAw \\). Поскольку \\( T^2 = AB + BA \\), условие \\( T^2 w = 0 \\) даёт \\( ABw + BAw = 0 \\). Подставляя сюда равенство \\( ABw = BAw \\), приходим к \\( 2 \\cdot ABw = 0 \\). Поскольку пространство векторное над \\( \\mathbb{R} \\), отсюда следует \\( ABw = 0 \\), а значит и \\( BAw = 0 \\). Но тогда \\( v = Tw = ABw - BAw = 0 \\). Таким образом, \\( \\ker T \\cap \\operatorname{Im} T = \\{0\\} \\).\n\n### Доказательство равенства суммы пространству.\n\nПусть теперь \\( v \\in V \\) — произвольный вектор. Рассмотрим разложение \\( v = (v - T^2 v) + T^2 v \\). Прежде всего, \\( T^2 v = T(Tv) \\), так что \\( T^2 v \\in \\operatorname{Im} T \\). Положим \\( k = v - T^2 v \\). Тогда\n\\[\nTk = Tv - T^3 v = Tv - Tv = 0,\n\\]\nпоскольку \\( T^3 = T \\). Таким образом, \\( k \\in \\ker T \\), и мы получаем \\( v \\in \\ker T + \\operatorname{Im} T \\). Поскольку \\( v \\) было произвольным, заключаем, что \\( V = \\ker T + \\operatorname{Im} T \\).\n\n### Заключение.\n\nПоскольку мы установили как тривиальность пересечения \\( \\ker T \\cap \\operatorname{Im} T \\), так и равенство суммы \\( \\ker T + \\operatorname{Im} T \\) всему пространству \\( V \\), отсюда следует, что \\( V = \\ker T \\oplus \\operatorname{Im} T \\). \n\n(Заметим, что все построения и вычисления носят операторный характер и не зависят от размерности пространства \\( V \\).)",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "The problem is in Russian, but I understand it. We have a vector space V over the reals, and linear operators A and B from V to V satisfying:\nThe problem is to prove that V = ker T ⊕ Im T where T = AB - BA, given those conditions.\n\nI need to show that every vector v in V can be written as x + y where x in ker T, y in Im T, and uniquely, or at least intersection zero and sum V .\n\nSince it's direct sum, intersection {0} and span to V.\n\nFrom the relations, perhaps I can find a way to express v in terms of T.\n\nSuppose I consider A v and B v or something.\n\nLet's see what T does.\n\nFrom T A = A, that means A = T A, so A v = T (A v) for any v, so A v is in Im T for any v, hence Im A ⊂ Im T.\n\nSimilarly, from T B = -B, so B = - T B, thus B v = - T (B v), so Im B ⊂ Im T.\n\nSince 0= A² so Im A ⊂ ker A, etc.\n\nFor arbitrary v, perhaps v = (v - A v - B v) + A v + B v, and A v, B v in Im T, so if I can show that v - A v - B v in ker T, then v = k + i with i= A v + B v in Im T, k= v-Av-Bv in ker T.\n\nLet's check if T (v - A v - B v) =0.\n\nCompute T v - T A v - T B v = T v - A v - (- B ? T B v = - B v, wait.\n\nT (A v) = A v, as T A =A, so T(Av)=A v.\n\nT(B v)= - B v.\n\nSo T (v - A v - B v) = T v - T(Av) - T(B v) = T v - A v - (- B v) = T v - A v + B v.\n\nFor this to be zero, need T v = A v - B v.\n\nIs that true? Probably not in general.\n\nSo not.\n\nPerhaps different coefficients.\n\nSuppose v = k + c A v + d B v, but complicated.\n\nLet's compute T v.\n\nT v = (AB - BA) v = A B v - B A v.\n\nFrom the relations, perhaps express B v in terms of A or something.\n\nSince BAB =B, B A B =B, so B (A B - I)= 0? Earlier B(AB -I)=0.\n\nYes, B (AB - I)=0, so B AB = B, but AB B? B A B =B.\n\nYes.\n\nSimilarly A(BA -I)=0.\n\nSo A BA =A.\n\nPerhaps.\n\nLet's try to find w such that T ² w = T v, and set w = T v, as I was thinking earlier.\n\nYes, since T³ v = T v, and T³ v = T² (T v), so T² (T v) = T v.\n\nTherefore, T v = T² (T v), so T ² maps T v to T v, hence T v ∈ Im T² ⊂ Im T, since Im T² ⊂ Im T.\n\nYes."
+            }
+          }
+        ],
+        "created": 1783370009,
+        "model": "grok-4.3",
+        "object": "chat.completion",
+        "moderation": null,
+        "service_tier": "default",
+        "system_fingerprint": "fp_eb3c003fc66c14ed",
+        "usage": {
+          "completion_tokens": 1091,
+          "prompt_tokens": 354,
+          "total_tokens": 6993,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 5548,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 256,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 167712000
+        }
+      },
+      "usage": {
+        "input_tokens": 354,
+        "output_tokens": 1091,
+        "total_tokens": 6993,
+        "reasoning_tokens": 5548,
+        "cached_input_tokens": 256,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 1091,
+          "prompt_tokens": 354,
+          "total_tokens": 6993,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 5548,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 256,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 167712000
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 59226,
+        "monotonic_ms": 59226,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 59226,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.0001225,
+        "output": 0.0027275,
+        "cached_input": 5.12e-05,
+        "reasoning": null,
+        "native": null,
+        "total": 0.0167712,
+        "pricing_source": "provider_response",
+        "pricing_version": "2026-07-06",
+        "estimated": false,
+        "exchange_rate": null,
+        "note": "Provider-reported cost_in_usd_ticks overrides this local estimate when present.",
+        "provider_reported": {
+          "cost_in_usd_ticks": null
+        }
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "3592c651-ef66-906d-9e1f-21d12ef560eb",
+      "provider_timestamp": 1783370009,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_00_25_17_new_models_20260706_225754_task_08_zai_glm-5.2_128000",
+  "timestamp": "2026-07-07T00:25:17.840755Z",
+  "started_at": "2026-07-07T00:25:17.840755Z",
+  "completed_at": "2026-07-07T01:25:19.235691Z",
+  "duration_ms": 3601382,
+  "status": "failed",
+  "git_hash": "3ffa87e",
+  "git": {
+    "hash": "3ffa87e",
+    "full_hash": "3ffa87eccf1c01358c1d0d65f9cb6e140c8f3a24",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_08.json",
+      "--models",
+      "zai:glm-5.2",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "new_models_20260706_225754_task_08_zai_glm-5.2_128000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_08.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "zai:glm-5.2",
+      "run_id": "new_models_20260706_225754_task_08_zai_glm-5.2_128000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 128000
+    },
+    "requested_models": [
+      "zai:glm-5.2"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "zai:glm-5.2"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_08",
+  "problem_number": 8,
+  "problem_title": "Строки",
+  "problem_file": "data/competitions/math-cup-2026-final/task_08.json",
+  "problem_text": "Назовём связанными два множества \\(A,B\\) строк длины \\(n\\), если для любой пары строк \\(a\\in A\\) и \\(b\\in B\\) никакой префикс строки \\(a\\) не является суффиксом строки \\(b\\). Положим\n\\[\nf(n)=\\max_{A,B}[\\min(|A|,|B|)]\n\\]\nсреди всех связанных \\(A,B\\) для данного \\(n\\). Докажите, что\n\nа)\n\\[\n\\frac{f(n)}{2^n}\\ge\\frac1{1000\\sqrt n};\n\\]\n\nб)\n\\[\n\\frac{f(n)}{2^n}\\le\\frac{1000}{\\sqrt n}.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_08",
+    "number": 8,
+    "title": "Строки",
+    "statement": "Назовём связанными два множества \\(A,B\\) строк длины \\(n\\), если для любой пары строк \\(a\\in A\\) и \\(b\\in B\\) никакой префикс строки \\(a\\) не является суффиксом строки \\(b\\). Положим\n\\[\nf(n)=\\max_{A,B}[\\min(|A|,|B|)]\n\\]\nсреди всех связанных \\(A,B\\) для данного \\(n\\). Докажите, что\n\nа)\n\\[\n\\frac{f(n)}{2^n}\\ge\\frac1{1000\\sqrt n};\n\\]\n\nб)\n\\[\n\\frac{f(n)}{2^n}\\le\\frac{1000}{\\sqrt n}.\n\\]",
+    "answer": null,
+    "solution": "Работаем со строками над алфавитом \\(\\{0,1\\}\\). Для строки \\(s\\) положим её вес \\(\\sigma(s)\\) равным числу единиц минус число нулей в \\(s\\); эквивалентно, заменив каждый символ \\(s_t\\) на шаг\n\\[\nx_t=2s_t-1\\in\\{+1,-1\\},\n\\]\nимеем \\(\\sigma(s)=\\sum_t x_t\\), а частичная сумма \\(\\sum_{t=1}^{k}x_t\\) есть вес префикса длины \\(k\\).\n\nУдобна следующая переформулировка. Если префикс строки \\(a\\) длины \\(k\\) равен суффиксу строки \\(b\\) длины \\(k\\), то это одна и та же строка \\(u\\) длины \\(k\\). Поэтому \\(A,B\\) связаны тогда и только тогда, когда для любого \\(k\\in\\{1,\\ldots,n\\}\\) ни одна строка не является одновременно префиксом длины \\(k\\) некоторой строки из \\(A\\) и суффиксом длины \\(k\\) некоторой строки из \\(B\\).\n\n### Пункт а)\n\nПостроим связанные \\(A,B\\) нужного размера. Положим\n\\[\nA=\\left\\{a:\\sum_{t=1}^{k}(2a_t-1)\\ge1\\text{ для всех }1\\le k\\le n\\right\\},\n\\]\n\\[\nB=\\left\\{b:\\sum_{t=j+1}^{n}(2b_t-1)\\le-1\\text{ для всех }0\\le j\\le n-1\\right\\}.\n\\]\nИначе говоря, у строки из \\(A\\) каждый непустой префикс имеет положительный вес, а у строки из \\(B\\) каждый непустой суффикс — отрицательный.\n\n**Связанность.** Пусть для некоторых \\(a\\in A\\), \\(b\\in B\\) и \\(1\\le k\\le n\\) префикс \\(a[1..k]\\) совпал с суффиксом \\(b[n-k+1..n]\\); обозначим эту общую строку \\(u\\). Как префикс строки \\(a\\) она имеет вес\n\\[\n\\sigma(u)=\\sum_{t=1}^{k}(2a_t-1)\\ge1>0,\n\\]\nа как суффикс строки \\(b\\) — вес\n\\[\n\\sigma(u)=\\sum_{t=n-k+1}^{n}(2b_t-1)\\le-1<0.\n\\]\nПротиворечие, значит, \\(A,B\\) связаны.\n\n**Размер.** Подсчитаем \\(|A|\\). Строка из \\(A\\) обязана начинаться с \\(1\\), иначе \\(S_1=-1\\). Отбросив первый шаг \\(+1\\) и понизив высоту на \\(1\\), получаем биекцию между \\(A\\) и путями из \\(\\pm1\\) длины \\(n-1\\), не опускающимися ниже нуля. По классическому тождеству о неотрицательных путях их число равно\n\\[\n\\binom{n-1}{\\lfloor(n-1)/2\\rfloor}.\n\\]\nОтображение \\(b\\mapsto c\\), где \\(c_t=1-b_{n+1-t}\\), разворот с инверсией, — биекция \\(\\{0,1\\}^n\\) на себя, переводящая условие на суффиксы \\(b\\) в точно такое же условие на префиксы \\(c\\); поэтому\n\\[\n|B|=|A|=\\binom{n-1}{\\lfloor(n-1)/2\\rfloor}.\n\\]\n\nВоспользуемся оценкой\n\\[\n\\binom{m}{\\lfloor m/2\\rfloor}\\ge\\frac{2^m}{2\\sqrt m}\n\\]\nдля всех \\(m\\ge1\\). Для чётного \\(m=2k\\) это\n\\[\n\\binom{2k}{k}\\ge\\frac{4^k}{2\\sqrt k}.\n\\]\nПри \\(k=1\\) равенство, а шаг индукции следует из\n\\[\n\\frac{\\binom{2k+2}{k+1}}{\\binom{2k}{k}}=\\frac{2(2k+1)}{k+1}\\ge4\\sqrt{\\frac{k}{k+1}}\n\\iff(2k+1)^2\\ge4k(k+1).\n\\]\nДля нечётного \\(m=2k+1\\):\n\\[\n\\binom{2k+1}{k}=\\frac12\\binom{2k+2}{k+1}\\ge\\frac12\\cdot\\frac{4^{k+1}}{2\\sqrt{k+1}}=\\frac{2^m}{\\sqrt{2(m+1)}}\\ge\\frac{2^m}{2\\sqrt{2m}}.\n\\]\nСледовательно, при \\(n\\ge2\\),\n\\[\n\\frac{f(n)}{2^n}\\ge\\frac{|A|}{2^n}\\ge\\frac{2^{n-1}}{2^n\\cdot2\\sqrt{n-1}}\n=\\frac1{4\\sqrt{n-1}}\\ge\\frac1{4\\sqrt n}\\ge\\frac1{1000\\sqrt n}.\n\\]\nПри \\(n=1\\) имеем \\(A=\\{1\\}\\), \\(B=\\{0\\}\\), \\(\\min(|A|,|B|)=1\\), и неравенство очевидно. Пункт а) доказан с большим запасом.\n\n### Пункт б)\n\nПусть \\(A,B\\) связаны. Каждой паре \\((a,b)\\in A\\times B\\) сопоставим строку \\(w=ba\\) длины \\(2n\\); разным парам отвечают разные строки. Обозначим\n\\[\nV=\\{ba:b\\in B,a\\in A\\},\n\\]\nтак что \\(|V|=|A|\\cdot|B|\\).\n\nРасположим строку длины \\(2n\\) на окружности, индексы по модулю \\(2n\\). Допустимым разрезом в позиции \\(i\\) назовём такой \\(i\\), что строка \\(w[i..i+n-1]\\) лежит в \\(B\\), а дополнительная строка \\(w[i+n..i+2n-1]\\) лежит в \\(A\\).\n\n**Лемма.** У любой циклической строки длины \\(2n\\) не более одного допустимого разреза.\n\n**Доказательство.** Пусть есть два разных допустимых разреза в позициях \\(i\\) и \\(j\\). Из двух дуг окружности между ними одна имеет длину \\(d\\) с \\(1\\le d\\le n\\); переобозначив при необходимости \\(i\\leftrightarrow j\\), считаем, что от \\(i\\) к \\(j\\) ровно \\(d\\) шагов вперёд, \\(j=i+d\\).\n\nВозьмём строку\n\\[\na:=w[i+n..i+2n-1]\\in A\n\\]\nиз разреза в \\(i\\) и строку\n\\[\nb':=w[j..j+n-1]\\in B\n\\]\nиз разреза в \\(j\\). Рассмотрим \\(d\\) позиций \\(i+n,i+n+1,\\ldots,i+n+d-1\\). С одной стороны, они образуют начало блока строки \\(a\\), то есть префикс \\(a[1..d]\\). С другой стороны, при \\(1\\le d\\le n\\) блок \\([i+d,i+d+n-1]\\) строки \\(b'\\) содержит эти позиции своими последними \\(d\\) символами, то есть это суффикс \\(b'[n-d+1..n]\\). Значит,\n\\[\na[1..d]=b'[n-d+1..n],\n\\]\nто есть префикс строки из \\(A\\) совпал с суффиксом строки из \\(B\\), что противоречит связанности.\n\nИз леммы следует, что для любой строки \\(w\\in\\{0,1\\}^{2n}\\) найдётся не более одного сдвига \\(t\\in\\{0,1,\\ldots,2n-1\\}\\), для которого циклический сдвиг \\(\\rho^tw\\) лежит в \\(V\\).\n\nПосчитаем двумя способами число пар \\((w,t)\\), \\(w\\in\\{0,1\\}^{2n}\\), \\(t\\in\\{0,\\ldots,2n-1\\}\\), с условием \\(\\rho^tw\\in V\\). При фиксированном \\(t\\) отображение \\(\\rho^t\\) биективно, поэтому таких \\(w\\) ровно \\(|V|\\); сумма по всем \\(2n\\) значениям \\(t\\) даёт \\(2n|V|\\). С другой стороны, при фиксированном \\(w\\) подходящих \\(t\\) не больше одного, поэтому всё число не превосходит \\(2^{2n}\\). Значит,\n\\[\n2n|A||B|=2n|V|\\le2^{2n},\n\\]\nоткуда\n\\[\n|A||B|\\le\\frac{4^n}{2n}.\n\\]\nПоэтому\n\\[\n\\frac{f(n)}{2^n}\\le\\frac{\\sqrt{|A||B|}}{2^n}\\le\\frac1{\\sqrt{2n}}\\le\\frac{1000}{\\sqrt n}.\n\\]\nПункт б) доказан.\n\n**Замечание.** Доказанные оценки дают\n\\[\n\\frac1{4\\sqrt n}\\le\\frac{f(n)}{2^n}\\le\\frac1{\\sqrt{2n}},\n\\]\nто есть \\(f(n)=\\Theta(2^n/\\sqrt n)\\).\n\nТочная оценка\n\\[\n\\frac{1-o(1)}{\\sqrt{en}}\\le\\frac{f(n)}{2^n}\\le\\frac{1+o(1)}{\\sqrt{en}},\n\\]\nдоказательство этого сложнее. Заинтересованный читатель отсылается к `https://arxiv.org/abs/2602.20143`.",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        14,
+        15,
+        16
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "349fb9bfabd955b91c2eb2adcd5b917cbe33976d89e719a210d190eafeed17a3",
+  "problem_text_hash": "b0b9b5cf1c988aa14cd52efbde3c9862d9739abce11019946376c7134dde1f47",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 128000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_c2ed4693819153c25a0e82ee",
+      "result_index": 0,
+      "provider": "zai",
+      "alias": "zai:glm-5.2",
+      "adapter_class": "models.glm.glm.GLMModel",
+      "requested_model_id": "glm-5.2",
+      "resolved_model_id": "glm-5.2",
+      "model": "glm-5.2",
+      "attempt": 1,
+      "started_at": "2026-07-07T00:25:17.867396Z",
+      "completed_at": "2026-07-07T01:25:19.230588Z",
+      "status": "error",
+      "request": {
+        "endpoint": "https://api.z.ai/api/paas/v4/chat/completions",
+        "model": "glm-5.2",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Назовём связанными два множества \\(A,B\\) строк длины \\(n\\), если для любой пары строк \\(a\\in A\\) и \\(b\\in B\\) никакой префикс строки \\(a\\) не является суффиксом строки \\(b\\). Положим\n\\[\nf(n)=\\max_{A,B}[\\min(|A|,|B|)]\n\\]\nсреди всех связанных \\(A,B\\) для данного \\(n\\). Докажите, что\n\nа)\n\\[\n\\frac{f(n)}{2^n}\\ge\\frac1{1000\\sqrt n};\n\\]\n\nб)\n\\[\n\\frac{f(n)}{2^n}\\le\\frac{1000}{\\sqrt n}.\n\\]"
+          }
+        ],
+        "stream": false,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_tokens": 128000,
+        "thinking": {
+          "type": "enabled"
+        },
+        "reasoning_effort": "max"
+      },
+      "answer": "",
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "cost_usd": 0.0,
+      "latency_ms": 3601358,
+      "raw_response": {},
+      "usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {},
+        "source": "legacy_fields"
+      },
+      "timing": {
+        "wall_ms": 3601358,
+        "monotonic_ms": 3601358,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 3601358,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "cached_input": null,
+        "reasoning": null,
+        "total": 0.0,
+        "pricing_source": null,
+        "pricing_version": null,
+        "estimated": false,
+        "exchange_rate": null
+      },
+      "finish_reason": null,
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": "Request timed out.",
+      "error_info": {
+        "type": "APITimeoutError",
+        "message": "Request timed out.",
+        "http_status": null,
+        "provider_code": null,
+        "request_id": null,
+        "retryable": null,
+        "attempt": 1,
+        "traceback": "Traceback (most recent call last):\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_transports/default.py\", line 101, in map_httpcore_exceptions\n    yield\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_transports/default.py\", line 250, in handle_request\n    resp = self._pool.handle_request(req)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py\", line 256, in handle_request\n    raise exc from None\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py\", line 236, in handle_request\n    response = connection.handle_request(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_sync/connection.py\", line 103, in handle_request\n    return self._connection.handle_request(request)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py\", line 136, in handle_request\n    raise exc\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py\", line 106, in handle_request\n    ) = self._receive_response_headers(**kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py\", line 177, in _receive_response_headers\n    event = self._receive_event(timeout=timeout)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py\", line 217, in _receive_event\n    data = self._network_stream.read(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_backends/sync.py\", line 126, in read\n    with map_exceptions(exc_map):\n  File \"/usr/lib/python3.12/contextlib.py\", line 158, in __exit__\n    self.gen.throw(value)\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpcore/_exceptions.py\", line 14, in map_exceptions\n    raise to_exc(exc) from exc\nhttpcore.ReadTimeout: The read operation timed out\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1037, in request\n    response = self._send_request(\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/_client.py\", line 478, in _send_request\n    response = self._send_with_auth_retry(request, stream=stream, **kwargs)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/_client.py\", line 456, in _send_with_auth_retry\n    response = super()._send_request(request, stream=stream, **kwargs)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/_base_client.py\", line 964, in _send_request\n    return self._client.send(request, stream=stream, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_client.py\", line 914, in send\n    response = self._send_handling_auth(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_client.py\", line 942, in _send_handling_auth\n    response = self._send_handling_redirects(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_client.py\", line 979, in _send_handling_redirects\n    response = self._send_single_request(request)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_client.py\", line 1014, in _send_single_request\n    response = transport.handle_request(request)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_transports/default.py\", line 249, in handle_request\n    with map_httpcore_exceptions():\n  File \"/usr/lib/python3.12/contextlib.py\", line 158, in __exit__\n    self.gen.throw(value)\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/httpx/_transports/default.py\", line 118, in map_httpcore_exceptions\n    raise mapped_exc(message) from exc\nhttpx.ReadTimeout: The read operation timed out\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"./models/glm/glm.py\", line 160, in solve\n    response, latency_ms = timed(\n                           ^^^^^^\n  File \"./models/common.py\", line 63, in timed\n    result = call()\n             ^^^^^^\n  File \"./models/glm/glm.py\", line 161, in <lambda>\n    lambda: client.chat.completions.create(\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/_utils/_utils.py\", line 298, in wrapper\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py\", line 1251, in create\n    return self._post(\n           ^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1332, in post\n    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/olympiad-scorer/venv/lib/python3.12/site-packages/openai/_base_client.py\", line 1055, in request\n    raise APITimeoutError(request=request) from err\nopenai.APITimeoutError: Request timed out.\n",
+        "provider_response": null,
+        "adapter_notes": []
+      },
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}
