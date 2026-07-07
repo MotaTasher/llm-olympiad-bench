@@ -1,0 +1,17 @@
+START 2026-07-06T22:57:54.490044+00:00 task_06 xai:grok-build-0.1 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_06.json --models xai:grok-build-0.1 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_225754_task_06_xai_grok-build-0.1_256000
+Run 2026_07_06_22_57_54_new_models_20260706_225754_task_06_xai_grok-build-0.1_256000: math-cup-2026-final/task_06, 1 model(s), max_tokens=256000
+[1/1] START xai:grok-build-0.1
+[1/1] DONE  grok-build-0.1 in 16m10s tokens=2966 cost_usd=0.244019
+| model          |   tokens |   cost_usd |   latency_ms | status   | error   |
+|----------------|----------|------------|--------------|----------|---------|
+| grok-build-0.1 |     2966 |   0.244019 |       969779 | ok       |         |
+
+Run ID: 2026_07_06_22_57_54_new_models_20260706_225754_task_06_xai_grok-build-0.1_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_06 (Гамильтонов граф)
+Timestamp: 2026-07-06T22:57:54.693663Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_06/2026_07_06_22_57_54_new_models_20260706_225754_task_06_xai_grok-build-0.1_256000.json
+
+DONE 2026-07-06T23:14:05.938937+00:00 task_06 xai:grok-build-0.1 cap=256000 exit=0 elapsed_s=971.4

@@ -1,0 +1,17 @@
+START 2026-07-04T22:59:49.768871+00:00 task_06 openai:gpt-5.5
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_06.json --models openai:gpt-5.5 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id openai_responses_256k_20260704_225949_task_06_openai_gpt-5.5_256000
+Run 2026_07_04_22_59_49_openai_responses_256k_20260704_225949_task_06_openai_gpt-5.5_256000: math-cup-2026-final/task_06, 1 model(s), max_tokens=256000
+[1/1] START openai:gpt-5.5
+[1/1] DONE  gpt-5.5 in 29m09s tokens=33484 cost_usd=0.995795
+| model   |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------|----------|------------|--------------|----------|---------|
+| gpt-5.5 |    33484 |   0.995795 |      1748098 | ok       |         |
+
+Run ID: 2026_07_04_22_59_49_openai_responses_256k_20260704_225949_task_06_openai_gpt-5.5_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_06 (Гамильтонов граф)
+Timestamp: 2026-07-04T22:59:49.871114Z
+Git hash: b4dc85d
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_06/2026_07_04_22_59_49_openai_responses_256k_20260704_225949_task_06_openai_gpt-5.5_256000.json
+
+DONE 2026-07-04T23:28:59.260050+00:00 task_06 openai:gpt-5.5 exit=0

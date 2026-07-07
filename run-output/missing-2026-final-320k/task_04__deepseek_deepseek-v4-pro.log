@@ -1,0 +1,17 @@
+START 2026-06-30T10:09:19.602898+00:00 task_04 deepseek:deepseek-v4-pro
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_04.json --models deepseek:deepseek-v4-pro --max-tokens 320000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id retry_320k_20260630_100919_task_04_deepseek_deepseek-v4-pro_320000
+Run 2026_06_30_10_09_20_retry_320k_20260630_100919_task_04_deepseek_deepseek-v4-pro_320000: math-cup-2026-final/task_04, 1 model(s), max_tokens=320000
+[1/1] START deepseek:deepseek-v4-pro
+[1/1] DONE  deepseek-v4-pro in 29m51s tokens=118708 cost_usd=0.103142
+| model           |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-----------------|----------|------------|--------------|----------|---------|
+| deepseek-v4-pro |   118708 |   0.103142 |      1783272 | ok       |         |
+
+Run ID: 2026_06_30_10_09_20_retry_320k_20260630_100919_task_04_deepseek_deepseek-v4-pro_320000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_04 (Блуждание по плоскости)
+Timestamp: 2026-06-30T10:09:20.772364Z
+Git hash: bacff41
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_04/2026_06_30_10_09_20_retry_320k_20260630_100919_task_04_deepseek_deepseek-v4-pro_320000.json
+
+DONE 2026-06-30T10:39:13.505918+00:00 task_04 deepseek:deepseek-v4-pro exit=0

@@ -1,0 +1,58 @@
+Missing successful non-empty answers: 23
+task_04	openai:gpt-5.4-mini	empty answer	attempts=1	latest=2026_06_29_21_22_54_math_cup_2026_final_task_04_all_models_16192.json
+task_04	deepseek:deepseek-v4-pro	empty answer	attempts=1	latest=2026_06_29_21_22_54_math_cup_2026_final_task_04_all_models_16192.json
+task_04	deepseek:deepseek-v4-flash	empty answer	attempts=1	latest=2026_06_29_21_22_54_math_cup_2026_final_task_04_all_models_16192.json
+task_05	openai:gpt-5.5	empty answer	attempts=1	latest=2026_06_29_21_38_09_math_cup_2026_final_task_05_all_models_16192.json
+task_05	openai:gpt-5.4-mini	empty answer	attempts=1	latest=2026_06_29_21_38_09_math_cup_2026_final_task_05_all_models_16192.json
+task_05	deepseek:deepseek-v4-pro	empty answer	attempts=1	latest=2026_06_29_21_38_09_math_cup_2026_final_task_05_all_models_16192.json
+task_05	deepseek:deepseek-v4-flash	empty answer	attempts=1	latest=2026_06_29_21_38_09_math_cup_2026_final_task_05_all_models_16192.json
+task_06	openai:gpt-5.5	empty answer	attempts=1	latest=2026_06_29_21_52_26_math_cup_2026_final_task_06_all_models_16192.json
+task_06	openai:gpt-5.4-mini	empty answer	attempts=1	latest=2026_06_29_21_52_26_math_cup_2026_final_task_06_all_models_16192.json
+task_06	deepseek:deepseek-v4-pro	empty answer	attempts=1	latest=2026_06_29_21_52_26_math_cup_2026_final_task_06_all_models_16192.json
+task_06	deepseek:deepseek-v4-flash	empty answer	attempts=1	latest=2026_06_29_21_52_26_math_cup_2026_final_task_06_all_models_16192.json
+task_07	openai:gpt-5.5	empty answer	attempts=2	latest=2026_06_29_22_09_22_math_cup_2026_final_task_07_no_gigachat_16192.json
+task_07	openai:gpt-5.4-mini	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_07_no_gigachat_16192.json
+task_07	deepseek:deepseek-v4-pro	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_07_no_gigachat_16192.json
+task_07	deepseek:deepseek-v4-flash	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_07_no_gigachat_16192.json
+task_08	openai:gpt-5.5	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_08_no_gigachat_16192.json
+task_08	openai:gpt-5.4-mini	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_08_no_gigachat_16192.json
+task_08	deepseek:deepseek-v4-pro	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_08_no_gigachat_16192.json
+task_08	deepseek:deepseek-v4-flash	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_08_no_gigachat_16192.json
+task_09	openai:gpt-5.5	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_09_no_gigachat_16192.json
+task_09	openai:gpt-5.4-mini	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_09_no_gigachat_16192.json
+task_09	deepseek:deepseek-v4-pro	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_09_no_gigachat_16192.json
+task_09	deepseek:deepseek-v4-flash	empty answer	attempts=1	latest=2026_06_29_22_09_22_math_cup_2026_final_task_09_no_gigachat_16192.json
+
+Estimated max cost:
+provider	deepseek	$2.2089
+provider	openai	$35.2071
+model	deepseek:deepseek-v4-flash	$0.5378
+model	deepseek:deepseek-v4-pro	$1.6711
+model	openai:gpt-5.4-mini	$19.2039
+model	openai:gpt-5.5	$16.0032
+total	$37.4160
+total_plus_20pct	$44.8992
+Launching 23 pair(s), workers=23, max_tokens=320000, run_group=retry_320k_20260630_100919
+DONE task_04 openai:gpt-5.4-mini exit=0
+DONE task_07 openai:gpt-5.4-mini exit=0
+DONE task_07 openai:gpt-5.5 exit=0
+DONE task_05 openai:gpt-5.4-mini exit=0
+DONE task_06 openai:gpt-5.4-mini exit=0
+DONE task_08 openai:gpt-5.4-mini exit=0
+DONE task_09 openai:gpt-5.5 exit=0
+DONE task_05 openai:gpt-5.5 exit=0
+DONE task_06 openai:gpt-5.5 exit=0
+DONE task_09 openai:gpt-5.4-mini exit=0
+DONE task_08 openai:gpt-5.5 exit=0
+DONE task_09 deepseek:deepseek-v4-flash exit=0
+DONE task_06 deepseek:deepseek-v4-flash exit=0
+DONE task_04 deepseek:deepseek-v4-flash exit=0
+DONE task_07 deepseek:deepseek-v4-flash exit=0
+DONE task_05 deepseek:deepseek-v4-flash exit=0
+DONE task_06 deepseek:deepseek-v4-pro exit=0
+DONE task_07 deepseek:deepseek-v4-pro exit=0
+DONE task_08 deepseek:deepseek-v4-flash exit=0
+DONE task_08 deepseek:deepseek-v4-pro exit=0
+DONE task_04 deepseek:deepseek-v4-pro exit=0
+DONE task_05 deepseek:deepseek-v4-pro exit=0
+DONE task_09 deepseek:deepseek-v4-pro exit=0

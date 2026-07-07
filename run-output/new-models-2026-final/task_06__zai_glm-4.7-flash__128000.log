@@ -1,0 +1,17 @@
+START 2026-07-07T00:04:00.761153+00:00 task_06 zai:glm-4.7-flash cap=128000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_06.json --models zai:glm-4.7-flash --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_225754_task_06_zai_glm-4.7-flash_128000
+Run 2026_07_07_00_04_00_new_models_20260706_225754_task_06_zai_glm-4.7-flash_128000: math-cup-2026-final/task_06, 1 model(s), max_tokens=128000
+[1/1] START zai:glm-4.7-flash
+[1/1] ERROR glm-4.7-flash in 60m01s: Request timed out.
+| model         |   tokens |   cost_usd |   latency_ms | status   | error              |
+|---------------|----------|------------|--------------|----------|--------------------|
+| glm-4.7-flash |        0 |          0 |            0 | error    | Request timed out. |
+
+Run ID: 2026_07_07_00_04_00_new_models_20260706_225754_task_06_zai_glm-4.7-flash_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_06 (Гамильтонов граф)
+Timestamp: 2026-07-07T00:04:00.867685Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_06/2026_07_07_00_04_00_new_models_20260706_225754_task_06_zai_glm-4.7-flash_128000.json
+
+DONE 2026-07-07T01:04:02.799270+00:00 task_06 zai:glm-4.7-flash cap=128000 exit=0 elapsed_s=3602.0

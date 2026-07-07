@@ -1,0 +1,13 @@
+Run 2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_07_claude_opus_4_8_128000: math-cup-2026-final/task_07, 1 model(s), max_tokens=128000
+[1/1] START anthropic:claude-opus-4-8
+[1/1] DONE  claude-opus-4-8 in 42.2s tokens=3619 cost_usd=0.248625
+| model           |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-----------------|----------|------------|--------------|----------|---------|
+| claude-opus-4-8 |     3619 |   0.248625 |        41180 | ok       |         |
+
+Run ID: 2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_07_claude_opus_4_8_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_07 (Касательные)
+Timestamp: 2026-07-01T21:30:49.314997Z
+Git hash: 79406b6
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_07/2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_07_claude_opus_4_8_128000.json

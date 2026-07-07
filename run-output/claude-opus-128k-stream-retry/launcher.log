@@ -1,0 +1,30 @@
+START task_07 anthropic:claude-opus-4-8 2026-07-01T21:30:49Z
+START task_08 anthropic:claude-opus-4-8 2026-07-01T21:30:49Z
+Run 2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_07_claude_opus_4_8_128000: math-cup-2026-final/task_07, 1 model(s), max_tokens=128000
+[1/1] START anthropic:claude-opus-4-8
+Run 2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_08_claude_opus_4_8_128000: math-cup-2026-final/task_08, 1 model(s), max_tokens=128000
+[1/1] START anthropic:claude-opus-4-8
+[1/1] DONE  claude-opus-4-8 in 40.7s tokens=3408 cost_usd=0.228840
+| model           |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-----------------|----------|------------|--------------|----------|---------|
+| claude-opus-4-8 |     3408 |    0.22884 |        39881 | ok       |         |
+
+Run ID: 2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_08_claude_opus_4_8_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_08 (Строки)
+Timestamp: 2026-07-01T21:30:49.406059Z
+Git hash: 79406b6
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_08/2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_08_claude_opus_4_8_128000.json
+DONE  task_08 anthropic:claude-opus-4-8 exit=0 2026-07-01T21:31:30Z
+[1/1] DONE  claude-opus-4-8 in 42.2s tokens=3619 cost_usd=0.248625
+| model           |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-----------------|----------|------------|--------------|----------|---------|
+| claude-opus-4-8 |     3619 |   0.248625 |        41180 | ok       |         |
+
+Run ID: 2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_07_claude_opus_4_8_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_07 (Касательные)
+Timestamp: 2026-07-01T21:30:49.314997Z
+Git hash: 79406b6
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_07/2026_07_01_21_30_49_claude_opus_128k_stream_retry_20260701_213049_task_07_claude_opus_4_8_128000.json
+DONE  task_07 anthropic:claude-opus-4-8 exit=0 2026-07-01T21:31:31Z

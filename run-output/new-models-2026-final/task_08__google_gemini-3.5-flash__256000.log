@@ -1,0 +1,17 @@
+START 2026-07-06T23:43:49.995766+00:00 task_08 google:gemini-3.5-flash cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_08.json --models google:gemini-3.5-flash --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_225754_task_08_google_gemini-3.5-flash_256000
+Run 2026_07_06_23_43_50_new_models_20260706_225754_task_08_google_gemini-3.5-flash_256000: math-cup-2026-final/task_08, 1 model(s), max_tokens=256000
+[1/1] START google:gemini-3.5-flash
+[1/1] DONE  gemini-3.5-flash in 2m47s tokens=0 cost_usd=0.000000
+| model            |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------|----------|------------|--------------|----------|---------|
+| gemini-3.5-flash |        0 |          0 |       166128 | ok       |         |
+
+Run ID: 2026_07_06_23_43_50_new_models_20260706_225754_task_08_google_gemini-3.5-flash_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_08 (Строки)
+Timestamp: 2026-07-06T23:43:50.099901Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_08/2026_07_06_23_43_50_new_models_20260706_225754_task_08_google_gemini-3.5-flash_256000.json
+
+DONE 2026-07-06T23:46:38.155641+00:00 task_08 google:gemini-3.5-flash cap=256000 exit=0 elapsed_s=168.2

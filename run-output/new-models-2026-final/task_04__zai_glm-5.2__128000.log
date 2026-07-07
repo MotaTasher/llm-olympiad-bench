@@ -1,0 +1,17 @@
+START 2026-07-06T22:57:54.487598+00:00 task_04 zai:glm-5.2 cap=128000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_04.json --models zai:glm-5.2 --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_225754_task_04_zai_glm-5.2_128000
+Run 2026_07_06_22_57_54_new_models_20260706_225754_task_04_zai_glm-5.2_128000: math-cup-2026-final/task_04, 1 model(s), max_tokens=128000
+[1/1] START zai:glm-5.2
+[1/1] DONE  glm-5.2 in 10m47s tokens=39482 cost_usd=0.172749
+| model   |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------|----------|------------|--------------|----------|---------|
+| glm-5.2 |    39482 |   0.172749 |       646415 | ok       |         |
+
+Run ID: 2026_07_06_22_57_54_new_models_20260706_225754_task_04_zai_glm-5.2_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_04 (Блуждание по плоскости)
+Timestamp: 2026-07-06T22:57:54.712875Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_04/2026_07_06_22_57_54_new_models_20260706_225754_task_04_zai_glm-5.2_128000.json
+
+DONE 2026-07-06T23:08:42.594872+00:00 task_04 zai:glm-5.2 cap=128000 exit=0 elapsed_s=648.1

@@ -1,0 +1,17 @@
+START 2026-07-06T20:43:44.122004+00:00 task_05 xai:grok-build-0.1 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_05.json --models xai:grok-build-0.1 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_203306_task_05_xai_grok-build-0.1_256000
+Run 2026_07_06_20_43_44_new_models_20260706_203306_task_05_xai_grok-build-0.1_256000: math-cup-2026-final/task_05, 1 model(s), max_tokens=256000
+[1/1] START xai:grok-build-0.1
+[1/1] DONE  grok-build-0.1 in 10m45s tokens=1355 cost_usd=0.181370
+| model          |   tokens |   cost_usd |   latency_ms | status   | error   |
+|----------------|----------|------------|--------------|----------|---------|
+| grok-build-0.1 |     1355 |    0.18137 |       644900 | ok       |         |
+
+Run ID: 2026_07_06_20_43_44_new_models_20260706_203306_task_05_xai_grok-build-0.1_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_05 (Клетки)
+Timestamp: 2026-07-06T20:43:44.226755Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_05/2026_07_06_20_43_44_new_models_20260706_203306_task_05_xai_grok-build-0.1_256000.json
+
+DONE 2026-07-06T20:54:30.080256+00:00 task_05 xai:grok-build-0.1 cap=256000 exit=0 elapsed_s=646.0

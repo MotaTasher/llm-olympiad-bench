@@ -1,0 +1,17 @@
+START 2026-06-30T10:12:12.665249+00:00 task_08 openai:gpt-5.5
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_08.json --models openai:gpt-5.5 --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id retry_320k_20260630_101212_task_08_openai_gpt-5.5_128000
+Run 2026_06_30_10_12_13_retry_320k_20260630_101212_task_08_openai_gpt-5.5_128000: math-cup-2026-final/task_08, 1 model(s), max_tokens=128000
+[1/1] START openai:gpt-5.5
+[1/1] DONE  gpt-5.5 in 4m50s tokens=16888 cost_usd=0.166555
+| model   |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------|----------|------------|--------------|----------|---------|
+| gpt-5.5 |    16888 |   0.166555 |       286387 | ok       |         |
+
+Run ID: 2026_06_30_10_12_13_retry_320k_20260630_101212_task_08_openai_gpt-5.5_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_08 (Строки)
+Timestamp: 2026-06-30T10:12:13.283419Z
+Git hash: bacff41
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_08/2026_06_30_10_12_13_retry_320k_20260630_101212_task_08_openai_gpt-5.5_128000.json
+
+DONE 2026-06-30T10:17:04.014183+00:00 task_08 openai:gpt-5.5 exit=0

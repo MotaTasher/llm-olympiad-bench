@@ -1,0 +1,17 @@
+START 2026-07-06T20:36:29.773576+00:00 task_04 xai:grok-4.3 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_04.json --models xai:grok-4.3 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_203306_task_04_xai_grok-4.3_256000
+Run 2026_07_06_20_36_29_new_models_20260706_203306_task_04_xai_grok-4.3_256000: math-cup-2026-final/task_04, 1 model(s), max_tokens=256000
+[1/1] START xai:grok-4.3
+[1/1] DONE  grok-4.3 in 7m05s tokens=781 cost_usd=0.106167
+| model    |   tokens |   cost_usd |   latency_ms | status   | error   |
+|----------|----------|------------|--------------|----------|---------|
+| grok-4.3 |      781 |   0.106167 |       425283 | ok       |         |
+
+Run ID: 2026_07_06_20_36_29_new_models_20260706_203306_task_04_xai_grok-4.3_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_04 (Блуждание по плоскости)
+Timestamp: 2026-07-06T20:36:29.877204Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_04/2026_07_06_20_36_29_new_models_20260706_203306_task_04_xai_grok-4.3_256000.json
+
+DONE 2026-07-06T20:43:36.039181+00:00 task_04 xai:grok-4.3 cap=256000 exit=0 elapsed_s=426.3

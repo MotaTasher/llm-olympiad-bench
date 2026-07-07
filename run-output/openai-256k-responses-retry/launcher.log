@@ -1,0 +1,13 @@
+Missing successful non-empty answers: 2
+task_05	openai:gpt-5.4-mini	error: Request timed out.	attempts=4	latest=2026_06_30_11_06_17_retry_openai_timeout_task_05_gpt_5_4_mini_128000.json
+task_06	openai:gpt-5.5	error: Request timed out.	attempts=4	latest=2026_06_30_11_06_17_retry_openai_timeout_task_06_gpt_5_5_128000.json
+
+Estimated max cost:
+provider	openai	$8.8335
+model	openai:gpt-5.4-mini	$1.1522
+model	openai:gpt-5.5	$7.6814
+total	$8.8335
+total_plus_20pct	$10.6002
+Launching 2 pair(s), workers=2, max_tokens=256000, run_group=openai_responses_256k_20260704_225949
+DONE task_06 openai:gpt-5.5 exit=0
+DONE task_05 openai:gpt-5.4-mini exit=0

@@ -1,0 +1,17 @@
+START 2026-07-06T23:03:58.964918+00:00 task_05 zai:glm-5.2 cap=128000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_05.json --models zai:glm-5.2 --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_225754_task_05_zai_glm-5.2_128000
+Run 2026_07_06_23_03_59_new_models_20260706_225754_task_05_zai_glm-5.2_128000: math-cup-2026-final/task_05, 1 model(s), max_tokens=128000
+[1/1] START zai:glm-5.2
+[1/1] ERROR glm-5.2 in 60m01s: Request timed out.
+| model   |   tokens |   cost_usd |   latency_ms | status   | error              |
+|---------|----------|------------|--------------|----------|--------------------|
+| glm-5.2 |        0 |          0 |            0 | error    | Request timed out. |
+
+Run ID: 2026_07_06_23_03_59_new_models_20260706_225754_task_05_zai_glm-5.2_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_05 (Клетки)
+Timestamp: 2026-07-06T23:03:59.071146Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_05/2026_07_06_23_03_59_new_models_20260706_225754_task_05_zai_glm-5.2_128000.json
+
+DONE 2026-07-07T00:04:00.759827+00:00 task_05 zai:glm-5.2 cap=128000 exit=0 elapsed_s=3601.8

@@ -1,0 +1,17 @@
+START 2026-06-30T10:09:19.700097+00:00 task_07 deepseek:deepseek-v4-flash
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_07.json --models deepseek:deepseek-v4-flash --max-tokens 320000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id retry_320k_20260630_100919_task_07_deepseek_deepseek-v4-flash_320000
+Run 2026_06_30_10_09_21_retry_320k_20260630_100919_task_07_deepseek_deepseek-v4-flash_320000: math-cup-2026-final/task_07, 1 model(s), max_tokens=320000
+[1/1] START deepseek:deepseek-v4-flash
+[1/1] DONE  deepseek-v4-flash in 15m50s tokens=96333 cost_usd=0.026936
+| model             |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-------------------|----------|------------|--------------|----------|---------|
+| deepseek-v4-flash |    96333 |   0.026936 |       941939 | ok       |         |
+
+Run ID: 2026_06_30_10_09_21_retry_320k_20260630_100919_task_07_deepseek_deepseek-v4-flash_320000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_07 (Касательные)
+Timestamp: 2026-06-30T10:09:21.146865Z
+Git hash: bacff41
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_07/2026_06_30_10_09_21_retry_320k_20260630_100919_task_07_deepseek_deepseek-v4-flash_320000.json
+
+DONE 2026-06-30T10:25:12.185826+00:00 task_07 deepseek:deepseek-v4-flash exit=0

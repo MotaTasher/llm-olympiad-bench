@@ -1,0 +1,17 @@
+START 2026-07-06T20:35:10.696219+00:00 task_03 zai:glm-5.2 cap=128000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_03.json --models zai:glm-5.2 --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_203306_task_03_zai_glm-5.2_128000
+Run 2026_07_06_20_35_10_new_models_20260706_203306_task_03_zai_glm-5.2_128000: math-cup-2026-final/task_03, 1 model(s), max_tokens=128000
+[1/1] START zai:glm-5.2
+[1/1] DONE  glm-5.2 in 5m40s tokens=18819 cost_usd=0.082114
+| model   |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------|----------|------------|--------------|----------|---------|
+| glm-5.2 |    18819 |   0.082114 |       339529 | ok       |         |
+
+Run ID: 2026_07_06_20_35_10_new_models_20260706_203306_task_03_zai_glm-5.2_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_03 (Многочлен)
+Timestamp: 2026-07-06T20:35:10.804284Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_03/2026_07_06_20_35_10_new_models_20260706_203306_task_03_zai_glm-5.2_128000.json
+
+DONE 2026-07-06T20:40:51.369694+00:00 task_03 zai:glm-5.2 cap=128000 exit=0 elapsed_s=340.7

@@ -1,0 +1,31 @@
+Missing successful non-empty answers: 11
+task_04	openai:gpt-5.4-mini	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_20_retry_320k_20260630_100919_task_04_openai_gpt-5.4-mini_320000.json
+task_05	openai:gpt-5.5	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_20_retry_320k_20260630_100919_task_05_openai_gpt-5.5_320000.json
+task_05	openai:gpt-5.4-mini	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_20_retry_320k_20260630_100919_task_05_openai_gpt-5.4-mini_320000.json
+task_06	openai:gpt-5.5	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_20_retry_320k_20260630_100919_task_06_openai_gpt-5.5_320000.json
+task_06	openai:gpt-5.4-mini	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_20_retry_320k_20260630_100919_task_06_openai_gpt-5.4-mini_320000.json
+task_07	openai:gpt-5.5	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=3	latest=2026_06_30_10_09_20_retry_320k_20260630_100919_task_07_openai_gpt-5.5_320000.json
+task_07	openai:gpt-5.4-mini	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_21_retry_320k_20260630_100919_task_07_openai_gpt-5.4-mini_320000.json
+task_08	openai:gpt-5.5	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_21_retry_320k_20260630_100919_task_08_openai_gpt-5.5_320000.json
+task_08	openai:gpt-5.4-mini	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_21_retry_320k_20260630_100919_task_08_openai_gpt-5.4-mini_320000.json
+task_09	openai:gpt-5.5	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_21_retry_320k_20260630_100919_task_09_openai_gpt-5.5_320000.json
+task_09	openai:gpt-5.4-mini	error: Error code: 400 - {'error': {'message': 'max_tokens is too large: 320000. This model supports at most 128000 completion tokens, whereas you provided 320000.', '	attempts=2	latest=2026_06_30_10_09_21_retry_320k_20260630_100919_task_09_openai_gpt-5.4-mini_320000.json
+
+Estimated max cost:
+provider	openai	$14.0871
+model	openai:gpt-5.4-mini	$7.6839
+model	openai:gpt-5.5	$6.4032
+total	$14.0871
+total_plus_20pct	$16.9045
+Launching 11 pair(s), workers=11, max_tokens=128000, run_group=retry_320k_20260630_101212
+DONE task_08 openai:gpt-5.5 exit=0
+DONE task_07 openai:gpt-5.5 exit=0
+DONE task_09 openai:gpt-5.4-mini exit=0
+DONE task_06 openai:gpt-5.4-mini exit=0
+DONE task_08 openai:gpt-5.4-mini exit=0
+DONE task_05 openai:gpt-5.5 exit=0
+DONE task_04 openai:gpt-5.4-mini exit=0
+DONE task_07 openai:gpt-5.4-mini exit=0
+DONE task_09 openai:gpt-5.5 exit=0
+DONE task_05 openai:gpt-5.4-mini exit=0
+DONE task_06 openai:gpt-5.5 exit=0

@@ -1,0 +1,17 @@
+START 2026-07-06T20:34:29.656656+00:00 task_02 zai:glm-4.7-flash cap=128000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_02.json --models zai:glm-4.7-flash --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_203306_task_02_zai_glm-4.7-flash_128000
+Run 2026_07_06_20_34_29_new_models_20260706_203306_task_02_zai_glm-4.7-flash_128000: math-cup-2026-final/task_02, 1 model(s), max_tokens=128000
+[1/1] START zai:glm-4.7-flash
+[1/1] DONE  glm-4.7-flash in 2m35s tokens=16363 cost_usd=0.000000
+| model         |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------------|----------|------------|--------------|----------|---------|
+| glm-4.7-flash |    16363 |          0 |       154549 | ok       |         |
+
+Run ID: 2026_07_06_20_34_29_new_models_20260706_203306_task_02_zai_glm-4.7-flash_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_02 (Матрицы)
+Timestamp: 2026-07-06T20:34:29.766762Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_02/2026_07_06_20_34_29_new_models_20260706_203306_task_02_zai_glm-4.7-flash_128000.json
+
+DONE 2026-07-06T20:37:05.288282+00:00 task_02 zai:glm-4.7-flash cap=128000 exit=0 elapsed_s=155.6

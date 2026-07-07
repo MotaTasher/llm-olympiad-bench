@@ -1,0 +1,17 @@
+START 2026-07-06T20:35:49.204165+00:00 task_04 google:gemini-3.5-flash cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_04.json --models google:gemini-3.5-flash --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_203306_task_04_google_gemini-3.5-flash_256000
+Run 2026_07_06_20_35_49_new_models_20260706_203306_task_04_google_gemini-3.5-flash_256000: math-cup-2026-final/task_04, 1 model(s), max_tokens=256000
+[1/1] START google:gemini-3.5-flash
+[1/1] DONE  gemini-3.5-flash in 4m08s tokens=0 cost_usd=0.000000
+| model            |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------|----------|------------|--------------|----------|---------|
+| gemini-3.5-flash |        0 |          0 |       247333 | ok       |         |
+
+Run ID: 2026_07_06_20_35_49_new_models_20260706_203306_task_04_google_gemini-3.5-flash_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_04 (Блуждание по плоскости)
+Timestamp: 2026-07-06T20:35:49.305875Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_04/2026_07_06_20_35_49_new_models_20260706_203306_task_04_google_gemini-3.5-flash_256000.json
+
+DONE 2026-07-06T20:39:58.573192+00:00 task_04 google:gemini-3.5-flash cap=256000 exit=0 elapsed_s=249.4

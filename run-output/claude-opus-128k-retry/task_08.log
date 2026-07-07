@@ -1,0 +1,13 @@
+Run 2026_06_30_22_36_10_claude_opus_128k_retry_20260630_223610_task_08_claude_opus_4_8_128000: math-cup-2026-final/task_08, 1 model(s), max_tokens=128000
+[1/1] START anthropic:claude-opus-4-8
+[1/1] ERROR claude-opus-4-8 in 1.4s: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-s
+| model           |   tokens |   cost_usd |   latency_ms | status   | error                                                                                                                    |
+|-----------------|----------|------------|--------------|----------|--------------------------------------------------------------------------------------------------------------------------|
+| claude-opus-4-8 |        0 |          0 |            0 | error    | Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-s |
+
+Run ID: 2026_06_30_22_36_10_claude_opus_128k_retry_20260630_223610_task_08_claude_opus_4_8_128000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_08 (Строки)
+Timestamp: 2026-06-30T22:36:10.631774Z
+Git hash: 284a814
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_08/2026_06_30_22_36_10_claude_opus_128k_retry_20260630_223610_task_08_claude_opus_4_8_128000.json

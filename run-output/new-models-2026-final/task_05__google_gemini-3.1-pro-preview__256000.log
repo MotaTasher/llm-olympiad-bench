@@ -1,0 +1,17 @@
+START 2026-07-06T20:39:58.574064+00:00 task_05 google:gemini-3.1-pro-preview cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_05.json --models google:gemini-3.1-pro-preview --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id new_models_20260706_203306_task_05_google_gemini-3.1-pro-preview_256000
+Run 2026_07_06_20_39_58_new_models_20260706_203306_task_05_google_gemini-3.1-pro-preview_256000: math-cup-2026-final/task_05, 1 model(s), max_tokens=256000
+[1/1] START google:gemini-3.1-pro-preview
+[1/1] DONE  gemini-3.1-pro-preview in 5m17s tokens=0 cost_usd=0.000000
+| model                  |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------------|----------|------------|--------------|----------|---------|
+| gemini-3.1-pro-preview |        0 |          0 |       316155 | ok       |         |
+
+Run ID: 2026_07_06_20_39_58_new_models_20260706_203306_task_05_google_gemini-3.1-pro-preview_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_05 (Клетки)
+Timestamp: 2026-07-06T20:39:58.679435Z
+Git hash: 3ffa87e
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_05/2026_07_06_20_39_58_new_models_20260706_203306_task_05_google_gemini-3.1-pro-preview_256000.json
+
+DONE 2026-07-06T20:45:16.751263+00:00 task_05 google:gemini-3.1-pro-preview cap=256000 exit=0 elapsed_s=318.2

@@ -1,0 +1,64 @@
+Pair count: 25
+provider	google	$12.6741
+provider	xai	$3.9700
+provider	zai	$3.3814
+model	google:gemini-3.1-pro-preview	$9.2175
+model	google:gemini-3.5-flash	$3.4566
+model	xai:grok-4.3	$1.9210
+model	xai:grok-build-0.1	$2.0490
+model	zai:glm-4.7-flash	$0.0000
+model	zai:glm-5.2	$3.3814
+total	$20.0255
+total_plus_20pct	$24.0306
+  0%|          | 0/25 [00:00<?, ?run/s]                                         0%|          | 0/25 [00:00<?, ?run/s]                                         0%|          | 0/25 [00:00<?, ?run/s]                                         0%|          | 0/25 [00:00<?, ?run/s]                                         0%|          | 0/25 [00:00<?, ?run/s]                                         0%|          | 0/25 [06:04<?, ?run/s]  4%|▍         | 1/25 [06:04<2:25:47, 364.48s/run]                                                    4%|▍         | 1/25 [06:04<2:25:47, 364.48s/run]                                                    4%|▍         | 1/25 [10:48<2:25:47, 364.48s/run]  8%|▊         | 2/25 [10:48<2:01:29, 316.92s/run]                                                    8%|▊         | 2/25 [10:48<2:01:29, 316.92s/run]                                                    8%|▊         | 2/25 [10:48<2:01:29, 316.92s/run]                                                    8%|▊         | 2/25 [12:45<2:01:29, 316.92s/run] 12%|█▏        | 3/25 [12:45<1:22:51, 225.99s/run]                                                   12%|█▏        | 3/25 [12:45<1:22:51, 225.99s/run]                                                   12%|█▏        | 3/25 [12:45<1:22:51, 225.99s/run]                                                   12%|█▏        | 3/25 [13:36<1:22:51, 225.99s/run] 16%|█▌        | 4/25 [13:36<54:48, 156.62s/run]                                                   16%|█▌        | 4/25 [13:36<54:48, 156.62s/run]                                                 16%|█▌        | 4/25 [14:59<54:48, 156.62s/run] 20%|██        | 5/25 [14:59<43:23, 130.17s/run]                                                 20%|██        | 5/25 [16:11<43:23, 130.17s/run] 24%|██▍       | 6/25 [16:11<34:57, 110.40s/run]                                                 24%|██▍       | 6/25 [16:11<34:57, 110.40s/run]                                                 24%|██▍       | 6/25 [19:15<34:57, 110.40s/run] 28%|██▊       | 7/25 [19:15<40:19, 134.44s/run]                                                 28%|██▊       | 7/25 [40:39<40:19, 134.44s/run] 32%|███▏      | 8/25 [40:39<2:21:48, 500.51s/run]                                                   32%|███▏      | 8/25 [40:39<2:21:48, 500.51s/run]                                                   32%|███▏      | 8/25 [45:55<2:21:48, 500.51s/run] 36%|███▌      | 9/25 [45:55<1:58:04, 442.76s/run]                                                   36%|███▌      | 9/25 [45:55<1:58:04, 442.76s/run]                                                   36%|███▌      | 9/25 [48:43<1:58:04, 442.76s/run] 40%|████      | 10/25 [48:43<1:29:29, 357.99s/run]                                                    40%|████      | 10/25 [48:43<1:29:29, 357.99s/run]                                                    40%|████      | 10/25 [1:03:21<1:29:29, 357.99s/run] 44%|████▍     | 11/25 [1:03:21<2:00:41, 517.23s/run]                                                      44%|████▍     | 11/25 [1:03:21<2:00:41, 517.23s/run]                                                      44%|████▍     | 11/25 [1:06:06<2:00:41, 517.23s/run] 48%|████▊     | 12/25 [1:06:06<1:28:48, 409.87s/run]                                                      48%|████▊     | 12/25 [1:06:06<1:28:48, 409.87s/run]                                                      48%|████▊     | 12/25 [1:12:48<1:28:48, 409.87s/run] 52%|█████▏    | 13/25 [1:12:48<1:21:28, 407.40s/run]                                                      52%|█████▏    | 13/25 [1:12:48<1:21:28, 407.40s/run]                                                      52%|█████▏    | 13/25 [1:24:19<1:21:28, 407.40s/run] 56%|█████▌    | 14/25 [1:24:19<1:30:26, 493.31s/run]                                                      56%|█████▌    | 14/25 [1:24:19<1:30:26, 493.31s/run]                                                      56%|█████▌    | 14/25 [1:24:19<1:30:26, 493.31s/run]                                                      56%|█████▌    | 14/25 [1:26:03<1:30:26, 493.31s/run] 60%|██████    | 15/25 [1:26:03<1:02:39, 375.98s/run]                                                      60%|██████    | 15/25 [1:26:03<1:02:39, 375.98s/run]                                                      60%|██████    | 15/25 [1:27:23<1:02:39, 375.98s/run] 64%|██████▍   | 16/25 [1:27:23<43:00, 286.70s/run]                                                      64%|██████▍   | 16/25 [1:27:23<43:00, 286.70s/run]                                                    64%|██████▍   | 16/25 [1:27:23<43:00, 286.70s/run]                                                    64%|██████▍   | 16/25 [1:27:48<43:00, 286.70s/run] 68%|██████▊   | 17/25 [1:27:48<27:45, 208.23s/run]                                                    68%|██████▊   | 17/25 [1:27:48<27:45, 208.23s/run]                                                    68%|██████▊   | 17/25 [1:28:42<27:45, 208.23s/run] 72%|███████▏  | 18/25 [1:28:42<18:53, 161.86s/run]                                                    72%|███████▏  | 18/25 [1:40:10<18:53, 161.86s/run] 76%|███████▌  | 19/25 [1:40:10<31:57, 319.65s/run]                                                    76%|███████▌  | 19/25 [1:53:05<31:57, 319.65s/run] 80%|████████  | 20/25 [1:53:05<38:01, 456.35s/run]                                                    80%|████████  | 20/25 [2:06:08<38:01, 456.35s/run] 84%|████████▍ | 21/25 [2:06:08<36:57, 554.47s/run]                                                    84%|████████▍ | 21/25 [2:06:08<36:57, 554.47s/run]                                                    84%|████████▍ | 21/25 [2:27:25<36:57, 554.47s/run] 88%|████████▊ | 22/25 [2:27:25<38:33, 771.24s/run]                                                    88%|████████▊ | 22/25 [2:27:25<38:33, 771.24s/run]                                                    88%|████████▊ | 22/25 [3:06:10<38:33, 771.24s/run] 92%|█████████▏| 23/25 [3:06:10<41:14, 1237.49s/run]                                                     92%|█████████▏| 23/25 [3:06:10<41:14, 1237.49s/run]                                                     92%|█████████▏| 23/25 [3:06:12<41:14, 1237.49s/run] 96%|█████████▌| 24/25 [3:06:12<14:26, 866.84s/run]                                                     96%|█████████▌| 24/25 [3:27:26<14:26, 866.84s/run]100%|██████████| 25/25 [3:27:26<00:00, 989.17s/run]100%|██████████| 25/25 [3:27:26<00:00, 497.87s/run]
+Launching 25 pair(s), workers=6, provider_workers={'google': 2, 'xai': 2, 'zai': 2}, run_group=new_models_20260706_225754
+START task_04 zai:glm-5.2 cap=128000
+START task_04 zai:glm-4.7-flash cap=128000
+START task_06 xai:grok-build-0.1 cap=256000
+OK task_04 zai:glm-4.7-flash exit=0 elapsed=364.5s log=run-output/new-models-2026-final/task_04__zai_glm-4.7-flash__128000.log
+START task_05 zai:glm-5.2 cap=128000
+OK task_04 zai:glm-5.2 exit=0 elapsed=648.1s log=run-output/new-models-2026-final/task_04__zai_glm-5.2__128000.log
+START task_05 zai:glm-4.7-flash cap=128000
+START task_07 google:gemini-3.1-pro-preview cap=256000
+OK task_05 zai:glm-4.7-flash exit=0 elapsed=117.8s log=run-output/new-models-2026-final/task_05__zai_glm-4.7-flash__128000.log
+START task_06 zai:glm-5.2 cap=128000
+START task_07 google:gemini-3.5-flash cap=256000
+OK task_07 google:gemini-3.1-pro-preview exit=0 elapsed=168.1s log=run-output/new-models-2026-final/task_07__google_gemini-3.1-pro-preview__256000.log
+START task_07 xai:grok-4.3 cap=256000
+OK task_07 google:gemini-3.5-flash exit=0 elapsed=133.5s log=run-output/new-models-2026-final/task_07__google_gemini-3.5-flash__256000.log
+OK task_06 xai:grok-build-0.1 exit=0 elapsed=971.4s log=run-output/new-models-2026-final/task_06__xai_grok-build-0.1__256000.log
+START task_07 xai:grok-build-0.1 cap=256000
+OK task_07 xai:grok-4.3 exit=0 elapsed=339.2s log=run-output/new-models-2026-final/task_07__xai_grok-4.3__256000.log
+OK task_07 xai:grok-build-0.1 exit=0 elapsed=1468.3s log=run-output/new-models-2026-final/task_07__xai_grok-build-0.1__256000.log
+START task_08 google:gemini-3.1-pro-preview cap=256000
+OK task_08 google:gemini-3.1-pro-preview exit=0 elapsed=315.8s log=run-output/new-models-2026-final/task_08__google_gemini-3.1-pro-preview__256000.log
+START task_08 google:gemini-3.5-flash cap=256000
+OK task_08 google:gemini-3.5-flash exit=0 elapsed=168.2s log=run-output/new-models-2026-final/task_08__google_gemini-3.5-flash__256000.log
+START task_08 xai:grok-4.3 cap=256000
+OK task_08 xai:grok-4.3 exit=0 elapsed=878.3s log=run-output/new-models-2026-final/task_08__xai_grok-4.3__256000.log
+START task_08 xai:grok-build-0.1 cap=256000
+OK task_05 zai:glm-5.2 exit=0 elapsed=3601.8s log=run-output/new-models-2026-final/task_05__zai_glm-5.2__128000.log
+START task_06 zai:glm-4.7-flash cap=128000
+OK task_06 zai:glm-5.2 exit=0 elapsed=3602.1s log=run-output/new-models-2026-final/task_06__zai_glm-5.2__128000.log
+START task_07 zai:glm-5.2 cap=128000
+OK task_07 zai:glm-5.2 exit=0 elapsed=691.8s log=run-output/new-models-2026-final/task_07__zai_glm-5.2__128000.log
+START task_07 zai:glm-4.7-flash cap=128000
+START task_09 google:gemini-3.1-pro-preview cap=256000
+OK task_08 xai:grok-build-0.1 exit=0 elapsed=1361.9s log=run-output/new-models-2026-final/task_08__xai_grok-build-0.1__256000.log
+START task_09 google:gemini-3.5-flash cap=256000
+OK task_07 zai:glm-4.7-flash exit=0 elapsed=183.4s log=run-output/new-models-2026-final/task_07__zai_glm-4.7-flash__128000.log
+START task_08 zai:glm-5.2 cap=128000
+START task_09 xai:grok-4.3 cap=256000
+OK task_09 google:gemini-3.5-flash exit=0 elapsed=105.1s log=run-output/new-models-2026-final/task_09__google_gemini-3.5-flash__256000.log
+START task_09 xai:grok-build-0.1 cap=256000
+OK task_09 google:gemini-3.1-pro-preview exit=0 elapsed=263.1s log=run-output/new-models-2026-final/task_09__google_gemini-3.1-pro-preview__256000.log
+OK task_09 xai:grok-4.3 exit=0 elapsed=766.9s log=run-output/new-models-2026-final/task_09__xai_grok-4.3__256000.log
+OK task_09 xai:grok-build-0.1 exit=0 elapsed=1516.1s log=run-output/new-models-2026-final/task_09__xai_grok-build-0.1__256000.log
+OK task_06 zai:glm-4.7-flash exit=0 elapsed=3602.0s log=run-output/new-models-2026-final/task_06__zai_glm-4.7-flash__128000.log
+START task_08 zai:glm-4.7-flash cap=128000
+OK task_08 zai:glm-5.2 exit=0 elapsed=3601.8s log=run-output/new-models-2026-final/task_08__zai_glm-5.2__128000.log
+START task_09 zai:glm-5.2 cap=128000
+OK task_08 zai:glm-4.7-flash exit=0 elapsed=3601.7s log=run-output/new-models-2026-final/task_08__zai_glm-4.7-flash__128000.log
+START task_09 zai:glm-4.7-flash cap=128000
+OK task_09 zai:glm-4.7-flash exit=0 elapsed=2.2s log=run-output/new-models-2026-final/task_09__zai_glm-4.7-flash__128000.log
+OK task_09 zai:glm-5.2 exit=0 elapsed=3601.8s log=run-output/new-models-2026-final/task_09__zai_glm-5.2__128000.log
