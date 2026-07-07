@@ -114,10 +114,13 @@ python scripts/run_model_batch.py \
   --models new
 ```
 
-It uses the same Gemini/Grok/GLM default caps and cost estimates as the final
-launcher. Add `--detach --yes` on the server to start the run in a new session,
-write progress to `<output-dir>/launcher.log`, and allow the SSH connection to
-close without stopping child `runner.py` processes.
+`--models new` runs only the Gemini/Grok/GLM set; `--models all` runs every
+active configured model from `models/*/versions.py`. The generic launcher clips
+known provider/model token caps before invoking `runner.py`, so a broad
+`--max-tokens` request is reduced to the supported per-model maximum where the
+project knows it. Add `--detach --yes` on the server to start the run in a new
+session, write progress to `<output-dir>/launcher.log`, and allow the SSH
+connection to close without stopping child `runner.py` processes.
 
 ## Generated artifacts
 

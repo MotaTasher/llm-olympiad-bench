@@ -2,6 +2,9 @@
 
 Этот адаптер запускает Claude через общий `runner.py` в text-only режиме: без `tools`, web search, computer use и внешних цепочек.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `ANTHROPIC_MAX_TOKENS` остаётся fallback-настройкой.
+Адаптер сам режет общий лимит на provider-совместимые запросы: до `128000`
+output-токенов за запрос для `claude-opus-4-8` и до `64000` для
+`claude-haiku-4-5-20251001`.
 
 ## 1. Как получить ключ
 
@@ -76,6 +79,14 @@ Anthropic Python SDK требует streaming для запросов с `max_to
 переключается на Messages streaming автоматически выше этого порога и затем
 собирает финальный текст из итогового message. Стоимость API от streaming не
 меняется: тарификация остается по input/output токенам.
+
+Если общий `--max-tokens` больше лимита одного Claude-запроса и Claude вернул
+только thinking/redacted thinking без видимого текста, адаптер продолжает
+Messages-диалог следующим запросом. Для продолжения он передает предыдущие
+assistant `content` blocks неизмененными и добавляет короткое user-сообщение
+`Continue.`. Это официальный формат Anthropic для сохранения подписанных
+thinking-блоков; адаптер не пересказывает reasoning в обычный prompt и не
+подключает инструменты.
 
 `runner.load_env()` специально игнорирует старые `ANTHROPIC_MODEL` из `.env`, shell env и `models/*/secrets/.env`, чтобы выбор модели был централизован. Shell override разрешается только при запуске с флагом `--allow-env-model-overrides`.
 

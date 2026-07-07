@@ -13,10 +13,11 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from runner import active_model_specs  # noqa: E402
 from scripts.run_new_models_math_cup_2026_final import (  # noqa: E402
     DEFAULT_LOGS_DIR,
     DEFAULT_PROVIDER_WORKERS,
-    MODEL_CAPS,
+    MODEL_CAPS as NEW_MODEL_CAPS,
     Progress,
     json_data,
     model_candidates,
@@ -26,6 +27,21 @@ from scripts.run_new_models_math_cup_2026_final import (  # noqa: E402
 )
 from models.common import SYSTEM_PROMPT  # noqa: E402
 from models.pricing import estimate_cost, estimate_tokens  # noqa: E402
+
+
+MODEL_CAPS = {
+    "openai:gpt-5.5": 128_000,
+    "openai:gpt-5.4-mini": 128_000,
+    "anthropic:claude-opus-4-8": 128_000,
+    "anthropic:claude-haiku-4-5-20251001": 64_000,
+    "deepseek:deepseek-v4-pro": 320_000,
+    "deepseek:deepseek-v4-flash": 320_000,
+    "yandexgpt:yandexgpt-5.1": 8_000,
+    "yandexgpt:yandexgpt-5-lite": 8_000,
+    "gigachat:GigaChat-2-Max": 8_192,
+    "gigachat:GigaChat-2": 8_192,
+    **NEW_MODEL_CAPS,
+}
 
 
 @dataclass(frozen=True)
@@ -58,8 +74,10 @@ def problem_ids(value: str) -> list[str]:
 
 
 def model_specs(value: str) -> list[str]:
-    if value.lower() in {"new", "all"}:
-        return list(MODEL_CAPS)
+    if value.lower() == "new":
+        return list(NEW_MODEL_CAPS)
+    if value.lower() in {"all", "site", "configured"}:
+        return active_model_specs()
     return parse_csv(value)
 
 

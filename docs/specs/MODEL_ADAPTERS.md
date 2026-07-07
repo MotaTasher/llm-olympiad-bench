@@ -111,11 +111,18 @@ OpenAI long Responses requests use `OPENAI_TIMEOUT_SECONDS` for the per-request
 HTTP timeout, defaulting to 7200 seconds so 128K reasoning/output calls are not
 cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override
 the SDK retry count when operators want to avoid or allow replaying long calls.
-The Anthropic adapter uses the non-streaming Messages API up to `max_tokens =
-21333`, matching the Anthropic Python SDK's documented long-request threshold.
-For larger Claude requests it automatically switches to Messages streaming and
-collects the final message before returning `SolveResult`; this is still a
-text-only request and does not change API pricing. When Anthropic returns
+The Anthropic adapter treats `runner.py --max-tokens` as a total Claude output
+budget. Each Messages request is capped by the provider/model maximum
+(`claude-opus-4-8`: 128,000; `claude-haiku-4-5-20251001`: 64,000). If the total
+budget is larger and a step returns no visible text, the adapter continues with
+another Messages request by passing the previous assistant `content` blocks
+unchanged and then a text-only `Continue.` user message. This preserves
+Anthropic signed `thinking`/`redacted_thinking` blocks when they are returned,
+without converting them to prompt text and without adding tools, search or code
+execution. The adapter uses the non-streaming Messages API up to `max_tokens =
+21333`, matching the Anthropic Python SDK's documented long-request threshold;
+larger per-request steps automatically use Messages streaming and collect the
+final message before returning `SolveResult`. When Anthropic returns
 `output_tokens_details.reasoning_tokens`, the adapter stores it in
 `usage.reasoning_tokens`; those tokens are billed as output tokens, so
 `cost.reasoning` is a subcomponent of the already total-priced output cost.
