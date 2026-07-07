@@ -25,6 +25,10 @@ ANTHROPIC_MAX_OUTPUT_TOKENS_BY_MODEL = {
     "claude-haiku-4-5-20251001": 64_000,
 }
 ANTHROPIC_DEFAULT_MAX_OUTPUT_TOKENS = 64_000
+ANTHROPIC_ADAPTIVE_THINKING_MODEL_PREFIXES = ("claude-opus-4-8",)
+ANTHROPIC_DEFAULT_EFFORT = "xhigh"
+ANTHROPIC_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
+ANTHROPIC_DEFAULT_FINAL_TOKEN_RESERVE = 4096
 
 
 def usage_value(usage: Any, *names: str) -> int | None:
@@ -49,6 +53,35 @@ def max_output_tokens_for_model(model_id: str) -> int:
         if model_id == prefix or model_id.startswith(f"{prefix}-"):
             return limit
     return ANTHROPIC_DEFAULT_MAX_OUTPUT_TOKENS
+
+
+def uses_adaptive_thinking(model_id: str) -> bool:
+    return any(
+        model_id == prefix or model_id.startswith(f"{prefix}-")
+        for prefix in ANTHROPIC_ADAPTIVE_THINKING_MODEL_PREFIXES
+    )
+
+
+def effort_value() -> str:
+    value = (env("ANTHROPIC_EFFORT", ANTHROPIC_DEFAULT_EFFORT) or ANTHROPIC_DEFAULT_EFFORT).lower()
+    return value if value in ANTHROPIC_EFFORTS else ANTHROPIC_DEFAULT_EFFORT
+
+
+def positive_int_env(name: str, default: int) -> int:
+    value = env(name)
+    if value is None:
+        return default
+    try:
+        parsed = int(value)
+    except ValueError:
+        return default
+    return parsed if parsed > 0 else default
+
+
+def manual_thinking_budget_for_step(step_max_tokens: int, requested_budget_tokens: int) -> int:
+    reserve = positive_int_env("ANTHROPIC_FINAL_TOKEN_RESERVE", ANTHROPIC_DEFAULT_FINAL_TOKEN_RESERVE)
+    maximum = step_max_tokens - reserve if step_max_tokens > reserve else step_max_tokens - 1
+    return max(1, min(requested_budget_tokens, maximum))
 
 
 def content_blocks_for_request(content: Any) -> list[dict[str, Any]]:
@@ -111,15 +144,16 @@ class ClaudeModel(BaseModel):
             }
             if thinking_budget is not None:
                 if budget_tokens > 0:
-                    if per_request_limit <= budget_tokens:
-                        raise RuntimeError(
-                            "Claude per-request max_tokens must be greater than "
-                            "ANTHROPIC_THINKING_BUDGET_TOKENS when extended thinking is enabled"
-                        )
-                    request_payload["thinking"] = {
-                        "type": "enabled",
-                        "budget_tokens": budget_tokens,
-                    }
+                    if uses_adaptive_thinking(self.model_id):
+                        request_payload["thinking"] = {"type": "adaptive"}
+                        request_payload["output_config"] = {"effort": effort_value()}
+                    else:
+                        request_payload["thinking"] = {
+                            "type": "enabled",
+                            "budget_tokens": manual_thinking_budget_for_step(
+                                per_request_limit, budget_tokens
+                            ),
+                        }
             ensure_text_only_request(request_payload)
 
             responses = []
@@ -134,11 +168,6 @@ class ClaudeModel(BaseModel):
 
             while remaining_budget > 0:
                 step_max_tokens = min(remaining_budget, per_request_limit)
-                if budget_tokens > 0 and step_max_tokens <= budget_tokens:
-                    raise RuntimeError(
-                        "Claude step max_tokens must be greater than "
-                        "ANTHROPIC_THINKING_BUDGET_TOKENS when extended thinking is enabled"
-                    )
                 kwargs: dict[str, Any] = {
                     "model": self.model_id,
                     "max_tokens": step_max_tokens,
@@ -146,10 +175,16 @@ class ClaudeModel(BaseModel):
                     "messages": messages,
                 }
                 if budget_tokens > 0:
-                    kwargs["thinking"] = {
-                        "type": "enabled",
-                        "budget_tokens": budget_tokens,
-                    }
+                    if uses_adaptive_thinking(self.model_id):
+                        kwargs["thinking"] = {"type": "adaptive"}
+                        kwargs["output_config"] = {"effort": effort_value()}
+                    else:
+                        kwargs["thinking"] = {
+                            "type": "enabled",
+                            "budget_tokens": manual_thinking_budget_for_step(
+                                step_max_tokens, budget_tokens
+                            ),
+                        }
                 use_streaming = step_max_tokens > ANTHROPIC_NONSTREAMING_MAX_TOKENS
                 step_request = {
                     "model": self.model_id,
@@ -161,6 +196,8 @@ class ClaudeModel(BaseModel):
                 }
                 if budget_tokens > 0:
                     step_request["thinking"] = kwargs["thinking"]
+                    if "output_config" in kwargs:
+                        step_request["output_config"] = kwargs["output_config"]
                 ensure_text_only_request(step_request)
                 request_steps.append(step_request)
 
@@ -178,8 +215,21 @@ class ClaudeModel(BaseModel):
                 step_prompt_tokens = int(usage_value(provider_usage, "input_tokens") or 0)
                 step_completion_tokens = int(usage_value(provider_usage, "output_tokens") or 0)
                 step_reasoning_tokens = (
-                    usage_detail_value(provider_usage, "output_tokens_details", "reasoning_tokens", "reasoningTokens")
-                    or usage_value(provider_usage, "reasoning_tokens", "reasoningTokens")
+                    usage_detail_value(
+                        provider_usage,
+                        "output_tokens_details",
+                        "reasoning_tokens",
+                        "reasoningTokens",
+                        "thinking_tokens",
+                        "thinkingTokens",
+                    )
+                    or usage_value(
+                        provider_usage,
+                        "reasoning_tokens",
+                        "reasoningTokens",
+                        "thinking_tokens",
+                        "thinkingTokens",
+                    )
                     or 0
                 )
                 step_cached_input_tokens = usage_value(provider_usage, "cache_read_input_tokens") or 0
@@ -244,7 +294,10 @@ class ClaudeModel(BaseModel):
                     "input_tokens": prompt_tokens,
                     "output_tokens": completion_tokens,
                     "total_tokens": prompt_tokens + completion_tokens,
-                    "output_tokens_details": {"reasoning_tokens": reasoning_tokens or None},
+                    "output_tokens_details": {
+                        "reasoning_tokens": reasoning_tokens or None,
+                        "thinking_tokens": reasoning_tokens or None,
+                    },
                     "cache_read_input_tokens": cached_input_tokens or None,
                     "cache_creation_input_tokens": cache_creation_input_tokens or None,
                 },

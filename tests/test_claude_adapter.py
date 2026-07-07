@@ -20,6 +20,10 @@ class FakeUsage:
     output_tokens_details = {"reasoning_tokens": 5}
 
 
+class FakeThinkingTokensUsage(FakeUsage):
+    output_tokens_details = {"thinking_tokens": 7}
+
+
 class FakeBlock:
     type = "text"
     text = "ok"
@@ -108,6 +112,53 @@ class ClaudeAdapterTests(unittest.TestCase):
         self.assertEqual(messages.kwargs["max_tokens"], 128000)
         self.assertEqual(result.answer, "ok")
         self.assertTrue(result.request["stream"])
+
+    def test_opus_48_uses_adaptive_thinking_and_effort(self) -> None:
+        class ThinkingTokensMessage(FakeMessage):
+            usage = FakeThinkingTokensUsage()
+
+        class ThinkingTokensMessages(FakeMessages):
+            def stream(self, **kwargs):
+                self.stream_called = True
+                self.kwargs = kwargs
+
+                class Stream:
+                    def __enter__(inner_self):
+                        return inner_self
+
+                    def __exit__(inner_self, exc_type, exc, traceback):
+                        return False
+
+                    def get_final_message(inner_self):
+                        self.stream_final_called = True
+                        return ThinkingTokensMessage()
+
+                return Stream()
+
+        class ThinkingTokensAnthropicClient(FakeAnthropicClient):
+            def __init__(self, api_key):
+                self.api_key = api_key
+                self.messages = ThinkingTokensMessages()
+                FakeAnthropicClient.last_messages = self.messages
+
+        module = types.SimpleNamespace(Anthropic=ThinkingTokensAnthropicClient)
+        with patch.dict(sys.modules, {"anthropic": module}), patch.dict(
+            "os.environ",
+            {
+                "ANTHROPIC_API_KEY": "test",
+                "ANTHROPIC_THINKING_BUDGET_TOKENS": "32000",
+                "ANTHROPIC_EFFORT": "high",
+            },
+            clear=False,
+        ):
+            result = ClaudeModel("claude-opus-4-8").solve("problem", max_tokens=128000)
+
+        messages = FakeAnthropicClient.last_messages
+        self.assertEqual(messages.kwargs["thinking"], {"type": "adaptive"})
+        self.assertEqual(messages.kwargs["output_config"], {"effort": "high"})
+        self.assertNotIn("budget_tokens", messages.kwargs["thinking"])
+        self.assertEqual(result.usage["reasoning_tokens"], 7)
+        self.assertEqual(result.cost["reasoning"], 0.000175)
 
     def test_large_budget_continues_with_previous_content_blocks_until_text(self) -> None:
         class ThinkingBlock:

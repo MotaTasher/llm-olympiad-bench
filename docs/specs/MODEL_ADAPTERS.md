@@ -113,7 +113,12 @@ cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override
 the SDK retry count when operators want to avoid or allow replaying long calls.
 The Anthropic adapter treats `runner.py --max-tokens` as a total Claude output
 budget. Each Messages request is capped by the provider/model maximum
-(`claude-opus-4-8`: 128,000; `claude-haiku-4-5-20251001`: 64,000). If the total
+(`claude-opus-4-8`: 128,000; `claude-haiku-4-5-20251001`: 64,000). For
+`claude-opus-4-8`, Claude thinking uses current Anthropic adaptive thinking:
+`thinking: {"type": "adaptive"}` plus `output_config.effort` (`xhigh` in the
+committed benchmark runtime config). Manual `budget_tokens` is only used for
+models that still accept `thinking: {"type": "enabled"}`; the adapter clamps
+that budget so each request keeps a visible-answer token reserve. If the total
 budget is larger and a step returns no visible text, the adapter continues with
 another Messages request by passing the previous assistant `content` blocks
 unchanged and then a text-only `Continue.` user message. This preserves
