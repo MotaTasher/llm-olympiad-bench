@@ -257,10 +257,14 @@ class GeminiAdapterTests(unittest.TestCase):
         self.assertEqual(result.raw_response["usage"]["total_thought_tokens"], 19)
         self.assertEqual(result.raw_response["usage"]["billable_output_tokens"], 36)
         self.assertGreater(result.cost_usd, 0)
+        self.assertEqual(result.cost["output"], 0.0000765)
+        self.assertEqual(result.cost["reasoning"], 0.0000855)
+        self.assertEqual(result.cost["total"], 0.000168)
         logged = result.to_log_dict()
         last_usage = logged["raw_response"]["last_response"]["usage"]
         self.assertEqual(last_usage["total_thought_tokens"], 19)
         self.assertEqual(last_usage["total_output_tokens"], 17)
+        self.assertEqual(logged["raw_response"]["usage"]["billable_output_tokens"], 36)
 
     def test_provider_exception_and_missing_key_return_error_result(self) -> None:
         with patch.dict("os.environ", {}, clear=True):

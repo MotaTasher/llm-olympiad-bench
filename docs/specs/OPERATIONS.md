@@ -105,6 +105,20 @@ default, prints a cost estimate, and writes each `runner.py` stdout/stderr log
 under `run-output/new-models-2026-final/`. Run logs themselves go to the
 configured `--logs-dir`, normally `/opt/olympiad-scorer/shared/logs`.
 
+For arbitrary competitions or one-off task batches, use the generic launcher:
+
+```bash
+python scripts/run_model_batch.py \
+  --competition math-cup-2026-qualifying \
+  --problems 01 \
+  --models new
+```
+
+It uses the same Gemini/Grok/GLM default caps and cost estimates as the final
+launcher. Add `--detach --yes` on the server to start the run in a new session,
+write progress to `<output-dir>/launcher.log`, and allow the SSH connection to
+close without stopping child `runner.py` processes.
+
 ## Generated artifacts
 
 Model runs and review results are project data and are versioned:

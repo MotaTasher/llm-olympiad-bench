@@ -40,6 +40,7 @@ SECRET_KEY_PARTS = {
 }
 
 SAFE_TOKEN_KEYS = {
+    "billable_output_tokens",
     "cached_input_tokens",
     "cached_tokens",
     "cache_creation_input_tokens",
@@ -73,6 +74,8 @@ SAFE_TOKEN_KEYS = {
     "reasoning_tokens",
     "reasoningtokens",
     "time_to_first_token_ms",
+    "thoughts_token_count",
+    "thoughtstokencount",
     "total_cached_tokens",
     "total_input_tokens",
     "total_output_tokens",

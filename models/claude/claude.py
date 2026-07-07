@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from ..base import BaseModel, SolveResult
 from ..common import (
     SYSTEM_PROMPT,
@@ -17,6 +19,23 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 ANTHROPIC_NONSTREAMING_MAX_TOKENS = 21333
+
+
+def usage_value(usage: Any, *names: str) -> int | None:
+    for name in names:
+        value = usage.get(name) if isinstance(usage, dict) else getattr(usage, name, None)
+        if value not in {None, ""}:
+            return int(value or 0)
+    return None
+
+
+def usage_detail_value(usage: Any, detail_name: str, *names: str) -> int | None:
+    detail = usage.get(detail_name) if isinstance(usage, dict) else getattr(usage, detail_name, None)
+    for name in names:
+        value = detail.get(name) if isinstance(detail, dict) else getattr(detail, name, None)
+        if value not in {None, ""}:
+            return int(value or 0)
+    return None
 
 
 class ClaudeModel(BaseModel):
@@ -86,8 +105,15 @@ class ClaudeModel(BaseModel):
             else:
                 response, latency_ms = timed(lambda: client.messages.create(**kwargs))
 
-            prompt_tokens = int(getattr(response.usage, "input_tokens", 0) or 0)
-            completion_tokens = int(getattr(response.usage, "output_tokens", 0) or 0)
+            provider_usage = getattr(response, "usage", None)
+            prompt_tokens = int(usage_value(provider_usage, "input_tokens") or 0)
+            completion_tokens = int(usage_value(provider_usage, "output_tokens") or 0)
+            reasoning_tokens = (
+                usage_detail_value(provider_usage, "output_tokens_details", "reasoning_tokens", "reasoningTokens")
+                or usage_value(provider_usage, "reasoning_tokens", "reasoningTokens")
+            )
+            cached_input_tokens = usage_value(provider_usage, "cache_read_input_tokens")
+            cache_creation_input_tokens = usage_value(provider_usage, "cache_creation_input_tokens")
             input_per_1m, output_per_1m = price_for(
                 self.model_id, PRICES_USD_PER_1M, PRICES_USD_PER_1M["claude-opus-4-5"]
             )
@@ -100,6 +126,7 @@ class ClaudeModel(BaseModel):
                 self.model_id,
                 input_tokens=prompt_tokens,
                 output_tokens=completion_tokens,
+                reasoning_tokens=reasoning_tokens,
             )
             answer = "".join(
                 block.text for block in response.content if getattr(block, "type", None) == "text"
@@ -127,7 +154,17 @@ class ClaudeModel(BaseModel):
                 requested_model_id=self.model_id,
                 resolved_model_id=raw_response.get("model") or self.model_id,
                 request=request_payload,
-                cost={**cost, "cached_input": None, "reasoning": None},
+                usage={
+                    "input_tokens": prompt_tokens,
+                    "output_tokens": completion_tokens,
+                    "total_tokens": prompt_tokens + completion_tokens,
+                    "reasoning_tokens": reasoning_tokens,
+                    "cached_input_tokens": cached_input_tokens,
+                    "cache_creation_input_tokens": cache_creation_input_tokens,
+                    "raw": safe_dict(provider_usage),
+                    "source": "provider_response" if provider_usage else "legacy_fields",
+                },
+                cost={**cost, "cached_input": None},
             )
         except Exception as exc:
             result = error_result(self.model_id, exc)

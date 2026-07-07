@@ -263,14 +263,19 @@ def estimate_cost(
         input_cost = billable_input_tokens * input_per_1m / 1_000_000
         cached_input_cost = cached_tokens * float(cached_input_per_1m or 0) / 1_000_000
         output_cost = output_tokens * output_per_1m / 1_000_000
+        reasoning_cost = (
+            reasoning_tokens * output_per_1m / 1_000_000
+            if reasoning_tokens is not None
+            else None
+        )
         return {
             "currency": "USD",
             "input": round(input_cost, 8),
             "output": round(output_cost, 8),
             "cached_input": round(cached_input_cost, 8) if cached_tokens else None,
-            "reasoning": None,
+            "reasoning": round(reasoning_cost, 8) if reasoning_cost is not None else None,
             "native": None,
-            "total": round(input_cost + cached_input_cost + output_cost, 8),
+            "total": round(input_cost + cached_input_cost + output_cost + float(reasoning_cost or 0), 8),
             "pricing_source": tier.source,
             "pricing_version": PRICING_VERSION,
             "estimated": True,
@@ -306,6 +311,7 @@ def estimate_cost(
             if reasoning_tokens is not None
             else None
         )
+        reasoning_total_cost = float(reasoning_cost or 0) if provider == "google" else 0.0
         return {
             "currency": "USD",
             "input": round(input_cost, 8),
@@ -313,7 +319,7 @@ def estimate_cost(
             "cached_input": round(cached_input_cost, 8) if cached_tokens else None,
             "reasoning": round(reasoning_cost, 8) if reasoning_cost is not None else None,
             "native": None,
-            "total": round(input_cost + cached_input_cost + output_cost, 8),
+            "total": round(input_cost + cached_input_cost + output_cost + reasoning_total_cost, 8),
             "pricing_source": price.source,
             "pricing_version": PRICING_VERSION,
             "estimated": True,

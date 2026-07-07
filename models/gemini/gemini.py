@@ -324,14 +324,15 @@ class GeminiModel(BaseModel):
                     break
 
             answer = "\n\n".join(part.strip() for part in answer_parts if part.strip())
-            billable_output_tokens = completion_tokens + reasoning_tokens
             cost = estimate_cost(
                 "google",
                 self.model_id,
                 input_tokens=prompt_tokens,
-                output_tokens=billable_output_tokens,
+                output_tokens=completion_tokens,
+                reasoning_tokens=reasoning_tokens or None,
                 cached_input_tokens=cached_input_tokens or None,
             )
+            billable_output_tokens = completion_tokens + reasoning_tokens
             raw_response = {
                 "endpoint": sanitized_base_url(GEMINI_INTERACTIONS_ENDPOINT),
                 "multi_request": {
@@ -387,7 +388,7 @@ class GeminiModel(BaseModel):
                     "raw": raw_response["usage"],
                     "source": "provider_response" if responses else "legacy_fields",
                 },
-                cost={**cost, "reasoning": None},
+                cost=cost,
                 finish_reason=last_finish_reason,
                 response_id=(raw_response.get("last_response") or {}).get("id"),
                 provider_timestamp=(raw_response.get("last_response") or {}).get("create_time") or (raw_response.get("last_response") or {}).get("createTime"),

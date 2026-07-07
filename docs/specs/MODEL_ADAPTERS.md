@@ -115,7 +115,10 @@ The Anthropic adapter uses the non-streaming Messages API up to `max_tokens =
 21333`, matching the Anthropic Python SDK's documented long-request threshold.
 For larger Claude requests it automatically switches to Messages streaming and
 collects the final message before returning `SolveResult`; this is still a
-text-only request and does not change API pricing.
+text-only request and does not change API pricing. When Anthropic returns
+`output_tokens_details.reasoning_tokens`, the adapter stores it in
+`usage.reasoning_tokens`; those tokens are billed as output tokens, so
+`cost.reasoning` is a subcomponent of the already total-priced output cost.
 
 Current active set:
 
@@ -165,7 +168,10 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   preserves Gemini server-side conversation history and thought signatures
   without adding tools, search or code execution. Interactions API usage is
   normalized from `total_input_tokens`, `total_output_tokens`,
-  `total_thought_tokens`, `total_cached_tokens` and `total_tokens`.
+  `total_thought_tokens`, `total_cached_tokens` and `total_tokens`. Gemini
+  Interactions reports visible output and thought output separately, so Gemini
+  `cost.output` is visible output, `cost.reasoning` is thought output and
+  `cost.total` includes both.
 - Grok uses xAI's hosted OpenAI-compatible endpoint
   `https://api.x.ai/v1`. `grok-4.3` is the general-purpose model and receives
   `XAI_REASONING_EFFORT=high` by default. `grok-build-0.1` is the

@@ -11,6 +11,9 @@ from models.claude.claude import ANTHROPIC_NONSTREAMING_MAX_TOKENS, ClaudeModel
 class FakeUsage:
     input_tokens = 11
     output_tokens = 22
+    cache_creation_input_tokens = 3
+    cache_read_input_tokens = 4
+    output_tokens_details = {"reasoning_tokens": 5}
 
 
 class FakeBlock:
@@ -81,6 +84,10 @@ class ClaudeAdapterTests(unittest.TestCase):
         self.assertEqual(messages.kwargs["max_tokens"], ANTHROPIC_NONSTREAMING_MAX_TOKENS)
         self.assertEqual(result.answer, "ok")
         self.assertFalse(result.request["stream"])
+        self.assertEqual(result.usage["reasoning_tokens"], 5)
+        self.assertEqual(result.usage["cached_input_tokens"], 4)
+        self.assertEqual(result.usage["cache_creation_input_tokens"], 3)
+        self.assertEqual(result.cost["reasoning"], 0.000125)
 
     def test_large_requests_use_streaming_messages_api(self) -> None:
         with self.fake_anthropic_module(), patch.dict("os.environ", {"ANTHROPIC_API_KEY": "test"}, clear=False):

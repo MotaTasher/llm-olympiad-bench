@@ -40,12 +40,12 @@ class SolveResult:
 
     def to_log_dict(self) -> dict[str, Any]:
         data = asdict(self)
-        raw_response = redact(self.raw_response or {})
         usage = self.usage or extract_usage(
-            raw_response,
+            self.raw_response or {},
             self.prompt_tokens,
             self.completion_tokens,
         )
+        raw_response = redact(self.raw_response or {})
         timing = self.timing or {
             "wall_ms": self.latency_ms,
             "monotonic_ms": self.latency_ms,

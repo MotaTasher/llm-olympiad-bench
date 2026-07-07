@@ -51,8 +51,10 @@ and thought signatures while keeping the request text-only. For example,
 Usage telemetry is read from the Interactions API `usage` fields:
 `total_input_tokens`, `total_output_tokens`, `total_thought_tokens`,
 `total_cached_tokens` and `total_tokens`. Thinking tokens are billed as output
-telemetry by the local benchmark estimator. A response with no visible text is
-logged as an adapter error even when the provider HTTP request succeeds.
+telemetry by the local benchmark estimator: `cost.output` is visible output,
+`cost.reasoning` is thought output and `cost.total` includes both. A response
+with no visible text is logged as an adapter error even when the provider HTTP
+request succeeds.
 
 Credential-free smoke:
 
