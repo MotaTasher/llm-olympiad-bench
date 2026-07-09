@@ -147,7 +147,7 @@ class ClaudeAdapterTests(unittest.TestCase):
             {
                 "ANTHROPIC_API_KEY": "test",
                 "ANTHROPIC_THINKING_BUDGET_TOKENS": "32000",
-                "ANTHROPIC_EFFORT": "high",
+                "ANTHROPIC_EFFORT": "max",
             },
             clear=False,
         ):
@@ -155,7 +155,7 @@ class ClaudeAdapterTests(unittest.TestCase):
 
         messages = FakeAnthropicClient.last_messages
         self.assertEqual(messages.kwargs["thinking"], {"type": "adaptive"})
-        self.assertEqual(messages.kwargs["output_config"], {"effort": "high"})
+        self.assertEqual(messages.kwargs["output_config"], {"effort": "max"})
         self.assertNotIn("budget_tokens", messages.kwargs["thinking"])
         self.assertEqual(result.usage["reasoning_tokens"], 7)
         self.assertEqual(result.cost["reasoning"], 0.000175)
