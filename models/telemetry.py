@@ -76,6 +76,8 @@ SAFE_TOKEN_KEYS = {
     "time_to_first_token_ms",
     "thoughts_token_count",
     "thoughtstokencount",
+    "thinking_tokens",
+    "thinkingtokens",
     "total_cached_tokens",
     "total_input_tokens",
     "total_output_tokens",

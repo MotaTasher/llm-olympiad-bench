@@ -115,8 +115,9 @@ The Anthropic adapter treats `runner.py --max-tokens` as a total Claude output
 budget. Each Messages request is capped by the provider/model maximum
 (`claude-opus-4-8`: 128,000; `claude-haiku-4-5-20251001`: 64,000). For
 `claude-opus-4-8`, Claude thinking uses current Anthropic adaptive thinking:
-`thinking: {"type": "adaptive"}` plus `output_config.effort` (`max` in the
-committed benchmark runtime config). Manual `budget_tokens` is only used for
+`thinking: {"type": "adaptive", "display": "summarized"}` plus
+`output_config.effort` (`max` in the committed benchmark runtime config).
+Manual `budget_tokens` is only used for
 models that still accept `thinking: {"type": "enabled"}`; the adapter clamps
 that budget so each request keeps a visible-answer token reserve. If the total
 budget is larger and a step returns no visible text, the adapter continues with

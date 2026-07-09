@@ -154,7 +154,7 @@ class ClaudeAdapterTests(unittest.TestCase):
             result = ClaudeModel("claude-opus-4-8").solve("problem", max_tokens=128000)
 
         messages = FakeAnthropicClient.last_messages
-        self.assertEqual(messages.kwargs["thinking"], {"type": "adaptive"})
+        self.assertEqual(messages.kwargs["thinking"], {"type": "adaptive", "display": "summarized"})
         self.assertEqual(messages.kwargs["output_config"], {"effort": "max"})
         self.assertNotIn("budget_tokens", messages.kwargs["thinking"])
         self.assertEqual(result.usage["reasoning_tokens"], 7)

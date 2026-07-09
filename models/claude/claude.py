@@ -67,6 +67,10 @@ def effort_value() -> str:
     return value if value in ANTHROPIC_EFFORTS else ANTHROPIC_DEFAULT_EFFORT
 
 
+def adaptive_thinking_config() -> dict[str, str]:
+    return {"type": "adaptive", "display": "summarized"}
+
+
 def positive_int_env(name: str, default: int) -> int:
     value = env(name)
     if value is None:
@@ -145,7 +149,7 @@ class ClaudeModel(BaseModel):
             if thinking_budget is not None:
                 if budget_tokens > 0:
                     if uses_adaptive_thinking(self.model_id):
-                        request_payload["thinking"] = {"type": "adaptive"}
+                        request_payload["thinking"] = adaptive_thinking_config()
                         request_payload["output_config"] = {"effort": effort_value()}
                     else:
                         request_payload["thinking"] = {
@@ -176,7 +180,7 @@ class ClaudeModel(BaseModel):
                 }
                 if budget_tokens > 0:
                     if uses_adaptive_thinking(self.model_id):
-                        kwargs["thinking"] = {"type": "adaptive"}
+                        kwargs["thinking"] = adaptive_thinking_config()
                         kwargs["output_config"] = {"effort": effort_value()}
                     else:
                         kwargs["thinking"] = {
