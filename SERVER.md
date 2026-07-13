@@ -181,7 +181,9 @@ tail -f /opt/olympiad-scorer/app/run-output/new-models-2026-final/launcher.log
 ```
 
 По умолчанию caps применяются так: Gemini `256000` total budget через chained
-Interactions requests, Grok `256000`, GLM `128000`. Concurrency по умолчанию:
+Interactions requests, Grok `256000`, GLM `128000`. Явный `--max-tokens`
+переопределяет default и может быть больше него; Grok/GLM разбивают такой total
+budget на продолжения с сохранённым reasoning-состоянием. Concurrency по умолчанию:
 `google=2,xai=2,zai=2`, общий лимит процессов `--workers 6`.
 
 ## Pull: забрать оценки с сервера

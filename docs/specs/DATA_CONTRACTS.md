@@ -263,6 +263,11 @@ adapter's per-request cap for that model. If multiple OpenAI requests were
 needed, `request.steps[]` and `raw_response.responses[]` contain redacted
 per-step snapshots. Continuation steps use `previous_response_id`; they are not
 independent solver passes and do not include tools or browsing.
+Grok Responses runs use the same multi-step fields and
+`previous_response_id`. GLM multi-step runs also use `request.steps[]`; their
+continuation step contains the exact prior `reasoning_content` and
+`clear_thinking=false`. These are continuations inside one `SolveResult`, not
+new benchmark attempts.
 
 Do not mutate `results[]` order after a score sidecar exists.
 

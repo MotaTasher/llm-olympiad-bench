@@ -102,12 +102,13 @@ class GLMAdapterTests(unittest.TestCase):
         self.assertEqual(call["max_tokens"], 123)
         self.assertEqual(call["extra_body"]["thinking"]["type"], "enabled")
         self.assertEqual(call["extra_body"]["reasoning_effort"], "max")
+        self.assertFalse(call["extra_body"]["clear_thinking"])
         self.assertNotIn("tools", json.dumps(call).lower())
         self.assertEqual(result.provider, "zai")
         self.assertEqual(result.answer, "GLM_ANSWER")
         self.assertNotIn("hidden reasoning", result.answer)
-        self.assertEqual(result.raw_response["reasoning_content"], "hidden reasoning")
-        self.assertEqual(result.raw_response["api_key"], "[REDACTED]")
+        self.assertEqual(result.raw_response["last_response"]["reasoning_content"], "hidden reasoning")
+        self.assertEqual(result.raw_response["last_response"]["api_key"], "[REDACTED]")
         self.assertEqual(result.usage["reasoning_tokens"], 6)
         self.assertEqual(result.usage["cached_input_tokens"], 3)
 
@@ -170,6 +171,64 @@ class GLMAdapterTests(unittest.TestCase):
         self.assertTrue(result.error)
         self.assertIn("no visible output", result.error)
         self.assertEqual(result.finish_reason, "length")
+
+    def test_empty_response_preserves_reasoning_for_continuation(self) -> None:
+        class FirstMessage:
+            content = ""
+            reasoning_content = "complete unmodified reasoning"
+
+        class FirstChoice:
+            message = FirstMessage()
+            finish_reason = "length"
+
+        class FirstResponse(FakeResponse):
+            id = "first-response"
+            choices = [FirstChoice()]
+
+            def model_dump(self) -> dict:
+                data = super().model_dump()
+                data["id"] = self.id
+                data["choices"] = [{
+                    "finish_reason": "length",
+                    "message": {
+                        "content": "",
+                        "reasoning_content": "complete unmodified reasoning",
+                    },
+                }]
+                return data
+
+        class SecondResponse(FakeResponse):
+            id = "second-response"
+
+        class MultiCompletions(FakeCompletions):
+            def create(self, **kwargs):
+                self.calls.append(kwargs)
+                return FirstResponse() if len(self.calls) == 1 else SecondResponse()
+
+        class MultiChat:
+            def __init__(self) -> None:
+                self.completions = MultiCompletions()
+
+        class MultiOpenAI(FakeOpenAI):
+            def __init__(self, **kwargs) -> None:
+                super().__init__(**kwargs)
+                self.chat = MultiChat()
+
+        with self.fake_openai_module(MultiOpenAI), patch.dict(
+            "os.environ",
+            {"ZAI_API_KEY": "test-key", "ZAI_MAX_TOKENS_PER_REQUEST": "64"},
+            clear=True,
+        ):
+            result = GLMModel("glm-5.2").solve("problem", max_tokens=128)
+
+        calls = FakeCompletions.calls
+        self.assertEqual(len(calls), 2)
+        continued_messages = calls[1]["messages"]
+        self.assertEqual(continued_messages[-2]["reasoning_content"], "complete unmodified reasoning")
+        self.assertEqual(continued_messages[-1]["role"], "user")
+        self.assertFalse(calls[1]["extra_body"]["clear_thinking"])
+        self.assertEqual(result.answer, "GLM_ANSWER")
+        self.assertTrue(result.raw_response["multi_request"]["enabled"])
 
     def test_exception_and_missing_key_return_error_result(self) -> None:
         with patch.dict("os.environ", {}, clear=True):

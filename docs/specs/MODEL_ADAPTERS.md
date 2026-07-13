@@ -107,6 +107,13 @@ the total exceeds the configured per-request cap for the model, the adapter
 continues with additional Responses requests linked by `previous_response_id`
 until it receives non-empty visible output or exhausts the budget. This is still
 text-only and does not add tools, browsing or provider-side execution.
+The Grok adapter uses xAI's Responses API with the same total-budget behavior,
+a 256,000-token per-request default and `previous_response_id` continuation.
+The GLM adapter uses a 128,000-token per-request default; when a request has no
+visible answer but returns `reasoning_content`, it appends that content
+unmodified and continues with `clear_thinking=false`. The per-request defaults
+may be adjusted with `XAI_MAX_OUTPUT_TOKENS_PER_REQUEST` and
+`ZAI_MAX_TOKENS_PER_REQUEST` without changing the total runner budget.
 OpenAI long Responses requests use `OPENAI_TIMEOUT_SECONDS` for the per-request
 HTTP timeout, defaulting to 7200 seconds so 128K reasoning/output calls are not
 cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override
@@ -185,8 +192,9 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   Interactions reports visible output and thought output separately, so Gemini
   `cost.output` is visible output, `cost.reasoning` is thought output and
   `cost.total` includes both.
-- Grok uses xAI's hosted OpenAI-compatible endpoint
-  `https://api.x.ai/v1`. `grok-4.3` is the general-purpose model and receives
+- Grok uses xAI's hosted Responses endpoint under `https://api.x.ai/v1`.
+  Stateful continuation preserves reasoning through `previous_response_id`.
+  `grok-4.3` is the general-purpose model and receives
   `XAI_REASONING_EFFORT=high` by default. `grok-build-0.1` is the
   coding-specialized baseline but still receives only the text olympiad prompt;
   it must not get shell, repository tools, code execution or unsupported
@@ -198,6 +206,8 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   thinking plus `reasoning_effort=max`; `glm-4.7-flash` is the official free
   hosted model and gets thinking when supported, but not the GLM-5.2-only
   reasoning effort field. `glm-4.7-flashx` is not part of the active benchmark.
+  Empty visible responses continue with exact preserved thinking rather than
+  discarding the returned reasoning trace.
 
 All provider-side tools remain disabled: no Google Search, X search, web
 search, code execution, function calling, files, managed agents or remote MCP.

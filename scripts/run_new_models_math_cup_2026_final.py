@@ -94,7 +94,7 @@ def cap_for(model: str, requested_cap: int | None) -> int:
         if known_cap is None:
             raise SystemExit(f"No default cap configured for {model}; pass --max-tokens")
         return known_cap
-    return min(int(requested_cap), known_cap) if known_cap is not None else int(requested_cap)
+    return int(requested_cap)
 
 
 def model_candidates(result: dict[str, Any]) -> set[str]:
@@ -335,7 +335,7 @@ def parse_args() -> argparse.Namespace:
         "--max-tokens",
         type=int,
         default=None,
-        help="Optional global cap. Known model caps still apply.",
+        help="Optional total output/reasoning budget; overrides the model batch default.",
     )
     parser.add_argument("--workers", type=int, default=6, help="Global subprocess concurrency.")
     parser.add_argument(

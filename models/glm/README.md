@@ -47,6 +47,7 @@ ZAI_BASE_URL=https://api.z.ai/api/paas/v4/
 ZAI_THINKING=enabled
 ZAI_REASONING_EFFORT=max
 ZAI_MAX_TOKENS=8192
+ZAI_MAX_TOKENS_PER_REQUEST=128000
 ZAI_TIMEOUT_SECONDS=3600
 ZAI_MAX_RETRIES=0
 ```
@@ -63,4 +64,10 @@ for model_id in ["glm-5.2", "glm-4.7-flash"]:
 PY
 ```
 
-The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files, managed agents or code execution. Provider `reasoning_content` may be retained in redacted raw telemetry but is never included in the visible answer. A response with no visible text is logged as an adapter error even when Z.AI returns token usage.
+The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no
+provider tools, search, files, managed agents or code execution. If a request
+uses its budget without visible text, the adapter returns the complete,
+unmodified `reasoning_content` with `clear_thinking=false` and asks the same
+conversation to finish. Reasoning is retained in redacted telemetry but never
+included in the visible answer. Empty output becomes an error only after the
+available total continuation budget is exhausted.

@@ -5,7 +5,6 @@ from typing import Any
 from ..base import BaseModel, SolveResult
 from ..common import (
     SYSTEM_PROMPT,
-    empty_answer_error,
     ensure_text_only_request,
     env,
     error_result,
@@ -22,6 +21,8 @@ ZAI_DEFAULT_BASE_URL = "https://api.z.ai/api/paas/v4/"
 ZAI_DEFAULT_THINKING = "enabled"
 ZAI_DEFAULT_REASONING_EFFORT = "max"
 ZAI_DEFAULT_TIMEOUT_SECONDS = 3600.0
+ZAI_DEFAULT_MAX_OUTPUT_TOKENS_PER_REQUEST = 128_000
+ZAI_CONTINUATION_INPUT = "Continue the reasoning and provide the complete final answer."
 ZAI_REASONING_EFFORT_MODELS = {"glm-5.2"}
 
 
@@ -106,7 +107,7 @@ class GLMModel(BaseModel):
 
     def solve(self, problem: str, max_tokens: int | None = None) -> SolveResult:
         request_payload: dict[str, Any] = {}
-        raw_response: dict[str, Any] = {}
+        last_raw_response: dict[str, Any] = {}
         latency_ms = 0
         try:
             api_key = require_env("ZAI_API_KEY")
@@ -123,19 +124,24 @@ class GLMModel(BaseModel):
             if max_retries is not None:
                 client_kwargs["max_retries"] = max_retries
             client = OpenAI(**client_kwargs)
-            messages = [
+            messages: list[dict[str, Any]] = [
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": problem},
             ]
-            kwargs: dict[str, Any] = {}
+            total_budget = None
             if max_tokens is not None:
-                kwargs["max_tokens"] = int(max_tokens)
+                total_budget = int(max_tokens)
             elif self._max_final_tokens is not None:
-                kwargs["max_tokens"] = int(self._max_final_tokens)
+                total_budget = int(self._max_final_tokens) + max(0, int(self._reasoning_budget_tokens or 0))
             elif env("ZAI_MAX_TOKENS") is not None:
-                kwargs["max_tokens"] = int(env("ZAI_MAX_TOKENS", "4096") or "4096")
-            if env("ZAI_TEMPERATURE") is not None:
-                kwargs["temperature"] = float(env("ZAI_TEMPERATURE", "0.2") or "0.2")
+                total_budget = int(env("ZAI_MAX_TOKENS", "4096") or "4096")
+            per_request_limit = ZAI_DEFAULT_MAX_OUTPUT_TOKENS_PER_REQUEST
+            if env("ZAI_MAX_TOKENS_PER_REQUEST") is not None:
+                per_request_limit = max(
+                    1,
+                    int(env("ZAI_MAX_TOKENS_PER_REQUEST", str(per_request_limit)) or per_request_limit),
+                )
+            remaining_budget = total_budget or per_request_limit
 
             extra_body: dict[str, Any] = {}
             thinking = env("ZAI_THINKING", ZAI_DEFAULT_THINKING) or ZAI_DEFAULT_THINKING
@@ -143,8 +149,7 @@ class GLMModel(BaseModel):
                 extra_body["thinking"] = {"type": thinking}
             if self.model_id in ZAI_REASONING_EFFORT_MODELS:
                 extra_body["reasoning_effort"] = env("ZAI_REASONING_EFFORT", ZAI_DEFAULT_REASONING_EFFORT) or ZAI_DEFAULT_REASONING_EFFORT
-            if extra_body:
-                kwargs["extra_body"] = extra_body
+            extra_body["clear_thinking"] = False
 
             request_payload = {
                 "endpoint": sanitized_base_url(f"{base_url.rstrip('/')}/chat/completions"),
@@ -153,44 +158,117 @@ class GLMModel(BaseModel):
                 "stream": False,
                 "timeout_seconds": timeout_seconds,
                 "max_retries": max_retries,
-                **{key: value for key, value in kwargs.items() if key != "extra_body"},
+                "max_output_tokens_total": total_budget,
+                "max_output_tokens_per_request": per_request_limit,
                 **extra_body,
             }
             ensure_text_only_request(request_payload)
 
-            response, latency_ms = timed(
-                lambda: client.chat.completions.create(
-                    model=self.model_id,
-                    messages=messages,
-                    **kwargs,
+            responses: list[dict[str, Any]] = []
+            request_steps: list[dict[str, Any]] = []
+            prompt_tokens = 0
+            completion_tokens = 0
+            reasoning_tokens = 0
+            cached_input_tokens = 0
+            answer = ""
+
+            while remaining_budget > 0:
+                step_max_tokens = min(remaining_budget, per_request_limit)
+                kwargs: dict[str, Any] = {
+                    "max_tokens": step_max_tokens,
+                    "extra_body": dict(extra_body),
+                }
+                if env("ZAI_TEMPERATURE") is not None:
+                    kwargs["temperature"] = float(env("ZAI_TEMPERATURE", "0.2") or "0.2")
+                step_request = {
+                    "endpoint": request_payload["endpoint"],
+                    "model": self.model_id,
+                    "messages": safe_dict(messages),
+                    "max_tokens": step_max_tokens,
+                    "stream": False,
+                    "timeout_seconds": timeout_seconds,
+                    **extra_body,
+                }
+                if "temperature" in kwargs:
+                    step_request["temperature"] = kwargs["temperature"]
+                ensure_text_only_request(step_request)
+                request_steps.append(step_request)
+
+                response, step_latency_ms = timed(
+                    lambda: client.chat.completions.create(
+                        model=self.model_id,
+                        messages=messages,
+                        **kwargs,
+                    )
                 )
-            )
-            raw_response = safe_dict(response)
-            usage = getattr(response, "usage", None) or raw_response.get("usage") or {}
-            prompt_tokens = usage_value(usage, "prompt_tokens", "input_tokens")
-            completion_tokens = usage_value(usage, "completion_tokens", "output_tokens")
-            total_tokens = usage_value(usage, "total_tokens")
-            reasoning_tokens = usage_detail_value(usage, "completion_tokens_details", "reasoning_tokens") or usage_detail_value(usage, "output_tokens_details", "reasoning_tokens") or usage_value(usage, "reasoning_tokens") or None
-            cached_input_tokens = usage_detail_value(usage, "prompt_tokens_details", "cached_tokens", "cached_input_tokens") or usage_detail_value(usage, "input_tokens_details", "cached_tokens", "cached_input_tokens") or usage_value(usage, "cached_input_tokens") or None
-            message = first_choice_message(response)
-            answer = (message.get("content") if isinstance(message, dict) else getattr(message, "content", "")) or ""
-            reasoning_content = message.get("reasoning_content") if isinstance(message, dict) else getattr(message, "reasoning_content", None)
-            if reasoning_content:
-                raw_response["reasoning_content"] = reasoning_content
+                latency_ms += step_latency_ms
+                raw_step = safe_dict(response)
+                last_raw_response = raw_step
+                usage = getattr(response, "usage", None) or raw_step.get("usage") or {}
+                step_prompt = usage_value(usage, "prompt_tokens", "input_tokens")
+                step_completion = usage_value(usage, "completion_tokens", "output_tokens")
+                step_reasoning = usage_detail_value(usage, "completion_tokens_details", "reasoning_tokens") or usage_detail_value(usage, "output_tokens_details", "reasoning_tokens") or usage_value(usage, "reasoning_tokens")
+                step_cached = usage_detail_value(usage, "prompt_tokens_details", "cached_tokens", "cached_input_tokens") or usage_detail_value(usage, "input_tokens_details", "cached_tokens", "cached_input_tokens") or usage_value(usage, "cached_input_tokens")
+                prompt_tokens += step_prompt
+                completion_tokens += step_completion
+                reasoning_tokens += step_reasoning
+                cached_input_tokens += step_cached
+                message = first_choice_message(response)
+                text = (message.get("content") if isinstance(message, dict) else getattr(message, "content", "")) or ""
+                reasoning_content = message.get("reasoning_content") if isinstance(message, dict) else getattr(message, "reasoning_content", None)
+                if reasoning_content:
+                    raw_step["reasoning_content"] = reasoning_content
+                responses.append({
+                    "request": step_request,
+                    "response": raw_step,
+                    "latency_ms": step_latency_ms,
+                    "answer_chars": len(text.strip()),
+                })
+                remaining_budget -= step_max_tokens
+                if text.strip():
+                    answer = text
+                    break
+                if remaining_budget <= 0 or not reasoning_content:
+                    break
+                messages.append({
+                    "role": "assistant",
+                    "content": text,
+                    "reasoning_content": reasoning_content,
+                })
+                messages.append({"role": "user", "content": ZAI_CONTINUATION_INPUT})
+
             cost = estimate_cost(
                 "zai",
                 self.model_id,
                 input_tokens=prompt_tokens,
                 output_tokens=completion_tokens,
-                cached_input_tokens=cached_input_tokens,
+                cached_input_tokens=cached_input_tokens or None,
             )
-            finish = choice_finish_reason(raw_response)
+            raw_response = {
+                "endpoint": request_payload["endpoint"],
+                "multi_request": {
+                    "enabled": len(responses) > 1 or bool(total_budget and total_budget > per_request_limit),
+                    "requests": len(responses),
+                    "max_output_tokens_total": total_budget,
+                    "max_output_tokens_per_request": per_request_limit,
+                    "stopped_after_visible_output": bool(answer.strip()),
+                },
+                "responses": responses,
+                "last_response": last_raw_response,
+                "usage": {
+                    "input_tokens": prompt_tokens,
+                    "output_tokens": completion_tokens,
+                    "total_tokens": prompt_tokens + completion_tokens,
+                    "output_tokens_details": {"reasoning_tokens": reasoning_tokens or None},
+                    "input_tokens_details": {"cached_tokens": cached_input_tokens or None},
+                },
+            }
+            finish = choice_finish_reason(last_raw_response)
             error = None
             if not answer.strip():
-                error = empty_answer_error(
-                    "Z.AI Chat Completions API",
-                    generated_tokens=completion_tokens + int(reasoning_tokens or 0),
-                    finish_reason=finish,
+                error = (
+                    "Z.AI Chat Completions API returned no visible output after "
+                    f"{len(responses)} request(s) and {completion_tokens} output tokens"
                 )
 
             return SolveResult(
@@ -204,28 +282,28 @@ class GLMModel(BaseModel):
                 error=error,
                 provider="zai",
                 requested_model_id=self.model_id,
-                resolved_model_id=raw_response.get("model") or self.model_id,
-                request=request_payload,
+                resolved_model_id=last_raw_response.get("model") or self.model_id,
+                request={**request_payload, "steps": request_steps},
                 usage={
                     "input_tokens": prompt_tokens,
                     "output_tokens": completion_tokens,
-                    "total_tokens": total_tokens or prompt_tokens + completion_tokens,
-                    "reasoning_tokens": reasoning_tokens,
-                    "cached_input_tokens": cached_input_tokens,
+                    "total_tokens": prompt_tokens + completion_tokens,
+                    "reasoning_tokens": reasoning_tokens or None,
+                    "cached_input_tokens": cached_input_tokens or None,
                     "cache_creation_input_tokens": None,
-                    "raw": safe_dict(usage),
-                    "source": "provider_response" if usage else "legacy_fields",
+                    "raw": raw_response["usage"],
+                    "source": "provider_response",
                 },
                 cost={**cost, "reasoning": None},
                 finish_reason=finish,
-                response_id=raw_response.get("id"),
-                provider_timestamp=raw_response.get("created"),
+                response_id=last_raw_response.get("id"),
+                provider_timestamp=last_raw_response.get("created"),
             )
         except Exception as exc:
             result = error_result(self.model_id, exc, latency_ms=latency_ms)
             result.provider = "zai"
             result.requested_model_id = self.model_id
-            result.resolved_model_id = raw_response.get("model") or self.model_id
+            result.resolved_model_id = last_raw_response.get("model") or self.model_id
             result.request = request_payload or None
-            result.raw_response = raw_response
+            result.raw_response = last_raw_response
             return result

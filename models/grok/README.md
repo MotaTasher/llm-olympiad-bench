@@ -46,6 +46,7 @@ Public runtime settings belong in `config/models.env`:
 XAI_BASE_URL=https://api.x.ai/v1
 XAI_REASONING_EFFORT=high
 XAI_MAX_OUTPUT_TOKENS=8192
+XAI_MAX_OUTPUT_TOKENS_PER_REQUEST=256000
 XAI_TIMEOUT_SECONDS=3600
 XAI_MAX_RETRIES=0
 ```
@@ -62,4 +63,10 @@ for model_id in ["grok-4.3", "grok-build-0.1"]:
 PY
 ```
 
-The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files, managed agents or code execution. If xAI returns `cost_in_usd_ticks`, that provider-reported cost overrides the local pricing estimate. A response with no visible text is logged as an adapter error even when xAI returns token usage and `finish_reason=length`.
+The adapter uses xAI's recommended Responses API and sends the shared
+`SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files,
+managed agents or code execution. A total budget above the per-request limit is
+continued with `previous_response_id`, preserving server-side reasoning state.
+If xAI returns `cost_in_usd_ticks`, that provider-reported cost overrides the
+local pricing estimate. A response with no visible text is an error only after
+the available continuation budget is exhausted.

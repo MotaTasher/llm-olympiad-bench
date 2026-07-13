@@ -86,12 +86,12 @@ python runner.py \
 из `config/models.env` (committed default: `8000`), а затем provider-specific
 настройки вроде `OPENAI_MAX_COMPLETION_TOKENS` или `YANDEX_MAX_TOKENS`.
 
-OpenAI reasoning-модели запускаются через Responses API. Если общий
-`--max-tokens` больше provider-limit одного запроса, GPT-адаптер сам режет
-бюджет на несколько `max_output_tokens` запросов и продолжает chain через
-`previous_response_id`, пока не получит первый непустой visible output или не
-исчерпает бюджет. Остальные провайдеры получают `--max-tokens` как один
-provider-specific output/completion ceiling.
+Для OpenAI, Gemini, Grok и GLM `--max-tokens` является суммарным бюджетом.
+Если он больше лимита одного запроса, адаптер продолжает незавершённое
+reasoning-состояние до первого непустого visible output или исчерпания бюджета:
+OpenAI/Grok через `previous_response_id`, Gemini через
+`previous_interaction_id`, GLM через preserved `reasoning_content`.
+Остальные провайдеры получают значение как один provider-specific ceiling.
 
 Runner пишет `schema_version: 2` run-log со статусом `running` до первого API-вызова и атомарно обновляет JSON после каждой модели. Ошибки API не должны останавливать весь запуск: они записываются в `error` и `error_info` соответствующего результата.
 Во время запуска runner печатает live-progress по моделям: `START`, затем

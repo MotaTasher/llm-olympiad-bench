@@ -98,13 +98,13 @@ Explicit CLI `--models` values override `RUNNER_MODELS` for that run.
 adapter. If omitted, runner reads `RUNNER_MAX_TOKENS` from `config/models.env`
 (committed default: `8000`); if that is also omitted, adapters fall back to
 their provider-specific token settings.
-The OpenAI adapter uses the Responses API. When the requested total
-`--max-tokens` exceeds the per-request output cap configured for that model,
-the adapter splits the budget across multiple text-only Responses requests and
-chains them with `previous_response_id`. It stops on the first non-empty visible
-output; if the budget is exhausted with no visible output, the result is an
-adapter error. Other adapters receive `--max-tokens` as one provider-specific
-output/completion ceiling.
+OpenAI, Gemini, Grok and GLM treat `--max-tokens` as a total budget and split it
+when it exceeds a provider request cap. OpenAI and Grok chain text-only
+Responses requests with `previous_response_id`; Gemini uses
+`previous_interaction_id`; GLM returns the exact prior `reasoning_content` with
+`clear_thinking=false`. Each stops on the first non-empty visible output. An
+exhausted budget with no visible output is an adapter error. Other adapters
+receive `--max-tokens` as one provider-specific output/completion ceiling.
 The active benchmark set includes paid and budget/free-tier models per
 provider. The current site/runner configured set is 8 provider groups and 16
 active model columns: Claude, DeepSeek, Gemini, GigaChat, Grok, GLM, OpenAI and
