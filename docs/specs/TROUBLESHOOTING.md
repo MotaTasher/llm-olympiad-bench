@@ -9,6 +9,7 @@ Start from the first missing or incorrect persisted artifact, not from the UI sy
 | log exists and one result has `error` | provider adapter/config | `models/<provider>/`, secret file, `config/models.env` | credential presence, model ID, endpoint, account access |
 | log has token usage but empty `answer` | provider adapter parsing | `models/<provider>/`, run-log `finish_reason`/`usage` | adapter should mark no visible output as `error`; check length-limited or reasoning-only responses |
 | Grok/GLM exhausts reasoning before visible output | total/per-request budget continuation | `request.steps`, `raw_response.multi_request` | use a total budget above one-request cap; verify Grok `previous_response_id` or GLM preserved `reasoning_content` |
+| GLM fails at almost exactly 3600 seconds | stale runtime timeout | result timing and `request.timeout_seconds` | update to the 7200-second committed default; shell env is overwritten by `config/models.env` |
 | all adapters fail similarly | shared environment or prompt/request logic | `runner.load_env`, `models/common.py` | env precedence, forbidden request keys, dependency versions |
 | run file exists but is absent from site | log discovery/metadata | `scoring/repository.py`, JSON file | valid JSON, canonical IDs, legacy group |
 | canonical task absent from site | problem data loading | `data/competitions/`, diagnostics panel | valid `competition.json`, problem id matches filename |

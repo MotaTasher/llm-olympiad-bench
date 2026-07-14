@@ -114,6 +114,9 @@ visible answer but returns `reasoning_content`, it appends that content
 unmodified and continues with `clear_thinking=false`. The per-request defaults
 may be adjusted with `XAI_MAX_OUTPUT_TOKENS_PER_REQUEST` and
 `ZAI_MAX_TOKENS_PER_REQUEST` without changing the total runner budget.
+GLM requests use a 7,200-second default HTTP timeout because 128K thinking
+requests can exceed one hour; shorter retry steps may lower the per-request
+token limit without discarding the total budget.
 OpenAI long Responses requests use `OPENAI_TIMEOUT_SECONDS` for the per-request
 HTTP timeout, defaulting to 7200 seconds so 128K reasoning/output calls are not
 cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override
