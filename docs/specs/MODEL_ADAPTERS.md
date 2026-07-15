@@ -117,6 +117,11 @@ may be adjusted with `XAI_MAX_OUTPUT_TOKENS_PER_REQUEST` and
 GLM requests use a 7,200-second default HTTP timeout because 128K thinking
 requests can exceed one hour; shorter retry steps may lower the per-request
 token limit without discarding the total budget.
+GLM 5.2 uses streaming chat completions and reconstructs the complete
+`reasoning_content`, visible `content`, usage and finish reason from deltas. This
+prevents a long first request from being lost while a non-streaming response is
+buffered until the HTTP timeout; continuation still receives the exact joined
+reasoning text.
 OpenAI long Responses requests use `OPENAI_TIMEOUT_SECONDS` for the per-request
 HTTP timeout, defaulting to 7200 seconds so 128K reasoning/output calls are not
 cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override

@@ -59,12 +59,47 @@ class FakeResponse:
         }
 
 
+class FakeStream:
+    def __init__(self, response) -> None:
+        data = response.model_dump()
+        message = data["choices"][0]["message"]
+        reasoning = message.get("reasoning_content", "")
+        content = message.get("content", "")
+        split = max(1, len(reasoning) // 2)
+        self.chunks = [
+            {
+                "id": data["id"],
+                "model": data["model"],
+                "created": data["created"],
+                "choices": [{"delta": {"reasoning_content": reasoning[:split]}, "finish_reason": None}],
+            },
+            {
+                "id": data["id"],
+                "model": data["model"],
+                "created": data["created"],
+                "choices": [{"delta": {"reasoning_content": reasoning[split:], "content": content}, "finish_reason": data["choices"][0]["finish_reason"]}],
+            },
+            {"id": data["id"], "model": data["model"], "created": data["created"], "choices": [], "usage": data["usage"]},
+        ]
+        self.closed = False
+
+    def __iter__(self):
+        return iter(self.chunks)
+
+    def close(self) -> None:
+        self.closed = True
+
+
+def maybe_stream(kwargs: dict, response):
+    return FakeStream(response) if kwargs.get("stream") else response
+
+
 class FakeCompletions:
     calls: list[dict] = []
 
     def create(self, **kwargs):
         self.calls.append(kwargs)
-        return FakeResponse()
+        return maybe_stream(kwargs, FakeResponse())
 
 
 class FakeChat:
@@ -100,6 +135,8 @@ class GLMAdapterTests(unittest.TestCase):
         self.assertEqual(call["messages"][0]["content"], SYSTEM_PROMPT)
         self.assertEqual(call["messages"][1]["content"], "problem")
         self.assertEqual(call["max_tokens"], 123)
+        self.assertTrue(call["stream"])
+        self.assertEqual(call["stream_options"], {"include_usage": True})
         self.assertEqual(call["extra_body"]["thinking"]["type"], "enabled")
         self.assertEqual(call["extra_body"]["reasoning_effort"], "max")
         self.assertFalse(call["extra_body"]["clear_thinking"])
@@ -108,7 +145,7 @@ class GLMAdapterTests(unittest.TestCase):
         self.assertEqual(result.answer, "GLM_ANSWER")
         self.assertNotIn("hidden reasoning", result.answer)
         self.assertEqual(result.raw_response["last_response"]["reasoning_content"], "hidden reasoning")
-        self.assertEqual(result.raw_response["last_response"]["api_key"], "[REDACTED]")
+        self.assertNotIn("api_key", result.raw_response["last_response"])
         self.assertEqual(result.usage["reasoning_tokens"], 6)
         self.assertEqual(result.usage["cached_input_tokens"], 3)
 
@@ -117,6 +154,8 @@ class GLMAdapterTests(unittest.TestCase):
             result = GLMModel("glm-4.7-flash").solve("problem", max_tokens=64)
         call = FakeCompletions.calls[0]
         self.assertEqual(call["model"], "glm-4.7-flash")
+        self.assertFalse(call["stream"])
+        self.assertNotIn("stream_options", call)
         self.assertEqual(call["extra_body"]["thinking"]["type"], "enabled")
         self.assertNotIn("reasoning_effort", call["extra_body"])
         self.assertEqual(result.cost["total"], 0.0)
@@ -154,7 +193,7 @@ class GLMAdapterTests(unittest.TestCase):
         class EmptyCompletions(FakeCompletions):
             def create(self, **kwargs):
                 self.calls.append(kwargs)
-                return EmptyResponse()
+                return maybe_stream(kwargs, EmptyResponse())
 
         class EmptyChat:
             def __init__(self) -> None:
@@ -203,7 +242,8 @@ class GLMAdapterTests(unittest.TestCase):
         class MultiCompletions(FakeCompletions):
             def create(self, **kwargs):
                 self.calls.append(kwargs)
-                return FirstResponse() if len(self.calls) == 1 else SecondResponse()
+                response = FirstResponse() if len(self.calls) == 1 else SecondResponse()
+                return maybe_stream(kwargs, response)
 
         class MultiChat:
             def __init__(self) -> None:

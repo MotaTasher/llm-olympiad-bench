@@ -24,6 +24,7 @@ ZAI_DEFAULT_TIMEOUT_SECONDS = 7200.0
 ZAI_DEFAULT_MAX_OUTPUT_TOKENS_PER_REQUEST = 128_000
 ZAI_CONTINUATION_INPUT = "Continue the reasoning and provide the complete final answer."
 ZAI_REASONING_EFFORT_MODELS = {"glm-5.2"}
+ZAI_STREAMING_MODELS = {"glm-5.2"}
 
 
 def optional_nonnegative_int_env(name: str) -> int | None:
@@ -89,6 +90,57 @@ def choice_finish_reason(raw_response: dict[str, Any]) -> str | None:
     return raw_response.get("finish_reason") or raw_response.get("status")
 
 
+def object_value(value: Any, name: str, default: Any = None) -> Any:
+    return value.get(name, default) if isinstance(value, dict) else getattr(value, name, default)
+
+
+def collect_streaming_response(stream: Any) -> dict[str, Any]:
+    """Collect an OpenAI-compatible Z.AI stream into one chat-completion shape."""
+    response: dict[str, Any] = {}
+    content_parts: list[str] = []
+    reasoning_parts: list[str] = []
+    finish_reason: str | None = None
+    usage: dict[str, Any] | None = None
+    try:
+        for chunk in stream:
+            raw_chunk = safe_dict(chunk)
+            for name in ("id", "model", "created", "system_fingerprint"):
+                value = object_value(chunk, name)
+                if value is not None:
+                    response[name] = value
+            chunk_usage = object_value(chunk, "usage")
+            if chunk_usage is not None:
+                usage = safe_dict(chunk_usage)
+            choice = first_choice(chunk)
+            if choice is None:
+                continue
+            chunk_finish = object_value(choice, "finish_reason")
+            if chunk_finish:
+                finish_reason = str(chunk_finish)
+            delta = object_value(choice, "delta") or {}
+            content = object_value(delta, "content", "") or ""
+            reasoning = object_value(delta, "reasoning_content", "") or ""
+            if content:
+                content_parts.append(str(content))
+            if reasoning:
+                reasoning_parts.append(str(reasoning))
+            # Some compatible endpoints expose usage only in the raw chunk.
+            if usage is None and isinstance(raw_chunk.get("usage"), dict):
+                usage = raw_chunk["usage"]
+    finally:
+        close = getattr(stream, "close", None)
+        if callable(close):
+            close()
+
+    message: dict[str, Any] = {"role": "assistant", "content": "".join(content_parts)}
+    if reasoning_parts:
+        message["reasoning_content"] = "".join(reasoning_parts)
+    response["choices"] = [{"index": 0, "finish_reason": finish_reason, "message": message}]
+    if usage is not None:
+        response["usage"] = usage
+    return response
+
+
 class GLMModel(BaseModel):
     def __init__(
         self,
@@ -142,6 +194,7 @@ class GLMModel(BaseModel):
                     int(env("ZAI_MAX_TOKENS_PER_REQUEST", str(per_request_limit)) or per_request_limit),
                 )
             remaining_budget = total_budget or per_request_limit
+            use_streaming = self.model_id in ZAI_STREAMING_MODELS
 
             extra_body: dict[str, Any] = {}
             thinking = env("ZAI_THINKING", ZAI_DEFAULT_THINKING) or ZAI_DEFAULT_THINKING
@@ -155,7 +208,7 @@ class GLMModel(BaseModel):
                 "endpoint": sanitized_base_url(f"{base_url.rstrip('/')}/chat/completions"),
                 "model": self.model_id,
                 "messages": messages,
-                "stream": False,
+                "stream": use_streaming,
                 "timeout_seconds": timeout_seconds,
                 "max_retries": max_retries,
                 "max_output_tokens_total": total_budget,
@@ -177,7 +230,10 @@ class GLMModel(BaseModel):
                 kwargs: dict[str, Any] = {
                     "max_tokens": step_max_tokens,
                     "extra_body": dict(extra_body),
+                    "stream": use_streaming,
                 }
+                if use_streaming:
+                    kwargs["stream_options"] = {"include_usage": True}
                 if env("ZAI_TEMPERATURE") is not None:
                     kwargs["temperature"] = float(env("ZAI_TEMPERATURE", "0.2") or "0.2")
                 step_request = {
@@ -185,7 +241,7 @@ class GLMModel(BaseModel):
                     "model": self.model_id,
                     "messages": safe_dict(messages),
                     "max_tokens": step_max_tokens,
-                    "stream": False,
+                    "stream": use_streaming,
                     "timeout_seconds": timeout_seconds,
                     **extra_body,
                 }
@@ -201,6 +257,9 @@ class GLMModel(BaseModel):
                         **kwargs,
                     )
                 )
+                if use_streaming:
+                    response, collect_latency_ms = timed(lambda: collect_streaming_response(response))
+                    step_latency_ms += collect_latency_ms
                 latency_ms += step_latency_ms
                 raw_step = safe_dict(response)
                 last_raw_response = raw_step

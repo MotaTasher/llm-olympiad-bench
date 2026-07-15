@@ -52,6 +52,12 @@ ZAI_TIMEOUT_SECONDS=7200
 ZAI_MAX_RETRIES=0
 ```
 
+`glm-5.2` uses streaming chat completions so long thinking requests deliver
+incremental data instead of waiting for one buffered response until the HTTP
+timeout. The adapter joins every `reasoning_content` and `content` delta and
+requests terminal usage telemetry. `glm-4.7-flash` keeps the compatible
+non-streaming path.
+
 Credential-free smoke:
 
 ```bash
