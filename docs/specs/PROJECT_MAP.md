@@ -34,6 +34,15 @@ scoring/
   README.md               closed scoring-site auth and user-management operations
   templates/              HTML pages
 
+public_results/
+  index.html              release buttons and stacked stage leaderboards
+  competitions.html       compact public release catalog
+  solution.html           full-width public solution-reading prototype
+  data.js                 static public snapshot and catalog data
+  app.js                  release switching, stacked matrices, catalog and detail rendering
+  styles.css              shared CS Space-inspired visual system
+  README.md               local preview command and data-scope notes
+
 scripts/
   check_secrets.py        credential presence checks without printing values
   validate_problem_data.py problem/competition JSON validation

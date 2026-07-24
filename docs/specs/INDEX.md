@@ -20,6 +20,7 @@ This directory is the first stop for coding agents. It describes the current imp
 | change `runner.py` or log generation | [`ARCHITECTURE.md`](ARCHITECTURE.md), [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md) |
 | add or modify a model provider | [`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) |
 | change Flask UI or scoring persistence | [`SCORING_WEB.md`](SCORING_WEB.md), [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md) |
+| change the standalone public-results prototype | [`PROJECT_MAP.md`](PROJECT_MAP.md), [`../LOCAL_SETUP.md`](../LOCAL_SETUP.md) |
 | change sync/export/secret checks | [`OPERATIONS.md`](OPERATIONS.md) |
 | diagnose a failure | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) |
 | prepare a final agent response | [`CHANGE_CHECKLIST.md`](CHANGE_CHECKLIST.md) |

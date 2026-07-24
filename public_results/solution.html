@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#030207">
+    <title>Решение — CS Space Arena</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body data-page="solution">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="CS Space Arena">
+        <picture>
+          <source media="(max-width: 744px)" srcset="https://storage.yandexcloud.net/csspace-bucket/icons/csspace-clean-logo.svg">
+          <img src="https://storage.yandexcloud.net/csspace-bucket/logos/csspace-logo.svg" alt="CS Space">
+        </picture>
+        <span>Arena</span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a href="index.html">Главная</a>
+        <a href="competitions.html">Соревнования</a>
+      </nav>
+    </header>
+
+    <main class="solution-main">
+      <a class="back-link" id="solution-back" href="index.html">← Назад к таблице</a>
+
+      <section class="solution-hero">
+        <div>
+          <p class="eyebrow" id="solution-competition">Math Cup 2026</p>
+          <h1 id="solution-task">Задача</h1>
+        </div>
+        <div class="solution-verdict">
+          <span>Результат</span>
+          <strong id="solution-score">—</strong>
+        </div>
+      </section>
+
+      <section class="solution-layout">
+        <dl class="metrics-list solution-metrics">
+          <div><dt>Вердикт</dt><dd id="solution-verdict">—</dd></div>
+          <div><dt>Стоимость</dt><dd id="solution-cost">—</dd></div>
+          <div><dt>Токены</dt><dd id="solution-tokens">—</dd></div>
+        </dl>
+
+        <article class="solution-card solution-copy">
+          <p class="eyebrow">Решение модели</p>
+          <h2 id="solution-model">Модель</h2>
+          <div class="prose" id="solution-text"></div>
+        </article>
+
+        <details class="official-solution" open>
+          <summary>
+            <span><small>Эталон</small>Авторское решение</span>
+            <b aria-hidden="true">+</b>
+          </summary>
+          <div class="prose">
+            <p>В первом прототипе здесь показано место для авторского решения. Полный текст будет подключён вместе с публичным экспортом условий и решений задач.</p>
+            <p>Блок занимает ту же читательскую ширину, что и ответ модели, поэтому длинные доказательства и разборы можно будет читать без узкой боковой колонки.</p>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a href="index.html"><img src="https://storage.yandexcloud.net/csspace-bucket/logos/csspace-logo.svg" alt="CS Space"></a>
+      <p>Решение модели<br>и данные конкретного запуска</p>
+      <a id="solution-footer-back" href="index.html">К рейтингу →</a>
+    </footer>
+  </body>
+</html>

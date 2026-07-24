@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#030207">
+    <title>Соревнования — CS Space Arena</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body data-page="competitions">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="CS Space Arena">
+        <picture>
+          <source media="(max-width: 744px)" srcset="https://storage.yandexcloud.net/csspace-bucket/icons/csspace-clean-logo.svg">
+          <img src="https://storage.yandexcloud.net/csspace-bucket/logos/csspace-logo.svg" alt="CS Space">
+        </picture>
+        <span>Arena</span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a href="index.html">Главная</a>
+        <a class="active" href="competitions.html">Соревнования</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="catalog-intro">
+        <p class="eyebrow">Архив проверок</p>
+        <h1>Соревнования</h1>
+        <p>Каждая кнопка открывает отдельный выпуск. Если у него есть отбор и финал, обе таблицы идут подряд на одной странице.</p>
+      </section>
+
+      <section class="catalog-section" aria-labelledby="available-title">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Опубликовано</p>
+            <h2 id="available-title">Доступные</h2>
+          </div>
+          <p class="section-note">Компактный список выпусков, которые уже есть в локальном проекте.</p>
+        </div>
+        <div class="competition-grid" id="competition-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a href="index.html"><img src="https://storage.yandexcloud.net/csspace-bucket/logos/csspace-logo.svg" alt="CS Space"></a>
+      <p>CS Space Arena<br>локальный публичный прототип</p>
+      <a href="index.html">Текущий рейтинг →</a>
+    </footer>
+  </body>
+</html>

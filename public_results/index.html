@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#030207">
+    <title>CS Space Arena — результаты</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body data-page="leaderboard">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="CS Space Arena">
+        <picture>
+          <source media="(max-width: 744px)" srcset="https://storage.yandexcloud.net/csspace-bucket/icons/csspace-clean-logo.svg">
+          <img src="https://storage.yandexcloud.net/csspace-bucket/logos/csspace-logo.svg" alt="CS Space">
+        </picture>
+        <span>Arena</span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a class="active" href="index.html">Главная</a>
+        <a href="competitions.html">Соревнования</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="leaderboard-intro">
+        <div>
+          <p class="eyebrow" id="release-kicker">Текущее соревнование</p>
+          <h1 id="release-title">Math Cup 2026</h1>
+        </div>
+        <p class="intro-copy" id="release-description">
+          Отборочный тур и финал показаны последовательно на одной странице.
+        </p>
+      </section>
+
+      <section class="release-picker" aria-labelledby="release-picker-title">
+        <p class="eyebrow" id="release-picker-title">Выберите соревнование</p>
+        <div class="release-tabs" id="release-tabs"></div>
+      </section>
+
+      <section class="leaderboard-section" aria-labelledby="leaderboard-title">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Leaderboard</p>
+            <h2 id="leaderboard-title">Результаты</h2>
+          </div>
+          <div class="legend" aria-label="Обозначения">
+            <span><i class="legend-full"></i>полный балл</span>
+            <span><i class="legend-partial"></i>частичный</span>
+            <span><i class="legend-zero"></i>ноль</span>
+            <span><i class="legend-empty"></i>нет оценки</span>
+          </div>
+        </div>
+
+        <div class="stage-stack" id="stage-stack"></div>
+      </section>
+
+      <section class="method-section">
+        <p class="eyebrow">Как читать таблицу</p>
+        <div>
+          <h2>Одна задача.<br>Один честный запуск.</h2>
+          <p>Строки — модели и три лучшие человеческие команды. Столбцы — задачи соревнования. Справа собраны итог: количество полностью решённых задач, точность по проверенным ответам, стоимость и токены.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a href="index.html"><img src="https://storage.yandexcloud.net/csspace-bucket/logos/csspace-logo.svg" alt="CS Space"></a>
+      <p>Открытая витрина результатов<br>моделей на олимпиадных задачах</p>
+      <a href="competitions.html">Все соревнования →</a>
+    </footer>
+  </body>
+</html>
