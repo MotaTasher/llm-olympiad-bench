@@ -48,6 +48,11 @@ budgets into multiple Interactions API requests and links them with
 `previous_interaction_id`. This preserves Gemini's server-side reasoning context
 and thought signatures while keeping the request text-only. For example,
 `--max-tokens 256000` can use up to four Gemini requests.
+Responses whose finish reason is `incomplete`, `length` or a max-token variant
+are continued even when they already contain visible text. Visible fragments
+are retained in order, and a response still marked incomplete after exhausting
+the total budget is logged as an error rather than a successful truncated
+solution.
 Usage telemetry is read from the Interactions API `usage` fields:
 `total_input_tokens`, `total_output_tokens`, `total_thought_tokens`,
 `total_cached_tokens` and `total_tokens`. Thinking tokens are billed as output

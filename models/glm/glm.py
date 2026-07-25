@@ -90,6 +90,18 @@ def choice_finish_reason(raw_response: dict[str, Any]) -> str | None:
     return raw_response.get("finish_reason") or raw_response.get("status")
 
 
+def is_incomplete_finish(value: str | None) -> bool:
+    if not value:
+        return False
+    normalized = value.upper()
+    return (
+        normalized in {"LENGTH", "MAX_TOKENS", "MAX_OUTPUT_TOKENS", "INCOMPLETE"}
+        or "LENGTH" in normalized
+        or "MAX_TOKEN" in normalized
+        or "INCOMPLETE" in normalized
+    )
+
+
 def object_value(value: Any, name: str, default: Any = None) -> Any:
     return value.get(name, default) if isinstance(value, dict) else getattr(value, name, default)
 
@@ -223,7 +235,7 @@ class GLMModel(BaseModel):
             completion_tokens = 0
             reasoning_tokens = 0
             cached_input_tokens = 0
-            answer = ""
+            answer_parts: list[str] = []
 
             while remaining_budget > 0:
                 step_max_tokens = min(remaining_budget, per_request_limit)
@@ -277,6 +289,7 @@ class GLMModel(BaseModel):
                 reasoning_content = message.get("reasoning_content") if isinstance(message, dict) else getattr(message, "reasoning_content", None)
                 if reasoning_content:
                     raw_step["reasoning_content"] = reasoning_content
+                step_finish = choice_finish_reason(raw_step)
                 responses.append({
                     "request": step_request,
                     "response": raw_step,
@@ -284,18 +297,22 @@ class GLMModel(BaseModel):
                     "answer_chars": len(text.strip()),
                 })
                 remaining_budget -= step_max_tokens
-                if text.strip():
-                    answer = text
+                if text:
+                    answer_parts.append(text)
+                if text.strip() and not is_incomplete_finish(step_finish):
                     break
-                if remaining_budget <= 0 or not reasoning_content:
+                if remaining_budget <= 0 or not (reasoning_content or text):
                     break
-                messages.append({
+                assistant_message = {
                     "role": "assistant",
                     "content": text,
-                    "reasoning_content": reasoning_content,
-                })
+                }
+                if reasoning_content:
+                    assistant_message["reasoning_content"] = reasoning_content
+                messages.append(assistant_message)
                 messages.append({"role": "user", "content": ZAI_CONTINUATION_INPUT})
 
+            answer = "".join(answer_parts)
             cost = estimate_cost(
                 "zai",
                 self.model_id,
@@ -310,7 +327,10 @@ class GLMModel(BaseModel):
                     "requests": len(responses),
                     "max_output_tokens_total": total_budget,
                     "max_output_tokens_per_request": per_request_limit,
-                    "stopped_after_visible_output": bool(answer.strip()),
+                    "stopped_after_complete_visible_output": bool(
+                        answer.strip()
+                        and not is_incomplete_finish(choice_finish_reason(last_raw_response))
+                    ),
                 },
                 "responses": responses,
                 "last_response": last_raw_response,
@@ -328,6 +348,11 @@ class GLMModel(BaseModel):
                 error = (
                     "Z.AI Chat Completions API returned no visible output after "
                     f"{len(responses)} request(s) and {completion_tokens} output tokens"
+                )
+            elif is_incomplete_finish(finish):
+                error = (
+                    "Z.AI Chat Completions API exhausted the available continuation "
+                    f"budget after {len(responses)} request(s) with incomplete visible output"
                 )
 
             return SolveResult(

@@ -122,6 +122,10 @@ GLM 5.2 uses streaming chat completions and reconstructs the complete
 prevents a long first request from being lost while a non-streaming response is
 buffered until the HTTP timeout; continuation still receives the exact joined
 reasoning text.
+GLM and Gemini must also continue responses that contain visible text but carry
+a length-limited or incomplete finish reason. They retain visible fragments in
+order and must not classify a still-incomplete response as successful after the
+total continuation budget is exhausted.
 OpenAI long Responses requests use `OPENAI_TIMEOUT_SECONDS` for the per-request
 HTTP timeout, defaulting to 7200 seconds so 128K reasoning/output calls are not
 cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override

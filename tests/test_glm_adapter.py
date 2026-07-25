@@ -270,6 +270,56 @@ class GLMAdapterTests(unittest.TestCase):
         self.assertEqual(result.answer, "GLM_ANSWER")
         self.assertTrue(result.raw_response["multi_request"]["enabled"])
 
+    def test_length_limited_visible_answer_is_continued_and_joined(self) -> None:
+        class PartialMessage:
+            content = "PARTIAL"
+            reasoning_content = "preserved reasoning"
+
+        class PartialChoice:
+            message = PartialMessage()
+            finish_reason = "length"
+
+        class PartialResponse(FakeResponse):
+            id = "partial-response"
+            choices = [PartialChoice()]
+
+            def model_dump(self) -> dict:
+                data = super().model_dump()
+                data["id"] = self.id
+                data["choices"] = [{
+                    "finish_reason": "length",
+                    "message": {
+                        "content": "PARTIAL",
+                        "reasoning_content": "preserved reasoning",
+                    },
+                }]
+                return data
+
+        class MultiCompletions(FakeCompletions):
+            def create(self, **kwargs):
+                self.calls.append(kwargs)
+                response = PartialResponse() if len(self.calls) == 1 else FakeResponse()
+                return maybe_stream(kwargs, response)
+
+        class MultiOpenAI(FakeOpenAI):
+            def __init__(self, **kwargs) -> None:
+                super().__init__(**kwargs)
+                self.chat = types.SimpleNamespace(completions=MultiCompletions())
+
+        with self.fake_openai_module(MultiOpenAI), patch.dict(
+            "os.environ",
+            {"ZAI_API_KEY": "test-key", "ZAI_MAX_TOKENS_PER_REQUEST": "64"},
+            clear=True,
+        ):
+            result = GLMModel("glm-4.7-flash").solve("problem", max_tokens=128)
+
+        self.assertEqual(len(FakeCompletions.calls), 2)
+        self.assertEqual(result.answer, "PARTIALGLM_ANSWER")
+        self.assertIsNone(result.error)
+        continued = FakeCompletions.calls[1]["messages"][-2]
+        self.assertEqual(continued["content"], "PARTIAL")
+        self.assertEqual(continued["reasoning_content"], "preserved reasoning")
+
     def test_exception_and_missing_key_return_error_result(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
             missing = GLMModel("glm-5.2").solve("problem")

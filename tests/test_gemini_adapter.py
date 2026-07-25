@@ -139,7 +139,7 @@ class GeminiAdapterTests(unittest.TestCase):
 
         class FirstInteraction:
             id = "first-id"
-            output_text = ""
+            output_text = "PARTIAL"
             usage_metadata = FirstUsage()
 
             def model_dump(self):
@@ -197,7 +197,7 @@ class GeminiAdapterTests(unittest.TestCase):
         self.assertEqual(calls[0]["generation_config"]["max_output_tokens"], 65536)
         self.assertEqual(calls[1]["generation_config"]["max_output_tokens"], 4464)
         self.assertEqual(calls[1]["previous_interaction_id"], "first-id")
-        self.assertEqual(result.answer, "FINAL")
+        self.assertEqual(result.answer, "PARTIAL\n\nFINAL")
         self.assertEqual(result.prompt_tokens, 22)
         self.assertEqual(result.completion_tokens, 20)
         self.assertEqual(result.usage["reasoning_tokens"], 65594)

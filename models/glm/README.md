@@ -75,5 +75,7 @@ provider tools, search, files, managed agents or code execution. If a request
 uses its budget without visible text, the adapter returns the complete,
 unmodified `reasoning_content` with `clear_thinking=false` and asks the same
 conversation to finish. Reasoning is retained in redacted telemetry but never
-included in the visible answer. Empty output becomes an error only after the
-available total continuation budget is exhausted.
+included in the visible answer. A `length`/`incomplete` response is continued
+even when it already contains visible text; visible fragments are joined in
+order. Empty or still-incomplete output becomes an error after the available
+total continuation budget is exhausted.

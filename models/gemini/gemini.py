@@ -136,7 +136,12 @@ def is_length_limited(value: str | None) -> bool:
     if not value:
         return False
     normalized = value.upper()
-    return normalized in {"MAX_TOKENS", "MAX_OUTPUT_TOKENS", "LENGTH"} or "MAX" in normalized or "LENGTH" in normalized
+    return (
+        normalized in {"MAX_TOKENS", "MAX_OUTPUT_TOKENS", "LENGTH", "INCOMPLETE"}
+        or "MAX" in normalized
+        or "LENGTH" in normalized
+        or "INCOMPLETE" in normalized
+    )
 
 
 class GeminiModel(BaseModel):
@@ -364,6 +369,11 @@ class GeminiModel(BaseModel):
                     generated_tokens=billable_output_tokens,
                     finish_reason=last_finish_reason,
                     request_count=len(responses),
+                )
+            elif is_length_limited(last_finish_reason):
+                error = (
+                    "Gemini Interactions API exhausted the available continuation "
+                    f"budget after {len(responses)} request(s) with incomplete visible output"
                 )
 
             return SolveResult(
