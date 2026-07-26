@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from scripts.export_public_results import (
+    atomic_write_text,
     public_score,
     select_public_attempt,
     solution_document,
@@ -121,6 +124,12 @@ class PublicResultsExportTests(unittest.TestCase):
             ),
             42,
         )
+
+    def test_atomic_public_files_are_world_readable(self) -> None:
+        with TemporaryDirectory() as temporary:
+            path = Path(temporary) / "public.json"
+            atomic_write_text(path, "{}\n")
+            self.assertEqual(path.stat().st_mode & 0o777, 0o644)
 
 
 if __name__ == "__main__":

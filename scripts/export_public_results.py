@@ -138,6 +138,7 @@ def atomic_write_text(path: Path, value: str) -> None:
     temporary = Path(temporary_name)
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            os.fchmod(handle.fileno(), 0o644)
             handle.write(value)
             handle.flush()
             os.fsync(handle.fileno())
