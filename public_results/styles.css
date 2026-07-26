@@ -404,7 +404,8 @@ h1, h2, h3 {
 .score-partial > span { background: var(--yellow); }
 .score-zero > a,
 .score-zero > span { background: var(--red); }
-.score-empty > span { border-color: var(--line); background: transparent; color: var(--faint); }
+.score-empty > span,
+.score-empty > a { border-color: var(--line); background: transparent; color: var(--faint); }
 
 .metric-column,
 .metric-cell {
@@ -550,6 +551,7 @@ h1, h2, h3 {
 .prose p { margin: 0 0 1.35em; }
 .prose h3 { margin: 2em 0 .8em; color: var(--ink); font-size: 22px; }
 .prose code { color: var(--acid); font-size: .9em; }
+.prose .preformatted { white-space: pre-wrap; overflow-wrap: anywhere; }
 
 .solution-metrics {
   display: grid;

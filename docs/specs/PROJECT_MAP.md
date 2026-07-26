@@ -37,9 +37,10 @@ scoring/
 public_results/
   index.html              release buttons and stacked stage leaderboards
   competitions.html       compact public release catalog
-  solution.html           full-width public solution-reading prototype
-  data.js                 static public snapshot and catalog data
-  app.js                  release switching, stacked matrices, catalog and detail rendering
+  solution.html           full-width public model/official solution reader
+  data.js                 fallback snapshot, releases, teams and catalog data
+  generated/              ignored runtime export consumed when present
+  app.js                  merges generated results and renders public pages
   styles.css              shared CS Space-inspired visual system
   README.md               local preview command and data-scope notes
 
@@ -47,7 +48,12 @@ scripts/
   check_secrets.py        credential presence checks without printing values
   validate_problem_data.py problem/competition JSON validation
   export_scoring.py       merge run logs and sidecars into CSV/JSONL
+  export_public_results.py sanitized read-only public matrix and solution export
   sync_logs.py            rsync push/pull for logs and score sidecars
+
+deploy/systemd/
+  public-results-export.service  one-shot server-side public export
+  public-results-export.timer    minute-based refresh schedule
 ```
 
 Current provider directories are `gpt`, `claude`, `deepseek`, `gemini`,
@@ -83,6 +89,8 @@ data/competitions/<competition_id>/
 - Problem text and metadata: `data/competitions/`.
 - Generated model answers: `logs/`.
 - Human evaluation: `data/results/`.
+- Generated public projection: ignored `public_results/generated/` locally or
+  the deployed release's `generated/` directory; it is never a source of truth.
 - Provider details: corresponding `models/<provider>/` directory.
 - Shared API policy, result serialization and telemetry helpers: `models/common.py`, `models/base.py` and `models/telemetry.py`.
 - User documentation: root README, `docs/` and provider READMEs.

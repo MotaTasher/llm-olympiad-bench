@@ -1,7 +1,25 @@
 (function () {
   "use strict";
 
-  const data = window.RESULTS_DATA;
+  const baselineData = window.RESULTS_DATA;
+  const generatedData = window.RESULTS_DATA_GENERATED;
+  const generatedCompetitions = new Map(
+    (generatedData?.competitions || []).map((competition) => [competition.id, competition])
+  );
+  const competitions = baselineData.competitions.map((competition) => {
+    const generated = generatedCompetitions.get(competition.id);
+    if (!generated) return competition;
+    const teams = competition.participants.filter((participant) => participant.type === "team");
+    return {
+      ...competition,
+      ...generated,
+      participants: [...generated.participants, ...teams]
+    };
+  });
+  generatedCompetitions.forEach((competition, id) => {
+    if (!competitions.some((item) => item.id === id)) competitions.push(competition);
+  });
+  const data = { ...baselineData, competitions };
   const page = document.body.dataset.page;
   const number = new Intl.NumberFormat("ru-RU");
 
@@ -39,6 +57,12 @@
 
   function scoreText(score) {
     return score === null || score === undefined ? "—" : `${score}`;
+  }
+
+  function renderPlainText(value, emptyText) {
+    const text = String(value || "").trim();
+    if (!text) return `<p>${escapeHtml(emptyText)}</p>`;
+    return `<p class="preformatted">${escapeHtml(text)}</p>`;
   }
 
   function renderLeaderboard() {
@@ -96,12 +120,13 @@
 
   function renderStage(competition) {
     const modelCount = competition.participants.filter((item) => item.type === "model").length;
+    const teamCount = competition.participants.filter((item) => item.type === "team").length;
     const hasResults = competition.tasks.length && competition.participants.length;
     const content = hasResults
       ? `
         <div class="leaderboard-meta">
-          <span>${competition.tasks.length} задач · ${modelCount} моделей · топ-3 команды</span>
-          <span>Нажмите на балл модели, чтобы открыть решение</span>
+          <span>${competition.tasks.length} задач · ${modelCount} моделей${teamCount ? " · топ-3 команды" : ""}</span>
+          <span>Нажмите на ячейку модели, чтобы открыть ответ</span>
         </div>
         <div class="matrix-shell">
           <div class="matrix-scroll" tabindex="0" aria-label="${escapeHtml(competition.stage)}: таблица результатов">
@@ -148,11 +173,9 @@
 
     const modelRows = competition.participants.filter((item) => item.type === "model");
     const teamRows = competition.participants.filter((item) => item.type === "team");
-    const rows = [
-      ...modelRows,
-      { type: "separator" },
-      ...teamRows
-    ];
+    const rows = teamRows.length
+      ? [...modelRows, { type: "separator" }, ...teamRows]
+      : modelRows;
 
     const body = rows.map((participant) => {
       if (participant.type === "separator") {
@@ -168,12 +191,14 @@
 
       const cells = competition.tasks.map((task, index) => {
         const score = participant.scores[index];
+        const solution = participant.solutions?.[index];
         const content = `<span>${scoreText(score)}</span>`;
-        if (isTeam || score === null || score === undefined) {
+        if (isTeam || !solution) {
           return `<td class="result-cell ${scoreClass(score)}">${content}</td>`;
         }
         const href = `solution.html?competition=${encodeURIComponent(competition.id)}&participant=${encodeURIComponent(participant.id)}&task=${encodeURIComponent(task.id)}`;
-        return `<td class="result-cell ${scoreClass(score)}"><a href="${href}" aria-label="${escapeHtml(participant.name)}, ${escapeHtml(task.title)}: ${score} баллов">${content}</a></td>`;
+        const label = score == null ? "ответ без публичной оценки" : `${score} баллов`;
+        return `<td class="result-cell ${scoreClass(score)}"><a href="${href}" aria-label="${escapeHtml(participant.name)}, ${escapeHtml(task.title)}: ${label}">${content}</a></td>`;
       }).join("");
 
       return `
@@ -219,7 +244,7 @@
     }).join("");
   }
 
-  function renderSolution() {
+  async function renderSolution() {
     const params = query();
     const competition = competitionById(params.get("competition")) || data.competitions[0];
     const participant = competition.participants.find((item) => item.id === params.get("participant"))
@@ -228,6 +253,7 @@
     const safeTaskIndex = taskIndex >= 0 ? taskIndex : 0;
     const task = competition.tasks[safeTaskIndex];
     const score = participant?.scores?.[safeTaskIndex];
+    const solutionPath = participant?.solutions?.[safeTaskIndex];
     const release = releaseForCompetition(competition.id);
     const back = `index.html?release=${encodeURIComponent(release?.id || data.releases[0].id)}`;
 
@@ -240,14 +266,46 @@
     document.querySelector("#solution-verdict").textContent = score == null
       ? "Нет оценки"
       : score >= 100 ? "Полное решение" : score > 0 ? "Частичное решение" : "Не зачтено";
-    document.querySelector("#solution-cost").textContent = participant?.cost == null ? "—" : `$${participant.cost.toFixed(3)} за соревнование`;
-    document.querySelector("#solution-tokens").textContent = participant?.tokens == null ? "—" : `${number.format(participant.tokens)} за соревнование`;
-    document.querySelector("#solution-text").innerHTML = `
-      <p>Это рабочий прототип страницы чтения конкретного ответа. Ячейка уже сохраняет контекст соревнования, модели и задачи в URL.</p>
-      <p>На следующем этапе сюда будет подставляться полный неизменённый текст ответа из run-log, связанный по <code>competition_id + problem_id + result_id</code>. Рядом останутся вердикт, стоимость, токены и раскрывающееся авторское решение.</p>
-      <h3>Структура будущего ответа</h3>
-      <p>Формализация условия, введённые обозначения, последовательное доказательство и финальный вывод модели будут показаны в одной комфортной колонке без элементов внутреннего scoring-интерфейса.</p>
-    `;
+    document.querySelector("#solution-cost").textContent = "—";
+    document.querySelector("#solution-tokens").textContent = "—";
+    document.querySelector("#solution-text").innerHTML = "<p>Загружаем ответ…</p>";
+    document.querySelector("#official-solution-text").innerHTML = "<p>Загружаем авторское решение…</p>";
+
+    if (!solutionPath) {
+      document.querySelector("#solution-text").innerHTML = "<p>Для этой ячейки нет опубликованного ответа.</p>";
+      document.querySelector("#official-solution-text").innerHTML = "<p>Авторское решение недоступно.</p>";
+      return;
+    }
+
+    try {
+      const response = await fetch(solutionPath, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const documentData = await response.json();
+      const result = documentData.result || {};
+      const competitionTitle = documentData.competition?.title || competition.title;
+      const competitionStage = documentData.competition?.stage || competition.stage;
+      document.querySelector("#solution-competition").textContent =
+        competitionStage && !competitionTitle.toLocaleLowerCase("ru").includes(competitionStage.toLocaleLowerCase("ru"))
+          ? `${competitionTitle} · ${competitionStage}`
+          : competitionTitle;
+      document.querySelector("#solution-task").textContent = documentData.task?.title || task?.title || "Задача";
+      document.querySelector("#solution-model").textContent = documentData.model?.name || participant?.name || "Модель";
+      document.querySelector("#solution-score").textContent = result.score == null ? "—" : `${result.score} / 100`;
+      document.querySelector("#solution-verdict").textContent = result.verdict || "Нет публичной оценки";
+      document.querySelector("#solution-cost").textContent =
+        result.cost == null ? "—" : `$${Number(result.cost).toFixed(4)}`;
+      document.querySelector("#solution-tokens").textContent =
+        result.tokens == null ? "—" : number.format(result.tokens);
+      document.querySelector("#solution-text").innerHTML =
+        renderPlainText(result.answer, "Текст ответа пуст.");
+      document.querySelector("#official-solution-text").innerHTML =
+        renderPlainText(documentData.task?.officialSolution, "Авторское решение не опубликовано.");
+    } catch (error) {
+      document.querySelector("#solution-text").innerHTML =
+        "<p>Не удалось загрузить опубликованный ответ. Попробуйте обновить страницу.</p>";
+      document.querySelector("#official-solution-text").innerHTML =
+        "<p>Авторское решение временно недоступно.</p>";
+    }
   }
 
   if (page === "leaderboard") renderLeaderboard();

@@ -2,6 +2,7 @@
 config/server.env
 .DS_Store
 __pycache__/
+public_results/generated/
 *.py[cod]
 *.sqlite3
 __MACOSX/

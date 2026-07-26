@@ -40,6 +40,47 @@ python scripts/export_scoring.py --format jsonl
 
 The exporter joins run logs and sidecars using competition/problem/run/index. It also supports some legacy single-answer log shapes.
 
+## Public-results export
+
+Generate the read-only public projection locally:
+
+```bash
+python scripts/export_public_results.py
+```
+
+The default output is the ignored `public_results/generated/` directory. The
+export contains both Math Cup 2026 stages, all 16 configured model rows, and one
+JSON document for every selected successful answer. For each model/problem cell
+the selection policy is:
+
+1. newest successful attempt that has at least one evaluation;
+2. otherwise, newest successful attempt without a public score;
+3. otherwise, no link for the cell.
+
+When several evaluations exist on the selected result, their scores are
+normalized against `max_score` and the public score is their median on a
+0–100 scale. Run logs and sidecars remain unchanged. The public documents omit
+reviewer identities, feedback, raw provider responses, request payloads, errors,
+and internal paths.
+
+On the production host, install
+`deploy/systemd/public-results-export.{service,timer}` in `/etc/systemd/system/`
+and enable the timer. It refreshes the deployed release every minute from the
+same log, result, and competition paths used by the scoring service:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now public-results-export.timer
+sudo systemctl start public-results-export.service
+```
+
+Inspect it with:
+
+```bash
+systemctl status public-results-export.timer --no-pager
+journalctl -u public-results-export.service -n 50 --no-pager
+```
+
 ## Evaluation-pool CSV
 
 The web UI can export and import manual checks without touching model run logs:

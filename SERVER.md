@@ -252,10 +252,23 @@ Nginx публикует `current` внутри существующего scori
 `current` на предыдущий каталог и перезагрузить Nginx. Приватные IP, домены и
 SSH-параметры в репозиторий не добавляются.
 
-Публичная витрина не должна напрямую писать в run-логи или scoring sidecar.
-Будущая публикация выбранного вердикта и комментария должна выполняться через
-явный экспорт/API-контракт: scoring остаётся источником оценок, а публичный сайт
-получает только разрешённый для публикации срез.
+Публичная витрина не пишет в run-логи или scoring sidecar. Безопасный срез
+создаёт `scripts/export_public_results.py`; на сервере его раз в минуту запускает
+`deploy/systemd/public-results-export.timer`. Экспорт читает активные каталоги
+scoring-сервиса, публикует обе стадии Math Cup 2026 и сохраняет результат в
+`current/generated/`. Scoring остаётся источником оценок, а статический сайт
+получает только разрешённый для публикации срез без имён проверяющих, внутренних
+комментариев и сырых ответов API.
+
+После обновления release-файлов установите или обновите unit-файлы:
+
+```bash
+sudo cp deploy/systemd/public-results-export.service /etc/systemd/system/
+sudo cp deploy/systemd/public-results-export.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now public-results-export.timer
+sudo systemctl start public-results-export.service
+```
 
 ## Собрать датасет
 

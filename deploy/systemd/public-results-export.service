@@ -1,0 +1,10 @@
+[Unit]
+Description=Export sanitized public olympiad results
+After=olympiad-scorer.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/olympiad-scorer/app
+ExecStart=/opt/olympiad-scorer/venv/bin/python scripts/export_public_results.py --competitions-dir data/competitions --logs-dir /opt/olympiad-scorer/shared/logs --results-dir data/results --output-dir /opt/olympiad-scorer/public-results/current/generated
+NoNewPrivileges=true
+PrivateTmp=true
