@@ -8,33 +8,6 @@ window.RESULTS_DATA = {
       title: "Math Cup 2026",
       description: "Отборочный тур и финал идут последовательно — один выпуск, одна страница и две независимые таблицы.",
       competitionIds: ["math-cup-2026-qualifying", "math-cup-2026-final"]
-    },
-    {
-      id: "math-cup-2025-spring",
-      series: "Math Cup",
-      year: "2025",
-      shortTitle: "2025 · Весна",
-      title: "Math Cup 2025",
-      description: "Весенний выпуск Math Cup 2025 и результаты его финального этапа.",
-      competitionIds: ["math-cup-2025-spring-final"]
-    },
-    {
-      id: "math-cup-2025-winter",
-      series: "Math Cup",
-      year: "2025",
-      shortTitle: "2025 · Зима",
-      title: "Math Cup 2025",
-      description: "Зимний отбор и финал Math Cup 2025 собраны на одной странице в хронологическом порядке.",
-      competitionIds: ["math-cup-2025-winter-qualifying", "math-cup-2025-winter-final"]
-    },
-    {
-      id: "vsosh-ai-2026",
-      series: "ВсОШ по ИИ",
-      year: "2026",
-      shortTitle: "Финал · 2026",
-      title: "ВсОШ по ИИ 2026",
-      description: "Заключительный этап профиля «Искусственный интеллект».",
-      competitionIds: ["vsosh-ai-2026-round-1"]
     }
   ],
   series: [
@@ -363,39 +336,6 @@ window.RESULTS_DATA = {
       stages: ["Отбор · 8 задач", "Финал · 9 задач"],
       status: "Таблица открыта",
       competitionId: "math-cup-2026-final",
-      accent: "dark"
-    },
-    {
-      id: "math-cup-2025-spring",
-      series: "Math Cup",
-      year: "2025",
-      title: "Math Cup 2025 · Весна",
-      description: "Весенний финал в отдельном выпуске.",
-      stages: ["Финал", "9 задач"],
-      status: "Открыть",
-      competitionId: "math-cup-2025-spring-final",
-      accent: "dark"
-    },
-    {
-      id: "math-cup-2025-winter",
-      series: "Math Cup",
-      year: "2025",
-      title: "Math Cup 2025 · Зима",
-      description: "Отборочный тур и финал показаны вместе.",
-      stages: ["Отбор · 10 задач", "Финал · 8 задач"],
-      status: "Открыть",
-      competitionId: "math-cup-2025-winter-final",
-      accent: "dark"
-    },
-    {
-      id: "vsosh-ai-2026",
-      series: "ВсОШ по ИИ",
-      year: "2026",
-      title: "ВсОШ по ИИ 2026",
-      description: "Заключительный этап профиля «Искусственный интеллект».",
-      stages: ["Финал · тур 1", "6 задач"],
-      status: "Открыть",
-      competitionId: "vsosh-ai-2026-round-1",
       accent: "dark"
     }
   ]

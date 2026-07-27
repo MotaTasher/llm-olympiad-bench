@@ -270,6 +270,7 @@ def export_competition(
                 tokens.append(token_count)
 
         scored = [float(score) for score in scores if score is not None]
+        points = round(sum(scored), 1) if scored else None
         participant_id = safe_component(column["model_key"], "model")
         participants.append(
             {
@@ -281,6 +282,7 @@ def export_competition(
                 "scores": scores,
                 "solutions": solutions,
                 "solved": sum(score >= 100 for score in scored),
+                "points": int(points) if points is not None and points.is_integer() else points,
                 "accuracy": round(sum(scored) / len(scored), 1) if scored else None,
                 "cost": round(sum(costs), 6) if costs else None,
                 "tokens": sum(tokens) if tokens else None,

@@ -38,5 +38,13 @@ modified.
 
 Each release is selected by a visible button. Its stages are never hidden behind
 a dropdown: qualifying and final rounds render one after another on the same
-page. Stages without a published public matrix remain visible with an explicit
-data-pending state.
+page. Only releases present in the public `releases` and `catalog` lists are
+shown; competition placeholders alone do not make an unpublished release
+visible.
+
+Every table column is sortable. The initial order is descending by `points`,
+which is the sum of all published 0–100 task scores, not the count of perfect
+answers. Task scores fill the complete table cell, aggregate values use a larger
+type size, and competition-level costs are displayed to cents. The main-page
+abstract is the same `abstract-home-2.png` asset used by the original CS Space
+site.

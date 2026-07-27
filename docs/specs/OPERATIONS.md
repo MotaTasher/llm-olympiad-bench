@@ -63,6 +63,11 @@ normalized against `max_score` and the public score is their median on a
 reviewer identities, feedback, raw provider responses, request payloads, errors,
 and internal paths.
 
+Each exported model row also contains `points`, the sum of all non-null
+normalized task scores for that stage. The public table uses this field for its
+default descending order; it is distinct from `solved`, which remains the count
+of perfect-score cells for compatibility.
+
 On the production host, install
 `deploy/systemd/public-results-export.{service,timer}` in `/etc/systemd/system/`
 and enable the timer. It refreshes the deployed release every minute from the

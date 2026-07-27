@@ -22,6 +22,8 @@
   const data = { ...baselineData, competitions };
   const page = document.body.dataset.page;
   const number = new Intl.NumberFormat("ru-RU");
+  const sortByCompetition = new Map();
+  let activeRelease = null;
 
   function escapeHtml(value) {
     return String(value ?? "")
@@ -71,6 +73,7 @@
     const initialRelease = requestedRelease
       || releaseForCompetition(legacyCompetition?.id)
       || data.releases[0];
+    activeRelease = initialRelease;
     renderReleasePicker(initialRelease.id);
     renderRelease(initialRelease);
     document.querySelector("#release-tabs").addEventListener("click", (event) => {
@@ -79,6 +82,7 @@
       event.preventDefault();
       const release = releaseById(link.dataset.release);
       if (!release) return;
+      activeRelease = release;
       renderReleasePicker(release.id);
       renderRelease(release);
       const url = new URL(window.location.href);
@@ -86,6 +90,21 @@
       url.searchParams.set("release", release.id);
       history.replaceState({}, "", url);
       window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    document.querySelector("#stage-stack").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-sort]");
+      if (!button) return;
+      const competitionId = button.dataset.competition;
+      const key = button.dataset.sort;
+      const current = sortState(competitionId);
+      const defaultDirection = key === "name" || key === "rank" ? "asc" : "desc";
+      sortByCompetition.set(competitionId, {
+        key,
+        direction: current.key === key
+          ? (current.direction === "asc" ? "desc" : "asc")
+          : defaultDirection
+      });
+      renderRelease(activeRelease);
     });
   }
 
@@ -157,21 +176,42 @@
   }
 
   function matrixMarkup(competition) {
+    const state = sortState(competition.id);
+    const sortableHeader = (key, label, className, title = "") => {
+      const active = state.key === key;
+      const arrow = active ? (state.direction === "asc" ? "↑" : "↓") : "↕";
+      const ariaSort = active
+        ? ` aria-sort="${state.direction === "asc" ? "ascending" : "descending"}"`
+        : "";
+      return `
+        <th class="${className}" scope="col"${ariaSort}${title ? ` title="${escapeHtml(title)}"` : ""}>
+          <button class="sort-button${active ? " active" : ""}" type="button"
+                  data-sort="${escapeHtml(key)}"
+                  data-competition="${escapeHtml(competition.id)}">
+            <span>${escapeHtml(label)}</span><b aria-hidden="true">${arrow}</b>
+          </button>
+        </th>
+      `;
+    };
     const head = `
       <thead>
         <tr>
-          <th class="rank-column" scope="col">#</th>
-          <th class="participant-column" scope="col">Модель / команда</th>
-          ${competition.tasks.map((task) => `<th class="task-column" scope="col" title="${escapeHtml(task.title)}">${escapeHtml(task.short)}</th>`).join("")}
-          <th class="metric-column" scope="col">Решено</th>
-          <th class="metric-column" scope="col">Точность</th>
-          <th class="metric-column" scope="col">Деньги</th>
-          <th class="metric-column" scope="col">Токены</th>
+          ${sortableHeader("rank", "#", "rank-column")}
+          ${sortableHeader("name", "Модель / команда", "participant-column")}
+          ${competition.tasks.map((task, index) => sortableHeader(`task:${index}`, task.short, "task-column", task.title)).join("")}
+          ${sortableHeader("points", "Баллы", "metric-column")}
+          ${sortableHeader("accuracy", "Точность", "metric-column")}
+          ${sortableHeader("cost", "Деньги", "metric-column")}
+          ${sortableHeader("tokens", "Токены", "metric-column")}
         </tr>
       </thead>
     `;
 
-    const modelRows = competition.participants.filter((item) => item.type === "model");
+    const unsortedModels = competition.participants.filter((item) => item.type === "model");
+    const ranks = rankingFor(unsortedModels);
+    const modelRows = [...unsortedModels].sort((left, right) =>
+      compareParticipants(left, right, state, ranks)
+    );
     const teamRows = competition.participants.filter((item) => item.type === "team");
     const rows = teamRows.length
       ? [...modelRows, { type: "separator" }, ...teamRows]
@@ -187,7 +227,7 @@
         : participant.provider;
       const rank = isTeam
         ? `<span class="medal" aria-label="${participant.rank} место">${participant.medal}</span>`
-        : String(participant.rank).padStart(2, "0");
+        : String(ranks.get(participant.id)).padStart(2, "0");
 
       const cells = competition.tasks.map((task, index) => {
         const score = participant.scores[index];
@@ -209,15 +249,71 @@
             <span class="participant-meta">${escapeHtml(participantMeta)}</span>
           </th>
           ${cells}
-          <td class="metric-cell strong">${participant.solved ?? "—"}</td>
+          <td class="metric-cell strong">${formatPoints(participantPoints(participant))}</td>
           <td class="metric-cell strong">${participant.accuracy == null ? "—" : `${String(participant.accuracy).replace(".", ",")}%`}</td>
-          <td class="metric-cell">${participant.cost == null ? "—" : `$${participant.cost.toFixed(3)}`}</td>
+          <td class="metric-cell">${participant.cost == null ? "—" : `$${participant.cost.toFixed(2)}`}</td>
           <td class="metric-cell">${participant.tokens == null ? "—" : number.format(participant.tokens)}</td>
         </tr>
       `;
     }).join("");
 
     return `<table class="leaderboard-table">${head}<tbody>${body}</tbody></table>`;
+  }
+
+  function sortState(competitionId) {
+    return sortByCompetition.get(competitionId) || { key: "points", direction: "desc" };
+  }
+
+  function participantPoints(participant) {
+    if (typeof participant.points === "number") return participant.points;
+    const scores = (participant.scores || []).filter((score) => typeof score === "number");
+    return scores.length ? scores.reduce((total, score) => total + score, 0) : null;
+  }
+
+  function formatPoints(value) {
+    if (value === null || value === undefined) return "—";
+    return Number.isInteger(value) ? number.format(value) : String(value).replace(".", ",");
+  }
+
+  function rankingFor(participants) {
+    const ordered = [...participants].sort((left, right) => {
+      const pointsDifference = (participantPoints(right) ?? -1) - (participantPoints(left) ?? -1);
+      if (pointsDifference) return pointsDifference;
+      const accuracyDifference = (right.accuracy ?? -1) - (left.accuracy ?? -1);
+      if (accuracyDifference) return accuracyDifference;
+      return left.name.localeCompare(right.name, "ru");
+    });
+    return new Map(ordered.map((participant, index) => [participant.id, index + 1]));
+  }
+
+  function sortValue(participant, key, ranks) {
+    if (key === "rank") return ranks.get(participant.id);
+    if (key === "name") return participant.name;
+    if (key === "points") return participantPoints(participant);
+    if (key === "accuracy") return participant.accuracy;
+    if (key === "cost") return participant.cost;
+    if (key === "tokens") return participant.tokens;
+    if (key.startsWith("task:")) {
+      return participant.scores?.[Number(key.split(":")[1])];
+    }
+    return null;
+  }
+
+  function compareParticipants(left, right, state, ranks) {
+    const leftValue = sortValue(left, state.key, ranks);
+    const rightValue = sortValue(right, state.key, ranks);
+    const leftMissing = leftValue === null || leftValue === undefined;
+    const rightMissing = rightValue === null || rightValue === undefined;
+    if (leftMissing !== rightMissing) return leftMissing ? 1 : -1;
+    if (leftMissing) return left.name.localeCompare(right.name, "ru");
+    let comparison;
+    if (typeof leftValue === "string") {
+      comparison = leftValue.localeCompare(rightValue, "ru");
+    } else {
+      comparison = leftValue - rightValue;
+    }
+    if (comparison === 0) return left.name.localeCompare(right.name, "ru");
+    return state.direction === "asc" ? comparison : -comparison;
   }
 
   function renderCatalog() {
