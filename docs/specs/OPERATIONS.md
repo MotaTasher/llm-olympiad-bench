@@ -86,6 +86,13 @@ systemctl status public-results-export.timer --no-pager
 journalctl -u public-results-export.service -n 50 --no-pager
 ```
 
+The Nginx `/results/` location must disable client caching with
+`Cache-Control: no-cache, no-store, must-revalidate` and an already expired
+`Expires` header.
+Release directories reuse stable asset names, while `generated/data.js` changes
+in place every minute. HTML also carries a query-string asset version as a
+second cache-busting layer for clients that retained an older release.
+
 ## Evaluation-pool CSV
 
 The web UI can export and import manual checks without touching model run logs:
