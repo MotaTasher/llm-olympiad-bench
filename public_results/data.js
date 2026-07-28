@@ -236,27 +236,33 @@ window.RESULTS_DATA = {
           type: "team",
           medal: "🥇",
           rank: 1,
-          name: "Команда будет добавлена",
-          members: "Участники будут добавлены после получения результатов",
-          scores: [null, null, null, null, null, null, null, null, null]
+          name: "Мысланты",
+          members: "Результат: 16 из 18",
+          scores: [100, 100, 100, 100, 100, 0, 100, 100, 100],
+          points: 800,
+          accuracy: 88.9
         },
         {
           id: "team-silver",
           type: "team",
           medal: "🥈",
           rank: 2,
-          name: "Команда будет добавлена",
-          members: "Участники будут добавлены после получения результатов",
-          scores: [null, null, null, null, null, null, null, null, null]
+          name: "придумайте что-нибудь, я устал придумывать названия",
+          members: "Результат: 14 из 18",
+          scores: [100, 100, 100, 0, 100, 0, 100, 100, 100],
+          points: 700,
+          accuracy: 77.8
         },
         {
           id: "team-bronze",
           type: "team",
           medal: "🥉",
           rank: 3,
-          name: "Команда будет добавлена",
-          members: "Участники будут добавлены после получения результатов",
-          scores: [null, null, null, null, null, null, null, null, null]
+          name: "239 15-1",
+          members: "Результат: 12 из 18",
+          scores: [100, 100, 100, 0, 100, 0, 50, 50, 100],
+          points: 600,
+          accuracy: 66.7
         }
       ]
     },

@@ -25,9 +25,11 @@ The generated view includes all 16 configured model rows for qualifying and
 final. A cell uses the newest successful evaluated attempt when one exists and
 otherwise the newest successful attempt. Unreviewed answers remain clickable
 without a score. Scores from multiple evaluations are normalized and combined
-with the median. The three team rows still come from the fallback file and
-remain explicit placeholders until actual names, members and results are
-provided.
+with the median. The three Math Cup 2026 final team rows come from `data.js`.
+Their source scoreboard contains penalties in solved cells; the public matrix
+ignores those penalty values and converts only solved status to the same
+0–100-per-task scale as model rows. Split tasks 6, 7 and 8 combine two equally
+weighted subproblems, so one solved half is displayed as 50.
 
 Each selected answer is copied into a small sanitized JSON document used by the
 solution page. It includes the problem statement, unchanged model answer,

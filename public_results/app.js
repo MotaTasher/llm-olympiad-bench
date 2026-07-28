@@ -245,7 +245,7 @@
         <tr class="${isTeam ? "team-row" : "model-row"}">
           <td class="rank-cell">${rank}</td>
           <th class="participant-cell" scope="row">
-            <span class="participant-name">${escapeHtml(participant.name)}</span>
+            <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
             <span class="participant-meta">${escapeHtml(participantMeta)}</span>
           </th>
           ${cells}

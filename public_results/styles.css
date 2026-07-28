@@ -463,6 +463,12 @@ h1, h2, h3 {
 .team-row .rank-cell,
 .team-row .participant-cell { background: #17161a; }
 .team-row .participant-name { color: rgba(255,255,255,.74); }
+.team-row .participant-name {
+  overflow: visible;
+  white-space: normal;
+  line-height: 1.25;
+  text-overflow: clip;
+}
 .medal { font-size: 22px; filter: grayscale(.15); }
 
 .empty-state {
