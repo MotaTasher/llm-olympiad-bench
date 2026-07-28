@@ -430,8 +430,8 @@ h1, h2, h3 {
 
 .metric-column,
 .metric-cell {
-  width: 116px;
-  min-width: 116px;
+  width: 132px;
+  min-width: 132px;
 }
 
 .metric-cell {
@@ -442,23 +442,23 @@ h1, h2, h3 {
   letter-spacing: -.04em;
 }
 .metric-cell.strong { color: var(--ink); font-weight: 700; }
+.prize-cell small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-family: Inter, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
 
 .model-row:hover .rank-cell,
 .model-row:hover .participant-cell,
-.model-row:hover td:not(.result-cell) { background-color: rgba(255,255,255,.045); }
-
-.section-row th {
-  position: static;
-  height: 48px;
-  padding-left: 18px;
-  background: #121115;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: .07em;
-  text-align: left;
-  text-transform: uppercase;
-}
+.model-row:hover td:not(.result-cell),
+.team-row:hover .rank-cell,
+.team-row:hover .participant-cell,
+.team-row:hover td:not(.result-cell) { background-color: rgba(255,255,255,.045); }
 
 .team-row .rank-cell,
 .team-row .participant-cell { background: #17161a; }

@@ -240,7 +240,11 @@ window.RESULTS_DATA = {
           members: "Результат: 16 из 18",
           scores: [100, 100, 100, 100, 100, 0, 100, 100, 100],
           points: 800,
-          accuracy: 88.9
+          accuracy: 88.9,
+          prizeRub: 150000,
+          prizeUsd: 1922.65,
+          prizeRateRubPerUsd: 78.0172,
+          prizeRateDate: "28.07.2026"
         },
         {
           id: "team-silver",
@@ -251,7 +255,11 @@ window.RESULTS_DATA = {
           members: "Результат: 14 из 18",
           scores: [100, 100, 100, 0, 100, 0, 100, 100, 100],
           points: 700,
-          accuracy: 77.8
+          accuracy: 77.8,
+          prizeRub: 100000,
+          prizeUsd: 1281.77,
+          prizeRateRubPerUsd: 78.0172,
+          prizeRateDate: "28.07.2026"
         },
         {
           id: "team-bronze",
@@ -262,7 +270,11 @@ window.RESULTS_DATA = {
           members: "Результат: 12 из 18",
           scores: [100, 100, 100, 0, 100, 0, 50, 50, 100],
           points: 600,
-          accuracy: 66.7
+          accuracy: 66.7,
+          prizeRub: 50000,
+          prizeUsd: 640.88,
+          prizeRateRubPerUsd: 78.0172,
+          prizeRateDate: "28.07.2026"
         }
       ]
     },

@@ -201,26 +201,21 @@
           ${competition.tasks.map((task, index) => sortableHeader(`task:${index}`, task.short, "task-column", task.title)).join("")}
           ${sortableHeader("points", "Баллы", "metric-column")}
           ${sortableHeader("accuracy", "Точность", "metric-column")}
-          ${sortableHeader("cost", "Деньги", "metric-column")}
+          ${sortableHeader("cost", "Затраты / призовые", "metric-column")}
           ${sortableHeader("tokens", "Токены", "metric-column")}
         </tr>
       </thead>
     `;
 
-    const unsortedModels = competition.participants.filter((item) => item.type === "model");
-    const ranks = rankingFor(unsortedModels);
-    const modelRows = [...unsortedModels].sort((left, right) =>
+    const participants = competition.participants.filter(
+      (item) => item.type === "model" || item.type === "team"
+    );
+    const ranks = rankingFor(participants);
+    const rows = [...participants].sort((left, right) =>
       compareParticipants(left, right, state, ranks)
     );
-    const teamRows = competition.participants.filter((item) => item.type === "team");
-    const rows = teamRows.length
-      ? [...modelRows, { type: "separator" }, ...teamRows]
-      : modelRows;
 
     const body = rows.map((participant) => {
-      if (participant.type === "separator") {
-        return `<tr class="section-row"><th colspan="${competition.tasks.length + 6}">Топ-3 человеческие команды</th></tr>`;
-      }
       const isTeam = participant.type === "team";
       const participantMeta = isTeam
         ? participant.members
@@ -251,7 +246,7 @@
           ${cells}
           <td class="metric-cell strong">${formatPoints(participantPoints(participant))}</td>
           <td class="metric-cell strong">${participant.accuracy == null ? "—" : `${String(participant.accuracy).replace(".", ",")}%`}</td>
-          <td class="metric-cell">${participant.cost == null ? "—" : `$${participant.cost.toFixed(2)}`}</td>
+          ${moneyCell(participant)}
           <td class="metric-cell">${participant.tokens == null ? "—" : number.format(participant.tokens)}</td>
         </tr>
       `;
@@ -275,6 +270,21 @@
     return Number.isInteger(value) ? number.format(value) : String(value).replace(".", ",");
   }
 
+  function participantMoney(participant) {
+    return participant.type === "team" ? participant.prizeUsd : participant.cost;
+  }
+
+  function moneyCell(participant) {
+    const value = participantMoney(participant);
+    if (value === null || value === undefined) return `<td class="metric-cell">—</td>`;
+    if (participant.type !== "team") {
+      return `<td class="metric-cell" title="Затраты модели">$${value.toFixed(2)}</td>`;
+    }
+    const rubles = number.format(participant.prizeRub);
+    const title = `Призовые: ${rubles} ₽ · курс ${String(participant.prizeRateRubPerUsd).replace(".", ",")} ₽/$ на ${participant.prizeRateDate}`;
+    return `<td class="metric-cell prize-cell" title="${escapeHtml(title)}"><span>$${value.toFixed(2)}</span><small>призовые</small></td>`;
+  }
+
   function rankingFor(participants) {
     const ordered = [...participants].sort((left, right) => {
       const pointsDifference = (participantPoints(right) ?? -1) - (participantPoints(left) ?? -1);
@@ -291,7 +301,7 @@
     if (key === "name") return participant.name;
     if (key === "points") return participantPoints(participant);
     if (key === "accuracy") return participant.accuracy;
-    if (key === "cost") return participant.cost;
+    if (key === "cost") return participantMoney(participant);
     if (key === "tokens") return participant.tokens;
     if (key.startsWith("task:")) {
       return participant.scores?.[Number(key.split(":")[1])];

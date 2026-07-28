@@ -25,11 +25,17 @@ The generated view includes all 16 configured model rows for qualifying and
 final. A cell uses the newest successful evaluated attempt when one exists and
 otherwise the newest successful attempt. Unreviewed answers remain clickable
 without a score. Scores from multiple evaluations are normalized and combined
-with the median. The three Math Cup 2026 final team rows come from `data.js`.
+with the median. The three Math Cup 2026 final team rows come from `data.js`
+and participate in the same table sorting as model rows rather than appearing
+in a separate section.
 Their source scoreboard contains penalties in solved cells; the public matrix
 ignores those penalty values and converts only solved status to the same
 0–100-per-task scale as model rows. Split tasks 6, 7 and 8 combine two equally
-weighted subproblems, so one solved half is displayed as 50.
+weighted subproblems, so one solved half is displayed as 50. Their official
+prizes of 150,000 ₽, 100,000 ₽ and 50,000 ₽ are shown in the shared money
+column in US dollars using the Central Bank of Russia rate for July 28, 2026
+(78.0172 RUB per USD); the original ruble amount and conversion rate remain
+available in the cell tooltip.
 
 Each selected answer is copied into a small sanitized JSON document used by the
 solution page. It includes the problem statement, unchanged model answer,
