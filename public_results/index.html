@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#030207">
     <title>CS Space Arena — результаты</title>
-    <link rel="stylesheet" href="styles.css?v=4">
-    <script src="data.js?v=4" defer></script>
-    <script src="generated/data.js?v=4" defer></script>
-    <script src="app.js?v=4" defer></script>
+    <link rel="stylesheet" href="styles.css?v=5">
+    <script src="data.js?v=5" defer></script>
+    <script src="generated/data.js?v=5" defer></script>
+    <script src="app.js?v=5" defer></script>
   </head>
   <body data-page="leaderboard">
     <header class="site-header">
@@ -28,17 +28,15 @@
     <main>
       <section class="leaderboard-intro">
         <div>
-          <p class="eyebrow" id="release-kicker">Текущее соревнование</p>
-          <h1 id="release-title">Math Cup 2026</h1>
+          <p class="eyebrow">CS Space · независимая оценка моделей</p>
+          <h1>Reasoning<br>Space</h1>
         </div>
-        <p class="intro-copy" id="release-description">
-          Отборочный тур и финал показаны последовательно на одной странице.
-        </p>
+        <p class="intro-copy">Открытый бенчмарк олимпиадного мышления для языковых моделей. Сравниваем ответы на свежих задачах, стоимость решения и точность проверки.</p>
       </section>
 
-      <section class="release-picker" aria-labelledby="release-picker-title">
-        <p class="eyebrow" id="release-picker-title">Выберите соревнование</p>
-        <div class="release-tabs" id="release-tabs"></div>
+      <section class="competition-picker" aria-labelledby="competition-picker-title">
+        <p class="eyebrow" id="competition-picker-title">Выберите соревнование</p>
+        <div class="competition-filters" id="competition-filters"></div>
       </section>
 
       <section class="leaderboard-section" aria-label="Результаты">

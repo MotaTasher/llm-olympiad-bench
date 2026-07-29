@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#030207">
     <title>Решение — CS Space Arena</title>
-    <link rel="stylesheet" href="styles.css?v=4">
-    <script src="data.js?v=4" defer></script>
-    <script src="generated/data.js?v=4" defer></script>
-    <script src="app.js?v=4" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css?v=5">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" defer></script>
+    <script src="data.js?v=5" defer></script>
+    <script src="generated/data.js?v=5" defer></script>
+    <script src="app.js?v=5" defer></script>
   </head>
   <body data-page="solution">
     <header class="site-header">
@@ -46,13 +51,20 @@
           <div><dt>Токены</dt><dd id="solution-tokens">—</dd></div>
         </dl>
 
-        <article class="solution-card solution-copy">
-          <p class="eyebrow">Решение модели</p>
-          <h2 id="solution-model">Модель</h2>
-          <div class="prose" id="solution-text"></div>
+        <article class="solution-card task-copy">
+          <p class="eyebrow">Условие</p>
+          <div class="prose" id="solution-statement"></div>
         </article>
 
-        <details class="official-solution" open>
+        <details class="reading-solution model-solution" open>
+          <summary>
+            <span><small>Решение модели</small><span id="solution-model">Модель</span></span>
+            <b aria-hidden="true">+</b>
+          </summary>
+          <div class="prose" id="solution-text"></div>
+        </details>
+
+        <details class="reading-solution official-solution" open>
           <summary>
             <span><small>Эталон</small>Авторское решение</span>
             <b aria-hidden="true">+</b>

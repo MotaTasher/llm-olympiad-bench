@@ -61,10 +61,54 @@
     return score === null || score === undefined ? "—" : `${score}`;
   }
 
-  function renderPlainText(value, emptyText) {
-    const text = String(value || "").trim();
-    if (!text) return `<p>${escapeHtml(emptyText)}</p>`;
-    return `<p class="preformatted">${escapeHtml(text)}</p>`;
+  function protectMath(source) {
+    const chunks = [];
+    const pattern = /(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\))/g;
+    const protectedSource = source.replace(pattern, (match) => {
+      const token = `@@MATH_${chunks.length}@@`;
+      chunks.push(match);
+      return token;
+    });
+    return { protectedSource, chunks };
+  }
+
+  function restoreMath(html, chunks) {
+    return html.replace(/@@MATH_(\d+)@@/g, (_, index) =>
+      escapeHtml(chunks[Number(index)] || "")
+    );
+  }
+
+  function renderMarkdown(value, emptyText) {
+    const source = String(value || "").trim();
+    if (!source) return `<p>${escapeHtml(emptyText)}</p>`;
+    const { protectedSource, chunks } = protectMath(source);
+    const canRenderSafely = Boolean(window.marked && window.DOMPurify);
+    const rendered = canRenderSafely
+      ? window.marked.parse(protectedSource, { gfm: true, breaks: true })
+      : `<p class="preformatted">${escapeHtml(protectedSource)}</p>`;
+    const sanitized = canRenderSafely
+      ? window.DOMPurify.sanitize(rendered)
+      : rendered;
+    return restoreMath(sanitized, chunks);
+  }
+
+  function renderMarkdownInto(selector, value, emptyText) {
+    const node = document.querySelector(selector);
+    node.innerHTML = renderMarkdown(value, emptyText);
+    if (!window.renderMathInElement) return;
+    try {
+      window.renderMathInElement(node, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\[", right: "\\]", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false }
+        ],
+        throwOnError: false
+      });
+    } catch (_) {
+      // Keep readable Markdown if one malformed formula cannot be rendered.
+    }
   }
 
   function renderLeaderboard() {
@@ -76,7 +120,7 @@
     activeRelease = initialRelease;
     renderReleasePicker(initialRelease.id);
     renderRelease(initialRelease);
-    document.querySelector("#release-tabs").addEventListener("click", (event) => {
+    document.querySelector("#competition-filters").addEventListener("click", (event) => {
       const link = event.target.closest("[data-release]");
       if (!link) return;
       event.preventDefault();
@@ -87,9 +131,8 @@
       renderRelease(release);
       const url = new URL(window.location.href);
       url.search = "";
-      url.searchParams.set("release", release.id);
+      url.searchParams.set("competition", release.competitionIds[0]);
       history.replaceState({}, "", url);
-      window.scrollTo({ top: 0, behavior: "smooth" });
     });
     document.querySelector("#stage-stack").addEventListener("click", (event) => {
       const button = event.target.closest("[data-sort]");
@@ -109,30 +152,75 @@
   }
 
   function renderReleasePicker(selectedId) {
-    const tabs = document.querySelector("#release-tabs");
-    tabs.innerHTML = data.releases.map((release) => `
-      <a class="release-tab${release.id === selectedId ? " active" : ""}"
-         href="index.html?release=${encodeURIComponent(release.id)}"
-         data-release="${escapeHtml(release.id)}"
-         ${release.id === selectedId ? 'aria-current="page"' : ""}>
-        <span>${escapeHtml(release.series)}</span>
-        <strong>${escapeHtml(release.shortTitle)}</strong>
-        <small>${release.competitionIds.length} ${release.competitionIds.length === 1 ? "этап" : "этапа"}</small>
-      </a>
-    `).join("");
+    const selected = releaseById(selectedId) || data.releases[0];
+    const benchmarkIds = [...new Set(data.releases.map((release) => release.benchmarkId))];
+    const benchmarks = benchmarkIds.map((benchmarkId) => {
+      const matching = data.releases.filter((release) => release.benchmarkId === benchmarkId);
+      const target = matching.find((release) =>
+        release.year === selected.year && release.stageLabel === selected.stageLabel
+      ) || matching.find((release) => release.year === selected.year) || matching[0];
+      return {
+        label: matching[0].series,
+        release: target,
+        active: benchmarkId === selected.benchmarkId
+      };
+    });
+    const years = [...new Set(
+      data.releases
+        .filter((release) => release.benchmarkId === selected.benchmarkId)
+        .map((release) => release.year)
+    )].map((year) => {
+      const matching = data.releases.filter((release) =>
+        release.benchmarkId === selected.benchmarkId && release.year === year
+      );
+      return {
+        label: year,
+        release: matching.find((release) => release.stageLabel === selected.stageLabel) || matching[0],
+        active: year === selected.year
+      };
+    });
+    const stages = data.releases
+      .filter((release) =>
+        release.benchmarkId === selected.benchmarkId && release.year === selected.year
+      )
+      .sort((left, right) => {
+        const order = { "Отбор": 0, "Финал": 1 };
+        return (order[left.stageLabel] ?? 10) - (order[right.stageLabel] ?? 10);
+      })
+      .map((release) => ({
+        label: release.stageLabel,
+        release,
+        active: release.id === selected.id
+      }));
 
+    const row = (label, options) => `
+      <div class="filter-row">
+        <span class="filter-label">${escapeHtml(label)}</span>
+        <div class="filter-options">
+          ${options.map((option) => `
+            <a class="filter-chip${option.active ? " active" : ""}"
+               href="index.html?competition=${encodeURIComponent(option.release.competitionIds[0])}"
+               data-release="${escapeHtml(option.release.id)}"
+               ${option.active ? 'aria-current="true"' : ""}>
+              ${escapeHtml(option.label)}
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    `;
+    document.querySelector("#competition-filters").innerHTML = [
+      row("Бенчмарк", benchmarks),
+      row("Год", years),
+      row("Этап", stages)
+    ].join("");
   }
 
   function renderRelease(release) {
-    document.querySelector("#release-title").textContent = release.title;
-    document.querySelector("#release-kicker").textContent = `${release.series} · ${release.year}`;
-    document.querySelector("#release-description").textContent = release.description;
-    document.title = `${release.title} — CS Space Arena`;
-
-    const competitions = release.competitionIds
+    document.title = `${release.title} — Reasoning Space`;
+    const selectedCompetitions = release.competitionIds
       .map(competitionById)
       .filter(Boolean);
-    document.querySelector("#stage-stack").innerHTML = competitions
+    document.querySelector("#stage-stack").innerHTML = selectedCompetitions
       .map(renderStage)
       .join("");
   }
@@ -329,7 +417,7 @@
   function renderCatalog() {
     const grid = document.querySelector("#competition-grid");
     grid.innerHTML = data.catalog.map((item) => {
-      const href = `index.html?release=${encodeURIComponent(item.id)}`;
+      const href = `index.html?competition=${encodeURIComponent(item.competitionId)}`;
       const stages = item.stages.map((stage) => `<span>${escapeHtml(stage)}</span>`).join("");
       return `
         <a class="competition-card" href="${href}">
@@ -375,10 +463,12 @@
     document.querySelector("#solution-cost").textContent = "—";
     document.querySelector("#solution-tokens").textContent = "—";
     document.querySelector("#solution-text").innerHTML = "<p>Загружаем ответ…</p>";
+    document.querySelector("#solution-statement").innerHTML = "<p>Загружаем условие…</p>";
     document.querySelector("#official-solution-text").innerHTML = "<p>Загружаем авторское решение…</p>";
 
     if (!solutionPath) {
       document.querySelector("#solution-text").innerHTML = "<p>Для этой ячейки нет опубликованного ответа.</p>";
+      document.querySelector("#solution-statement").innerHTML = "<p>Условие недоступно.</p>";
       document.querySelector("#official-solution-text").innerHTML = "<p>Авторское решение недоступно.</p>";
       return;
     }
@@ -402,13 +492,22 @@
         result.cost == null ? "—" : `$${Number(result.cost).toFixed(4)}`;
       document.querySelector("#solution-tokens").textContent =
         result.tokens == null ? "—" : number.format(result.tokens);
-      document.querySelector("#solution-text").innerHTML =
-        renderPlainText(result.answer, "Текст ответа пуст.");
-      document.querySelector("#official-solution-text").innerHTML =
-        renderPlainText(documentData.task?.officialSolution, "Авторское решение не опубликовано.");
+      renderMarkdownInto(
+        "#solution-statement",
+        documentData.task?.statement,
+        "Условие задачи не опубликовано."
+      );
+      renderMarkdownInto("#solution-text", result.answer, "Текст ответа пуст.");
+      renderMarkdownInto(
+        "#official-solution-text",
+        documentData.task?.officialSolution,
+        "Авторское решение не опубликовано."
+      );
     } catch (error) {
       document.querySelector("#solution-text").innerHTML =
         "<p>Не удалось загрузить опубликованный ответ. Попробуйте обновить страницу.</p>";
+      document.querySelector("#solution-statement").innerHTML =
+        "<p>Условие задачи временно недоступно.</p>";
       document.querySelector("#official-solution-text").innerHTML =
         "<p>Авторское решение временно недоступно.</p>";
     }

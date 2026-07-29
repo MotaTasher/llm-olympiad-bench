@@ -2,7 +2,7 @@
 
 This is a standalone local prototype for the public CS Space Arena. It contains:
 
-- `index.html`: release buttons and sequential stage leaderboards;
+- `index.html`: benchmark, year and stage filters plus one selected leaderboard;
 - `competitions.html`: compact buttons for available competition releases;
 - `solution.html`: full-width model and official solution reading layout;
 - `data.js`: fallback release, team and catalog data;
@@ -44,15 +44,20 @@ reviewer identities and comments, raw provider/request data, errors and internal
 filesystem paths. Run logs and evaluation sidecars are only read and are never
 modified.
 
-Each release is selected by a visible button. Its stages are never hidden behind
-a dropdown: qualifying and final rounds render one after another on the same
-page. Only releases present in the public `releases` and `catalog` lists are
-shown; competition placeholders alone do not make an unpublished release
-visible.
+Each published stage is an independent release with its own URL and table.
+Three visible button rows select benchmark, year and stage without a dropdown;
+qualifying and final are never rendered together. Only releases present in the
+public `releases` and `catalog` lists are shown; competition placeholders alone
+do not make an unpublished release visible.
+
+The solution page renders the exported problem statement, model answer and
+official solution as sanitized GitHub-flavored Markdown. TeX delimiters are
+rendered with KaTeX when its CDN assets are available, with safe plain-text
+fallbacks otherwise. Both solution blocks are collapsible and open by default.
 
 Every table column is sortable. The initial order is descending by `points`,
 which is the sum of all published 0–100 task scores, not the count of perfect
 answers. Task scores fill the complete table cell, aggregate values use a larger
 type size, and competition-level costs are displayed to cents. The main-page
-abstract is the same `abstract-home-2.png` asset used by the original CS Space
-site.
+hero uses optimized WebP derivatives of the supplied CS Space 2026 formula
+pattern SVGs for desktop and mobile layouts.

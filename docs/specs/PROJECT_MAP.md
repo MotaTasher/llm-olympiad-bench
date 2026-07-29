@@ -35,9 +35,9 @@ scoring/
   templates/              HTML pages
 
 public_results/
-  index.html              release buttons and stacked stage leaderboards
+  index.html              benchmark/year/stage filters and selected leaderboard
   competitions.html       compact public release catalog
-  solution.html           full-width public model/official solution reader
+  solution.html           Markdown + KaTeX task/model/official solution reader
   data.js                 fallback snapshot, releases, teams and catalog data
   generated/              ignored runtime export consumed when present
   app.js                  merges generated results and renders public pages

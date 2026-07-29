@@ -1,13 +1,24 @@
 window.RESULTS_DATA = {
   releases: [
     {
-      id: "math-cup-2026",
+      id: "math-cup-2026-final",
+      benchmarkId: "math-cup",
       series: "Math Cup",
       year: "2026",
-      shortTitle: "2026",
-      title: "Math Cup 2026",
-      description: "Отборочный тур и финал идут последовательно — один выпуск, одна страница и две независимые таблицы.",
-      competitionIds: ["math-cup-2026-qualifying", "math-cup-2026-final"]
+      stageLabel: "Финал",
+      title: "Math Cup 2026 · Финал",
+      description: "Финальный этап Math Cup 2026.",
+      competitionIds: ["math-cup-2026-final"]
+    },
+    {
+      id: "math-cup-2026-qualifying",
+      benchmarkId: "math-cup",
+      series: "Math Cup",
+      year: "2026",
+      stageLabel: "Отбор",
+      title: "Math Cup 2026 · Отбор",
+      description: "Отборочный этап Math Cup 2026.",
+      competitionIds: ["math-cup-2026-qualifying"]
     }
   ],
   series: [
@@ -346,14 +357,25 @@ window.RESULTS_DATA = {
   ],
   catalog: [
     {
-      id: "math-cup-2026",
+      id: "math-cup-2026-final",
       series: "Math Cup",
       year: "2026",
-      title: "Math Cup 2026",
-      description: "Отборочный тур и финал объединены в один выпуск.",
-      stages: ["Отбор · 8 задач", "Финал · 9 задач"],
+      title: "Math Cup 2026 · Финал",
+      description: "Результаты моделей и трёх лучших команд финального этапа.",
+      stages: ["Финал · 9 задач"],
       status: "Таблица открыта",
       competitionId: "math-cup-2026-final",
+      accent: "dark"
+    },
+    {
+      id: "math-cup-2026-qualifying",
+      series: "Math Cup",
+      year: "2026",
+      title: "Math Cup 2026 · Отбор",
+      description: "Результаты моделей на задачах отборочного этапа.",
+      stages: ["Отбор · 8 задач"],
+      status: "Таблица открыта",
+      competitionId: "math-cup-2026-qualifying",
       accent: "dark"
     }
   ]
