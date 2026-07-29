@@ -40,6 +40,7 @@ public_results/
   solution.html           Markdown + KaTeX task/model/official solution reader
   data.js                 fallback snapshot, releases, teams and catalog data
   generated/              ignored runtime export consumed when present
+  vendor/                 pinned Markdown sanitizer and KaTeX browser assets
   app.js                  merges generated results and renders public pages
   styles.css              shared CS Space-inspired visual system
   README.md               local preview command and data-scope notes

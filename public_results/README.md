@@ -51,9 +51,11 @@ public `releases` and `catalog` lists are shown; competition placeholders alone
 do not make an unpublished release visible.
 
 The solution page renders the exported problem statement, model answer and
-official solution as sanitized GitHub-flavored Markdown. TeX delimiters are
-rendered with KaTeX when its CDN assets are available, with safe plain-text
-fallbacks otherwise. Both solution blocks are collapsible and open by default.
+official solution as sanitized GitHub-flavored Markdown. The required Marked,
+DOMPurify and KaTeX browser assets (including fonts and their licenses) are
+versioned under `vendor/`, so rendering does not depend on a third-party CDN.
+A safe plain-text fallback remains in place. Both solution blocks are
+collapsible and open by default.
 
 Every table column is sortable. The initial order is descending by `points`,
 which is the sum of all published 0–100 task scores, not the count of perfect
