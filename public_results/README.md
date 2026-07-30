@@ -25,13 +25,15 @@ The generated view includes all 16 configured model rows for qualifying and
 final. A cell uses the newest successful evaluated attempt when one exists and
 otherwise the newest successful attempt. Unreviewed answers remain clickable
 without a score. Scores from multiple evaluations are normalized and combined
-with the median. The three Math Cup 2026 final team rows come from `data.js`
+with the median on the task's current absolute scale. Math Cup 2026 qualifying
+is displayed on the integer `0..4` scale; the final remains on `0..2`. The
+three Math Cup 2026 final team rows come from `data.js`
 and participate in the same table sorting as model rows rather than appearing
 in a separate section.
 Their source scoreboard contains penalties in solved cells; the public matrix
-ignores those penalty values and converts only solved status to the same
-0–100-per-task scale as model rows. Split tasks 6, 7 and 8 combine two equally
-weighted subproblems, so one solved half is displayed as 50. Their official
+ignores those penalty values and converts only solved status to the final's
+`0..2` task scale. Split tasks 6, 7 and 8 combine two equally weighted
+subproblems, so one solved half is displayed as 1. Their official
 prizes of 150,000 ₽, 100,000 ₽ and 50,000 ₽ are shown in the shared money
 column in US dollars using the Central Bank of Russia rate for July 28, 2026
 (78.0172 RUB per USD); the original ruble amount and conversion rate remain
@@ -58,8 +60,9 @@ A safe plain-text fallback remains in place. Both solution blocks are
 collapsible and open by default.
 
 Every table column is sortable. The initial order is descending by `points`,
-which is the sum of all published 0–100 task scores, not the count of perfect
-answers. Task scores fill the complete table cell, aggregate values use a larger
-type size, and competition-level costs are displayed to cents. The main-page
-hero uses optimized WebP derivatives of the supplied CS Space 2026 formula
-pattern SVGs for desktop and mobile layouts.
+which is the sum of all published absolute task scores, not the count of
+perfect answers. Cost/prize, sum, token and accuracy columns precede the task
+columns. Task scores fill the complete table cell, aggregate values use a
+larger type size, and competition-level costs are displayed to cents. The
+main-page hero uses optimized WebP derivatives of the supplied CS Space 2026
+formula pattern SVGs for desktop and mobile layouts.

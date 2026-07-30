@@ -61,6 +61,14 @@ telemetry by the local benchmark estimator: `cost.output` is visible output,
 with no visible text is logged as an adapter error even when the provider HTTP
 request succeeds.
 
+The estimator uses Google API Standard rates. For legacy Gemini logs that
+persisted only `usage.total_tokens`, normalization estimates input tokens from
+the saved text request and treats the remaining total as output/thinking
+tokens. The recovered `cost.total` is marked with the
+`models/pricing.py:total-token-fallback` source and an explanatory note. This
+keeps old immutable run logs unchanged and makes the estimate visibly distinct
+from exact provider token counters.
+
 Credential-free smoke:
 
 ```bash

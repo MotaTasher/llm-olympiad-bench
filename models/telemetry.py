@@ -17,6 +17,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
+from .pricing import estimate_google_cost_from_total_tokens
+
 
 RUN_LOG_SCHEMA_VERSION = 2
 SIDECAR_SCHEMA_VERSION = 2
@@ -559,6 +561,24 @@ def normalize_legacy_result(
         "exchange_rate": None,
     }
     model_info = result.get("model_info") if isinstance(result.get("model_info"), dict) else {}
+    provider_value = result.get("provider") or model_info.get("provider") or provider or "unknown"
+    result_cost = result.get("cost_usd")
+    structured_cost = cost.get("total")
+    total_tokens = usage.get("total_tokens")
+    if (
+        str(provider_value).lower() == "google"
+        and result_cost in {None, 0, 0.0}
+        and structured_cost in {None, 0, 0.0}
+        and isinstance(total_tokens, (int, float))
+        and total_tokens > 0
+    ):
+        recovered_cost = estimate_google_cost_from_total_tokens(
+            result.get("requested_model_id") or model,
+            total_tokens=int(total_tokens),
+            request=result.get("request") if isinstance(result.get("request"), dict) else None,
+        )
+        if recovered_cost is not None:
+            cost = recovered_cost
     result_id = result.get("result_id") or legacy_result_id(
         competition_id,
         problem_id,
@@ -573,7 +593,7 @@ def normalize_legacy_result(
         **result,
         "result_id": result_id,
         "result_index": result_index,
-        "provider": result.get("provider") or model_info.get("provider") or provider or "unknown",
+        "provider": provider_value,
         "alias": result.get("alias") or model_info.get("alias"),
         "adapter_class": result.get("adapter_class") or model_info.get("adapter_class"),
         "requested_model_id": result.get("requested_model_id") or model_info.get("requested_model_id") or model,
@@ -591,7 +611,11 @@ def normalize_legacy_result(
         "error_info": error_info,
         "prompt_tokens": result.get("prompt_tokens", usage.get("input_tokens") or 0),
         "completion_tokens": result.get("completion_tokens", usage.get("output_tokens") or 0),
-        "cost_usd": result.get("cost_usd", cost.get("total") or 0.0),
+        "cost_usd": (
+            cost.get("total")
+            if cost.get("total") not in {None, 0, 0.0} or result.get("cost_usd") is None
+            else result.get("cost_usd", 0.0)
+        ),
         "latency_ms": result.get("latency_ms", timing.get("wall_ms") or 0),
         "error": result.get("error"),
         "score": result.get("score"),

@@ -12,6 +12,8 @@
     "year": 2026,
     "stage": "Отборочный тур",
     "stage_index": 1,
-    "document_type": "Решения"
+    "document_type": "Решения",
+    "max_score": 4,
+    "score_step": 1
   }
 }

@@ -59,16 +59,38 @@ policy is:
 2. otherwise, newest successful attempt without a public score;
 3. otherwise, no link for the cell.
 
-When several evaluations exist on the selected result, their scores are
-normalized against `max_score` and the public score is their median on a
-0–100 scale. Run logs and sidecars remain unchanged. The public documents omit
+When several evaluations exist on the selected result, each score is converted
+to the task's current absolute scale and the public score is their median.
+Math Cup 2026 qualifying uses the integer `0..4` scale and half-up rounding;
+the final keeps its existing `0..2` scale. Run logs and sidecars remain
+unchanged during export. The public documents omit
 reviewer identities, feedback, raw provider responses, request payloads, errors,
 and internal paths.
 
 Each exported model row also contains `points`, the sum of all non-null
-normalized task scores for that stage. The public table uses this field for its
+absolute task scores for that stage. The public table uses this field for its
 default descending order; it is distinct from `solved`, which remains the count
 of perfect-score cells for compatibility.
+
+To change an existing competition's score scale, preview and then apply the
+explicit migration:
+
+```bash
+python scripts/migrate_score_scale.py \
+  --competition math-cup-2026-qualifying \
+  --max-score 4 \
+  --score-step 1
+python scripts/migrate_score_scale.py \
+  --competition math-cup-2026-qualifying \
+  --max-score 4 \
+  --score-step 1 \
+  --apply
+```
+
+The command updates only the named competition's metadata and evaluation
+sidecars. It rescales scores proportionally, rounds half up to an integer,
+writes atomically, and is idempotent. The migration currently requires
+`--score-step 1`.
 
 On the production host, install
 `deploy/systemd/public-results-export.{service,timer}` in `/etc/systemd/system/`

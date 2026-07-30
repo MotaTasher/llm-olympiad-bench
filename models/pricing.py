@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-PRICING_VERSION = "2026-07-06"
+PRICING_VERSION = "2026-07-30"
 DEFAULT_RUB_PER_USD = 90.0
 
 
@@ -63,7 +63,7 @@ DEEPSEEK_USD_PER_1M = {
 }
 
 GEMINI_STANDARD_USD_PER_1M = {
-    "gemini-3.5-flash": (0.75, 0.0, 4.50),
+    "gemini-3.5-flash": (1.50, 0.15, 9.00),
 }
 
 GEMINI_TIERED_USD_PER_1M = {
@@ -235,6 +235,60 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
 def estimate_tokens(text: str) -> int:
     compact_length = len((text or "").strip())
     return max(1, math.ceil(compact_length / 4))
+
+
+def estimate_google_cost_from_total_tokens(
+    model_id: str,
+    *,
+    total_tokens: int,
+    request: dict[str, Any] | None,
+) -> dict[str, Any] | None:
+    """Recover an estimated Gemini cost when only total token usage survived."""
+    if total_tokens <= 0:
+        return None
+    request = request if isinstance(request, dict) else {}
+    steps = request.get("steps")
+    request_parts: list[str] = []
+    if isinstance(steps, list) and steps:
+        for step in steps:
+            if not isinstance(step, dict):
+                continue
+            request_parts.extend(
+                str(step.get(key) or "")
+                for key in ("system_instruction", "input")
+                if step.get(key)
+            )
+    else:
+        request_parts.extend(
+            str(request.get(key) or "")
+            for key in ("system_instruction", "input")
+            if request.get(key)
+        )
+    estimated_input_tokens = min(
+        total_tokens,
+        sum(estimate_tokens(part) for part in request_parts),
+    )
+    estimated_output_tokens = max(0, total_tokens - estimated_input_tokens)
+    cost = estimate_cost(
+        "google",
+        model_id,
+        input_tokens=estimated_input_tokens,
+        output_tokens=estimated_output_tokens,
+    )
+    cost["pricing_source"] = "models/pricing.py:total-token-fallback"
+    cost["estimated_token_split"] = {
+        "input_tokens": estimated_input_tokens,
+        "output_and_thinking_tokens": estimated_output_tokens,
+        "total_tokens": total_tokens,
+    }
+    existing_note = str(cost.get("note") or "").strip()
+    fallback_note = (
+        "Input/output counters were unavailable; input tokens are estimated "
+        "from the persisted text request and all remaining total tokens are "
+        "priced as output including thinking."
+    )
+    cost["note"] = f"{existing_note} {fallback_note}".strip()
+    return cost
 
 
 def estimate_cost(

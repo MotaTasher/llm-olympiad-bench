@@ -10,6 +10,7 @@ import statistics
 import sys
 import tempfile
 from datetime import UTC, datetime
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from typing import Any
 
@@ -47,17 +48,27 @@ def finite_number(value: Any) -> float | None:
     return parsed if math.isfinite(parsed) else None
 
 
-def public_score(attempt: dict[str, Any], max_score: float) -> float | int | None:
-    percentages = []
+def public_score(
+    attempt: dict[str, Any],
+    max_score: float,
+    *,
+    round_to_integer: bool = False,
+) -> float | int | None:
+    absolute_scores = []
     for evaluation in attempt.get("evaluations") or []:
         score = finite_number(evaluation.get("score"))
         evaluation_max = finite_number(evaluation.get("max_score")) or max_score
         if score is None or evaluation_max <= 0:
             continue
-        percentages.append(max(0.0, min(100.0, score / evaluation_max * 100.0)))
-    if not percentages:
+        absolute_scores.append(
+            max(0.0, min(max_score, score / evaluation_max * max_score))
+        )
+    if not absolute_scores:
         return None
-    value = round(float(statistics.median(percentages)), 1)
+    value = float(statistics.median(absolute_scores))
+    if round_to_integer:
+        return int(Decimal(str(value)).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+    value = round(value, 1)
     return int(value) if value.is_integer() else value
 
 
@@ -158,6 +169,7 @@ def solution_document(
     result = attempt["result"]
     cost = finite_number(result.get("cost_usd"))
     latency = finite_number(result.get("latency_ms"))
+    max_score = float(problem.get("max_score") or 0)
     return {
         "schemaVersion": 1,
         "competition": {
@@ -170,6 +182,7 @@ def solution_document(
             "title": problem["problem_title"],
             "statement": problem.get("statement") or "",
             "officialSolution": problem.get("solution") or "",
+            "maxScore": int(max_score) if max_score.is_integer() else max_score,
         },
         "model": {
             "id": safe_component(column.get("model_key"), "model"),
@@ -188,7 +201,7 @@ def solution_document(
                 "Нет публичной оценки"
                 if score is None
                 else "Полное решение"
-                if score >= 100
+                if score >= max_score
                 else "Частичное решение"
                 if score > 0
                 else "Не зачтено"
@@ -206,13 +219,17 @@ def export_competition(
     output_dir: Path,
 ) -> dict[str, Any]:
     tasks = []
+    task_max_scores: list[float] = []
     for index, problem_id in enumerate(competition["problem_order"], start=1):
         problem = competition["problems"][problem_id]
+        max_score = float(problem["max_score"])
+        task_max_scores.append(max_score)
         tasks.append(
             {
                 "id": problem_id,
                 "short": f"{index:02d}",
                 "title": problem["problem_title"],
+                "maxScore": int(max_score) if max_score.is_integer() else max_score,
             }
         )
 
@@ -234,7 +251,11 @@ def export_competition(
                 scores.append(None)
                 solutions.append(None)
                 continue
-            score = public_score(attempt, float(problem["max_score"]))
+            score = public_score(
+                attempt,
+                float(problem["max_score"]),
+                round_to_integer=competition["competition_id"] == "math-cup-2026-qualifying",
+            )
             result_id = stable_result_id(
                 attempt,
                 competition_id=competition["competition_id"],
@@ -270,6 +291,11 @@ def export_competition(
                 tokens.append(token_count)
 
         scored = [float(score) for score in scores if score is not None]
+        scored_with_max = [
+            (float(score), task_max_scores[index])
+            for index, score in enumerate(scores)
+            if score is not None
+        ]
         points = round(sum(scored), 1) if scored else None
         participant_id = safe_component(column["model_key"], "model")
         participants.append(
@@ -281,9 +307,17 @@ def export_competition(
                 "provider": column.get("provider_label") or column.get("provider") or "",
                 "scores": scores,
                 "solutions": solutions,
-                "solved": sum(score >= 100 for score in scored),
+                "solved": sum(score >= max_score for score, max_score in scored_with_max),
                 "points": int(points) if points is not None and points.is_integer() else points,
-                "accuracy": round(sum(scored) / len(scored), 1) if scored else None,
+                "accuracy": (
+                    round(
+                        sum(score / max_score * 100 for score, max_score in scored_with_max)
+                        / len(scored_with_max),
+                        1,
+                    )
+                    if scored_with_max
+                    else None
+                ),
                 "cost": round(sum(costs), 6) if costs else None,
                 "tokens": sum(tokens) if tokens else None,
             }

@@ -340,6 +340,14 @@ The evaluation key for new writes is `result_id`. Readers use this precedence:
 4. legacy `score`, `scored_by`, `scored_at` and `score_comment` inside the run-log.
 
 Manual scoring must not be written back into run logs. Server-side score validation uses `problem.metadata.max_score`, then `competition.metadata.max_score`, then fallback `10`. The UI scoring step uses `problem.metadata.score_step`, then `competition.metadata.score_step`, then fallback `1`; it is not stored in evaluation records.
+
+An existing competition's scoring scale can be migrated with
+`scripts/migrate_score_scale.py`. The competition ID is mandatory: the script
+updates only that manifest, its direct-child problem metadata, and its
+evaluation sidecars. It proportionally rescales both `evaluation_pool` and the
+compatibility `evaluations` snapshot, rounds half up to an integer, writes
+atomically, and is a dry run unless `--apply` is supplied. The migration
+currently requires `--score-step 1`. Run logs are never modified.
 For new web-scoring writes, `evaluator` is the authenticated
 `current_user.username` from the scoring site session. Older sidecars with any
 string `evaluator` remain valid and readable.

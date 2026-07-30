@@ -408,6 +408,38 @@ class RunnerTests(TempCompetition):
         self.assertEqual(normalized["results"][0]["usage"]["input_tokens"], 1)
         self.assertIsNone(normalized["results"][0]["usage"]["reasoning_tokens"])
 
+    def test_gemini_total_token_fallback_recovers_cost_without_mutating_log(self) -> None:
+        old = {
+            "run_id": "gemini",
+            "problem": {"id": "task", "text": "Statement"},
+            "results": [
+                {
+                    "provider": "google",
+                    "requested_model_id": "gemini-3.5-flash",
+                    "model": "gemini-3.5-flash",
+                    "answer": "Answer",
+                    "cost_usd": 0.0,
+                    "usage": {
+                        "input_tokens": 0,
+                        "output_tokens": 0,
+                        "total_tokens": 10_000,
+                    },
+                    "request": {
+                        "system_instruction": "Solve carefully",
+                        "input": "A short task",
+                    },
+                }
+            ],
+        }
+        normalized = normalize_run_log(old)
+        result = normalized["results"][0]
+        self.assertGreater(result["cost_usd"], 0)
+        self.assertEqual(
+            result["cost"]["pricing_source"],
+            "models/pricing.py:total-token-fallback",
+        )
+        self.assertEqual(old["results"][0]["cost_usd"], 0.0)
+
 
 class ScoringRepositoryTests(TempCompetition):
     def test_catalog_contains_canonical_problem_without_logs_and_statuses(self) -> None:

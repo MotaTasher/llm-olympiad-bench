@@ -50,7 +50,7 @@ class PublicResultsExportTests(unittest.TestCase):
         }
         self.assertIs(select_public_attempt({"attempts": [newest, older]}), newest)
 
-    def test_public_score_is_median_normalized_to_one_hundred(self) -> None:
+    def test_public_score_is_median_on_current_absolute_scale(self) -> None:
         attempt = {
             "evaluations": [
                 {"score": 1, "max_score": 2},
@@ -58,7 +58,8 @@ class PublicResultsExportTests(unittest.TestCase):
                 {"score": 3, "max_score": 4},
             ]
         }
-        self.assertEqual(public_score(attempt, 2), 75)
+        self.assertEqual(public_score(attempt, 2), 1.5)
+        self.assertEqual(public_score(attempt, 2, round_to_integer=True), 2)
 
     def test_solution_document_excludes_private_review_fields(self) -> None:
         attempt = {
@@ -94,6 +95,7 @@ class PublicResultsExportTests(unittest.TestCase):
                 "problem_title": "Task",
                 "statement": "Statement",
                 "solution": "Official solution",
+                "max_score": 2,
             },
             column={
                 "model_key": "openai:gpt-test",
@@ -103,7 +105,7 @@ class PublicResultsExportTests(unittest.TestCase):
                 "provider_label": "OpenAI",
             },
             attempt=attempt,
-            score=50,
+            score=1,
         )
         serialized = str(document)
         self.assertNotIn("private reviewer", serialized)
@@ -112,6 +114,7 @@ class PublicResultsExportTests(unittest.TestCase):
         self.assertNotIn("raw_response", serialized)
         self.assertEqual(document["result"]["answer"], "Model answer")
         self.assertEqual(document["result"]["tokens"], 30)
+        self.assertEqual(document["task"]["maxScore"], 2)
 
     def test_total_tokens_uses_structured_usage_first(self) -> None:
         self.assertEqual(

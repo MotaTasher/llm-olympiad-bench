@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_f0428e72be7398e4d4c91fea": {
+      "evaluation_id": "ev_20110e0e678343c29033b29d6ec2d0ab",
+      "result_id": "res_f0428e72be7398e4d4c91fea",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-2-Max",
+      "model": "GigaChat-2-Max",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 4,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-07-24T21:34:48.465151Z",
+      "updated_at": "2026-07-24T21:34:48.465151Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_f0428e72be7398e4d4c91fea": [
+      {
+        "evaluation_id": "ev_20110e0e678343c29033b29d6ec2d0ab",
+        "result_id": "res_f0428e72be7398e4d4c91fea",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 4,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-24T21:34:48.465151Z",
+        "updated_at": "2026-07-24T21:34:48.465151Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_08",
+  "run_id": "2026_07_15_17_14_50_qualifying_missing_20260715_144724_task_08_gigachat_GigaChat-2-Max_8192",
+  "updated_at": "2026-07-24T21:34:48.465151Z"
+}

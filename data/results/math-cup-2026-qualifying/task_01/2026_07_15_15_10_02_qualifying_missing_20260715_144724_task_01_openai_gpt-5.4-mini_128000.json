@@ -1,0 +1,69 @@
+{
+  "evaluations": {
+    "res_3d0dce018cb1e6e15189be43": {
+      "evaluation_id": "ev_4a3a263f7b22487b8f8174029f63b852",
+      "result_id": "res_3d0dce018cb1e6e15189be43",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.4-mini",
+      "model": "gpt-5.4-mini",
+      "evaluator": "mofeyTEA",
+      "score": 0,
+      "max_score": 4,
+      "score_category": "zero",
+      "feedback": "WA",
+      "created_at": "2026-07-29T14:47:45.497486Z",
+      "updated_at": "2026-07-29T14:47:45.497486Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_3d0dce018cb1e6e15189be43": [
+      {
+        "evaluation_id": "ev_5898d0873af74497833d342f756d9a6c",
+        "result_id": "res_3d0dce018cb1e6e15189be43",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 4,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-24T20:43:37.656513Z",
+        "updated_at": "2026-07-24T20:43:37.656513Z"
+      },
+      {
+        "evaluation_id": "ev_c1522c71d9d4404d8dda3261b3cc8496",
+        "result_id": "res_3d0dce018cb1e6e15189be43",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 4,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-24T20:43:52.205575Z",
+        "updated_at": "2026-07-24T20:43:52.205575Z"
+      },
+      {
+        "evaluation_id": "ev_4a3a263f7b22487b8f8174029f63b852",
+        "result_id": "res_3d0dce018cb1e6e15189be43",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 4,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-29T14:47:45.497486Z",
+        "updated_at": "2026-07-29T14:47:45.497486Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_01",
+  "run_id": "2026_07_15_15_10_02_qualifying_missing_20260715_144724_task_01_openai_gpt-5.4-mini_128000",
+  "updated_at": "2026-07-29T14:47:45.497486Z"
+}

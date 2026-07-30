@@ -204,6 +204,11 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   Interactions reports visible output and thought output separately, so Gemini
   `cost.output` is visible output, `cost.reasoning` is thought output and
   `cost.total` includes both.
+- Legacy Google logs that contain only `usage.total_tokens` recover an estimated
+  cost during `normalize_legacy_result()`: input is estimated from the persisted
+  text request and the remainder is priced as output/thinking. The source is
+  marked `models/pricing.py:total-token-fallback`; the immutable log is not
+  rewritten.
 - Grok uses xAI's hosted Responses endpoint under `https://api.x.ai/v1`.
   Stateful continuation preserves reasoning through `previous_response_id`.
   `grok-4.3` is the general-purpose model and receives

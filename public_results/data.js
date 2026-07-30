@@ -38,16 +38,17 @@ window.RESULTS_DATA = {
       date: "17 мая 2026",
       description: "Сравниваем, как языковые модели решают задачи финала — без инструментов, поиска и доступа к коду.",
       taskCount: 9,
+      scoreFormat: "percent",
       tasks: [
-        { id: "task_01", short: "01", title: "Задача 1" },
-        { id: "task_02", short: "02", title: "Задача 2" },
-        { id: "task_03", short: "03", title: "Задача 3" },
-        { id: "task_04", short: "04", title: "Задача 4" },
-        { id: "task_05", short: "05", title: "Задача 5" },
-        { id: "task_06", short: "06", title: "Задача 6" },
-        { id: "task_07", short: "07", title: "Задача 7" },
-        { id: "task_08", short: "08", title: "Строки" },
-        { id: "task_09", short: "09", title: "Задача 9" }
+        { id: "task_01", short: "01", title: "Задача 1", maxScore: 2 },
+        { id: "task_02", short: "02", title: "Задача 2", maxScore: 2 },
+        { id: "task_03", short: "03", title: "Задача 3", maxScore: 2 },
+        { id: "task_04", short: "04", title: "Задача 4", maxScore: 2 },
+        { id: "task_05", short: "05", title: "Задача 5", maxScore: 2 },
+        { id: "task_06", short: "06", title: "Задача 6", maxScore: 2 },
+        { id: "task_07", short: "07", title: "Задача 7", maxScore: 2 },
+        { id: "task_08", short: "08", title: "Строки", maxScore: 2 },
+        { id: "task_09", short: "09", title: "Задача 9", maxScore: 2 }
       ],
       participants: [
         {

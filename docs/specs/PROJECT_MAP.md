@@ -50,6 +50,7 @@ scripts/
   validate_problem_data.py problem/competition JSON validation
   export_scoring.py       merge run logs and sidecars into CSV/JSONL
   export_public_results.py sanitized read-only public matrix and solution export
+  migrate_score_scale.py  explicit one-competition score-scale migration
   sync_logs.py            rsync push/pull for logs and score sidecars
 
 deploy/systemd/

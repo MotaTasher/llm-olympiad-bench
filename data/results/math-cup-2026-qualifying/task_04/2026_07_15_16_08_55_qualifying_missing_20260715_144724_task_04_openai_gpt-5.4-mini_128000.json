@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_61cb47b42175ec1ec6ae912c": {
+      "evaluation_id": "ev_caf5abc843934ffb85af000b16b1b9d3",
+      "result_id": "res_61cb47b42175ec1ec6ae912c",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.4-mini",
+      "model": "gpt-5.4-mini",
+      "evaluator": "b2_maxim",
+      "score": 4,
+      "max_score": 4,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-24T21:24:16.620499Z",
+      "updated_at": "2026-07-24T21:24:16.620499Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_61cb47b42175ec1ec6ae912c": [
+      {
+        "evaluation_id": "ev_caf5abc843934ffb85af000b16b1b9d3",
+        "result_id": "res_61cb47b42175ec1ec6ae912c",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "b2_maxim",
+        "score": 4,
+        "max_score": 4,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-24T21:24:16.620499Z",
+        "updated_at": "2026-07-24T21:24:16.620499Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_04",
+  "run_id": "2026_07_15_16_08_55_qualifying_missing_20260715_144724_task_04_openai_gpt-5.4-mini_128000",
+  "updated_at": "2026-07-24T21:24:16.620499Z"
+}

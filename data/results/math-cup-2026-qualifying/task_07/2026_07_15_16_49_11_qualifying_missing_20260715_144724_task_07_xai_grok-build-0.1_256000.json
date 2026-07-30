@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_e44d7f8875d0891d7b0aef17": {
+      "evaluation_id": "ev_16da375fb0fc4db6a3d3a445fe10b03b",
+      "result_id": "res_e44d7f8875d0891d7b0aef17",
+      "result_index": 0,
+      "model_key": "xai:grok-build-0.1",
+      "model": "grok-build-0.1",
+      "evaluator": "b2_maxim",
+      "score": 1,
+      "max_score": 4,
+      "score_category": "partial",
+      "feedback": "",
+      "created_at": "2026-07-24T20:55:55.886280Z",
+      "updated_at": "2026-07-24T20:55:55.886280Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_e44d7f8875d0891d7b0aef17": [
+      {
+        "evaluation_id": "ev_16da375fb0fc4db6a3d3a445fe10b03b",
+        "result_id": "res_e44d7f8875d0891d7b0aef17",
+        "result_index": 0,
+        "model_key": "xai:grok-build-0.1",
+        "model": "grok-build-0.1",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 4,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-07-24T20:55:55.886280Z",
+        "updated_at": "2026-07-24T20:55:55.886280Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_07",
+  "run_id": "2026_07_15_16_49_11_qualifying_missing_20260715_144724_task_07_xai_grok-build-0.1_256000",
+  "updated_at": "2026-07-24T20:55:55.886280Z"
+}

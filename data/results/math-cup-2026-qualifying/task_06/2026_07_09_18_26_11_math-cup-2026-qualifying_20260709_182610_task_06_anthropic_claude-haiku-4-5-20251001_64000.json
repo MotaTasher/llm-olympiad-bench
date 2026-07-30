@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_3e110a940799c78d515145a3": {
+      "evaluation_id": "ev_7095a004f1ea41579b73bae1d988e531",
+      "result_id": "res_3e110a940799c78d515145a3",
+      "result_index": 0,
+      "model_key": "anthropic:claude-haiku-4-5-20251001",
+      "model": "claude-haiku-4-5-20251001",
+      "evaluator": "b2_maxim",
+      "score": 4,
+      "max_score": 4,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-24T21:00:26.667687Z",
+      "updated_at": "2026-07-24T21:00:26.667687Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_3e110a940799c78d515145a3": [
+      {
+        "evaluation_id": "ev_7095a004f1ea41579b73bae1d988e531",
+        "result_id": "res_3e110a940799c78d515145a3",
+        "result_index": 0,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "b2_maxim",
+        "score": 4,
+        "max_score": 4,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-24T21:00:26.667687Z",
+        "updated_at": "2026-07-24T21:00:26.667687Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_06",
+  "run_id": "2026_07_09_18_26_11_math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-haiku-4-5-20251001_64000",
+  "updated_at": "2026-07-24T21:00:26.667687Z"
+}

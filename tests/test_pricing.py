@@ -29,9 +29,9 @@ class PricingTests(unittest.TestCase):
 
     def test_gemini_flash_paid_list_estimate(self) -> None:
         cost = estimate_cost("google", "gemini-3.5-flash", input_tokens=1_000_000, output_tokens=1_000_000)
-        self.assertEqual(cost["input"], 0.75)
-        self.assertEqual(cost["output"], 4.5)
-        self.assertEqual(cost["total"], 5.25)
+        self.assertEqual(cost["input"], 1.5)
+        self.assertEqual(cost["output"], 9.0)
+        self.assertEqual(cost["total"], 10.5)
         self.assertIn("Free Tier", cost["note"])
 
     def test_gemini_reasoning_tokens_are_billable_output(self) -> None:
@@ -42,9 +42,9 @@ class PricingTests(unittest.TestCase):
             output_tokens=1_000_000,
             reasoning_tokens=1_000_000,
         )
-        self.assertEqual(cost["output"], 4.5)
-        self.assertEqual(cost["reasoning"], 4.5)
-        self.assertEqual(cost["total"], 9.75)
+        self.assertEqual(cost["output"], 9.0)
+        self.assertEqual(cost["reasoning"], 9.0)
+        self.assertEqual(cost["total"], 19.5)
 
     def test_grok_rates(self) -> None:
         grok = estimate_cost("xai", "grok-4.3", input_tokens=1_000_000, output_tokens=1_000_000, cached_input_tokens=100_000)

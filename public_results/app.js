@@ -1,7 +1,11 @@
 (function () {
   "use strict";
 
-  const baselineData = window.RESULTS_DATA;
+  const sourceBaselineData = window.RESULTS_DATA;
+  const baselineData = {
+    ...sourceBaselineData,
+    competitions: sourceBaselineData.competitions.map(normalizeBaselineCompetition)
+  };
   const generatedData = window.RESULTS_DATA_GENERATED;
   const generatedCompetitions = new Map(
     (generatedData?.competitions || []).map((competition) => [competition.id, competition])
@@ -50,10 +54,30 @@
     return data.releases.find((release) => release.competitionIds.includes(competitionId));
   }
 
-  function scoreClass(score) {
+  function normalizeBaselineCompetition(competition) {
+    if (competition.scoreFormat !== "percent") return competition;
+    const participants = competition.participants.map((participant) => {
+      const scores = (participant.scores || []).map((score, index) => {
+        if (score === null || score === undefined) return score;
+        const maxScore = Number(competition.tasks[index]?.maxScore || 100);
+        return Math.round((Number(score) / 100 * maxScore) * 10) / 10;
+      });
+      const numericScores = scores.filter((score) => typeof score === "number");
+      return {
+        ...participant,
+        scores,
+        points: numericScores.length
+          ? numericScores.reduce((total, score) => total + score, 0)
+          : null
+      };
+    });
+    return { ...competition, participants };
+  }
+
+  function scoreClass(score, maxScore) {
     if (score === null || score === undefined) return "score-empty";
     if (score === 0) return "score-zero";
-    if (score >= 100) return "score-full";
+    if (score >= maxScore) return "score-full";
     return "score-partial";
   }
 
@@ -286,11 +310,11 @@
         <tr>
           ${sortableHeader("rank", "#", "rank-column")}
           ${sortableHeader("name", "Модель / команда", "participant-column")}
-          ${competition.tasks.map((task, index) => sortableHeader(`task:${index}`, task.short, "task-column", task.title)).join("")}
-          ${sortableHeader("points", "Баллы", "metric-column")}
-          ${sortableHeader("accuracy", "Точность", "metric-column")}
           ${sortableHeader("cost", "Затраты / призовые", "metric-column")}
+          ${sortableHeader("points", "Сумма", "metric-column")}
           ${sortableHeader("tokens", "Токены", "metric-column")}
+          ${sortableHeader("accuracy", "Точность", "metric-column")}
+          ${competition.tasks.map((task, index) => sortableHeader(`task:${index}`, task.short, "task-column", `${task.title} · максимум ${task.maxScore} балла`)).join("")}
         </tr>
       </thead>
     `;
@@ -317,11 +341,11 @@
         const solution = participant.solutions?.[index];
         const content = `<span>${scoreText(score)}</span>`;
         if (isTeam || !solution) {
-          return `<td class="result-cell ${scoreClass(score)}">${content}</td>`;
+          return `<td class="result-cell ${scoreClass(score, task.maxScore)}">${content}</td>`;
         }
         const href = `solution.html?competition=${encodeURIComponent(competition.id)}&participant=${encodeURIComponent(participant.id)}&task=${encodeURIComponent(task.id)}`;
         const label = score == null ? "ответ без публичной оценки" : `${score} баллов`;
-        return `<td class="result-cell ${scoreClass(score)}"><a href="${href}" aria-label="${escapeHtml(participant.name)}, ${escapeHtml(task.title)}: ${label}">${content}</a></td>`;
+        return `<td class="result-cell ${scoreClass(score, task.maxScore)}"><a href="${href}" aria-label="${escapeHtml(participant.name)}, ${escapeHtml(task.title)}: ${label}">${content}</a></td>`;
       }).join("");
 
       return `
@@ -331,11 +355,11 @@
             <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
             <span class="participant-meta">${escapeHtml(participantMeta)}</span>
           </th>
-          ${cells}
-          <td class="metric-cell strong">${formatPoints(participantPoints(participant))}</td>
-          <td class="metric-cell strong">${participant.accuracy == null ? "—" : `${String(participant.accuracy).replace(".", ",")}%`}</td>
           ${moneyCell(participant)}
+          <td class="metric-cell strong">${formatPoints(participantPoints(participant))}</td>
           <td class="metric-cell">${participant.tokens == null ? "—" : number.format(participant.tokens)}</td>
+          <td class="metric-cell strong">${participant.accuracy == null ? "—" : `${String(participant.accuracy).replace(".", ",")}%`}</td>
+          ${cells}
         </tr>
       `;
     }).join("");
@@ -447,6 +471,7 @@
     const safeTaskIndex = taskIndex >= 0 ? taskIndex : 0;
     const task = competition.tasks[safeTaskIndex];
     const score = participant?.scores?.[safeTaskIndex];
+    const maxScore = Number(task?.maxScore || 0);
     const solutionPath = participant?.solutions?.[safeTaskIndex];
     const release = releaseForCompetition(competition.id);
     const back = `index.html?release=${encodeURIComponent(release?.id || data.releases[0].id)}`;
@@ -456,10 +481,10 @@
     document.querySelector("#solution-competition").textContent = `${competition.title} · ${competition.stage}`;
     document.querySelector("#solution-task").textContent = task?.title || "Задача";
     document.querySelector("#solution-model").textContent = participant?.name || "Модель";
-    document.querySelector("#solution-score").textContent = score == null ? "—" : `${score} / 100`;
+    document.querySelector("#solution-score").textContent = score == null ? "—" : `${score} / ${maxScore}`;
     document.querySelector("#solution-verdict").textContent = score == null
       ? "Нет оценки"
-      : score >= 100 ? "Полное решение" : score > 0 ? "Частичное решение" : "Не зачтено";
+      : score >= maxScore ? "Полное решение" : score > 0 ? "Частичное решение" : "Не зачтено";
     document.querySelector("#solution-cost").textContent = "—";
     document.querySelector("#solution-tokens").textContent = "—";
     document.querySelector("#solution-text").innerHTML = "<p>Загружаем ответ…</p>";
@@ -478,6 +503,7 @@
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const documentData = await response.json();
       const result = documentData.result || {};
+      const documentMaxScore = Number(documentData.task?.maxScore || maxScore);
       const competitionTitle = documentData.competition?.title || competition.title;
       const competitionStage = documentData.competition?.stage || competition.stage;
       document.querySelector("#solution-competition").textContent =
@@ -486,7 +512,7 @@
           : competitionTitle;
       document.querySelector("#solution-task").textContent = documentData.task?.title || task?.title || "Задача";
       document.querySelector("#solution-model").textContent = documentData.model?.name || participant?.name || "Модель";
-      document.querySelector("#solution-score").textContent = result.score == null ? "—" : `${result.score} / 100`;
+      document.querySelector("#solution-score").textContent = result.score == null ? "—" : `${result.score} / ${documentMaxScore}`;
       document.querySelector("#solution-verdict").textContent = result.verdict || "Нет публичной оценки";
       document.querySelector("#solution-cost").textContent =
         result.cost == null ? "—" : `$${Number(result.cost).toFixed(4)}`;

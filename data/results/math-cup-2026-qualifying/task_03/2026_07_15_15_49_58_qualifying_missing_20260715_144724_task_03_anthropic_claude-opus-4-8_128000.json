@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_f169141d854a0c357149ac2f": {
+      "evaluation_id": "ev_36c7b0be50164065a7a18f04fe3cc43e",
+      "result_id": "res_f169141d854a0c357149ac2f",
+      "result_index": 0,
+      "model_key": "anthropic:claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "evaluator": "b2_maxim",
+      "score": 4,
+      "max_score": 4,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-24T21:31:35.641201Z",
+      "updated_at": "2026-07-24T21:31:35.641201Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_f169141d854a0c357149ac2f": [
+      {
+        "evaluation_id": "ev_36c7b0be50164065a7a18f04fe3cc43e",
+        "result_id": "res_f169141d854a0c357149ac2f",
+        "result_index": 0,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "b2_maxim",
+        "score": 4,
+        "max_score": 4,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-24T21:31:35.641201Z",
+        "updated_at": "2026-07-24T21:31:35.641201Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_03",
+  "run_id": "2026_07_15_15_49_58_qualifying_missing_20260715_144724_task_03_anthropic_claude-opus-4-8_128000",
+  "updated_at": "2026-07-24T21:31:35.641201Z"
+}
