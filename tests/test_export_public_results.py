@@ -21,7 +21,7 @@ class PublicResultsExportTests(unittest.TestCase):
             competition_id="math-cup-2026-final",
         )
         self.assertIn(
-            "../../assets/math-cup-2026-final/task_09_diagram.png",
+            "generated/assets/math-cup-2026-final/task_09_diagram.png",
             rendered,
         )
         self.assertIn(
