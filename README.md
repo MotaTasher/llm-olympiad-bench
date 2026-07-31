@@ -82,9 +82,11 @@ python runner.py \
 `config/models.env`. По умолчанию там стоит `RUNNER_MODELS=all`, то есть
 запускаются все активные версии из `models/*/versions.py`.
 Флаг `--max-tokens` задаёт единый потолок output/completion-токенов для всех
-выбранных адаптеров. Если флаг не передан, runner берёт `RUNNER_MAX_TOKENS`
-из `config/models.env` (committed default: `8000`), а затем provider-specific
-настройки вроде `OPENAI_MAX_COMPLETION_TOKENS` или `YANDEX_MAX_TOKENS`.
+выбранных адаптеров. Без флага runner использует provider-specific бюджеты из
+`config/models.env`: DeepSeek — 320k; Gemini и Grok — 256k; OpenAI, Anthropic
+и GLM — 128k; GigaChat — 8192; Yandex Alice — 8000. Это максимальные
+протестированные безопасные пределы активных моделей; отдельный CLI-флаг
+намеренно их переопределяет.
 
 Для OpenAI, Gemini, Grok и GLM `--max-tokens` является суммарным бюджетом.
 Если он больше лимита одного запроса, адаптер продолжает незавершённое
