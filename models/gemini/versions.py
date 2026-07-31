@@ -6,9 +6,9 @@
 # Benchmark snapshot: 2026-08-01
 
 VERSIONS = [
-    "gemini-3.5-flash",
+    "gemini-3.1-pro-preview",
 ]
 
-LEGACY_VERSIONS = ["gemini-3.1-pro-preview"]
+LEGACY_VERSIONS = ["gemini-3.5-flash"]
 
 DEFAULT = VERSIONS[0]

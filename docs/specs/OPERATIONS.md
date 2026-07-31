@@ -184,7 +184,7 @@ python scripts/run_new_models_math_cup_2026_final.py --yes
 ```
 
 The script defaults to Math Cup 2026 final tasks and the seven newly selected
-models: `claude-fable-5`, `claude-opus-5`, `gemini-3.5-flash`,
+models: `claude-fable-5`, `claude-opus-5`, `gemini-3.1-pro-preview`,
 `GigaChat-3-Ultra`, `grok-4.5`, `gpt-5.6-sol` and `aliceai-llm`. It is dry-run by
 default, prints a cost estimate, and writes each `runner.py` stdout/stderr log
 under `run-output/new-models-2026-final/`. Run logs themselves go to the

@@ -311,7 +311,7 @@ RUNNER_MODELS=all
 ```bash
 python runner.py \
   --problem data/competitions/local_examples/example.json \
-  --models openai:gpt-5.6-sol,google:gemini-3.5-flash,anthropic:claude-opus-5 \
+  --models openai:gpt-5.6-sol,google:gemini-3.1-pro-preview,anthropic:claude-opus-5 \
   --max-tokens 4096 \
   --run-id strong_pair
 ```

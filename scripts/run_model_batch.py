@@ -46,6 +46,7 @@ MODEL_CAPS = {
     "gigachat:GigaChat-2-Max": 8_192,
     "gigachat:GigaChat-2": 8_192,
     "google:gemini-3.1-pro-preview": 128_000,
+    "google:gemini-3.5-flash": 128_000,
     "xai:grok-4.3": 128_000,
     "zai:glm-5.2": 128_000,
     **NEW_MODEL_CAPS,

@@ -164,7 +164,7 @@ Current active set:
 | OpenAI | `gpt-5.6-sol` |
 | Anthropic | `claude-fable-5`, `claude-opus-5` |
 | DeepSeek | `deepseek-v4-pro` |
-| Gemini | `gemini-3.5-flash` |
+| Gemini | `gemini-3.1-pro-preview` |
 | GigaChat | `GigaChat-3-Ultra` |
 | Grok | `grok-4.5` |
 | GLM | `glm-5.2` |
@@ -195,7 +195,7 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
 ## Current provider notes
 
 - Gemini uses the official `google-genai` package and the Gemini Developer API.
-  `gemini-3.5-flash` is the active strongest sustained-reasoning model. The supported
+  `gemini-3.1-pro-preview` is the active Google Pro reasoning model. The supported
   `gemini-3.5-flash` ID is legacy-only and does not create a benchmark column.
   Thinking is configured by provider thinking level
   (`GEMINI_THINKING_LEVEL=high` by default), not by inventing a token-budget

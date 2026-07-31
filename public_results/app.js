@@ -7,7 +7,7 @@
     "Claude Fable 5",
     "Claude Opus 5",
     "DeepSeek V4 Pro",
-    "Gemini 3.5 Flash",
+    "Gemini 3.1 Pro",
     "GigaChat 3 Ultra",
     "Grok 4.5",
     "GLM 5.2",
