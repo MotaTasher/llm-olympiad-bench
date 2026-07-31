@@ -1,6 +1,6 @@
 # YandexGPT / Alice
 
-Алиас `alice` в `runner.py` использует тот же text-completion адаптер Yandex AI Studio. Публичного API голосовой Alice для произвольного скоринга задач здесь не используется.
+Алиас `alice` в `runner.py` использует тот же text-completion адаптер Yandex AI Studio. Публичного API голосовой Alice для произвольного скоринга задач здесь не используется. Официальный benchmark запрашивает общий бюджет `128000` токенов, но этот адаптер безопасно ограничивает запрос до API-лимита `8000` и фиксирует оба значения в telemetry.
 
 Адаптер работает через basic completion endpoint в text-only режиме: без tools, function calling, поиска, кода и внешних цепочек.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `YANDEX_MAX_TOKENS` остаётся fallback-настройкой.

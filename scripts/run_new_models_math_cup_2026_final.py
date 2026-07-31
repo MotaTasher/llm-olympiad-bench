@@ -27,9 +27,9 @@ DEFAULT_LOGS_DIR = "/opt/olympiad-scorer/shared/logs"
 MODEL_CAPS = {
     "anthropic:claude-fable-5": 128_000,
     "anthropic:claude-opus-5": 128_000,
-    "google:gemini-3.5-flash": 256_000,
+    "google:gemini-3.5-flash": 128_000,
     "gigachat:GigaChat-3-Ultra": 8_192,
-    "xai:grok-4.5": 256_000,
+    "xai:grok-4.5": 128_000,
     "openai:gpt-5.6-sol": 128_000,
     "yandexgpt:aliceai-llm": 8_000,
 }

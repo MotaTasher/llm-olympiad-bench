@@ -1,7 +1,9 @@
 # GigaChat (Сбер)
 
 Этот адаптер запускает GigaChat через общий `runner.py` в text-only режиме: без `tools`, `functions`, `function_call` и внешних цепочек.
-Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `GIGACHAT_MAX_TOKENS` остаётся fallback-настройкой.
+Официальный benchmark запрашивает общий бюджет `128000` токенов, но адаптер
+безопасно ограничивает GigaChat до его API-лимита `8192` и записывает оба
+значения в telemetry. `GIGACHAT_MAX_TOKENS` остаётся настройкой этого лимита.
 Активная колонка бенчмарка — `GigaChat-3-Ultra`; прежние модели оставлены как
 явно запускаемая legacy-версия.
 

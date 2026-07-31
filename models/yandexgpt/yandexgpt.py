@@ -15,6 +15,9 @@ from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
+YANDEX_MAX_TOKENS_PER_REQUEST = 8_000
+
+
 class YandexGPTModel(BaseModel):
     def __init__(
         self,
@@ -57,15 +60,24 @@ class YandexGPTModel(BaseModel):
             else:
                 headers["Authorization"] = f"Bearer {iam_token}"
 
+            requested_max_tokens = (
+                int(max_tokens)
+                if max_tokens is not None
+                else int(self._max_final_tokens)
+                if self._max_final_tokens is not None
+                else int(env("YANDEX_MAX_TOKENS", "8000") or "8000")
+            )
+            configured_cap = int(
+                env("YANDEX_MAX_TOKENS", str(YANDEX_MAX_TOKENS_PER_REQUEST))
+                or YANDEX_MAX_TOKENS_PER_REQUEST
+            )
             completion_options = {
                 "stream": False,
                 "temperature": float(env("YANDEX_TEMPERATURE", "0.15") or "0.15"),
-                "maxTokens": (
-                    int(max_tokens)
-                    if max_tokens is not None
-                    else int(self._max_final_tokens)
-                    if self._max_final_tokens is not None
-                    else int(env("YANDEX_MAX_TOKENS", "8000") or "8000")
+                "maxTokens": min(
+                    requested_max_tokens,
+                    configured_cap,
+                    YANDEX_MAX_TOKENS_PER_REQUEST,
                 ),
             }
             reasoning_mode = env("YANDEX_REASONING_MODE")
@@ -88,6 +100,8 @@ class YandexGPTModel(BaseModel):
                     "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
                 ),
                 "stream": completion_options.get("stream"),
+                "requested_max_tokens": requested_max_tokens,
+                "provider_max_tokens": YANDEX_MAX_TOKENS_PER_REQUEST,
             }
             ensure_text_only_request(request_payload)
 
