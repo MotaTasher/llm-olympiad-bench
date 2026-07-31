@@ -11,7 +11,7 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 GIGACHAT_DEFAULT_BASE_URL = "https://api.giga.chat/v1"
-GIGACHAT_MAX_TOKENS_PER_REQUEST = 8_192
+GIGACHAT_MAX_TOKENS_PER_REQUEST = 256_000
 
 
 def normalize_gigachat_credentials(credentials: str) -> str:
@@ -110,15 +110,7 @@ class GigaChatModel(BaseModel):
                 if self._max_final_tokens is not None
                 else int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
             )
-            configured_cap = int(
-                env("GIGACHAT_MAX_TOKENS", str(GIGACHAT_MAX_TOKENS_PER_REQUEST))
-                or GIGACHAT_MAX_TOKENS_PER_REQUEST
-            )
-            payload["max_tokens"] = min(
-                requested_max_tokens,
-                configured_cap,
-                GIGACHAT_MAX_TOKENS_PER_REQUEST,
-            )
+            payload["max_tokens"] = requested_max_tokens
             if env("GIGACHAT_REPETITION_PENALTY") is not None:
                 payload["repetition_penalty"] = float(
                     env("GIGACHAT_REPETITION_PENALTY", "1.05") or "1.05"

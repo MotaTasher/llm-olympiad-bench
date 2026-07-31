@@ -81,6 +81,8 @@ REQUIRED = {
         "all": [],
         "one_of": [("ZAI_API_KEY",)],
     },
+    "kimi": {"all": [], "one_of": [("KIMI_API_KEY",)]},
+    "moonshot": {"all": [], "one_of": [("KIMI_API_KEY",)]},
 }
 
 

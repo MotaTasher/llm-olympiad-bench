@@ -48,6 +48,8 @@ MODEL_CLASSES = {
     "glm": ("models.glm", "GLMModel"),
     "zai": ("models.glm", "GLMModel"),
     "zhipu": ("models.glm", "GLMModel"),
+    "kimi": ("models.kimi", "KimiModel"),
+    "moonshot": ("models.kimi", "KimiModel"),
 }
 
 MODEL_VERSION_MODULES = {
@@ -59,6 +61,7 @@ MODEL_VERSION_MODULES = {
     "zai": "models.glm.versions",
     "openai": "models.gpt.versions",
     "yandexgpt": "models.yandexgpt.versions",
+    "kimi": "models.kimi.versions",
 }
 
 MODEL_ENV_VARS = {
@@ -70,6 +73,7 @@ MODEL_ENV_VARS = {
     "GEMINI_MODEL",
     "XAI_MODEL",
     "ZAI_MODEL",
+    "KIMI_MODEL",
 }
 
 
@@ -243,6 +247,8 @@ def provider_for_alias(alias: str) -> str:
         return "yandexgpt"
     if key in {"glm", "zai", "zhipu"}:
         return "zai"
+    if key in {"kimi", "moonshot"}:
+        return "kimi"
     return "unknown"
 
 

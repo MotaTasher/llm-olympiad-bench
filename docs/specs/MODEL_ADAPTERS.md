@@ -169,6 +169,7 @@ Current active set:
 | Grok | `grok-4.5` |
 | GLM | `glm-5.2` |
 | Yandex AI Studio | `aliceai-llm` |
+| Moonshot AI | `kimi-k2.5` |
 
 Retired IDs may be listed in provider `LEGACY_VERSIONS` for operator context,
 but they are not active benchmark models and must not create scoring UI columns
@@ -189,6 +190,7 @@ explicit; for example `yandexgpt-5.1/latest` is canonicalized to
 | `glm`, `zai`, `zhipu` | `models.glm.GLMModel` |
 | `yandex`, `yandexgpt` | `models.yandexgpt.YandexGPTModel` |
 | `alice` | `models.yandexgpt.AliceModel` |
+| `kimi`, `moonshot` | `models.kimi.KimiModel` |
 
 Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README examples.
 

@@ -20,6 +20,7 @@ class ModelBatchTests(unittest.TestCase):
                 "zai:glm-5.2",
                 "openai:gpt-5.6-sol",
                 "yandexgpt:aliceai-llm",
+                "kimi:kimi-k2.5",
             ],
         )
         self.assertEqual(
@@ -55,6 +56,7 @@ class ModelBatchTests(unittest.TestCase):
             "zai:glm-5.2": 128_000,
             "openai:gpt-5.6-sol": 128_000,
             "yandexgpt:aliceai-llm": 8_000,
+            "kimi:kimi-k2.5": 256_000,
         }
         for model, cap in expected_caps.items():
             with self.subTest(model=model):

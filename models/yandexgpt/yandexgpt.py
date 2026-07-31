@@ -15,7 +15,7 @@ from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
-YANDEX_MAX_TOKENS_PER_REQUEST = 8_000
+YANDEX_MAX_TOKENS_PER_REQUEST = 256_000
 
 
 class YandexGPTModel(BaseModel):
@@ -67,18 +67,10 @@ class YandexGPTModel(BaseModel):
                 if self._max_final_tokens is not None
                 else int(env("YANDEX_MAX_TOKENS", "8000") or "8000")
             )
-            configured_cap = int(
-                env("YANDEX_MAX_TOKENS", str(YANDEX_MAX_TOKENS_PER_REQUEST))
-                or YANDEX_MAX_TOKENS_PER_REQUEST
-            )
             completion_options = {
                 "stream": False,
                 "temperature": float(env("YANDEX_TEMPERATURE", "0.15") or "0.15"),
-                "maxTokens": min(
-                    requested_max_tokens,
-                    configured_cap,
-                    YANDEX_MAX_TOKENS_PER_REQUEST,
-                ),
+                "maxTokens": requested_max_tokens,
             }
             reasoning_mode = env("YANDEX_REASONING_MODE")
             if reasoning_mode:

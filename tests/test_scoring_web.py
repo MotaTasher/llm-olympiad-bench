@@ -1678,6 +1678,7 @@ class ScoringWebTests(unittest.TestCase):
             "xai:grok-4.5",
             "zai:glm-5.2",
             "yandexgpt:aliceai-llm",
+            "kimi:kimi-k2.5",
         }
         expected_order = [
             "anthropic:claude-fable-5",
@@ -1689,13 +1690,14 @@ class ScoringWebTests(unittest.TestCase):
             "zai:glm-5.2",
             "openai:gpt-5.6-sol",
             "yandexgpt:aliceai-llm",
+            "kimi:kimi-k2.5",
         ]
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
         self.assertEqual(runner.active_model_specs(), expected_order)
         self.assertEqual(runner.requested_aliases("all"), expected_order)
-        self.assertEqual(len(runner.requested_aliases("all")), 9)
-        self.assertEqual(len(set(runner.requested_aliases("all"))), 9)
+        self.assertEqual(len(runner.requested_aliases("all")), 10)
+        self.assertEqual(len(set(runner.requested_aliases("all"))), 10)
         for alias, provider in {
             "gemini": "google",
             "google": "google",
@@ -1734,11 +1736,12 @@ class ScoringWebTests(unittest.TestCase):
             ("zai", "GLM", list(GLM_VERSIONS)),
             ("openai", "OpenAI", list(GPT_VERSIONS)),
             ("yandexgpt", "Яндекс", list(YANDEX_VERSIONS)),
+            ("kimi", "Kimi", ["kimi-k2.5"]),
         ]
         groups = competition["model_groups"]
         self.assertEqual([group["provider"] for group in groups], [item[0] for item in expected_groups])
         self.assertEqual([group["label"] for group in groups], [item[1] for item in expected_groups])
-        self.assertEqual([len(group["models"]) for group in groups], [2, 1, 1, 1, 1, 1, 1, 1])
+        self.assertEqual([len(group["models"]) for group in groups], [2, 1, 1, 1, 1, 1, 1, 1, 1])
         for group, (provider, _label, versions) in zip(groups, expected_groups, strict=True):
             self.assertEqual([model["model_id"] for model in group["models"]], versions)
             self.assertEqual([model["model_key"] for model in group["models"]], [f"{provider}:{model}" for model in versions])
@@ -1760,6 +1763,7 @@ class ScoringWebTests(unittest.TestCase):
             "glm-5.2": "5.2",
             "gpt-5.6-sol": "GPT-5.6 Sol",
             "aliceai-llm": "Alice AI LLM",
+            "kimi-k2.5": "K2.5",
         }
         actual = {column["model_id"]: column["short_label"] for column in columns.values()}
         for model_id, short_label in expected.items():
@@ -1767,7 +1771,7 @@ class ScoringWebTests(unittest.TestCase):
 
         fallback = model_presentation("future_provider", "future-model_x")
         self.assertEqual(fallback["provider_label"], "future_provider")
-        self.assertEqual(fallback["provider_order"], 8)
+        self.assertEqual(fallback["provider_order"], 9)
         self.assertEqual(fallback["model_order"], 10000)
         self.assertTrue(fallback["short_label"])
         self.assertEqual(fallback["short_label"], "future model x")
@@ -1780,9 +1784,9 @@ class ScoringWebTests(unittest.TestCase):
 
         self.assertEqual(len(parser.header_rows), 2)
         provider_headers = parser.header_rows[0][1:]
-        self.assertEqual([cell["attrs"].get("scope") for cell in provider_headers], ["colgroup"] * 8)
-        self.assertEqual([cell["attrs"].get("colspan") for cell in provider_headers], ["2", "1", "1", "1", "1", "1", "1", "1"])
-        self.assertEqual([cell["text"] for cell in provider_headers], ["Claude", "DeepSeek", "Gemini", "GigaChat", "Grok", "GLM", "OpenAI", "Яндекс"])
+        self.assertEqual([cell["attrs"].get("scope") for cell in provider_headers], ["colgroup"] * 9)
+        self.assertEqual([cell["attrs"].get("colspan") for cell in provider_headers], ["2", "1", "1", "1", "1", "1", "1", "1", "1"])
+        self.assertEqual([cell["text"] for cell in provider_headers], ["Claude", "DeepSeek", "Gemini", "GigaChat", "Grok", "GLM", "OpenAI", "Яндекс", "Kimi"])
 
         expected_links = [
             ("anthropic:claude-fable-5", "claude-fable-5", "Fable 5"),
@@ -1794,6 +1798,7 @@ class ScoringWebTests(unittest.TestCase):
             ("zai:glm-5.2", "glm-5.2", "5.2"),
             ("openai:gpt-5.6-sol", "gpt-5.6-sol", "GPT-5.6 Sol"),
             ("yandexgpt:aliceai-llm", "aliceai-llm", "Alice AI LLM"),
+            ("kimi:kimi-k2.5", "kimi-k2.5", "K2.5"),
         ]
         self.assertEqual([link["text"] for link in parser.model_links], [item[2] for item in expected_links])
         for link, (model_key, model_id, short_label) in zip(parser.model_links, expected_links, strict=True):
@@ -1832,10 +1837,10 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("competition-matrix-wrap", parser.wrapper_classes)
         self.assertIn("competition-matrix", parser.table_attrs.get("class", ""))
         self.assertEqual(sum("competition-matrix-problem-column" in classes for classes in parser.cols), 1)
-        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in parser.cols), 9)
+        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in parser.cols), 10)
         self.assertNotIn("max-height", parser.table_attrs.get("style", ""))
         self.assertEqual(len(parser.body_rows), 1)
-        self.assertEqual(len(parser.body_rows[0]["model_cell_hrefs"]), 9)
+        self.assertEqual(len(parser.body_rows[0]["model_cell_hrefs"]), 10)
 
         catalog = build_catalog(
             competitions_dir=self.competitions_dir,
@@ -1912,7 +1917,7 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("competition-matrix-wrap", checks.wrapper_classes)
         self.assertIn("competition-matrix", checks.table_attrs.get("class", ""))
         self.assertEqual(sum("competition-matrix-problem-column" in classes for classes in checks.cols), 1)
-        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in checks.cols), 9)
+        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in checks.cols), 10)
 
         catalog = build_catalog(
             competitions_dir=self.competitions_dir,
