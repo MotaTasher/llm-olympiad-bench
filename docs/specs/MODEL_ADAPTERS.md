@@ -99,9 +99,13 @@ omitted, runner reads `RUNNER_MODELS` from `config/models.env`; the committed
 default is `RUNNER_MODELS=all`, so CLI runs match the scoring UI configured
 columns. Individual model specs may be mixed with aliases, for example
 `--models gpt,anthropic:claude-opus-5`.
-`runner.py --max-tokens N` overrides `RUNNER_MAX_TOKENS` (committed default:
-`8000`) and provider-specific token env vars for all selected adapters in that
-run.
+`runner.py --max-tokens N` overrides every provider-specific token budget for
+all selected adapters in that run. Without the flag, the committed benchmark
+runtime uses the largest tested safe total budget for each active model:
+DeepSeek 320,000; Gemini and Grok 256,000; OpenAI, Anthropic and GLM 128,000;
+GigaChat 8,192; Yandex Alice 8,000. `RUNNER_MAX_TOKENS` is intentionally
+unset in the committed configuration, because setting it would reduce all
+providers to one shared ceiling.
 The OpenAI adapter maps this value to a total Responses API output budget. If
 the total exceeds the configured per-request cap for the model, the adapter
 continues with additional Responses requests linked by `previous_response_id`

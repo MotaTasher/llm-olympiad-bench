@@ -318,9 +318,11 @@ python runner.py \
 
 Единый лимит output/completion-токенов можно задать CLI-флагом
 `--max-tokens` или переменной `RUNNER_MAX_TOKENS` в `config/models.env`.
-В committed-конфиге стоит `RUNNER_MAX_TOKENS=8000`. CLI-флаг имеет приоритет
-над `RUNNER_MAX_TOKENS`, а они вместе имеют приоритет над provider-specific
-переменными (`ANTHROPIC_MAX_TOKENS`,
+В committed-конфиге `RUNNER_MAX_TOKENS` намеренно не задан: без него каждая
+активная модель использует свой максимальный безопасный бюджет — DeepSeek
+320k; Gemini и Grok 256k; OpenAI, Anthropic и GLM 128k; GigaChat 8192; Alice
+8000. CLI-флаг имеет приоритет над `RUNNER_MAX_TOKENS`, а они вместе имеют
+приоритет над provider-specific переменными (`ANTHROPIC_MAX_TOKENS`,
 `OPENAI_MAX_COMPLETION_TOKENS`, `DEEPSEEK_MAX_TOKENS`, `GIGACHAT_MAX_TOKENS`,
 `GEMINI_MAX_OUTPUT_TOKENS`, `XAI_MAX_OUTPUT_TOKENS`, `ZAI_MAX_TOKENS`,
 `YANDEX_MAX_TOKENS`).
