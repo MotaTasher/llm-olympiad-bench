@@ -3,7 +3,7 @@
 #   https://api-docs.deepseek.com/api/list-models
 #   https://api-docs.deepseek.com/quick_start/pricing
 #   https://api-docs.deepseek.com/updates/
-# Updated: 2026-06-29
+# Updated: 2026-07-31
 #
 # Programmatic check:
 #   curl https://api.deepseek.com/models \
@@ -12,11 +12,8 @@
 VERSIONS = [
     # Strongest paid model.
     "deepseek-v4-pro",
-
-    # Strongest budget/free-tier candidate available through this adapter.
-    "deepseek-v4-flash",
 ]
 
-LEGACY_VERSIONS = []
+LEGACY_VERSIONS = ["deepseek-v4-flash"]
 
 DEFAULT = VERSIONS[0]

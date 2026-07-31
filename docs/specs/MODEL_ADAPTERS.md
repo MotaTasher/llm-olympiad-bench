@@ -156,14 +156,14 @@ Current active set:
 
 | Provider | Active model |
 | --- | --- |
-| OpenAI | `gpt-5.5`, `gpt-5.4-mini` |
+| OpenAI | `gpt-5.5` |
 | Anthropic | `claude-opus-4-8`, `claude-haiku-4-5-20251001` |
-| DeepSeek | `deepseek-v4-pro`, `deepseek-v4-flash` |
-| Gemini | `gemini-3.1-pro-preview`, `gemini-3.5-flash` |
-| GigaChat | `GigaChat-2-Max`, `GigaChat-2` |
-| Grok | `grok-4.3`, `grok-build-0.1` |
-| GLM | `glm-5.2`, `glm-4.7-flash` |
-| YandexGPT | `yandexgpt-5.1`, `yandexgpt-5-lite` |
+| DeepSeek | `deepseek-v4-pro` |
+| Gemini | `gemini-3.1-pro-preview` |
+| GigaChat | `GigaChat-2-Max` |
+| Grok | `grok-4.3` |
+| GLM | `glm-5.2` |
+| YandexGPT | `yandexgpt-5.1` |
 
 Retired IDs may be listed in provider `LEGACY_VERSIONS` for operator context,
 but they are not active benchmark models and must not create scoring UI columns
@@ -190,9 +190,9 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
 ## Current provider notes
 
 - Gemini uses the official `google-genai` package and the Gemini Developer API.
-  `gemini-3.1-pro-preview` is a Preview Pro model; `gemini-3.5-flash` may have
-  Free Tier/API Studio allowance, but benchmark cost telemetry uses paid-list
-  estimates. Thinking is configured by provider thinking level
+  `gemini-3.1-pro-preview` is the active Preview Pro model. The supported
+  `gemini-3.5-flash` ID is legacy-only and does not create a benchmark column.
+  Thinking is configured by provider thinking level
   (`GEMINI_THINKING_LEVEL=high` by default), not by inventing a token-budget
   conversion. `runner.py --max-tokens` is a total Gemini output/thinking budget:
   the adapter caps each Interactions API request at 65,536 output tokens and
@@ -212,17 +212,17 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
 - Grok uses xAI's hosted Responses endpoint under `https://api.x.ai/v1`.
   Stateful continuation preserves reasoning through `previous_response_id`.
   `grok-4.3` is the general-purpose model and receives
-  `XAI_REASONING_EFFORT=high` by default. `grok-build-0.1` is the
-  coding-specialized baseline but still receives only the text olympiad prompt;
+  `XAI_REASONING_EFFORT=high` by default. The legacy `grok-build-0.1` is a
+  coding-specialized model but still receives only the text olympiad prompt;
   it must not get shell, repository tools, code execution or unsupported
   reasoning parameters. `grok-code-fast-1` canonicalizes to
   `grok-build-0.1`; Grok-1 is intentionally excluded because self-hosted
   inference is outside the project contract.
 - GLM uses Z.AI's OpenAI-compatible endpoint
   `https://api.z.ai/api/paas/v4/`. `glm-5.2` is the paid flagship and gets
-  thinking plus `reasoning_effort=max`; `glm-4.7-flash` is the official free
-  hosted model and gets thinking when supported, but not the GLM-5.2-only
-  reasoning effort field. `glm-4.7-flashx` is not part of the active benchmark.
+  thinking plus `reasoning_effort=max`; the legacy `glm-4.7-flash` remains
+  callable explicitly and gets thinking when supported, but not the GLM-5.2-only
+  reasoning effort field. Neither Flash ID is part of the active benchmark.
   Empty visible responses continue with exact preserved thinking rather than
   discarding the returned reasoning trace.
 

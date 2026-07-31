@@ -1670,46 +1670,32 @@ class ScoringWebTests(unittest.TestCase):
     def test_active_model_catalog_contains_only_strong_models(self) -> None:
         expected = {
             "openai:gpt-5.5",
-            "openai:gpt-5.4-mini",
             "anthropic:claude-opus-4-8",
             "anthropic:claude-haiku-4-5-20251001",
             "deepseek:deepseek-v4-pro",
-            "deepseek:deepseek-v4-flash",
             "google:gemini-3.1-pro-preview",
-            "google:gemini-3.5-flash",
             "gigachat:GigaChat-2-Max",
-            "gigachat:GigaChat-2",
             "xai:grok-4.3",
-            "xai:grok-build-0.1",
             "zai:glm-5.2",
-            "zai:glm-4.7-flash",
             "yandexgpt:yandexgpt-5.1",
-            "yandexgpt:yandexgpt-5-lite",
         }
         expected_order = [
             "anthropic:claude-opus-4-8",
             "anthropic:claude-haiku-4-5-20251001",
             "deepseek:deepseek-v4-pro",
-            "deepseek:deepseek-v4-flash",
             "google:gemini-3.1-pro-preview",
-            "google:gemini-3.5-flash",
             "gigachat:GigaChat-2-Max",
-            "gigachat:GigaChat-2",
             "xai:grok-4.3",
-            "xai:grok-build-0.1",
             "zai:glm-5.2",
-            "zai:glm-4.7-flash",
             "openai:gpt-5.5",
-            "openai:gpt-5.4-mini",
             "yandexgpt:yandexgpt-5.1",
-            "yandexgpt:yandexgpt-5-lite",
         ]
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
         self.assertEqual(runner.active_model_specs(), expected_order)
         self.assertEqual(runner.requested_aliases("all"), expected_order)
-        self.assertEqual(len(runner.requested_aliases("all")), 16)
-        self.assertEqual(len(set(runner.requested_aliases("all"))), 16)
+        self.assertEqual(len(runner.requested_aliases("all")), 9)
+        self.assertEqual(len(set(runner.requested_aliases("all"))), 9)
         for alias, provider in {
             "gemini": "google",
             "google": "google",
@@ -1752,7 +1738,7 @@ class ScoringWebTests(unittest.TestCase):
         groups = competition["model_groups"]
         self.assertEqual([group["provider"] for group in groups], [item[0] for item in expected_groups])
         self.assertEqual([group["label"] for group in groups], [item[1] for item in expected_groups])
-        self.assertTrue(all(len(group["models"]) == 2 for group in groups))
+        self.assertEqual([len(group["models"]) for group in groups], [2, 1, 1, 1, 1, 1, 1, 1])
         for group, (provider, _label, versions) in zip(groups, expected_groups, strict=True):
             self.assertEqual([model["model_id"] for model in group["models"]], versions)
             self.assertEqual([model["model_key"] for model in group["models"]], [f"{provider}:{model}" for model in versions])
@@ -1768,19 +1754,12 @@ class ScoringWebTests(unittest.TestCase):
             "claude-opus-4-8": "Opus 4.8",
             "claude-haiku-4-5-20251001": "Haiku 4.5",
             "deepseek-v4-pro": "V4 Pro",
-            "deepseek-v4-flash": "V4 Flash",
             "gemini-3.1-pro-preview": "3.1 Pro",
-            "gemini-3.5-flash": "3.5 Flash",
             "GigaChat-2-Max": "2 Max",
-            "GigaChat-2": "2",
             "grok-4.3": "4.3",
-            "grok-build-0.1": "Build 0.1",
             "glm-5.2": "5.2",
-            "glm-4.7-flash": "4.7 Flash",
             "gpt-5.5": "GPT-5.5",
-            "gpt-5.4-mini": "GPT-5.4 mini",
             "yandexgpt-5.1": "5.1",
-            "yandexgpt-5-lite": "5 Lite",
         }
         actual = {column["model_id"]: column["short_label"] for column in columns.values()}
         for model_id, short_label in expected.items():
@@ -1802,26 +1781,19 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(len(parser.header_rows), 2)
         provider_headers = parser.header_rows[0][1:]
         self.assertEqual([cell["attrs"].get("scope") for cell in provider_headers], ["colgroup"] * 8)
-        self.assertEqual([cell["attrs"].get("colspan") for cell in provider_headers], ["2"] * 8)
+        self.assertEqual([cell["attrs"].get("colspan") for cell in provider_headers], ["2", "1", "1", "1", "1", "1", "1", "1"])
         self.assertEqual([cell["text"] for cell in provider_headers], ["Claude", "DeepSeek", "Gemini", "GigaChat", "Grok", "GLM", "OpenAI", "Яндекс"])
 
         expected_links = [
             ("anthropic:claude-opus-4-8", "claude-opus-4-8", "Opus 4.8"),
             ("anthropic:claude-haiku-4-5-20251001", "claude-haiku-4-5-20251001", "Haiku 4.5"),
             ("deepseek:deepseek-v4-pro", "deepseek-v4-pro", "V4 Pro"),
-            ("deepseek:deepseek-v4-flash", "deepseek-v4-flash", "V4 Flash"),
             ("google:gemini-3.1-pro-preview", "gemini-3.1-pro-preview", "3.1 Pro"),
-            ("google:gemini-3.5-flash", "gemini-3.5-flash", "3.5 Flash"),
             ("gigachat:GigaChat-2-Max", "GigaChat-2-Max", "2 Max"),
-            ("gigachat:GigaChat-2", "GigaChat-2", "2"),
             ("xai:grok-4.3", "grok-4.3", "4.3"),
-            ("xai:grok-build-0.1", "grok-build-0.1", "Build 0.1"),
             ("zai:glm-5.2", "glm-5.2", "5.2"),
-            ("zai:glm-4.7-flash", "glm-4.7-flash", "4.7 Flash"),
             ("openai:gpt-5.5", "gpt-5.5", "GPT-5.5"),
-            ("openai:gpt-5.4-mini", "gpt-5.4-mini", "GPT-5.4 mini"),
             ("yandexgpt:yandexgpt-5.1", "yandexgpt-5.1", "5.1"),
-            ("yandexgpt:yandexgpt-5-lite", "yandexgpt-5-lite", "5 Lite"),
         ]
         self.assertEqual([link["text"] for link in parser.model_links], [item[2] for item in expected_links])
         for link, (model_key, model_id, short_label) in zip(parser.model_links, expected_links, strict=True):
@@ -1860,10 +1832,10 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("competition-matrix-wrap", parser.wrapper_classes)
         self.assertIn("competition-matrix", parser.table_attrs.get("class", ""))
         self.assertEqual(sum("competition-matrix-problem-column" in classes for classes in parser.cols), 1)
-        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in parser.cols), 16)
+        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in parser.cols), 9)
         self.assertNotIn("max-height", parser.table_attrs.get("style", ""))
         self.assertEqual(len(parser.body_rows), 1)
-        self.assertEqual(len(parser.body_rows[0]["model_cell_hrefs"]), 16)
+        self.assertEqual(len(parser.body_rows[0]["model_cell_hrefs"]), 9)
 
         catalog = build_catalog(
             competitions_dir=self.competitions_dir,
@@ -1879,7 +1851,7 @@ class ScoringWebTests(unittest.TestCase):
         css = Path("scoring/templates/base.html").read_text(encoding="utf-8")
         self.assertRegex(css, r"\.competition-matrix-wrap\s*\{[^}]*max-height:\s*none")
         self.assertRegex(css, r"\.competition-matrix\s*\{[^}]*width:\s*max-content")
-        self.assertRegex(css, r"\.competition-matrix\s*\{[^}]*86px \* 16")
+        self.assertRegex(css, r"\.competition-matrix\s*\{[^}]*86px \* 9")
         self.assertRegex(css, r"\.competition-matrix th:first-child,\s*\.competition-matrix td:first-child\s*\{[^}]*min-width:\s*200px")
         self.assertRegex(css, r"\.competition-matrix-model-column\s*\{[^}]*width:\s*86px")
         self.assertRegex(css, r"\.competition-matrix \.matrix-cell\s*\{[^}]*min-width:\s*0")
@@ -1940,7 +1912,7 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("competition-matrix-wrap", checks.wrapper_classes)
         self.assertIn("competition-matrix", checks.table_attrs.get("class", ""))
         self.assertEqual(sum("competition-matrix-problem-column" in classes for classes in checks.cols), 1)
-        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in checks.cols), 16)
+        self.assertEqual(sum("competition-matrix-model-column" in classes for classes in checks.cols), 9)
 
         catalog = build_catalog(
             competitions_dir=self.competitions_dir,
@@ -2057,7 +2029,7 @@ class ScoringWebTests(unittest.TestCase):
             404,
         )
 
-    def test_active_budget_model_creates_scoring_column(self) -> None:
+    def test_retired_budget_model_does_not_create_scoring_column(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(model_id="gpt-5.4-mini", result_id="res_budget", run_id="run_budget")
         self.write_run(
@@ -2075,7 +2047,7 @@ class ScoringWebTests(unittest.TestCase):
         )
         competition = catalog["competition_map"]["math_2026"]
         model_keys = [column["model_key"] for column in competition["model_columns"]]
-        self.assertIn("openai:gpt-5.4-mini", model_keys)
+        self.assertNotIn("openai:gpt-5.4-mini", model_keys)
         self.assertIn("yandexgpt:yandexgpt-5.1", model_keys)
 
         problem = competition["problems"]["task_01"]
@@ -2084,25 +2056,24 @@ class ScoringWebTests(unittest.TestCase):
             for state in problem["model_states"]
         }
         self.assertEqual(active_attempts["openai:gpt-5.5"], 0)
-        self.assertEqual(active_attempts["openai:gpt-5.4-mini"], 1)
+        self.assertNotIn("openai:gpt-5.4-mini", active_attempts)
         self.assertEqual(active_attempts["yandexgpt:yandexgpt-5.1"], 1)
 
         html = self.client.get("/competition/math_2026").get_data(as_text=True)
         parser = CompetitionMatrixParser()
         parser.feed(html)
-        budget_link = next(link for link in parser.model_links if link["attrs"].get("title") == "gpt-5.4-mini")
-        self.assertEqual(budget_link["text"], "GPT-5.4 mini")
-        self.assertIn("gpt-5.4-mini", budget_link["attrs"].get("aria-label", ""))
-        self.assertIn("gpt-5.4-mini", parser.tooltips[budget_link["attrs"]["aria-describedby"]])
+        self.assertFalse(any(link["attrs"].get("title") == "gpt-5.4-mini" for link in parser.model_links))
 
     def test_new_provider_columns_exist_without_logs_and_fake_logs_do_not_merge(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
-        new_models = [
+        active_models = [
             ("google", "gemini-3.1-pro-preview", "res_gemini_pro"),
-            ("google", "gemini-3.5-flash", "res_gemini_flash"),
             ("xai", "grok-4.3", "res_grok"),
-            ("xai", "grok-build-0.1", "res_grok_build"),
             ("zai", "glm-5.2", "res_glm_paid"),
+        ]
+        hidden_models = [
+            ("google", "gemini-3.5-flash", "res_gemini_flash"),
+            ("xai", "grok-build-0.1", "res_grok_build"),
             ("zai", "glm-4.7-flash", "res_glm_free"),
         ]
         empty_catalog = build_catalog(
@@ -2112,14 +2083,14 @@ class ScoringWebTests(unittest.TestCase):
         )
         empty_problem = empty_catalog["competition_map"]["math_2026"]["problems"]["task_01"]
         empty_states = {state["model_key"]: state for state in empty_problem["model_states"]}
-        for provider, model_id, _result_id in new_models:
+        for provider, model_id, _result_id in active_models:
             key = f"{provider}:{model_id}"
             self.assertIn(key, empty_states)
             self.assertTrue(empty_states[key]["configured"])
             self.assertEqual(empty_states[key]["status"], "not_run")
             self.assertEqual(empty_states[key]["cell_text"], "")
 
-        for index, (provider, model_id, result_id) in enumerate(new_models, start=1):
+        for index, (provider, model_id, result_id) in enumerate(active_models + hidden_models, start=1):
             self.write_run(
                 provider=provider,
                 model_id=model_id,
@@ -2142,13 +2113,14 @@ class ScoringWebTests(unittest.TestCase):
         )
         problem = catalog["competition_map"]["math_2026"]["problems"]["task_01"]
         states = {state["model_key"]: state for state in problem["model_states"]}
-        for provider, model_id, result_id in new_models:
+        for provider, model_id, result_id in active_models:
             key = f"{provider}:{model_id}"
-            self.assertEqual(states[key]["attempt_count"], 1 if model_id != "grok-build-0.1" else 2)
+            self.assertEqual(states[key]["attempt_count"], 1)
             answers = [attempt["result"]["answer"] for attempt in states[key]["attempts"]]
-            if model_id == "grok-build-0.1":
-                self.assertIn("ANSWER_GROK_LEGACY_ALIAS", answers)
             self.assertTrue(any(result_id in attempt["result_id"] for attempt in states[key]["attempts"]))
+        for provider, model_id, _result_id in hidden_models:
+            self.assertNotIn(f"{provider}:{model_id}", states)
+        self.assertNotIn("ANSWER_GROK_LEGACY_ALIAS", [attempt["result"]["answer"] for state in states.values() for attempt in state["attempts"]])
         self.assertNotIn("xai:grok-code-fast-1", states)
 
         for key in states:

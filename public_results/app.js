@@ -2,6 +2,17 @@
   "use strict";
 
   const sourceBaselineData = window.RESULTS_DATA;
+  const visibleBaselineModels = new Set([
+    "GPT-5.5",
+    "Claude Opus 4.8",
+    "Claude Haiku 4.5",
+    "DeepSeek V4 Pro",
+    "Gemini 3.1 Pro",
+    "GigaChat 2 Max",
+    "Grok 4.3",
+    "GLM 5.2",
+    "YandexGPT 5.1"
+  ]);
   const baselineData = {
     ...sourceBaselineData,
     competitions: sourceBaselineData.competitions.map(normalizeBaselineCompetition)
@@ -56,21 +67,23 @@
 
   function normalizeBaselineCompetition(competition) {
     if (competition.scoreFormat !== "percent") return competition;
-    const participants = competition.participants.map((participant) => {
-      const scores = (participant.scores || []).map((score, index) => {
-        if (score === null || score === undefined) return score;
-        const maxScore = Number(competition.tasks[index]?.maxScore || 100);
-        return Math.round((Number(score) / 100 * maxScore) * 10) / 10;
+    const participants = competition.participants
+      .filter((participant) => participant.type === "team" || visibleBaselineModels.has(participant.name))
+      .map((participant) => {
+        const scores = (participant.scores || []).map((score, index) => {
+          if (score === null || score === undefined) return score;
+          const maxScore = Number(competition.tasks[index]?.maxScore || 100);
+          return Math.round((Number(score) / 100 * maxScore) * 10) / 10;
+        });
+        const numericScores = scores.filter((score) => typeof score === "number");
+        return {
+          ...participant,
+          scores,
+          points: numericScores.length
+            ? numericScores.reduce((total, score) => total + score, 0)
+            : null
+        };
       });
-      const numericScores = scores.filter((score) => typeof score === "number");
-      return {
-        ...participant,
-        scores,
-        points: numericScores.length
-          ? numericScores.reduce((total, score) => total + score, 0)
-          : null
-      };
-    });
     return { ...competition, participants };
   }
 

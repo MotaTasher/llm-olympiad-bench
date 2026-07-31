@@ -2,6 +2,8 @@
 
 Этот адаптер запускает GigaChat через общий `runner.py` в text-only режиме: без `tools`, `functions`, `function_call` и внешних цепочек.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `GIGACHAT_MAX_TOKENS` остаётся fallback-настройкой.
+Активная колонка бенчмарка — `GigaChat-2-Max`; `GigaChat-2` оставлен как
+явно запускаемая legacy-версия.
 
 ## 1. Как получить ключи
 

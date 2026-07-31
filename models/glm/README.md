@@ -9,9 +9,9 @@ https://api.z.ai/api/paas/v4/
 Active models:
 
 - `glm-5.2` — flagship paid model; thinking is enabled and `reasoning_effort=max` is sent.
-- `glm-4.7-flash` — official free hosted lightweight model; thinking is enabled when supported, but `reasoning_effort` is not sent.
 
-`glm-4.7-flashx` is not part of the active benchmark and does not receive the free pricing rule.
+`glm-4.7-flash` remains explicitly callable as a legacy model; neither it nor
+`glm-4.7-flashx` creates an active benchmark column.
 
 ## 1. How to get an API key
 

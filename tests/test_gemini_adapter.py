@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from models.common import SYSTEM_PROMPT
 from models.gemini import GeminiModel
-from models.gemini.versions import VERSIONS
+from models.gemini.versions import LEGACY_VERSIONS, VERSIONS
 
 
 class FakeUsage:
@@ -94,7 +94,7 @@ class GeminiAdapterTests(unittest.TestCase):
 
     def test_default_override_versions_and_text_only_request(self) -> None:
         self.assertEqual(GeminiModel().model_id, VERSIONS[0])
-        self.assertEqual(GeminiModel(VERSIONS[1]).model_id, VERSIONS[1])
+        self.assertEqual(GeminiModel(LEGACY_VERSIONS[0]).model_id, LEGACY_VERSIONS[0])
         with self.fake_google_modules(), patch.dict("os.environ", {"GEMINI_API_KEY": "test-key"}, clear=True):
             result = GeminiModel("gemini-3.1-pro-preview").solve("problem", max_tokens=123)
 
@@ -257,9 +257,9 @@ class GeminiAdapterTests(unittest.TestCase):
         self.assertEqual(result.raw_response["usage"]["total_thought_tokens"], 19)
         self.assertEqual(result.raw_response["usage"]["billable_output_tokens"], 36)
         self.assertGreater(result.cost_usd, 0)
-        self.assertEqual(result.cost["output"], 0.0000765)
-        self.assertEqual(result.cost["reasoning"], 0.0000855)
-        self.assertEqual(result.cost["total"], 0.000168)
+        self.assertEqual(result.cost["output"], 0.000153)
+        self.assertEqual(result.cost["reasoning"], 0.000171)
+        self.assertEqual(result.cost["total"], 0.00033675)
         logged = result.to_log_dict()
         last_usage = logged["raw_response"]["last_response"]["usage"]
         self.assertEqual(last_usage["total_thought_tokens"], 19)

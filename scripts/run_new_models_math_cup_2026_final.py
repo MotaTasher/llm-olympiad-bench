@@ -24,11 +24,8 @@ DEFAULT_LOGS_DIR = "/opt/olympiad-scorer/shared/logs"
 
 MODEL_CAPS = {
     "google:gemini-3.1-pro-preview": 256_000,
-    "google:gemini-3.5-flash": 256_000,
     "xai:grok-4.3": 256_000,
-    "xai:grok-build-0.1": 256_000,
     "zai:glm-5.2": 128_000,
-    "zai:glm-4.7-flash": 128_000,
 }
 
 DEFAULT_PROVIDER_WORKERS = {

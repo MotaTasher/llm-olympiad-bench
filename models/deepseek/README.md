@@ -2,6 +2,8 @@
 
 Этот адаптер запускает DeepSeek через OpenAI-compatible Chat Completions API в text-only режиме: без `tools`, function calling, поиска и внешних цепочек.
 Единый лимит completion-токенов задаётся через `runner.py --max-tokens`; `DEEPSEEK_MAX_TOKENS` остаётся fallback-настройкой.
+Активная колонка бенчмарка — `deepseek-v4-pro`; `deepseek-v4-flash` оставлен
+как явно запускаемая legacy-версия.
 
 ## 1. Как получить ключ
 

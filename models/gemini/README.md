@@ -5,7 +5,9 @@ Runs Google Gemini through the official `google-genai` package in text-only mode
 Active models:
 
 - `gemini-3.1-pro-preview` — preview Pro model, default high thinking level.
-- `gemini-3.5-flash` — Flash model that may have Free Tier/API Studio allowance, but runner telemetry uses paid-list estimates.
+
+`gemini-3.5-flash` remains explicitly callable as a legacy model, but it no
+longer creates a default scoring or public-results column.
 
 ## 1. How to get an API key
 

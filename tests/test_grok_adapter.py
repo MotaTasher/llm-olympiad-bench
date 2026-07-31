@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from models.common import SYSTEM_PROMPT
 from models.grok import GrokModel
-from models.grok.versions import VERSIONS
+from models.grok.versions import LEGACY_VERSIONS, VERSIONS
 from scoring.repository import canonical_model_key, configured_model_columns
 
 
@@ -78,7 +78,7 @@ class GrokAdapterTests(unittest.TestCase):
 
     def test_default_override_versions_and_grok_43_reasoning(self) -> None:
         self.assertEqual(GrokModel().model_id, VERSIONS[0])
-        self.assertEqual(GrokModel(VERSIONS[1]).model_id, VERSIONS[1])
+        self.assertEqual(GrokModel(LEGACY_VERSIONS[0]).model_id, LEGACY_VERSIONS[0])
         with self.fake_openai_module(), patch.dict("os.environ", {"XAI_API_KEY": "test-key"}, clear=True):
             result = GrokModel("grok-4.3").solve("problem", max_tokens=123)
 
@@ -107,7 +107,7 @@ class GrokAdapterTests(unittest.TestCase):
         self.assertNotIn("reasoning", call)
         self.assertEqual(result.requested_model_id, "grok-build-0.1")
         self.assertEqual(canonical_model_key("xai", "grok-code-fast-1"), "xai:grok-build-0.1")
-        self.assertIn("xai:grok-build-0.1", configured_model_columns())
+        self.assertNotIn("xai:grok-build-0.1", configured_model_columns())
         self.assertNotIn("xai:grok-code-fast-1", configured_model_columns())
 
     def test_empty_visible_answer_is_error(self) -> None:

@@ -4,6 +4,8 @@
 
 Адаптер работает через basic completion endpoint в text-only режиме: без tools, function calling, поиска, кода и внешних цепочек.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `YANDEX_MAX_TOKENS` остаётся fallback-настройкой.
+Активная колонка бенчмарка — `yandexgpt-5.1`; `yandexgpt-5-lite` оставлен как
+явно запускаемая legacy-версия.
 
 ## 1. Как получить ключ
 

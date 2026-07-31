@@ -2,11 +2,10 @@
 # Source: https://platform.claude.com/docs/en/about-claude/models/overview
 # Source: https://platform.claude.com/docs/en/about-claude/model-deprecations
 # Source: https://platform.claude.com/docs/en/api/models/list
-# Updated: 2026-06-29
+# Updated: 2026-07-31
 
-# Keep the scoring UI focused: strongest paid Claude plus the strongest
-# budget/Haiku Claude. Anthropic API access is billed by usage; there is no
-# separate free API model ID in this adapter.
+# Anthropic is the one provider with two active benchmark columns: the
+# strongest Opus and the current Haiku comparison model.
 
 VERSIONS = [
     "claude-opus-4-8",

@@ -105,10 +105,10 @@ Responses requests with `previous_response_id`; Gemini uses
 `clear_thinking=false`. Each stops on the first non-empty visible output. An
 exhausted budget with no visible output is an adapter error. Other adapters
 receive `--max-tokens` as one provider-specific output/completion ceiling.
-The active benchmark set includes paid and budget/free-tier models per
-provider. The current site/runner configured set is 8 provider groups and 16
-active model columns: Claude, DeepSeek, Gemini, GigaChat, Grok, GLM, OpenAI and
-Yandex. Retired IDs may remain documented as legacy versions but do not create
+The active benchmark set keeps one flagship per provider, except Anthropic,
+which keeps Opus and Haiku. The current site/runner configured set is 8 provider
+groups and 9 active model columns: Claude, DeepSeek, Gemini, GigaChat, Grok,
+GLM, OpenAI and Yandex. Retired IDs may remain documented as legacy versions but do not create
 scoring UI columns from historical logs. Legacy `grok-code-fast-1` results are
 canonicalized into `xai:grok-build-0.1`; they do not create a separate column.
 

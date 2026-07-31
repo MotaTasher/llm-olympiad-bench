@@ -4,14 +4,13 @@
 #   https://developers.openai.com/api/docs/models/all
 #   https://developers.openai.com/api/docs/deprecations
 #   https://developers.openai.com/api/reference/resources/models/methods/list
-# Updated: 2026-06-29
+# Updated: 2026-07-31
 #
 # Scope:
 #   Active OpenAI API model IDs for Olympiad Scorer.
-#   Keep the strongest paid model and the strongest budget model that the
-#   current Responses API adapter can call. Image, audio, video, embeddings,
-#   moderation, realtime, search, and open-weight-only models are intentionally
-#   excluded.
+#   Keep only the strongest paid model in the active benchmark. Image, audio,
+#   video, embeddings, moderation, realtime, search, and open-weight-only
+#   models are intentionally excluded.
 #
 # Programmatic check:
 #   OpenAI has an authenticated public list-models endpoint.
@@ -37,12 +36,8 @@
 VERSIONS = [
     # Strongest paid reasoning model.
     "gpt-5.5",
-
-    # OpenAI API does not expose a separate free model ID for this adapter.
-    # Use the strongest current mini/budget model as the low-cost column.
-    "gpt-5.4-mini",
 ]
 
-LEGACY_VERSIONS = []
+LEGACY_VERSIONS = ["gpt-5.4-mini"]
 
 DEFAULT = VERSIONS[0]

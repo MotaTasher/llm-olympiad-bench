@@ -143,7 +143,7 @@ On `/competition/<competition_id>`, the matrix wrapper uses scoped
 `competition-matrix-wrap` / `competition-matrix` classes. It does not impose a
 fixed or viewport-derived vertical height; the page scrolls vertically, while
 the wrapper keeps horizontal scrolling for narrow screens and for the current
-16 active columns. The table uses compact fixed model columns and must not
+9 active columns. The table uses compact fixed model columns and must not
 expand from full model IDs in tooltips. The first column is scoped for long
 wrapping task titles and shows only the problem title as the anonymous-scoring
 link, prefixed by the problem number when one exists. It does not render problem

@@ -9,9 +9,10 @@ https://api.x.ai/v1
 Active models:
 
 - `grok-4.3` — general-purpose reasoning model; default `XAI_REASONING_EFFORT=high`.
-- `grok-build-0.1` — coding-specialized baseline, still used only as a text solver. No shell, repository tools or code execution are attached.
 
-`grok-code-fast-1` is treated only as a legacy alias and canonicalizes to `grok-build-0.1`; it is not a separate benchmark column.
+`grok-build-0.1` remains explicitly callable as a legacy text-only model.
+`grok-code-fast-1` is a legacy alias that canonicalizes to it; neither ID
+creates a benchmark column.
 
 ## 1. How to get an API key
 

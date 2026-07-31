@@ -65,10 +65,9 @@ main,
   font-size: 12px;
 }
 
-.brand picture,
 .brand img {
   display: block;
-  width: 178px;
+  width: 149px;
   height: auto;
 }
 
@@ -119,7 +118,7 @@ h1, h2, h3 {
   z-index: -1;
   width: min(58vw, 820px);
   background-color: var(--acid);
-  background-image: url("assets/formula-pattern-desktop.webp");
+  background-image: url("assets/formula-pattern-desktop.svg");
   background-position: center;
   background-size: cover;
   clip-path: polygon(8% 10%, 28% 3%, 52% 7%, 73% 2%, 94% 15%, 100% 38%, 95% 66%, 100% 89%, 77% 98%, 50% 93%, 24% 99%, 3% 84%, 8% 61%, 0 37%);
@@ -654,7 +653,7 @@ h1, h2, h3 {
   font-size: 13px;
 }
 
-.site-footer img { display: block; width: 178px; height: auto; }
+.site-footer img { display: block; width: 149px; height: auto; }
 .site-footer p { margin: 0; }
 .site-footer > a:last-child:hover { color: var(--ink); }
 
@@ -678,7 +677,7 @@ h1, h2, h3 {
   .leaderboard-intro,
   .competition-picker { min-width: 0; }
   .site-header { min-height: 82px; }
-  .brand picture, .brand img { width: 32px; }
+  .brand img { width: 118px; }
   .brand span { display: none; }
   nav { gap: 16px; }
   nav a { font-size: 12px; }
@@ -691,7 +690,7 @@ h1, h2, h3 {
     right: -115px;
     bottom: 0;
     width: 390px;
-    background-image: url("assets/formula-pattern-mobile.webp");
+    background-image: url("assets/formula-pattern-mobile.svg");
     opacity: .7;
   }
   .intro-copy { max-width: calc(100% - 28px); padding: 17px 18px; font-size: 14px; }

@@ -6,6 +6,8 @@ This is a standalone local prototype for the public CS Space Arena. It contains:
 - `competitions.html`: compact buttons for available competition releases;
 - `solution.html`: full-width model and official solution reading layout;
 - `data.js`: fallback release, team and catalog data;
+- `assets/csspace-logo.svg`: local vector CS Space logo used in headers and footers;
+- `assets/formula-pattern-{desktop,mobile}.svg`: original vector formula backgrounds;
 - `generated/`: ignored public export created from real logs and sidecars;
 - `app.js`: release switching, generated-data merge and page rendering.
 
@@ -21,7 +23,7 @@ python3 -m http.server 8080 --directory public_results
 
 Then visit <http://127.0.0.1:8080>.
 
-The generated view includes all 16 configured model rows for qualifying and
+The generated view includes all 9 configured model rows for qualifying and
 final. A cell uses the newest successful evaluated attempt when one exists and
 otherwise the newest successful attempt. Unreviewed answers remain clickable
 without a score. Scores from multiple evaluations are normalized and combined
@@ -64,5 +66,5 @@ which is the sum of all published absolute task scores, not the count of
 perfect answers. Cost/prize, sum, token and accuracy columns precede the task
 columns. Task scores fill the complete table cell, aggregate values use a
 larger type size, and competition-level costs are displayed to cents. The
-main-page hero uses optimized WebP derivatives of the supplied CS Space 2026
-formula pattern SVGs for desktop and mobile layouts.
+main-page hero uses the supplied CS Space 2026 formula-pattern SVGs directly
+for desktop and mobile layouts; the logo is also served as a local SVG.

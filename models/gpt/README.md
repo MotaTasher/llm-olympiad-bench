@@ -4,6 +4,8 @@
 без `tools`, поиска, code interpreter и function calling.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`;
 `OPENAI_MAX_COMPLETION_TOKENS` остаётся fallback-настройкой.
+Активная колонка бенчмарка — `gpt-5.5`; `gpt-5.4-mini` оставлен как
+явно запускаемая legacy-версия и по умолчанию не показывается.
 
 ## 1. Как получить ключ
 

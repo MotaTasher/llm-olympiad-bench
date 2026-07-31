@@ -50,7 +50,7 @@ python scripts/export_public_results.py
 
 The default output is the ignored `public_results/generated/` directory. The
 export contains both Math Cup 2026 stages as independent competition records,
-all 16 configured model rows, and one JSON document for every selected
+all 9 configured model rows, and one JSON document for every selected
 successful answer. The public UI selects exactly one record at a time through
 benchmark, year and stage buttons. For each model/problem cell the selection
 policy is:
@@ -175,9 +175,9 @@ python scripts/run_new_models_math_cup_2026_final.py
 python scripts/run_new_models_math_cup_2026_final.py --yes
 ```
 
-The script defaults to Math Cup 2026 final tasks and the six new active models:
-`google:gemini-3.1-pro-preview`, `google:gemini-3.5-flash`, `xai:grok-4.3`,
-`xai:grok-build-0.1`, `zai:glm-5.2` and `zai:glm-4.7-flash`. It is dry-run by
+The script defaults to Math Cup 2026 final tasks and the three active models
+owned by its adapters: `google:gemini-3.1-pro-preview`, `xai:grok-4.3` and
+`zai:glm-5.2`. It is dry-run by
 default, prints a cost estimate, and writes each `runner.py` stdout/stderr log
 under `run-output/new-models-2026-final/`. Run logs themselves go to the
 configured `--logs-dir`, normally `/opt/olympiad-scorer/shared/logs`.
@@ -188,14 +188,16 @@ For arbitrary competitions or one-off task batches, use the generic launcher:
 python scripts/run_model_batch.py \
   --competition math-cup-2026-qualifying \
   --problems 01 \
-  --models new
+  --models all
 ```
 
-`--models new` runs only the Gemini/Grok/GLM set; `--models all` runs every
-active configured model from `models/*/versions.py`. Without an explicit token
+`--models all` runs all 9 active configured models from
+`models/*/versions.py`. Without an explicit token
 budget the launcher uses its per-model defaults and cost estimates. An explicit
 `--max-tokens` overrides those defaults, including with a larger total budget;
 Grok and GLM split larger totals across preserved-state continuation requests.
+`--models new` is the narrower operational shortcut for only the three active
+Gemini/Grok/GLM flagships.
 Add `--detach --yes` on the server to start the run in a new session, write
 progress to `<output-dir>/launcher.log`, and allow the SSH connection to close
 without stopping child `runner.py` processes.

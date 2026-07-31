@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from models.common import SYSTEM_PROMPT
 from models.glm import GLMModel
-from models.glm.versions import VERSIONS
+from models.glm.versions import LEGACY_VERSIONS, VERSIONS
 from models.pricing import estimate_cost
 
 
@@ -125,7 +125,7 @@ class GLMAdapterTests(unittest.TestCase):
 
     def test_default_override_versions_and_glm_52_reasoning(self) -> None:
         self.assertEqual(GLMModel().model_id, VERSIONS[0])
-        self.assertEqual(GLMModel(VERSIONS[1]).model_id, VERSIONS[1])
+        self.assertEqual(GLMModel(LEGACY_VERSIONS[0]).model_id, LEGACY_VERSIONS[0])
         with self.fake_openai_module(), patch.dict("os.environ", {"ZAI_API_KEY": "test-key"}, clear=True):
             result = GLMModel("glm-5.2").solve("problem", max_tokens=123)
 
