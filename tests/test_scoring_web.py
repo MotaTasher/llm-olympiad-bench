@@ -1673,7 +1673,7 @@ class ScoringWebTests(unittest.TestCase):
             "anthropic:claude-fable-5",
             "anthropic:claude-opus-5",
             "deepseek:deepseek-v4-pro",
-            "google:gemini-3.5-flash",
+            "google:gemini-3.1-pro-preview",
             "gigachat:GigaChat-3-Ultra",
             "xai:grok-4.5",
             "zai:glm-5.2",
@@ -1683,7 +1683,7 @@ class ScoringWebTests(unittest.TestCase):
             "anthropic:claude-fable-5",
             "anthropic:claude-opus-5",
             "deepseek:deepseek-v4-pro",
-            "google:gemini-3.5-flash",
+            "google:gemini-3.1-pro-preview",
             "gigachat:GigaChat-3-Ultra",
             "xai:grok-4.5",
             "zai:glm-5.2",
@@ -1754,7 +1754,7 @@ class ScoringWebTests(unittest.TestCase):
             "claude-fable-5": "Fable 5",
             "claude-opus-5": "Opus 5",
             "deepseek-v4-pro": "V4 Pro",
-            "gemini-3.5-flash": "3.5 Flash",
+            "gemini-3.1-pro-preview": "3.1 Pro",
             "GigaChat-3-Ultra": "3 Ultra",
             "grok-4.5": "4.5",
             "glm-5.2": "5.2",
@@ -1788,7 +1788,7 @@ class ScoringWebTests(unittest.TestCase):
             ("anthropic:claude-fable-5", "claude-fable-5", "Fable 5"),
             ("anthropic:claude-opus-5", "claude-opus-5", "Opus 5"),
             ("deepseek:deepseek-v4-pro", "deepseek-v4-pro", "V4 Pro"),
-            ("google:gemini-3.5-flash", "gemini-3.5-flash", "3.5 Flash"),
+            ("google:gemini-3.1-pro-preview", "gemini-3.1-pro-preview", "3.1 Pro"),
             ("gigachat:GigaChat-3-Ultra", "GigaChat-3-Ultra", "3 Ultra"),
             ("xai:grok-4.5", "grok-4.5", "4.5"),
             ("zai:glm-5.2", "glm-5.2", "5.2"),
@@ -2067,12 +2067,12 @@ class ScoringWebTests(unittest.TestCase):
     def test_new_provider_columns_exist_without_logs_and_fake_logs_do_not_merge(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         active_models = [
-            ("google", "gemini-3.5-flash", "res_gemini_pro"),
+            ("google", "gemini-3.1-pro-preview", "res_gemini_pro"),
             ("xai", "grok-4.5", "res_grok"),
             ("zai", "glm-5.2", "res_glm_paid"),
         ]
         hidden_models = [
-            ("google", "gemini-3.1-pro-preview", "res_gemini_preview"),
+            ("google", "gemini-3.5-flash", "res_gemini_preview"),
             ("xai", "grok-build-0.1", "res_grok_build"),
             ("zai", "glm-4.7-flash", "res_glm_free"),
         ]
