@@ -6,6 +6,7 @@ import json
 import math
 import os
 import re
+import shutil
 import statistics
 import sys
 import tempfile
@@ -36,6 +37,50 @@ MODEL_NAME_PREFIXES = {
     "yandexgpt": "",
     "zai": "GLM",
 }
+
+PUBLIC_ASSET_PREFIX = "../../assets/"
+LOCAL_ASSET_REFERENCE = re.compile(r"(?<![A-Za-z0-9_./-])(?:\./)?assets/([A-Za-z0-9._/-]+)")
+INLINE_CODE_URL = re.compile(r"`(https?://[^`\s]+)`")
+BARE_URL = re.compile(r"(?<![\w\"'(/=:])https?://[^\s<>\]\[)]+")
+
+
+def rewrite_public_markdown(value: Any, *, competition_id: str) -> str:
+    """Make local competition assets and plain URLs work in solution documents."""
+    text = str(value or "")
+    asset_prefix = f"{PUBLIC_ASSET_PREFIX}{safe_component(competition_id, 'competition')}/"
+    text = LOCAL_ASSET_REFERENCE.sub(lambda match: asset_prefix + match.group(1), text)
+
+    # Marked renders Markdown links, but does not consistently autolink bare URLs.
+    # URLs already inside Markdown links or angle-bracket autolinks are left alone.
+    text = INLINE_CODE_URL.sub(lambda match: f"[{match.group(1)}]({match.group(1)})", text)
+    text = BARE_URL.sub(lambda match: f"[{match.group(0)}]({match.group(0)})", text)
+    return text
+
+
+def copy_public_assets(
+    *,
+    competition: dict[str, Any],
+    output_dir: Path,
+) -> None:
+    """Copy the competition's local assets into the generated public projection."""
+    problem_paths = [
+        Path(problem.get("path", ""))
+        for problem in competition.get("problems", {}).values()
+        if problem.get("path")
+    ]
+    if not problem_paths:
+        return
+    source_assets = problem_paths[0].parent / "assets"
+    if not source_assets.is_dir():
+        return
+    destination = output_dir / "assets" / safe_component(competition["competition_id"], "competition")
+    for source in source_assets.rglob("*"):
+        if not source.is_file():
+            continue
+        relative = source.relative_to(source_assets)
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
 
 
 def finite_number(value: Any) -> float | None:
@@ -180,8 +225,14 @@ def solution_document(
         "task": {
             "id": problem["problem_id"],
             "title": problem["problem_title"],
-            "statement": problem.get("statement") or "",
-            "officialSolution": problem.get("solution") or "",
+            "statement": rewrite_public_markdown(
+                problem.get("statement"),
+                competition_id=competition["competition_id"],
+            ),
+            "officialSolution": rewrite_public_markdown(
+                problem.get("solution"),
+                competition_id=competition["competition_id"],
+            ),
             "maxScore": int(max_score) if max_score.is_integer() else max_score,
         },
         "model": {
@@ -218,6 +269,7 @@ def export_competition(
     *,
     output_dir: Path,
 ) -> dict[str, Any]:
+    copy_public_assets(competition=competition, output_dir=output_dir)
     tasks = []
     task_max_scores: list[float] = []
     for index, problem_id in enumerate(competition["problem_order"], start=1):

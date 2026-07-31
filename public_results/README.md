@@ -11,6 +11,12 @@ This is a standalone local prototype for the public CS Space Arena. It contains:
 - `generated/`: ignored public export created from real logs and sidecars;
 - `app.js`: release switching, generated-data merge and page rendering.
 
+The exporter copies each selected competition's `assets/` directory into
+`generated/assets/<competition-id>/` and rewrites `assets/...` references in
+published statements and official solutions. It also turns plain HTTP(S)
+links, including links accidentally wrapped in inline code, into clickable
+Markdown links. The CS Space SVG is used as the favicon on every public page.
+
 It deliberately does not import Flask, modify scoring routes, or write to run
 logs and evaluation sidecars.
 
