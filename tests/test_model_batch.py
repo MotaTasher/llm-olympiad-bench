@@ -31,6 +31,7 @@ class ModelBatchTests(unittest.TestCase):
                 "gigachat:GigaChat-3-Ultra",
                 "xai:grok-4.5",
                 "openai:gpt-5.6-sol",
+                "yandexgpt:aliceai-llm",
             ],
         )
 

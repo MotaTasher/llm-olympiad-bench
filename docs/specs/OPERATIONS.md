@@ -175,9 +175,9 @@ python scripts/run_new_models_math_cup_2026_final.py
 python scripts/run_new_models_math_cup_2026_final.py --yes
 ```
 
-The script defaults to Math Cup 2026 final tasks and the six newly selected
+The script defaults to Math Cup 2026 final tasks and the seven newly selected
 models: `claude-fable-5`, `claude-opus-5`, `gemini-3.5-flash`,
-`GigaChat-3-Ultra`, `grok-4.5` and `gpt-5.6-sol`. It is dry-run by
+`GigaChat-3-Ultra`, `grok-4.5`, `gpt-5.6-sol` and `aliceai-llm`. It is dry-run by
 default, prints a cost estimate, and writes each `runner.py` stdout/stderr log
 under `run-output/new-models-2026-final/`. Run logs themselves go to the
 configured `--logs-dir`, normally `/opt/olympiad-scorer/shared/logs`.
@@ -196,7 +196,7 @@ python scripts/run_model_batch.py \
 provider/model defaults and cost estimates. An explicit `--max-tokens`
 overrides those defaults for every selected pair;
 Grok and GLM split larger totals across preserved-state continuation requests.
-`--models new` is the narrower operational shortcut for only the six models
+`--models new` is the narrower operational shortcut for only the seven models
 introduced in the 2026-08-01 snapshot.
 Add `--detach --yes` on the server to start the run in a new session, write
 progress to `<output-dir>/launcher.log`, and allow the SSH connection to close

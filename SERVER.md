@@ -148,7 +148,7 @@ schema-v2 run-log прямо в `/opt/olympiad-scorer/shared/logs`. Логи std
 
 ## Server-side run for the 2026-08-01 flagships
 
-Для шести моделей, добавленных в snapshot 2026-08-01, есть отдельный launcher с live progress через
+Для семи моделей, добавленных в snapshot 2026-08-01, есть отдельный launcher с live progress через
 `tqdm`. По умолчанию он делает dry-run, показывает пары и максимальную оценку
 стоимости:
 

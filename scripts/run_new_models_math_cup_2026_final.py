@@ -31,6 +31,7 @@ MODEL_CAPS = {
     "gigachat:GigaChat-3-Ultra": 8_192,
     "xai:grok-4.5": 256_000,
     "openai:gpt-5.6-sol": 128_000,
+    "yandexgpt:aliceai-llm": 8_000,
 }
 
 DEFAULT_PROVIDER_WORKERS = {
@@ -39,6 +40,7 @@ DEFAULT_PROVIDER_WORKERS = {
     "gigachat": 1,
     "openai": 1,
     "xai": 2,
+    "yandexgpt": 1,
     "zai": 2,
 }
 
