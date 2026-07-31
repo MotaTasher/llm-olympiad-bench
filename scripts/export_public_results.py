@@ -38,7 +38,7 @@ MODEL_NAME_PREFIXES = {
     "zai": "GLM",
 }
 
-PUBLIC_ASSET_PREFIX = "../../assets/"
+PUBLIC_ASSET_PREFIX = "generated/assets/"
 LOCAL_ASSET_REFERENCE = re.compile(r"(?<![A-Za-z0-9_./-])(?:\./)?assets/([A-Za-z0-9._/-]+)")
 INLINE_CODE_URL = re.compile(r"`(https?://[^`\s]+)`")
 BARE_URL = re.compile(r"(?<![\w\"'(/=:])https?://[^\s<>\]\[)]+")
