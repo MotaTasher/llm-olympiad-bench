@@ -507,6 +507,17 @@ h1, h2, h3 {
   line-height: 1.5;
 }
 
+.launch-rules {
+  max-width: 700px;
+  margin: 0;
+  padding-left: 1.2em;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.launch-rules li + li { margin-top: 10px; }
+
 .catalog-intro {
   max-width: 1120px;
   padding: 130px 0 55px;

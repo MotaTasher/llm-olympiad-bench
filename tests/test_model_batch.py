@@ -44,6 +44,22 @@ class ModelBatchTests(unittest.TestCase):
             256_000,
         )
 
+    def test_active_models_share_budget_except_documented_api_caps(self) -> None:
+        expected_caps = {
+            "anthropic:claude-fable-5": 128_000,
+            "anthropic:claude-opus-5": 128_000,
+            "deepseek:deepseek-v4-pro": 128_000,
+            "google:gemini-3.5-flash": 128_000,
+            "gigachat:GigaChat-3-Ultra": 8_192,
+            "xai:grok-4.5": 128_000,
+            "zai:glm-5.2": 128_000,
+            "openai:gpt-5.6-sol": 128_000,
+            "yandexgpt:aliceai-llm": 8_000,
+        }
+        for model, cap in expected_caps.items():
+            with self.subTest(model=model):
+                self.assertEqual(run_model_batch.cap_for(model, None), cap)
+
 
 if __name__ == "__main__":
     unittest.main()

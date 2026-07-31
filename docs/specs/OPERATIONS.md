@@ -116,9 +116,11 @@ systemctl status public-results-export.timer --no-pager
 journalctl -u public-results-export.service -n 50 --no-pager
 ```
 
-The Nginx `/results/` location must disable client caching with
-`Cache-Control: no-cache, no-store, must-revalidate` and an already expired
-`Expires` header.
+The generic Nginx `/results/` location must use `Cache-Control: no-cache` so
+HTML and `generated/data.js` are revalidated. Static asset locations
+`/results/assets/`, `/results/vendor/` and `/results/generated/assets/` should
+use `Cache-Control: public, max-age=604800`; this keeps backgrounds, logos,
+fonts and exported problem images across page transitions.
 Release directories reuse stable asset names, while `generated/data.js` changes
 in place every minute. HTML also carries a query-string asset version as a
 second cache-busting layer for clients that retained an older release.
@@ -198,10 +200,11 @@ python scripts/run_model_batch.py \
 ```
 
 `--models all` runs all 9 active configured models from
-`models/*/versions.py`. Without an explicit token budget the launcher uses its
-provider/model defaults and cost estimates. An explicit `--max-tokens`
-overrides those defaults for every selected pair;
-Grok and GLM split larger totals across preserved-state continuation requests.
+`models/*/versions.py`. Without an explicit token budget the launcher uses the
+common 128,000-token benchmark budget; GigaChat and Alice remain on their
+documented API caps of 8,192 and 8,000. An explicit `--max-tokens` overrides
+those defaults for every selected pair; Grok and GLM split larger totals across
+preserved-state continuation requests.
 `--models new` is the narrower operational shortcut for only the seven models
 introduced in the 2026-08-01 snapshot.
 Add `--detach --yes` on the server to start the run in a new session, write

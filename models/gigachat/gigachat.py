@@ -11,6 +11,7 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 GIGACHAT_DEFAULT_BASE_URL = "https://api.giga.chat/v1"
+GIGACHAT_MAX_TOKENS_PER_REQUEST = 8_192
 
 
 def normalize_gigachat_credentials(credentials: str) -> str:
@@ -102,12 +103,22 @@ class GigaChatModel(BaseModel):
                 payload["temperature"] = float(env("GIGACHAT_TEMPERATURE", "0.1") or "0.1")
             if env("GIGACHAT_TOP_P") is not None:
                 payload["top_p"] = float(env("GIGACHAT_TOP_P", "0.9") or "0.9")
-            if max_tokens is not None:
-                payload["max_tokens"] = int(max_tokens)
-            elif self._max_final_tokens is not None:
-                payload["max_tokens"] = int(self._max_final_tokens)
-            elif env("GIGACHAT_MAX_TOKENS") is not None:
-                payload["max_tokens"] = int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
+            requested_max_tokens = (
+                int(max_tokens)
+                if max_tokens is not None
+                else int(self._max_final_tokens)
+                if self._max_final_tokens is not None
+                else int(env("GIGACHAT_MAX_TOKENS", "4096") or "4096")
+            )
+            configured_cap = int(
+                env("GIGACHAT_MAX_TOKENS", str(GIGACHAT_MAX_TOKENS_PER_REQUEST))
+                or GIGACHAT_MAX_TOKENS_PER_REQUEST
+            )
+            payload["max_tokens"] = min(
+                requested_max_tokens,
+                configured_cap,
+                GIGACHAT_MAX_TOKENS_PER_REQUEST,
+            )
             if env("GIGACHAT_REPETITION_PENALTY") is not None:
                 payload["repetition_penalty"] = float(
                     env("GIGACHAT_REPETITION_PENALTY", "1.05") or "1.05"
@@ -119,6 +130,8 @@ class GigaChatModel(BaseModel):
                     f"{env('GIGACHAT_BASE_URL', GIGACHAT_DEFAULT_BASE_URL)}/chat/completions"
                 ),
                 "stream": False,
+                "requested_max_tokens": requested_max_tokens,
+                "provider_max_tokens": GIGACHAT_MAX_TOKENS_PER_REQUEST,
             }
             ensure_text_only_request(request_payload)
 
