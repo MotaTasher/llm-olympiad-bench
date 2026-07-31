@@ -7,6 +7,7 @@ from tempfile import TemporaryDirectory
 from scripts.export_public_results import (
     atomic_write_text,
     public_score,
+    rewrite_public_markdown,
     select_public_attempt,
     solution_document,
     total_tokens,
@@ -14,6 +15,20 @@ from scripts.export_public_results import (
 
 
 class PublicResultsExportTests(unittest.TestCase):
+    def test_public_markdown_rewrites_assets_and_plain_links(self) -> None:
+        rendered = rewrite_public_markdown(
+            "![figure](assets/task_09_diagram.png) see `https://arxiv.org/abs/1234`",
+            competition_id="math-cup-2026-final",
+        )
+        self.assertIn(
+            "../../assets/math-cup-2026-final/task_09_diagram.png",
+            rendered,
+        )
+        self.assertIn(
+            "[https://arxiv.org/abs/1234](https://arxiv.org/abs/1234)",
+            rendered,
+        )
+
     def test_prefers_newest_reviewed_success_over_newer_unreviewed_success(self) -> None:
         newest_unreviewed = {
             "successful_answer": True,

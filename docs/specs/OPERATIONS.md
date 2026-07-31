@@ -67,6 +67,12 @@ unchanged during export. The public documents omit
 reviewer identities, feedback, raw provider responses, request payloads, errors,
 and internal paths.
 
+The exporter also copies selected competition assets into
+`generated/assets/<competition_id>/` and rewrites local `assets/...` references
+in statements and official solutions to those public files. Plain HTTP(S) links
+in published Markdown are normalized to clickable links. The public HTML pages
+use the local CS Space SVG as their favicon.
+
 Each exported model row also contains `points`, the sum of all non-null
 absolute task scores for that stage. The public table uses this field for its
 default descending order; it is distinct from `solved`, which remains the count
