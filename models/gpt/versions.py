@@ -4,7 +4,7 @@
 #   https://developers.openai.com/api/docs/models/all
 #   https://developers.openai.com/api/docs/deprecations
 #   https://developers.openai.com/api/reference/resources/models/methods/list
-# Updated: 2026-07-31
+# Benchmark snapshot: 2026-08-01
 #
 # Scope:
 #   Active OpenAI API model IDs for Olympiad Scorer.
@@ -35,9 +35,9 @@
 
 VERSIONS = [
     # Strongest paid reasoning model.
-    "gpt-5.5",
+    "gpt-5.6-sol",
 ]
 
-LEGACY_VERSIONS = ["gpt-5.4-mini"]
+LEGACY_VERSIONS = ["gpt-5.5", "gpt-5.4-mini"]
 
 DEFAULT = VERSIONS[0]

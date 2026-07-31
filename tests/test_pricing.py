@@ -6,6 +6,32 @@ from models.pricing import estimate_cost
 
 
 class PricingTests(unittest.TestCase):
+    def test_2026_08_flagship_rates(self) -> None:
+        openai = estimate_cost("openai", "gpt-5.6-sol", input_tokens=1_000_000, output_tokens=1_000_000)
+        fable = estimate_cost("anthropic", "claude-fable-5", input_tokens=1_000_000, output_tokens=1_000_000)
+        opus = estimate_cost("anthropic", "claude-opus-5", input_tokens=1_000_000, output_tokens=1_000_000)
+        grok = estimate_cost("xai", "grok-4.5", input_tokens=1_000_000, output_tokens=1_000_000)
+        self.assertEqual(openai["total"], 35.0)
+        self.assertEqual(fable["total"], 60.0)
+        self.assertEqual(opus["total"], 30.0)
+        self.assertEqual(grok["total"], 8.0)
+
+    def test_gigachat_ultra_current_freemium_cost(self) -> None:
+        ultra = estimate_cost("gigachat", "GigaChat-3-Ultra", input_tokens=1_000_000, output_tokens=1_000_000)
+        self.assertEqual(ultra["total"], 0.0)
+        self.assertIn("Freemium", ultra["note"])
+
+    def test_alice_ai_llm_uses_distinct_input_and_output_rates(self) -> None:
+        alice = estimate_cost(
+            "yandexgpt",
+            "aliceai-llm",
+            input_tokens=1_000_000,
+            output_tokens=1_000_000,
+        )
+        self.assertEqual(alice["native"]["input"], 500.0)
+        self.assertEqual(alice["native"]["output"], 1200.0)
+        self.assertEqual(alice["native"]["total"], 1700.0)
+
     def test_gemini_pro_short_and_long_context_tiers(self) -> None:
         short = estimate_cost(
             "google",

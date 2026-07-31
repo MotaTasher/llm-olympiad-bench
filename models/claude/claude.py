@@ -21,11 +21,17 @@ from .versions import DEFAULT as DEFAULT_VERSION
 ANTHROPIC_NONSTREAMING_MAX_TOKENS = 21333
 ANTHROPIC_CONTINUATION_INPUT = "Continue."
 ANTHROPIC_MAX_OUTPUT_TOKENS_BY_MODEL = {
+    "claude-fable-5": 128_000,
+    "claude-opus-5": 128_000,
     "claude-opus-4-8": 128_000,
     "claude-haiku-4-5-20251001": 64_000,
 }
 ANTHROPIC_DEFAULT_MAX_OUTPUT_TOKENS = 64_000
-ANTHROPIC_ADAPTIVE_THINKING_MODEL_PREFIXES = ("claude-opus-4-8",)
+ANTHROPIC_ADAPTIVE_THINKING_MODEL_PREFIXES = (
+    "claude-fable-5",
+    "claude-opus-5",
+    "claude-opus-4-8",
+)
 ANTHROPIC_DEFAULT_EFFORT = "max"
 ANTHROPIC_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
 ANTHROPIC_DEFAULT_FINAL_TOKEN_RESERVE = 4096
@@ -246,7 +252,11 @@ class ClaudeModel(BaseModel):
                 text = "".join(
                     block.text for block in response.content if getattr(block, "type", None) == "text"
                 )
-                finish = raw_response.get("stop_reason") or raw_response.get("stopReason")
+                finish = (
+                    getattr(response, "stop_reason", None)
+                    or raw_response.get("stop_reason")
+                    or raw_response.get("stopReason")
+                )
                 responses.append(
                     {
                         "request": step_request,
@@ -307,7 +317,9 @@ class ClaudeModel(BaseModel):
                 },
             }
             error = None
-            if not answer.strip():
+            if str(finish or "").lower() == "refusal":
+                error = "Anthropic Messages API returned a model refusal"
+            elif not answer.strip():
                 error = empty_answer_error(
                     "Anthropic Messages API",
                     generated_tokens=completion_tokens,

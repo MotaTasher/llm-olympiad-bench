@@ -474,8 +474,8 @@ class ScoringRepositoryTests(TempCompetition):
                         "result_id": "res_a",
                         "result_index": 0,
                         "provider": "openai",
-                        "model": "gpt-5.5",
-                        "requested_model_id": "gpt-5.5",
+                        "model": "gpt-5.6-sol",
+                        "requested_model_id": "gpt-5.6-sol",
                         "answer": "answer",
                         "error": None,
                         "prompt_tokens": 1,
@@ -513,8 +513,8 @@ class ScoringRepositoryTests(TempCompetition):
             run_id="run",
             result_id="res_a",
             result_index=0,
-            model_key_value="openai:gpt-5.5",
-            model="gpt-5.5",
+            model_key_value="openai:gpt-5.6-sol",
+            model="gpt-5.6-sol",
             evaluator="judge",
             score=3,
             max_score=5,
@@ -539,8 +539,8 @@ class ScoringRepositoryTests(TempCompetition):
                 "results": [
                     {
                         "provider": "gigachat",
-                        "model": "GigaChat-2-Max",
-                        "requested_model_id": "GigaChat-2-Max",
+                        "model": "GigaChat-3-Ultra",
+                        "requested_model_id": "GigaChat-3-Ultra",
                         "answer": "A",
                         "prompt_tokens": 1,
                         "completion_tokens": 2,
@@ -592,8 +592,8 @@ class ScoringRepositoryTests(TempCompetition):
                         "result_id": "res_a",
                         "result_index": 0,
                         "provider": "openai",
-                        "model": "gpt-5.5",
-                        "requested_model_id": "gpt-5.5",
+                        "model": "gpt-5.6-sol",
+                        "requested_model_id": "gpt-5.6-sol",
                         "answer": "answer",
                         "error": None,
                         "prompt_tokens": 1,
@@ -638,7 +638,7 @@ class ScoringRepositoryTests(TempCompetition):
             self.assertEqual(response.status_code, 200)
             self.assertIn("Sample Competition".encode(), response.data)
             self.assertIn('aria-label="'.encode(), response.data)
-            response = client.get("/competition/sample_competition/problem/task_01?model=openai:gpt-5.5")
+            response = client.get("/competition/sample_competition/problem/task_01?model=openai:gpt-5.6-sol")
             self.assertEqual(response.status_code, 200)
             self.assertIn("answer".encode(), response.data)
             csrf = re.search(r'name="csrf_token"[^>]*value="([^"]+)"', response.get_data(as_text=True)).group(1)
@@ -649,7 +649,7 @@ class ScoringRepositoryTests(TempCompetition):
                     "problem_id": "task_01",
                     "run_id": "run",
                     "result_id": "res_a",
-                    "model_key": "openai:gpt-5.5",
+                    "model_key": "openai:gpt-5.6-sol",
                     "score": "5",
                 },
                 follow_redirects=False,
@@ -664,7 +664,7 @@ class ScoringRepositoryTests(TempCompetition):
                     "problem_id": "task_01",
                     "run_id": "run",
                     "result_id": "res_a",
-                    "model_key": "openai:gpt-5.5",
+                    "model_key": "openai:gpt-5.6-sol",
                     "evaluator": "browser-ignored",
                     "score": "4",
                     "feedback": "ok",
@@ -672,7 +672,7 @@ class ScoringRepositoryTests(TempCompetition):
                 follow_redirects=False,
             )
             self.assertEqual(ok.status_code, 302)
-            self.assertIn("model=openai:gpt-5.5", ok.headers["Location"])
+            self.assertIn("model=openai:gpt-5.6-sol", ok.headers["Location"])
             sidecar = json.loads((results_dir / "sample_competition" / "task_01" / "run.json").read_text(encoding="utf-8"))
             self.assertIn("res_a", sidecar["evaluations"])
             self.assertEqual(sidecar["evaluation_pool"]["res_a"][0]["evaluator"], "repo-smoke")

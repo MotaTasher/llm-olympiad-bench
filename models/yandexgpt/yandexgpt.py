@@ -10,7 +10,7 @@ from ..common import (
     safe_dict,
     timed,
 )
-from ..pricing import YANDEX_RUB_PER_1K as PRICES_RUB_PER_1K, estimate_cost
+from ..pricing import estimate_cost
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
@@ -133,9 +133,6 @@ class YandexGPTModel(BaseModel):
             )
 
             total_tokens = prompt_tokens + completion_tokens
-            price_rub_per_1k = PRICES_RUB_PER_1K.get(self.model_id.lower(), 0.80)
-            rub_per_usd = float(env("RUB_PER_USD", "90") or "90")
-            cost_usd = (total_tokens / 1000) * price_rub_per_1k / rub_per_usd
             cost = estimate_cost(
                 "yandexgpt",
                 self.model_id,
@@ -143,6 +140,7 @@ class YandexGPTModel(BaseModel):
                 output_tokens=completion_tokens,
                 reasoning_tokens=reasoning_tokens or None,
             )
+            cost_usd = float(cost.get("total") or 0.0)
             raw_response = safe_dict(data)
             alternatives = result.get("alternatives") if isinstance(result, dict) else None
             finish = None

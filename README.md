@@ -186,7 +186,7 @@ RUNNER_MODELS=all
 `all` разворачивается в те же активные модели, что используются как колонки
 scoring UI. Точечный запуск конкретной версии можно задать через
 `provider:model_id`, например
-`openai:gpt-5.5,google:gemini-3.1-pro-preview,anthropic:claude-opus-4-8`.
+`openai:gpt-5.6-sol,google:gemini-3.5-flash,anthropic:claude-opus-5`.
 
 **Версии моделей по умолчанию**:
 
@@ -195,10 +195,10 @@ models/<provider>/versions.py
 ```
 
 Эти файлы также задают активные колонки в scoring UI. Сейчас в активном
-бенчмарке 8 provider groups и 9 active model columns: `claude-opus-4-8`,
-`claude-haiku-4-5-20251001`, `deepseek-v4-pro`,
-`gemini-3.1-pro-preview`, `GigaChat-2-Max`, `grok-4.3`, `glm-5.2`,
-`gpt-5.5`, `yandexgpt-5.1`. Исторические логи моделей вне `VERSIONS` не создают
+бенчмарке 8 provider groups и 9 active model columns: `claude-fable-5`,
+`claude-opus-5`, `deepseek-v4-pro`, `gemini-3.5-flash`,
+`GigaChat-3-Ultra`, `grok-4.5`, `glm-5.2`, `gpt-5.6-sol`,
+`aliceai-llm`. Исторические логи моделей вне `VERSIONS` не создают
 отдельные колонки на сайте.
 
 Canonical provider IDs for new adapters are `google`, `xai` and `zai`.

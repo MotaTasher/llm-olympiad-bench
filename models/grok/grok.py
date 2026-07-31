@@ -25,7 +25,7 @@ XAI_CONTINUATION_INPUT = "Continue the reasoning and provide the complete final 
 XAI_CANONICAL_MODEL_ALIASES = {
     "grok-code-fast-1": "grok-build-0.1",
 }
-XAI_REASONING_MODELS = {"grok-4.3"}
+XAI_REASONING_MODELS = {"grok-4.5", "grok-4.3"}
 XAI_REASONING_EFFORTS = {"none", "low", "medium", "high"}
 
 

@@ -11,23 +11,26 @@ class ModelBatchTests(unittest.TestCase):
         self.assertEqual(
             run_model_batch.model_specs("all"),
             [
-                "anthropic:claude-opus-4-8",
-                "anthropic:claude-haiku-4-5-20251001",
+                "anthropic:claude-fable-5",
+                "anthropic:claude-opus-5",
                 "deepseek:deepseek-v4-pro",
-                "google:gemini-3.1-pro-preview",
-                "gigachat:GigaChat-2-Max",
-                "xai:grok-4.3",
+                "google:gemini-3.5-flash",
+                "gigachat:GigaChat-3-Ultra",
+                "xai:grok-4.5",
                 "zai:glm-5.2",
-                "openai:gpt-5.5",
-                "yandexgpt:yandexgpt-5.1",
+                "openai:gpt-5.6-sol",
+                "yandexgpt:aliceai-llm",
             ],
         )
         self.assertEqual(
             run_model_batch.model_specs("new"),
             [
-                "google:gemini-3.1-pro-preview",
-                "xai:grok-4.3",
-                "zai:glm-5.2",
+                "anthropic:claude-fable-5",
+                "anthropic:claude-opus-5",
+                "google:gemini-3.5-flash",
+                "gigachat:GigaChat-3-Ultra",
+                "xai:grok-4.5",
+                "openai:gpt-5.6-sol",
             ],
         )
 

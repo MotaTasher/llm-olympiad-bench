@@ -51,8 +51,8 @@ The following are cross-subsystem contracts and require coordinated updates:
 
 Current active benchmark columns are documented in
 [`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) and
-[`SCORING_WEB.md`](SCORING_WEB.md); after adding Gemini/Grok/GLM the configured
-set is 8 provider groups and 9 active model columns.
+[`SCORING_WEB.md`](SCORING_WEB.md); the configured set is 8 provider groups and
+9 active model columns.
 
 ## Documentation maintenance rule
 

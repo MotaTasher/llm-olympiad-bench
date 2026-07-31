@@ -8,7 +8,7 @@ https://api.x.ai/v1
 
 Active models:
 
-- `grok-4.3` — general-purpose reasoning model; default `XAI_REASONING_EFFORT=high`.
+- `grok-4.5` — general-purpose flagship reasoning model; existing benchmark default remains `XAI_REASONING_EFFORT=high`.
 
 `grok-build-0.1` remains explicitly callable as a legacy text-only model.
 `grok-code-fast-1` is a legacy alias that canonicalizes to it; neither ID
@@ -57,7 +57,7 @@ Credential-free smoke:
 ```bash
 python - <<'PY'
 from models.grok import GrokModel
-for model_id in ["grok-4.3", "grok-build-0.1"]:
+for model_id in ["grok-4.5", "grok-4.3", "grok-build-0.1"]:
     result = GrokModel(model_id).solve("Докажите, что 1 = 1.", max_tokens=32)
     assert result.error
     print(model_id, "error path ok")

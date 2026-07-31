@@ -4,8 +4,8 @@
 без `tools`, поиска, code interpreter и function calling.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`;
 `OPENAI_MAX_COMPLETION_TOKENS` остаётся fallback-настройкой.
-Активная колонка бенчмарка — `gpt-5.5`; `gpt-5.4-mini` оставлен как
-явно запускаемая legacy-версия и по умолчанию не показывается.
+Активная колонка бенчмарка — `gpt-5.6-sol`; прежние `gpt-5.5` и
+`gpt-5.4-mini` оставлены как явно запускаемые legacy-версии.
 
 ## 1. Как получить ключ
 
@@ -62,7 +62,7 @@ config/models.env
 Пример:
 
 ```env
-OPENAI_MODEL=gpt-5.5
+OPENAI_MODEL=gpt-5.6-sol
 OPENAI_REASONING_EFFORT=high
 OPENAI_MAX_COMPLETION_TOKENS=12000
 OPENAI_TIMEOUT_SECONDS=7200

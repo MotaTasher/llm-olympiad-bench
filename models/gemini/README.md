@@ -4,7 +4,7 @@ Runs Google Gemini through the official `google-genai` package in text-only mode
 
 Active models:
 
-- `gemini-3.1-pro-preview` — preview Pro model, default high thinking level.
+- `gemini-3.5-flash` — strongest current model for sustained frontier reasoning, default high thinking level.
 
 `gemini-3.5-flash` remains explicitly callable as a legacy model, but it no
 longer creates a default scoring or public-results column.
@@ -76,7 +76,7 @@ Credential-free smoke:
 ```bash
 python - <<'PY'
 from models.gemini import GeminiModel
-for model_id in ["gemini-3.1-pro-preview", "gemini-3.5-flash"]:
+for model_id in ["gemini-3.5-flash", "gemini-3.1-pro-preview"]:
     result = GeminiModel(model_id).solve("Докажите, что 1 = 1.", max_tokens=32)
     assert result.error
     print(model_id, "error path ok")

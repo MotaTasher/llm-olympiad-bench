@@ -33,7 +33,7 @@ MODEL_NAME_PREFIXES = {
     "google": "Gemini",
     "openai": "",
     "xai": "Grok",
-    "yandexgpt": "YandexGPT",
+    "yandexgpt": "",
     "zai": "GLM",
 }
 

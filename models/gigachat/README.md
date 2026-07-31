@@ -2,7 +2,7 @@
 
 Этот адаптер запускает GigaChat через общий `runner.py` в text-only режиме: без `tools`, `functions`, `function_call` и внешних цепочек.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `GIGACHAT_MAX_TOKENS` остаётся fallback-настройкой.
-Активная колонка бенчмарка — `GigaChat-2-Max`; `GigaChat-2` оставлен как
+Активная колонка бенчмарка — `GigaChat-3-Ultra`; прежние модели оставлены как
 явно запускаемая legacy-версия.
 
 ## 1. Как получить ключи
@@ -71,13 +71,14 @@ config/models.env
 Пример:
 
 ```env
-GIGACHAT_MODEL=GigaChat-2-Max
+GIGACHAT_MODEL=GigaChat-3-Ultra
 ```
 
 Runtime-настройки GigaChat тоже должны жить в `config/models.env`:
 
 ```env
 GIGACHAT_SCOPE=GIGACHAT_API_PERS
+GIGACHAT_BASE_URL=https://api.giga.chat/v1
 GIGACHAT_VERIFY_SSL=false
 GIGACHAT_TEMPERATURE=0.1
 GIGACHAT_TOP_P=0.9
@@ -112,6 +113,7 @@ Tools не включаются через конфиг. Если в payload с�
 
 ```env
 GIGACHAT_SCOPE=GIGACHAT_API_PERS
+GIGACHAT_BASE_URL=https://api.giga.chat/v1
 GIGACHAT_VERIFY_SSL=false
 GIGACHAT_TEMPERATURE=0.1
 GIGACHAT_TOP_P=0.9

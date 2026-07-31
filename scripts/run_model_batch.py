@@ -30,16 +30,24 @@ from models.pricing import estimate_cost, estimate_tokens  # noqa: E402
 
 
 MODEL_CAPS = {
+    "openai:gpt-5.6-sol": 128_000,
     "openai:gpt-5.5": 128_000,
     "openai:gpt-5.4-mini": 128_000,
+    "anthropic:claude-fable-5": 128_000,
+    "anthropic:claude-opus-5": 128_000,
     "anthropic:claude-opus-4-8": 128_000,
     "anthropic:claude-haiku-4-5-20251001": 64_000,
     "deepseek:deepseek-v4-pro": 320_000,
     "deepseek:deepseek-v4-flash": 320_000,
+    "yandexgpt:aliceai-llm": 8_000,
     "yandexgpt:yandexgpt-5.1": 8_000,
     "yandexgpt:yandexgpt-5-lite": 8_000,
+    "gigachat:GigaChat-3-Ultra": 8_192,
     "gigachat:GigaChat-2-Max": 8_192,
     "gigachat:GigaChat-2": 8_192,
+    "google:gemini-3.1-pro-preview": 256_000,
+    "xai:grok-4.3": 256_000,
+    "zai:glm-5.2": 128_000,
     **NEW_MODEL_CAPS,
 }
 

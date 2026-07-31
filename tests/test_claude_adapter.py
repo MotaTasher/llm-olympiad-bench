@@ -160,6 +160,40 @@ class ClaudeAdapterTests(unittest.TestCase):
         self.assertEqual(result.usage["reasoning_tokens"], 7)
         self.assertEqual(result.cost["reasoning"], 0.000175)
 
+    def test_fable_5_uses_adaptive_thinking_and_marks_refusal_as_error(self) -> None:
+        class RefusalMessage(FakeMessage):
+            model = "claude-fable-5"
+            stop_reason = "refusal"
+
+        class RefusalMessages(FakeMessages):
+            def create(self, **kwargs):
+                self.create_called = True
+                self.kwargs = kwargs
+                return RefusalMessage()
+
+        class RefusalClient(FakeAnthropicClient):
+            def __init__(self, api_key):
+                self.api_key = api_key
+                self.messages = RefusalMessages()
+                FakeAnthropicClient.last_messages = self.messages
+
+        module = types.SimpleNamespace(Anthropic=RefusalClient)
+        with patch.dict(sys.modules, {"anthropic": module}), patch.dict(
+            "os.environ",
+            {
+                "ANTHROPIC_API_KEY": "test",
+                "ANTHROPIC_THINKING_BUDGET_TOKENS": "60000",
+                "ANTHROPIC_EFFORT": "max",
+            },
+            clear=False,
+        ):
+            result = ClaudeModel("claude-fable-5").solve("problem", max_tokens=8000)
+
+        messages = FakeAnthropicClient.last_messages
+        self.assertEqual(messages.kwargs["thinking"], {"type": "adaptive", "display": "summarized"})
+        self.assertEqual(messages.kwargs["output_config"], {"effort": "max"})
+        self.assertIn("refusal", result.error)
+
     def test_large_budget_continues_with_previous_content_blocks_until_text(self) -> None:
         class ThinkingBlock:
             type = "thinking"

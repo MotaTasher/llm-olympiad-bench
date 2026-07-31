@@ -618,8 +618,8 @@ class ScoringWebTests(unittest.TestCase):
         problem_id: str = "task_01",
         run_id: str = "run_active",
         result_id: str = "res_a",
-        model_key: str = "openai:gpt-5.5",
-        model: str = "gpt-5.5",
+        model_key: str = "openai:gpt-5.6-sol",
+        model: str = "gpt-5.6-sol",
         score: float = 7,
         max_score: float = 10,
         evaluator: str | None = None,
@@ -657,7 +657,7 @@ class ScoringWebTests(unittest.TestCase):
         *,
         competition_id: str = "math_2026",
         problem_id: str = "task_01",
-        model_id: str = "gpt-5.5",
+        model_id: str = "gpt-5.6-sol",
         provider: str = "openai",
         result_id: str = "res_a",
         answer: str | None = "MODEL_ANSWER_TOKEN",
@@ -765,7 +765,7 @@ class ScoringWebTests(unittest.TestCase):
                     "problem_id": "task_01",
                     "run_id": "run_active",
                     "result_id": "res_a",
-                    "model_key": "openai:gpt-5.5",
+                    "model_key": "openai:gpt-5.6-sol",
                     "score": "7",
                 },
             ),
@@ -909,8 +909,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_mine",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": self.username,
                             "score": 7,
                             "max_score": 10,
@@ -923,8 +923,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_other",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": "other-reviewer",
                             "score": 5,
                             "max_score": 10,
@@ -961,8 +961,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_mine",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": self.username,
                             "score": 7,
                             "max_score": 10,
@@ -975,8 +975,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_other",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": "other-reviewer",
                             "score": 10,
                             "max_score": 10,
@@ -990,7 +990,7 @@ class ScoringWebTests(unittest.TestCase):
             },
         )
 
-        problem_html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5").get_data(
+        problem_html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol").get_data(
             as_text=True
         )
         anonymous_html = self.client.get(
@@ -1093,7 +1093,7 @@ class ScoringWebTests(unittest.TestCase):
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run()
 
-        response = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5")
+        response = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
 
@@ -1107,7 +1107,7 @@ class ScoringWebTests(unittest.TestCase):
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run()
 
-        response = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5")
+        response = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
 
@@ -1162,12 +1162,12 @@ class ScoringWebTests(unittest.TestCase):
                 "problem_id": "task_01",
                 "run_id": "run_active",
                 "result_id": "res_a",
-                "model_key": "openai:gpt-5.5",
+                "model_key": "openai:gpt-5.6-sol",
                 "evaluator": "BrowserSuppliedName",
                 "score": "7",
                 "feedback": "ok",
             },
-            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.5",
+            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol",
             follow_redirects=False,
         )
         self.assertEqual(ok.status_code, 302)
@@ -1178,7 +1178,7 @@ class ScoringWebTests(unittest.TestCase):
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(
             provider="anthropic",
-            model_id="claude-opus-4-8",
+            model_id="claude-opus-5",
             run_id="run_scored",
             result_id="res_scored",
             answer="SCORED",
@@ -1186,14 +1186,14 @@ class ScoringWebTests(unittest.TestCase):
         self.write_score(run_id="run_scored", result_id="res_scored", score=8)
         self.write_run(
             provider="anthropic",
-            model_id="claude-haiku-4-5-20251001",
+            model_id="claude-fable-5",
             run_id="run_pending_first",
             result_id="res_pending_first",
             answer="PENDING_FIRST",
         )
         self.write_run(
             provider="openai",
-            model_id="gpt-5.5",
+            model_id="gpt-5.6-sol",
             run_id="run_pending_second",
             result_id="res_pending_second",
             answer="PENDING_SECOND",
@@ -1208,29 +1208,29 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(
             [state["model_key"] for state in states[:3]],
             [
-                "anthropic:claude-haiku-4-5-20251001",
-                "openai:gpt-5.5",
-                "anthropic:claude-opus-4-8",
+                "anthropic:claude-fable-5",
+                "openai:gpt-5.6-sol",
+                "anthropic:claude-opus-5",
             ],
         )
 
-        html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5").get_data(
+        html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol").get_data(
             as_text=True
         )
         parser = ModelTabsParser()
         parser.feed(html)
-        self.assertEqual([link["text"] for link in parser.links[:3]], ["Haiku 4.5", "GPT-5.5", "Opus 4.8"])
+        self.assertEqual([link["text"] for link in parser.links[:3]], ["Fable 5", "GPT-5.6 Sol", "Opus 5"])
         self.assertNotIn("Ожидает проверки", [link["text"] for link in parser.links])
         self.assertNotIn("Максимальный балл", [link["text"] for link in parser.links])
         self.assertNotIn("0 баллов", [link["text"] for link in parser.links])
 
     def test_score_redirects_to_next_unscored_existing_model_attempt_after_save(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
-        self.write_run(provider="anthropic", model_id="claude-opus-4-8", run_id="run_wrap", result_id="res_wrap")
-        self.write_run(provider="openai", model_id="gpt-5.5", run_id="run_current", result_id="res_current")
+        self.write_run(provider="anthropic", model_id="claude-opus-5", run_id="run_wrap", result_id="res_wrap")
+        self.write_run(provider="openai", model_id="gpt-5.6-sol", run_id="run_current", result_id="res_current")
         self.write_run(
             provider="yandexgpt",
-            model_id="yandexgpt-5.1",
+            model_id="aliceai-llm",
             run_id="run_next",
             result_id="res_next",
         )
@@ -1242,25 +1242,25 @@ class ScoringWebTests(unittest.TestCase):
                 "problem_id": "task_01",
                 "run_id": "run_current",
                 "result_id": "res_current",
-                "model_key": "openai:gpt-5.5",
+                "model_key": "openai:gpt-5.6-sol",
                 "score": "7",
                 "feedback": "",
             },
-            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.5",
+            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol",
             follow_redirects=False,
         )
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.headers["Location"],
-            "/competition/math_2026/problem/task_01?model=yandexgpt:yandexgpt-5.1&attempt=res_next",
+            "/competition/math_2026/problem/task_01?model=yandexgpt:aliceai-llm&attempt=res_next",
         )
 
     def test_anonymous_entry_starts_with_unscored_solution_when_reviewed_exists(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(
             provider="anthropic",
-            model_id="claude-opus-4-8",
+            model_id="claude-opus-5",
             run_id="run_scored",
             result_id="res_scored",
             answer="REVIEWED_ANSWER_TOKEN",
@@ -1268,7 +1268,7 @@ class ScoringWebTests(unittest.TestCase):
         self.write_score(run_id="run_scored", result_id="res_scored", score=10)
         self.write_run(
             provider="openai",
-            model_id="gpt-5.5",
+            model_id="gpt-5.6-sol",
             run_id="run_unscored",
             result_id="res_unscored",
             answer="PENDING_ANSWER_TOKEN",
@@ -1289,7 +1289,7 @@ class ScoringWebTests(unittest.TestCase):
         self.write_run()
         self.write_score(score=2, max_score=2.0)
 
-        problem_html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.5").get_data(
+        problem_html = self.client.get("/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol").get_data(
             as_text=True
         )
         checks_html = self.client.get("/competition/math_2026/checks").get_data(as_text=True)
@@ -1318,8 +1318,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_a_1",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": self.username,
                             "score": 10,
                             "max_score": 10,
@@ -1331,8 +1331,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_a_2",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": "reviewer-02",
                             "score": 0,
                             "max_score": 10,
@@ -1357,8 +1357,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_b_1",
                             "result_id": "res_b",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": self.username,
                             "score": 10,
                             "max_score": 10,
@@ -1377,7 +1377,7 @@ class ScoringWebTests(unittest.TestCase):
             results_dir=self.results_dir,
         )
         stats = competition_statistics(data["competition_map"]["math_2026"])
-        row = next(model for model in stats["models"] if model["model_key"] == "openai:gpt-5.5")
+        row = next(model for model in stats["models"] if model["model_key"] == "openai:gpt-5.6-sol")
         self.assertEqual(row["solution_count"], 2)
         self.assertEqual(row["scored_solution_count"], 2)
         self.assertEqual(row["evaluation_count"], 3)
@@ -1395,7 +1395,7 @@ class ScoringWebTests(unittest.TestCase):
         self.assertNotIn("ждёт проверки", visible.text)
         self.assertNotIn("Статистика модель-задача", html)
 
-        detail = self.client.get("/competition/math_2026/stats?model=openai:gpt-5.5").get_data(as_text=True)
+        detail = self.client.get("/competition/math_2026/stats?model=openai:gpt-5.6-sol").get_data(as_text=True)
         detail_visible = VisibleTextParser()
         detail_visible.feed(detail)
         self.assertIn("Средний балл", detail_visible.text)
@@ -1424,8 +1424,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_mine",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": self.username,
                             "score": 6,
                             "max_score": 10,
@@ -1437,8 +1437,8 @@ class ScoringWebTests(unittest.TestCase):
                             "evaluation_id": "ev_other",
                             "result_id": "res_a",
                             "result_index": 0,
-                            "model_key": "openai:gpt-5.5",
-                            "model": "gpt-5.5",
+                            "model_key": "openai:gpt-5.6-sol",
+                            "model": "gpt-5.6-sol",
                             "evaluator": "reviewer-02",
                             "score": 10,
                             "max_score": 10,
@@ -1457,7 +1457,7 @@ class ScoringWebTests(unittest.TestCase):
                 results_dir=self.results_dir,
             )["competition_map"]["math_2026"]
         )
-        row = next(model for model in stats["models"] if model["model_key"] == "openai:gpt-5.5")
+        row = next(model for model in stats["models"] if model["model_key"] == "openai:gpt-5.6-sol")
         self.assertEqual(row["solution_count"], 1)
         self.assertEqual(row["scored_solution_count"], 1)
         self.assertEqual(row["evaluation_count"], 2)
@@ -1525,7 +1525,7 @@ class ScoringWebTests(unittest.TestCase):
                 self.write_competition(competition_id, title=competition_id, max_score=max_score, score_step=score_step)
                 self.write_run(competition_id=competition_id)
                 for path in (
-                    f"/competition/{competition_id}/problem/task_01?model=openai:gpt-5.5",
+                    f"/competition/{competition_id}/problem/task_01?model=openai:gpt-5.6-sol",
                     f"/competition/{competition_id}/problem/task_01/anonymous?seed=fixed&n=1",
                 ):
                     html = self.client.get(path).get_data(as_text=True)
@@ -1560,10 +1560,10 @@ class ScoringWebTests(unittest.TestCase):
                 "problem_id": "task_01",
                 "run_id": "run_active",
                 "result_id": "res_a",
-                "model_key": "openai:gpt-5.5",
+                "model_key": "openai:gpt-5.6-sol",
                 "score": "12.5",
             },
-            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.5",
+            token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol",
         )
         self.assertEqual(ok.status_code, 302)
         payload = json.loads(sidecar_path.read_text(encoding="utf-8"))
@@ -1579,10 +1579,10 @@ class ScoringWebTests(unittest.TestCase):
                         "problem_id": "task_01",
                         "run_id": "run_active",
                         "result_id": "res_a",
-                        "model_key": "openai:gpt-5.5",
+                        "model_key": "openai:gpt-5.6-sol",
                         "score": value,
                     },
-                    token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.5",
+                    token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol",
                 )
                 self.assertEqual(response.status_code, 302, index)
         payload = json.loads(sidecar_path.read_text(encoding="utf-8"))
@@ -1610,7 +1610,7 @@ class ScoringWebTests(unittest.TestCase):
         self.write_score()
         pages = [
             (
-                "/competition/math_2026/problem/task_01?model=openai:gpt-5.5",
+                "/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol",
                 "2026-06-29T13:24:18.381921Z",
                 "29 июня 2026",
                 "13:24",
@@ -1628,7 +1628,7 @@ class ScoringWebTests(unittest.TestCase):
                 "00:00",
             ),
             (
-                "/competition/math_2026/stats?model=openai:gpt-5.5",
+                "/competition/math_2026/stats?model=openai:gpt-5.6-sol",
                 "2026-06-29T13:24:18.381921Z",
                 "29 июня 2026",
                 "13:24",
@@ -1669,26 +1669,26 @@ class ScoringWebTests(unittest.TestCase):
 
     def test_active_model_catalog_contains_only_strong_models(self) -> None:
         expected = {
-            "openai:gpt-5.5",
-            "anthropic:claude-opus-4-8",
-            "anthropic:claude-haiku-4-5-20251001",
+            "openai:gpt-5.6-sol",
+            "anthropic:claude-fable-5",
+            "anthropic:claude-opus-5",
             "deepseek:deepseek-v4-pro",
-            "google:gemini-3.1-pro-preview",
-            "gigachat:GigaChat-2-Max",
-            "xai:grok-4.3",
+            "google:gemini-3.5-flash",
+            "gigachat:GigaChat-3-Ultra",
+            "xai:grok-4.5",
             "zai:glm-5.2",
-            "yandexgpt:yandexgpt-5.1",
+            "yandexgpt:aliceai-llm",
         }
         expected_order = [
-            "anthropic:claude-opus-4-8",
-            "anthropic:claude-haiku-4-5-20251001",
+            "anthropic:claude-fable-5",
+            "anthropic:claude-opus-5",
             "deepseek:deepseek-v4-pro",
-            "google:gemini-3.1-pro-preview",
-            "gigachat:GigaChat-2-Max",
-            "xai:grok-4.3",
+            "google:gemini-3.5-flash",
+            "gigachat:GigaChat-3-Ultra",
+            "xai:grok-4.5",
             "zai:glm-5.2",
-            "openai:gpt-5.5",
-            "yandexgpt:yandexgpt-5.1",
+            "openai:gpt-5.6-sol",
+            "yandexgpt:aliceai-llm",
         ]
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
@@ -1751,15 +1751,15 @@ class ScoringWebTests(unittest.TestCase):
     def test_model_short_labels_and_unknown_fallback(self) -> None:
         columns = configured_model_columns()
         expected = {
-            "claude-opus-4-8": "Opus 4.8",
-            "claude-haiku-4-5-20251001": "Haiku 4.5",
+            "claude-fable-5": "Fable 5",
+            "claude-opus-5": "Opus 5",
             "deepseek-v4-pro": "V4 Pro",
-            "gemini-3.1-pro-preview": "3.1 Pro",
-            "GigaChat-2-Max": "2 Max",
-            "grok-4.3": "4.3",
+            "gemini-3.5-flash": "3.5 Flash",
+            "GigaChat-3-Ultra": "3 Ultra",
+            "grok-4.5": "4.5",
             "glm-5.2": "5.2",
-            "gpt-5.5": "GPT-5.5",
-            "yandexgpt-5.1": "5.1",
+            "gpt-5.6-sol": "GPT-5.6 Sol",
+            "aliceai-llm": "Alice AI LLM",
         }
         actual = {column["model_id"]: column["short_label"] for column in columns.values()}
         for model_id, short_label in expected.items():
@@ -1785,15 +1785,15 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual([cell["text"] for cell in provider_headers], ["Claude", "DeepSeek", "Gemini", "GigaChat", "Grok", "GLM", "OpenAI", "Яндекс"])
 
         expected_links = [
-            ("anthropic:claude-opus-4-8", "claude-opus-4-8", "Opus 4.8"),
-            ("anthropic:claude-haiku-4-5-20251001", "claude-haiku-4-5-20251001", "Haiku 4.5"),
+            ("anthropic:claude-fable-5", "claude-fable-5", "Fable 5"),
+            ("anthropic:claude-opus-5", "claude-opus-5", "Opus 5"),
             ("deepseek:deepseek-v4-pro", "deepseek-v4-pro", "V4 Pro"),
-            ("google:gemini-3.1-pro-preview", "gemini-3.1-pro-preview", "3.1 Pro"),
-            ("gigachat:GigaChat-2-Max", "GigaChat-2-Max", "2 Max"),
-            ("xai:grok-4.3", "grok-4.3", "4.3"),
+            ("google:gemini-3.5-flash", "gemini-3.5-flash", "3.5 Flash"),
+            ("gigachat:GigaChat-3-Ultra", "GigaChat-3-Ultra", "3 Ultra"),
+            ("xai:grok-4.5", "grok-4.5", "4.5"),
             ("zai:glm-5.2", "glm-5.2", "5.2"),
-            ("openai:gpt-5.5", "gpt-5.5", "GPT-5.5"),
-            ("yandexgpt:yandexgpt-5.1", "yandexgpt-5.1", "5.1"),
+            ("openai:gpt-5.6-sol", "gpt-5.6-sol", "GPT-5.6 Sol"),
+            ("yandexgpt:aliceai-llm", "aliceai-llm", "Alice AI LLM"),
         ]
         self.assertEqual([link["text"] for link in parser.model_links], [item[2] for item in expected_links])
         for link, (model_key, model_id, short_label) in zip(parser.model_links, expected_links, strict=True):
@@ -1920,7 +1920,7 @@ class ScoringWebTests(unittest.TestCase):
             results_dir=self.results_dir,
         )
         model_keys = [column["model_key"] for column in catalog["competition_map"]["math_2026"]["model_columns"]]
-        openai_index = model_keys.index("openai:gpt-5.5")
+        openai_index = model_keys.index("openai:gpt-5.6-sol")
         self.assertTrue(all(len(row["matrix_cells"]) == len(model_keys) for row in checks.body_rows))
         self.assertEqual([link["text"] for link in checks.task_links], ["Task One", "Only Error", "Unscored", "Zero Score", "Partial Score", "Full Score"])
         self.assertTrue(all(link["attrs"].get("href", "").endswith("/anonymous") for link in checks.task_links))
@@ -1986,7 +1986,7 @@ class ScoringWebTests(unittest.TestCase):
 
     def test_cost_calculator_is_removed_from_public_scoring_pages(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
-        self.write_run(competition_id="math_2026", model_id="gpt-5.5", provider="openai")
+        self.write_run(competition_id="math_2026", model_id="gpt-5.6-sol", provider="openai")
 
         index_response = self.client.get("/")
         competition_response = self.client.get("/competition/math_2026")
@@ -2033,7 +2033,7 @@ class ScoringWebTests(unittest.TestCase):
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         self.write_run(model_id="gpt-5.4-mini", result_id="res_budget", run_id="run_budget")
         self.write_run(
-            model_id="yandexgpt-5.1/latest",
+            model_id="aliceai-llm",
             provider="yandexgpt",
             result_id="res_yandex",
             run_id="run_yandex",
@@ -2048,16 +2048,16 @@ class ScoringWebTests(unittest.TestCase):
         competition = catalog["competition_map"]["math_2026"]
         model_keys = [column["model_key"] for column in competition["model_columns"]]
         self.assertNotIn("openai:gpt-5.4-mini", model_keys)
-        self.assertIn("yandexgpt:yandexgpt-5.1", model_keys)
+        self.assertIn("yandexgpt:aliceai-llm", model_keys)
 
         problem = competition["problems"]["task_01"]
         active_attempts = {
             state["model_key"]: state["attempt_count"]
             for state in problem["model_states"]
         }
-        self.assertEqual(active_attempts["openai:gpt-5.5"], 0)
+        self.assertEqual(active_attempts["openai:gpt-5.6-sol"], 0)
         self.assertNotIn("openai:gpt-5.4-mini", active_attempts)
-        self.assertEqual(active_attempts["yandexgpt:yandexgpt-5.1"], 1)
+        self.assertEqual(active_attempts["yandexgpt:aliceai-llm"], 1)
 
         html = self.client.get("/competition/math_2026").get_data(as_text=True)
         parser = CompetitionMatrixParser()
@@ -2067,12 +2067,12 @@ class ScoringWebTests(unittest.TestCase):
     def test_new_provider_columns_exist_without_logs_and_fake_logs_do_not_merge(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")
         active_models = [
-            ("google", "gemini-3.1-pro-preview", "res_gemini_pro"),
-            ("xai", "grok-4.3", "res_grok"),
+            ("google", "gemini-3.5-flash", "res_gemini_pro"),
+            ("xai", "grok-4.5", "res_grok"),
             ("zai", "glm-5.2", "res_glm_paid"),
         ]
         hidden_models = [
-            ("google", "gemini-3.5-flash", "res_gemini_flash"),
+            ("google", "gemini-3.1-pro-preview", "res_gemini_preview"),
             ("xai", "grok-build-0.1", "res_grok_build"),
             ("zai", "glm-4.7-flash", "res_glm_free"),
         ]

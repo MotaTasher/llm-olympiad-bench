@@ -10,6 +10,9 @@ from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
+GIGACHAT_DEFAULT_BASE_URL = "https://api.giga.chat/v1"
+
+
 def normalize_gigachat_credentials(credentials: str) -> str:
     value = credentials.strip()
     if value.lower().startswith("basic "):
@@ -82,6 +85,7 @@ class GigaChatModel(BaseModel):
                 "yes",
             }
             client = GigaChat(
+                base_url=env("GIGACHAT_BASE_URL", GIGACHAT_DEFAULT_BASE_URL),
                 credentials=self._credentials(),
                 scope=env("GIGACHAT_SCOPE", "GIGACHAT_API_PERS"),
                 model=self.model_id,
@@ -111,7 +115,9 @@ class GigaChatModel(BaseModel):
             request_payload = {
                 "model": self.model_id,
                 **payload,
-                "endpoint": sanitized_base_url("https://gigachat.devices.sberbank.ru/api/v1/chat/completions"),
+                "endpoint": sanitized_base_url(
+                    f"{env('GIGACHAT_BASE_URL', GIGACHAT_DEFAULT_BASE_URL)}/chat/completions"
+                ),
                 "stream": False,
             }
             ensure_text_only_request(request_payload)

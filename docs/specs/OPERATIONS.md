@@ -165,19 +165,19 @@ python scripts/sync_logs.py pull --dry-run
 
 The script requires local `rsync` and SSH access. Push uses `--ignore-existing`; this protects existing remote files but does not implement conflict resolution. Detailed user instructions are in root `SERVER.md`.
 
-## Server-side new-model final run
+## Server-side flagship runs
 
-Gemini/Grok/GLM final runs can be launched from the server with live tqdm
-progress:
+The flagships introduced in the 2026-08-01 snapshot can be launched for the
+2026 final with live tqdm progress:
 
 ```bash
 python scripts/run_new_models_math_cup_2026_final.py
 python scripts/run_new_models_math_cup_2026_final.py --yes
 ```
 
-The script defaults to Math Cup 2026 final tasks and the three active models
-owned by its adapters: `google:gemini-3.1-pro-preview`, `xai:grok-4.3` and
-`zai:glm-5.2`. It is dry-run by
+The script defaults to Math Cup 2026 final tasks and the six newly selected
+models: `claude-fable-5`, `claude-opus-5`, `gemini-3.5-flash`,
+`GigaChat-3-Ultra`, `grok-4.5` and `gpt-5.6-sol`. It is dry-run by
 default, prints a cost estimate, and writes each `runner.py` stdout/stderr log
 under `run-output/new-models-2026-final/`. Run logs themselves go to the
 configured `--logs-dir`, normally `/opt/olympiad-scorer/shared/logs`.
@@ -192,12 +192,12 @@ python scripts/run_model_batch.py \
 ```
 
 `--models all` runs all 9 active configured models from
-`models/*/versions.py`. Without an explicit token
-budget the launcher uses its per-model defaults and cost estimates. An explicit
-`--max-tokens` overrides those defaults, including with a larger total budget;
+`models/*/versions.py`. Without an explicit token budget the launcher uses its
+provider/model defaults and cost estimates. An explicit `--max-tokens`
+overrides those defaults for every selected pair;
 Grok and GLM split larger totals across preserved-state continuation requests.
-`--models new` is the narrower operational shortcut for only the three active
-Gemini/Grok/GLM flagships.
+`--models new` is the narrower operational shortcut for only the six models
+introduced in the 2026-08-01 snapshot.
 Add `--detach --yes` on the server to start the run in a new session, write
 progress to `<output-dir>/launcher.log`, and allow the SSH connection to close
 without stopping child `runner.py` processes.

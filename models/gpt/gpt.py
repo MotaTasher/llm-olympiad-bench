@@ -18,6 +18,7 @@ from .versions import DEFAULT as DEFAULT_VERSION
 OPENAI_RESPONSES_ENDPOINT = "https://api.openai.com/v1/responses"
 OPENAI_CONTINUATION_INPUT = "Continue."
 OPENAI_MAX_OUTPUT_TOKENS_BY_MODEL = {
+    "gpt-5.6-sol": 128_000,
     "gpt-5.5": 128_000,
     "gpt-5.4-mini": 128_000,
 }

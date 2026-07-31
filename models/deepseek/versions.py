@@ -3,7 +3,7 @@
 #   https://api-docs.deepseek.com/api/list-models
 #   https://api-docs.deepseek.com/quick_start/pricing
 #   https://api-docs.deepseek.com/updates/
-# Updated: 2026-07-31
+# Benchmark snapshot: 2026-08-01
 #
 # Programmatic check:
 #   curl https://api.deepseek.com/models \

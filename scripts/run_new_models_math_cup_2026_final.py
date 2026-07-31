@@ -22,14 +22,22 @@ DEFAULT_TASK_COUNT = 9
 DEFAULT_OUTPUT_DIR = "run-output/new-models-2026-final"
 DEFAULT_LOGS_DIR = "/opt/olympiad-scorer/shared/logs"
 
+# Models introduced into the active benchmark snapshot on 2026-08-01.
+# Unchanged flagships remain available through scripts/run_model_batch.py --models all.
 MODEL_CAPS = {
-    "google:gemini-3.1-pro-preview": 256_000,
-    "xai:grok-4.3": 256_000,
-    "zai:glm-5.2": 128_000,
+    "anthropic:claude-fable-5": 128_000,
+    "anthropic:claude-opus-5": 128_000,
+    "google:gemini-3.5-flash": 256_000,
+    "gigachat:GigaChat-3-Ultra": 8_192,
+    "xai:grok-4.5": 256_000,
+    "openai:gpt-5.6-sol": 128_000,
 }
 
 DEFAULT_PROVIDER_WORKERS = {
+    "anthropic": 1,
     "google": 2,
+    "gigachat": 1,
+    "openai": 1,
     "xai": 2,
     "zai": 2,
 }

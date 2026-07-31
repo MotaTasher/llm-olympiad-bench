@@ -94,11 +94,11 @@ answer token cap when supported.
 `VERSIONS` is the active benchmark set and should stay small. The scoring UI uses only `VERSIONS` for configured columns; `LEGACY_VERSIONS` may document retired IDs, but must not be used to seed the default matrix.
 
 `runner.py --models all` expands to every active `VERSIONS` entry for every
-provider, using explicit specs such as `openai:gpt-5.5`. If `--models` is
+provider, using explicit specs such as `openai:gpt-5.6-sol`. If `--models` is
 omitted, runner reads `RUNNER_MODELS` from `config/models.env`; the committed
 default is `RUNNER_MODELS=all`, so CLI runs match the scoring UI configured
 columns. Individual model specs may be mixed with aliases, for example
-`--models gpt,anthropic:claude-opus-4-8`.
+`--models gpt,anthropic:claude-opus-5`.
 `runner.py --max-tokens N` overrides `RUNNER_MAX_TOKENS` (committed default:
 `8000`) and provider-specific token env vars for all selected adapters in that
 run.
@@ -132,8 +132,8 @@ cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override
 the SDK retry count when operators want to avoid or allow replaying long calls.
 The Anthropic adapter treats `runner.py --max-tokens` as a total Claude output
 budget. Each Messages request is capped by the provider/model maximum
-(`claude-opus-4-8`: 128,000; `claude-haiku-4-5-20251001`: 64,000). For
-`claude-opus-4-8`, Claude thinking uses current Anthropic adaptive thinking:
+(`claude-fable-5` and `claude-opus-5`: 128,000). Both active Claude models use
+current Anthropic adaptive thinking:
 `thinking: {"type": "adaptive", "display": "summarized"}` plus
 `output_config.effort` (`max` in the committed benchmark runtime config).
 Manual `budget_tokens` is only used for
@@ -151,19 +151,21 @@ final message before returning `SolveResult`. When Anthropic returns
 `output_tokens_details.reasoning_tokens`, the adapter stores it in
 `usage.reasoning_tokens`; those tokens are billed as output tokens, so
 `cost.reasoning` is a subcomponent of the already total-priced output cost.
+Claude Fable 5 can return a refusal as HTTP 200; `stop_reason=refusal` is stored
+as `SolveResult.error` and is not treated as a successful benchmark answer.
 
 Current active set:
 
 | Provider | Active model |
 | --- | --- |
-| OpenAI | `gpt-5.5` |
-| Anthropic | `claude-opus-4-8`, `claude-haiku-4-5-20251001` |
+| OpenAI | `gpt-5.6-sol` |
+| Anthropic | `claude-fable-5`, `claude-opus-5` |
 | DeepSeek | `deepseek-v4-pro` |
-| Gemini | `gemini-3.1-pro-preview` |
-| GigaChat | `GigaChat-2-Max` |
-| Grok | `grok-4.3` |
+| Gemini | `gemini-3.5-flash` |
+| GigaChat | `GigaChat-3-Ultra` |
+| Grok | `grok-4.5` |
 | GLM | `glm-5.2` |
-| YandexGPT | `yandexgpt-5.1` |
+| Yandex AI Studio | `aliceai-llm` |
 
 Retired IDs may be listed in provider `LEGACY_VERSIONS` for operator context,
 but they are not active benchmark models and must not create scoring UI columns
@@ -190,7 +192,7 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
 ## Current provider notes
 
 - Gemini uses the official `google-genai` package and the Gemini Developer API.
-  `gemini-3.1-pro-preview` is the active Preview Pro model. The supported
+  `gemini-3.5-flash` is the active strongest sustained-reasoning model. The supported
   `gemini-3.5-flash` ID is legacy-only and does not create a benchmark column.
   Thinking is configured by provider thinking level
   (`GEMINI_THINKING_LEVEL=high` by default), not by inventing a token-budget
@@ -211,7 +213,7 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   rewritten.
 - Grok uses xAI's hosted Responses endpoint under `https://api.x.ai/v1`.
   Stateful continuation preserves reasoning through `previous_response_id`.
-  `grok-4.3` is the general-purpose model and receives
+  `grok-4.5` is the general-purpose flagship and receives
   `XAI_REASONING_EFFORT=high` by default. The legacy `grok-build-0.1` is a
   coding-specialized model but still receives only the text olympiad prompt;
   it must not get shell, repository tools, code execution or unsupported

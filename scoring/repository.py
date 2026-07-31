@@ -51,6 +51,8 @@ PROVIDER_LABELS = {
 }
 
 SHORT_MODEL_LABELS = {
+    ("anthropic", "claude-fable-5"): "Fable 5",
+    ("anthropic", "claude-opus-5"): "Opus 5",
     ("anthropic", "claude-opus-4-8"): "Opus 4.8",
     ("anthropic", "claude-haiku-4-5-20251001"): "Haiku 4.5",
     ("deepseek", "deepseek-v4-pro"): "V4 Pro",
@@ -58,13 +60,17 @@ SHORT_MODEL_LABELS = {
     ("google", "gemini-3.1-pro-preview"): "3.1 Pro",
     ("google", "gemini-3.5-flash"): "3.5 Flash",
     ("gigachat", "GigaChat-2-Max"): "2 Max",
+    ("gigachat", "GigaChat-3-Ultra"): "3 Ultra",
     ("gigachat", "GigaChat-2"): "2",
     ("xai", "grok-4.3"): "4.3",
+    ("xai", "grok-4.5"): "4.5",
     ("xai", "grok-build-0.1"): "Build 0.1",
     ("zai", "glm-5.2"): "5.2",
     ("zai", "glm-4.7-flash"): "4.7 Flash",
     ("openai", "gpt-5.5"): "GPT-5.5",
+    ("openai", "gpt-5.6-sol"): "GPT-5.6 Sol",
     ("openai", "gpt-5.4-mini"): "GPT-5.4 mini",
+    ("yandexgpt", "aliceai-llm"): "Alice AI LLM",
     ("yandexgpt", "yandexgpt-5.1"): "5.1",
     ("yandexgpt", "yandexgpt-5-lite"): "5 Lite",
 }

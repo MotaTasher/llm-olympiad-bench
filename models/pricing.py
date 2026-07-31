@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-PRICING_VERSION = "2026-07-30"
+PRICING_VERSION = "2026-08-01"
 DEFAULT_RUB_PER_USD = 90.0
 
 
@@ -40,6 +40,7 @@ class TieredTokenPrice:
 
 
 OPENAI_USD_PER_1M = {
+    "gpt-5.6-sol": (5.00, 30.00),
     "gpt-5.5": (5.00, 30.00),
     "gpt-5.4-mini": (0.75, 4.50),
     "gpt-4o": (2.50, 10.00),
@@ -49,6 +50,8 @@ OPENAI_USD_PER_1M = {
 }
 
 ANTHROPIC_USD_PER_1M = {
+    "claude-fable-5": (10.00, 50.00),
+    "claude-opus-5": (5.00, 25.00),
     "claude-opus-4-8": (5.00, 25.00),
     "claude-opus-4-5": (5.00, 25.00),
     "claude-sonnet-4-5": (3.00, 15.00),
@@ -83,6 +86,7 @@ GEMINI_TIERED_USD_PER_1M = {
 }
 
 XAI_USD_PER_1M = {
+    "grok-4.5": (2.00, 0.30, 6.00),
     "grok-4.3": (1.25, 0.20, 2.50),
     "grok-build-0.1": (1.00, 0.20, 2.00),
 }
@@ -105,7 +109,13 @@ YANDEX_RUB_PER_1K = {
     "yandexgpt-pro-32k": 1.20,
 }
 
+YANDEX_RUB_PER_1M = {
+    # Synchronous text generation: input, cached input, output.
+    "aliceai-llm": (500.0, 500.0, 1_200.0),
+}
+
 GIGACHAT_RUB_PER_1K = {
+    "gigachat-3-ultra": 0.0,
     "gigachat": 0.065,
     "gigachat-2": 0.065,
     "gigachat-pro": 0.50,
@@ -146,13 +156,13 @@ def total_price_for(model_id: str, prices: dict[str, float], fallback: float) ->
 def token_price(provider: str, model_id: str) -> TokenPrice | None:
     provider = provider.lower()
     if provider == "openai":
-        input_price, output_price = price_for(model_id, OPENAI_USD_PER_1M, OPENAI_USD_PER_1M["gpt-5.5"])
+        input_price, output_price = price_for(model_id, OPENAI_USD_PER_1M, OPENAI_USD_PER_1M["gpt-5.6-sol"])
         return TokenPrice(provider, model_id, "USD", input_price, output_price)
     if provider == "anthropic":
         input_price, output_price = price_for(
             model_id,
             ANTHROPIC_USD_PER_1M,
-            ANTHROPIC_USD_PER_1M["claude-opus-4-8"],
+            ANTHROPIC_USD_PER_1M["claude-opus-5"],
         )
         return TokenPrice(provider, model_id, "USD", input_price, output_price)
     if provider == "deepseek":
@@ -187,7 +197,7 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
         input_price, cached_input_price, output_price = price_for(
             model_id,
             XAI_USD_PER_1M,
-            XAI_USD_PER_1M["grok-4.3"],
+            XAI_USD_PER_1M["grok-4.5"],
         )
         return TokenPrice(
             provider,
@@ -215,6 +225,18 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
             note=note,
         )
     if provider == "yandexgpt":
+        normalized = model_id.lower()
+        if normalized in YANDEX_RUB_PER_1M:
+            input_price, cached_input_price, output_price = YANDEX_RUB_PER_1M[normalized]
+            return TokenPrice(
+                provider,
+                model_id,
+                "RUB",
+                input_per_1m=input_price,
+                cached_input_per_1m=cached_input_price,
+                output_per_1m=output_price,
+                note="Yandex AI Studio synchronous text-generation tariff, RUB including VAT.",
+            )
         return TokenPrice(
             provider,
             model_id,
@@ -222,12 +244,19 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
             total_per_1k=total_price_for(model_id, YANDEX_RUB_PER_1K, 0.80),
         )
     if provider == "gigachat":
+        normalized = model_id.lower()
+        ultra_freemium = normalized.startswith("gigachat-3-ultra")
         return TokenPrice(
             provider,
             model_id,
             "RUB",
             total_per_1k=total_price_for(model_id, GIGACHAT_RUB_PER_1K, 0.65),
-            note="GigaChat text-generation package price; freemium tokens are not subtracted.",
+            note=(
+                "GigaChat 3 Ultra is currently available to individuals only through its "
+                "Freemium allocation; no paid per-token Ultra tariff is published."
+                if ultra_freemium
+                else "GigaChat text-generation package price; freemium tokens are not subtracted."
+            ),
         )
     return None
 
@@ -381,13 +410,39 @@ def estimate_cost(
             "note": price.note,
         }
 
-    native_total = ((input_tokens + output_tokens) / 1000) * float(price.total_per_1k or 0)
+    if price.input_per_1m is not None or price.output_per_1m is not None:
+        cached_tokens = int(cached_input_tokens or 0)
+        billable_input_tokens = max(0, int(input_tokens or 0) - cached_tokens)
+        native_input = billable_input_tokens * float(price.input_per_1m or 0) / 1_000_000
+        native_cached = cached_tokens * float(
+            price.cached_input_per_1m
+            if price.cached_input_per_1m is not None
+            else price.input_per_1m or 0
+        ) / 1_000_000
+        native_output = int(output_tokens or 0) * float(price.output_per_1m or 0) / 1_000_000
+        native_total = native_input + native_cached + native_output
+        native_reasoning = (
+            reasoning_tokens * float(price.output_per_1m or 0) / 1_000_000
+            if reasoning_tokens is not None
+            else None
+        )
+        native_price_details = {
+            "input": round(native_input, 8),
+            "cached_input": round(native_cached, 8) if cached_tokens else None,
+            "output": round(native_output, 8),
+            "input_per_1m": price.input_per_1m,
+            "cached_input_per_1m": price.cached_input_per_1m,
+            "output_per_1m": price.output_per_1m,
+        }
+    else:
+        native_total = ((input_tokens + output_tokens) / 1000) * float(price.total_per_1k or 0)
+        native_reasoning = (
+            (reasoning_tokens / 1000) * float(price.total_per_1k or 0)
+            if reasoning_tokens is not None
+            else None
+        )
+        native_price_details = {"price_per_1k_total_tokens": price.total_per_1k}
     usd_total = native_total / rub_per_usd()
-    native_reasoning = (
-        (reasoning_tokens / 1000) * float(price.total_per_1k or 0)
-        if reasoning_tokens is not None
-        else None
-    )
     return {
         "currency": "USD",
         "input": None,
@@ -397,7 +452,7 @@ def estimate_cost(
             "currency": price.currency,
             "total": round(native_total, 8),
             "reasoning": round(native_reasoning, 8) if native_reasoning is not None else None,
-            "price_per_1k_total_tokens": price.total_per_1k,
+            **native_price_details,
         },
         "total": round(usd_total, 8),
         "pricing_source": price.source,

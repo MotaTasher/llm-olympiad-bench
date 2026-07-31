@@ -1,8 +1,8 @@
 # models/glm/versions.py
 # Source:
-#   https://docs.z.ai/guides/overview/models
+#   https://docs.z.ai/guides/llm/glm-5.2
 #   https://docs.z.ai/guides/overview/pricing
-# Updated: 2026-07-31
+# Benchmark snapshot: 2026-08-01
 
 VERSIONS = [
     "glm-5.2",

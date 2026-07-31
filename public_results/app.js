@@ -3,15 +3,15 @@
 
   const sourceBaselineData = window.RESULTS_DATA;
   const visibleBaselineModels = new Set([
-    "GPT-5.5",
-    "Claude Opus 4.8",
-    "Claude Haiku 4.5",
+    "GPT-5.6 Sol",
+    "Claude Fable 5",
+    "Claude Opus 5",
     "DeepSeek V4 Pro",
-    "Gemini 3.1 Pro",
-    "GigaChat 2 Max",
-    "Grok 4.3",
+    "Gemini 3.5 Flash",
+    "GigaChat 3 Ultra",
+    "Grok 4.5",
     "GLM 5.2",
-    "YandexGPT 5.1"
+    "Alice AI LLM"
   ]);
   const baselineData = {
     ...sourceBaselineData,
@@ -323,7 +323,7 @@
         <tr>
           ${sortableHeader("rank", "#", "rank-column")}
           ${sortableHeader("name", "Модель / команда", "participant-column")}
-          ${sortableHeader("cost", "Затраты / призовые", "metric-column")}
+          ${sortableHeader("cost", "Затраты", "metric-column")}
           ${sortableHeader("points", "Сумма", "metric-column")}
           ${sortableHeader("tokens", "Токены", "metric-column")}
           ${sortableHeader("accuracy", "Точность", "metric-column")}
@@ -342,9 +342,6 @@
 
     const body = rows.map((participant) => {
       const isTeam = participant.type === "team";
-      const participantMeta = isTeam
-        ? participant.members
-        : participant.provider;
       const rank = isTeam
         ? `<span class="medal" aria-label="${participant.rank} место">${participant.medal}</span>`
         : String(ranks.get(participant.id)).padStart(2, "0");
@@ -366,7 +363,7 @@
           <td class="rank-cell">${rank}</td>
           <th class="participant-cell" scope="row">
             <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
-            <span class="participant-meta">${escapeHtml(participantMeta)}</span>
+            ${isTeam ? `<span class="participant-meta">${escapeHtml(participant.members)}</span>` : ""}
           </th>
           ${moneyCell(participant)}
           <td class="metric-cell strong">${formatPoints(participantPoints(participant))}</td>

@@ -1,7 +1,7 @@
 # models/yandexgpt/versions.py
 # Source: https://aistudio.yandex.ru/docs/en/ai-studio/concepts/generation/models
 # Source: https://aistudio.yandex.ru/docs/en/ai-studio/operations/models/get
-# Updated: 2026-07-31
+# Benchmark snapshot: 2026-08-01
 #
 # Model IDs are URI suffixes. Build full modelUri as:
 #     f"gpt://{YANDEX_FOLDER_ID}/{model_id}"
@@ -27,10 +27,10 @@
 # - Available models may depend on folder, billing status, quotas, and enabled features.
 
 VERSIONS = [
-    # Strongest current YandexGPT model for this completion adapter.
-    "yandexgpt-5.1",
+    # Yandex's current flagship text model; uses the same completion adapter.
+    "aliceai-llm",
 ]
 
-LEGACY_VERSIONS = ["yandexgpt-5-lite"]
+LEGACY_VERSIONS = ["yandexgpt-5.1", "yandexgpt-5-lite"]
 
 DEFAULT = VERSIONS[0]

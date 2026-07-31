@@ -3,8 +3,7 @@
 Этот адаптер запускает Claude через общий `runner.py` в text-only режиме: без `tools`, web search, computer use и внешних цепочек.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `ANTHROPIC_MAX_TOKENS` остаётся fallback-настройкой.
 Адаптер сам режет общий лимит на provider-совместимые запросы: до `128000`
-output-токенов за запрос для `claude-opus-4-8` и до `64000` для
-`claude-haiku-4-5-20251001`.
+output-токенов за запрос для активных `claude-fable-5` и `claude-opus-5`.
 
 ## 1. Как получить ключ
 
@@ -61,7 +60,7 @@ config/models.env
 Пример:
 
 ```env
-ANTHROPIC_MODEL=claude-opus-4-8
+ANTHROPIC_MODEL=claude-fable-5
 ANTHROPIC_MAX_TOKENS=12000
 # ANTHROPIC_THINKING_BUDGET_TOKENS=8000
 ```
@@ -73,7 +72,7 @@ ANTHROPIC_MAX_TOKENS=4096
 ```
 
 `ANTHROPIC_THINKING_BUDGET_TOKENS` включает extended thinking и задает максимум thinking tokens там, где конкретная версия Claude поддерживает ручной thinking budget. `ANTHROPIC_MAX_TOKENS` должен быть больше thinking budget. API не гарантирует минимум thinking tokens. Extended/adaptive thinking тарифицируется как output tokens; если Anthropic возвращает `output_tokens_details.reasoning_tokens`, адаптер сохраняет это в `usage.reasoning_tokens`, а `cost.reasoning` показывает поддолю output-стоимости. Локальная таблица цен в `models/pricing.py` должна соответствовать официальной Anthropic pricing table.
-Для `claude-opus-4-8` ручной `thinking: {type: "enabled", budget_tokens: ...}` не поддерживается; при заданном `ANTHROPIC_THINKING_BUDGET_TOKENS` адаптер включает `thinking: {type: "adaptive", display: "summarized"}` и `output_config: {effort: ...}`. Effort задается через `ANTHROPIC_EFFORT` (`max` по умолчанию в проекте для максимального Claude-режима). `display: "summarized"` нужен, чтобы Anthropic возвращал непустой thinking-блок, а не только подпись/пустой omitted block. Для моделей с manual thinking budget адаптер режет `ANTHROPIC_THINKING_BUDGET_TOKENS` так, чтобы в каждом запросе осталось не меньше `ANTHROPIC_FINAL_TOKEN_RESERVE` токенов под видимый ответ. Если Anthropic возвращает `output_tokens_details.thinking_tokens`, адаптер также нормализует это значение в `usage.reasoning_tokens`.
+Для `claude-fable-5` и `claude-opus-5` ручной `thinking: {type: "enabled", budget_tokens: ...}` не используется; адаптер включает `thinking: {type: "adaptive", display: "summarized"}` и `output_config: {effort: ...}`. Effort задается через `ANTHROPIC_EFFORT` (`max` по умолчанию в проекте). `display: "summarized"` нужен, чтобы Anthropic возвращал непустой thinking-блок. Для legacy-моделей с manual thinking budget адаптер режет `ANTHROPIC_THINKING_BUDGET_TOKENS` так, чтобы в каждом запросе осталось не меньше `ANTHROPIC_FINAL_TOKEN_RESERVE` токенов под видимый ответ. Если Anthropic возвращает `output_tokens_details.thinking_tokens`, адаптер также нормализует это значение в `usage.reasoning_tokens`.
 
 Anthropic Python SDK требует streaming для запросов с `max_tokens > 21333`,
 потому что такие запросы могут идти дольше non-streaming timeout. Адаптер
@@ -118,6 +117,8 @@ ANTHROPIC_EFFORT=max
 
 Если API вернул usage и stop reason, но не вернул видимый текстовый ответ,
 адаптер записывает `SolveResult.error`, а не успешное пустое решение.
+Ответ Fable с `stop_reason=refusal` также сохраняется как ошибка, даже если API
+вернул сопровождающий текст.
 
 ## Полезные ссылки
 
