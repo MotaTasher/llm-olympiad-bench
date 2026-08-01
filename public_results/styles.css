@@ -387,6 +387,19 @@ h1, h2, h3 {
   background: #252429;
 }
 
+/* Hover filters create stacking contexts; keep them below the sticky columns. */
+.leaderboard-table tbody .result-cell {
+  position: relative;
+  z-index: 0;
+}
+
+.leaderboard-table tbody .result-cell:has(a):hover {
+  z-index: 1;
+}
+
+.leaderboard-table tbody .rank-cell { z-index: 6; }
+.leaderboard-table tbody .participant-cell { z-index: 5; }
+
 .rank-cell {
   color: var(--muted);
   font-family: Unbounded, Arial, sans-serif;
