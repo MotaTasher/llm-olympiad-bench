@@ -95,10 +95,8 @@ The intended separation is:
 `models/*/versions.py`, matching the configured columns in the scoring UI.
 Explicit CLI `--models` values override `RUNNER_MODELS` for that run.
 `--max-tokens` sets one output/completion-token ceiling for every selected
-adapter. If omitted, runner reads the committed `RUNNER_MAX_TOKENS=128000`
-benchmark default. GigaChat and Yandex Alice clamp this common requested budget
-to their documented API maxima of 8,192 and 8,000 tokens; the request telemetry
-keeps both values explicit.
+adapter. If omitted, runner reads the committed `RUNNER_MAX_TOKENS=256000`
+benchmark default. The same requested budget is sent to every active adapter.
 OpenAI, Gemini, Grok and GLM treat `--max-tokens` as a total budget and split it
 when it exceeds a provider request cap. OpenAI and Grok chain text-only
 Responses requests with `previous_response_id`; Gemini uses

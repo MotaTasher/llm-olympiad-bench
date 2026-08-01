@@ -36,6 +36,7 @@ PROVIDER_ORDER = [
     "zai",
     "openai",
     "yandexgpt",
+    "kimi",
 ]
 
 PROVIDER_LABELS = {
@@ -48,6 +49,7 @@ PROVIDER_LABELS = {
     "xai": "Grok",
     "yandexgpt": "Яндекс",
     "zai": "GLM",
+    "kimi": "Kimi",
 }
 
 SHORT_MODEL_LABELS = {
@@ -73,6 +75,7 @@ SHORT_MODEL_LABELS = {
     ("yandexgpt", "aliceai-llm"): "Alice AI LLM",
     ("yandexgpt", "yandexgpt-5.1"): "5.1",
     ("yandexgpt", "yandexgpt-5-lite"): "5 Lite",
+    ("kimi", "kimi-k2.5"): "K2.5",
 }
 
 PROVIDER_MODULES = {
@@ -84,6 +87,7 @@ PROVIDER_MODULES = {
     "zai": "models.glm.versions",
     "openai": "models.gpt.versions",
     "yandexgpt": "models.yandexgpt.versions",
+    "kimi": "models.kimi.versions",
 }
 
 STATUS_META = {

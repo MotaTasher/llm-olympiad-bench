@@ -36,6 +36,7 @@ MODEL_NAME_PREFIXES = {
     "xai": "Grok",
     "yandexgpt": "",
     "zai": "GLM",
+    "kimi": "Kimi",
 }
 
 PUBLIC_ASSET_PREFIX = "generated/assets/"

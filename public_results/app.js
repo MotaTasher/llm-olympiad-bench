@@ -11,7 +11,8 @@
     "GigaChat 3 Ultra",
     "Grok 4.5",
     "GLM 5.2",
-    "Alice AI LLM"
+    "Alice AI LLM",
+    "Kimi K2.5"
   ]);
   const baselineData = {
     ...sourceBaselineData,
