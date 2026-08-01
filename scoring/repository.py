@@ -75,7 +75,7 @@ SHORT_MODEL_LABELS = {
     ("yandexgpt", "aliceai-llm"): "Alice AI LLM",
     ("yandexgpt", "yandexgpt-5.1"): "5.1",
     ("yandexgpt", "yandexgpt-5-lite"): "5 Lite",
-    ("kimi", "kimi-k2.5"): "K2.5",
+    ("kimi", "kimi-k3"): "K3",
 }
 
 PROVIDER_MODULES = {

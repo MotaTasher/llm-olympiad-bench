@@ -12,7 +12,7 @@
     "Grok 4.5",
     "GLM 5.2",
     "Alice AI LLM",
-    "Kimi K2.5"
+    "Kimi K3"
   ]);
   const baselineData = {
     ...sourceBaselineData,

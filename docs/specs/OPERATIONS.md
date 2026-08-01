@@ -199,12 +199,11 @@ python scripts/run_model_batch.py \
   --models all
 ```
 
-`--models all` runs all 9 active configured models from
-`models/*/versions.py`. Without an explicit token budget the launcher uses the
-common 128,000-token benchmark budget; GigaChat and Alice remain on their
-documented API caps of 8,192 and 8,000. An explicit `--max-tokens` overrides
-those defaults for every selected pair; Grok and GLM split larger totals across
-preserved-state continuation requests.
+`--models all` runs all active configured models from `models/*/versions.py`.
+Without an explicit token budget the launcher uses the common 256,000-token
+benchmark budget. An explicit `--max-tokens` overrides that default for every
+selected pair; adapters split larger totals across preserved-state continuation
+requests only when a provider API requires it.
 `--models new` is the narrower operational shortcut for only the seven models
 introduced in the 2026-08-01 snapshot.
 Add `--detach --yes` on the server to start the run in a new session, write

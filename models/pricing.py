@@ -96,6 +96,12 @@ ZAI_USD_PER_1M = {
     "glm-4.7-flash": (0.0, 0.0, 0.0),
 }
 
+# Official Kimi K3 list price, USD per million tokens, 2026-08-01.
+# https://platform.kimi.ai/ (latest models section)
+KIMI_USD_PER_1M = {
+    "kimi-k3": (3.00, 0.30, 15.00),
+}
+
 YANDEX_RUB_PER_1K = {
     "yandexgpt-5.1": 0.80,
     "yandexgpt-5-lite": 0.20,
@@ -223,6 +229,21 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
             cached_input_per_1m=cached_input_price,
             output_per_1m=output_price,
             note=note,
+        )
+    if provider == "kimi":
+        input_price, cached_input_price, output_price = price_for(
+            model_id,
+            KIMI_USD_PER_1M,
+            KIMI_USD_PER_1M["kimi-k3"],
+        )
+        return TokenPrice(
+            provider,
+            model_id,
+            "USD",
+            input_per_1m=input_price,
+            cached_input_per_1m=cached_input_price,
+            output_per_1m=output_price,
+            note="Official Kimi K3 standard list price; provider usage counters are used.",
         )
     if provider == "yandexgpt":
         normalized = model_id.lower()

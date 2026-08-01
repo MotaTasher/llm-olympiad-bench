@@ -9,5 +9,5 @@ from scripts.run_model_batch import main
 
 
 if __name__ == "__main__":
-    sys.argv[1:1] = ["--competition", "math-cup-2026-final", "--models", "kimi:kimi-k2.5", "--problems", "01,02,03,04,05,06,07,08,09", "--max-tokens", "256000", "--only-missing"]
+    sys.argv[1:1] = ["--competition", "math-cup-2026-final", "--models", "kimi:kimi-k3", "--problems", "01,02,03,04,05,06,07,08,09", "--max-tokens", "256000", "--only-missing"]
     raise SystemExit(main())

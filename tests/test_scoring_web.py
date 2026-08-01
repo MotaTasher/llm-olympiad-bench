@@ -1678,7 +1678,7 @@ class ScoringWebTests(unittest.TestCase):
             "xai:grok-4.5",
             "zai:glm-5.2",
             "yandexgpt:aliceai-llm",
-            "kimi:kimi-k2.5",
+            "kimi:kimi-k3",
         }
         expected_order = [
             "anthropic:claude-fable-5",
@@ -1690,7 +1690,7 @@ class ScoringWebTests(unittest.TestCase):
             "zai:glm-5.2",
             "openai:gpt-5.6-sol",
             "yandexgpt:aliceai-llm",
-            "kimi:kimi-k2.5",
+            "kimi:kimi-k3",
         ]
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
@@ -1736,7 +1736,7 @@ class ScoringWebTests(unittest.TestCase):
             ("zai", "GLM", list(GLM_VERSIONS)),
             ("openai", "OpenAI", list(GPT_VERSIONS)),
             ("yandexgpt", "Яндекс", list(YANDEX_VERSIONS)),
-            ("kimi", "Kimi", ["kimi-k2.5"]),
+            ("kimi", "Kimi", ["kimi-k3"]),
         ]
         groups = competition["model_groups"]
         self.assertEqual([group["provider"] for group in groups], [item[0] for item in expected_groups])
@@ -1763,7 +1763,7 @@ class ScoringWebTests(unittest.TestCase):
             "glm-5.2": "5.2",
             "gpt-5.6-sol": "GPT-5.6 Sol",
             "aliceai-llm": "Alice AI LLM",
-            "kimi-k2.5": "K2.5",
+            "kimi-k3": "K3",
         }
         actual = {column["model_id"]: column["short_label"] for column in columns.values()}
         for model_id, short_label in expected.items():
@@ -1798,7 +1798,7 @@ class ScoringWebTests(unittest.TestCase):
             ("zai:glm-5.2", "glm-5.2", "5.2"),
             ("openai:gpt-5.6-sol", "gpt-5.6-sol", "GPT-5.6 Sol"),
             ("yandexgpt:aliceai-llm", "aliceai-llm", "Alice AI LLM"),
-            ("kimi:kimi-k2.5", "kimi-k2.5", "K2.5"),
+            ("kimi:kimi-k3", "kimi-k3", "K3"),
         ]
         self.assertEqual([link["text"] for link in parser.model_links], [item[2] for item in expected_links])
         for link, (model_key, model_id, short_label) in zip(parser.model_links, expected_links, strict=True):
