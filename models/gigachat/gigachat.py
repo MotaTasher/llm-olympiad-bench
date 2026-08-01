@@ -91,6 +91,9 @@ class GigaChatModel(BaseModel):
                 scope=env("GIGACHAT_SCOPE", "GIGACHAT_API_PERS"),
                 model=self.model_id,
                 verify_ssl_certs=verify_ssl,
+                timeout=float(env("GIGACHAT_TIMEOUT", "7200") or "7200"),
+                max_retries=int(env("GIGACHAT_MAX_RETRIES", "3") or "3"),
+                retry_backoff_factor=float(env("GIGACHAT_RETRY_BACKOFF_FACTOR", "2") or "2"),
             )
 
             payload = {
