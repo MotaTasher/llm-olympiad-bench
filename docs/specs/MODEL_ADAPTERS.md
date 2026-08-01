@@ -101,10 +101,10 @@ columns. Individual model specs may be mixed with aliases, for example
 `--models gpt,anthropic:claude-opus-5`.
 `runner.py --max-tokens N` overrides the benchmark token budget for every
 selected adapter in that run. The committed benchmark default is a common
-128,000-token total output budget. GigaChat and Yandex Alice clamp a larger
-requested budget to their documented per-request API maxima (8,192 and 8,000)
-and record both the requested and provider limit in safe request telemetry.
-This is the only active-model token-limit exception.
+256,000-token total output budget. Provider requests use that value whenever
+their API permits it and record the safe request snapshot. A provider-specific
+parameter constraint is documented next to the adapter rather than silently
+lowering the common runner budget.
 The OpenAI adapter maps this value to a total Responses API output budget. If
 the total exceeds the configured per-request cap for the model, the adapter
 continues with additional Responses requests linked by `previous_response_id`
@@ -169,7 +169,7 @@ Current active set:
 | Grok | `grok-4.5` |
 | GLM | `glm-5.2` |
 | Yandex AI Studio | `aliceai-llm` |
-| Moonshot AI | `kimi-k2.5` |
+| Moonshot AI | `kimi-k3` |
 
 Retired IDs may be listed in provider `LEGACY_VERSIONS` for operator context,
 but they are not active benchmark models and must not create scoring UI columns
@@ -216,6 +216,14 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   text request and the remainder is priced as output/thinking. The source is
   marked `models/pricing.py:total-token-fallback`; the immutable log is not
   rewritten.
+- Kimi uses Moonshot's OpenAI-compatible Chat Completions endpoint with
+  `kimi-k3`, the provider's current flagship available to this account. Its
+  request contains only the shared system/user text messages,
+  `max_completion_tokens=256000`, `temperature=1`, and `stream=false`; it
+  deliberately omits `tools`, search, files, images, code execution, and
+  function calls. K3 is the one active API model that accepts only temperature
+  `1`. Usage is read from the returned `usage` object; K3 list-price estimates
+  are stored separately from provider token counters.
 - Grok uses xAI's hosted Responses endpoint under `https://api.x.ai/v1`.
   Stateful continuation preserves reasoning through `previous_response_id`.
   `grok-4.5` is the general-purpose flagship and receives

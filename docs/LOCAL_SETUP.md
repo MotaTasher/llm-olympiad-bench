@@ -318,9 +318,8 @@ python runner.py \
 
 Единый лимит output/completion-токенов можно задать CLI-флагом
 `--max-tokens` или переменной `RUNNER_MAX_TOKENS` в `config/models.env`.
-В committed-конфиге задан единый `RUNNER_MAX_TOKENS=128000` для всех
-официальных запусков. GigaChat и Alice безопасно ограничивают больший запрос
-до 8192 и 8000 токенов, потому что это максимумы их API. CLI-флаг имеет
+В committed-конфиге задан единый `RUNNER_MAX_TOKENS=256000` для всех
+официальных запусков. CLI-флаг имеет
 приоритет над `RUNNER_MAX_TOKENS`, а они вместе имеют приоритет над
 provider-specific переменными (`ANTHROPIC_MAX_TOKENS`,
 `OPENAI_MAX_COMPLETION_TOKENS`, `DEEPSEEK_MAX_TOKENS`, `GIGACHAT_MAX_TOKENS`,

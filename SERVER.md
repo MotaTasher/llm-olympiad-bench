@@ -180,10 +180,11 @@ nohup /opt/olympiad-scorer/venv/bin/python scripts/run_new_models_math_cup_2026_
 tail -f /opt/olympiad-scorer/app/run-output/new-models-2026-final/launcher.log
 ```
 
-По умолчанию launcher сохраняет существующие provider/model caps: Claude и
-OpenAI `128000`, Gemini и Grok `256000`, GigaChat `8192`. Явный
-`--max-tokens` переопределяет default для всех выбранных моделей. Concurrency
-ограничивается отдельно по провайдерам, общий лимит процессов — `--workers 6`.
+По умолчанию launcher использует общий бюджет `256000` токенов. Адаптеры могут
+делить его на несколько запросов только когда это необходимо из-за лимита API;
+явный `--max-tokens` переопределяет default для всех выбранных моделей.
+Concurrency ограничивается отдельно по провайдерам, общий лимит процессов —
+`--workers 6`.
 
 ## Pull: забрать оценки с сервера
 
