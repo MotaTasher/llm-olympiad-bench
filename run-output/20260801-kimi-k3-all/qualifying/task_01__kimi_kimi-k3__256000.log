@@ -1,0 +1,4 @@
+START 2026-08-01T13:29:18.840027+00:00 math-cup-2026-qualifying/task_01 kimi:kimi-k3 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_01.json --models kimi:kimi-k3 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_132918_task_01_kimi_kimi-k3_256000
+Run 2026_08_01_13_29_18_math-cup-2026-qualifying_20260801_132918_task_01_kimi_kimi-k3_256000: math-cup-2026-qualifying/task_01, 1 model(s), max_tokens=256000
+[1/1] START kimi:kimi-k3

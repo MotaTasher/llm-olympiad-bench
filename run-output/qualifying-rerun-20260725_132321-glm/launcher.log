@@ -1,0 +1,11 @@
+
+DETACH 2026-07-25T13:23:21.724420+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/qualifying-rerun-20260725_132321-glm --models zai:glm-4.7-flash --problems 03 --max-tokens 256000 --workers 1 --provider-workers zai=1 --run-group qualifying_rerun_20260725_132321_glm --yes
+Pair count: 1
+provider	zai	$0.0000
+model	zai:glm-4.7-flash	$0.0000
+total	$0.0000
+total_plus_20pct	$0.0000
+  0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:03<?, ?run/s]100%|██████████| 1/1 [00:03<00:00,  3.08s/run]100%|██████████| 1/1 [00:03<00:00,  3.08s/run]
+Launching 1 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'google': 2, 'xai': 2, 'zai': 1}, run_group=qualifying_rerun_20260725_132321_glm
+START math-cup-2026-qualifying/task_03 zai:glm-4.7-flash cap=256000
+OK task_03 zai:glm-4.7-flash exit=0 elapsed=3.1s log=run-output/qualifying-rerun-20260725_132321-glm/task_03__zai_glm-4.7-flash__256000.log

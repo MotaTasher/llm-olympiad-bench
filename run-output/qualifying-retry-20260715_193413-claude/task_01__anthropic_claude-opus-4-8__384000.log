@@ -1,0 +1,17 @@
+START 2026-07-15T19:34:14.047299+00:00 math-cup-2026-qualifying/task_01 anthropic:claude-opus-4-8 cap=384000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_01.json --models anthropic:claude-opus-4-8 --max-tokens 384000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_retry_20260715_193413_claude_task_01_anthropic_claude-opus-4-8_384000
+Run 2026_07_15_19_34_14_qualifying_retry_20260715_193413_claude_task_01_anthropic_claude-opus-4-8_384000: math-cup-2026-qualifying/task_01, 1 model(s), max_tokens=384000
+[1/1] START anthropic:claude-opus-4-8
+[1/1] ERROR claude-opus-4-8 in 30m51s: peer closed connection without sending complete message body (incomplete chunked read)
+| model           |   tokens |   cost_usd |   latency_ms | status   | error                                                                                  |
+|-----------------|----------|------------|--------------|----------|----------------------------------------------------------------------------------------|
+| claude-opus-4-8 |        0 |          0 |      1594924 | error    | peer closed connection without sending complete message body (incomplete chunked read) |
+
+Run ID: 2026_07_15_19_34_14_qualifying_retry_20260715_193413_claude_task_01_anthropic_claude-opus-4-8_384000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_01 (Муравей в большом квадрате)
+Timestamp: 2026-07-15T19:34:14.194444Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_01/2026_07_15_19_34_14_qualifying_retry_20260715_193413_claude_task_01_anthropic_claude-opus-4-8_384000.json
+
+DONE 2026-07-15T20:05:06.584239+00:00 math-cup-2026-qualifying/task_01 anthropic:claude-opus-4-8 cap=384000 exit=0 elapsed_s=1852.5

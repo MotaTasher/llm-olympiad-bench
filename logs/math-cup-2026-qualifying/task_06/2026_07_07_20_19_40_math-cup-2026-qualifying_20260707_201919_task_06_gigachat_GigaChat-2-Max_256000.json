@@ -1,0 +1,278 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_20_19_40_math-cup-2026-qualifying_20260707_201919_task_06_gigachat_GigaChat-2-Max_256000",
+  "timestamp": "2026-07-07T20:19:40.336384Z",
+  "started_at": "2026-07-07T20:19:40.336384Z",
+  "completed_at": "2026-07-07T20:20:00.221176Z",
+  "duration_ms": 19871,
+  "status": "completed",
+  "git_hash": "abcc89f",
+  "git": {
+    "hash": "abcc89f",
+    "full_hash": "abcc89f3ecd9edd8b11c8dca7bd067640ca2fe93",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "gigachat:GigaChat-2-Max",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_201919_task_06_gigachat_GigaChat-2-Max_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "gigachat:GigaChat-2-Max",
+      "run_id": "math-cup-2026-qualifying_20260707_201919_task_06_gigachat_GigaChat-2-Max_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "gigachat:GigaChat-2-Max"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.113.0",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "gigachat:GigaChat-2-Max"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_6ccaa0bfbc440525a69c0207",
+      "result_index": 0,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-2-Max",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-2-Max",
+      "resolved_model_id": "GigaChat-2-Max:2.0.28.2",
+      "model": "GigaChat-2-Max",
+      "attempt": 1,
+      "started_at": "2026-07-07T20:19:40.362044Z",
+      "completed_at": "2026-07-07T20:20:00.212740Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-2-Max",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 0.9,
+        "max_tokens": 256000,
+        "repetition_penalty": 1.05,
+        "endpoint": "https://gigachat.devices.sberbank.ru/api/v1/chat/completions",
+        "stream": false
+      },
+      "answer": "### Шаг 1: Формализация условия\n\nПусть $f \\in C[0,1]$ — непрерывная функция на отрезке $[0,1]$, удовлетворяющая следующим условиям:\n\n$$\n\\int_0^1 f^2(x)\\,dx = 1,\\quad \\int_0^1 f(x)\\,dx = \\frac{1}{2},\\quad \\int_0^1 x f(x)\\,dx = 0.\n$$\n\nНеобходимо найти значение интеграла $\\int_0^1 x^2 f(x)\\,dx$.\n\n### Шаг 2: Использование ортогональности функций\n\nРассмотрим пространство $L^2([0,1])$ с внутренним произведением:\n\n$$\n\\langle g, h \\rangle = \\int_0^1 g(x)h(x)\\,dx.\n$$\n\nТогда условия задачи можно переписать в виде:\n\n$$\n\\|f\\|^2 = 1,\\quad \\langle f, 1 \\rangle = \\frac{1}{2},\\quad \\langle f, x \\rangle = 0.\n$$\n\nЗдесь $\\|f\\|^2 = \\langle f, f \\rangle$ — норма функции $f$.\n\n### Шаг 3: Нахождение искомого интеграла\n\nРассмотрим функцию $g(x) = x^2$. Нам нужно вычислить $\\langle f, g \\rangle = \\int_0^1 x^2 f(x)\\,dx$.\n\nИспользуем разложение функции $x^2$ по базису $\\{1, x\\}$:\n\n$$\nx^2 = a + bx.\n$$\n\nНайдем коэффициенты $a$ и $b$ из условий ортогональности:\n\n$$\n\\langle x^2 - (a + bx), 1 \\rangle = 0,\\quad \\langle x^2 - (a + bx), x \\rangle = 0.\n$$\n\nВычислим эти интегралы:\n\n$$\n\\int_0^1 (x^2 - a - bx)\\,dx = 0,\\quad \\int_0^1 x(x^2 - a - bx)\\,dx = 0.\n$$\n\nПервое уравнение дает:\n\n$$\n\\frac{1}{3} - a - \\frac{b}{2} = 0 \\implies a + \\frac{b}{2} = \\frac{1}{3}.\n$$\n\nВторое уравнение дает:\n\n$$\n\\frac{1}{4} - \\frac{a}{2} - \\frac{b}{3} = 0 \\implies \\frac{a}{2} + \\frac{b}{3} = \\frac{1}{4}.\n$$\n\nРешим систему уравнений:\n\n$$\n\\begin{cases}\na + \\frac{b}{2} = \\frac{1}{3}, \\\\\n\\frac{a}{2} + \\frac{b}{3} = \\frac{1}{4}.\n\\end{cases}\n$$\n\nУмножим первое уравнение на 2:\n\n$$\n2a + b = \\frac{2}{3}.\n$$\n\nУмножим второе уравнение на 6:\n\n$$\n3a + 2b = \\frac{3}{2}.\n$$\n\nТеперь решим систему:\n\n$$\n\\begin{cases}\n2a + b = \\frac{2}{3}, \\\\\n3a + 2b = \\frac{3}{2}.\n\\end{cases}\n$$\n\nУмножим первое уравнение на 2 и вычтем из второго:\n\n$$\n(3a + 2b) - 2(2a + b) = \\frac{3}{2} - 2\\cdot\\frac{2}{3},\n$$\n\n$$\n- a = \\frac{3}{2} - \\frac{4}{3} = \\frac{9 - 8}{6} = \\frac{1}{6},\n$$\n\n$$\na = -\\frac{1}{6}.\n$$\n\nПодставим $a$ в первое уравнение:\n\n$$\n2\\left(-\\frac{1}{6}\\right) + b = \\frac{2}{3},\n$$\n\n$$\n-\\frac{1}{3} + b = \\frac{2}{3},\n$$\n\n$$\nb = 1.\n$$\n\nТаким образом, $x^2 = -\\frac{1}{6} + x$.\n\n### Шаг 4: Вычисление интеграла\n\nТеперь используем найденное разложение:\n\n$$\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 \\left(-\\frac{1}{6} + x\\right)f(x)\\,dx = -\\frac{1}{6}\\int_0^1 f(x)\\,dx + \\int_0^1 x f(x)\\,dx.\n$$\n\nПодставляем известные значения:\n\n$$\n\\int_0^1 x^2 f(x)\\,dx = -\\frac{1}{6}\\cdot\\frac{1}{2} + 0 = -\\frac{1}{12}.\n$$\n\n### Финальный ответ\n\n$$\n\\int_0^1 x^2 f(x)\\,dx = -\\frac{1}{12}.\n$$",
+      "prompt_tokens": 208,
+      "completion_tokens": 1047,
+      "cost_usd": 0.00906389,
+      "latency_ms": 19643,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "07d7d078-3f5f-451f-bdeb-aca0cf0cb915",
+          "x-session-id": "01ef3545-3524-4b42-a5fd-29b7f7f4749a"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "### Шаг 1: Формализация условия\n\nПусть $f \\in C[0,1]$ — непрерывная функция на отрезке $[0,1]$, удовлетворяющая следующим условиям:\n\n$$\n\\int_0^1 f^2(x)\\,dx = 1,\\quad \\int_0^1 f(x)\\,dx = \\frac{1}{2},\\quad \\int_0^1 x f(x)\\,dx = 0.\n$$\n\nНеобходимо найти значение интеграла $\\int_0^1 x^2 f(x)\\,dx$.\n\n### Шаг 2: Использование ортогональности функций\n\nРассмотрим пространство $L^2([0,1])$ с внутренним произведением:\n\n$$\n\\langle g, h \\rangle = \\int_0^1 g(x)h(x)\\,dx.\n$$\n\nТогда условия задачи можно переписать в виде:\n\n$$\n\\|f\\|^2 = 1,\\quad \\langle f, 1 \\rangle = \\frac{1}{2},\\quad \\langle f, x \\rangle = 0.\n$$\n\nЗдесь $\\|f\\|^2 = \\langle f, f \\rangle$ — норма функции $f$.\n\n### Шаг 3: Нахождение искомого интеграла\n\nРассмотрим функцию $g(x) = x^2$. Нам нужно вычислить $\\langle f, g \\rangle = \\int_0^1 x^2 f(x)\\,dx$.\n\nИспользуем разложение функции $x^2$ по базису $\\{1, x\\}$:\n\n$$\nx^2 = a + bx.\n$$\n\nНайдем коэффициенты $a$ и $b$ из условий ортогональности:\n\n$$\n\\langle x^2 - (a + bx), 1 \\rangle = 0,\\quad \\langle x^2 - (a + bx), x \\rangle = 0.\n$$\n\nВычислим эти интегралы:\n\n$$\n\\int_0^1 (x^2 - a - bx)\\,dx = 0,\\quad \\int_0^1 x(x^2 - a - bx)\\,dx = 0.\n$$\n\nПервое уравнение дает:\n\n$$\n\\frac{1}{3} - a - \\frac{b}{2} = 0 \\implies a + \\frac{b}{2} = \\frac{1}{3}.\n$$\n\nВторое уравнение дает:\n\n$$\n\\frac{1}{4} - \\frac{a}{2} - \\frac{b}{3} = 0 \\implies \\frac{a}{2} + \\frac{b}{3} = \\frac{1}{4}.\n$$\n\nРешим систему уравнений:\n\n$$\n\\begin{cases}\na + \\frac{b}{2} = \\frac{1}{3}, \\\\\n\\frac{a}{2} + \\frac{b}{3} = \\frac{1}{4}.\n\\end{cases}\n$$\n\nУмножим первое уравнение на 2:\n\n$$\n2a + b = \\frac{2}{3}.\n$$\n\nУмножим второе уравнение на 6:\n\n$$\n3a + 2b = \\frac{3}{2}.\n$$\n\nТеперь решим систему:\n\n$$\n\\begin{cases}\n2a + b = \\frac{2}{3}, \\\\\n3a + 2b = \\frac{3}{2}.\n\\end{cases}\n$$\n\nУмножим первое уравнение на 2 и вычтем из второго:\n\n$$\n(3a + 2b) - 2(2a + b) = \\frac{3}{2} - 2\\cdot\\frac{2}{3},\n$$\n\n$$\n- a = \\frac{3}{2} - \\frac{4}{3} = \\frac{9 - 8}{6} = \\frac{1}{6},\n$$\n\n$$\na = -\\frac{1}{6}.\n$$\n\nПодставим $a$ в первое уравнение:\n\n$$\n2\\left(-\\frac{1}{6}\\right) + b = \\frac{2}{3},\n$$\n\n$$\n-\\frac{1}{3} + b = \\frac{2}{3},\n$$\n\n$$\nb = 1.\n$$\n\nТаким образом, $x^2 = -\\frac{1}{6} + x$.\n\n### Шаг 4: Вычисление интеграла\n\nТеперь используем найденное разложение:\n\n$$\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 \\left(-\\frac{1}{6} + x\\right)f(x)\\,dx = -\\frac{1}{6}\\int_0^1 f(x)\\,dx + \\int_0^1 x f(x)\\,dx.\n$$\n\nПодставляем известные значения:\n\n$$\n\\int_0^1 x^2 f(x)\\,dx = -\\frac{1}{6}\\cdot\\frac{1}{2} + 0 = -\\frac{1}{12}.\n$$\n\n### Финальный ответ\n\n$$\n\\int_0^1 x^2 f(x)\\,dx = -\\frac{1}{12}.\n$$",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1783455600,
+        "model": "GigaChat-2-Max:2.0.28.2",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 208,
+          "completion_tokens": 1047,
+          "total_tokens": 1255,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completion"
+      },
+      "usage": {
+        "input_tokens": 208,
+        "output_tokens": 1047,
+        "total_tokens": 1255,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 208,
+          "completion_tokens": 1047,
+          "total_tokens": 1255,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 19643,
+        "monotonic_ms": 19643,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 19643,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.81575,
+          "reasoning": null,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00906389,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat text-generation package price; freemium tokens are not subtracted.",
+        "cached_input": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "07d7d078-3f5f-451f-bdeb-aca0cf0cb915",
+      "response_id": null,
+      "provider_timestamp": 1783455600,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+START 2026-07-15T08:03:00.619694+00:00 math-cup-2026-final/task_08 zai:glm-5.2 cap=256000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_08.json --models zai:glm-5.2 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id retry_glm5_stream_20260715_072449_task_08_zai_glm-5.2_256000
+Run 2026_07_15_08_03_00_retry_glm5_stream_20260715_072449_task_08_zai_glm-5.2_256000: math-cup-2026-final/task_08, 1 model(s), max_tokens=256000
+[1/1] START zai:glm-5.2
+[1/1] DONE  glm-5.2 in 34m12s tokens=105952 cost_usd=0.464251
+| model   |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------|----------|------------|--------------|----------|---------|
+| glm-5.2 |   105952 |   0.464251 |      2052319 | ok       |         |
+
+Run ID: 2026_07_15_08_03_00_retry_glm5_stream_20260715_072449_task_08_zai_glm-5.2_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_08 (Строки)
+Timestamp: 2026-07-15T08:03:00.730882Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_08/2026_07_15_08_03_00_retry_glm5_stream_20260715_072449_task_08_zai_glm-5.2_256000.json
+
+DONE 2026-07-15T08:37:14.546257+00:00 math-cup-2026-final/task_08 zai:glm-5.2 cap=256000 exit=0 elapsed_s=2053.9

@@ -1,0 +1,276 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_15_16_58_54_qualifying_missing_20260715_144724_task_07_yandexgpt_yandexgpt-5-lite_8000",
+  "timestamp": "2026-07-15T16:58:54.477532Z",
+  "started_at": "2026-07-15T16:58:54.477532Z",
+  "completed_at": "2026-07-15T16:59:02.081398Z",
+  "duration_ms": 7594,
+  "status": "completed",
+  "git_hash": "a5c99be",
+  "git": {
+    "hash": "a5c99be",
+    "full_hash": "a5c99be75b80798536aad586d62dca0193135cc1",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_07.json",
+      "--models",
+      "yandexgpt:yandexgpt-5-lite",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "qualifying_missing_20260715_144724_task_07_yandexgpt_yandexgpt-5-lite_8000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_07.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "yandexgpt:yandexgpt-5-lite",
+      "run_id": "qualifying_missing_20260715_144724_task_07_yandexgpt_yandexgpt-5-lite_8000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 8000
+    },
+    "requested_models": [
+      "yandexgpt:yandexgpt-5-lite"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.113.0",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.11.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "yandexgpt:yandexgpt-5-lite"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_07",
+  "problem_number": 7,
+  "problem_title": "Мумифицированный тетраэдр",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_07.json",
+  "problem_text": "Поверхность правильного тетраэдра с длиной ребра \\(239\\) требуется полностью покрыть прямоугольными полосками размера \\(1\\times23\\). Полоски можно накладывать друг на друга, сгибать вдоль рёбер тетраэдра и произвольно располагать на поверхности, однако резать или рвать их нельзя.\n\nНайдите минимальное количество полосок, необходимое для покрытия всей поверхности тетраэдра.",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_07",
+    "number": 7,
+    "title": "Мумифицированный тетраэдр",
+    "statement": "Поверхность правильного тетраэдра с длиной ребра \\(239\\) требуется полностью покрыть прямоугольными полосками размера \\(1\\times23\\). Полоски можно накладывать друг на друга, сгибать вдоль рёбер тетраэдра и произвольно располагать на поверхности, однако резать или рвать их нельзя.\n\nНайдите минимальное количество полосок, необходимое для покрытия всей поверхности тетраэдра.",
+    "answer": "4302",
+    "solution": "Обозначим искомое число полосок через \\(N\\).\n\n**Нижняя оценка.** Площадь поверхности правильного тетраэдра со стороной \\(239\\) равна\n\\[\n4\\cdot\\frac{\\sqrt3}{4}\\cdot239^2=239^2\\sqrt3,\n\\]\nа площадь каждой полоски равна \\(23\\). Так как полоски должны покрыть поверхность без пропусков, необходимо\n\\[\nN\\ge\\left\\lceil\\frac{239^2\\sqrt3}{23}\\right\\rceil=4302.\n\\]\n\n**Верхняя оценка.** Разрежем поверхность тетраэдра по двум противоположным рёбрам — она развернётся в цилиндрическое кольцо высотой\n\\[\n\\frac{239\\sqrt3}{2}\n\\]\nи с длиной окружности\n\\[\n2\\cdot239=478.\n\\]\n\nРазобьём это кольцо на \\(478\\) вертикальных полос шириной \\(1\\). Каждую такую полосу можно покрыть полосками \\(1\\times23\\), уложенными вертикально. Их потребуется\n\\[\n\\left\\lceil\\frac{239\\sqrt3}{46}\\right\\rceil=\\lceil8.9991335437\\ldots\\rceil=9.\n\\]\nСледовательно, весь тетраэдр можно покрыть\n\\[\n478\\cdot9=4302\n\\]\nполосками \\(1\\times23\\).",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "1e740be6bff1a097a89740c7a4421303bc934631bd90f9b138ff4d7d06778ca6",
+  "problem_text_hash": "33118ee5aa5aaf50383cfb16089984faad67e3bb4dfe479cf92e5f416eb9ea09",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 8000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_f398bc16a0c376e0e78805c1",
+      "result_index": 0,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt:yandexgpt-5-lite",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "yandexgpt-5-lite",
+      "resolved_model_id": "yandexgpt-5-lite",
+      "model": "yandexgpt-5-lite",
+      "attempt": 1,
+      "started_at": "2026-07-15T16:58:54.501569Z",
+      "completed_at": "2026-07-15T16:59:02.076794Z",
+      "status": "success",
+      "request": {
+        "model": "yandexgpt-5-lite",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 8000,
+          "reasoningOptions": {
+            "mode": "ENABLED_HIDDEN"
+          }
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Поверхность правильного тетраэдра с длиной ребра \\(239\\) требуется полностью покрыть прямоугольными полосками размера \\(1\\times23\\). Полоски можно накладывать друг на друга, сгибать вдоль рёбер тетраэдра и произвольно располагать на поверхности, однако резать или рвать их нельзя.\n\nНайдите минимальное количество полосок, необходимое для покрытия всей поверхности тетраэдра."
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false
+      },
+      "answer": "Минимальное количество полосок, необходимое для покрытия всей поверхности тетраэдра, равно \\( n \\), где \\( n \\) получено путём деления общей площади поверхности тетраэдра на площадь одной полоски и последующего округления в большую сторону.",
+      "prompt_tokens": 203,
+      "completion_tokens": 655,
+      "cost_usd": 0.00190667,
+      "latency_ms": 7495,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": "Минимальное количество полосок, необходимое для покрытия всей поверхности тетраэдра, равно \\( n \\), где \\( n \\) получено путём деления общей площади поверхности тетраэдра на площадь одной полоски и последующего округления в большую сторону."
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "203",
+            "completionTokens": "655",
+            "totalTokens": "858",
+            "completionTokensDetails": {
+              "reasoningTokens": "607"
+            }
+          },
+          "modelVersion": "25.03.2025"
+        }
+      },
+      "usage": {
+        "input_tokens": 203,
+        "output_tokens": 655,
+        "total_tokens": "858",
+        "reasoning_tokens": 607,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "inputTextTokens": "203",
+          "completionTokens": "655",
+          "totalTokens": "858",
+          "completionTokensDetails": {
+            "reasoningTokens": "607"
+          }
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 7495,
+        "monotonic_ms": 7495,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 7495,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "reasoning": 0.00134889,
+        "native": {
+          "currency": "RUB",
+          "total": 0.1716,
+          "reasoning": 0.1214,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.00190667,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": null,
+        "cached_input": null
+      },
+      "finish_reason": "ALTERNATIVE_STATUS_FINAL",
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

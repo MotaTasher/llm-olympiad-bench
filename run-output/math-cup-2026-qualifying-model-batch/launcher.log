@@ -1,0 +1,169 @@
+
+DETACH 2026-07-07T13:49:39.301000+00:00 COMMAND /opt/olympiad-scorer/venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models new --problems 06 --workers 6 --provider-workers google=2,xai=2,zai=2 --yes
+Pair count: 6
+provider	google	$4.2245
+provider	xai	$1.1524
+provider	zai	$0.5635
+model	google:gemini-3.1-pro-preview	$3.0724
+model	google:gemini-3.5-flash	$1.1521
+model	xai:grok-4.3	$0.6402
+model	xai:grok-build-0.1	$0.5122
+model	zai:glm-4.7-flash	$0.0000
+model	zai:glm-5.2	$0.5635
+total	$5.9404
+total_plus_20pct	$7.1284
+  0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:32<?, ?run/s] 17%|█▋        | 1/6 [00:32<02:42, 32.59s/run]                                               17%|█▋        | 1/6 [00:34<02:42, 32.59s/run] 33%|███▎      | 2/6 [00:34<00:59, 14.76s/run]                                               33%|███▎      | 2/6 [01:03<00:59, 14.76s/run] 50%|█████     | 3/6 [01:03<01:03, 21.14s/run]                                               50%|█████     | 3/6 [01:37<01:03, 21.14s/run] 67%|██████▋   | 4/6 [01:37<00:52, 26.24s/run]                                               67%|██████▋   | 4/6 [02:07<00:52, 26.24s/run] 83%|████████▎ | 5/6 [02:07<00:27, 27.60s/run]                                               83%|████████▎ | 5/6 [02:12<00:27, 27.60s/run]100%|██████████| 6/6 [02:12<00:00, 19.72s/run]100%|██████████| 6/6 [02:12<00:00, 22.02s/run]
+Launching 6 pair(s), competition=math-cup-2026-qualifying, workers=6, provider_workers={'google': 2, 'xai': 2, 'zai': 2}, run_group=math-cup-2026-qualifying_20260707_134939
+START math-cup-2026-qualifying/task_06 google:gemini-3.1-pro-preview cap=256000
+START math-cup-2026-qualifying/task_06 google:gemini-3.5-flash cap=256000
+START math-cup-2026-qualifying/task_06 xai:grok-4.3 cap=256000
+START math-cup-2026-qualifying/task_06 xai:grok-build-0.1 cap=256000
+START math-cup-2026-qualifying/task_06 zai:glm-5.2 cap=128000
+START math-cup-2026-qualifying/task_06 zai:glm-4.7-flash cap=128000
+OK task_06 google:gemini-3.5-flash exit=0 elapsed=32.6s log=run-output/math-cup-2026-qualifying-model-batch/task_06__google_gemini-3.5-flash__256000.log
+OK task_06 xai:grok-build-0.1 exit=0 elapsed=34.9s log=run-output/math-cup-2026-qualifying-model-batch/task_06__xai_grok-build-0.1__256000.log
+OK task_06 google:gemini-3.1-pro-preview exit=0 elapsed=63.6s log=run-output/math-cup-2026-qualifying-model-batch/task_06__google_gemini-3.1-pro-preview__256000.log
+OK task_06 zai:glm-5.2 exit=0 elapsed=97.6s log=run-output/math-cup-2026-qualifying-model-batch/task_06__zai_glm-5.2__128000.log
+OK task_06 zai:glm-4.7-flash exit=0 elapsed=127.7s log=run-output/math-cup-2026-qualifying-model-batch/task_06__zai_glm-4.7-flash__128000.log
+OK task_06 xai:grok-4.3 exit=0 elapsed=132.1s log=run-output/math-cup-2026-qualifying-model-batch/task_06__xai_grok-4.3__256000.log
+
+DETACH 2026-07-07T20:19:19.242890+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models openai:gpt-5.5,openai:gpt-5.4-mini,anthropic:claude-opus-4-8,anthropic:claude-haiku-4-5-20251001,deepseek:deepseek-v4-pro,deepseek:deepseek-v4-flash,yandexgpt:yandexgpt-5.1,yandexgpt:yandexgpt-5-lite,gigachat:GigaChat-2,gigachat:GigaChat-2-Max --problems 06 --max-tokens 256000 --workers 6 --provider-workers openai=2,anthropic=2,deepseek=2,yandexgpt=2,gigachat=1 --only-missing --yes
+Pair count: 10
+provider	anthropic	$7.6811
+provider	deepseek	$0.2945
+provider	gigachat	$2.0352
+provider	openai	$8.8330
+provider	yandexgpt	$2.8465
+model	anthropic:claude-haiku-4-5-20251001	$1.2802
+model	anthropic:claude-opus-4-8	$6.4009
+model	deepseek:deepseek-v4-flash	$0.0717
+model	deepseek:deepseek-v4-pro	$0.2228
+model	gigachat:GigaChat-2	$0.1850
+model	gigachat:GigaChat-2-Max	$1.8502
+model	openai:gpt-5.4-mini	$1.1521
+model	openai:gpt-5.5	$7.6809
+model	yandexgpt:yandexgpt-5-lite	$0.5693
+model	yandexgpt:yandexgpt-5.1	$2.2772
+total	$21.6903
+total_plus_20pct	$26.0284
+  0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:00<?, ?run/s]                                         0%|          | 0/10 [00:04<?, ?run/s] 10%|█         | 1/10 [00:04<00:38,  4.30s/run]                                                10%|█         | 1/10 [00:04<00:38,  4.30s/run]                                                10%|█         | 1/10 [00:04<00:38,  4.30s/run]                                                20%|██        | 2/10 [00:04<00:34,  4.30s/run]                                                20%|██        | 2/10 [00:12<00:34,  4.30s/run] 30%|███       | 3/10 [00:12<00:30,  4.31s/run]                                                30%|███       | 3/10 [00:12<00:30,  4.31s/run]                                                30%|███       | 3/10 [00:15<00:30,  4.31s/run] 40%|████      | 4/10 [00:15<00:22,  3.80s/run]                                                40%|████      | 4/10 [00:17<00:22,  3.80s/run] 50%|█████     | 5/10 [00:17<00:16,  3.27s/run]                                                50%|█████     | 5/10 [00:18<00:16,  3.27s/run] 60%|██████    | 6/10 [00:18<00:09,  2.35s/run]                                                60%|██████    | 6/10 [00:20<00:09,  2.35s/run] 70%|███████   | 7/10 [00:20<00:07,  2.40s/run]                                                70%|███████   | 7/10 [00:20<00:07,  2.40s/run]                                                70%|███████   | 7/10 [00:21<00:07,  2.40s/run] 80%|████████  | 8/10 [00:21<00:03,  1.99s/run]                                                80%|████████  | 8/10 [00:41<00:03,  1.99s/run] 90%|█████████ | 9/10 [00:41<00:07,  7.23s/run]                                                90%|█████████ | 9/10 [01:12<00:07,  7.23s/run]100%|██████████| 10/10 [01:12<00:00, 14.73s/run]100%|██████████| 10/10 [01:12<00:00,  7.28s/run]
+Launching 10 pair(s), competition=math-cup-2026-qualifying, workers=6, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'openai': 2, 'anthropic': 2, 'deepseek': 2, 'yandexgpt': 2, 'gigachat': 1}, run_group=math-cup-2026-qualifying_20260707_201919
+START math-cup-2026-qualifying/task_06 openai:gpt-5.5 cap=256000
+START math-cup-2026-qualifying/task_06 openai:gpt-5.4-mini cap=256000
+START math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=256000
+START math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=256000
+START math-cup-2026-qualifying/task_06 deepseek:deepseek-v4-pro cap=256000
+START math-cup-2026-qualifying/task_06 deepseek:deepseek-v4-flash cap=256000
+OK task_06 anthropic:claude-haiku-4-5-20251001 exit=0 elapsed=4.3s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-haiku-4-5-20251001__256000.log
+START math-cup-2026-qualifying/task_06 yandexgpt:yandexgpt-5.1 cap=256000
+OK task_06 anthropic:claude-opus-4-8 exit=0 elapsed=4.3s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-opus-4-8__256000.log
+START math-cup-2026-qualifying/task_06 yandexgpt:yandexgpt-5-lite cap=256000
+OK task_06 yandexgpt:yandexgpt-5.1 exit=0 elapsed=8.6s log=run-output/math-cup-2026-qualifying-model-batch/task_06__yandexgpt_yandexgpt-5.1__256000.log
+START math-cup-2026-qualifying/task_06 gigachat:GigaChat-2 cap=256000
+OK task_06 yandexgpt:yandexgpt-5-lite exit=0 elapsed=11.5s log=run-output/math-cup-2026-qualifying-model-batch/task_06__yandexgpt_yandexgpt-5-lite__256000.log
+OK task_06 openai:gpt-5.4-mini exit=0 elapsed=17.9s log=run-output/math-cup-2026-qualifying-model-batch/task_06__openai_gpt-5.4-mini__256000.log
+OK task_06 deepseek:deepseek-v4-flash exit=0 elapsed=18.3s log=run-output/math-cup-2026-qualifying-model-batch/task_06__deepseek_deepseek-v4-flash__256000.log
+OK task_06 gigachat:GigaChat-2 exit=0 elapsed=7.9s log=run-output/math-cup-2026-qualifying-model-batch/task_06__gigachat_GigaChat-2__256000.log
+START math-cup-2026-qualifying/task_06 gigachat:GigaChat-2-Max cap=256000
+OK task_06 openai:gpt-5.5 exit=0 elapsed=21.9s log=run-output/math-cup-2026-qualifying-model-batch/task_06__openai_gpt-5.5__256000.log
+OK task_06 gigachat:GigaChat-2-Max exit=0 elapsed=20.1s log=run-output/math-cup-2026-qualifying-model-batch/task_06__gigachat_GigaChat-2-Max__256000.log
+OK task_06 deepseek:deepseek-v4-pro exit=0 elapsed=72.8s log=run-output/math-cup-2026-qualifying-model-batch/task_06__deepseek_deepseek-v4-pro__256000.log
+
+DETACH 2026-07-07T21:02:21.738440+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models all --problems 06 --max-tokens 256000 --workers 2 --provider-workers anthropic=2 --only-missing --yes
+Pair count: 2
+provider	anthropic	$3.5211
+model	anthropic:claude-haiku-4-5-20251001	$0.3202
+model	anthropic:claude-opus-4-8	$3.2009
+total	$3.5211
+total_plus_20pct	$4.2253
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:11<?, ?run/s] 50%|█████     | 1/2 [00:11<00:11, 11.29s/run]                                               50%|█████     | 1/2 [00:19<00:11, 11.29s/run]100%|██████████| 2/2 [00:19<00:00,  9.51s/run]100%|██████████| 2/2 [00:19<00:00,  9.77s/run]
+Launching 2 pair(s), competition=math-cup-2026-qualifying, workers=2, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'anthropic': 2}, run_group=math-cup-2026-qualifying_20260707_210221
+START math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=128000
+START math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=64000
+OK task_06 anthropic:claude-haiku-4-5-20251001 exit=0 elapsed=11.3s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-haiku-4-5-20251001__64000.log
+OK task_06 anthropic:claude-opus-4-8 exit=0 elapsed=19.5s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-opus-4-8__128000.log
+
+DETACH 2026-07-07T21:07:57.655578+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models anthropic:claude-opus-4-8,anthropic:claude-haiku-4-5-20251001 --problems 06 --max-tokens 256000 --workers 2 --provider-workers anthropic=2 --yes
+Pair count: 2
+provider	anthropic	$3.5211
+model	anthropic:claude-haiku-4-5-20251001	$0.3202
+model	anthropic:claude-opus-4-8	$3.2009
+total	$3.5211
+total_plus_20pct	$4.2253
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:01<?, ?run/s] 50%|█████     | 1/2 [00:01<00:01,  1.68s/run]                                               50%|█████     | 1/2 [00:54<00:01,  1.68s/run]100%|██████████| 2/2 [00:54<00:00, 31.62s/run]100%|██████████| 2/2 [00:54<00:00, 27.13s/run]
+Launching 2 pair(s), competition=math-cup-2026-qualifying, workers=2, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'anthropic': 2}, run_group=math-cup-2026-qualifying_20260707_210757
+START math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=128000
+START math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=64000
+OK task_06 anthropic:claude-opus-4-8 exit=0 elapsed=1.7s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-opus-4-8__128000.log
+OK task_06 anthropic:claude-haiku-4-5-20251001 exit=0 elapsed=54.3s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-haiku-4-5-20251001__64000.log
+
+DETACH 2026-07-09T15:26:45.974906+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models all --problems 06 --max-tokens 256000 --workers 10 --provider-workers openai=2,anthropic=2,deepseek=2,google=2,gigachat=1,xai=2,zai=2,yandexgpt=2 --yes
+Pair count: 16
+provider	anthropic	$3.5211
+provider	deepseek	$0.2945
+provider	gigachat	$0.0665
+provider	google	$4.2245
+provider	openai	$4.4170
+provider	xai	$1.1524
+provider	yandexgpt	$0.0909
+provider	zai	$0.5635
+model	anthropic:claude-haiku-4-5-20251001	$0.3202
+model	anthropic:claude-opus-4-8	$3.2009
+model	deepseek:deepseek-v4-flash	$0.0717
+model	deepseek:deepseek-v4-pro	$0.2228
+model	gigachat:GigaChat-2	$0.0060
+model	gigachat:GigaChat-2-Max	$0.0605
+model	google:gemini-3.1-pro-preview	$3.0724
+model	google:gemini-3.5-flash	$1.1521
+model	openai:gpt-5.4-mini	$0.5761
+model	openai:gpt-5.5	$3.8409
+model	xai:grok-4.3	$0.6402
+model	xai:grok-build-0.1	$0.5122
+model	yandexgpt:yandexgpt-5-lite	$0.0182
+model	yandexgpt:yandexgpt-5.1	$0.0727
+model	zai:glm-4.7-flash	$0.0000
+model	zai:glm-5.2	$0.5635
+total	$14.3304
+total_plus_20pct	$17.1965
+  0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]                                         0%|          | 0/16 [00:00<?, ?run/s]  6%|▋         | 1/16 [00:00<00:12,  1.18run/s]                                                 6%|▋         | 1/16 [00:00<00:12,  1.18run/s]                                                 6%|▋         | 1/16 [00:00<00:12,  1.18run/s]                                                12%|█▎        | 2/16 [00:00<00:11,  1.18run/s]
+DETACH 2026-07-09T15:42:52.406485+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models anthropic:claude-opus-4-8,anthropic:claude-haiku-4-5-20251001 --problems 06 --max-tokens 256000 --workers 2 --provider-workers anthropic=2 --yes
+Pair count: 2
+provider	anthropic	$3.5211
+model	anthropic:claude-haiku-4-5-20251001	$0.3202
+model	anthropic:claude-opus-4-8	$3.2009
+total	$3.5211
+total_plus_20pct	$4.2253
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:52<?, ?run/s] 50%|█████     | 1/2 [00:52<00:52, 52.77s/run]                                               50%|█████     | 1/2 [01:06<00:52, 52.77s/run]100%|██████████| 2/2 [01:06<00:00, 29.87s/run]100%|██████████| 2/2 [01:06<00:00, 33.30s/run]
+Launching 2 pair(s), competition=math-cup-2026-qualifying, workers=2, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'anthropic': 2}, run_group=math-cup-2026-qualifying_20260709_154252
+START math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=128000
+START math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=64000
+OK task_06 anthropic:claude-opus-4-8 exit=0 elapsed=52.8s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-opus-4-8__128000.log
+OK task_06 anthropic:claude-haiku-4-5-20251001 exit=0 elapsed=66.6s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-haiku-4-5-20251001__64000.log
+
+DETACH 2026-07-09T17:10:06.256386+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models anthropic:claude-opus-4-8,anthropic:claude-haiku-4-5-20251001 --problems 06 --max-tokens 256000 --workers 2 --provider-workers anthropic=2 --yes
+Pair count: 2
+provider	anthropic	$3.5211
+model	anthropic:claude-haiku-4-5-20251001	$0.3202
+model	anthropic:claude-opus-4-8	$3.2009
+total	$3.5211
+total_plus_20pct	$4.2253
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:08<?, ?run/s] 50%|█████     | 1/2 [00:08<00:08,  8.14s/run]                                               50%|█████     | 1/2 [00:51<00:08,  8.14s/run]100%|██████████| 2/2 [00:51<00:00, 28.69s/run]100%|██████████| 2/2 [00:51<00:00, 25.61s/run]
+Launching 2 pair(s), competition=math-cup-2026-qualifying, workers=2, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'anthropic': 2}, run_group=math-cup-2026-qualifying_20260709_171006
+START math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=128000
+START math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=64000
+OK task_06 anthropic:claude-haiku-4-5-20251001 exit=0 elapsed=8.1s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-haiku-4-5-20251001__64000.log
+OK task_06 anthropic:claude-opus-4-8 exit=0 elapsed=51.2s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-opus-4-8__128000.log
+
+DETACH 2026-07-09T18:26:10.767050+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-qualifying-model-batch --models anthropic:claude-opus-4-8,anthropic:claude-haiku-4-5-20251001 --problems 06 --max-tokens 256000 --workers 2 --provider-workers anthropic=2 --yes
+Pair count: 2
+provider	anthropic	$3.5211
+model	anthropic:claude-haiku-4-5-20251001	$0.3202
+model	anthropic:claude-opus-4-8	$3.2009
+total	$3.5211
+total_plus_20pct	$4.2253
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:58<?, ?run/s] 50%|█████     | 1/2 [00:58<00:58, 58.10s/run]                                               50%|█████     | 1/2 [01:30<00:58, 58.10s/run]100%|██████████| 2/2 [01:30<00:00, 43.05s/run]100%|██████████| 2/2 [01:30<00:00, 45.31s/run]
+Launching 2 pair(s), competition=math-cup-2026-qualifying, workers=2, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'anthropic': 2}, run_group=math-cup-2026-qualifying_20260709_182610
+START math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=128000
+START math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=64000
+OK task_06 anthropic:claude-opus-4-8 exit=0 elapsed=58.1s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-opus-4-8__128000.log
+OK task_06 anthropic:claude-haiku-4-5-20251001 exit=0 elapsed=90.6s log=run-output/math-cup-2026-qualifying-model-batch/task_06__anthropic_claude-haiku-4-5-20251001__64000.log

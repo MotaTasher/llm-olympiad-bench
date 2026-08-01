@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_afa4d9b99fdf85cb0ceadbfc": {
-      "evaluation_id": "ev_8df0860650be4fde88ec1228243be5d7",
+      "evaluation_id": "ev_46091d87eac1494296ffb5445bfa2515",
       "result_id": "res_afa4d9b99fdf85cb0ceadbfc",
       "result_index": 0,
       "model_key": "openai:gpt-5.4-mini",
       "model": "gpt-5.4-mini",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
-      "feedback": "\"Стационарное распределение одной координаты\" угадано, но этого достаточно\r\n\r\n",
-      "created_at": "2026-07-03T19:29:40.155984Z",
-      "updated_at": "2026-07-03T19:29:40.155984Z"
+      "feedback": "",
+      "created_at": "2026-07-27T12:19:43.522121Z",
+      "updated_at": "2026-07-27T12:19:43.522121Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,34 @@
         "feedback": "\"Стационарное распределение одной координаты\" угадано, но этого достаточно\r\n\r\n",
         "created_at": "2026-07-03T19:29:40.155984Z",
         "updated_at": "2026-07-03T19:29:40.155984Z"
+      },
+      {
+        "evaluation_id": "ev_46a96cf3f67244a7b9629e742dd6c135",
+        "result_id": "res_afa4d9b99fdf85cb0ceadbfc",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-25T18:09:11.077224Z",
+        "updated_at": "2026-07-25T18:09:11.077224Z"
+      },
+      {
+        "evaluation_id": "ev_46091d87eac1494296ffb5445bfa2515",
+        "result_id": "res_afa4d9b99fdf85cb0ceadbfc",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-27T12:19:43.522121Z",
+        "updated_at": "2026-07-27T12:19:43.522121Z"
       }
     ]
   },
@@ -37,5 +65,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_04",
   "run_id": "2026_06_30_10_12_13_retry_320k_20260630_101212_task_04_openai_gpt-5.4-mini_128000",
-  "updated_at": "2026-07-03T19:29:40.155984Z"
+  "updated_at": "2026-07-27T12:19:43.522121Z"
 }

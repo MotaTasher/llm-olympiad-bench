@@ -1,0 +1,11 @@
+
+DETACH 2026-07-25T13:23:21.933066+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/qualifying-rerun-20260725_132321-gemini --models google:gemini-3.1-pro-preview --problems 08 --max-tokens 256000 --workers 1 --provider-workers google=1 --run-group qualifying_rerun_20260725_132321_gemini --yes
+Pair count: 1
+provider	google	$3.0725
+model	google:gemini-3.1-pro-preview	$3.0725
+total	$3.0725
+total_plus_20pct	$3.6870
+  0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [06:22<?, ?run/s]100%|██████████| 1/1 [06:22<00:00, 382.92s/run]100%|██████████| 1/1 [06:22<00:00, 382.92s/run]
+Launching 1 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'google': 1, 'xai': 2, 'zai': 2}, run_group=qualifying_rerun_20260725_132321_gemini
+START math-cup-2026-qualifying/task_08 google:gemini-3.1-pro-preview cap=256000
+OK task_08 google:gemini-3.1-pro-preview exit=0 elapsed=382.9s log=run-output/qualifying-rerun-20260725_132321-gemini/task_08__google_gemini-3.1-pro-preview__256000.log

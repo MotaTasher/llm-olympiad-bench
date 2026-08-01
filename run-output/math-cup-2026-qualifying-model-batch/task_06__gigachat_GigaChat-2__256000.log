@@ -1,0 +1,17 @@
+START 2026-07-07T20:19:32.298834+00:00 math-cup-2026-qualifying/task_06 gigachat:GigaChat-2 cap=256000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_06.json --models gigachat:GigaChat-2 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260707_201919_task_06_gigachat_GigaChat-2_256000
+Run 2026_07_07_20_19_32_math-cup-2026-qualifying_20260707_201919_task_06_gigachat_GigaChat-2_256000: math-cup-2026-qualifying/task_06, 1 model(s), max_tokens=256000
+[1/1] START gigachat:GigaChat-2
+[1/1] DONE  GigaChat-2 in 7.7s tokens=1193 cost_usd=0.000862
+| model      |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------|----------|------------|--------------|----------|---------|
+| GigaChat-2 |     1193 |   0.000862 |         7410 | ok       |         |
+
+Run ID: 2026_07_07_20_19_32_math-cup-2026-qualifying_20260707_201919_task_06_gigachat_GigaChat-2_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_06 (Занятые интегралы)
+Timestamp: 2026-07-07T20:19:32.401052Z
+Git hash: abcc89f
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_06/2026_07_07_20_19_32_math-cup-2026-qualifying_20260707_201919_task_06_gigachat_GigaChat-2_256000.json
+
+DONE 2026-07-07T20:19:40.233179+00:00 math-cup-2026-qualifying/task_06 gigachat:GigaChat-2 cap=256000 exit=0 elapsed_s=7.9

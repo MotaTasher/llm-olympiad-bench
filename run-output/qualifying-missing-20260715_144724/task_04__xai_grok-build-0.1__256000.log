@@ -1,0 +1,17 @@
+START 2026-07-15T16:04:51.308652+00:00 math-cup-2026-qualifying/task_04 xai:grok-build-0.1 cap=256000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_04.json --models xai:grok-build-0.1 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_04_xai_grok-build-0.1_256000
+Run 2026_07_15_16_04_51_qualifying_missing_20260715_144724_task_04_xai_grok-build-0.1_256000: math-cup-2026-qualifying/task_04, 1 model(s), max_tokens=256000
+[1/1] START xai:grok-build-0.1
+[1/1] DONE  grok-build-0.1 in 3m05s tokens=19196 cost_usd=0.037861
+| model          |   tokens |   cost_usd |   latency_ms | status   | error   |
+|----------------|----------|------------|--------------|----------|---------|
+| grok-build-0.1 |    19196 |   0.037861 |       184920 | ok       |         |
+
+Run ID: 2026_07_15_16_04_51_qualifying_missing_20260715_144724_task_04_xai_grok-build-0.1_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_04 (Честные выборы)
+Timestamp: 2026-07-15T16:04:51.405228Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_04/2026_07_15_16_04_51_qualifying_missing_20260715_144724_task_04_xai_grok-build-0.1_256000.json
+
+DONE 2026-07-15T16:07:57.228771+00:00 math-cup-2026-qualifying/task_04 xai:grok-build-0.1 cap=256000 exit=0 elapsed_s=185.9

@@ -1,0 +1,48 @@
+Pair count: 8
+provider	kimi	$0.0000
+model	kimi:kimi-k2.5	$0.0000
+total	$0.0000
+total_plus_20pct	$0.0000
+  0%|          | 0/8 [00:00<?, ?run/s]                                        0%|          | 0/8 [00:00<?, ?run/s]                                        0%|          | 0/8 [00:00<?, ?run/s]                                        0%|          | 0/8 [00:00<?, ?run/s] 12%|█▎        | 1/8 [00:00<00:03,  1.82run/s]                                               12%|█▎        | 1/8 [00:00<00:03,  1.82run/s]                                               12%|█▎        | 1/8 [00:01<00:03,  1.82run/s] 25%|██▌       | 2/8 [00:01<00:03,  1.91run/s]                                               25%|██▌       | 2/8 [00:01<00:03,  1.91run/s]                                               25%|██▌       | 2/8 [00:01<00:03,  1.91run/s] 38%|███▊      | 3/8 [00:01<00:02,  1.96run/s]                                               38%|███▊      | 3/8 [00:01<00:02,  1.96run/s]                                               38%|███▊      | 3/8 [00:02<00:02,  1.96run/s] 50%|█████     | 4/8 [00:02<00:02,  1.93run/s]                                               50%|█████     | 4/8 [00:02<00:02,  1.93run/s]                                               50%|█████     | 4/8 [00:02<00:02,  1.93run/s] 62%|██████▎   | 5/8 [00:02<00:01,  1.95run/s]                                               62%|██████▎   | 5/8 [00:02<00:01,  1.95run/s]                                               62%|██████▎   | 5/8 [00:03<00:01,  1.95run/s] 75%|███████▌  | 6/8 [00:03<00:01,  1.97run/s]                                               75%|███████▌  | 6/8 [00:03<00:01,  1.97run/s]                                               75%|███████▌  | 6/8 [00:03<00:01,  1.97run/s] 88%|████████▊ | 7/8 [00:03<00:00,  1.96run/s]                                               88%|████████▊ | 7/8 [00:03<00:00,  1.96run/s]                                               88%|████████▊ | 7/8 [00:04<00:00,  1.96run/s]100%|██████████| 8/8 [00:04<00:00,  1.91run/s]100%|██████████| 8/8 [00:04<00:00,  1.93run/s]
+Launching 8 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'anthropic': 1, 'google': 2, 'gigachat': 1, 'openai': 1, 'xai': 2, 'yandexgpt': 1, 'zai': 2, 'kimi': 1}, run_group=math-cup-2026-qualifying_20260801_113128
+START math-cup-2026-qualifying/task_01 kimi:kimi-k2.5 cap=256000
+OK task_01 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_01__kimi_kimi-k2.5__256000.log
+START math-cup-2026-qualifying/task_02 kimi:kimi-k2.5 cap=256000
+OK task_02 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_02__kimi_kimi-k2.5__256000.log
+START math-cup-2026-qualifying/task_03 kimi:kimi-k2.5 cap=256000
+OK task_03 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_03__kimi_kimi-k2.5__256000.log
+START math-cup-2026-qualifying/task_04 kimi:kimi-k2.5 cap=256000
+OK task_04 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_04__kimi_kimi-k2.5__256000.log
+START math-cup-2026-qualifying/task_05 kimi:kimi-k2.5 cap=256000
+OK task_05 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_05__kimi_kimi-k2.5__256000.log
+START math-cup-2026-qualifying/task_06 kimi:kimi-k2.5 cap=256000
+OK task_06 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_06__kimi_kimi-k2.5__256000.log
+START math-cup-2026-qualifying/task_07 kimi:kimi-k2.5 cap=256000
+OK task_07 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_07__kimi_kimi-k2.5__256000.log
+START math-cup-2026-qualifying/task_08 kimi:kimi-k2.5 cap=256000
+OK task_08 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/qualifying/task_08__kimi_kimi-k2.5__256000.log
+Pair count: 9
+provider	kimi	$0.0000
+model	kimi:kimi-k2.5	$0.0000
+total	$0.0000
+total_plus_20pct	$0.0000
+  0%|          | 0/9 [00:00<?, ?run/s]                                        0%|          | 0/9 [00:00<?, ?run/s]                                        0%|          | 0/9 [00:00<?, ?run/s]                                        0%|          | 0/9 [00:00<?, ?run/s] 11%|█         | 1/9 [00:00<00:04,  1.95run/s]                                               11%|█         | 1/9 [00:00<00:04,  1.95run/s]                                               11%|█         | 1/9 [00:01<00:04,  1.95run/s] 22%|██▏       | 2/9 [00:01<00:03,  1.95run/s]                                               22%|██▏       | 2/9 [00:01<00:03,  1.95run/s]                                               22%|██▏       | 2/9 [00:01<00:03,  1.95run/s] 33%|███▎      | 3/9 [00:01<00:03,  1.97run/s]                                               33%|███▎      | 3/9 [00:01<00:03,  1.97run/s]                                               33%|███▎      | 3/9 [00:02<00:03,  1.97run/s] 44%|████▍     | 4/9 [00:02<00:02,  1.97run/s]                                               44%|████▍     | 4/9 [00:02<00:02,  1.97run/s]                                               44%|████▍     | 4/9 [00:02<00:02,  1.97run/s] 56%|█████▌    | 5/9 [00:02<00:02,  1.94run/s]                                               56%|█████▌    | 5/9 [00:02<00:02,  1.94run/s]                                               56%|█████▌    | 5/9 [00:03<00:02,  1.94run/s] 67%|██████▋   | 6/9 [00:03<00:01,  1.95run/s]                                               67%|██████▋   | 6/9 [00:03<00:01,  1.95run/s]                                               67%|██████▋   | 6/9 [00:03<00:01,  1.95run/s] 78%|███████▊  | 7/9 [00:03<00:01,  1.97run/s]                                               78%|███████▊  | 7/9 [00:03<00:01,  1.97run/s]                                               78%|███████▊  | 7/9 [00:04<00:01,  1.97run/s] 89%|████████▉ | 8/9 [00:04<00:00,  1.97run/s]                                               89%|████████▉ | 8/9 [00:04<00:00,  1.97run/s]                                               89%|████████▉ | 8/9 [00:04<00:00,  1.97run/s]100%|██████████| 9/9 [00:04<00:00,  1.95run/s]100%|██████████| 9/9 [00:04<00:00,  1.95run/s]
+Launching 9 pair(s), competition=math-cup-2026-final, workers=1, provider_workers={'anthropic': 1, 'google': 2, 'gigachat': 1, 'openai': 1, 'xai': 2, 'yandexgpt': 1, 'zai': 2, 'kimi': 1}, run_group=math-cup-2026-final_20260801_113132
+START math-cup-2026-final/task_01 kimi:kimi-k2.5 cap=256000
+OK task_01 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_01__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_02 kimi:kimi-k2.5 cap=256000
+OK task_02 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_02__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_03 kimi:kimi-k2.5 cap=256000
+OK task_03 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_03__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_04 kimi:kimi-k2.5 cap=256000
+OK task_04 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_04__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_05 kimi:kimi-k2.5 cap=256000
+OK task_05 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_05__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_06 kimi:kimi-k2.5 cap=256000
+OK task_06 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_06__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_07 kimi:kimi-k2.5 cap=256000
+OK task_07 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_07__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_08 kimi:kimi-k2.5 cap=256000
+OK task_08 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_08__kimi_kimi-k2.5__256000.log
+START math-cup-2026-final/task_09 kimi:kimi-k2.5 cap=256000
+OK task_09 kimi:kimi-k2.5 exit=0 elapsed=0.5s log=run-output/20260801-kimi/final/task_09__kimi_kimi-k2.5__256000.log

@@ -1,0 +1,17 @@
+START 2026-07-15T15:55:26.700865+00:00 math-cup-2026-qualifying/task_03 openai:gpt-5.5 cap=128000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_03.json --models openai:gpt-5.5 --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_03_openai_gpt-5.5_128000
+Run 2026_07_15_15_55_26_qualifying_missing_20260715_144724_task_03_openai_gpt-5.5_128000: math-cup-2026-qualifying/task_03, 1 model(s), max_tokens=128000
+[1/1] START openai:gpt-5.5
+[1/1] DONE  gpt-5.5 in 1m04s tokens=3980 cost_usd=0.114350
+| model   |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------|----------|------------|--------------|----------|---------|
+| gpt-5.5 |     3980 |    0.11435 |        63499 | ok       |         |
+
+Run ID: 2026_07_15_15_55_26_qualifying_missing_20260715_144724_task_03_openai_gpt-5.5_128000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_03 (Гена, возьми определитель)
+Timestamp: 2026-07-15T15:55:26.801305Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_03/2026_07_15_15_55_26_qualifying_missing_20260715_144724_task_03_openai_gpt-5.5_128000.json
+
+DONE 2026-07-15T15:56:31.235816+00:00 math-cup-2026-qualifying/task_03 openai:gpt-5.5 cap=128000 exit=0 elapsed_s=64.5

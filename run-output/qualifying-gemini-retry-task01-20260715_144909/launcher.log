@@ -1,0 +1,14 @@
+
+DETACH 2026-07-15T14:49:10.014252+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/qualifying-gemini-retry-task01-20260715_144909 --models google:gemini-3.1-pro-preview,google:gemini-3.5-flash --problems 01 --workers 1 --provider-workers google=1 --run-group qualifying_gemini_retry_20260715_144909 --only-missing --yes
+Pair count: 2
+provider	google	$4.2246
+model	google:gemini-3.1-pro-preview	$3.0724
+model	google:gemini-3.5-flash	$1.1522
+total	$4.2246
+total_plus_20pct	$5.0695
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [05:38<?, ?run/s] 50%|█████     | 1/2 [05:38<05:38, 338.80s/run]                                                50%|█████     | 1/2 [05:38<05:38, 338.80s/run]                                                50%|█████     | 1/2 [07:49<05:38, 338.80s/run]100%|██████████| 2/2 [07:49<00:00, 216.51s/run]100%|██████████| 2/2 [07:49<00:00, 234.85s/run]
+Launching 2 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'google': 1, 'xai': 2, 'zai': 2}, run_group=qualifying_gemini_retry_20260715_144909
+START math-cup-2026-qualifying/task_01 google:gemini-3.1-pro-preview cap=256000
+OK task_01 google:gemini-3.1-pro-preview exit=0 elapsed=338.8s log=run-output/qualifying-gemini-retry-task01-20260715_144909/task_01__google_gemini-3.1-pro-preview__256000.log
+START math-cup-2026-qualifying/task_01 google:gemini-3.5-flash cap=256000
+OK task_01 google:gemini-3.5-flash exit=0 elapsed=130.9s log=run-output/qualifying-gemini-retry-task01-20260715_144909/task_01__google_gemini-3.5-flash__256000.log

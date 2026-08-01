@@ -1,0 +1,5 @@
+START 2026-07-15T18:38:53.974507+00:00 math-cup-2026-qualifying/task_09 deepseek:deepseek-v4-pro cap=320000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_09.json --models deepseek:deepseek-v4-pro --max-tokens 320000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_09_deepseek_deepseek-v4-pro_320000
+data/competitions/math-cup-2026-qualifying/task_09.json: cannot read file: [Errno 2] No such file or directory: 'data/competitions/math-cup-2026-qualifying/task_09.json'
+
+DONE 2026-07-15T18:38:54.091718+00:00 math-cup-2026-qualifying/task_09 deepseek:deepseek-v4-pro cap=320000 exit=1 elapsed_s=0.1

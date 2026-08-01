@@ -1,0 +1,523 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_00_18_45_math-cup-2026-final_20260801_001725_task_03_xai_grok-4.5_256000",
+  "timestamp": "2026-08-01T00:18:45.356972Z",
+  "started_at": "2026-08-01T00:18:45.356972Z",
+  "completed_at": "2026-08-01T00:19:40.973084Z",
+  "duration_ms": 55602,
+  "status": "completed",
+  "git_hash": "1413f2c",
+  "git": {
+    "hash": "1413f2c",
+    "full_hash": "1413f2c404239d5054a772a2c936fe8d69c640fa",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_03.json",
+      "--models",
+      "xai:grok-4.5",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-final_20260801_001725_task_03_xai_grok-4.5_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_03.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "xai:grok-4.5",
+      "run_id": "math-cup-2026-final_20260801_001725_task_03_xai_grok-4.5_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "xai:grok-4.5"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "xai:grok-4.5"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_03",
+  "problem_number": 3,
+  "problem_title": "Многочлен",
+  "problem_file": "data/competitions/math-cup-2026-final/task_03.json",
+  "problem_text": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_03",
+    "number": 3,
+    "title": "Многочлен",
+    "statement": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+    "answer": null,
+    "solution": "Обозначим \\(\\Delta P(x)=P(x+1)-P(x)\\). Условие переписывается как\n\\[\nQ(x):=2P(x)-P(x+1)=P(x)-\\Delta P(x),\n\\]\nпричём \\(Q(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n**Решение 1.** Пусть \\(\\deg P=n\\), тогда \\(\\Delta^{n+1}P\\equiv0\\). Применяя оператор \\(\\Delta^k\\) к тождеству \\(Q=P-\\Delta P\\), получаем\n\\[\n\\Delta^kQ=\\Delta^kP-\\Delta^{k+1}P\n\\]\nпри каждом \\(k\\ge0\\). Складывая эти равенства для \\(k=0,1,\\ldots,n\\), телескопическая сумма даёт\n\\[\n\\sum_{k=0}^{n}\\Delta^kQ=P-\\Delta^{n+1}P=P.\n\\]\nПоскольку \\(Q(m)\\in\\mathbb Z\\), целыми будут и все его конечные разности \\(\\Delta^kQ(m)\\), а значит, \\(P(m)\\) — сумма целых чисел, то есть \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).\n\n**Решение 2.** Индукция по \\(n=\\deg P\\).\n\nПри \\(n=0\\) многочлен \\(P\\equiv c\\) и \\(c=Q(0)\\in\\mathbb Z\\).\n\nПусть \\(n\\ge1\\) и утверждение верно для меньших степеней. Применяя \\(\\Delta\\) к \\(Q=P-\\Delta P\\), видим, что \\(\\Delta Q\\) — результат той же операции \\(R\\mapsto R-\\Delta R\\), применённой к \\(\\Delta P\\). При этом \\(\\Delta Q(m)\\in\\mathbb Z\\) и \\(\\deg\\Delta P=n-1\\), поэтому по предположению индукции \\(\\Delta P(m)\\in\\mathbb Z\\) для всех \\(m\\), и тогда\n\\[\nP(m)=Q(m)+\\Delta P(m)\\in\\mathbb Z.\n\\]\n\n**Решение 3.** Запишем \\(P\\) в биномиальном базисе\n\\[\n\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!}:\n\\qquad\nP(x)=\\sum_{k=0}^{d}a_k\\binom{x}{k},\\qquad d=\\deg P.\n\\]\nИз\n\\[\n\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}\n\\]\nследует\n\\[\n2\\binom{x}{k}-\\binom{x+1}{k}=\\binom{x}{k}-\\binom{x}{k-1},\n\\]\nпоэтому, при \\(a_{d+1}:=0\\),\n\\[\nQ(x)=\\sum_{k=0}^{d}(a_k-a_{k+1})\\binom{x}{k}.\n\\]\nМногочлен принимает целые значения во всех целых точках в точности тогда, когда все его коэффициенты в этом базисе целые. Применяя это к \\(Q\\), получаем \\(a_k-a_{k+1}\\in\\mathbb Z\\); по нисходящей индукции \\(a_d,a_{d-1},\\ldots,a_0\\in\\mathbb Z\\), значит и \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        3
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "611a52ad8a68c05ba3b466d2c37fc3b320edc15098da00a2829086080836b955",
+  "problem_text_hash": "2694d9f4dfd3b1683539e7f30b3150aaf1824b7cb028637d07e5b79d2d88c470",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_155355aec5c2409dfc642c33",
+      "result_index": 0,
+      "provider": "xai",
+      "alias": "xai:grok-4.5",
+      "adapter_class": "models.grok.grok.GrokModel",
+      "requested_model_id": "grok-4.5",
+      "resolved_model_id": "grok-4.5",
+      "model": "grok-4.5",
+      "attempt": 1,
+      "started_at": "2026-08-01T00:18:45.388066Z",
+      "completed_at": "2026-08-01T00:19:40.966481Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.x.ai/v1/responses",
+        "model": "grok-4.5",
+        "input": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "stream": false,
+        "store": true,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_output_tokens_total": 256000,
+        "max_output_tokens_per_request": 256000,
+        "reasoning": {
+          "effort": "high"
+        },
+        "steps": [
+          {
+            "endpoint": "https://api.x.ai/v1/responses",
+            "model": "grok-4.5",
+            "input": [
+              {
+                "role": "system",
+                "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+              },
+              {
+                "role": "user",
+                "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+              }
+            ],
+            "previous_response_id": null,
+            "max_output_tokens": 256000,
+            "store": true,
+            "stream": false,
+            "timeout_seconds": 3600.0,
+            "reasoning": {
+              "effort": "high"
+            }
+          }
+        ]
+      },
+      "answer": "### Формализация условия.\nПусть \\( P(x) \\in \\mathbb{R}[x] \\) — многочлен, удовлетворяющий условию: для всякого \\( m \\in \\mathbb{Z} \\) число \\( 2P(m) - P(m+1) \\) целое. Требуется доказать, что \\( P(m) \\in \\mathbb{Z} \\) для всякого \\( m \\in \\mathbb{Z} \\).\n\nОбозначим через \\( d = \\deg P \\) (при \\( P \\equiv 0 \\) утверждение тривиально). Введём вспомогательный многочлен \\( R(x) := 2P(x) - P(x+1) \\); по условию \\( R(\\mathbb{Z}) \\subset \\mathbb{Z} \\). Доказательство проведём индукцией по \\( d \\).\n\n### База индукции.\nПусть \\( d = 0 \\), т.е. \\( P(x) \\equiv c \\) — константа. Тогда \\( 2c - c = c \\), и по условию \\( c \\in \\mathbb{Z} \\), что и требуется.\n\n### Индукционный переход.\nПусть \\( d \\geq 1 \\), и утверждение уже доказано для всех многочленов степени строго меньше \\( d \\), удовлетворяющих аналогичному условию. Рассмотрим разностный многочлен \\( S(x) := P(x+1) - P(x) \\). Ясно, что \\( \\deg S = d-1 \\) (старшие члены сокращаются, и старший коэффициент \\( S \\) равен \\( d \\) раз старшему коэффициенту \\( P \\), отличен от нуля). \n\nЗаметим сначала, что \\( P(x) = R(x) + S(x) \\). Действительно, \\( R(x) = 2P(x) - P(x+1) = P(x) - \\bigl( P(x+1) - P(x) \\bigr) = P(x) - S(x) \\).\n\nДалее, проверим, что \\( S \\) удовлетворяет условию задачи. Вычислим \\( 2S(x) - S(x+1) \\). Имеем \\( S(x+1) = P(x+2) - P(x+1) \\). Из определения \\( R \\) получаем рекурсию \\( P(y+1) = 2P(y) - R(y) \\) (тождество многочленов). Тогда\n\\[ P(x+2) = 2P(x+1) - R(x+1), \\]\nоткуда\n\\[ S(x+1) = \\bigl( 2P(x+1) - R(x+1) \\bigr) - P(x+1) = P(x+1) - R(x+1). \\]\nПодставляя \\( P(x+1) = 2P(x) - R(x) \\), находим\n\\[ S(x+1) = 2P(x) - R(x) - R(x+1). \\]\nС другой стороны,\n\\[ 2S(x) = 2\\bigl( P(x+1) - P(x) \\bigr) = 2P(x+1) - 2P(x) = 2\\bigl( 2P(x) - R(x) \\bigr) - 2P(x) = 2P(x) - 2R(x). \\]\nСледовательно,\n\\begin{align*}\n2S(x) - S(x+1) &= \\bigl( 2P(x) - 2R(x) \\bigr) - \\bigl( 2P(x) - R(x) - R(x+1) \\bigr) \\\\\n&= 2P(x) - 2R(x) - 2P(x) + R(x) + R(x+1) = R(x+1) - R(x).\n\\end{align*}\nТаким образом, \\( 2S(x) - S(x+1) = R(x+1) - R(x) \\). Поскольку \\( R(\\mathbb{Z}) \\subset \\mathbb{Z} \\), для всякого \\( m \\in \\mathbb{Z} \\) имеем \\( R(m+1) - R(m) \\in \\mathbb{Z} \\), откуда \\( 2S(m) - S(m+1) \\in \\mathbb{Z} \\).\n\nМногочлен \\( S \\) имеет степень \\( d-1 < d \\) и удовлетворяет условию задачи. По индукционному предположению \\( S(m) \\in \\mathbb{Z} \\) для всех \\( m \\in \\mathbb{Z} \\). Но тогда из равенства \\( P(x) = R(x) + S(x) \\) получаем \\( P(m) = R(m) + S(m) \\in \\mathbb{Z} \\) для всех \\( m \\in \\mathbb{Z} \\), что и требовалось.\n\n### Заключение.\nПо индукции утверждение верно для многочленов любой степени. \n\n(Заметим, что все объекты, фигурирующие в рассуждении — в частности, \\( R \\) и \\( S \\) — корректно определены как многочлены при любых допустимых \\( P \\), и индукция не опирается на какие-либо дополнительные ограничения на коэффициенты.)",
+      "prompt_tokens": 411,
+      "completion_tokens": 5152,
+      "cost_usd": 0.0315164,
+      "latency_ms": 54999,
+      "raw_response": {
+        "endpoint": "https://api.x.ai/v1/responses",
+        "multi_request": {
+          "enabled": false,
+          "requests": 1,
+          "max_output_tokens_total": 256000,
+          "max_output_tokens_per_request": 256000,
+          "stopped_after_visible_output": true
+        },
+        "responses": [
+          {
+            "request": {
+              "endpoint": "https://api.x.ai/v1/responses",
+              "model": "grok-4.5",
+              "input": [
+                {
+                  "role": "system",
+                  "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+                },
+                {
+                  "role": "user",
+                  "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+                }
+              ],
+              "previous_response_id": null,
+              "max_output_tokens": 256000,
+              "store": true,
+              "stream": false,
+              "timeout_seconds": 3600.0,
+              "reasoning": {
+                "effort": "high"
+              }
+            },
+            "response": {
+              "id": "172c31fe-baad-90b5-932d-65b596ef1485",
+              "created_at": 1785543527.0,
+              "error": null,
+              "incomplete_details": null,
+              "instructions": null,
+              "metadata": {
+                "system_fingerprint": "fp_a39489019fa99b6e"
+              },
+              "model": "grok-4.5",
+              "object": "response",
+              "output": [
+                {
+                  "id": "rs_172c31fe-baad-90b5-932d-65b596ef1485",
+                  "summary": [
+                    {
+                      "text": "The problem states: Let \\( P(x) \\) be a polynomial with real coefficients such that \\( 2P(m) - P(m+1) \\) is an integer for any integer \\( m \\). Prove that \\( P(m) \\) is an integer for any integer \\( m...Let \\(P(x) = \\sum_{k=0}^n c_k x^k\\) be a polynomial of degree \\(n\\) with real coefficients. Define the forward difference operator \\(\\Delta P(x) = P(x+1) - P(x)\\). Then the given condition is equivalent to\n\\[\n\\Delta P(m ) = P(m) - k_m,\n\\]\nwhere \\(k_m = 2P(m) - P(m+1) \\in \\mathbb{Z}\\) for each integer \\(m\\).\n\nThe polynomial \\(Q(x) := 2P(x) - P(x+1)\\) takes integer values at all integers \\( m \\in \\mathbb{Z}\\). Thus \\(Q\\) is an integer-valued polynomial, so it can be expressed in the binomial basis:\n\\[\nQ(x) = \\sum_{j=0}^n b_j \\binom{x}{j}, \\quad b_j \\in \\mathbb{Z}.\n\\]\nThe leading coefficient of \\(Q(x)\\) is determined by the leading term of \\(P\\): if \\(P(x) = c_n x^n + \\cdots\\), then\n\\[\nQ(x) = 2c_n x^n - c_n (x+1)^n + \\text{lower terms} = c_n (2 - 2n + \\cdots) x^n + \\cdots,\n\\]\nso the degree of \\(Q\\) is at most \\(n\\), and \\(b_n\\) is an integer multiple related to \\(c_n\\).\n\nNow express \\(P\\) in the binomial basis:\n\\[\nP(x) = \\sum_{k=0}^ n c_k \\binom{x}{k}, \\quad c_k \\in \\mathbb{R}.\n\\]\nThen\n\\[\nP(x+1) = \\sum_{k=0}^n c_k \\binom{x+1}{k} = \\sum_{k=0}^n c_k \\left( \\binom{x }{k} + \\binom{x}{k-1} \\right) = \\sum_{k=0}^n c_k \\binom{x}{k} + \\sum_{k=1}^n c_k \\binom{x}{k-1}.",
+                      "type": "summary_text"
+                    }
+                  ],
+                  "type": "reasoning",
+                  "content": null,
+                  "encrypted_content": null,
+                  "status": "completed"
+                },
+                {
+                  "id": "msg_172c31fe-baad-90b5-932d-65b596ef1485",
+                  "content": [
+                    {
+                      "annotations": [],
+                      "text": "### Формализация условия.\nПусть \\( P(x) \\in \\mathbb{R}[x] \\) — многочлен, удовлетворяющий условию: для всякого \\( m \\in \\mathbb{Z} \\) число \\( 2P(m) - P(m+1) \\) целое. Требуется доказать, что \\( P(m) \\in \\mathbb{Z} \\) для всякого \\( m \\in \\mathbb{Z} \\).\n\nОбозначим через \\( d = \\deg P \\) (при \\( P \\equiv 0 \\) утверждение тривиально). Введём вспомогательный многочлен \\( R(x) := 2P(x) - P(x+1) \\); по условию \\( R(\\mathbb{Z}) \\subset \\mathbb{Z} \\). Доказательство проведём индукцией по \\( d \\).\n\n### База индукции.\nПусть \\( d = 0 \\), т.е. \\( P(x) \\equiv c \\) — константа. Тогда \\( 2c - c = c \\), и по условию \\( c \\in \\mathbb{Z} \\), что и требуется.\n\n### Индукционный переход.\nПусть \\( d \\geq 1 \\), и утверждение уже доказано для всех многочленов степени строго меньше \\( d \\), удовлетворяющих аналогичному условию. Рассмотрим разностный многочлен \\( S(x) := P(x+1) - P(x) \\). Ясно, что \\( \\deg S = d-1 \\) (старшие члены сокращаются, и старший коэффициент \\( S \\) равен \\( d \\) раз старшему коэффициенту \\( P \\), отличен от нуля). \n\nЗаметим сначала, что \\( P(x) = R(x) + S(x) \\). Действительно, \\( R(x) = 2P(x) - P(x+1) = P(x) - \\bigl( P(x+1) - P(x) \\bigr) = P(x) - S(x) \\).\n\nДалее, проверим, что \\( S \\) удовлетворяет условию задачи. Вычислим \\( 2S(x) - S(x+1) \\). Имеем \\( S(x+1) = P(x+2) - P(x+1) \\). Из определения \\( R \\) получаем рекурсию \\( P(y+1) = 2P(y) - R(y) \\) (тождество многочленов). Тогда\n\\[ P(x+2) = 2P(x+1) - R(x+1), \\]\nоткуда\n\\[ S(x+1) = \\bigl( 2P(x+1) - R(x+1) \\bigr) - P(x+1) = P(x+1) - R(x+1). \\]\nПодставляя \\( P(x+1) = 2P(x) - R(x) \\), находим\n\\[ S(x+1) = 2P(x) - R(x) - R(x+1). \\]\nС другой стороны,\n\\[ 2S(x) = 2\\bigl( P(x+1) - P(x) \\bigr) = 2P(x+1) - 2P(x) = 2\\bigl( 2P(x) - R(x) \\bigr) - 2P(x) = 2P(x) - 2R(x). \\]\nСледовательно,\n\\begin{align*}\n2S(x) - S(x+1) &= \\bigl( 2P(x) - 2R(x) \\bigr) - \\bigl( 2P(x) - R(x) - R(x+1) \\bigr) \\\\\n&= 2P(x) - 2R(x) - 2P(x) + R(x) + R(x+1) = R(x+1) - R(x).\n\\end{align*}\nТаким образом, \\( 2S(x) - S(x+1) = R(x+1) - R(x) \\). Поскольку \\( R(\\mathbb{Z}) \\subset \\mathbb{Z} \\), для всякого \\( m \\in \\mathbb{Z} \\) имеем \\( R(m+1) - R(m) \\in \\mathbb{Z} \\), откуда \\( 2S(m) - S(m+1) \\in \\mathbb{Z} \\).\n\nМногочлен \\( S \\) имеет степень \\( d-1 < d \\) и удовлетворяет условию задачи. По индукционному предположению \\( S(m) \\in \\mathbb{Z} \\) для всех \\( m \\in \\mathbb{Z} \\). Но тогда из равенства \\( P(x) = R(x) + S(x) \\) получаем \\( P(m) = R(m) + S(m) \\in \\mathbb{Z} \\) для всех \\( m \\in \\mathbb{Z} \\), что и требовалось.\n\n### Заключение.\nПо индукции утверждение верно для многочленов любой степени. \n\n(Заметим, что все объекты, фигурирующие в рассуждении — в частности, \\( R \\) и \\( S \\) — корректно определены как многочлены при любых допустимых \\( P \\), и индукция не опирается на какие-либо дополнительные ограничения на коэффициенты.)",
+                      "type": "output_text",
+                      "logprobs": []
+                    }
+                  ],
+                  "role": "assistant",
+                  "status": "completed",
+                  "type": "message",
+                  "phase": null
+                }
+              ],
+              "parallel_tool_calls": true,
+              "temperature": 0.7,
+              "tool_choice": "auto",
+              "tools": [],
+              "top_p": 0.95,
+              "background": false,
+              "completed_at": 1785543580.0,
+              "conversation": null,
+              "max_output_tokens": 256000,
+              "max_tool_calls": null,
+              "moderation": null,
+              "previous_response_id": null,
+              "prompt": null,
+              "prompt_cache_key": null,
+              "prompt_cache_retention": null,
+              "reasoning": {
+                "context": null,
+                "effort": "high",
+                "generate_summary": null,
+                "summary": "detailed"
+              },
+              "safety_identifier": null,
+              "service_tier": "default",
+              "status": "completed",
+              "text": {
+                "format": {
+                  "type": "text"
+                },
+                "verbosity": null
+              },
+              "top_logprobs": 0,
+              "truncation": "disabled",
+              "usage": {
+                "input_tokens": 411,
+                "input_tokens_details": {
+                  "cached_tokens": 128
+                },
+                "output_tokens": 5152,
+                "output_tokens_details": {
+                  "reasoning_tokens": 3957
+                },
+                "total_tokens": 5563,
+                "num_sources_used": 0,
+                "num_server_side_tools_used": 0,
+                "cost_in_usd_ticks": 315164000,
+                "context_details": {
+                  "input_tokens": 411,
+                  "output_tokens": 5152
+                }
+              },
+              "user": null,
+              "store": true,
+              "presence_penalty": 0.0,
+              "frequency_penalty": 0.0
+            },
+            "latency_ms": 54999,
+            "answer_chars": 2784
+          }
+        ],
+        "last_response": {
+          "id": "172c31fe-baad-90b5-932d-65b596ef1485",
+          "created_at": 1785543527.0,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "metadata": {
+            "system_fingerprint": "fp_a39489019fa99b6e"
+          },
+          "model": "grok-4.5",
+          "object": "response",
+          "output": [
+            {
+              "id": "rs_172c31fe-baad-90b5-932d-65b596ef1485",
+              "summary": [
+                {
+                  "text": "The problem states: Let \\( P(x) \\) be a polynomial with real coefficients such that \\( 2P(m) - P(m+1) \\) is an integer for any integer \\( m \\). Prove that \\( P(m) \\) is an integer for any integer \\( m...Let \\(P(x) = \\sum_{k=0}^n c_k x^k\\) be a polynomial of degree \\(n\\) with real coefficients. Define the forward difference operator \\(\\Delta P(x) = P(x+1) - P(x)\\). Then the given condition is equivalent to\n\\[\n\\Delta P(m ) = P(m) - k_m,\n\\]\nwhere \\(k_m = 2P(m) - P(m+1) \\in \\mathbb{Z}\\) for each integer \\(m\\).\n\nThe polynomial \\(Q(x) := 2P(x) - P(x+1)\\) takes integer values at all integers \\( m \\in \\mathbb{Z}\\). Thus \\(Q\\) is an integer-valued polynomial, so it can be expressed in the binomial basis:\n\\[\nQ(x) = \\sum_{j=0}^n b_j \\binom{x}{j}, \\quad b_j \\in \\mathbb{Z}.\n\\]\nThe leading coefficient of \\(Q(x)\\) is determined by the leading term of \\(P\\): if \\(P(x) = c_n x^n + \\cdots\\), then\n\\[\nQ(x) = 2c_n x^n - c_n (x+1)^n + \\text{lower terms} = c_n (2 - 2n + \\cdots) x^n + \\cdots,\n\\]\nso the degree of \\(Q\\) is at most \\(n\\), and \\(b_n\\) is an integer multiple related to \\(c_n\\).\n\nNow express \\(P\\) in the binomial basis:\n\\[\nP(x) = \\sum_{k=0}^ n c_k \\binom{x}{k}, \\quad c_k \\in \\mathbb{R}.\n\\]\nThen\n\\[\nP(x+1) = \\sum_{k=0}^n c_k \\binom{x+1}{k} = \\sum_{k=0}^n c_k \\left( \\binom{x }{k} + \\binom{x}{k-1} \\right) = \\sum_{k=0}^n c_k \\binom{x}{k} + \\sum_{k=1}^n c_k \\binom{x}{k-1}.",
+                  "type": "summary_text"
+                }
+              ],
+              "type": "reasoning",
+              "content": null,
+              "encrypted_content": null,
+              "status": "completed"
+            },
+            {
+              "id": "msg_172c31fe-baad-90b5-932d-65b596ef1485",
+              "content": [
+                {
+                  "annotations": [],
+                  "text": "### Формализация условия.\nПусть \\( P(x) \\in \\mathbb{R}[x] \\) — многочлен, удовлетворяющий условию: для всякого \\( m \\in \\mathbb{Z} \\) число \\( 2P(m) - P(m+1) \\) целое. Требуется доказать, что \\( P(m) \\in \\mathbb{Z} \\) для всякого \\( m \\in \\mathbb{Z} \\).\n\nОбозначим через \\( d = \\deg P \\) (при \\( P \\equiv 0 \\) утверждение тривиально). Введём вспомогательный многочлен \\( R(x) := 2P(x) - P(x+1) \\); по условию \\( R(\\mathbb{Z}) \\subset \\mathbb{Z} \\). Доказательство проведём индукцией по \\( d \\).\n\n### База индукции.\nПусть \\( d = 0 \\), т.е. \\( P(x) \\equiv c \\) — константа. Тогда \\( 2c - c = c \\), и по условию \\( c \\in \\mathbb{Z} \\), что и требуется.\n\n### Индукционный переход.\nПусть \\( d \\geq 1 \\), и утверждение уже доказано для всех многочленов степени строго меньше \\( d \\), удовлетворяющих аналогичному условию. Рассмотрим разностный многочлен \\( S(x) := P(x+1) - P(x) \\). Ясно, что \\( \\deg S = d-1 \\) (старшие члены сокращаются, и старший коэффициент \\( S \\) равен \\( d \\) раз старшему коэффициенту \\( P \\), отличен от нуля). \n\nЗаметим сначала, что \\( P(x) = R(x) + S(x) \\). Действительно, \\( R(x) = 2P(x) - P(x+1) = P(x) - \\bigl( P(x+1) - P(x) \\bigr) = P(x) - S(x) \\).\n\nДалее, проверим, что \\( S \\) удовлетворяет условию задачи. Вычислим \\( 2S(x) - S(x+1) \\). Имеем \\( S(x+1) = P(x+2) - P(x+1) \\). Из определения \\( R \\) получаем рекурсию \\( P(y+1) = 2P(y) - R(y) \\) (тождество многочленов). Тогда\n\\[ P(x+2) = 2P(x+1) - R(x+1), \\]\nоткуда\n\\[ S(x+1) = \\bigl( 2P(x+1) - R(x+1) \\bigr) - P(x+1) = P(x+1) - R(x+1). \\]\nПодставляя \\( P(x+1) = 2P(x) - R(x) \\), находим\n\\[ S(x+1) = 2P(x) - R(x) - R(x+1). \\]\nС другой стороны,\n\\[ 2S(x) = 2\\bigl( P(x+1) - P(x) \\bigr) = 2P(x+1) - 2P(x) = 2\\bigl( 2P(x) - R(x) \\bigr) - 2P(x) = 2P(x) - 2R(x). \\]\nСледовательно,\n\\begin{align*}\n2S(x) - S(x+1) &= \\bigl( 2P(x) - 2R(x) \\bigr) - \\bigl( 2P(x) - R(x) - R(x+1) \\bigr) \\\\\n&= 2P(x) - 2R(x) - 2P(x) + R(x) + R(x+1) = R(x+1) - R(x).\n\\end{align*}\nТаким образом, \\( 2S(x) - S(x+1) = R(x+1) - R(x) \\). Поскольку \\( R(\\mathbb{Z}) \\subset \\mathbb{Z} \\), для всякого \\( m \\in \\mathbb{Z} \\) имеем \\( R(m+1) - R(m) \\in \\mathbb{Z} \\), откуда \\( 2S(m) - S(m+1) \\in \\mathbb{Z} \\).\n\nМногочлен \\( S \\) имеет степень \\( d-1 < d \\) и удовлетворяет условию задачи. По индукционному предположению \\( S(m) \\in \\mathbb{Z} \\) для всех \\( m \\in \\mathbb{Z} \\). Но тогда из равенства \\( P(x) = R(x) + S(x) \\) получаем \\( P(m) = R(m) + S(m) \\in \\mathbb{Z} \\) для всех \\( m \\in \\mathbb{Z} \\), что и требовалось.\n\n### Заключение.\nПо индукции утверждение верно для многочленов любой степени. \n\n(Заметим, что все объекты, фигурирующие в рассуждении — в частности, \\( R \\) и \\( S \\) — корректно определены как многочлены при любых допустимых \\( P \\), и индукция не опирается на какие-либо дополнительные ограничения на коэффициенты.)",
+                  "type": "output_text",
+                  "logprobs": []
+                }
+              ],
+              "role": "assistant",
+              "status": "completed",
+              "type": "message",
+              "phase": null
+            }
+          ],
+          "parallel_tool_calls": true,
+          "temperature": 0.7,
+          "tool_choice": "auto",
+          "tools": [],
+          "top_p": 0.95,
+          "background": false,
+          "completed_at": 1785543580.0,
+          "conversation": null,
+          "max_output_tokens": 256000,
+          "max_tool_calls": null,
+          "moderation": null,
+          "previous_response_id": null,
+          "prompt": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "context": null,
+            "effort": "high",
+            "generate_summary": null,
+            "summary": "detailed"
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "status": "completed",
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": null
+          },
+          "top_logprobs": 0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 411,
+            "input_tokens_details": {
+              "cached_tokens": 128
+            },
+            "output_tokens": 5152,
+            "output_tokens_details": {
+              "reasoning_tokens": 3957
+            },
+            "total_tokens": 5563,
+            "num_sources_used": 0,
+            "num_server_side_tools_used": 0,
+            "cost_in_usd_ticks": 315164000,
+            "context_details": {
+              "input_tokens": 411,
+              "output_tokens": 5152
+            }
+          },
+          "user": null,
+          "store": true,
+          "presence_penalty": 0.0,
+          "frequency_penalty": 0.0
+        },
+        "usage": {
+          "input_tokens": 411,
+          "output_tokens": 5152,
+          "total_tokens": 5563,
+          "output_tokens_details": {
+            "reasoning_tokens": 3957
+          },
+          "input_tokens_details": {
+            "cached_tokens": 128
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 411,
+        "output_tokens": 5152,
+        "total_tokens": 5563,
+        "reasoning_tokens": 3957,
+        "cached_input_tokens": 128,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "input_tokens": 411,
+          "output_tokens": 5152,
+          "total_tokens": 5563,
+          "output_tokens_details": {
+            "reasoning_tokens": 3957
+          },
+          "input_tokens_details": {
+            "cached_tokens": 128
+          }
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 54999,
+        "monotonic_ms": 54999,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 54999,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.000566,
+        "output": 0.030912,
+        "cached_input": 3.84e-05,
+        "reasoning": null,
+        "native": null,
+        "total": 0.0315164,
+        "pricing_source": "provider_response",
+        "pricing_version": "2026-08-01",
+        "estimated": false,
+        "exchange_rate": null,
+        "note": "Provider-reported cost_in_usd_ticks overrides this local estimate when present.",
+        "provider_reported": {
+          "cost_in_usd_ticks": 315164000
+        }
+      },
+      "finish_reason": "completed",
+      "provider_request_id": null,
+      "response_id": "172c31fe-baad-90b5-932d-65b596ef1485",
+      "provider_timestamp": 1785543527.0,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

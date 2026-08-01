@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_c569e2e3b639afb9d42cc76a": {
-      "evaluation_id": "ev_28b511b8791c44aba03ab38d2e10c550",
+      "evaluation_id": "ev_bdb8ab4ef4d9429fb179ff33da4a27d5",
       "result_id": "res_c569e2e3b639afb9d42cc76a",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-flash",
       "model": "deepseek-v4-flash",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "WA, только скетч краткий",
-      "created_at": "2026-07-01T17:07:55.878756Z",
-      "updated_at": "2026-07-01T17:07:55.878756Z"
+      "feedback": "",
+      "created_at": "2026-07-27T12:36:57.437453Z",
+      "updated_at": "2026-07-27T12:36:57.437453Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,34 @@
         "feedback": "WA, только скетч краткий",
         "created_at": "2026-07-01T17:07:55.878756Z",
         "updated_at": "2026-07-01T17:07:55.878756Z"
+      },
+      {
+        "evaluation_id": "ev_98ae73dabbe14bc6bb7f5f5823d642d5",
+        "result_id": "res_c569e2e3b639afb9d42cc76a",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T18:20:42.768205Z",
+        "updated_at": "2026-07-25T18:20:42.768205Z"
+      },
+      {
+        "evaluation_id": "ev_bdb8ab4ef4d9429fb179ff33da4a27d5",
+        "result_id": "res_c569e2e3b639afb9d42cc76a",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-27T12:36:57.437453Z",
+        "updated_at": "2026-07-27T12:36:57.437453Z"
       }
     ]
   },
@@ -37,5 +65,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_04",
   "run_id": "2026_06_30_10_09_20_retry_320k_20260630_100919_task_04_deepseek_deepseek-v4-flash_320000",
-  "updated_at": "2026-07-01T17:07:55.878756Z"
+  "updated_at": "2026-07-27T12:36:57.437453Z"
 }

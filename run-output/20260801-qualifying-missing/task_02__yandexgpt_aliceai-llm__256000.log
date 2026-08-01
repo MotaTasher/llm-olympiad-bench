@@ -1,0 +1,17 @@
+START 2026-08-01T00:17:33.839600+00:00 math-cup-2026-qualifying/task_02 yandexgpt:aliceai-llm cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_02.json --models yandexgpt:aliceai-llm --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_001725_task_02_yandexgpt_aliceai-llm_256000
+Run 2026_08_01_00_17_34_math-cup-2026-qualifying_20260801_001725_task_02_yandexgpt_aliceai-llm_256000: math-cup-2026-qualifying/task_02, 1 model(s), max_tokens=256000
+[1/1] START yandexgpt:aliceai-llm
+[1/1] DONE  aliceai-llm in 6.6s tokens=1111 cost_usd=0.012239
+| model       |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-------------|----------|------------|--------------|----------|---------|
+| aliceai-llm |     1111 |   0.012239 |         6494 | ok       |         |
+
+Run ID: 2026_08_01_00_17_34_math-cup-2026-qualifying_20260801_001725_task_02_yandexgpt_aliceai-llm_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_02 (Ожерелье, плоскость, два гвоздя)
+Timestamp: 2026-08-01T00:17:34.059371Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_02/2026_08_01_00_17_34_math-cup-2026-qualifying_20260801_001725_task_02_yandexgpt_aliceai-llm_256000.json
+
+DONE 2026-08-01T00:17:40.794615+00:00 math-cup-2026-qualifying/task_02 yandexgpt:aliceai-llm cap=256000 exit=0 elapsed_s=7.0

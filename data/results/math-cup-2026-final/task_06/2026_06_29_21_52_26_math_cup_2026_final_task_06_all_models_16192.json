@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_2cb4096c46f1c9851e95f77f": {
-      "evaluation_id": "ev_276605b418354cf6b4c31d97de916956",
+      "evaluation_id": "ev_f9a1df7edcd040b1a2322f9ade1fe764",
       "result_id": "res_2cb4096c46f1c9851e95f77f",
       "result_index": 9,
       "model_key": "yandexgpt:yandexgpt-5-lite",
       "model": "yandexgpt-5-lite",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
       "feedback": "",
-      "created_at": "2026-06-30T18:03:27.851969Z",
-      "updated_at": "2026-06-30T18:03:27.851969Z"
+      "created_at": "2026-07-25T18:34:10.673682Z",
+      "updated_at": "2026-07-25T18:34:10.673682Z"
     },
     "res_fb3f31577dd5adacb5b3f046": {
       "evaluation_id": "ev_b8c42b07d1f74e78816311520b48feb6",
@@ -43,18 +43,18 @@
       "updated_at": "2026-07-01T17:39:45.392514Z"
     },
     "res_d89ed9040dbc0afe9d6ced06": {
-      "evaluation_id": "ev_871b0f25c89441b19295b00fef9b24fe",
+      "evaluation_id": "ev_733ed2dc6c7347f6918563d18589a3b1",
       "result_id": "res_d89ed9040dbc0afe9d6ced06",
       "result_index": 8,
       "model_key": "yandexgpt:yandexgpt-5.1",
       "model": "yandexgpt-5.1",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "а) может не остаться рёбер пока длина пути ещё маленькая\r\nб)что? Поскольку граф содержит гамильтонов путь, вероятность «застрять» рано невелика, особенно если граф достаточно плотный.\r\n",
-      "created_at": "2026-07-01T17:43:01.769825Z",
-      "updated_at": "2026-07-01T17:43:01.769825Z"
+      "feedback": "",
+      "created_at": "2026-07-25T18:29:23.903051Z",
+      "updated_at": "2026-07-25T18:29:23.903051Z"
     },
     "res_66143a53d29a1ed85ce0c16f": {
       "evaluation_id": "ev_1b926a26f5304718bf56e1c0d5558ac4",
@@ -100,6 +100,20 @@
         "feedback": "",
         "created_at": "2026-06-30T18:03:27.851969Z",
         "updated_at": "2026-06-30T18:03:27.851969Z"
+      },
+      {
+        "evaluation_id": "ev_f9a1df7edcd040b1a2322f9ade1fe764",
+        "result_id": "res_2cb4096c46f1c9851e95f77f",
+        "result_index": 9,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T18:34:10.673682Z",
+        "updated_at": "2026-07-25T18:34:10.673682Z"
       }
     ],
     "res_fb3f31577dd5adacb5b3f046": [
@@ -148,6 +162,20 @@
         "feedback": "а) может не остаться рёбер пока длина пути ещё маленькая\r\nб)что? Поскольку граф содержит гамильтонов путь, вероятность «застрять» рано невелика, особенно если граф достаточно плотный.\r\n",
         "created_at": "2026-07-01T17:43:01.769825Z",
         "updated_at": "2026-07-01T17:43:01.769825Z"
+      },
+      {
+        "evaluation_id": "ev_733ed2dc6c7347f6918563d18589a3b1",
+        "result_id": "res_d89ed9040dbc0afe9d6ced06",
+        "result_index": 8,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T18:29:23.903051Z",
+        "updated_at": "2026-07-25T18:29:23.903051Z"
       }
     ],
     "res_66143a53d29a1ed85ce0c16f": [
@@ -187,5 +215,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_06_29_21_52_26_math_cup_2026_final_task_06_all_models_16192",
-  "updated_at": "2026-07-03T23:04:08.566916Z"
+  "updated_at": "2026-07-25T18:34:10.673682Z"
 }

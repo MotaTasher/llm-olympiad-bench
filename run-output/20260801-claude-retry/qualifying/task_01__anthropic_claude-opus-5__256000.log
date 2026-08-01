@@ -1,0 +1,17 @@
+START 2026-08-01T11:47:18.764253+00:00 math-cup-2026-qualifying/task_01 anthropic:claude-opus-5 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_01.json --models anthropic:claude-opus-5 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_104901_task_01_anthropic_claude-opus-5_256000
+Run 2026_08_01_11_47_18_math-cup-2026-qualifying_20260801_104901_task_01_anthropic_claude-opus-5_256000: math-cup-2026-qualifying/task_01, 1 model(s), max_tokens=256000
+[1/1] START anthropic:claude-opus-5
+[1/1] DONE  claude-opus-5 in 10m09s tokens=53872 cost_usd=1.340280
+| model         |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------------|----------|------------|--------------|----------|---------|
+| claude-opus-5 |    53872 |    1.34028 |       608419 | ok       |         |
+
+Run ID: 2026_08_01_11_47_18_math-cup-2026-qualifying_20260801_104901_task_01_anthropic_claude-opus-5_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_01 (Муравей в большом квадрате)
+Timestamp: 2026-08-01T11:47:18.865471Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_01/2026_08_01_11_47_18_math-cup-2026-qualifying_20260801_104901_task_01_anthropic_claude-opus-5_256000.json
+
+DONE 2026-08-01T11:57:28.418548+00:00 math-cup-2026-qualifying/task_01 anthropic:claude-opus-5 cap=256000 exit=0 elapsed_s=609.7

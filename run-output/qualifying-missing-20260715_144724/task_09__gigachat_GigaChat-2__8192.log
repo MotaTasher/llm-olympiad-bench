@@ -1,0 +1,5 @@
+START 2026-07-15T17:42:16.519711+00:00 math-cup-2026-qualifying/task_09 gigachat:GigaChat-2 cap=8192
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_09.json --models gigachat:GigaChat-2 --max-tokens 8192 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_09_gigachat_GigaChat-2_8192
+data/competitions/math-cup-2026-qualifying/task_09.json: cannot read file: [Errno 2] No such file or directory: 'data/competitions/math-cup-2026-qualifying/task_09.json'
+
+DONE 2026-07-15T17:42:16.637282+00:00 math-cup-2026-qualifying/task_09 gigachat:GigaChat-2 cap=8192 exit=1 elapsed_s=0.1

@@ -1,0 +1,17 @@
+START 2026-08-01T00:24:15.522194+00:00 math-cup-2026-qualifying/task_03 yandexgpt:aliceai-llm cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_03.json --models yandexgpt:aliceai-llm --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_001725_task_03_yandexgpt_aliceai-llm_256000
+Run 2026_08_01_00_24_15_math-cup-2026-qualifying_20260801_001725_task_03_yandexgpt_aliceai-llm_256000: math-cup-2026-qualifying/task_03, 1 model(s), max_tokens=256000
+[1/1] START yandexgpt:aliceai-llm
+[1/1] DONE  aliceai-llm in 12.4s tokens=2240 cost_usd=0.028443
+| model       |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-------------|----------|------------|--------------|----------|---------|
+| aliceai-llm |     2240 |   0.028443 |        12319 | ok       |         |
+
+Run ID: 2026_08_01_00_24_15_math-cup-2026-qualifying_20260801_001725_task_03_yandexgpt_aliceai-llm_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_03 (Гена, возьми определитель)
+Timestamp: 2026-08-01T00:24:15.622513Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_03/2026_08_01_00_24_15_math-cup-2026-qualifying_20260801_001725_task_03_yandexgpt_aliceai-llm_256000.json
+
+DONE 2026-08-01T00:24:28.129494+00:00 math-cup-2026-qualifying/task_03 yandexgpt:aliceai-llm cap=256000 exit=0 elapsed_s=12.6

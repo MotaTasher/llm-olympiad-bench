@@ -1,0 +1,349 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_21_02_22_math-cup-2026-qualifying_20260707_210221_task_06_anthropic_claude-opus-4-8_128000",
+  "timestamp": "2026-07-07T21:02:22.019562Z",
+  "started_at": "2026-07-07T21:02:22.019562Z",
+  "completed_at": "2026-07-07T21:02:41.190237Z",
+  "duration_ms": 19156,
+  "status": "completed",
+  "git_hash": "2f73f96",
+  "git": {
+    "hash": "2f73f96",
+    "full_hash": "2f73f96a2c1ad815121dba008d3ecbea17505ee5",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "anthropic:claude-opus-4-8",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_210221_task_06_anthropic_claude-opus-4-8_128000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "anthropic:claude-opus-4-8",
+      "run_id": "math-cup-2026-qualifying_20260707_210221_task_06_anthropic_claude-opus-4-8_128000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 128000
+    },
+    "requested_models": [
+      "anthropic:claude-opus-4-8"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.113.0",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "anthropic:claude-opus-4-8"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 128000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_8b41c1619b5dc31216c98165",
+      "result_index": 0,
+      "provider": "anthropic",
+      "alias": "anthropic:claude-opus-4-8",
+      "adapter_class": "models.claude.claude.ClaudeModel",
+      "requested_model_id": "claude-opus-4-8",
+      "resolved_model_id": "claude-opus-4-8",
+      "model": "claude-opus-4-8",
+      "attempt": 1,
+      "started_at": "2026-07-07T21:02:22.048216Z",
+      "completed_at": "2026-07-07T21:02:41.184691Z",
+      "status": "success",
+      "request": {
+        "model": "claude-opus-4-8",
+        "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "max_output_tokens_total": 128000,
+        "max_output_tokens_per_request": 128000,
+        "stream": true,
+        "steps": [
+          {
+            "model": "claude-opus-4-8",
+            "max_tokens": 128000,
+            "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+              }
+            ],
+            "endpoint": "https://api.anthropic.com/v1/messages",
+            "stream": true
+          }
+        ]
+      },
+      "answer": "Я формализую задачу. Дана $f\\in C[0,1]$ с тремя условиями:\n$$\\int_0^1 f^2\\,dx=1,\\quad \\int_0^1 f\\,dx=\\tfrac12,\\quad \\int_0^1 xf\\,dx=0.$$\n\nНужно найти $\\int_0^1 x^2 f\\,dx$.\n\n**Идея.** Рассмотрим многочлен $g(x)=a+bx$ и оценим $\\int_0^1 (f-g)^2\\,dx\\ge 0$. Раскрывая:\n$$\\int_0^1 (f-g)^2\\,dx=\\int_0^1 f^2\\,dx-2\\int_0^1 fg\\,dx+\\int_0^1 g^2\\,dx.$$\n\nВычислим по данным условиям:\n$$\\int_0^1 fg\\,dx=a\\int_0^1 f\\,dx+b\\int_0^1 xf\\,dx=\\tfrac{a}{2}+0=\\tfrac a2.$$\n\nТакже\n$$\\int_0^1 g^2\\,dx=\\int_0^1 (a+bx)^2\\,dx=a^2+ab+\\tfrac{b^2}{3}.$$\n\nПоэтому\n$$0\\le \\int_0^1(f-g)^2\\,dx=1-2\\cdot\\tfrac a2+a^2+ab+\\tfrac{b^2}{3}=1-a+a^2+ab+\\tfrac{b^2}{3}.$$\n\n**Минимизируем правую часть по $a,b$.** Обозначим $h(a,b)=a^2+ab+\\tfrac{b^2}{3}-a+1$.\n\nЧастные производные:\n$$h_a=2a+b-1=0,\\qquad h_b=a+\\tfrac{2b}{3}=0.$$\n\nИз второго: $a=-\\tfrac{2b}{3}$. Подставляем в первое:\n$$-\\tfrac{4b}{3}+b-1=0\\Rightarrow -\\tfrac{b}{3}=1\\Rightarrow b=-3,\\quad a=2.$$\n\nМинимальное значение:\n$$h(2,-3)=4+2\\cdot(-3)+\\tfrac{9}{3}-2+1=4-6+3-2+1=0.$$\n\n**Следствие.** Мы получили, что для $g(x)=2-3x$:\n$$\\int_0^1 (f-g)^2\\,dx\\ge 0,$$\nпричём эта величина равна ровно **минимуму** $h(a,b)=0$, достигаемому при $a=2,b=-3$. Но по неравенству $\\int_0^1(f-g)^2\\,dx\\ge 0$ мы знаем лишь, что $h(a,b)\\ge 0$ для всех $a,b$. Проверим: значение $h(2,-3)=0$ означает, что при этом конкретном $g$\n$$\\int_0^1 (f-(2-3x))^2\\,dx=0.$$\n\nТак как $f$ непрерывна и $2-3x$ непрерывна, подынтегральная функция $(f-(2-3x))^2$ непрерывна, неотрицательна, а её интеграл равен нулю. Значит она тождественно равна нулю, то есть\n$$f(x)=2-3x\\quad\\text{для всех }x\\in[0,1].$$\n\n**Проверка условий.** Убедимся, что $f(x)=2-3x$ действительно удовлетворяет всем условиям (существование объекта):\n$$\\int_0^1 f\\,dx=\\int_0^1(2-3x)dx=2-\\tfrac32=\\tfrac12.\\ \\checkmark$$\n$$\\int_0^1 xf\\,dx=\\int_0^1(2x-3x^2)dx=1-1=0.\\ \\checkmark$$\n$$\\int_0^1 f^2\\,dx=\\int_0^1(2-3x)^2dx=\\int_0^1(4-12x+9x^2)dx=4-6+3=1.\\ \\checkmark$$\n\nВсе три условия выполнены, значит такая $f$ существует и единственна (мы доказали, что любая $f$, удовлетворяющая условиям, совпадает с $2-3x$).\n\n**Вычисление ответа.**\n$$\\int_0^1 x^2 f\\,dx=\\int_0^1 x^2(2-3x)dx=\\int_0^1(2x^2-3x^3)dx=\\tfrac23-\\tfrac34=\\tfrac{8-9}{12}=-\\tfrac{1}{12}.$$\n\n**Финальный вывод.**\n$$\\boxed{\\int_0^1 x^2 f(x)\\,dx=-\\frac{1}{12}}.$$\n\nБолее того, из условий однозначно следует $f(x)=2-3x$.",
+      "prompt_tokens": 352,
+      "completion_tokens": 1607,
+      "cost_usd": 0.041935,
+      "latency_ms": 18291,
+      "raw_response": {
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "multi_request": {
+          "enabled": false,
+          "requests": 1,
+          "max_output_tokens_total": 128000,
+          "max_output_tokens_per_request": 128000,
+          "stopped_after_visible_output": true,
+          "continuation": "assistant_content_blocks"
+        },
+        "responses": [
+          {
+            "request": {
+              "model": "claude-opus-4-8",
+              "max_tokens": 128000,
+              "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+                }
+              ],
+              "endpoint": "https://api.anthropic.com/v1/messages",
+              "stream": true
+            },
+            "response": {
+              "id": "msg_011CcoNakmX91mDtKB3UKR5J",
+              "container": null,
+              "content": [
+                {
+                  "citations": null,
+                  "text": "Я формализую задачу. Дана $f\\in C[0,1]$ с тремя условиями:\n$$\\int_0^1 f^2\\,dx=1,\\quad \\int_0^1 f\\,dx=\\tfrac12,\\quad \\int_0^1 xf\\,dx=0.$$\n\nНужно найти $\\int_0^1 x^2 f\\,dx$.\n\n**Идея.** Рассмотрим многочлен $g(x)=a+bx$ и оценим $\\int_0^1 (f-g)^2\\,dx\\ge 0$. Раскрывая:\n$$\\int_0^1 (f-g)^2\\,dx=\\int_0^1 f^2\\,dx-2\\int_0^1 fg\\,dx+\\int_0^1 g^2\\,dx.$$\n\nВычислим по данным условиям:\n$$\\int_0^1 fg\\,dx=a\\int_0^1 f\\,dx+b\\int_0^1 xf\\,dx=\\tfrac{a}{2}+0=\\tfrac a2.$$\n\nТакже\n$$\\int_0^1 g^2\\,dx=\\int_0^1 (a+bx)^2\\,dx=a^2+ab+\\tfrac{b^2}{3}.$$\n\nПоэтому\n$$0\\le \\int_0^1(f-g)^2\\,dx=1-2\\cdot\\tfrac a2+a^2+ab+\\tfrac{b^2}{3}=1-a+a^2+ab+\\tfrac{b^2}{3}.$$\n\n**Минимизируем правую часть по $a,b$.** Обозначим $h(a,b)=a^2+ab+\\tfrac{b^2}{3}-a+1$.\n\nЧастные производные:\n$$h_a=2a+b-1=0,\\qquad h_b=a+\\tfrac{2b}{3}=0.$$\n\nИз второго: $a=-\\tfrac{2b}{3}$. Подставляем в первое:\n$$-\\tfrac{4b}{3}+b-1=0\\Rightarrow -\\tfrac{b}{3}=1\\Rightarrow b=-3,\\quad a=2.$$\n\nМинимальное значение:\n$$h(2,-3)=4+2\\cdot(-3)+\\tfrac{9}{3}-2+1=4-6+3-2+1=0.$$\n\n**Следствие.** Мы получили, что для $g(x)=2-3x$:\n$$\\int_0^1 (f-g)^2\\,dx\\ge 0,$$\nпричём эта величина равна ровно **минимуму** $h(a,b)=0$, достигаемому при $a=2,b=-3$. Но по неравенству $\\int_0^1(f-g)^2\\,dx\\ge 0$ мы знаем лишь, что $h(a,b)\\ge 0$ для всех $a,b$. Проверим: значение $h(2,-3)=0$ означает, что при этом конкретном $g$\n$$\\int_0^1 (f-(2-3x))^2\\,dx=0.$$\n\nТак как $f$ непрерывна и $2-3x$ непрерывна, подынтегральная функция $(f-(2-3x))^2$ непрерывна, неотрицательна, а её интеграл равен нулю. Значит она тождественно равна нулю, то есть\n$$f(x)=2-3x\\quad\\text{для всех }x\\in[0,1].$$\n\n**Проверка условий.** Убедимся, что $f(x)=2-3x$ действительно удовлетворяет всем условиям (существование объекта):\n$$\\int_0^1 f\\,dx=\\int_0^1(2-3x)dx=2-\\tfrac32=\\tfrac12.\\ \\checkmark$$\n$$\\int_0^1 xf\\,dx=\\int_0^1(2x-3x^2)dx=1-1=0.\\ \\checkmark$$\n$$\\int_0^1 f^2\\,dx=\\int_0^1(2-3x)^2dx=\\int_0^1(4-12x+9x^2)dx=4-6+3=1.\\ \\checkmark$$\n\nВсе три условия выполнены, значит такая $f$ существует и единственна (мы доказали, что любая $f$, удовлетворяющая условиям, совпадает с $2-3x$).\n\n**Вычисление ответа.**\n$$\\int_0^1 x^2 f\\,dx=\\int_0^1 x^2(2-3x)dx=\\int_0^1(2x^2-3x^3)dx=\\tfrac23-\\tfrac34=\\tfrac{8-9}{12}=-\\tfrac{1}{12}.$$\n\n**Финальный вывод.**\n$$\\boxed{\\int_0^1 x^2 f(x)\\,dx=-\\frac{1}{12}}.$$\n\nБолее того, из условий однозначно следует $f(x)=2-3x$.",
+                  "type": "text",
+                  "parsed_output": null
+                }
+              ],
+              "model": "claude-opus-4-8",
+              "role": "assistant",
+              "stop_details": null,
+              "stop_reason": "end_turn",
+              "stop_sequence": null,
+              "type": "message",
+              "usage": {
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": "[REDACTED]",
+                  "ephemeral_5m_input_tokens": "[REDACTED]"
+                },
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "inference_geo": "global",
+                "input_tokens": 352,
+                "output_tokens": 1607,
+                "output_tokens_details": null,
+                "server_tool_use": null,
+                "service_tier": "standard"
+              }
+            },
+            "latency_ms": 18291,
+            "answer_chars": 2327
+          }
+        ],
+        "last_response": {
+          "id": "msg_011CcoNakmX91mDtKB3UKR5J",
+          "container": null,
+          "content": [
+            {
+              "citations": null,
+              "text": "Я формализую задачу. Дана $f\\in C[0,1]$ с тремя условиями:\n$$\\int_0^1 f^2\\,dx=1,\\quad \\int_0^1 f\\,dx=\\tfrac12,\\quad \\int_0^1 xf\\,dx=0.$$\n\nНужно найти $\\int_0^1 x^2 f\\,dx$.\n\n**Идея.** Рассмотрим многочлен $g(x)=a+bx$ и оценим $\\int_0^1 (f-g)^2\\,dx\\ge 0$. Раскрывая:\n$$\\int_0^1 (f-g)^2\\,dx=\\int_0^1 f^2\\,dx-2\\int_0^1 fg\\,dx+\\int_0^1 g^2\\,dx.$$\n\nВычислим по данным условиям:\n$$\\int_0^1 fg\\,dx=a\\int_0^1 f\\,dx+b\\int_0^1 xf\\,dx=\\tfrac{a}{2}+0=\\tfrac a2.$$\n\nТакже\n$$\\int_0^1 g^2\\,dx=\\int_0^1 (a+bx)^2\\,dx=a^2+ab+\\tfrac{b^2}{3}.$$\n\nПоэтому\n$$0\\le \\int_0^1(f-g)^2\\,dx=1-2\\cdot\\tfrac a2+a^2+ab+\\tfrac{b^2}{3}=1-a+a^2+ab+\\tfrac{b^2}{3}.$$\n\n**Минимизируем правую часть по $a,b$.** Обозначим $h(a,b)=a^2+ab+\\tfrac{b^2}{3}-a+1$.\n\nЧастные производные:\n$$h_a=2a+b-1=0,\\qquad h_b=a+\\tfrac{2b}{3}=0.$$\n\nИз второго: $a=-\\tfrac{2b}{3}$. Подставляем в первое:\n$$-\\tfrac{4b}{3}+b-1=0\\Rightarrow -\\tfrac{b}{3}=1\\Rightarrow b=-3,\\quad a=2.$$\n\nМинимальное значение:\n$$h(2,-3)=4+2\\cdot(-3)+\\tfrac{9}{3}-2+1=4-6+3-2+1=0.$$\n\n**Следствие.** Мы получили, что для $g(x)=2-3x$:\n$$\\int_0^1 (f-g)^2\\,dx\\ge 0,$$\nпричём эта величина равна ровно **минимуму** $h(a,b)=0$, достигаемому при $a=2,b=-3$. Но по неравенству $\\int_0^1(f-g)^2\\,dx\\ge 0$ мы знаем лишь, что $h(a,b)\\ge 0$ для всех $a,b$. Проверим: значение $h(2,-3)=0$ означает, что при этом конкретном $g$\n$$\\int_0^1 (f-(2-3x))^2\\,dx=0.$$\n\nТак как $f$ непрерывна и $2-3x$ непрерывна, подынтегральная функция $(f-(2-3x))^2$ непрерывна, неотрицательна, а её интеграл равен нулю. Значит она тождественно равна нулю, то есть\n$$f(x)=2-3x\\quad\\text{для всех }x\\in[0,1].$$\n\n**Проверка условий.** Убедимся, что $f(x)=2-3x$ действительно удовлетворяет всем условиям (существование объекта):\n$$\\int_0^1 f\\,dx=\\int_0^1(2-3x)dx=2-\\tfrac32=\\tfrac12.\\ \\checkmark$$\n$$\\int_0^1 xf\\,dx=\\int_0^1(2x-3x^2)dx=1-1=0.\\ \\checkmark$$\n$$\\int_0^1 f^2\\,dx=\\int_0^1(2-3x)^2dx=\\int_0^1(4-12x+9x^2)dx=4-6+3=1.\\ \\checkmark$$\n\nВсе три условия выполнены, значит такая $f$ существует и единственна (мы доказали, что любая $f$, удовлетворяющая условиям, совпадает с $2-3x$).\n\n**Вычисление ответа.**\n$$\\int_0^1 x^2 f\\,dx=\\int_0^1 x^2(2-3x)dx=\\int_0^1(2x^2-3x^3)dx=\\tfrac23-\\tfrac34=\\tfrac{8-9}{12}=-\\tfrac{1}{12}.$$\n\n**Финальный вывод.**\n$$\\boxed{\\int_0^1 x^2 f(x)\\,dx=-\\frac{1}{12}}.$$\n\nБолее того, из условий однозначно следует $f(x)=2-3x$.",
+              "type": "text",
+              "parsed_output": null
+            }
+          ],
+          "model": "claude-opus-4-8",
+          "role": "assistant",
+          "stop_details": null,
+          "stop_reason": "end_turn",
+          "stop_sequence": null,
+          "type": "message",
+          "usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": "[REDACTED]",
+              "ephemeral_5m_input_tokens": "[REDACTED]"
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 352,
+            "output_tokens": 1607,
+            "output_tokens_details": null,
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        "usage": {
+          "input_tokens": 352,
+          "output_tokens": 1607,
+          "total_tokens": 1959,
+          "output_tokens_details": {
+            "reasoning_tokens": null
+          },
+          "cache_read_input_tokens": null,
+          "cache_creation_input_tokens": null
+        }
+      },
+      "usage": {
+        "input_tokens": 352,
+        "output_tokens": 1607,
+        "total_tokens": 1959,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "input_tokens": 352,
+          "output_tokens": 1607,
+          "total_tokens": 1959,
+          "output_tokens_details": {
+            "reasoning_tokens": null
+          },
+          "cache_read_input_tokens": null,
+          "cache_creation_input_tokens": null
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 18291,
+        "monotonic_ms": 18291,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 18291,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00176,
+        "output": 0.040175,
+        "cached_input": null,
+        "reasoning": 0.0,
+        "native": null,
+        "total": 0.041935,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null
+      },
+      "finish_reason": "end_turn",
+      "provider_request_id": null,
+      "response_id": "msg_011CcoNakmX91mDtKB3UKR5J",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

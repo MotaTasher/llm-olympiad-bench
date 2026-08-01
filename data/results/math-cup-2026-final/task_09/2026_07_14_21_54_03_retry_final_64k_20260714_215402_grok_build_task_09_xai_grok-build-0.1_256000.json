@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_13bd38c4de88579e420b792c": {
+      "evaluation_id": "ev_8de4e423244f4ba188bd1246ad65a73d",
+      "result_id": "res_13bd38c4de88579e420b792c",
+      "result_index": 0,
+      "model_key": "xai:grok-build-0.1",
+      "model": "grok-build-0.1",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "\"Proof of Miquel's four-circles theorem.\" просто не верна теорема в этой формулировке. она не верна для прямых, а окружностями можно приблизить прямые\r\n\r\nКроме того вообще не используются условия касания, хотя без этого задача не верна.",
+      "created_at": "2026-07-17T15:33:59.987398Z",
+      "updated_at": "2026-07-17T15:33:59.987398Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_13bd38c4de88579e420b792c": [
+      {
+        "evaluation_id": "ev_8de4e423244f4ba188bd1246ad65a73d",
+        "result_id": "res_13bd38c4de88579e420b792c",
+        "result_index": 0,
+        "model_key": "xai:grok-build-0.1",
+        "model": "grok-build-0.1",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "\"Proof of Miquel's four-circles theorem.\" просто не верна теорема в этой формулировке. она не верна для прямых, а окружностями можно приблизить прямые\r\n\r\nКроме того вообще не используются условия касания, хотя без этого задача не верна.",
+        "created_at": "2026-07-17T15:33:59.987398Z",
+        "updated_at": "2026-07-17T15:33:59.987398Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_07_14_21_54_03_retry_final_64k_20260714_215402_grok_build_task_09_xai_grok-build-0.1_256000",
+  "updated_at": "2026-07-17T15:33:59.987398Z"
+}

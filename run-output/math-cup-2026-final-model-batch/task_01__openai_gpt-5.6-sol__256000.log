@@ -1,0 +1,17 @@
+START 2026-08-01T00:08:57.024801+00:00 math-cup-2026-final/task_01 openai:gpt-5.6-sol cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_01.json --models openai:gpt-5.6-sol --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-final_20260801_000856_task_01_openai_gpt-5.6-sol_256000
+Run 2026_08_01_00_08_57_math-cup-2026-final_20260801_000856_task_01_openai_gpt-5.6-sol_256000: math-cup-2026-final/task_01, 1 model(s), max_tokens=256000
+[1/1] START openai:gpt-5.6-sol
+[1/1] DONE  gpt-5.6-sol in 13.4s tokens=1003 cost_usd=0.025340
+| model       |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-------------|----------|------------|--------------|----------|---------|
+| gpt-5.6-sol |     1003 |    0.02534 |        12444 | ok       |         |
+
+Run ID: 2026_08_01_00_08_57_math-cup-2026-final_20260801_000856_task_01_openai_gpt-5.6-sol_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_01 (Произведение)
+Timestamp: 2026-08-01T00:08:57.162907Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_01/2026_08_01_00_08_57_math-cup-2026-final_20260801_000856_task_01_openai_gpt-5.6-sol_256000.json
+
+DONE 2026-08-01T00:09:10.921816+00:00 math-cup-2026-final/task_01 openai:gpt-5.6-sol cap=256000 exit=0 elapsed_s=13.9

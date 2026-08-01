@@ -1,0 +1,17 @@
+START 2026-08-01T13:21:18.820097+00:00 math-cup-2026-qualifying/task_08 anthropic:claude-opus-5 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_08.json --models anthropic:claude-opus-5 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_104901_task_08_anthropic_claude-opus-5_256000
+Run 2026_08_01_13_21_18_math-cup-2026-qualifying_20260801_104901_task_08_anthropic_claude-opus-5_256000: math-cup-2026-qualifying/task_08, 1 model(s), max_tokens=256000
+[1/1] START anthropic:claude-opus-5
+[1/1] ERROR claude-opus-5 in 1.2s: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too lo
+| model         |   tokens |   cost_usd |   latency_ms | status   | error                                                                                                                    |
+|---------------|----------|------------|--------------|----------|--------------------------------------------------------------------------------------------------------------------------|
+| claude-opus-5 |        0 |          0 |            0 | error    | Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too lo |
+
+Run ID: 2026_08_01_13_21_18_math-cup-2026-qualifying_20260801_104901_task_08_anthropic_claude-opus-5_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_08 (Найдите общий язык)
+Timestamp: 2026-08-01T13:21:18.921873Z
+Git hash: 05f751b
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_08/2026_08_01_13_21_18_math-cup-2026-qualifying_20260801_104901_task_08_anthropic_claude-opus-5_256000.json
+
+DONE 2026-08-01T13:21:20.398028+00:00 math-cup-2026-qualifying/task_08 anthropic:claude-opus-5 cap=256000 exit=0 elapsed_s=1.6

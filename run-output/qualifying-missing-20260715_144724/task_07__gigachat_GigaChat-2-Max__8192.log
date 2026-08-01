@@ -1,0 +1,17 @@
+START 2026-07-15T16:44:39.152559+00:00 math-cup-2026-qualifying/task_07 gigachat:GigaChat-2-Max cap=8192
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_07.json --models gigachat:GigaChat-2-Max --max-tokens 8192 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_07_gigachat_GigaChat-2-Max_8192
+Run 2026_07_15_16_44_39_qualifying_missing_20260715_144724_task_07_gigachat_GigaChat-2-Max_8192: math-cup-2026-qualifying/task_07, 1 model(s), max_tokens=8192
+[1/1] START gigachat:GigaChat-2-Max
+[1/1] DONE  GigaChat-2-Max in 11.4s tokens=772 cost_usd=0.005576
+| model          |   tokens |   cost_usd |   latency_ms | status   | error   |
+|----------------|----------|------------|--------------|----------|---------|
+| GigaChat-2-Max |      772 |   0.005576 |        11224 | ok       |         |
+
+Run ID: 2026_07_15_16_44_39_qualifying_missing_20260715_144724_task_07_gigachat_GigaChat-2-Max_8192
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_07 (Мумифицированный тетраэдр)
+Timestamp: 2026-07-15T16:44:39.257156Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_07/2026_07_15_16_44_39_qualifying_missing_20260715_144724_task_07_gigachat_GigaChat-2-Max_8192.json
+
+DONE 2026-07-15T16:44:50.833442+00:00 math-cup-2026-qualifying/task_07 gigachat:GigaChat-2-Max cap=8192 exit=0 elapsed_s=11.7

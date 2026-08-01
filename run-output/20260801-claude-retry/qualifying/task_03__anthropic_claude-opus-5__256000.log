@@ -1,0 +1,17 @@
+START 2026-08-01T12:46:54.872023+00:00 math-cup-2026-qualifying/task_03 anthropic:claude-opus-5 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_03.json --models anthropic:claude-opus-5 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_104901_task_03_anthropic_claude-opus-5_256000
+Run 2026_08_01_12_46_54_math-cup-2026-qualifying_20260801_104901_task_03_anthropic_claude-opus-5_256000: math-cup-2026-qualifying/task_03, 1 model(s), max_tokens=256000
+[1/1] START anthropic:claude-opus-5
+[1/1] DONE  claude-opus-5 in 2m23s tokens=15161 cost_usd=0.372965
+| model         |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------------|----------|------------|--------------|----------|---------|
+| claude-opus-5 |    15161 |   0.372965 |       142686 | ok       |         |
+
+Run ID: 2026_08_01_12_46_54_math-cup-2026-qualifying_20260801_104901_task_03_anthropic_claude-opus-5_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_03 (Гена, возьми определитель)
+Timestamp: 2026-08-01T12:46:54.975090Z
+Git hash: 05f751b
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_03/2026_08_01_12_46_54_math-cup-2026-qualifying_20260801_104901_task_03_anthropic_claude-opus-5_256000.json
+
+DONE 2026-08-01T12:49:18.654460+00:00 math-cup-2026-qualifying/task_03 anthropic:claude-opus-5 cap=256000 exit=0 elapsed_s=143.8

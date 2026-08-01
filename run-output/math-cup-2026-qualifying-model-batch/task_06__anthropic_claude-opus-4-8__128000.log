@@ -1,0 +1,17 @@
+START 2026-07-09T18:26:10.899978+00:00 math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=128000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_06.json --models anthropic:claude-opus-4-8 --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-opus-4-8_128000
+Run 2026_07_09_18_26_11_math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-opus-4-8_128000: math-cup-2026-qualifying/task_06, 1 model(s), max_tokens=128000
+[1/1] START anthropic:claude-opus-4-8
+[1/1] DONE  claude-opus-4-8 in 57.7s tokens=5950 cost_usd=0.141710
+| model           |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-----------------|----------|------------|--------------|----------|---------|
+| claude-opus-4-8 |     5950 |    0.14171 |        56893 | ok       |         |
+
+Run ID: 2026_07_09_18_26_11_math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-opus-4-8_128000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_06 (Занятые интегралы)
+Timestamp: 2026-07-09T18:26:11.017432Z
+Git hash: 78959a8
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_06/2026_07_09_18_26_11_math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-opus-4-8_128000.json
+
+DONE 2026-07-09T18:27:08.995978+00:00 math-cup-2026-qualifying/task_06 anthropic:claude-opus-4-8 cap=128000 exit=0 elapsed_s=58.1

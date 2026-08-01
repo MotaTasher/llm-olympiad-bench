@@ -1,0 +1,299 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_13_49_39_math-cup-2026-qualifying_20260707_134939_task_06_xai_grok-4.3_256000",
+  "timestamp": "2026-07-07T13:49:39.830126Z",
+  "started_at": "2026-07-07T13:49:39.830126Z",
+  "completed_at": "2026-07-07T13:51:51.200502Z",
+  "duration_ms": 131340,
+  "status": "completed",
+  "git_hash": "ea7e3e2",
+  "git": {
+    "hash": "ea7e3e2",
+    "full_hash": "ea7e3e2fe1f167d20051f55ea81e4f0c77345b71",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "xai:grok-4.3",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_134939_task_06_xai_grok-4.3_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "xai:grok-4.3",
+      "run_id": "math-cup-2026-qualifying_20260707_134939_task_06_xai_grok-4.3_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "xai:grok-4.3"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "xai:grok-4.3"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_351a44d58a61f29a82a17981",
+      "result_index": 0,
+      "provider": "xai",
+      "alias": "xai:grok-4.3",
+      "adapter_class": "models.grok.grok.GrokModel",
+      "requested_model_id": "grok-4.3",
+      "resolved_model_id": "grok-4.3",
+      "model": "grok-4.3",
+      "attempt": 1,
+      "started_at": "2026-07-07T13:49:39.906602Z",
+      "completed_at": "2026-07-07T13:51:51.195267Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.x.ai/v1/chat/completions",
+        "model": "grok-4.3",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "stream": false,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_tokens": 256000,
+        "reasoning_effort": "high"
+      },
+      "answer": "### Постановка и обозначения.\n\nПусть \\( f \\in C[0,1] \\) удовлетворяет условиям\n\\[\n\\int_0^1 f(x)\\, dx = \\frac12, \\qquad \\int_0^1 x f(x)\\, dx = 0, \\qquad \\int_0^1 f^2(x)\\, dx = 1.\n\\]\nОбозначим через \\( W = \\operatorname{span}\\{1, x\\} \\) двумерное подпространство пространства \\( L^2[0,1] \\). Пусть \\( r \\) — ортогональная проекция функции \\( f \\) на \\( W \\). Тогда \\( \\langle f - r,\\, w \\rangle = 0 \\) для всех \\( w \\in W \\), где \\( \\langle \\cdot,\\, \\cdot \\rangle \\) обозначает стандартное скалярное произведение в \\( L^2[0,1] \\). В частности, принимая \\( w = 1 \\) и \\( w = x \\), получаем\n\\[\n\\int_0^1 (f - r)\\, dx = 0 \\qquad \\text{и} \\qquad \\int_0^1 x(f - r)\\, dx = 0,\n\\]\nоткуда немедленно следует, что \\( r \\) удовлетворяет тем же двум моментным условиям, что и \\( f \\):\n\\[\n\\int_0^1 r(x)\\, dx = \\frac12, \\qquad \\int_0^1 x r(x)\\, dx = 0.\n\\]\n\n### Определение функции \\( r \\).\n\nПоскольку \\( r \\in W \\), имеем \\( r(x) = a + b x \\) для некоторых коэффициентов \\( a, b \\in \\mathbb{R} \\). Подставляя в моментные условия, приходим к системе линейных уравнений\n\\[\na + \\frac{b}{2} = \\frac12, \\qquad \\frac{a}{2} + \\frac{b}{3} = 0.\n\\]\nУмножая второе уравнение на 6, получаем эквивалентное соотношение \\( 3a + 2b = 0 \\), так что \\( a = -\\frac{2}{3} b \\). Подстановка в первое уравнение даёт\n\\[\n-\\frac{2}{3} b + \\frac{1}{2} b = \\frac12 \\implies \\left( -\\frac{4}{6} + \\frac{3}{6} \\right) b = \\frac12 \\implies -\\frac{1}{6} b = \\frac12 \\implies b = -3.\n\\]\nТогда \\( a = -\\frac{2}{3} (-3) = 2 \\), так что \\( r(x) = 2 - 3x \\).\n\n### Вычисление нормы \\( r \\).\n\nПрямая проверка показывает, что\n\\[\n\\int_0^1 r(x)^2\\, dx = \\int_0^1 (2 - 3x)^2\\, dx = \\int_0^1 \\bigl(4 - 12x + 9x^2\\bigr)\\, dx = \\bigl[ 4x - 6x^2 + 3x^3 \\bigr]_0^1 = 4 - 6 + 3 = 1.\n\\]\n\n### Доказательство равенства \\( f = r \\).\n\nПоскольку \\( r \\) есть ортогональная проекция \\( f \\) на \\( W \\), имеем \\( \\langle f - r,\\, r \\rangle = 0 \\), откуда \\( \\int_0^1 f(x) r(x)\\, dx = \\int_0^1 r(x)^2\\, dx = 1 \\). Рассмотрим теперь разность квадратов норм:\n\\[\n\\int_0^1 \\bigl( f(x) - r(x) \\bigr)^2\\, dx = \\int_0^1 f^2(x)\\, dx - 2 \\int_0^1 f(x) r(x)\\, dx + \\int_0^1 r(x)^2\\, dx = 1 - 2 \\cdot 1 + 1 = 0.\n\\]\nТаким образом, \\( \\int_0^1 \\bigl( f(x) - r(x) \\bigr)^2\\, dx = 0 \\). Поскольку подынтегральная функция неотрицательна и непрерывна (ввиду непрерывности \\( f \\) и \\( r \\)), отсюда следует, что \\( f(x) - r(x) = 0 \\) всюду на \\( [0,1] \\). Иными словами, \\( f(x) = 2 - 3x \\) для всех \\( x \\in [0,1] \\).\n\n### Вычисление искомого интеграла.\n\nТеперь непосредственно вычисляем\n\\[\n\\int_0^1 x^2 f(x)\\, dx = \\int_0^1 x^2 (2 - 3x)\\, dx = \\int_0^1 \\bigl( 2x^2 - 3x^3 \\bigr)\\, dx = \\bigl[ \\frac{2}{3} x^3 - \\frac{3}{4} x^4 \\bigr]_0^1 = \\frac{2}{3} - \\frac{3}{4} = \\frac{8}{12} - \\frac{9}{12} = -\\frac{1}{12}.\n\\]\n\n### Проверка существования и заключение.\n\nОтметим, что построенная функция \\( f(x) = 2 - 3x \\) действительно принадлежит \\( C[0,1] \\) и удовлетворяет всем исходным условиям задачи (первые два моментных условия выполняются по построению, а равенство \\( \\int_0^1 f^2 = 1 \\) было проверено выше). Поскольку любое \\( f \\), удовлетворяющее условиям задачи, необходимо совпадает с этой функцией, значение интеграла \\( \\int_0^1 x^2 f(x)\\, dx \\) однозначно равно \\( -\\frac{1}{12} \\).\n\n(Note, что в ходе рассуждений не было использовано никаких дополнительных предположений о знаке \\( f \\) или иных ограничений, помимо указанных в условии; в частности, построенная функция \\( f \\) меняет знак на \\( [0,1] \\), что допустимо.) \n\nТаким образом, искомое значение равно \\( -\\dfrac{1}{12} \\).",
+      "prompt_tokens": 344,
+      "completion_tokens": 1362,
+      "cost_usd": 0.0241528,
+      "latency_ms": 128904,
+      "raw_response": {
+        "id": "9f33a4c5-b524-975a-af41-0b2cfa3ded9f",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "### Постановка и обозначения.\n\nПусть \\( f \\in C[0,1] \\) удовлетворяет условиям\n\\[\n\\int_0^1 f(x)\\, dx = \\frac12, \\qquad \\int_0^1 x f(x)\\, dx = 0, \\qquad \\int_0^1 f^2(x)\\, dx = 1.\n\\]\nОбозначим через \\( W = \\operatorname{span}\\{1, x\\} \\) двумерное подпространство пространства \\( L^2[0,1] \\). Пусть \\( r \\) — ортогональная проекция функции \\( f \\) на \\( W \\). Тогда \\( \\langle f - r,\\, w \\rangle = 0 \\) для всех \\( w \\in W \\), где \\( \\langle \\cdot,\\, \\cdot \\rangle \\) обозначает стандартное скалярное произведение в \\( L^2[0,1] \\). В частности, принимая \\( w = 1 \\) и \\( w = x \\), получаем\n\\[\n\\int_0^1 (f - r)\\, dx = 0 \\qquad \\text{и} \\qquad \\int_0^1 x(f - r)\\, dx = 0,\n\\]\nоткуда немедленно следует, что \\( r \\) удовлетворяет тем же двум моментным условиям, что и \\( f \\):\n\\[\n\\int_0^1 r(x)\\, dx = \\frac12, \\qquad \\int_0^1 x r(x)\\, dx = 0.\n\\]\n\n### Определение функции \\( r \\).\n\nПоскольку \\( r \\in W \\), имеем \\( r(x) = a + b x \\) для некоторых коэффициентов \\( a, b \\in \\mathbb{R} \\). Подставляя в моментные условия, приходим к системе линейных уравнений\n\\[\na + \\frac{b}{2} = \\frac12, \\qquad \\frac{a}{2} + \\frac{b}{3} = 0.\n\\]\nУмножая второе уравнение на 6, получаем эквивалентное соотношение \\( 3a + 2b = 0 \\), так что \\( a = -\\frac{2}{3} b \\). Подстановка в первое уравнение даёт\n\\[\n-\\frac{2}{3} b + \\frac{1}{2} b = \\frac12 \\implies \\left( -\\frac{4}{6} + \\frac{3}{6} \\right) b = \\frac12 \\implies -\\frac{1}{6} b = \\frac12 \\implies b = -3.\n\\]\nТогда \\( a = -\\frac{2}{3} (-3) = 2 \\), так что \\( r(x) = 2 - 3x \\).\n\n### Вычисление нормы \\( r \\).\n\nПрямая проверка показывает, что\n\\[\n\\int_0^1 r(x)^2\\, dx = \\int_0^1 (2 - 3x)^2\\, dx = \\int_0^1 \\bigl(4 - 12x + 9x^2\\bigr)\\, dx = \\bigl[ 4x - 6x^2 + 3x^3 \\bigr]_0^1 = 4 - 6 + 3 = 1.\n\\]\n\n### Доказательство равенства \\( f = r \\).\n\nПоскольку \\( r \\) есть ортогональная проекция \\( f \\) на \\( W \\), имеем \\( \\langle f - r,\\, r \\rangle = 0 \\), откуда \\( \\int_0^1 f(x) r(x)\\, dx = \\int_0^1 r(x)^2\\, dx = 1 \\). Рассмотрим теперь разность квадратов норм:\n\\[\n\\int_0^1 \\bigl( f(x) - r(x) \\bigr)^2\\, dx = \\int_0^1 f^2(x)\\, dx - 2 \\int_0^1 f(x) r(x)\\, dx + \\int_0^1 r(x)^2\\, dx = 1 - 2 \\cdot 1 + 1 = 0.\n\\]\nТаким образом, \\( \\int_0^1 \\bigl( f(x) - r(x) \\bigr)^2\\, dx = 0 \\). Поскольку подынтегральная функция неотрицательна и непрерывна (ввиду непрерывности \\( f \\) и \\( r \\)), отсюда следует, что \\( f(x) - r(x) = 0 \\) всюду на \\( [0,1] \\). Иными словами, \\( f(x) = 2 - 3x \\) для всех \\( x \\in [0,1] \\).\n\n### Вычисление искомого интеграла.\n\nТеперь непосредственно вычисляем\n\\[\n\\int_0^1 x^2 f(x)\\, dx = \\int_0^1 x^2 (2 - 3x)\\, dx = \\int_0^1 \\bigl( 2x^2 - 3x^3 \\bigr)\\, dx = \\bigl[ \\frac{2}{3} x^3 - \\frac{3}{4} x^4 \\bigr]_0^1 = \\frac{2}{3} - \\frac{3}{4} = \\frac{8}{12} - \\frac{9}{12} = -\\frac{1}{12}.\n\\]\n\n### Проверка существования и заключение.\n\nОтметим, что построенная функция \\( f(x) = 2 - 3x \\) действительно принадлежит \\( C[0,1] \\) и удовлетворяет всем исходным условиям задачи (первые два моментных условия выполняются по построению, а равенство \\( \\int_0^1 f^2 = 1 \\) было проверено выше). Поскольку любое \\( f \\), удовлетворяющее условиям задачи, необходимо совпадает с этой функцией, значение интеграла \\( \\int_0^1 x^2 f(x)\\, dx \\) однозначно равно \\( -\\frac{1}{12} \\).\n\n(Note, что в ходе рассуждений не было использовано никаких дополнительных предположений о знаке \\( f \\) или иных ограничений, помимо указанных в условии; в частности, построенная функция \\( f \\) меняет знак на \\( [0,1] \\), что допустимо.) \n\nТаким образом, искомое значение равно \\( -\\dfrac{1}{12} \\).",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "The problem is in Russian, but I understand it. We have a function \\( f \\) continuous on [0,1] satisfying:\nThe problem is to find ∫from0to1 x²f(x)dx given those integrals.\n\nLet me denote I0 = ∫f dx =1/2\n\nI1=∫x f dx=0\n\nI2=∫x²f dx=?\n\nAnd ∫f²dx=1 (L2 norm squared=1)\n\nSince f continuous, no issue.\n\nAs I thought, let g = P_V f, where V=span{1,x,x²}, then <f, p> = <g,p> for p in V, and ||f||² = ||g||² + || f-g ||² =1, so ||g||² ≤1.\n\ng is the unique element in V such that it matches the moments I0,I1,I2, i.e., g solves the system <g,1>=I0, <g,x>=I1, <g,x²>=I2 (wait, <g, x^k> = ∫ g x^k dx = I_k for k=0,1,2)\n\nYes.\n\nFor given I0,I1,I2, there is unique g in V satisfying that, and then ||g||² must be ≤1 for existence.\n\nBut here I 0 and I1 fixed, I2 unknown, and existence with ||f||=1, so for the I2 such that the corresponding ||g||² ≤1, but again range.\n\nThe problem assumes such f exists, and asks for I2, but probably it's to find the value that I2 must take for the f to exist? But that would be an interval.\n\nPerhaps it's to find the value when f is the one with minimal norm or something, but the problem doesn't say.\n\nLet's search for the problem, but since no internet, I can't.\n\nThe tool is not for search, only code execution etc, but here no code needed.\n\nLet's try to solve for the coefficients assuming f is quadratic polynomial.\n\nSuppose f(x) = a + b x + c x², then we have three equations from the integrals, and ∫f²=1 will determine if consistent, but wait, three conditions for three params, then ∫ f² will be determined, and the problem has it =1, so perhaps scale or something, but no, it's fixed.\n\nIf I ignore ∫f² first, the two conditions I0,I1 fix a relation, but with three params, two conditions, one free, then ∫f²=1 fixes it, then I2 determined.\n\nNo, for f quadratic, the conditions are I0=1/2, I1=0, and ∫f²=1, three conditions for three params a,b,c, so solve the system, get unique (or finite) solutions, then compute I2 for them.\n\nAnd since the problem has f in C[0,1], but perhaps the extremal is quadratic, and the value is that.\n\nBut for other f, I2 could be different, but perhaps the problem intends for us to find that value assuming it's the case, or perhaps in the context it's unique.\n\n Let's try to calculate that.\n\nSo let f(x) = a + b x + c x²\n\nThen ∫0^1 f dx = ∫(a +b x +c x²)dx = a + b/2 + c/3 =1/2\n\n∫ x f dx =  ∫ a x + b x² + c x³ dx = a/2 + b/3 + c/4 =0\n\n∫ f² dx = ∫ (a +b x +c x²)² dx =1\n\nExpand (a +b x +c x²)² = a ² + 2a b x + (2a c + b²) x² + 2b c x³ + c² x^4\n\nThen ∫ = a² *1 + 2ab *(1/2) + (2ac +b²)(1/3) + 2 2bc (1/4) + c² (1/5) =1\n\nSo a² + a b + (2ac +b²)/3 + b c /2 + c²/5 =1\n\nAnd we need ∫ x² f dx = ∫ a x² + b x ³ + c x^4 dx = a/3 + b/4 + c/5\n\nLet me denote this as m = a/3 + b/4 + c/5 , that's what we seek.\n\nNow, the first two equations:\n\nEq1: a + (1/2)b + (1 3)c =1/2\n\nEq2: (1/2)a + (1/3)b + (1/4)c =0\n\nLet me multiply to clear denominators.\n\nMultiply Eq1 by 6: 6a +3b +2c =3\n\nEq2 by 12:  6a +4b +3c =0\n\nNow, subtract first from this: (6a+4b+3c) - (6a+3b+2c) =0-3\n\nSo b + c = -3\n\nThus b = -3 - c\n\nNow, from 6a +3b +2c =3\n\n6a +3(-3 -c) +2c =3\n\n6a -9 -3c +2c =3\n\n6a -9 -c =3\n\n6a =3+9 +c =12 +c\n\na= ( 12 + c )/6 = 2 + c/6\n\nNow, b= -3 -c\n\nPlug into the ∫f²=1 to solve for c."
+            }
+          }
+        ],
+        "created": 1783432184,
+        "model": "grok-4.3",
+        "object": "chat.completion",
+        "moderation": null,
+        "service_tier": "default",
+        "system_fingerprint": "fp_eb3c003fc66c14ed",
+        "usage": {
+          "completion_tokens": 1362,
+          "prompt_tokens": 344,
+          "total_tokens": 9860,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 8154,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 64,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 241528000
+        }
+      },
+      "usage": {
+        "input_tokens": 344,
+        "output_tokens": 1362,
+        "total_tokens": 9860,
+        "reasoning_tokens": 8154,
+        "cached_input_tokens": 64,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 1362,
+          "prompt_tokens": 344,
+          "total_tokens": 9860,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 8154,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 64,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 241528000
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 128904,
+        "monotonic_ms": 128904,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 128904,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00035,
+        "output": 0.003405,
+        "cached_input": 1.28e-05,
+        "reasoning": null,
+        "native": null,
+        "total": 0.0241528,
+        "pricing_source": "provider_response",
+        "pricing_version": "2026-07-06",
+        "estimated": false,
+        "exchange_rate": null,
+        "note": "Provider-reported cost_in_usd_ticks overrides this local estimate when present.",
+        "provider_reported": {
+          "cost_in_usd_ticks": 241528000
+        }
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "9f33a4c5-b524-975a-af41-0b2cfa3ded9f",
+      "provider_timestamp": 1783432184,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+START 2026-07-15T15:10:01.934952+00:00 math-cup-2026-qualifying/task_01 yandexgpt:yandexgpt-5.1 cap=8000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_01.json --models yandexgpt:yandexgpt-5.1 --max-tokens 8000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_01_yandexgpt_yandexgpt-5.1_8000
+Run 2026_07_15_15_10_02_qualifying_missing_20260715_144724_task_01_yandexgpt_yandexgpt-5.1_8000: math-cup-2026-qualifying/task_01, 1 model(s), max_tokens=8000
+[1/1] START yandexgpt:yandexgpt-5.1
+[1/1] DONE  yandexgpt-5.1 in 9.3s tokens=838 cost_usd=0.007449
+| model         |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------------|----------|------------|--------------|----------|---------|
+| yandexgpt-5.1 |      838 |   0.007449 |         9228 | ok       |         |
+
+Run ID: 2026_07_15_15_10_02_qualifying_missing_20260715_144724_task_01_yandexgpt_yandexgpt-5.1_8000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_01 (Муравей в большом квадрате)
+Timestamp: 2026-07-15T15:10:02.049822Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_01/2026_07_15_15_10_02_qualifying_missing_20260715_144724_task_01_yandexgpt_yandexgpt-5.1_8000.json
+
+DONE 2026-07-15T15:10:11.475657+00:00 math-cup-2026-qualifying/task_01 yandexgpt:yandexgpt-5.1 cap=8000 exit=0 elapsed_s=9.5

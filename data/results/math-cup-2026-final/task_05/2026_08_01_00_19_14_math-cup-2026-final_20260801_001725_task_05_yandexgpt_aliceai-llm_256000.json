@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_dfd576e1fd8e4c6bf2b41d62": {
+      "evaluation_id": "ev_8e41a3810a564178971d60aab19d190e",
+      "result_id": "res_dfd576e1fd8e4c6bf2b41d62",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "WA",
+      "created_at": "2026-08-01T08:51:44.167119Z",
+      "updated_at": "2026-08-01T08:51:44.167119Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_dfd576e1fd8e4c6bf2b41d62": [
+      {
+        "evaluation_id": "ev_8e41a3810a564178971d60aab19d190e",
+        "result_id": "res_dfd576e1fd8e4c6bf2b41d62",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-08-01T08:51:44.167119Z",
+        "updated_at": "2026-08-01T08:51:44.167119Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_05",
+  "run_id": "2026_08_01_00_19_14_math-cup-2026-final_20260801_001725_task_05_yandexgpt_aliceai-llm_256000",
+  "updated_at": "2026-08-01T08:51:44.167119Z"
+}

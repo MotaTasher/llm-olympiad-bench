@@ -1,0 +1,17 @@
+START 2026-07-15T16:58:49.412304+00:00 math-cup-2026-qualifying/task_07 yandexgpt:yandexgpt-5.1 cap=8000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_07.json --models yandexgpt:yandexgpt-5.1 --max-tokens 8000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_07_yandexgpt_yandexgpt-5.1_8000
+Run 2026_07_15_16_58_49_qualifying_missing_20260715_144724_task_07_yandexgpt_yandexgpt-5.1_8000: math-cup-2026-qualifying/task_07, 1 model(s), max_tokens=8000
+[1/1] START yandexgpt:yandexgpt-5.1
+[1/1] DONE  yandexgpt-5.1 in 4.8s tokens=879 cost_usd=0.007813
+| model         |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------------|----------|------------|--------------|----------|---------|
+| yandexgpt-5.1 |      879 |   0.007813 |         4703 | ok       |         |
+
+Run ID: 2026_07_15_16_58_49_qualifying_missing_20260715_144724_task_07_yandexgpt_yandexgpt-5.1_8000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_07 (Мумифицированный тетраэдр)
+Timestamp: 2026-07-15T16:58:49.511934Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_07/2026_07_15_16_58_49_qualifying_missing_20260715_144724_task_07_yandexgpt_yandexgpt-5.1_8000.json
+
+DONE 2026-07-15T16:58:54.378207+00:00 math-cup-2026-qualifying/task_07 yandexgpt:yandexgpt-5.1 cap=8000 exit=0 elapsed_s=5.0

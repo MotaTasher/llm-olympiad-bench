@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_3488b41a131bd7b321fc26dc": {
+      "evaluation_id": "ev_1d156bede1cb44489f7d3f2396d6bd6f",
+      "result_id": "res_3488b41a131bd7b321fc26dc",
+      "result_index": 0,
+      "model_key": "xai:grok-4.3",
+      "model": "grok-4.3",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "By Miquel's theorem applied to this chain of four circles, the points А, Х_B, Х_А, B\r\n are concyclic. - не проверена посылка теоремы микеля(которая на самом деле равносильно внешней версии изначальной задачи).\r\nдо есть просто ссылаются что точки пересечения пары соседних(из 4ех циклически пронумерованных) окружностей лежат на одной окружности, что без доп условий очевидно неверно(слишком много степеней свободы)",
+      "created_at": "2026-07-17T17:36:25.616801Z",
+      "updated_at": "2026-07-17T17:36:25.616801Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_3488b41a131bd7b321fc26dc": [
+      {
+        "evaluation_id": "ev_1d156bede1cb44489f7d3f2396d6bd6f",
+        "result_id": "res_3488b41a131bd7b321fc26dc",
+        "result_index": 0,
+        "model_key": "xai:grok-4.3",
+        "model": "grok-4.3",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "By Miquel's theorem applied to this chain of four circles, the points А, Х_B, Х_А, B\r\n are concyclic. - не проверена посылка теоремы микеля(которая на самом деле равносильно внешней версии изначальной задачи).\r\nдо есть просто ссылаются что точки пересечения пары соседних(из 4ех циклически пронумерованных) окружностей лежат на одной окружности, что без доп условий очевидно неверно(слишком много степеней свободы)",
+        "created_at": "2026-07-17T17:36:25.616801Z",
+        "updated_at": "2026-07-17T17:36:25.616801Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_07_07_00_25_17_new_models_20260706_225754_task_09_xai_grok-4.3_256000",
+  "updated_at": "2026-07-17T17:36:25.616801Z"
+}

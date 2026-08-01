@@ -1,0 +1,24 @@
+
+DETACH 2026-07-14T12:21:56.006405+00:00 COMMAND /opt/olympiad-scorer/venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-final --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/retry-final-20260714_122155/glm --models zai:glm-5.2,zai:glm-4.7-flash --problems 05,06,08,09 --max-tokens 256000 --workers 1 --provider-workers zai=1 --run-group retry_final_20260714_122155_glm --only-missing --yes
+Pair count: 7
+provider	zai	$4.5071
+model	zai:glm-4.7-flash	$0.0000
+model	zai:glm-5.2	$4.5071
+total	$4.5071
+total_plus_20pct	$5.4085
+  0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [13:32<?, ?run/s] 14%|█▍        | 1/7 [13:32<1:21:13, 812.29s/run]                                                  14%|█▍        | 1/7 [13:32<1:21:13, 812.29s/run]                                                  14%|█▍        | 1/7 [20:16<1:21:13, 812.29s/run] 29%|██▊       | 2/7 [20:16<47:39, 571.99s/run]                                                  29%|██▊       | 2/7 [20:16<47:39, 571.99s/run]                                                29%|██▊       | 2/7 [23:54<47:39, 571.99s/run] 43%|████▎     | 3/7 [23:54<27:21, 410.41s/run]                                                43%|████▎     | 3/7 [23:54<27:21, 410.41s/run]                                                43%|████▎     | 3/7 [1:23:55<27:21, 410.41s/run] 57%|█████▋    | 4/7 [1:23:55<1:23:30, 1670.32s/run]                                                     57%|█████▋    | 4/7 [1:23:55<1:23:30, 1670.32s/run]                                                     57%|█████▋    | 4/7 [2:23:57<1:23:30, 1670.32s/run] 71%|███████▏  | 5/7 [2:23:57<1:18:53, 2366.82s/run]                                                     71%|███████▏  | 5/7 [2:23:57<1:18:53, 2366.82s/run]                                                     71%|███████▏  | 5/7 [2:34:37<1:18:53, 2366.82s/run] 86%|████████▌ | 6/7 [2:34:37<29:39, 1779.54s/run]                                                     86%|████████▌ | 6/7 [2:34:37<29:39, 1779.54s/run]                                                   86%|████████▌ | 6/7 [2:41:20<29:39, 1779.54s/run]100%|██████████| 7/7 [2:41:20<00:00, 1329.67s/run]100%|██████████| 7/7 [2:41:20<00:00, 1382.96s/run]
+Launching 7 pair(s), competition=math-cup-2026-final, workers=1, provider_workers={'google': 2, 'xai': 2, 'zai': 1}, run_group=retry_final_20260714_122155_glm
+START math-cup-2026-final/task_05 zai:glm-5.2 cap=256000
+OK task_05 zai:glm-5.2 exit=0 elapsed=812.3s log=run-output/retry-final-20260714_122155/glm/task_05__zai_glm-5.2__256000.log
+START math-cup-2026-final/task_06 zai:glm-5.2 cap=256000
+OK task_06 zai:glm-5.2 exit=0 elapsed=403.8s log=run-output/retry-final-20260714_122155/glm/task_06__zai_glm-5.2__256000.log
+START math-cup-2026-final/task_06 zai:glm-4.7-flash cap=256000
+OK task_06 zai:glm-4.7-flash exit=0 elapsed=218.1s log=run-output/retry-final-20260714_122155/glm/task_06__zai_glm-4.7-flash__256000.log
+START math-cup-2026-final/task_08 zai:glm-5.2 cap=256000
+OK task_08 zai:glm-5.2 exit=0 elapsed=3601.8s log=run-output/retry-final-20260714_122155/glm/task_08__zai_glm-5.2__256000.log
+START math-cup-2026-final/task_08 zai:glm-4.7-flash cap=256000
+OK task_08 zai:glm-4.7-flash exit=0 elapsed=3601.8s log=run-output/retry-final-20260714_122155/glm/task_08__zai_glm-4.7-flash__256000.log
+START math-cup-2026-final/task_09 zai:glm-5.2 cap=256000
+OK task_09 zai:glm-5.2 exit=0 elapsed=639.5s log=run-output/retry-final-20260714_122155/glm/task_09__zai_glm-5.2__256000.log
+START math-cup-2026-final/task_09 zai:glm-4.7-flash cap=256000
+OK task_09 zai:glm-4.7-flash exit=0 elapsed=403.5s log=run-output/retry-final-20260714_122155/glm/task_09__zai_glm-4.7-flash__256000.log

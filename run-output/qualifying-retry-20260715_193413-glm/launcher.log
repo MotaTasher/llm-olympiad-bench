@@ -1,0 +1,11 @@
+
+DETACH 2026-07-15T19:34:13.791255+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/qualifying-retry-20260715_193413-glm --models zai:glm-4.7-flash --problems 04 --max-tokens 256000 --workers 1 --provider-workers zai=1 --run-group qualifying_retry_20260715_193413_glm --only-missing --yes
+Pair count: 1
+provider	zai	$0.0000
+model	zai:glm-4.7-flash	$0.0000
+total	$0.0000
+total_plus_20pct	$0.0000
+  0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [03:40<?, ?run/s]100%|██████████| 1/1 [03:40<00:00, 220.98s/run]100%|██████████| 1/1 [03:40<00:00, 220.98s/run]
+Launching 1 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'google': 2, 'xai': 2, 'zai': 1}, run_group=qualifying_retry_20260715_193413_glm
+START math-cup-2026-qualifying/task_04 zai:glm-4.7-flash cap=256000
+OK task_04 zai:glm-4.7-flash exit=0 elapsed=221.0s log=run-output/qualifying-retry-20260715_193413-glm/task_04__zai_glm-4.7-flash__256000.log

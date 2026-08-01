@@ -1,0 +1,55 @@
+{
+  "evaluations": {
+    "res_613eaeef1362a1eb137a943d": {
+      "evaluation_id": "ev_f81853b7d8664249b86d2a61ea59e3cb",
+      "result_id": "res_613eaeef1362a1eb137a943d",
+      "result_index": 0,
+      "model_key": "zai:glm-5.2",
+      "model": "glm-5.2",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "а) пример некорректный\r\n\r\nб)\"Применяя неравенство типа Эйкена или изопериметрическое неравенство для гиперкуба, можно показать, что , а с учетом непересечения множества значений \r\n и  достигается граница\" это не доказательство",
+      "created_at": "2026-07-18T16:43:01.277245Z",
+      "updated_at": "2026-07-18T16:43:01.277245Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_613eaeef1362a1eb137a943d": [
+      {
+        "evaluation_id": "ev_4804b66a7ae649b590499e1c0583093b",
+        "result_id": "res_613eaeef1362a1eb137a943d",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "b2_maxim",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "а) пример некорректный\r\n\r\nб)\"Применяя неравенство типа Эйкена или изопериметрическое неравенство для гиперкуба, можно показать, что , а с учетом непересечения множества значений \r\n и  достигается граница\" это не доказательство",
+        "created_at": "2026-07-18T16:41:52.652563Z",
+        "updated_at": "2026-07-18T16:41:52.652563Z"
+      },
+      {
+        "evaluation_id": "ev_f81853b7d8664249b86d2a61ea59e3cb",
+        "result_id": "res_613eaeef1362a1eb137a943d",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а) пример некорректный\r\n\r\nб)\"Применяя неравенство типа Эйкена или изопериметрическое неравенство для гиперкуба, можно показать, что , а с учетом непересечения множества значений \r\n и  достигается граница\" это не доказательство",
+        "created_at": "2026-07-18T16:43:01.277245Z",
+        "updated_at": "2026-07-18T16:43:01.277245Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_08",
+  "run_id": "2026_07_15_08_03_00_retry_glm5_stream_20260715_072449_task_08_zai_glm-5.2_256000",
+  "updated_at": "2026-07-18T16:43:01.277245Z"
+}

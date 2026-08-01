@@ -1,0 +1,55 @@
+{
+  "evaluations": {
+    "res_ee038692bd4e6c27549834d4": {
+      "evaluation_id": "ev_794ad23197db469a92aaac66cbe5e8ec",
+      "result_id": "res_ee038692bd4e6c27549834d4",
+      "result_index": 0,
+      "model_key": "zai:glm-5.2",
+      "model": "glm-5.2",
+      "evaluator": "b2_maxim",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "Язная конструкция для f. f задаётся через p, p задаятся через u",
+      "created_at": "2026-07-31T04:03:41.749210Z",
+      "updated_at": "2026-07-31T04:03:41.749210Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_ee038692bd4e6c27549834d4": [
+      {
+        "evaluation_id": "ev_cad6e124516045b4b35aa783441f709a",
+        "result_id": "res_ee038692bd4e6c27549834d4",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-28T12:08:17.806359Z",
+        "updated_at": "2026-07-28T12:08:17.806359Z"
+      },
+      {
+        "evaluation_id": "ev_794ad23197db469a92aaac66cbe5e8ec",
+        "result_id": "res_ee038692bd4e6c27549834d4",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "b2_maxim",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "Язная конструкция для f. f задаётся через p, p задаятся через u",
+        "created_at": "2026-07-31T04:03:41.749210Z",
+        "updated_at": "2026-07-31T04:03:41.749210Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_07",
+  "run_id": "2026_07_07_00_10_42_new_models_20260706_225754_task_07_zai_glm-5.2_128000",
+  "updated_at": "2026-07-31T04:16:57.286190Z"
+}

@@ -1,0 +1,17 @@
+START 2026-08-01T00:53:27.138891+00:00 math-cup-2026-qualifying/task_08 openai:gpt-5.6-sol cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_08.json --models openai:gpt-5.6-sol --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_001725_task_08_openai_gpt-5.6-sol_256000
+Run 2026_08_01_00_53_27_math-cup-2026-qualifying_20260801_001725_task_08_openai_gpt-5.6-sol_256000: math-cup-2026-qualifying/task_08, 1 model(s), max_tokens=256000
+[1/1] START openai:gpt-5.6-sol
+[1/1] DONE  gpt-5.6-sol in 5m19s tokens=15059 cost_usd=0.443245
+| model       |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-------------|----------|------------|--------------|----------|---------|
+| gpt-5.6-sol |    15059 |   0.443245 |       318843 | ok       |         |
+
+Run ID: 2026_08_01_00_53_27_math-cup-2026-qualifying_20260801_001725_task_08_openai_gpt-5.6-sol_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_08 (Найдите общий язык)
+Timestamp: 2026-08-01T00:53:27.241644Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_08/2026_08_01_00_53_27_math-cup-2026-qualifying_20260801_001725_task_08_openai_gpt-5.6-sol_256000.json
+
+DONE 2026-08-01T00:58:47.112967+00:00 math-cup-2026-qualifying/task_08 openai:gpt-5.6-sol cap=256000 exit=0 elapsed_s=320.0

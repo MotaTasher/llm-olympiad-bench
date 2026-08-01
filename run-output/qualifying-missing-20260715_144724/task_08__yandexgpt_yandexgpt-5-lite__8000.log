@@ -1,0 +1,17 @@
+START 2026-07-15T17:33:35.919273+00:00 math-cup-2026-qualifying/task_08 yandexgpt:yandexgpt-5-lite cap=8000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_08.json --models yandexgpt:yandexgpt-5-lite --max-tokens 8000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_08_yandexgpt_yandexgpt-5-lite_8000
+Run 2026_07_15_17_33_36_qualifying_missing_20260715_144724_task_08_yandexgpt_yandexgpt-5-lite_8000: math-cup-2026-qualifying/task_08, 1 model(s), max_tokens=8000
+[1/1] START yandexgpt:yandexgpt-5-lite
+[1/1] DONE  yandexgpt-5-lite in 20.6s tokens=2052 cost_usd=0.004560
+| model            |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------|----------|------------|--------------|----------|---------|
+| yandexgpt-5-lite |     2052 |    0.00456 |        20521 | ok       |         |
+
+Run ID: 2026_07_15_17_33_36_qualifying_missing_20260715_144724_task_08_yandexgpt_yandexgpt-5-lite_8000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_08 (Найдите общий язык)
+Timestamp: 2026-07-15T17:33:36.017711Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_08/2026_07_15_17_33_36_qualifying_missing_20260715_144724_task_08_yandexgpt_yandexgpt-5-lite_8000.json
+
+DONE 2026-07-15T17:33:56.711184+00:00 math-cup-2026-qualifying/task_08 yandexgpt:yandexgpt-5-lite cap=8000 exit=0 elapsed_s=20.8

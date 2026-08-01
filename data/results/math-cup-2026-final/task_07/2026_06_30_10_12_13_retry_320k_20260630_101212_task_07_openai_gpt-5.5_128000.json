@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_72d27624c186deacb3e0699d": {
-      "evaluation_id": "ev_3d11a7bf918a45508b4814ffd1813351",
+      "evaluation_id": "ev_9893b2a075404668b77f434b38fbd07a",
       "result_id": "res_72d27624c186deacb3e0699d",
       "result_index": 0,
       "model_key": "openai:gpt-5.5",
       "model": "gpt-5.5",
-      "evaluator": "b2_maxim",
-      "score": 1.8,
-      "max_score": 2,
-      "score_category": "partial",
-      "feedback": "правдоподобно(не вчитывался), opus-4.8 ошибок не нашел",
-      "created_at": "2026-07-03T23:31:53.327832Z",
-      "updated_at": "2026-07-03T23:31:53.327832Z"
+      "evaluator": "mofeyTEA",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-07-28T11:27:15.756258Z",
+      "updated_at": "2026-07-28T11:27:15.756258Z"
     }
   },
   "evaluation_pool": {
@@ -24,12 +24,26 @@
         "model_key": "openai:gpt-5.5",
         "model": "gpt-5.5",
         "evaluator": "b2_maxim",
-        "score": 1.8,
+        "score": 2,
         "max_score": 2,
-        "score_category": "partial",
+        "score_category": "full",
         "feedback": "правдоподобно(не вчитывался), opus-4.8 ошибок не нашел",
         "created_at": "2026-07-03T23:31:53.327832Z",
         "updated_at": "2026-07-03T23:31:53.327832Z"
+      },
+      {
+        "evaluation_id": "ev_9893b2a075404668b77f434b38fbd07a",
+        "result_id": "res_72d27624c186deacb3e0699d",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "gpt-5.5",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-28T11:27:15.756258Z",
+        "updated_at": "2026-07-28T11:27:15.756258Z"
       }
     ]
   },
@@ -37,5 +51,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_07",
   "run_id": "2026_06_30_10_12_13_retry_320k_20260630_101212_task_07_openai_gpt-5.5_128000",
-  "updated_at": "2026-07-03T23:31:53.327832Z"
+  "updated_at": "2026-07-28T11:27:15.756258Z"
 }

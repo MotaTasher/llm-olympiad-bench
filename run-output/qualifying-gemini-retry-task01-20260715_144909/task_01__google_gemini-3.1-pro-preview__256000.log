@@ -1,0 +1,17 @@
+START 2026-07-15T14:49:10.154254+00:00 math-cup-2026-qualifying/task_01 google:gemini-3.1-pro-preview cap=256000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_01.json --models google:gemini-3.1-pro-preview --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_gemini_retry_20260715_144909_task_01_google_gemini-3.1-pro-preview_256000
+Run 2026_07_15_14_49_10_qualifying_gemini_retry_20260715_144909_task_01_google_gemini-3.1-pro-preview_256000: math-cup-2026-qualifying/task_01, 1 model(s), max_tokens=256000
+[1/1] START google:gemini-3.1-pro-preview
+[1/1] DONE  gemini-3.1-pro-preview in 5m38s tokens=1622 cost_usd=0.533984
+| model                  |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------------|----------|------------|--------------|----------|---------|
+| gemini-3.1-pro-preview |     1622 |   0.533984 |       336856 | ok       |         |
+
+Run ID: 2026_07_15_14_49_10_qualifying_gemini_retry_20260715_144909_task_01_google_gemini-3.1-pro-preview_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_01 (Муравей в большом квадрате)
+Timestamp: 2026-07-15T14:49:10.249865Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_01/2026_07_15_14_49_10_qualifying_gemini_retry_20260715_144909_task_01_google_gemini-3.1-pro-preview_256000.json
+
+DONE 2026-07-15T14:54:48.948640+00:00 math-cup-2026-qualifying/task_01 google:gemini-3.1-pro-preview cap=256000 exit=0 elapsed_s=338.8

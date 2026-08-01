@@ -1,0 +1,55 @@
+{
+  "evaluations": {
+    "res_067f6b3bdf0f67d5b5ca5299": {
+      "evaluation_id": "ev_06be3a20a95c4aa7a1aff33d5c5dc8fb",
+      "result_id": "res_067f6b3bdf0f67d5b5ca5299",
+      "result_index": 0,
+      "model_key": "xai:grok-4.3",
+      "model": "grok-4.3",
+      "evaluator": "mofeyTEA",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "Оценка не доказана",
+      "created_at": "2026-07-29T18:01:16.989177Z",
+      "updated_at": "2026-07-29T18:01:16.989177Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_067f6b3bdf0f67d5b5ca5299": [
+      {
+        "evaluation_id": "ev_a80de5f6b86e4bcbaf2b7aa639dc8041",
+        "result_id": "res_067f6b3bdf0f67d5b5ca5299",
+        "result_index": 0,
+        "model_key": "xai:grok-4.3",
+        "model": "grok-4.3",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "оценка на 3/7 норм, но потом говорится, что оптимум 3/7 не достижим, значит хотябы 3/8. логическая ошибка.",
+        "created_at": "2026-07-24T20:27:54.230133Z",
+        "updated_at": "2026-07-24T20:27:54.230133Z"
+      },
+      {
+        "evaluation_id": "ev_06be3a20a95c4aa7a1aff33d5c5dc8fb",
+        "result_id": "res_067f6b3bdf0f67d5b5ca5299",
+        "result_index": 0,
+        "model_key": "xai:grok-4.3",
+        "model": "grok-4.3",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "Оценка не доказана",
+        "created_at": "2026-07-29T18:01:16.989177Z",
+        "updated_at": "2026-07-29T18:01:16.989177Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_05",
+  "run_id": "2026_07_06_20_43_36_new_models_20260706_203306_task_05_xai_grok-4.3_256000",
+  "updated_at": "2026-07-29T18:01:16.989177Z"
+}

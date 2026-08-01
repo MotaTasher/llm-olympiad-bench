@@ -1,0 +1,17 @@
+START 2026-07-14T12:21:56.082176+00:00 math-cup-2026-final/task_09 xai:grok-build-0.1 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_09.json --models xai:grok-build-0.1 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id retry_final_20260714_122155_grok_build_task_09_xai_grok-build-0.1_256000
+Run 2026_07_14_12_21_56_retry_final_20260714_122155_grok_build_task_09_xai_grok-build-0.1_256000: math-cup-2026-final/task_09, 1 model(s), max_tokens=256000
+[1/1] START xai:grok-build-0.1
+[1/1] ERROR grok-build-0.1 in 29m58s: upstream connect error or disconnect/reset before headers. reset reason: connection termination
+| model          |   tokens |   cost_usd |   latency_ms | status   | error                                                                                           |
+|----------------|----------|------------|--------------|----------|-------------------------------------------------------------------------------------------------|
+| grok-build-0.1 |        0 |          0 |      1638862 | error    | upstream connect error or disconnect/reset before headers. reset reason: connection termination |
+
+Run ID: 2026_07_14_12_21_56_retry_final_20260714_122155_grok_build_task_09_xai_grok-build-0.1_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_09 (Геометрия)
+Timestamp: 2026-07-14T12:21:56.193099Z
+Git hash: 3938228
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_09/2026_07_14_12_21_56_retry_final_20260714_122155_grok_build_task_09_xai_grok-build-0.1_256000.json
+
+DONE 2026-07-14T12:51:54.694980+00:00 math-cup-2026-final/task_09 xai:grok-build-0.1 cap=256000 exit=0 elapsed_s=1798.6

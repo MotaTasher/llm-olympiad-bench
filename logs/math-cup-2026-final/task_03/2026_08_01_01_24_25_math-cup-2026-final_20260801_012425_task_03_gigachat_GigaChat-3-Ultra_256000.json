@@ -1,0 +1,289 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_01_24_25_math-cup-2026-final_20260801_012425_task_03_gigachat_GigaChat-3-Ultra_256000",
+  "timestamp": "2026-08-01T01:24:25.424046Z",
+  "started_at": "2026-08-01T01:24:25.424046Z",
+  "completed_at": "2026-08-01T01:24:51.643585Z",
+  "duration_ms": 26205,
+  "status": "completed",
+  "git_hash": "1413f2c",
+  "git": {
+    "hash": "1413f2c",
+    "full_hash": "1413f2c404239d5054a772a2c936fe8d69c640fa",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_03.json",
+      "--models",
+      "gigachat:GigaChat-3-Ultra",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-final_20260801_012425_task_03_gigachat_GigaChat-3-Ultra_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_03.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "gigachat:GigaChat-3-Ultra",
+      "run_id": "math-cup-2026-final_20260801_012425_task_03_gigachat_GigaChat-3-Ultra_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "gigachat:GigaChat-3-Ultra"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "gigachat:GigaChat-3-Ultra"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_03",
+  "problem_number": 3,
+  "problem_title": "Многочлен",
+  "problem_file": "data/competitions/math-cup-2026-final/task_03.json",
+  "problem_text": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_03",
+    "number": 3,
+    "title": "Многочлен",
+    "statement": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+    "answer": null,
+    "solution": "Обозначим \\(\\Delta P(x)=P(x+1)-P(x)\\). Условие переписывается как\n\\[\nQ(x):=2P(x)-P(x+1)=P(x)-\\Delta P(x),\n\\]\nпричём \\(Q(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n**Решение 1.** Пусть \\(\\deg P=n\\), тогда \\(\\Delta^{n+1}P\\equiv0\\). Применяя оператор \\(\\Delta^k\\) к тождеству \\(Q=P-\\Delta P\\), получаем\n\\[\n\\Delta^kQ=\\Delta^kP-\\Delta^{k+1}P\n\\]\nпри каждом \\(k\\ge0\\). Складывая эти равенства для \\(k=0,1,\\ldots,n\\), телескопическая сумма даёт\n\\[\n\\sum_{k=0}^{n}\\Delta^kQ=P-\\Delta^{n+1}P=P.\n\\]\nПоскольку \\(Q(m)\\in\\mathbb Z\\), целыми будут и все его конечные разности \\(\\Delta^kQ(m)\\), а значит, \\(P(m)\\) — сумма целых чисел, то есть \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).\n\n**Решение 2.** Индукция по \\(n=\\deg P\\).\n\nПри \\(n=0\\) многочлен \\(P\\equiv c\\) и \\(c=Q(0)\\in\\mathbb Z\\).\n\nПусть \\(n\\ge1\\) и утверждение верно для меньших степеней. Применяя \\(\\Delta\\) к \\(Q=P-\\Delta P\\), видим, что \\(\\Delta Q\\) — результат той же операции \\(R\\mapsto R-\\Delta R\\), применённой к \\(\\Delta P\\). При этом \\(\\Delta Q(m)\\in\\mathbb Z\\) и \\(\\deg\\Delta P=n-1\\), поэтому по предположению индукции \\(\\Delta P(m)\\in\\mathbb Z\\) для всех \\(m\\), и тогда\n\\[\nP(m)=Q(m)+\\Delta P(m)\\in\\mathbb Z.\n\\]\n\n**Решение 3.** Запишем \\(P\\) в биномиальном базисе\n\\[\n\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!}:\n\\qquad\nP(x)=\\sum_{k=0}^{d}a_k\\binom{x}{k},\\qquad d=\\deg P.\n\\]\nИз\n\\[\n\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}\n\\]\nследует\n\\[\n2\\binom{x}{k}-\\binom{x+1}{k}=\\binom{x}{k}-\\binom{x}{k-1},\n\\]\nпоэтому, при \\(a_{d+1}:=0\\),\n\\[\nQ(x)=\\sum_{k=0}^{d}(a_k-a_{k+1})\\binom{x}{k}.\n\\]\nМногочлен принимает целые значения во всех целых точках в точности тогда, когда все его коэффициенты в этом базисе целые. Применяя это к \\(Q\\), получаем \\(a_k-a_{k+1}\\in\\mathbb Z\\); по нисходящей индукции \\(a_d,a_{d-1},\\ldots,a_0\\in\\mathbb Z\\), значит и \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        3
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "611a52ad8a68c05ba3b466d2c37fc3b320edc15098da00a2829086080836b955",
+  "problem_text_hash": "2694d9f4dfd3b1683539e7f30b3150aaf1824b7cb028637d07e5b79d2d88c470",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_200e49dad5fab549e1e88d0c",
+      "result_index": 0,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-3-Ultra",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-3-Ultra",
+      "resolved_model_id": "GigaChat-3-Ultra:32.9.23.6",
+      "model": "GigaChat-3-Ultra",
+      "attempt": 1,
+      "started_at": "2026-08-01T01:24:25.452141Z",
+      "completed_at": "2026-08-01T01:24:51.638208Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-3-Ultra",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 1.0,
+        "max_tokens": 256000,
+        "repetition_penalty": 1.0,
+        "endpoint": "https://api.giga.chat/v1/chat/completions",
+        "stream": false,
+        "requested_max_tokens": "[REDACTED]",
+        "provider_max_tokens": "[REDACTED]"
+      },
+      "answer": "Рассмотрим многочлен $P(x)$ с вещественными коэффициентами, удовлетворяющий условию: для любого целого $m$ число\n\n$$\n2P(m) - P(m+1)\n$$\n\nявляется целым. Обозначим\n\n$$\nQ(m) = 2P(m) - P(m+1) \\in \\mathbb{Z}, \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\nНаша цель — доказать, что $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\n---\n\n### 1. Введение вспомогательной последовательности\n\nОпределим последовательность $a_m = P(m)$ для $m \\in \\mathbb{Z}$. Тогда условие принимает вид:\n\n$$\n2a_m - a_{m+1} \\in \\mathbb{Z}, \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\nПерепишем это как рекуррентное соотношение:\n\n$$\na_{m+1} = 2a_m - q_m, \\quad \\text{где } q_m = 2a_m - a_{m+1} \\in \\mathbb{Z}.\n$$\n\nЭто линейное рекуррентное соотношение первого порядка с переменным \"свободным членом\" $-q_m$, но $q_m$ — целое число, зависящее от $m$.\n\n---\n\n### 2. Решение рекуррентного соотношения\n\nРассмотрим однородное уравнение: $a_{m+1} = 2a_m$. Его решение: $a_m^{(h)} = C \\cdot 2^m$.\n\nДля неоднородного уравнения $a_{m+1} = 2a_m - q_m$ можно искать решение методом вариации постоянной или итерацией.\n\nИтерируем:\n\n$$\n\\begin{aligned}\na_1 &= 2a_0 - q_0 \\\\\na_2 &= 2a_1 - q_1 = 2(2a_0 - q_0) - q_1 = 4a_0 - 2q_0 - q_1 \\\\\na_3 &= 2a_2 - q_2 = 8a_0 - 4q_0 - 2q_1 - q_2 \\\\\n\\end{aligned}\n$$\n\nПо индукции, для $m \\geq 0$:\n\n$$\na_m = 2^m a_0 - \\sum_{k=0}^{m-1} 2^{m-1-k} q_k.\n$$\n\nАналогично, для отрицательных $m$, можно выразить $a_0$ через $a_{-1}, a_{-2}, \\dots$:\n\n$$\na_0 = 2a_{-1} - q_{-1} \\Rightarrow a_{-1} = \\frac{a_0 + q_{-1}}{2}\n$$\n\n$$\na_{-1} = 2a_{-2} - q_{-2} \\Rightarrow a_{-2} = \\frac{a_{-1} + q_{-2}}{2} = \\frac{a_0 + q_{-1} + 2q_{-2}}{4}\n$$\n\nПо индукции, для $m < 0$:\n\n$$\na_m = \\frac{a_0}{2^{-m}} + \\sum_{k=m}^{-1} \\frac{q_k}{2^{k - m + 1}}.\n$$\n\n---\n\n### 3. Использование того, что $P(x)$ — многочлен\n\nКлючевое наблюдение: $P(x)$ — многочлен, поэтому последовательность $a_m = P(m)$ не может расти экспоненциально. Но из выражения для $a_m$ при $m \\to +\\infty$:\n\n$$\na_m = 2^m a_0 - \\sum_{k=0}^{m-1} 2^{m-1-k} q_k.\n$$\n\nЕсли $a_0 \\notin \\mathbb{Z}$, то $2^m a_0$ имеет дробную часть, которая при умножении на $2^m$ \"размывается\". Но сумма $\\sum 2^{m-1-k} q_k$ — целое число, умноженное на степень двойки, то есть целое.\n\nОднако, более сильное ограничение даёт поведение на бесконечности: так как $P(x)$ — многочлен, то $a_m = P(m)$ растёт как $O(m^d)$, а не как $2^m$, если только коэффициент при $2^m$ не равен нулю.\n\nНо в нашем выражении $a_m = 2^m a_0 - (\\text{целое})$. Чтобы $a_m$ рос полиномиально, необходимо, чтобы $a_0$ было таким, что $2^m a_0$ компенсируется суммой. Но сумма — целое число, а $2^m a_0$ — либо целое, либо имеет дробную часть, которая при умножении на $2^m$ становится целой только если $a_0$ — двоично-рациональное число.\n\nНо даже если $a_0$ — двоично-рациональное, $2^m a_0$ растёт экспоненциально, если $a_0 \\ne 0$. Единственный способ, чтобы $a_m$ рос полиномиально — это если $a_0$ — целое число, и сумма точно компенсирует дробные части.\n\n---\n\n### 4. Доказательство по индукции с использованием конечных разностей\n\nРассмотрим конечные разности. Для многочлена $P(x)$ степени $d$, $d$-я конечная разность постоянна, $(d+1)$-я равна нулю.\n\nОпределим оператор $T: f(m) \\mapsto 2f(m) - f(m+1)$. По условию, $T(P)(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\nЗаметим, что $T$ — линейный оператор. Применим его несколько раз.\n\nПусть $P_0(m) = P(m)$, $P_{k+1}(m) = T(P_k)(m) = 2P_k(m) - P_k(m+1)$.\n\nТогда $P_1(m) \\in \\mathbb{Z}$ для всех $m$.\n\nВычислим $P_2(m) = 2P_1(m) - P_1(m+1)$. Так как $P_1(m) \\in \\mathbb{Z}$, то $P_2(m) \\in \\mathbb{Z}$.\n\nПродолжая, все $P_k(m) \\in \\mathbb{Z}$.\n\nНо $P_k(m)$ — это тоже многочлен от $m$, потому что $T$ сохраняет класс многочленов (применение $T$ к многочлену степени $d$ даёт многочлен степени $d$).\n\nБолее того, можно показать, что $T$ понижает \"дробность\" коэффициентов.\n\nРассмотрим $P(x)$ в базисе биномиальных коэффициентов: любой многочлен можно записать как\n\n$$\nP(x) = \\sum_{k=0}^d c_k \\binom{x}{k}, \\quad c_k \\in \\mathbb{R}.\n$$\n\nТогда\n\n$$\nP(m+1) = \\sum_{k=0}^d c_k \\binom{m+1}{k} = \\sum_{k=0}^d c_k \\left( \\binom{m}{k} + \\binom{m}{k-1} \\right) = \\sum_{k=0}^d c_k \\binom{m}{k} + \\sum_{k=1}^d c_k \\binom{m}{k-1}.\n$$\n\nТогда\n\n$$\n2P(m) - P(m+1) = 2\\sum c_k \\binom{m}{k} - \\left( \\sum c_k \\binom{m}{k} + \\sum c_k \\binom{m}{k-1} \\right) = \\sum c_k \\binom{m}{k} - \\sum c_k \\binom{m}{k-1}.\n$$\n\nСдвинем индекс во второй сумме: $\\sum_{k=1}^d c_k \\binom{m}{k-1} = \\sum_{j=0}^{d-1} c_{j+1} \\binom{m}{j}$.\n\nТогда\n\n$$\n2P(m) - P(m+1) = c_0 \\binom{m}{0} + \\sum_{k=1}^d (c_k - c_{k+1}) \\binom{m}{k}, \\quad \\text{где } c_{d+1} = 0.\n$$\n\nПо условию, это целое число для всех $m \\in \\mathbb{Z}$. Но $\\binom{m}{k}$ при $m \\in \\mathbb{Z}$ принимает целые значения, и система функций $\\binom{m}{k}$ линейно независима над $\\mathbb{R}$ на $\\mathbb{Z}$.\n\nСледовательно, коэффициенты при каждом $\\binom{m}{k}$ должны быть целыми:\n\n- $c_0 \\in \\mathbb{Z}$,\n- $c_1 - c_2 \\in \\mathbb{Z}$,\n- $c_2 - c_3 \\in \\mathbb{Z}$,\n- ...\n- $c_d - 0 \\in \\mathbb{Z} \\Rightarrow c_d \\in \\mathbb{Z}$.\n\nИз $c_d \\in \\mathbb{Z}$ и $c_{d-1} - c_d \\in \\mathbb{Z}$ следует $c_{d-1} \\in \\mathbb{Z}$, и так далее: по индукции $c_k \\in \\mathbb{Z}$ для всех $k$.\n\nТаким образом, все коэффициенты $c_k$ в разложении по биномиальным коэффициентам — целые.\n\nНо тогда\n\n$$\nP(m) = \\sum_{k=0}^d c_k \\binom{m}{k}\n$$\n\n— целое число для любого целого $m$, так как $\\binom{m}{k} \\in \\mathbb{Z}$ при $m \\in \\mathbb{Z}$.\n\n---\n\n### 5. Заключение\n\nМы показали, что условие $2P(m) - P(m+1) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$ влечёт, что в биномиальном разложении многочлена $P(x)$ все коэффициенты целые. Следовательно, $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\n**Ответ:** $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$.",
+      "prompt_tokens": 191,
+      "completion_tokens": 2217,
+      "cost_usd": 0.0,
+      "latency_ms": 25973,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "37b37698-3d7b-4c80-a57d-7158b514acf0",
+          "x-session-id": "2e6261b4-748e-4b59-859c-345bc5fba5d6"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "Рассмотрим многочлен $P(x)$ с вещественными коэффициентами, удовлетворяющий условию: для любого целого $m$ число\n\n$$\n2P(m) - P(m+1)\n$$\n\nявляется целым. Обозначим\n\n$$\nQ(m) = 2P(m) - P(m+1) \\in \\mathbb{Z}, \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\nНаша цель — доказать, что $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\n---\n\n### 1. Введение вспомогательной последовательности\n\nОпределим последовательность $a_m = P(m)$ для $m \\in \\mathbb{Z}$. Тогда условие принимает вид:\n\n$$\n2a_m - a_{m+1} \\in \\mathbb{Z}, \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\nПерепишем это как рекуррентное соотношение:\n\n$$\na_{m+1} = 2a_m - q_m, \\quad \\text{где } q_m = 2a_m - a_{m+1} \\in \\mathbb{Z}.\n$$\n\nЭто линейное рекуррентное соотношение первого порядка с переменным \"свободным членом\" $-q_m$, но $q_m$ — целое число, зависящее от $m$.\n\n---\n\n### 2. Решение рекуррентного соотношения\n\nРассмотрим однородное уравнение: $a_{m+1} = 2a_m$. Его решение: $a_m^{(h)} = C \\cdot 2^m$.\n\nДля неоднородного уравнения $a_{m+1} = 2a_m - q_m$ можно искать решение методом вариации постоянной или итерацией.\n\nИтерируем:\n\n$$\n\\begin{aligned}\na_1 &= 2a_0 - q_0 \\\\\na_2 &= 2a_1 - q_1 = 2(2a_0 - q_0) - q_1 = 4a_0 - 2q_0 - q_1 \\\\\na_3 &= 2a_2 - q_2 = 8a_0 - 4q_0 - 2q_1 - q_2 \\\\\n\\end{aligned}\n$$\n\nПо индукции, для $m \\geq 0$:\n\n$$\na_m = 2^m a_0 - \\sum_{k=0}^{m-1} 2^{m-1-k} q_k.\n$$\n\nАналогично, для отрицательных $m$, можно выразить $a_0$ через $a_{-1}, a_{-2}, \\dots$:\n\n$$\na_0 = 2a_{-1} - q_{-1} \\Rightarrow a_{-1} = \\frac{a_0 + q_{-1}}{2}\n$$\n\n$$\na_{-1} = 2a_{-2} - q_{-2} \\Rightarrow a_{-2} = \\frac{a_{-1} + q_{-2}}{2} = \\frac{a_0 + q_{-1} + 2q_{-2}}{4}\n$$\n\nПо индукции, для $m < 0$:\n\n$$\na_m = \\frac{a_0}{2^{-m}} + \\sum_{k=m}^{-1} \\frac{q_k}{2^{k - m + 1}}.\n$$\n\n---\n\n### 3. Использование того, что $P(x)$ — многочлен\n\nКлючевое наблюдение: $P(x)$ — многочлен, поэтому последовательность $a_m = P(m)$ не может расти экспоненциально. Но из выражения для $a_m$ при $m \\to +\\infty$:\n\n$$\na_m = 2^m a_0 - \\sum_{k=0}^{m-1} 2^{m-1-k} q_k.\n$$\n\nЕсли $a_0 \\notin \\mathbb{Z}$, то $2^m a_0$ имеет дробную часть, которая при умножении на $2^m$ \"размывается\". Но сумма $\\sum 2^{m-1-k} q_k$ — целое число, умноженное на степень двойки, то есть целое.\n\nОднако, более сильное ограничение даёт поведение на бесконечности: так как $P(x)$ — многочлен, то $a_m = P(m)$ растёт как $O(m^d)$, а не как $2^m$, если только коэффициент при $2^m$ не равен нулю.\n\nНо в нашем выражении $a_m = 2^m a_0 - (\\text{целое})$. Чтобы $a_m$ рос полиномиально, необходимо, чтобы $a_0$ было таким, что $2^m a_0$ компенсируется суммой. Но сумма — целое число, а $2^m a_0$ — либо целое, либо имеет дробную часть, которая при умножении на $2^m$ становится целой только если $a_0$ — двоично-рациональное число.\n\nНо даже если $a_0$ — двоично-рациональное, $2^m a_0$ растёт экспоненциально, если $a_0 \\ne 0$. Единственный способ, чтобы $a_m$ рос полиномиально — это если $a_0$ — целое число, и сумма точно компенсирует дробные части.\n\n---\n\n### 4. Доказательство по индукции с использованием конечных разностей\n\nРассмотрим конечные разности. Для многочлена $P(x)$ степени $d$, $d$-я конечная разность постоянна, $(d+1)$-я равна нулю.\n\nОпределим оператор $T: f(m) \\mapsto 2f(m) - f(m+1)$. По условию, $T(P)(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\nЗаметим, что $T$ — линейный оператор. Применим его несколько раз.\n\nПусть $P_0(m) = P(m)$, $P_{k+1}(m) = T(P_k)(m) = 2P_k(m) - P_k(m+1)$.\n\nТогда $P_1(m) \\in \\mathbb{Z}$ для всех $m$.\n\nВычислим $P_2(m) = 2P_1(m) - P_1(m+1)$. Так как $P_1(m) \\in \\mathbb{Z}$, то $P_2(m) \\in \\mathbb{Z}$.\n\nПродолжая, все $P_k(m) \\in \\mathbb{Z}$.\n\nНо $P_k(m)$ — это тоже многочлен от $m$, потому что $T$ сохраняет класс многочленов (применение $T$ к многочлену степени $d$ даёт многочлен степени $d$).\n\nБолее того, можно показать, что $T$ понижает \"дробность\" коэффициентов.\n\nРассмотрим $P(x)$ в базисе биномиальных коэффициентов: любой многочлен можно записать как\n\n$$\nP(x) = \\sum_{k=0}^d c_k \\binom{x}{k}, \\quad c_k \\in \\mathbb{R}.\n$$\n\nТогда\n\n$$\nP(m+1) = \\sum_{k=0}^d c_k \\binom{m+1}{k} = \\sum_{k=0}^d c_k \\left( \\binom{m}{k} + \\binom{m}{k-1} \\right) = \\sum_{k=0}^d c_k \\binom{m}{k} + \\sum_{k=1}^d c_k \\binom{m}{k-1}.\n$$\n\nТогда\n\n$$\n2P(m) - P(m+1) = 2\\sum c_k \\binom{m}{k} - \\left( \\sum c_k \\binom{m}{k} + \\sum c_k \\binom{m}{k-1} \\right) = \\sum c_k \\binom{m}{k} - \\sum c_k \\binom{m}{k-1}.\n$$\n\nСдвинем индекс во второй сумме: $\\sum_{k=1}^d c_k \\binom{m}{k-1} = \\sum_{j=0}^{d-1} c_{j+1} \\binom{m}{j}$.\n\nТогда\n\n$$\n2P(m) - P(m+1) = c_0 \\binom{m}{0} + \\sum_{k=1}^d (c_k - c_{k+1}) \\binom{m}{k}, \\quad \\text{где } c_{d+1} = 0.\n$$\n\nПо условию, это целое число для всех $m \\in \\mathbb{Z}$. Но $\\binom{m}{k}$ при $m \\in \\mathbb{Z}$ принимает целые значения, и система функций $\\binom{m}{k}$ линейно независима над $\\mathbb{R}$ на $\\mathbb{Z}$.\n\nСледовательно, коэффициенты при каждом $\\binom{m}{k}$ должны быть целыми:\n\n- $c_0 \\in \\mathbb{Z}$,\n- $c_1 - c_2 \\in \\mathbb{Z}$,\n- $c_2 - c_3 \\in \\mathbb{Z}$,\n- ...\n- $c_d - 0 \\in \\mathbb{Z} \\Rightarrow c_d \\in \\mathbb{Z}$.\n\nИз $c_d \\in \\mathbb{Z}$ и $c_{d-1} - c_d \\in \\mathbb{Z}$ следует $c_{d-1} \\in \\mathbb{Z}$, и так далее: по индукции $c_k \\in \\mathbb{Z}$ для всех $k$.\n\nТаким образом, все коэффициенты $c_k$ в разложении по биномиальным коэффициентам — целые.\n\nНо тогда\n\n$$\nP(m) = \\sum_{k=0}^d c_k \\binom{m}{k}\n$$\n\n— целое число для любого целого $m$, так как $\\binom{m}{k} \\in \\mathbb{Z}$ при $m \\in \\mathbb{Z}$.\n\n---\n\n### 5. Заключение\n\nМы показали, что условие $2P(m) - P(m+1) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$ влечёт, что в биномиальном разложении многочлена $P(x)$ все коэффициенты целые. Следовательно, $P(m) \\in \\mathbb{Z}$ для всех $m \\in \\mathbb{Z}$.\n\n**Ответ:** $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$.",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1785547491,
+        "model": "GigaChat-3-Ultra:32.9.23.6",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 191,
+          "completion_tokens": 2217,
+          "total_tokens": 2408,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completions"
+      },
+      "usage": {
+        "input_tokens": 191,
+        "output_tokens": 2217,
+        "total_tokens": 2408,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 191,
+          "completion_tokens": 2217,
+          "total_tokens": 2408,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 25973,
+        "monotonic_ms": 25973,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 25973,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.0,
+          "reasoning": null,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.0,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-08-01",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat 3 Ultra is currently available to individuals only through its Freemium allocation; no paid per-token Ultra tariff is published.",
+        "cached_input": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "37b37698-3d7b-4c80-a57d-7158b514acf0",
+      "response_id": null,
+      "provider_timestamp": 1785547491,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}
