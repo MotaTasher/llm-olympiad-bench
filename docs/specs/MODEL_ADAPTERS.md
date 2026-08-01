@@ -216,6 +216,10 @@ Add aliases only in `runner.MODEL_CLASSES`, and update this table plus README ex
   text request and the remainder is priced as output/thinking. The source is
   marked `models/pricing.py:total-token-fallback`; the immutable log is not
   rewritten.
+- GigaChat uses the official Python SDK with a 7,200-second request timeout and
+  at most three SDK retries for transient HTTP failures. This avoids treating
+  the SDK's 30-second default timeout as a completed model answer; all requests
+  remain text-only.
 - Kimi uses Moonshot's OpenAI-compatible Chat Completions endpoint with
   `kimi-k3`, the provider's current flagship available to this account. Its
   request contains only the shared system/user text messages,
