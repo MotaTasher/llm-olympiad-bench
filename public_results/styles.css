@@ -469,6 +469,11 @@ h1, h2, h3 {
   text-transform: uppercase;
 }
 
+.model-row:hover > td:not(.result-cell):not(.rank-cell):not(.participant-cell),
+.team-row:hover > td:not(.result-cell):not(.rank-cell):not(.participant-cell) {
+  background-color: rgba(255,255,255,.045);
+}
+
 .team-row .rank-cell,
 .team-row .participant-cell { background: #17161a; }
 .team-row .participant-name { color: rgba(255,255,255,.74); }
