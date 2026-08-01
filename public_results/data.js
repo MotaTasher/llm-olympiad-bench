@@ -298,10 +298,50 @@ window.RESULTS_DATA = {
       title: "Math Cup 2026",
       stage: "Отборочный тур",
       date: "10 мая 2026",
-      description: "Отборочный тур Math Cup 2026. Набор задач уже есть в проекте; публичная матрица готовится.",
+      description: "Отборочный тур Math Cup 2026.",
       taskCount: 8,
-      tasks: [],
-      participants: []
+      tasks: [
+        { id: "task_01", short: "01", title: "Задача A", maxScore: 4 },
+        { id: "task_02", short: "02", title: "Задача B", maxScore: 4 },
+        { id: "task_03", short: "03", title: "Задача C", maxScore: 4 },
+        { id: "task_04", short: "04", title: "Задача D", maxScore: 4 },
+        { id: "task_05", short: "05", title: "Задача E", maxScore: 4 },
+        { id: "task_06", short: "06", title: "Задача F", maxScore: 4 },
+        { id: "task_07", short: "07", title: "Задача G · ответ + решение", maxScore: 4 },
+        { id: "task_08", short: "08", title: "Задача H · ответ + решение", maxScore: 4 }
+      ],
+      participants: [
+        {
+          id: "qualifying-team-gold",
+          type: "team",
+          medal: "🥇",
+          rank: 1,
+          name: "Фанаты КСП",
+          scores: [4, 4, 4, 4, 4, 4, 1.5, 2],
+          points: 27.5,
+          accuracy: 85.9
+        },
+        {
+          id: "qualifying-team-silver",
+          type: "team",
+          medal: "🥈",
+          rank: 2,
+          name: "ZigIsTheBestLanguage",
+          scores: [0, 4, 4, 4, 4, 4, 4, 2],
+          points: 26,
+          accuracy: 81.3
+        },
+        {
+          id: "qualifying-team-bronze",
+          type: "team",
+          medal: "🥉",
+          rank: 3,
+          name: "ФМШТО",
+          scores: [4, 1, 4, 4, 4, 4, 4, 0],
+          points: 25,
+          accuracy: 78.1
+        }
+      ]
     },
     {
       id: "math-cup-2025-spring-final",
