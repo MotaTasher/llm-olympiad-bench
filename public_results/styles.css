@@ -463,6 +463,12 @@ h1, h2, h3 {
 .team-row:hover .participant-cell,
 .team-row:hover td:not(.result-cell) { background-color: rgba(255,255,255,.045); }
 
+/* Keep the row hover state visible in front of the sticky leading columns. */
+.leaderboard-table tbody tr:hover > .rank-cell,
+.leaderboard-table tbody tr:hover > .participant-cell {
+  background-color: rgba(255,255,255,.045) !important;
+}
+
 .team-row .rank-cell,
 .team-row .participant-cell { background: #17161a; }
 .team-row .participant-name { color: rgba(255,255,255,.74); }
