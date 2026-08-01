@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_c1959898ac00a6bcf1332e27": {
-      "evaluation_id": "ev_96b1f564535f43819ba5d026f27de057",
+      "evaluation_id": "ev_022d88188c5849488e540f85910d0248",
       "result_id": "res_c1959898ac00a6bcf1332e27",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-flash",
       "model": "deepseek-v4-flash",
       "evaluator": "b2_maxim",
-      "score": 1,
-      "max_score": 4,
+      "score": 1.5,
+      "max_score": 4.0,
       "score_category": "partial",
       "feedback": "",
-      "created_at": "2026-07-24T20:46:50.477591Z",
-      "updated_at": "2026-07-24T20:46:50.477591Z"
+      "created_at": "2026-07-31T11:55:43.469889Z",
+      "updated_at": "2026-07-31T11:55:43.469889Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,34 @@
         "feedback": "",
         "created_at": "2026-07-24T20:46:50.477591Z",
         "updated_at": "2026-07-24T20:46:50.477591Z"
+      },
+      {
+        "evaluation_id": "ev_bf7c23cd70924196aefad264920d90a7",
+        "result_id": "res_c1959898ac00a6bcf1332e27",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "Не обоснован пример",
+        "created_at": "2026-07-30T20:15:45.882472Z",
+        "updated_at": "2026-07-30T20:15:45.882472Z"
+      },
+      {
+        "evaluation_id": "ev_022d88188c5849488e540f85910d0248",
+        "result_id": "res_c1959898ac00a6bcf1332e27",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-flash",
+        "model": "deepseek-v4-flash",
+        "evaluator": "b2_maxim",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-07-31T11:55:43.469889Z",
+        "updated_at": "2026-07-31T11:55:43.469889Z"
       }
     ]
   },
@@ -37,5 +65,5 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_07_15_16_54_20_qualifying_missing_20260715_144724_task_07_deepseek_deepseek-v4-flash_320000",
-  "updated_at": "2026-07-24T20:46:50.477591Z"
+  "updated_at": "2026-07-31T11:55:43.469889Z"
 }

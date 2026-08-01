@@ -1,0 +1,17 @@
+START 2026-08-01T00:17:25.967636+00:00 math-cup-2026-qualifying/task_01 openai:gpt-5.6-sol cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_01.json --models openai:gpt-5.6-sol --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_001725_task_01_openai_gpt-5.6-sol_256000
+Run 2026_08_01_00_17_26_math-cup-2026-qualifying_20260801_001725_task_01_openai_gpt-5.6-sol_256000: math-cup-2026-qualifying/task_01, 1 model(s), max_tokens=256000
+[1/1] START openai:gpt-5.6-sol
+[1/1] DONE  gpt-5.6-sol in 6m48s tokens=16360 cost_usd=0.485450
+| model       |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-------------|----------|------------|--------------|----------|---------|
+| gpt-5.6-sol |    16360 |    0.48545 |       406518 | ok       |         |
+
+Run ID: 2026_08_01_00_17_26_math-cup-2026-qualifying_20260801_001725_task_01_openai_gpt-5.6-sol_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_01 (Муравей в большом квадрате)
+Timestamp: 2026-08-01T00:17:26.462632Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_01/2026_08_01_00_17_26_math-cup-2026-qualifying_20260801_001725_task_01_openai_gpt-5.6-sol_256000.json
+
+DONE 2026-08-01T00:24:15.519926+00:00 math-cup-2026-qualifying/task_01 openai:gpt-5.6-sol cap=256000 exit=0 elapsed_s=409.6

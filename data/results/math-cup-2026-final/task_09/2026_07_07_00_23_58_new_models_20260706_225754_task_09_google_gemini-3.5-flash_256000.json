@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_705739bb0e074adde088977b": {
+      "evaluation_id": "ev_e8905d5f90fe49a3b792d206dfc4e1bc",
+      "result_id": "res_705739bb0e074adde088977b",
+      "result_index": 0,
+      "model_key": "google:gemini-3.5-flash",
+      "model": "gemini-3.5-flash",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "вводится система так, что A=(0,0), О_А О параллельна оси Ox (это в точности до подобия можно единственным образом сделать). потом без оснований утверждают, что середина B'C' лежит на этой оси, ссылаясь на замену координат.",
+      "created_at": "2026-07-17T15:16:06.569395Z",
+      "updated_at": "2026-07-17T15:16:06.569395Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_705739bb0e074adde088977b": [
+      {
+        "evaluation_id": "ev_e8905d5f90fe49a3b792d206dfc4e1bc",
+        "result_id": "res_705739bb0e074adde088977b",
+        "result_index": 0,
+        "model_key": "google:gemini-3.5-flash",
+        "model": "gemini-3.5-flash",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "вводится система так, что A=(0,0), О_А О параллельна оси Ox (это в точности до подобия можно единственным образом сделать). потом без оснований утверждают, что середина B'C' лежит на этой оси, ссылаясь на замену координат.",
+        "created_at": "2026-07-17T15:16:06.569395Z",
+        "updated_at": "2026-07-17T15:16:06.569395Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_07_07_00_23_58_new_models_20260706_225754_task_09_google_gemini-3.5-flash_256000",
+  "updated_at": "2026-07-17T15:16:06.569395Z"
+}

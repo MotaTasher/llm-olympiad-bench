@@ -1,0 +1,13 @@
+Run 2026_08_01_11_48_19_kimi_k3_20260801_final_task_01_256000: math-cup-2026-final/task_01, 1 model(s), max_tokens=256000
+[1/1] START kimi:kimi-k3
+[1/1] DONE  kimi-k3 in 2m51s tokens=4878 cost_usd=0.068958
+| model   |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------|----------|------------|--------------|----------|---------|
+| kimi-k3 |     4878 |   0.068958 |       171366 | ok       |         |
+
+Run ID: 2026_08_01_11_48_19_kimi_k3_20260801_final_task_01_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_01 (Произведение)
+Timestamp: 2026-08-01T11:48:19.645308Z
+Git hash: 05f751b
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_01/2026_08_01_11_48_19_kimi_k3_20260801_final_task_01_256000.json

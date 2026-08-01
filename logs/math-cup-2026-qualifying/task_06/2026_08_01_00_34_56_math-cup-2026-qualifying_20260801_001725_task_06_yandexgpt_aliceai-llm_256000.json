@@ -1,0 +1,283 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_00_34_56_math-cup-2026-qualifying_20260801_001725_task_06_yandexgpt_aliceai-llm_256000",
+  "timestamp": "2026-08-01T00:34:56.413796Z",
+  "started_at": "2026-08-01T00:34:56.413796Z",
+  "completed_at": "2026-08-01T00:35:08.198863Z",
+  "duration_ms": 11773,
+  "status": "completed",
+  "git_hash": "1413f2c",
+  "git": {
+    "hash": "1413f2c",
+    "full_hash": "1413f2c404239d5054a772a2c936fe8d69c640fa",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "yandexgpt:aliceai-llm",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260801_001725_task_06_yandexgpt_aliceai-llm_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "yandexgpt:aliceai-llm",
+      "run_id": "math-cup-2026-qualifying_20260801_001725_task_06_yandexgpt_aliceai-llm_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "yandexgpt:aliceai-llm"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "yandexgpt:aliceai-llm"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения",
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_hash": "60c94c90558685c9fedf23297f68a871bdcea91f3f7f27b968cb129e377e913d",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_7d73698e6a7262ebb4b07930",
+      "result_index": 0,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt:aliceai-llm",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "aliceai-llm",
+      "resolved_model_id": "aliceai-llm",
+      "model": "aliceai-llm",
+      "attempt": 1,
+      "started_at": "2026-08-01T00:34:56.437953Z",
+      "completed_at": "2026-08-01T00:35:08.192445Z",
+      "status": "success",
+      "request": {
+        "model": "aliceai-llm",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 256000,
+          "reasoningOptions": {
+            "mode": "ENABLED_HIDDEN"
+          }
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false,
+        "requested_max_tokens": "[REDACTED]",
+        "provider_max_tokens": "[REDACTED]"
+      },
+      "answer": " Решим задачу пошагово.\n\n**Шаг 1. Формализация условия и постановка задачи**\n\nДана непрерывная на $[0,1]$ функция $f(x)$, удовлетворяющая трём условиям:\n\n1. $\\int_0^1 f^2(x)\\,dx = 1$ (норма функции в $L^2[0,1]$ равна 1);\n2. $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$ (среднее значение функции равно $\\frac{1}{2}$);\n3. $\\int_0^1 x f(x)\\,dx = 0$ (первый момент функции относительно начала координат равен 0).\n\nТребуется найти значение интеграла $I = \\int_0^1 x^2 f(x)\\,dx$ (второй момент функции относительно начала координат).\n\n**Шаг 2. Идея решения: метод ортогональных проекций**\n\nБудем искать функцию $f(x)$ в виде линейной комбинации некоторых базисных функций, «ортогональных» к условиям задачи. Поскольку в условиях фигурируют интегралы от $f(x)$, умноженной на $1$, $x$ и $x^2$, логично рассмотреть пространство многочленов степени не выше 2.\n\nВведём скалярное произведение $(g, h) = \\int_0^1 g(x) h(x)\\,dx$. Тогда условия задачи можно переписать как:\n\n1. $(f, f) = 1$;\n2. $(f, 1) = \\frac{1}{2}$;\n3. $(f, x) = 0$.\n\nТребуется найти $(f, x^2)$.\n\n**Шаг 3. Построение ортогонального базиса**\n\nПрименим процесс Грама–Шмидта к системе функций $\\{1, x, x^2\\}$ на отрезке $[0,1]$:\n\n1. Первая функция: $p_0(x) = 1$.\n2. Вторая функция: $p_1(x) = x - \\frac{(x, 1)}{(1, 1)} \\cdot 1 = x - \\frac{1/2}{1} = x - \\frac{1}{2}$.\n3. Третья функция:\n   $p_2(x) = x^2 - \\frac{(x^2, 1)}{(1, 1)} \\cdot 1 - \\frac{(x^2, p_1)}{(p_1, p_1)} \\cdot p_1(x)$.\n\nВычислим необходимые скалярные произведения:\n\n* $(1, 1) = \\int_0^1 1\\,dx = 1$;\n* $(x, 1) = \\int_0^1 x\\,dx = \\frac{1}{2}$;\n* $(x^2, 1) = \\int_0^1 x^2\\,dx = \\frac{1}{3}$;\n* $(p_1, p_1) = \\int_0^1 \\left(x - \\frac{1}{2}\\right)^2 dx = \\int_0^1 \\left(x^2 - x + \\frac{1}{4}\\right) dx = \\frac{1}{3} - \\frac{1}{2} + \\frac{1}{4} = \\frac{1}{12}$;\n* $(x^2, p_1) = \\int_0^1 x^2 \\left(x - \\frac{1}{2}\\right) dx = \\int_0^1 \\left(x^3 - \\frac{1}{2} x^2\\right) dx = \\frac{1}{4} - \\frac{1}{6} = \\frac{1}{12}$.\n\nТогда:\n\n$p_2(x) = x^2 - \\frac{1/3}{1} \\cdot 1 - \\frac{1/12}{1/12} \\cdot \\left(x - \\frac{1}{2}\\right) = x^2 - \\frac{1}{3} - \\left(x - \\frac{1}{2}\\right) = x^2 - x + \\frac{1}{6}$.\n\n**Шаг 4. Разложение функции $f(x)$ по ортогональному базису**\n\nПредставим $f(x)$ в виде:\n\n$f(x) = a p_0(x) + b p_1(x) + c p_2(x) + g(x)$,\n\nгде $g(x)$ ортогональна ко всем $p_i(x)$, т. е. $(g, p_i) = 0$ для $i = 0, 1, 2$.\n\nИз условий задачи:\n\n1. $(f, 1) = a (p_0, 1) + b (p_1, 1) + c (p_2, 1) + (g, 1) = a \\cdot 1 + 0 + 0 + 0 = a = \\frac{1}{2}$.\n2. $(f, x) = a (p_0, x) + b (p_1, x) + c (p_2, x) + (g, x) = \\frac{1}{2} \\cdot \\frac{1}{2} + b \\cdot \\frac{1}{12} + 0 + 0 = \\frac{1}{4} + \\frac{b}{12} = 0 \\Rightarrow b = -3$.\n\nТеперь найдём $c$ из условия $(f, f) = 1$:\n\n$f(x) = \\frac{1}{2} \\cdot 1 - 3 \\cdot \\left(x - \\frac{1}{2}\\right) + c \\cdot \\left(x^2 - x + \\frac{1}{6}\\right) + g(x)$.\n\nВычислим $(f, f)$:\n\n$(f, f) = a^2 (p_0, p_0) + b^2 (p_1, p_1) + c^2 (p_2, p_2) + (g, g) = \\left(\\frac{1}{2}\\right)^2 \\cdot 1 + (-3)^2 \\cdot \\frac{1}{12} + c^2 (p_2, p_2) + (g, g) = \\frac{1}{4} + \\frac{9}{12} + c^2 (p_2, p_2) + (g, g) = 1$.\n\nУпростим:\n\n$\\frac{1}{4} + \\frac{3}{4} + c^2 (p_2, p_2) + (g, g) = 1 \\Rightarrow 1 + c^2 (p_2, p_2) + (g, g) = 1 \\Rightarrow c^2 (p_2, p_2) + (g, g) = 0$.\n\nПоскольку $(p_2, p_2) > 0$ и $(g, g) \\geqslant 0$, то $c = 0$ и $g(x) = 0$.\n\nТаким образом, $f(x) = \\frac{1}{2} - 3 \\left(x - \\frac{1}{2}\\right) = 2 - 3x$.\n\n**Шаг 5. Проверка условий**\n\nПроверим, что функция $f(x) = 2 - 3x$ удовлетворяет всем условиям задачи:\n\n1. $\\int_0^1 f^2(x)\\,dx = \\int_0^1 (2 - 3x)^2 dx = \\int_0^1 (4 - 12x + 9x^2) dx = 4 - 6 + 3 = 1$.\n2. $\\int_0^1 f(x)\\,dx = \\int_0^1 (2 - 3x) dx = 2 - \\frac{3}{2} = \\frac{1}{2}$.\n3. $\\int_0^1 x f(x)\\,dx = \\int_0^1 x (2 - 3x) dx = \\int_0^1 (2x - 3x^2) dx = 1 - 1 = 0$.\n\nВсе условия выполнены.\n\n**Шаг 6. Вычисление искомого интеграла**\n\nТеперь найдём $I = \\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2 - 3x) dx = \\int_0^1 (2x^2 - 3x^3) dx = \\frac{2}{3} - \\frac{3}{4} = -\\frac{1}{12}$.\n\n---\n\n**Ответ:** $-\\frac{1}{12}$",
+      "prompt_tokens": 234,
+      "completion_tokens": 2016,
+      "cost_usd": 0.02818,
+      "latency_ms": 11672,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": " Решим задачу пошагово.\n\n**Шаг 1. Формализация условия и постановка задачи**\n\nДана непрерывная на $[0,1]$ функция $f(x)$, удовлетворяющая трём условиям:\n\n1. $\\int_0^1 f^2(x)\\,dx = 1$ (норма функции в $L^2[0,1]$ равна 1);\n2. $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$ (среднее значение функции равно $\\frac{1}{2}$);\n3. $\\int_0^1 x f(x)\\,dx = 0$ (первый момент функции относительно начала координат равен 0).\n\nТребуется найти значение интеграла $I = \\int_0^1 x^2 f(x)\\,dx$ (второй момент функции относительно начала координат).\n\n**Шаг 2. Идея решения: метод ортогональных проекций**\n\nБудем искать функцию $f(x)$ в виде линейной комбинации некоторых базисных функций, «ортогональных» к условиям задачи. Поскольку в условиях фигурируют интегралы от $f(x)$, умноженной на $1$, $x$ и $x^2$, логично рассмотреть пространство многочленов степени не выше 2.\n\nВведём скалярное произведение $(g, h) = \\int_0^1 g(x) h(x)\\,dx$. Тогда условия задачи можно переписать как:\n\n1. $(f, f) = 1$;\n2. $(f, 1) = \\frac{1}{2}$;\n3. $(f, x) = 0$.\n\nТребуется найти $(f, x^2)$.\n\n**Шаг 3. Построение ортогонального базиса**\n\nПрименим процесс Грама–Шмидта к системе функций $\\{1, x, x^2\\}$ на отрезке $[0,1]$:\n\n1. Первая функция: $p_0(x) = 1$.\n2. Вторая функция: $p_1(x) = x - \\frac{(x, 1)}{(1, 1)} \\cdot 1 = x - \\frac{1/2}{1} = x - \\frac{1}{2}$.\n3. Третья функция:\n   $p_2(x) = x^2 - \\frac{(x^2, 1)}{(1, 1)} \\cdot 1 - \\frac{(x^2, p_1)}{(p_1, p_1)} \\cdot p_1(x)$.\n\nВычислим необходимые скалярные произведения:\n\n* $(1, 1) = \\int_0^1 1\\,dx = 1$;\n* $(x, 1) = \\int_0^1 x\\,dx = \\frac{1}{2}$;\n* $(x^2, 1) = \\int_0^1 x^2\\,dx = \\frac{1}{3}$;\n* $(p_1, p_1) = \\int_0^1 \\left(x - \\frac{1}{2}\\right)^2 dx = \\int_0^1 \\left(x^2 - x + \\frac{1}{4}\\right) dx = \\frac{1}{3} - \\frac{1}{2} + \\frac{1}{4} = \\frac{1}{12}$;\n* $(x^2, p_1) = \\int_0^1 x^2 \\left(x - \\frac{1}{2}\\right) dx = \\int_0^1 \\left(x^3 - \\frac{1}{2} x^2\\right) dx = \\frac{1}{4} - \\frac{1}{6} = \\frac{1}{12}$.\n\nТогда:\n\n$p_2(x) = x^2 - \\frac{1/3}{1} \\cdot 1 - \\frac{1/12}{1/12} \\cdot \\left(x - \\frac{1}{2}\\right) = x^2 - \\frac{1}{3} - \\left(x - \\frac{1}{2}\\right) = x^2 - x + \\frac{1}{6}$.\n\n**Шаг 4. Разложение функции $f(x)$ по ортогональному базису**\n\nПредставим $f(x)$ в виде:\n\n$f(x) = a p_0(x) + b p_1(x) + c p_2(x) + g(x)$,\n\nгде $g(x)$ ортогональна ко всем $p_i(x)$, т. е. $(g, p_i) = 0$ для $i = 0, 1, 2$.\n\nИз условий задачи:\n\n1. $(f, 1) = a (p_0, 1) + b (p_1, 1) + c (p_2, 1) + (g, 1) = a \\cdot 1 + 0 + 0 + 0 = a = \\frac{1}{2}$.\n2. $(f, x) = a (p_0, x) + b (p_1, x) + c (p_2, x) + (g, x) = \\frac{1}{2} \\cdot \\frac{1}{2} + b \\cdot \\frac{1}{12} + 0 + 0 = \\frac{1}{4} + \\frac{b}{12} = 0 \\Rightarrow b = -3$.\n\nТеперь найдём $c$ из условия $(f, f) = 1$:\n\n$f(x) = \\frac{1}{2} \\cdot 1 - 3 \\cdot \\left(x - \\frac{1}{2}\\right) + c \\cdot \\left(x^2 - x + \\frac{1}{6}\\right) + g(x)$.\n\nВычислим $(f, f)$:\n\n$(f, f) = a^2 (p_0, p_0) + b^2 (p_1, p_1) + c^2 (p_2, p_2) + (g, g) = \\left(\\frac{1}{2}\\right)^2 \\cdot 1 + (-3)^2 \\cdot \\frac{1}{12} + c^2 (p_2, p_2) + (g, g) = \\frac{1}{4} + \\frac{9}{12} + c^2 (p_2, p_2) + (g, g) = 1$.\n\nУпростим:\n\n$\\frac{1}{4} + \\frac{3}{4} + c^2 (p_2, p_2) + (g, g) = 1 \\Rightarrow 1 + c^2 (p_2, p_2) + (g, g) = 1 \\Rightarrow c^2 (p_2, p_2) + (g, g) = 0$.\n\nПоскольку $(p_2, p_2) > 0$ и $(g, g) \\geqslant 0$, то $c = 0$ и $g(x) = 0$.\n\nТаким образом, $f(x) = \\frac{1}{2} - 3 \\left(x - \\frac{1}{2}\\right) = 2 - 3x$.\n\n**Шаг 5. Проверка условий**\n\nПроверим, что функция $f(x) = 2 - 3x$ удовлетворяет всем условиям задачи:\n\n1. $\\int_0^1 f^2(x)\\,dx = \\int_0^1 (2 - 3x)^2 dx = \\int_0^1 (4 - 12x + 9x^2) dx = 4 - 6 + 3 = 1$.\n2. $\\int_0^1 f(x)\\,dx = \\int_0^1 (2 - 3x) dx = 2 - \\frac{3}{2} = \\frac{1}{2}$.\n3. $\\int_0^1 x f(x)\\,dx = \\int_0^1 x (2 - 3x) dx = \\int_0^1 (2x - 3x^2) dx = 1 - 1 = 0$.\n\nВсе условия выполнены.\n\n**Шаг 6. Вычисление искомого интеграла**\n\nТеперь найдём $I = \\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2 - 3x) dx = \\int_0^1 (2x^2 - 3x^3) dx = \\frac{2}{3} - \\frac{3}{4} = -\\frac{1}{12}$.\n\n---\n\n**Ответ:** $-\\frac{1}{12}$"
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "234",
+            "completionTokens": "2016",
+            "totalTokens": "2250",
+            "completionTokensDetails": null
+          },
+          "modelVersion": "gpt://aliceai-llm/latest"
+        }
+      },
+      "usage": {
+        "input_tokens": 234,
+        "output_tokens": 2016,
+        "total_tokens": "2250",
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "inputTextTokens": "234",
+          "completionTokens": "2016",
+          "totalTokens": "2250",
+          "completionTokensDetails": null
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 11672,
+        "monotonic_ms": 11672,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 11672,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "native": {
+          "currency": "RUB",
+          "total": 2.5362,
+          "reasoning": null,
+          "input": 0.117,
+          "cached_input": null,
+          "output": 2.4192,
+          "input_per_1m": 500.0,
+          "cached_input_per_1m": 500.0,
+          "output_per_1m": 1200.0
+        },
+        "total": 0.02818,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-08-01",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "Yandex AI Studio synchronous text-generation tariff, RUB including VAT.",
+        "cached_input": null
+      },
+      "finish_reason": "ALTERNATIVE_STATUS_FINAL",
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

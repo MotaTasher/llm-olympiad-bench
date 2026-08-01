@@ -1,0 +1,513 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_00_34_42_math-cup-2026-qualifying_20260801_001725_task_06_openai_gpt-5.6-sol_256000",
+  "timestamp": "2026-08-01T00:34:42.875471Z",
+  "started_at": "2026-08-01T00:34:42.875471Z",
+  "completed_at": "2026-08-01T00:34:55.980371Z",
+  "duration_ms": 13094,
+  "status": "completed",
+  "git_hash": "1413f2c",
+  "git": {
+    "hash": "1413f2c",
+    "full_hash": "1413f2c404239d5054a772a2c936fe8d69c640fa",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "openai:gpt-5.6-sol",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260801_001725_task_06_openai_gpt-5.6-sol_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "openai:gpt-5.6-sol",
+      "run_id": "math-cup-2026-qualifying_20260801_001725_task_06_openai_gpt-5.6-sol_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "openai:gpt-5.6-sol"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "openai:gpt-5.6-sol"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения",
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_hash": "60c94c90558685c9fedf23297f68a871bdcea91f3f7f27b968cb129e377e913d",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_7b776b8a16c2582cce4e6ea7",
+      "result_index": 0,
+      "provider": "openai",
+      "alias": "openai:gpt-5.6-sol",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.6-sol",
+      "resolved_model_id": "gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "attempt": 1,
+      "started_at": "2026-08-01T00:34:42.900679Z",
+      "completed_at": "2026-08-01T00:34:55.974779Z",
+      "status": "success",
+      "request": {
+        "model": "gpt-5.6-sol",
+        "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "input": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+        "endpoint": "https://api.openai.com/v1/responses",
+        "stream": false,
+        "store": true,
+        "max_output_tokens_total": 256000,
+        "max_output_tokens_per_request": 128000,
+        "timeout_seconds": 7200.0,
+        "max_retries": null,
+        "reasoning": {
+          "effort": "high"
+        },
+        "steps": [
+          {
+            "endpoint": "https://api.openai.com/v1/responses",
+            "model": "gpt-5.6-sol",
+            "input": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+            "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+            "previous_response_id": null,
+            "max_output_tokens": 128000,
+            "store": true,
+            "stream": false,
+            "timeout_seconds": 7200.0,
+            "reasoning": {
+              "effort": "high"
+            }
+          }
+        ]
+      },
+      "answer": "Обозначим скалярное произведение\n\\[\n\\langle u,v\\rangle=\\int_0^1u(x)v(x)\\,dx.\n\\]\n\nНайдём линейную функцию \\(p(x)=a+bx\\), имеющую те же первые два момента, что и \\(f\\):\n\\[\n\\int_0^1p(x)\\,dx=a+\\frac b2=\\frac12,\n\\]\n\\[\n\\int_0^1xp(x)\\,dx=\\frac a2+\\frac b3=0.\n\\]\nРешение этой системы:\n\\[\na=2,\\qquad b=-3,\n\\]\nто есть\n\\[\np(x)=2-3x.\n\\]\n\nПри этом\n\\[\n\\int_0^1p^2(x)\\,dx\n=\\int_0^1(2-3x)^2\\,dx\n=4-6+3=1.\n\\]\n\nПоложим \\(g=f-p\\). По построению\n\\[\n\\int_0^1g(x)\\,dx=0,\\qquad \\int_0^1xg(x)\\,dx=0.\n\\]\nПоскольку \\(p=2-3x\\), отсюда\n\\[\n\\int_0^1p(x)g(x)\\,dx\n=2\\int_0^1g(x)\\,dx-3\\int_0^1xg(x)\\,dx=0.\n\\]\nСледовательно,\n\\[\n\\int_0^1f^2\n=\\int_0^1(p+g)^2\n=\\int_0^1p^2+\\int_0^1g^2\n=1+\\int_0^1g^2.\n\\]\nНо по условию \\(\\int_0^1f^2=1\\), поэтому\n\\[\n\\int_0^1g^2(x)\\,dx=0.\n\\]\nТак как \\(g\\) непрерывна, это возможно лишь при \\(g\\equiv0\\). Значит,\n\\[\nf(x)=2-3x.\n\\]\n\nТеперь\n\\[\n\\int_0^1x^2f(x)\\,dx\n=\\int_0^1x^2(2-3x)\\,dx\n=\\frac23-\\frac34\n=-\\frac1{12}.\n\\]\n\n\\[\n\\boxed{-\\frac1{12}}\n\\]",
+      "prompt_tokens": 241,
+      "completion_tokens": 781,
+      "cost_usd": 0.024635,
+      "latency_ms": 12505,
+      "raw_response": {
+        "endpoint": "https://api.openai.com/v1/responses",
+        "multi_request": {
+          "enabled": true,
+          "requests": 1,
+          "max_output_tokens_total": 256000,
+          "max_output_tokens_per_request": 128000,
+          "stopped_after_visible_output": true
+        },
+        "responses": [
+          {
+            "request": {
+              "endpoint": "https://api.openai.com/v1/responses",
+              "model": "gpt-5.6-sol",
+              "input": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+              "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+              "previous_response_id": null,
+              "max_output_tokens": 128000,
+              "store": true,
+              "stream": false,
+              "timeout_seconds": 7200.0,
+              "reasoning": {
+                "effort": "high"
+              }
+            },
+            "response": {
+              "id": "resp_0a12a73ec8530656006a6d3f2408fc819c9ab53295f9dc638b",
+              "created_at": 1785544484.0,
+              "error": null,
+              "incomplete_details": null,
+              "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+              "metadata": {},
+              "model": "gpt-5.6-sol",
+              "object": "response",
+              "output": [
+                {
+                  "id": "rs_0a12a73ec8530656006a6d3f248acc819c9bb6604c376315ca",
+                  "summary": [],
+                  "type": "reasoning",
+                  "content": [],
+                  "encrypted_content": "gAAAAABqbT8vvm5sOTyY5j5Sw8Cr_uDXWnej0efA_NCLYDJOK1eROotx2QbRmIohyxAVeovdhViZdktL0rEYVZ_UoebcpvmiISONeOb-UC7VRuHRclJxCj0kWNWWlZ8YnpgoGgRlz3O3X1winUHNI6uOEPVSYMAcFQYyAn6-QaR6jiAEkrM97OACuK8_l_6a6q66VVKyUEXrtvuyGNEbXD0CxxVuv6SI1Ek7El4CLPTdh6UvWXWWdk5GEghPBX2hOKNouWR5uTOIcjm76pcv0Xwhvw9sA2z9gXX4eQFrY_K-BeyKNYqvLhdCcFBMPyLEV_4h8dHVuV3FbAnraI1-Sd7AbH07F7hCVjgGNQmPC_TSOVucn-lMYN3Il_tnPM2BvGE9AuloLEAtt1RlBJkarV9dWlLAUS86lMgwJTDFspZVAvhLBRLNIKAzdBrw2-tYMrsfvr4p2r7BM79mn6eCZshvZdKzOWz6C36bfg7Sjvq3Oo7py9ZI_iVpx1utCm2mFZjH-fgaJEFemeAf_Z1JgjzLc6flF5F3cnSD_JdiwGc9WI9UrVK86E4eNOc6jW7KvfSd3Hr5j8KDibzp7TOXS8Vl2DQH1mHjcgoIMHgE3AtgUo8ZrXVQphUlBsMoBiTnABp2wOe8yXa1vt0KlXG3vkEbf7I5suBlvWOFpQ2O3NjF59k0LzoTZjoviqsBLtJMGZt_NnzxowfgVq7l1QJfqEpO68lP96AE_XYp2NOL3AIDws-R5JrpFdW1kt7Gx-Ni5Q0QI6zi4EySsZ47ELTD4a6PvTGEDzFOmxyJ6vCcl4PX43qubSdr_PwPxRgbzvamFcEjrXf2gDlA9ZbiZMaucWVTDw8w66ij57dBXm4srVaM3HkOePAARPe0X8uiJfQtYUTIt9d69sV0X0AmmI708qITbYJju8IN4Hx2YNbt7H1GinmhlyWLdBdH9geLWL92F43rGzK5V-dPWdeSkUciR8K1wjECIPyBxMFQ_WhbirOLaetmLC4toW8qwghf7SiN9mERZd1TjMiuqpizwEyrMtbigbk5i3q8UcQAhIGyJ7AVKCzNbGYYgmhqQexXFXKxmqwNQamSm9AAEYUs87hSP2iFuEVFHe6pUnoO8L9Qf6zyTBKBQJ-wflncQqM3P0bchDcgGFvOcdxwBUzEVFZe82qDHWfoxHz4ZIHJFk0zCO_vWcjGZkqQVS4pRcxSSmhVnZQnXcaw7q3D-fSGWpDGI3lVBD-YSoSQyMX-5r0PTcz6hsVkChUT-YI9em2tWCPTcQKD57B0Z18ZuqdVy_ptHRVZTz9hzjzt-8gzv41aLafOoE4T_79P_66iO4ZWLhxgwptSP6MLePJPa7PWcS1-fPoGzCllC_6hhCbBk2cRveNKq2XO8JOg2XKmKhkWzo4WB4Vmk2KoxzFmSs_yT0AcVeeMclHTL_BeX9c17pFVax1EXT_nNhy2CgWeSeehFbAhToeWpy5hXSzb8Vy_CKLne2QYpbmD1tsfYTQ4MoSPT97ZOcWo-PvQcWBIgNXNon7BuQbPQKUdRAlilpc-TVvfEaHwcNn3_kjaBG1glTgykmOkhkwwEA862DTrqgPr1441I8s_T-KD30FqNAklN9vJqO6ZZb6ZsmLAYbNNszjYmfHJYqy9tnHlD6INYCSNqGHJruq21qQkdKlfwiq9RcETJexfsrLMoAXcNbngtubPFO8t_8hCNK2fZFO1sV4tvlBJaEv8vkTRvw4WtmmOSQoAbyqXn4ANXtlugrBVxHdT2DNWamj66cCc5vCUVrVf3OO8szXJTm5dTrRhi-D2sBBP0mmhZ5i77va8i5sc4hIn1dLNJQAW4VYSThKIOjbnH0ac-yjoWx1snkJNQuJG8Y7sj9pwFAbOjz_pgGAxfj9MrRZ6by896O96HwDlP_L0Ns_2n-zBeqopQRB_J11xB7j2Vp7rgDQ_2JBkpXPqiCgTl93_7lXPPIAHKGlHozLMCnb6SSIK_jVwtVsHnEN8-sR2FJSaAnvffRxtARZBJGaQVb8oKiInDDOL9Aujx1iG8ZW-5N_REjzTHNrR1rS0jfQQ0l3dEpCKT6yQiF5-b2HUHGm2AhXrEqhTMws=",
+                  "status": null
+                },
+                {
+                  "id": "msg_0a12a73ec8530656006a6d3f2aa454819ca7afd91e9f00e3db",
+                  "content": [
+                    {
+                      "annotations": [],
+                      "text": "Обозначим скалярное произведение\n\\[\n\\langle u,v\\rangle=\\int_0^1u(x)v(x)\\,dx.\n\\]\n\nНайдём линейную функцию \\(p(x)=a+bx\\), имеющую те же первые два момента, что и \\(f\\):\n\\[\n\\int_0^1p(x)\\,dx=a+\\frac b2=\\frac12,\n\\]\n\\[\n\\int_0^1xp(x)\\,dx=\\frac a2+\\frac b3=0.\n\\]\nРешение этой системы:\n\\[\na=2,\\qquad b=-3,\n\\]\nто есть\n\\[\np(x)=2-3x.\n\\]\n\nПри этом\n\\[\n\\int_0^1p^2(x)\\,dx\n=\\int_0^1(2-3x)^2\\,dx\n=4-6+3=1.\n\\]\n\nПоложим \\(g=f-p\\). По построению\n\\[\n\\int_0^1g(x)\\,dx=0,\\qquad \\int_0^1xg(x)\\,dx=0.\n\\]\nПоскольку \\(p=2-3x\\), отсюда\n\\[\n\\int_0^1p(x)g(x)\\,dx\n=2\\int_0^1g(x)\\,dx-3\\int_0^1xg(x)\\,dx=0.\n\\]\nСледовательно,\n\\[\n\\int_0^1f^2\n=\\int_0^1(p+g)^2\n=\\int_0^1p^2+\\int_0^1g^2\n=1+\\int_0^1g^2.\n\\]\nНо по условию \\(\\int_0^1f^2=1\\), поэтому\n\\[\n\\int_0^1g^2(x)\\,dx=0.\n\\]\nТак как \\(g\\) непрерывна, это возможно лишь при \\(g\\equiv0\\). Значит,\n\\[\nf(x)=2-3x.\n\\]\n\nТеперь\n\\[\n\\int_0^1x^2f(x)\\,dx\n=\\int_0^1x^2(2-3x)\\,dx\n=\\frac23-\\frac34\n=-\\frac1{12}.\n\\]\n\n\\[\n\\boxed{-\\frac1{12}}\n\\]",
+                      "type": "output_text",
+                      "logprobs": []
+                    }
+                  ],
+                  "role": "assistant",
+                  "status": "completed",
+                  "type": "message",
+                  "phase": "final_answer"
+                }
+              ],
+              "parallel_tool_calls": true,
+              "temperature": 1.0,
+              "tool_choice": "auto",
+              "tools": [],
+              "top_p": 0.98,
+              "background": false,
+              "completed_at": 1785544495.0,
+              "conversation": null,
+              "max_output_tokens": 128000,
+              "max_tool_calls": null,
+              "moderation": null,
+              "previous_response_id": null,
+              "prompt": null,
+              "prompt_cache_key": null,
+              "prompt_cache_retention": "24h",
+              "reasoning": {
+                "context": "all_turns",
+                "effort": "high",
+                "generate_summary": null,
+                "summary": null,
+                "mode": "standard"
+              },
+              "safety_identifier": null,
+              "service_tier": "default",
+              "status": "completed",
+              "text": {
+                "format": {
+                  "type": "text"
+                },
+                "verbosity": "medium"
+              },
+              "top_logprobs": 0,
+              "truncation": "disabled",
+              "usage": {
+                "input_tokens": 241,
+                "input_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": "[REDACTED]"
+                },
+                "output_tokens": 781,
+                "output_tokens_details": {
+                  "reasoning_tokens": 263
+                },
+                "total_tokens": 1022
+              },
+              "user": null,
+              "billing": {
+                "payer": "developer"
+              },
+              "frequency_penalty": 0.0,
+              "presence_penalty": 0.0,
+              "store": true,
+              "tool_usage": {
+                "image_gen": {
+                  "input_tokens": 0,
+                  "input_tokens_details": {
+                    "image_tokens": "[REDACTED]",
+                    "text_tokens": "[REDACTED]"
+                  },
+                  "output_tokens": 0,
+                  "output_tokens_details": {
+                    "image_tokens": "[REDACTED]",
+                    "text_tokens": "[REDACTED]"
+                  },
+                  "total_tokens": 0
+                },
+                "web_search": {
+                  "num_requests": 0
+                }
+              }
+            },
+            "latency_ms": 12505,
+            "answer_chars": 937
+          }
+        ],
+        "last_response": {
+          "id": "resp_0a12a73ec8530656006a6d3f2408fc819c9ab53295f9dc638b",
+          "created_at": 1785544484.0,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+          "metadata": {},
+          "model": "gpt-5.6-sol",
+          "object": "response",
+          "output": [
+            {
+              "id": "rs_0a12a73ec8530656006a6d3f248acc819c9bb6604c376315ca",
+              "summary": [],
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqbT8vvm5sOTyY5j5Sw8Cr_uDXWnej0efA_NCLYDJOK1eROotx2QbRmIohyxAVeovdhViZdktL0rEYVZ_UoebcpvmiISONeOb-UC7VRuHRclJxCj0kWNWWlZ8YnpgoGgRlz3O3X1winUHNI6uOEPVSYMAcFQYyAn6-QaR6jiAEkrM97OACuK8_l_6a6q66VVKyUEXrtvuyGNEbXD0CxxVuv6SI1Ek7El4CLPTdh6UvWXWWdk5GEghPBX2hOKNouWR5uTOIcjm76pcv0Xwhvw9sA2z9gXX4eQFrY_K-BeyKNYqvLhdCcFBMPyLEV_4h8dHVuV3FbAnraI1-Sd7AbH07F7hCVjgGNQmPC_TSOVucn-lMYN3Il_tnPM2BvGE9AuloLEAtt1RlBJkarV9dWlLAUS86lMgwJTDFspZVAvhLBRLNIKAzdBrw2-tYMrsfvr4p2r7BM79mn6eCZshvZdKzOWz6C36bfg7Sjvq3Oo7py9ZI_iVpx1utCm2mFZjH-fgaJEFemeAf_Z1JgjzLc6flF5F3cnSD_JdiwGc9WI9UrVK86E4eNOc6jW7KvfSd3Hr5j8KDibzp7TOXS8Vl2DQH1mHjcgoIMHgE3AtgUo8ZrXVQphUlBsMoBiTnABp2wOe8yXa1vt0KlXG3vkEbf7I5suBlvWOFpQ2O3NjF59k0LzoTZjoviqsBLtJMGZt_NnzxowfgVq7l1QJfqEpO68lP96AE_XYp2NOL3AIDws-R5JrpFdW1kt7Gx-Ni5Q0QI6zi4EySsZ47ELTD4a6PvTGEDzFOmxyJ6vCcl4PX43qubSdr_PwPxRgbzvamFcEjrXf2gDlA9ZbiZMaucWVTDw8w66ij57dBXm4srVaM3HkOePAARPe0X8uiJfQtYUTIt9d69sV0X0AmmI708qITbYJju8IN4Hx2YNbt7H1GinmhlyWLdBdH9geLWL92F43rGzK5V-dPWdeSkUciR8K1wjECIPyBxMFQ_WhbirOLaetmLC4toW8qwghf7SiN9mERZd1TjMiuqpizwEyrMtbigbk5i3q8UcQAhIGyJ7AVKCzNbGYYgmhqQexXFXKxmqwNQamSm9AAEYUs87hSP2iFuEVFHe6pUnoO8L9Qf6zyTBKBQJ-wflncQqM3P0bchDcgGFvOcdxwBUzEVFZe82qDHWfoxHz4ZIHJFk0zCO_vWcjGZkqQVS4pRcxSSmhVnZQnXcaw7q3D-fSGWpDGI3lVBD-YSoSQyMX-5r0PTcz6hsVkChUT-YI9em2tWCPTcQKD57B0Z18ZuqdVy_ptHRVZTz9hzjzt-8gzv41aLafOoE4T_79P_66iO4ZWLhxgwptSP6MLePJPa7PWcS1-fPoGzCllC_6hhCbBk2cRveNKq2XO8JOg2XKmKhkWzo4WB4Vmk2KoxzFmSs_yT0AcVeeMclHTL_BeX9c17pFVax1EXT_nNhy2CgWeSeehFbAhToeWpy5hXSzb8Vy_CKLne2QYpbmD1tsfYTQ4MoSPT97ZOcWo-PvQcWBIgNXNon7BuQbPQKUdRAlilpc-TVvfEaHwcNn3_kjaBG1glTgykmOkhkwwEA862DTrqgPr1441I8s_T-KD30FqNAklN9vJqO6ZZb6ZsmLAYbNNszjYmfHJYqy9tnHlD6INYCSNqGHJruq21qQkdKlfwiq9RcETJexfsrLMoAXcNbngtubPFO8t_8hCNK2fZFO1sV4tvlBJaEv8vkTRvw4WtmmOSQoAbyqXn4ANXtlugrBVxHdT2DNWamj66cCc5vCUVrVf3OO8szXJTm5dTrRhi-D2sBBP0mmhZ5i77va8i5sc4hIn1dLNJQAW4VYSThKIOjbnH0ac-yjoWx1snkJNQuJG8Y7sj9pwFAbOjz_pgGAxfj9MrRZ6by896O96HwDlP_L0Ns_2n-zBeqopQRB_J11xB7j2Vp7rgDQ_2JBkpXPqiCgTl93_7lXPPIAHKGlHozLMCnb6SSIK_jVwtVsHnEN8-sR2FJSaAnvffRxtARZBJGaQVb8oKiInDDOL9Aujx1iG8ZW-5N_REjzTHNrR1rS0jfQQ0l3dEpCKT6yQiF5-b2HUHGm2AhXrEqhTMws=",
+              "status": null
+            },
+            {
+              "id": "msg_0a12a73ec8530656006a6d3f2aa454819ca7afd91e9f00e3db",
+              "content": [
+                {
+                  "annotations": [],
+                  "text": "Обозначим скалярное произведение\n\\[\n\\langle u,v\\rangle=\\int_0^1u(x)v(x)\\,dx.\n\\]\n\nНайдём линейную функцию \\(p(x)=a+bx\\), имеющую те же первые два момента, что и \\(f\\):\n\\[\n\\int_0^1p(x)\\,dx=a+\\frac b2=\\frac12,\n\\]\n\\[\n\\int_0^1xp(x)\\,dx=\\frac a2+\\frac b3=0.\n\\]\nРешение этой системы:\n\\[\na=2,\\qquad b=-3,\n\\]\nто есть\n\\[\np(x)=2-3x.\n\\]\n\nПри этом\n\\[\n\\int_0^1p^2(x)\\,dx\n=\\int_0^1(2-3x)^2\\,dx\n=4-6+3=1.\n\\]\n\nПоложим \\(g=f-p\\). По построению\n\\[\n\\int_0^1g(x)\\,dx=0,\\qquad \\int_0^1xg(x)\\,dx=0.\n\\]\nПоскольку \\(p=2-3x\\), отсюда\n\\[\n\\int_0^1p(x)g(x)\\,dx\n=2\\int_0^1g(x)\\,dx-3\\int_0^1xg(x)\\,dx=0.\n\\]\nСледовательно,\n\\[\n\\int_0^1f^2\n=\\int_0^1(p+g)^2\n=\\int_0^1p^2+\\int_0^1g^2\n=1+\\int_0^1g^2.\n\\]\nНо по условию \\(\\int_0^1f^2=1\\), поэтому\n\\[\n\\int_0^1g^2(x)\\,dx=0.\n\\]\nТак как \\(g\\) непрерывна, это возможно лишь при \\(g\\equiv0\\). Значит,\n\\[\nf(x)=2-3x.\n\\]\n\nТеперь\n\\[\n\\int_0^1x^2f(x)\\,dx\n=\\int_0^1x^2(2-3x)\\,dx\n=\\frac23-\\frac34\n=-\\frac1{12}.\n\\]\n\n\\[\n\\boxed{-\\frac1{12}}\n\\]",
+                  "type": "output_text",
+                  "logprobs": []
+                }
+              ],
+              "role": "assistant",
+              "status": "completed",
+              "type": "message",
+              "phase": "final_answer"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "temperature": 1.0,
+          "tool_choice": "auto",
+          "tools": [],
+          "top_p": 0.98,
+          "background": false,
+          "completed_at": 1785544495.0,
+          "conversation": null,
+          "max_output_tokens": 128000,
+          "max_tool_calls": null,
+          "moderation": null,
+          "previous_response_id": null,
+          "prompt": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "high",
+            "generate_summary": null,
+            "summary": null,
+            "mode": "standard"
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "status": "completed",
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "top_logprobs": 0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 241,
+            "input_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": "[REDACTED]"
+            },
+            "output_tokens": 781,
+            "output_tokens_details": {
+              "reasoning_tokens": 263
+            },
+            "total_tokens": 1022
+          },
+          "user": null,
+          "billing": {
+            "payer": "developer"
+          },
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "store": true,
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": "[REDACTED]",
+                "text_tokens": "[REDACTED]"
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": "[REDACTED]",
+                "text_tokens": "[REDACTED]"
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 241,
+          "output_tokens": 781,
+          "total_tokens": 1022,
+          "output_tokens_details": {
+            "reasoning_tokens": 263
+          },
+          "input_tokens_details": {
+            "cached_tokens": null
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 241,
+        "output_tokens": 781,
+        "total_tokens": 1022,
+        "reasoning_tokens": 263,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "input_tokens": 241,
+          "output_tokens": 781,
+          "total_tokens": 1022,
+          "output_tokens_details": {
+            "reasoning_tokens": 263
+          },
+          "input_tokens_details": {
+            "cached_tokens": null
+          }
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 12505,
+        "monotonic_ms": 12505,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 12505,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.001205,
+        "output": 0.02343,
+        "cached_input": null,
+        "reasoning": 0.00789,
+        "native": null,
+        "total": 0.024635,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-08-01",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null
+      },
+      "finish_reason": "completed",
+      "provider_request_id": null,
+      "response_id": "resp_0a12a73ec8530656006a6d3f2408fc819c9ab53295f9dc638b",
+      "provider_timestamp": 1785544484.0,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

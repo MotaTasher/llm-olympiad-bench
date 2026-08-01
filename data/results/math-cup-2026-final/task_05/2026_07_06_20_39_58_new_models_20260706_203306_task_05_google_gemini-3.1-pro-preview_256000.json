@@ -1,0 +1,55 @@
+{
+  "evaluations": {
+    "res_a309574afd7b980a9bcd98a4": {
+      "evaluation_id": "ev_5bf04f276c7d43deafe36d94bdfdeb37",
+      "result_id": "res_a309574afd7b980a9bcd98a4",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "evaluator": "mofeyTEA",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "3/8 и 3/7 не сходятся",
+      "created_at": "2026-07-29T17:57:18.663909Z",
+      "updated_at": "2026-07-29T17:57:18.663909Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_a309574afd7b980a9bcd98a4": [
+      {
+        "evaluation_id": "ev_72c9203f155c4de8a7777bb52acb0b63",
+        "result_id": "res_a309574afd7b980a9bcd98a4",
+        "result_index": 0,
+        "model_key": "google:gemini-3.1-pro-preview",
+        "model": "gemini-3.1-pro-preview",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "\"Но можно строго доказать\" - а где доказательство то?\r\n\r\n\"Поэтому точная верхняя грань достигается, когда одно из множеств\" никак не обосновано\r\n\r\n\"Чтобы достичь плотности 3/7 граф \r\n должен состоять исключительно из изолированных ребер (доминошек)\" не связано с решением",
+        "created_at": "2026-07-17T11:29:56.413096Z",
+        "updated_at": "2026-07-17T11:29:56.413096Z"
+      },
+      {
+        "evaluation_id": "ev_5bf04f276c7d43deafe36d94bdfdeb37",
+        "result_id": "res_a309574afd7b980a9bcd98a4",
+        "result_index": 0,
+        "model_key": "google:gemini-3.1-pro-preview",
+        "model": "gemini-3.1-pro-preview",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "3/8 и 3/7 не сходятся",
+        "created_at": "2026-07-29T17:57:18.663909Z",
+        "updated_at": "2026-07-29T17:57:18.663909Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_05",
+  "run_id": "2026_07_06_20_39_58_new_models_20260706_203306_task_05_google_gemini-3.1-pro-preview_256000",
+  "updated_at": "2026-07-29T17:57:18.663909Z"
+}

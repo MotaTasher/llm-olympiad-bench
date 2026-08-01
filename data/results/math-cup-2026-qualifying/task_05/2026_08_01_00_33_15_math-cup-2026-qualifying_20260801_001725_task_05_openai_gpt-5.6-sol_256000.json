@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_635d1084a82bf3fa57ca4bef": {
+      "evaluation_id": "ev_3418f439250f479fb5299be5ef687002",
+      "result_id": "res_635d1084a82bf3fa57ca4bef",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "evaluator": "b2_maxim",
+      "score": 4,
+      "max_score": 4.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-01T09:04:08.288845Z",
+      "updated_at": "2026-08-01T09:04:08.288845Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_635d1084a82bf3fa57ca4bef": [
+      {
+        "evaluation_id": "ev_3418f439250f479fb5299be5ef687002",
+        "result_id": "res_635d1084a82bf3fa57ca4bef",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "b2_maxim",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-01T09:04:08.288845Z",
+        "updated_at": "2026-08-01T09:04:08.288845Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_05",
+  "run_id": "2026_08_01_00_33_15_math-cup-2026-qualifying_20260801_001725_task_05_openai_gpt-5.6-sol_256000",
+  "updated_at": "2026-08-01T09:04:08.288845Z"
+}

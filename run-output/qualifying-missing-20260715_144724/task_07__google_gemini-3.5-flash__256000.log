@@ -1,0 +1,17 @@
+START 2026-07-15T16:44:39.150858+00:00 math-cup-2026-qualifying/task_07 google:gemini-3.5-flash cap=256000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_07.json --models google:gemini-3.5-flash --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_07_google_gemini-3.5-flash_256000
+Run 2026_07_15_16_44_39_qualifying_missing_20260715_144724_task_07_google_gemini-3.5-flash_256000: math-cup-2026-qualifying/task_07, 1 model(s), max_tokens=256000
+[1/1] START google:gemini-3.5-flash
+[1/1] DONE  gemini-3.5-flash in 1m42s tokens=1368 cost_usd=0.098008
+| model            |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------|----------|------------|--------------|----------|---------|
+| gemini-3.5-flash |     1368 |   0.098008 |       101624 | ok       |         |
+
+Run ID: 2026_07_15_16_44_39_qualifying_missing_20260715_144724_task_07_google_gemini-3.5-flash_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_07 (Мумифицированный тетраэдр)
+Timestamp: 2026-07-15T16:44:39.272088Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_07/2026_07_15_16_44_39_qualifying_missing_20260715_144724_task_07_google_gemini-3.5-flash_256000.json
+
+DONE 2026-07-15T16:46:22.735565+00:00 math-cup-2026-qualifying/task_07 google:gemini-3.5-flash cap=256000 exit=0 elapsed_s=103.6

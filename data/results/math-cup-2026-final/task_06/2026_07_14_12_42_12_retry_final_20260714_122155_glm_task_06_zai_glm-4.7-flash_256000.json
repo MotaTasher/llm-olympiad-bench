@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_577673fe575b5013ad251f5e": {
+      "evaluation_id": "ev_21bc315b2f9742caa9a9e75d2d7548d8",
+      "result_id": "res_577673fe575b5013ad251f5e",
+      "result_index": 0,
+      "model_key": "zai:glm-4.7-flash",
+      "model": "glm-4.7-flash",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "ясно, что любой случайный путь не подойдёт(например если в бамбуке очень близко к одному из концов идём в короткую сторону, то может длина пути меньше константы)",
+      "created_at": "2026-07-18T16:58:05.814100Z",
+      "updated_at": "2026-07-18T16:58:05.814100Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_577673fe575b5013ad251f5e": [
+      {
+        "evaluation_id": "ev_21bc315b2f9742caa9a9e75d2d7548d8",
+        "result_id": "res_577673fe575b5013ad251f5e",
+        "result_index": 0,
+        "model_key": "zai:glm-4.7-flash",
+        "model": "glm-4.7-flash",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "ясно, что любой случайный путь не подойдёт(например если в бамбуке очень близко к одному из концов идём в короткую сторону, то может длина пути меньше константы)",
+        "created_at": "2026-07-18T16:58:05.814100Z",
+        "updated_at": "2026-07-18T16:58:05.814100Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_07_14_12_42_12_retry_final_20260714_122155_glm_task_06_zai_glm-4.7-flash_256000",
+  "updated_at": "2026-07-18T16:58:05.814100Z"
+}

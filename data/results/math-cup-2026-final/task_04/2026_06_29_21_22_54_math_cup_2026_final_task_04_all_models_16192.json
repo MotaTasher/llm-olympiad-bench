@@ -1,74 +1,74 @@
 {
   "evaluations": {
     "res_c6fd1bc165ace2291816982f": {
-      "evaluation_id": "ev_fdd5360c267b4fa085e4d3a0147453be",
+      "evaluation_id": "ev_8953e98d369c49b7b0dde14a7b4e2d6e",
       "result_id": "res_c6fd1bc165ace2291816982f",
       "result_index": 3,
       "model_key": "anthropic:claude-haiku-4-5-20251001",
       "model": "claude-haiku-4-5-20251001",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "WA, без аргументов E(a,b)=f(a)+g(b)",
-      "created_at": "2026-07-01T17:06:52.004917Z",
-      "updated_at": "2026-07-01T17:06:52.004917Z"
+      "feedback": "WA",
+      "created_at": "2026-07-27T12:36:10.127527Z",
+      "updated_at": "2026-07-27T12:36:10.127527Z"
     },
     "res_6b9a252444f881b48317869d": {
-      "evaluation_id": "ev_4404c28fab104630b41523efa3a03784",
+      "evaluation_id": "ev_fcfa8c3745764899afb68072d320157d",
       "result_id": "res_6b9a252444f881b48317869d",
       "result_index": 9,
       "model_key": "yandexgpt:yandexgpt-5-lite",
       "model": "yandexgpt-5-lite",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "нет ответа, только неполный план",
-      "created_at": "2026-07-01T17:11:14.373469Z",
-      "updated_at": "2026-07-01T17:11:14.373469Z"
+      "feedback": "Нет решения",
+      "created_at": "2026-07-27T12:34:38.735772Z",
+      "updated_at": "2026-07-27T12:34:38.735772Z"
     },
     "res_a47b0c62a0c23c24f7d761af": {
-      "evaluation_id": "ev_4aea601353ec49c88e6bec22d1d09955",
+      "evaluation_id": "ev_02c98b47b038414c8b37d9072a16c134",
       "result_id": "res_a47b0c62a0c23c24f7d761af",
       "result_index": 8,
       "model_key": "yandexgpt:yandexgpt-5.1",
       "model": "yandexgpt-5.1",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "Нет ответа, только уравнения введены",
-      "created_at": "2026-07-01T17:11:48.152649Z",
-      "updated_at": "2026-07-01T17:11:48.152649Z"
+      "feedback": "Нет решения",
+      "created_at": "2026-07-27T12:21:01.216904Z",
+      "updated_at": "2026-07-27T12:21:01.216904Z"
     },
     "res_5dccb290a67d9ac46fd1a515": {
-      "evaluation_id": "ev_2b3adee3df9048d889a5eb0ceb3d2c66",
+      "evaluation_id": "ev_41f9c80dcae34ddca71621d931824beb",
       "result_id": "res_5dccb290a67d9ac46fd1a515",
       "result_index": 2,
       "model_key": "anthropic:claude-opus-4-8",
       "model": "claude-opus-4-8",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
-      "feedback": "\"Стационарное распределение одной координаты\" угадано, но этого достаточно",
-      "created_at": "2026-07-03T19:29:15.415736Z",
-      "updated_at": "2026-07-03T19:29:15.415736Z"
+      "feedback": "",
+      "created_at": "2026-07-27T12:35:27.335328Z",
+      "updated_at": "2026-07-27T12:35:27.335328Z"
     },
     "res_b7e375625ef54dc6bc9e4895": {
-      "evaluation_id": "ev_7be99960e38d4fc6a4e9b23cd193f0a6",
+      "evaluation_id": "ev_4b301b1b438946aba1a337edfcc33f9d",
       "result_id": "res_b7e375625ef54dc6bc9e4895",
       "result_index": 0,
       "model_key": "openai:gpt-5.5",
       "model": "gpt-5.5",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-03T19:29:59.724480Z",
-      "updated_at": "2026-07-03T19:29:59.724480Z"
+      "created_at": "2026-07-27T12:19:02.204451Z",
+      "updated_at": "2026-07-27T12:19:02.204451Z"
     }
   },
   "evaluation_pool": {
@@ -86,6 +86,34 @@
         "feedback": "WA, без аргументов E(a,b)=f(a)+g(b)",
         "created_at": "2026-07-01T17:06:52.004917Z",
         "updated_at": "2026-07-01T17:06:52.004917Z"
+      },
+      {
+        "evaluation_id": "ev_cffb56c3c4ed4a58b86366743ba4def9",
+        "result_id": "res_c6fd1bc165ace2291816982f",
+        "result_index": 3,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T18:18:59.517316Z",
+        "updated_at": "2026-07-25T18:18:59.517316Z"
+      },
+      {
+        "evaluation_id": "ev_8953e98d369c49b7b0dde14a7b4e2d6e",
+        "result_id": "res_c6fd1bc165ace2291816982f",
+        "result_index": 3,
+        "model_key": "anthropic:claude-haiku-4-5-20251001",
+        "model": "claude-haiku-4-5-20251001",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-27T12:36:10.127527Z",
+        "updated_at": "2026-07-27T12:36:10.127527Z"
       }
     ],
     "res_6b9a252444f881b48317869d": [
@@ -102,6 +130,34 @@
         "feedback": "нет ответа, только неполный план",
         "created_at": "2026-07-01T17:11:14.373469Z",
         "updated_at": "2026-07-01T17:11:14.373469Z"
+      },
+      {
+        "evaluation_id": "ev_f88e2e561c54444799ac1fd2aa3d76a4",
+        "result_id": "res_6b9a252444f881b48317869d",
+        "result_index": 9,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T18:14:16.282417Z",
+        "updated_at": "2026-07-25T18:14:16.282417Z"
+      },
+      {
+        "evaluation_id": "ev_fcfa8c3745764899afb68072d320157d",
+        "result_id": "res_6b9a252444f881b48317869d",
+        "result_index": 9,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "Нет решения",
+        "created_at": "2026-07-27T12:34:38.735772Z",
+        "updated_at": "2026-07-27T12:34:38.735772Z"
       }
     ],
     "res_a47b0c62a0c23c24f7d761af": [
@@ -118,6 +174,34 @@
         "feedback": "Нет ответа, только уравнения введены",
         "created_at": "2026-07-01T17:11:48.152649Z",
         "updated_at": "2026-07-01T17:11:48.152649Z"
+      },
+      {
+        "evaluation_id": "ev_a9c9987f209c428b9b586c6499d477c0",
+        "result_id": "res_a47b0c62a0c23c24f7d761af",
+        "result_index": 8,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T18:11:40.486852Z",
+        "updated_at": "2026-07-25T18:11:40.486852Z"
+      },
+      {
+        "evaluation_id": "ev_02c98b47b038414c8b37d9072a16c134",
+        "result_id": "res_a47b0c62a0c23c24f7d761af",
+        "result_index": 8,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "Нет решения",
+        "created_at": "2026-07-27T12:21:01.216904Z",
+        "updated_at": "2026-07-27T12:21:01.216904Z"
       }
     ],
     "res_5dccb290a67d9ac46fd1a515": [
@@ -134,6 +218,34 @@
         "feedback": "\"Стационарное распределение одной координаты\" угадано, но этого достаточно",
         "created_at": "2026-07-03T19:29:15.415736Z",
         "updated_at": "2026-07-03T19:29:15.415736Z"
+      },
+      {
+        "evaluation_id": "ev_b4540b5474684c789a7189ba75cd16d2",
+        "result_id": "res_5dccb290a67d9ac46fd1a515",
+        "result_index": 2,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-25T18:17:43.605042Z",
+        "updated_at": "2026-07-25T18:17:43.605042Z"
+      },
+      {
+        "evaluation_id": "ev_41f9c80dcae34ddca71621d931824beb",
+        "result_id": "res_5dccb290a67d9ac46fd1a515",
+        "result_index": 2,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-27T12:35:27.335328Z",
+        "updated_at": "2026-07-27T12:35:27.335328Z"
       }
     ],
     "res_b7e375625ef54dc6bc9e4895": [
@@ -150,6 +262,34 @@
         "feedback": "",
         "created_at": "2026-07-03T19:29:59.724480Z",
         "updated_at": "2026-07-03T19:29:59.724480Z"
+      },
+      {
+        "evaluation_id": "ev_e7a313ec75f6401a8fdc52957d6c172e",
+        "result_id": "res_b7e375625ef54dc6bc9e4895",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "gpt-5.5",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-25T18:01:30.538760Z",
+        "updated_at": "2026-07-25T18:01:30.538760Z"
+      },
+      {
+        "evaluation_id": "ev_4b301b1b438946aba1a337edfcc33f9d",
+        "result_id": "res_b7e375625ef54dc6bc9e4895",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "gpt-5.5",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-27T12:19:02.204451Z",
+        "updated_at": "2026-07-27T12:19:02.204451Z"
       }
     ]
   },
@@ -157,5 +297,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_04",
   "run_id": "2026_06_29_21_22_54_math_cup_2026_final_task_04_all_models_16192",
-  "updated_at": "2026-07-03T19:29:59.724480Z"
+  "updated_at": "2026-07-27T12:36:10.127527Z"
 }

@@ -1,0 +1,17 @@
+START 2026-08-01T10:50:34.856588+00:00 math-cup-2026-final/task_04 gigachat:GigaChat-3-Ultra cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_04.json --models gigachat:GigaChat-3-Ultra --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-final_20260801_105034_task_04_gigachat_GigaChat-3-Ultra_256000
+Run 2026_08_01_10_50_34_math-cup-2026-final_20260801_105034_task_04_gigachat_GigaChat-3-Ultra_256000: math-cup-2026-final/task_04, 1 model(s), max_tokens=256000
+[1/1] START gigachat:GigaChat-3-Ultra
+[1/1] ERROR GigaChat-3-Ultra in 30.6s: The read operation timed out
+| model            |   tokens |   cost_usd |   latency_ms | status   | error                        |
+|------------------|----------|------------|--------------|----------|------------------------------|
+| GigaChat-3-Ultra |        0 |          0 |            0 | error    | The read operation timed out |
+
+Run ID: 2026_08_01_10_50_34_math-cup-2026-final_20260801_105034_task_04_gigachat_GigaChat-3-Ultra_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_04 (Блуждание по плоскости)
+Timestamp: 2026-08-01T10:50:34.959207Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_04/2026_08_01_10_50_34_math-cup-2026-final_20260801_105034_task_04_gigachat_GigaChat-3-Ultra_256000.json
+
+DONE 2026-08-01T10:51:05.663602+00:00 math-cup-2026-final/task_04 gigachat:GigaChat-3-Ultra cap=256000 exit=0 elapsed_s=30.8

@@ -1,0 +1,284 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_00_17_48_math-cup-2026-final_20260801_001725_task_03_yandexgpt_aliceai-llm_256000",
+  "timestamp": "2026-08-01T00:17:48.370891Z",
+  "started_at": "2026-08-01T00:17:48.370891Z",
+  "completed_at": "2026-08-01T00:17:57.517839Z",
+  "duration_ms": 9132,
+  "status": "completed",
+  "git_hash": "1413f2c",
+  "git": {
+    "hash": "1413f2c",
+    "full_hash": "1413f2c404239d5054a772a2c936fe8d69c640fa",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_03.json",
+      "--models",
+      "yandexgpt:aliceai-llm",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-final_20260801_001725_task_03_yandexgpt_aliceai-llm_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_03.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "yandexgpt:aliceai-llm",
+      "run_id": "math-cup-2026-final_20260801_001725_task_03_yandexgpt_aliceai-llm_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "yandexgpt:aliceai-llm"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "yandexgpt:aliceai-llm"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_03",
+  "problem_number": 3,
+  "problem_title": "Многочлен",
+  "problem_file": "data/competitions/math-cup-2026-final/task_03.json",
+  "problem_text": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_03",
+    "number": 3,
+    "title": "Многочлен",
+    "statement": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).",
+    "answer": null,
+    "solution": "Обозначим \\(\\Delta P(x)=P(x+1)-P(x)\\). Условие переписывается как\n\\[\nQ(x):=2P(x)-P(x+1)=P(x)-\\Delta P(x),\n\\]\nпричём \\(Q(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).\n\n**Решение 1.** Пусть \\(\\deg P=n\\), тогда \\(\\Delta^{n+1}P\\equiv0\\). Применяя оператор \\(\\Delta^k\\) к тождеству \\(Q=P-\\Delta P\\), получаем\n\\[\n\\Delta^kQ=\\Delta^kP-\\Delta^{k+1}P\n\\]\nпри каждом \\(k\\ge0\\). Складывая эти равенства для \\(k=0,1,\\ldots,n\\), телескопическая сумма даёт\n\\[\n\\sum_{k=0}^{n}\\Delta^kQ=P-\\Delta^{n+1}P=P.\n\\]\nПоскольку \\(Q(m)\\in\\mathbb Z\\), целыми будут и все его конечные разности \\(\\Delta^kQ(m)\\), а значит, \\(P(m)\\) — сумма целых чисел, то есть \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\).\n\n**Решение 2.** Индукция по \\(n=\\deg P\\).\n\nПри \\(n=0\\) многочлен \\(P\\equiv c\\) и \\(c=Q(0)\\in\\mathbb Z\\).\n\nПусть \\(n\\ge1\\) и утверждение верно для меньших степеней. Применяя \\(\\Delta\\) к \\(Q=P-\\Delta P\\), видим, что \\(\\Delta Q\\) — результат той же операции \\(R\\mapsto R-\\Delta R\\), применённой к \\(\\Delta P\\). При этом \\(\\Delta Q(m)\\in\\mathbb Z\\) и \\(\\deg\\Delta P=n-1\\), поэтому по предположению индукции \\(\\Delta P(m)\\in\\mathbb Z\\) для всех \\(m\\), и тогда\n\\[\nP(m)=Q(m)+\\Delta P(m)\\in\\mathbb Z.\n\\]\n\n**Решение 3.** Запишем \\(P\\) в биномиальном базисе\n\\[\n\\binom{x}{k}=\\frac{x(x-1)\\cdots(x-k+1)}{k!}:\n\\qquad\nP(x)=\\sum_{k=0}^{d}a_k\\binom{x}{k},\\qquad d=\\deg P.\n\\]\nИз\n\\[\n\\binom{x+1}{k}=\\binom{x}{k}+\\binom{x}{k-1}\n\\]\nследует\n\\[\n2\\binom{x}{k}-\\binom{x+1}{k}=\\binom{x}{k}-\\binom{x}{k-1},\n\\]\nпоэтому, при \\(a_{d+1}:=0\\),\n\\[\nQ(x)=\\sum_{k=0}^{d}(a_k-a_{k+1})\\binom{x}{k}.\n\\]\nМногочлен принимает целые значения во всех целых точках в точности тогда, когда все его коэффициенты в этом базисе целые. Применяя это к \\(Q\\), получаем \\(a_k-a_{k+1}\\in\\mathbb Z\\); по нисходящей индукции \\(a_d,a_{d-1},\\ldots,a_0\\in\\mathbb Z\\), значит и \\(P(m)\\in\\mathbb Z\\) для всех \\(m\\in\\mathbb Z\\).",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        3
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "611a52ad8a68c05ba3b466d2c37fc3b320edc15098da00a2829086080836b955",
+  "problem_text_hash": "2694d9f4dfd3b1683539e7f30b3150aaf1824b7cb028637d07e5b79d2d88c470",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_6e01e0421686e0a83a60e50a",
+      "result_index": 0,
+      "provider": "yandexgpt",
+      "alias": "yandexgpt:aliceai-llm",
+      "adapter_class": "models.yandexgpt.yandexgpt.YandexGPTModel",
+      "requested_model_id": "aliceai-llm",
+      "resolved_model_id": "aliceai-llm",
+      "model": "aliceai-llm",
+      "attempt": 1,
+      "started_at": "2026-08-01T00:17:48.398841Z",
+      "completed_at": "2026-08-01T00:17:57.508030Z",
+      "status": "success",
+      "request": {
+        "model": "aliceai-llm",
+        "completionOptions": {
+          "stream": false,
+          "temperature": 0.1,
+          "maxTokens": 256000,
+          "reasoningOptions": {
+            "mode": "ENABLED_HIDDEN"
+          }
+        },
+        "messages": [
+          {
+            "role": "system",
+            "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "text": "Пусть \\(P(x)\\) — такой многочлен с вещественными коэффициентами, что \\(2P(m)-P(m+1)\\) является целым числом для любого \\(m\\in\\mathbb Z\\). Докажите, что \\(P(m)\\in\\mathbb Z\\) для любого \\(m\\in\\mathbb Z\\)."
+          }
+        ],
+        "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+        "stream": false,
+        "requested_max_tokens": "[REDACTED]",
+        "provider_max_tokens": "[REDACTED]"
+      },
+      "answer": " **Доказательство:**\n\n**Шаг 1. Формализация условия и введение обозначений**\n\nПусть $P(x)$ — многочлен с вещественными коэффициентами степени $n$:\n$$\nP(x) = a_n x^n + a_{n-1} x^{n-1} + \\ldots + a_1 x + a_0, \\quad a_i \\in \\mathbb{R}.\n$$\n\nПо условию, для любого целого $m$ выражение $2P(m) - P(m+1)$ является целым числом:\n$$\n2P(m) - P(m+1) \\in \\mathbb{Z} \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\n**Шаг 2. Разложение $P(m+1)$**\n\nРазложим $P(m+1)$ по формуле Тейлора (или биному Ньютона):\n$$\nP(m+1) = \\sum_{k=0}^n a_k (m+1)^k = \\sum_{k=0}^n a_k \\sum_{j=0}^k \\binom{k}{j} m^j.\n$$\n\nПерегруппируем по степеням $m$:\n$$\nP(m+1) = \\sum_{j=0}^n m^j \\left( \\sum_{k=j}^n a_k \\binom{k}{j} \\right).\n$$\n\n**Шаг 3. Выражение для $2P(m) - P(m+1)$**\n\nПодставим $P(m)$ и $P(m+1)$ в выражение $2P(m) - P(m+1)$:\n$$\n2P(m) - P(m+1) = 2 \\sum_{j=0}^n a_j m^j - \\sum_{j=0}^n m^j \\left( \\sum_{k=j}^n a_k \\binom{k}{j} \\right).\n$$\n\nСгруппируем коэффициенты при одинаковых степенях $m$:\n$$\n2P(m) - P(m+1) = \\sum_{j=0}^n m^j \\left( 2a_j - \\sum_{k=j}^n a_k \\binom{k}{j} \\right).\n$$\n\nОбозначим:\n$$\nc_j = 2a_j - \\sum_{k=j}^n a_k \\binom{k}{j}.\n$$\n\nТогда:\n$$\n2P(m) - P(m+1) = \\sum_{j=0}^n c_j m^j.\n$$\n\n**Шаг 4. Анализ коэффициентов $c_j$**\n\nПо условию, $2P(m) - P(m+1)$ — целое число для всех целых $m$. Это означает, что многочлен $\\sum_{j=0}^n c_j m^j$ принимает целые значения при всех целых $m$.\n\nИзвестно, что если многочлен с вещественными коэффициентами принимает целые значения при всех целых аргументах, то его коэффициенты являются рациональными числами, а сам многочлен может быть представлен в виде линейной комбинации биномиальных коэффициентов с целыми коэффициентами.\n\nОднако, более сильный факт: если многочлен $Q(m) = \\sum_{j=0}^n c_j m^j$ принимает целые значения при всех целых $m$, то все его коэффициенты $c_j$ являются рациональными числами, и при этом $c_j$ имеют знаменатели, делящие $j!$.\n\nНо в нашем случае, поскольку $2P(m) - P(m+1)$ — целое для всех $m$, то все $c_j$ должны быть целыми числами.\n\n**Шаг 5. Рекуррентное соотношение для коэффициентов**\n\nРассмотрим коэффициенты $c_j$:\n$$\nc_j = 2a_j - \\sum_{k=j}^n a_k \\binom{k}{j}.\n$$\n\nДля $j = n$:\n$$\nc_n = 2a_n - a_n \\binom{n}{n} = 2a_n - a_n = a_n.\n$$\n\nТак как $c_n$ — целое, то $a_n \\in \\mathbb{Z}$.\n\nДля $j = n-1$:\n$$\nc_{n-1} = 2a_{n-1} - \\left( a_{n-1} \\binom{n-1}{n-1} + a_n \\binom{n}{n-1} \\right) = 2a_{n-1} - a_{n-1} - n a_n = a_{n-1} - n a_n.\n$$\n\nТак как $c_{n-1}$ — целое и $a_n$ — целое, то $a_{n-1}$ — целое.\n\nПродолжая аналогично, для $j = k$:\n$$\nc_k = 2a_k - \\sum_{i=k}^n a_i \\binom{i}{k}.\n$$\n\nПредположим, что $a_{k+1}, \\ldots, a_n$ — целые. Тогда:\n$$\nc_k = 2a_k - a_k - \\sum_{i=k+1}^n a_i \\binom{i}{k} = a_k - \\sum_{i=k+1}^n a_i \\binom{i}{k}.\n$$\n\nТак как $c_k$ — целое и $\\sum_{i=k+1}^n a_i \\binom{i}{k}$ — целое (по предположению), то $a_k$ — целое.\n\nТаким образом, по нисходящей индукции, все коэффициенты $a_j$ являются целыми числами.\n\n**Шаг 6. Заключение**\n\nПоскольку все коэффициенты $a_j$ многочлена $P(x)$ являются целыми числами, то для любого целого $m$ значение $P(m)$ также является целым числом:\n$$\nP(m) = \\sum_{j=0}^n a_j m^j \\in \\mathbb{Z} \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\n---\n\n**Ответ:**\n\nМы доказали, что если $2P(m) - P(m+1)$ является целым числом для любого целого $m$, то все коэффициенты многочлена $P(x)$ являются целыми числами, а значит, $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$.",
+      "prompt_tokens": 197,
+      "completion_tokens": 1492,
+      "cost_usd": 0.02098778,
+      "latency_ms": 9023,
+      "raw_response": {
+        "result": {
+          "alternatives": [
+            {
+              "message": {
+                "role": "assistant",
+                "text": " **Доказательство:**\n\n**Шаг 1. Формализация условия и введение обозначений**\n\nПусть $P(x)$ — многочлен с вещественными коэффициентами степени $n$:\n$$\nP(x) = a_n x^n + a_{n-1} x^{n-1} + \\ldots + a_1 x + a_0, \\quad a_i \\in \\mathbb{R}.\n$$\n\nПо условию, для любого целого $m$ выражение $2P(m) - P(m+1)$ является целым числом:\n$$\n2P(m) - P(m+1) \\in \\mathbb{Z} \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\n**Шаг 2. Разложение $P(m+1)$**\n\nРазложим $P(m+1)$ по формуле Тейлора (или биному Ньютона):\n$$\nP(m+1) = \\sum_{k=0}^n a_k (m+1)^k = \\sum_{k=0}^n a_k \\sum_{j=0}^k \\binom{k}{j} m^j.\n$$\n\nПерегруппируем по степеням $m$:\n$$\nP(m+1) = \\sum_{j=0}^n m^j \\left( \\sum_{k=j}^n a_k \\binom{k}{j} \\right).\n$$\n\n**Шаг 3. Выражение для $2P(m) - P(m+1)$**\n\nПодставим $P(m)$ и $P(m+1)$ в выражение $2P(m) - P(m+1)$:\n$$\n2P(m) - P(m+1) = 2 \\sum_{j=0}^n a_j m^j - \\sum_{j=0}^n m^j \\left( \\sum_{k=j}^n a_k \\binom{k}{j} \\right).\n$$\n\nСгруппируем коэффициенты при одинаковых степенях $m$:\n$$\n2P(m) - P(m+1) = \\sum_{j=0}^n m^j \\left( 2a_j - \\sum_{k=j}^n a_k \\binom{k}{j} \\right).\n$$\n\nОбозначим:\n$$\nc_j = 2a_j - \\sum_{k=j}^n a_k \\binom{k}{j}.\n$$\n\nТогда:\n$$\n2P(m) - P(m+1) = \\sum_{j=0}^n c_j m^j.\n$$\n\n**Шаг 4. Анализ коэффициентов $c_j$**\n\nПо условию, $2P(m) - P(m+1)$ — целое число для всех целых $m$. Это означает, что многочлен $\\sum_{j=0}^n c_j m^j$ принимает целые значения при всех целых $m$.\n\nИзвестно, что если многочлен с вещественными коэффициентами принимает целые значения при всех целых аргументах, то его коэффициенты являются рациональными числами, а сам многочлен может быть представлен в виде линейной комбинации биномиальных коэффициентов с целыми коэффициентами.\n\nОднако, более сильный факт: если многочлен $Q(m) = \\sum_{j=0}^n c_j m^j$ принимает целые значения при всех целых $m$, то все его коэффициенты $c_j$ являются рациональными числами, и при этом $c_j$ имеют знаменатели, делящие $j!$.\n\nНо в нашем случае, поскольку $2P(m) - P(m+1)$ — целое для всех $m$, то все $c_j$ должны быть целыми числами.\n\n**Шаг 5. Рекуррентное соотношение для коэффициентов**\n\nРассмотрим коэффициенты $c_j$:\n$$\nc_j = 2a_j - \\sum_{k=j}^n a_k \\binom{k}{j}.\n$$\n\nДля $j = n$:\n$$\nc_n = 2a_n - a_n \\binom{n}{n} = 2a_n - a_n = a_n.\n$$\n\nТак как $c_n$ — целое, то $a_n \\in \\mathbb{Z}$.\n\nДля $j = n-1$:\n$$\nc_{n-1} = 2a_{n-1} - \\left( a_{n-1} \\binom{n-1}{n-1} + a_n \\binom{n}{n-1} \\right) = 2a_{n-1} - a_{n-1} - n a_n = a_{n-1} - n a_n.\n$$\n\nТак как $c_{n-1}$ — целое и $a_n$ — целое, то $a_{n-1}$ — целое.\n\nПродолжая аналогично, для $j = k$:\n$$\nc_k = 2a_k - \\sum_{i=k}^n a_i \\binom{i}{k}.\n$$\n\nПредположим, что $a_{k+1}, \\ldots, a_n$ — целые. Тогда:\n$$\nc_k = 2a_k - a_k - \\sum_{i=k+1}^n a_i \\binom{i}{k} = a_k - \\sum_{i=k+1}^n a_i \\binom{i}{k}.\n$$\n\nТак как $c_k$ — целое и $\\sum_{i=k+1}^n a_i \\binom{i}{k}$ — целое (по предположению), то $a_k$ — целое.\n\nТаким образом, по нисходящей индукции, все коэффициенты $a_j$ являются целыми числами.\n\n**Шаг 6. Заключение**\n\nПоскольку все коэффициенты $a_j$ многочлена $P(x)$ являются целыми числами, то для любого целого $m$ значение $P(m)$ также является целым числом:\n$$\nP(m) = \\sum_{j=0}^n a_j m^j \\in \\mathbb{Z} \\quad \\forall m \\in \\mathbb{Z}.\n$$\n\n---\n\n**Ответ:**\n\nМы доказали, что если $2P(m) - P(m+1)$ является целым числом для любого целого $m$, то все коэффициенты многочлена $P(x)$ являются целыми числами, а значит, $P(m) \\in \\mathbb{Z}$ для любого $m \\in \\mathbb{Z}$."
+              },
+              "status": "ALTERNATIVE_STATUS_FINAL"
+            }
+          ],
+          "usage": {
+            "inputTextTokens": "197",
+            "completionTokens": "1492",
+            "totalTokens": "1689",
+            "completionTokensDetails": null
+          },
+          "modelVersion": "gpt://aliceai-llm/latest"
+        }
+      },
+      "usage": {
+        "input_tokens": 197,
+        "output_tokens": 1492,
+        "total_tokens": "1689",
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "inputTextTokens": "197",
+          "completionTokens": "1492",
+          "totalTokens": "1689",
+          "completionTokensDetails": null
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 9023,
+        "monotonic_ms": 9023,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 9023,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "native": {
+          "currency": "RUB",
+          "total": 1.8889,
+          "reasoning": null,
+          "input": 0.0985,
+          "cached_input": null,
+          "output": 1.7904,
+          "input_per_1m": 500.0,
+          "cached_input_per_1m": 500.0,
+          "output_per_1m": 1200.0
+        },
+        "total": 0.02098778,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-08-01",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "Yandex AI Studio synchronous text-generation tariff, RUB including VAT.",
+        "cached_input": null
+      },
+      "finish_reason": "ALTERNATIVE_STATUS_FINAL",
+      "provider_request_id": null,
+      "response_id": null,
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

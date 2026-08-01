@@ -1,0 +1,17 @@
+START 2026-07-15T16:30:28.341266+00:00 math-cup-2026-qualifying/task_05 yandexgpt:yandexgpt-5-lite cap=8000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_05.json --models yandexgpt:yandexgpt-5-lite --max-tokens 8000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_05_yandexgpt_yandexgpt-5-lite_8000
+Run 2026_07_15_16_30_28_qualifying_missing_20260715_144724_task_05_yandexgpt_yandexgpt-5-lite_8000: math-cup-2026-qualifying/task_05, 1 model(s), max_tokens=8000
+[1/1] START yandexgpt:yandexgpt-5-lite
+[1/1] DONE  yandexgpt-5-lite in 13.9s tokens=1427 cost_usd=0.003171
+| model            |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------|----------|------------|--------------|----------|---------|
+| yandexgpt-5-lite |     1427 |   0.003171 |        13828 | ok       |         |
+
+Run ID: 2026_07_15_16_30_28_qualifying_missing_20260715_144724_task_05_yandexgpt_yandexgpt-5-lite_8000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_05 (Прямоугольный бильярд)
+Timestamp: 2026-07-15T16:30:28.439609Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_05/2026_07_15_16_30_28_qualifying_missing_20260715_144724_task_05_yandexgpt_yandexgpt-5-lite_8000.json
+
+DONE 2026-07-15T16:30:42.438115+00:00 math-cup-2026-qualifying/task_05 yandexgpt:yandexgpt-5-lite cap=8000 exit=0 elapsed_s=14.1

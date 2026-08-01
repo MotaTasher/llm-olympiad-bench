@@ -1,0 +1,290 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_20_19_19_math-cup-2026-qualifying_20260707_201919_task_06_deepseek_deepseek-v4-flash_256000",
+  "timestamp": "2026-07-07T20:19:19.766257Z",
+  "started_at": "2026-07-07T20:19:19.766257Z",
+  "completed_at": "2026-07-07T20:19:37.410906Z",
+  "duration_ms": 17620,
+  "status": "completed",
+  "git_hash": "abcc89f",
+  "git": {
+    "hash": "abcc89f",
+    "full_hash": "abcc89f3ecd9edd8b11c8dca7bd067640ca2fe93",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "deepseek:deepseek-v4-flash",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_201919_task_06_deepseek_deepseek-v4-flash_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "deepseek:deepseek-v4-flash",
+      "run_id": "math-cup-2026-qualifying_20260707_201919_task_06_deepseek_deepseek-v4-flash_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "deepseek:deepseek-v4-flash"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.113.0",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "deepseek:deepseek-v4-flash"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_0aca2cb7867ead75a111a8b2",
+      "result_index": 0,
+      "provider": "deepseek",
+      "alias": "deepseek:deepseek-v4-flash",
+      "adapter_class": "models.deepseek.deepseek.DeepSeekModel",
+      "requested_model_id": "deepseek-v4-flash",
+      "resolved_model_id": "deepseek-v4-flash",
+      "model": "deepseek-v4-flash",
+      "attempt": 1,
+      "started_at": "2026-07-07T20:19:19.811290Z",
+      "completed_at": "2026-07-07T20:19:37.406139Z",
+      "status": "success",
+      "request": {
+        "model": "deepseek-v4-flash",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "temperature": 0.3,
+        "max_tokens": 256000,
+        "endpoint": "https://api.deepseek.com/chat/completions",
+        "stream": false
+      },
+      "answer": "Единственная непрерывная функция, удовлетворяющая заданным условиям, — \\(f(x) = 2 - 3x\\). Тогда\n\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2-3x)\\,dx = \\frac{2}{3} - \\frac{3}{4} = -\\frac{1}{12}.\n\\]\n\n\\boxed{-\\frac{1}{12}}",
+      "prompt_tokens": 247,
+      "completion_tokens": 1357,
+      "cost_usd": 0.00041454,
+      "latency_ms": 15562,
+      "raw_response": {
+        "id": "0c85ae1d-26fb-49ce-bdb3-067e4f317fa7",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Единственная непрерывная функция, удовлетворяющая заданным условиям, — \\(f(x) = 2 - 3x\\). Тогда\n\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2-3x)\\,dx = \\frac{2}{3} - \\frac{3}{4} = -\\frac{1}{12}.\n\\]\n\n\\boxed{-\\frac{1}{12}}",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "Мы должны найти значение интеграла ∫_0^1 x^2 f(x) dx при условиях:\n\nf ∈ C[0,1] — непрерывная на отрезке функция,\n∫_0^1 f^2(x) dx = 1,\n∫_0^1 f(x) dx = 1/2,\n∫_0^1 x f(x) dx = 0.\n\nТребуется найти ∫_0^1 x^2 f(x) dx.\n\nВозможно, ответ однозначно определяется этими условиями. Нужно попытаться использовать неравенства типа Коши-Шварца или вариационные методы. Фактически, мы имеем скалярное произведение в L^2[0,1]: (g, h) = ∫ g h. Тогда условия: (f, f)=1, (f,1)=1/2, (f, x)=0. Найти (f, x^2). Рассмотрим f как элемент гильбертова пространства L^2[0,1] (непрерывность обеспечивает принадлежность). Можно попытаться найти проекцию f на подпространство, порожденное функциями 1 и x, или что-то подобное.\n\nПусть e1(x)=1, e2(x)=x. Рассмотрим пространство многочленов степени ≤1. Обозначим P — ортогональная проекция f на это подпространство. Тогда f = P f + g, где g ортогонален span{1, x}. Тогда условия: (f,1) = (Pf,1) + (g,1) = (Pf,1) = 1/2; (f,x) = (Pf,x) = 0; (f,f)= ||Pf||^2 + ||g||^2 =1.\n\nМы можем вычислить Pf и его норму. Pf = α + β x, где α,β ∈ ℝ. Тогда:\n\n(Pf,1) = ∫_0^1 (α+βx) dx = α + β/2 = 1/2.\n(Pf,x) = ∫_0^1 (α+βx)x dx = α/2 + β/3 = 0.\n\nРешаем:\nα + β/2 = 1/2 → 2α + β = 1.\nα/2 + β/3 = 0 → умножим на 6: 3α + 2β = 0.\nИз второго: β = -3α/2. Подставим в первое: 2α -3α/2 = 1 → (4α-3α)/2 = α/2 = 1 → α=2. Тогда β = -3*2/2 = -3. Итак, Pf = 2 - 3x.\n\nТеперь вычислим норму Pf: ||Pf||^2 = ∫_0^1 (2-3x)^2 dx = ∫_0^1 (4 -12x +9x^2) dx = [4x -6x^2 +3x^3]_0^1 = 4-6+3=1. Получаем, что ||Pf||^2 = 1. Но у нас ||f||^2=1, следовательно, ||g||^2 = ||f||^2 - ||Pf||^2 = 0. Значит, g=0 почти всюду, а так как f непрерывна, то g=0 всюду. Таким образом, f = Pf = 2-3x.\n\nПроверим условия: ∫_0^1 (2-3x) dx = 2 - 3/2 = 1/2, ∫_0^1 x(2-3x) dx = ∫ (2x-3x^2) dx = [x^2 - x^3]_0^1 = 0, ∫_0^1 (2-3x)^2 dx = ∫ (4-12x+9x^2) dx = 4-6+3=1. Все совпадает. Значит, единственная непрерывная функция, удовлетворяющая условиям — это f(x)=2-3x. Тогда\n\n∫_0^1 x^2 f(x) dx = ∫_0^1 x^2 (2-3x) dx = ∫_0^1 (2x^2 - 3x^3) dx = [2x^3/3 - 3x^4/4]_0^1 = 2/3 - 3/4 = (8/12 - 9/12)= -1/12.\n\nТаким образом, ответ -1/12.\n\nНо важно: мы предположили, что f ∈ C[0,1] и удовлетворяет интегральным условиям. Из вычислений видно, что проекция f на подпространство {1,x} дает f с точностью до ортогонального дополнения. Но поскольку норма f совпадает с нормой проекции, то ортогональная составляющая равна нулю. Это строгий вывод: в гильбертовом пространстве L^2[0,1] из того, что ||f||^2 = ||Pf||^2 и g = f - Pf ортогонален Pf, следует g=0. Действительно, из ||f||^2 = ||Pf||^2 + ||g||^2 = ||Pf||^2, получаем ||g||=0, а значит g=0 почти всюду. Так как f непрерывна, то Pf непрерывна, и g непрерывна, следовательно g=0 всюду. Таким образом, f(x)=2-3x единственна. Тогда искомый интеграл равен -1/12.\n\nОтвет: -1/12."
+            }
+          }
+        ],
+        "created": 1783455563,
+        "model": "deepseek-v4-flash",
+        "object": "chat.completion",
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": "fp_8b330d02d0_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 1357,
+          "prompt_tokens": 247,
+          "total_tokens": 1604,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 1257,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "reasoning_content": "Мы должны найти значение интеграла ∫_0^1 x^2 f(x) dx при условиях:\n\nf ∈ C[0,1] — непрерывная на отрезке функция,\n∫_0^1 f^2(x) dx = 1,\n∫_0^1 f(x) dx = 1/2,\n∫_0^1 x f(x) dx = 0.\n\nТребуется найти ∫_0^1 x^2 f(x) dx.\n\nВозможно, ответ однозначно определяется этими условиями. Нужно попытаться использовать неравенства типа Коши-Шварца или вариационные методы. Фактически, мы имеем скалярное произведение в L^2[0,1]: (g, h) = ∫ g h. Тогда условия: (f, f)=1, (f,1)=1/2, (f, x)=0. Найти (f, x^2). Рассмотрим f как элемент гильбертова пространства L^2[0,1] (непрерывность обеспечивает принадлежность). Можно попытаться найти проекцию f на подпространство, порожденное функциями 1 и x, или что-то подобное.\n\nПусть e1(x)=1, e2(x)=x. Рассмотрим пространство многочленов степени ≤1. Обозначим P — ортогональная проекция f на это подпространство. Тогда f = P f + g, где g ортогонален span{1, x}. Тогда условия: (f,1) = (Pf,1) + (g,1) = (Pf,1) = 1/2; (f,x) = (Pf,x) = 0; (f,f)= ||Pf||^2 + ||g||^2 =1.\n\nМы можем вычислить Pf и его норму. Pf = α + β x, где α,β ∈ ℝ. Тогда:\n\n(Pf,1) = ∫_0^1 (α+βx) dx = α + β/2 = 1/2.\n(Pf,x) = ∫_0^1 (α+βx)x dx = α/2 + β/3 = 0.\n\nРешаем:\nα + β/2 = 1/2 → 2α + β = 1.\nα/2 + β/3 = 0 → умножим на 6: 3α + 2β = 0.\nИз второго: β = -3α/2. Подставим в первое: 2α -3α/2 = 1 → (4α-3α)/2 = α/2 = 1 → α=2. Тогда β = -3*2/2 = -3. Итак, Pf = 2 - 3x.\n\nТеперь вычислим норму Pf: ||Pf||^2 = ∫_0^1 (2-3x)^2 dx = ∫_0^1 (4 -12x +9x^2) dx = [4x -6x^2 +3x^3]_0^1 = 4-6+3=1. Получаем, что ||Pf||^2 = 1. Но у нас ||f||^2=1, следовательно, ||g||^2 = ||f||^2 - ||Pf||^2 = 0. Значит, g=0 почти всюду, а так как f непрерывна, то g=0 всюду. Таким образом, f = Pf = 2-3x.\n\nПроверим условия: ∫_0^1 (2-3x) dx = 2 - 3/2 = 1/2, ∫_0^1 x(2-3x) dx = ∫ (2x-3x^2) dx = [x^2 - x^3]_0^1 = 0, ∫_0^1 (2-3x)^2 dx = ∫ (4-12x+9x^2) dx = 4-6+3=1. Все совпадает. Значит, единственная непрерывная функция, удовлетворяющая условиям — это f(x)=2-3x. Тогда\n\n∫_0^1 x^2 f(x) dx = ∫_0^1 x^2 (2-3x) dx = ∫_0^1 (2x^2 - 3x^3) dx = [2x^3/3 - 3x^4/4]_0^1 = 2/3 - 3/4 = (8/12 - 9/12)= -1/12.\n\nТаким образом, ответ -1/12.\n\nНо важно: мы предположили, что f ∈ C[0,1] и удовлетворяет интегральным условиям. Из вычислений видно, что проекция f на подпространство {1,x} дает f с точностью до ортогонального дополнения. Но поскольку норма f совпадает с нормой проекции, то ортогональная составляющая равна нулю. Это строгий вывод: в гильбертовом пространстве L^2[0,1] из того, что ||f||^2 = ||Pf||^2 и g = f - Pf ортогонален Pf, следует g=0. Действительно, из ||f||^2 = ||Pf||^2 + ||g||^2 = ||Pf||^2, получаем ||g||=0, а значит g=0 почти всюду. Так как f непрерывна, то Pf непрерывна, и g непрерывна, следовательно g=0 всюду. Таким образом, f(x)=2-3x единственна. Тогда искомый интеграл равен -1/12.\n\nОтвет: -1/12."
+      },
+      "usage": {
+        "input_tokens": 247,
+        "output_tokens": 1357,
+        "total_tokens": 1604,
+        "reasoning_tokens": 1257,
+        "cached_input_tokens": 0,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 1357,
+          "prompt_tokens": 247,
+          "total_tokens": 1604,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 1257,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 15562,
+        "monotonic_ms": 15562,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 15562,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 3.458e-05,
+        "output": 0.00037996,
+        "cached_input": null,
+        "reasoning": null,
+        "native": null,
+        "total": 0.00041454,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "0c85ae1d-26fb-49ce-bdb3-067e4f317fa7",
+      "provider_timestamp": 1783455563,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

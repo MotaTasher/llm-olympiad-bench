@@ -1,0 +1,69 @@
+{
+  "evaluations": {
+    "res_fc3ba8f2cafd847d5928b09e": {
+      "evaluation_id": "ev_c044d40a6a7048bfac7a71c6b4f6dbf7",
+      "result_id": "res_fc3ba8f2cafd847d5928b09e",
+      "result_index": 0,
+      "model_key": "google:gemini-3.5-flash",
+      "model": "gemini-3.5-flash",
+      "evaluator": "mofeyTEA",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "WA",
+      "created_at": "2026-07-27T12:40:07.702655Z",
+      "updated_at": "2026-07-27T12:40:07.702655Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_fc3ba8f2cafd847d5928b09e": [
+      {
+        "evaluation_id": "ev_ea8d84b478a6440b8510b88be6f2a192",
+        "result_id": "res_fc3ba8f2cafd847d5928b09e",
+        "result_index": 0,
+        "model_key": "google:gemini-3.5-flash",
+        "model": "gemini-3.5-flash",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-07T19:07:45.703152Z",
+        "updated_at": "2026-07-07T19:07:45.703152Z"
+      },
+      {
+        "evaluation_id": "ev_a522172a8ad540a4bd9d2d59441c3066",
+        "result_id": "res_fc3ba8f2cafd847d5928b09e",
+        "result_index": 0,
+        "model_key": "google:gemini-3.5-flash",
+        "model": "gemini-3.5-flash",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T17:38:41.858096Z",
+        "updated_at": "2026-07-25T17:38:41.858096Z"
+      },
+      {
+        "evaluation_id": "ev_c044d40a6a7048bfac7a71c6b4f6dbf7",
+        "result_id": "res_fc3ba8f2cafd847d5928b09e",
+        "result_index": 0,
+        "model_key": "google:gemini-3.5-flash",
+        "model": "gemini-3.5-flash",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-27T12:40:07.702655Z",
+        "updated_at": "2026-07-27T12:40:07.702655Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_04",
+  "run_id": "2026_07_06_20_35_49_new_models_20260706_203306_task_04_google_gemini-3.5-flash_256000",
+  "updated_at": "2026-07-27T12:40:07.702655Z"
+}

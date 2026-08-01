@@ -1,0 +1,380 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_13_49_39_math-cup-2026-qualifying_20260707_134939_task_06_google_gemini-3.1-pro-preview_256000",
+  "timestamp": "2026-07-07T13:49:39.822355Z",
+  "started_at": "2026-07-07T13:49:39.822355Z",
+  "completed_at": "2026-07-07T13:50:42.605867Z",
+  "duration_ms": 62754,
+  "status": "completed",
+  "git_hash": "ea7e3e2",
+  "git": {
+    "hash": "ea7e3e2",
+    "full_hash": "ea7e3e2fe1f167d20051f55ea81e4f0c77345b71",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "google:gemini-3.1-pro-preview",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_134939_task_06_google_gemini-3.1-pro-preview_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "google:gemini-3.1-pro-preview",
+      "run_id": "math-cup-2026-qualifying_20260707_134939_task_06_google_gemini-3.1-pro-preview_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "google:gemini-3.1-pro-preview"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "google:gemini-3.1-pro-preview"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_e9e02d67930864b396240ec6",
+      "result_index": 0,
+      "provider": "google",
+      "alias": "google:gemini-3.1-pro-preview",
+      "adapter_class": "models.gemini.gemini.GeminiModel",
+      "requested_model_id": "gemini-3.1-pro-preview",
+      "resolved_model_id": "gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "attempt": 1,
+      "started_at": "2026-07-07T13:49:39.905575Z",
+      "completed_at": "2026-07-07T13:50:42.593762Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+        "model": "gemini-3.1-pro-preview",
+        "system_instruction": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "input": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+        "max_output_tokens_total": 256000,
+        "max_output_tokens_per_request": 65536,
+        "temperature": 0.2,
+        "thinking_config": {
+          "thinking_level": "HIGH"
+        },
+        "store": true,
+        "steps": [
+          {
+            "model": "gemini-3.1-pro-preview",
+            "input": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+            "system_instruction": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+            "generation_config": {
+              "thinking_level": "high",
+              "temperature": 0.2,
+              "max_output_tokens": 65536
+            },
+            "previous_interaction_id": null,
+            "store": true
+          }
+        ]
+      },
+      "answer": "Для решения этой задачи мы найдем саму функцию $f(x)$, доказав, что условия задачи однозначно определяют её в классе непрерывных функций. \n\n**1. Формализация условия и введение обозначений**\nНам дана функция $f \\in C[0,1]$ (непрерывная на отрезке $[0,1]$), удовлетворяющая трем условиям:\n1) $\\int_0^1 f^2(x)\\,dx = 1$\n2) $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n3) $\\int_0^1 x f(x)\\,dx = 0$\n\nТребуется найти значение интеграла $I = \\int_0^1 x^2 f(x)\\,dx$.\n\n**2. Оценка расстояния до линейной функции**\nРассмотрим интеграл от квадрата разности функции $f(x)$ и произвольной линейной функции $g(x) = ax + b$, где $a$ и $b$ — некоторые действительные числа. Поскольку подынтегральная функция неотрицательна, этот интеграл всегда больше или равен нулю:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx \\ge 0\n\\]\n\nРаскроем квадрат в подынтегральном выражении и разобьем интеграл на сумму интегралов, пользуясь линейностью:\n\\[\n\\int_0^1 \\left( f^2(x) - 2f(x)(ax + b) + (ax + b)^2 \\right) \\,dx \\ge 0\n\\]\n\\[\n\\int_0^1 f^2(x)\\,dx - 2a \\int_0^1 x f(x)\\,dx - 2b \\int_0^1 f(x)\\,dx + \\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx \\ge 0\n\\]\n\n**3. Подстановка известных значений**\nПодставим заданные в условии значения интегралов:\n*   $\\int_0^1 f^2(x)\\,dx = 1$\n*   $\\int_0^1 x f(x)\\,dx = 0$\n*   $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n\nВычислим интеграл от многочлена:\n\\[\n\\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx = \\left[ a^2 \\frac{x^3}{3} + 2ab \\frac{x^2}{2} + b^2 x \\right]_0^1 = \\frac{a^2}{3} + ab + b^2\n\\]\n\nПодставляя всё это в наше неравенство, получаем:\n\\[\n1 - 2a(0) - 2b\\left(\\frac{1}{2}\\right) + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\\[\n1 - b + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\n**4. Выделение полных квадратов**\nПреобразуем полученное выражение, рассматривая его как квадратный трехчлен относительно $b$:\n\\[\nb^2 + b(a - 1) + \\frac{a^2}{3} + 1\n\\]\nВыделим полный квадрат для $b$:\n\\[\n\\left( b + \\frac{a - 1}{2} \\right)^2 - \\frac{(a - 1)^2}{4} + \\frac{a^2}{3} + 1\n\\]\nРаскроем скобки и приведем подобные слагаемые в оставшейся части:\n\\[\n- \\frac{a^2 - 2a + 1}{4} + \\frac{a^2}{3} + 1 = -\\frac{a^2}{4} + \\frac{a}{2} - \\frac{1}{4} + \\frac{a^2}{3} + 1 = \\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4}\n\\]\nТеперь выделим полный квадрат для $a$:\n\\[\n\\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4} = \\frac{1}{12} (a^2 + 6a + 9) = \\frac{1}{12} (a + 3)^2\n\\]\n\nТаким образом, для любых действительных $a$ и $b$ справедливо тождество:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx = \\left( b + \\frac{a - 1}{2} \\right)^2 + \\frac{1}{12} (a + 3)^2\n\\]\n\n**5. Нахождение функции $f(x)$**\nЗаметим, что правая часть тождества может быть равна нулю. Это происходит тогда и только тогда, когда оба квадрата равны нулю:\n1) $a + 3 = 0 \\implies a = -3$\n2) $b + \\frac{-3 - 1}{2} = 0 \\implies b - 2 = 0 \\implies b = 2$\n\nПодставим $a = -3$ и $b = 2$ в наше интегральное тождество:\n\\[\n\\int_0^1 (f(x) - (-3x + 2))^2 \\,dx = 0\n\\]\nПоскольку функция $f(x)$ непрерывна на отрезке $[0,1]$, функция $(f(x) - (2 - 3x))^2$ также непрерывна и неотрицательна. Интеграл от неотрицательной непрерывной функции равен нулю тогда и только тогда, когда сама функция тождественно равна нулю на всем отрезке интегрирования. \nСледовательно:\n\\[\nf(x) - (2 - 3x) = 0 \\implies f(x) = 2 - 3x \\quad \\text{для всех } x \\in [0,1].\n\\]\n*(Проверка: $\\int_0^1 (2-3x)^2 dx = \\int_0^1 (4-12x+9x^2)dx = 4 - 6 + 3 = 1$; $\\int_0^1 (2-3x)dx = 2 - 1.5 = 0.5$; $\\int_0^1 (2x-3x^2)dx = 1 - 1 = 0$. Функция действительно удовлетворяет всем условиям).*\n\n**6. Вычисление искомого интеграла**\nТеперь, зная явный вид функции $f(x)$, мы можем вычислить требуемый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2 - 3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx\n\\]\nВычисляем первообразную и применяем формулу Ньютона-Лейбница:\n\\[\n\\left[ \\frac{2x^3}{3} - \\frac{3x^4}{4} \\right]_0^1 = \\frac{2}{3} - \\frac{3}{4} = \\frac{8 - 9}{12} = -\\frac{1}{12}\n\\]\n\n**Вывод:**\nЕдинственной непрерывной функцией, удовлетворяющей заданным условиям, является $f(x) = 2 - 3x$. Искомый интеграл от $x^2 f(x)$ для этой функции равен $-\\frac{1}{12}$.\n\n**Ответ:** $-\\frac{1}{12}$",
+      "prompt_tokens": 237,
+      "completion_tokens": 1779,
+      "cost_usd": 0.08643,
+      "latency_ms": 58565,
+      "raw_response": {
+        "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+        "multi_request": {
+          "enabled": true,
+          "requests": 1,
+          "max_output_tokens_total": 256000,
+          "max_output_tokens_per_request": 65536,
+          "stopped_after_non_limited_visible_output": true
+        },
+        "responses": [
+          {
+            "request": {
+              "model": "gemini-3.1-pro-preview",
+              "input": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+              "system_instruction": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+              "generation_config": {
+                "thinking_level": "high",
+                "temperature": 0.2,
+                "max_output_tokens": 65536
+              },
+              "previous_interaction_id": null,
+              "store": true
+            },
+            "response": {
+              "status": "completed",
+              "model": "gemini-3.1-pro-preview",
+              "id": "v1_ChdNUVJOYXRQX0JyYmF4czBQN2ItRXVBSRIXTVFSTmF0UF9CcmJheHMwUDdiLUV1QUk",
+              "created": "2026-07-07T13:50:41Z",
+              "updated": "2026-07-07T13:50:41Z",
+              "usage": {
+                "total_input_tokens": 237,
+                "input_tokens_by_modality": [
+                  {
+                    "modality": "text",
+                    "tokens": "[REDACTED]"
+                  }
+                ],
+                "total_cached_tokens": 0,
+                "total_output_tokens": 1779,
+                "total_tool_use_tokens": 0,
+                "total_thought_tokens": 5384,
+                "total_tokens": 7400
+              },
+              "service_tier": "standard",
+              "steps": [
+                {
+                  "type": "thought",
+                  "signature": "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"
+                },
+                {
+                  "type": "model_output",
+                  "content": [
+                    {
+                      "text": "Для решения этой задачи мы найдем саму функцию $f(x)$, доказав, что условия задачи однозначно определяют её в классе непрерывных функций. \n\n**1. Формализация условия и введение обозначений**\nНам дана функция $f \\in C[0,1]$ (непрерывная на отрезке $[0,1]$), удовлетворяющая трем условиям:\n1) $\\int_0^1 f^2(x)\\,dx = 1$\n2) $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n3) $\\int_0^1 x f(x)\\,dx = 0$\n\nТребуется найти значение интеграла $I = \\int_0^1 x^2 f(x)\\,dx$.\n\n**2. Оценка расстояния до линейной функции**\nРассмотрим интеграл от квадрата разности функции $f(x)$ и произвольной линейной функции $g(x) = ax + b$, где $a$ и $b$ — некоторые действительные числа. Поскольку подынтегральная функция неотрицательна, этот интеграл всегда больше или равен нулю:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx \\ge 0\n\\]\n\nРаскроем квадрат в подынтегральном выражении и разобьем интеграл на сумму интегралов, пользуясь линейностью:\n\\[\n\\int_0^1 \\left( f^2(x) - 2f(x)(ax + b) + (ax + b)^2 \\right) \\,dx \\ge 0\n\\]\n\\[\n\\int_0^1 f^2(x)\\,dx - 2a \\int_0^1 x f(x)\\,dx - 2b \\int_0^1 f(x)\\,dx + \\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx \\ge 0\n\\]\n\n**3. Подстановка известных значений**\nПодставим заданные в условии значения интегралов:\n*   $\\int_0^1 f^2(x)\\,dx = 1$\n*   $\\int_0^1 x f(x)\\,dx = 0$\n*   $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n\nВычислим интеграл от многочлена:\n\\[\n\\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx = \\left[ a^2 \\frac{x^3}{3} + 2ab \\frac{x^2}{2} + b^2 x \\right]_0^1 = \\frac{a^2}{3} + ab + b^2\n\\]\n\nПодставляя всё это в наше неравенство, получаем:\n\\[\n1 - 2a(0) - 2b\\left(\\frac{1}{2}\\right) + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\\[\n1 - b + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\n**4. Выделение полных квадратов**\nПреобразуем полученное выражение, рассматривая его как квадратный трехчлен относительно $b$:\n\\[\nb^2 + b(a - 1) + \\frac{a^2}{3} + 1\n\\]\nВыделим полный квадрат для $b$:\n\\[\n\\left( b + \\frac{a - 1}{2} \\right)^2 - \\frac{(a - 1)^2}{4} + \\frac{a^2}{3} + 1\n\\]\nРаскроем скобки и приведем подобные слагаемые в оставшейся части:\n\\[\n- \\frac{a^2 - 2a + 1}{4} + \\frac{a^2}{3} + 1 = -\\frac{a^2}{4} + \\frac{a}{2} - \\frac{1}{4} + \\frac{a^2}{3} + 1 = \\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4}\n\\]\nТеперь выделим полный квадрат для $a$:\n\\[\n\\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4} = \\frac{1}{12} (a^2 + 6a + 9) = \\frac{1}{12} (a + 3)^2\n\\]\n\nТаким образом, для любых действительных $a$ и $b$ справедливо тождество:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx = \\left( b + \\frac{a - 1}{2} \\right)^2 + \\frac{1}{12} (a + 3)^2\n\\]\n\n**5. Нахождение функции $f(x)$**\nЗаметим, что правая часть тождества может быть равна нулю. Это происходит тогда и только тогда, когда оба квадрата равны нулю:\n1) $a + 3 = 0 \\implies a = -3$\n2) $b + \\frac{-3 - 1}{2} = 0 \\implies b - 2 = 0 \\implies b = 2$\n\nПодставим $a = -3$ и $b = 2$ в наше интегральное тождество:\n\\[\n\\int_0^1 (f(x) - (-3x + 2))^2 \\,dx = 0\n\\]\nПоскольку функция $f(x)$ непрерывна на отрезке $[0,1]$, функция $(f(x) - (2 - 3x))^2$ также непрерывна и неотрицательна. Интеграл от неотрицательной непрерывной функции равен нулю тогда и только тогда, когда сама функция тождественно равна нулю на всем отрезке интегрирования. \nСледовательно:\n\\[\nf(x) - (2 - 3x) = 0 \\implies f(x) = 2 - 3x \\quad \\text{для всех } x \\in [0,1].\n\\]\n*(Проверка: $\\int_0^1 (2-3x)^2 dx = \\int_0^1 (4-12x+9x^2)dx = 4 - 6 + 3 = 1$; $\\int_0^1 (2-3x)dx = 2 - 1.5 = 0.5$; $\\int_0^1 (2x-3x^2)dx = 1 - 1 = 0$. Функция действительно удовлетворяет всем условиям).*\n\n**6. Вычисление искомого интеграла**\nТеперь, зная явный вид функции $f(x)$, мы можем вычислить требуемый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2 - 3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx\n\\]\nВычисляем первообразную и применяем формулу Ньютона-Лейбница:\n\\[\n\\left[ \\frac{2x^3}{3} - \\frac{3x^4}{4} \\right]_0^1 = \\frac{2}{3} - \\frac{3}{4} = \\frac{8 - 9}{12} = -\\frac{1}{12}\n\\]\n\n**Вывод:**\nЕдинственной непрерывной функцией, удовлетворяющей заданным условиям, является $f(x) = 2 - 3x$. Искомый интеграл от $x^2 f(x)$ для этой функции равен $-\\frac{1}{12}$.\n\n**Ответ:** $-\\frac{1}{12}$",
+                      "type": "text"
+                    }
+                  ]
+                }
+              ],
+              "output_text": "Для решения этой задачи мы найдем саму функцию $f(x)$, доказав, что условия задачи однозначно определяют её в классе непрерывных функций. \n\n**1. Формализация условия и введение обозначений**\nНам дана функция $f \\in C[0,1]$ (непрерывная на отрезке $[0,1]$), удовлетворяющая трем условиям:\n1) $\\int_0^1 f^2(x)\\,dx = 1$\n2) $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n3) $\\int_0^1 x f(x)\\,dx = 0$\n\nТребуется найти значение интеграла $I = \\int_0^1 x^2 f(x)\\,dx$.\n\n**2. Оценка расстояния до линейной функции**\nРассмотрим интеграл от квадрата разности функции $f(x)$ и произвольной линейной функции $g(x) = ax + b$, где $a$ и $b$ — некоторые действительные числа. Поскольку подынтегральная функция неотрицательна, этот интеграл всегда больше или равен нулю:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx \\ge 0\n\\]\n\nРаскроем квадрат в подынтегральном выражении и разобьем интеграл на сумму интегралов, пользуясь линейностью:\n\\[\n\\int_0^1 \\left( f^2(x) - 2f(x)(ax + b) + (ax + b)^2 \\right) \\,dx \\ge 0\n\\]\n\\[\n\\int_0^1 f^2(x)\\,dx - 2a \\int_0^1 x f(x)\\,dx - 2b \\int_0^1 f(x)\\,dx + \\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx \\ge 0\n\\]\n\n**3. Подстановка известных значений**\nПодставим заданные в условии значения интегралов:\n*   $\\int_0^1 f^2(x)\\,dx = 1$\n*   $\\int_0^1 x f(x)\\,dx = 0$\n*   $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n\nВычислим интеграл от многочлена:\n\\[\n\\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx = \\left[ a^2 \\frac{x^3}{3} + 2ab \\frac{x^2}{2} + b^2 x \\right]_0^1 = \\frac{a^2}{3} + ab + b^2\n\\]\n\nПодставляя всё это в наше неравенство, получаем:\n\\[\n1 - 2a(0) - 2b\\left(\\frac{1}{2}\\right) + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\\[\n1 - b + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\n**4. Выделение полных квадратов**\nПреобразуем полученное выражение, рассматривая его как квадратный трехчлен относительно $b$:\n\\[\nb^2 + b(a - 1) + \\frac{a^2}{3} + 1\n\\]\nВыделим полный квадрат для $b$:\n\\[\n\\left( b + \\frac{a - 1}{2} \\right)^2 - \\frac{(a - 1)^2}{4} + \\frac{a^2}{3} + 1\n\\]\nРаскроем скобки и приведем подобные слагаемые в оставшейся части:\n\\[\n- \\frac{a^2 - 2a + 1}{4} + \\frac{a^2}{3} + 1 = -\\frac{a^2}{4} + \\frac{a}{2} - \\frac{1}{4} + \\frac{a^2}{3} + 1 = \\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4}\n\\]\nТеперь выделим полный квадрат для $a$:\n\\[\n\\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4} = \\frac{1}{12} (a^2 + 6a + 9) = \\frac{1}{12} (a + 3)^2\n\\]\n\nТаким образом, для любых действительных $a$ и $b$ справедливо тождество:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx = \\left( b + \\frac{a - 1}{2} \\right)^2 + \\frac{1}{12} (a + 3)^2\n\\]\n\n**5. Нахождение функции $f(x)$**\nЗаметим, что правая часть тождества может быть равна нулю. Это происходит тогда и только тогда, когда оба квадрата равны нулю:\n1) $a + 3 = 0 \\implies a = -3$\n2) $b + \\frac{-3 - 1}{2} = 0 \\implies b - 2 = 0 \\implies b = 2$\n\nПодставим $a = -3$ и $b = 2$ в наше интегральное тождество:\n\\[\n\\int_0^1 (f(x) - (-3x + 2))^2 \\,dx = 0\n\\]\nПоскольку функция $f(x)$ непрерывна на отрезке $[0,1]$, функция $(f(x) - (2 - 3x))^2$ также непрерывна и неотрицательна. Интеграл от неотрицательной непрерывной функции равен нулю тогда и только тогда, когда сама функция тождественно равна нулю на всем отрезке интегрирования. \nСледовательно:\n\\[\nf(x) - (2 - 3x) = 0 \\implies f(x) = 2 - 3x \\quad \\text{для всех } x \\in [0,1].\n\\]\n*(Проверка: $\\int_0^1 (2-3x)^2 dx = \\int_0^1 (4-12x+9x^2)dx = 4 - 6 + 3 = 1$; $\\int_0^1 (2-3x)dx = 2 - 1.5 = 0.5$; $\\int_0^1 (2x-3x^2)dx = 1 - 1 = 0$. Функция действительно удовлетворяет всем условиям).*\n\n**6. Вычисление искомого интеграла**\nТеперь, зная явный вид функции $f(x)$, мы можем вычислить требуемый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2 - 3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx\n\\]\nВычисляем первообразную и применяем формулу Ньютона-Лейбница:\n\\[\n\\left[ \\frac{2x^3}{3} - \\frac{3x^4}{4} \\right]_0^1 = \\frac{2}{3} - \\frac{3}{4} = \\frac{8 - 9}{12} = -\\frac{1}{12}\n\\]\n\n**Вывод:**\nЕдинственной непрерывной функцией, удовлетворяющей заданным условиям, является $f(x) = 2 - 3x$. Искомый интеграл от $x^2 f(x)$ для этой функции равен $-\\frac{1}{12}$.\n\n**Ответ:** $-\\frac{1}{12}$",
+              "object": "interaction"
+            },
+            "latency_ms": 58565,
+            "answer_chars": 3991
+          }
+        ],
+        "last_response": {
+          "status": "completed",
+          "model": "gemini-3.1-pro-preview",
+          "id": "v1_ChdNUVJOYXRQX0JyYmF4czBQN2ItRXVBSRIXTVFSTmF0UF9CcmJheHMwUDdiLUV1QUk",
+          "created": "2026-07-07T13:50:41Z",
+          "updated": "2026-07-07T13:50:41Z",
+          "usage": {
+            "total_input_tokens": 237,
+            "input_tokens_by_modality": [
+              {
+                "modality": "text",
+                "tokens": "[REDACTED]"
+              }
+            ],
+            "total_cached_tokens": 0,
+            "total_output_tokens": 1779,
+            "total_tool_use_tokens": 0,
+            "total_thought_tokens": 5384,
+            "total_tokens": 7400
+          },
+          "service_tier": "standard",
+          "steps": [
+            {
+              "type": "thought",
+              "signature": "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"
+            },
+            {
+              "type": "model_output",
+              "content": [
+                {
+                  "text": "Для решения этой задачи мы найдем саму функцию $f(x)$, доказав, что условия задачи однозначно определяют её в классе непрерывных функций. \n\n**1. Формализация условия и введение обозначений**\nНам дана функция $f \\in C[0,1]$ (непрерывная на отрезке $[0,1]$), удовлетворяющая трем условиям:\n1) $\\int_0^1 f^2(x)\\,dx = 1$\n2) $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n3) $\\int_0^1 x f(x)\\,dx = 0$\n\nТребуется найти значение интеграла $I = \\int_0^1 x^2 f(x)\\,dx$.\n\n**2. Оценка расстояния до линейной функции**\nРассмотрим интеграл от квадрата разности функции $f(x)$ и произвольной линейной функции $g(x) = ax + b$, где $a$ и $b$ — некоторые действительные числа. Поскольку подынтегральная функция неотрицательна, этот интеграл всегда больше или равен нулю:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx \\ge 0\n\\]\n\nРаскроем квадрат в подынтегральном выражении и разобьем интеграл на сумму интегралов, пользуясь линейностью:\n\\[\n\\int_0^1 \\left( f^2(x) - 2f(x)(ax + b) + (ax + b)^2 \\right) \\,dx \\ge 0\n\\]\n\\[\n\\int_0^1 f^2(x)\\,dx - 2a \\int_0^1 x f(x)\\,dx - 2b \\int_0^1 f(x)\\,dx + \\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx \\ge 0\n\\]\n\n**3. Подстановка известных значений**\nПодставим заданные в условии значения интегралов:\n*   $\\int_0^1 f^2(x)\\,dx = 1$\n*   $\\int_0^1 x f(x)\\,dx = 0$\n*   $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n\nВычислим интеграл от многочлена:\n\\[\n\\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx = \\left[ a^2 \\frac{x^3}{3} + 2ab \\frac{x^2}{2} + b^2 x \\right]_0^1 = \\frac{a^2}{3} + ab + b^2\n\\]\n\nПодставляя всё это в наше неравенство, получаем:\n\\[\n1 - 2a(0) - 2b\\left(\\frac{1}{2}\\right) + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\\[\n1 - b + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\n**4. Выделение полных квадратов**\nПреобразуем полученное выражение, рассматривая его как квадратный трехчлен относительно $b$:\n\\[\nb^2 + b(a - 1) + \\frac{a^2}{3} + 1\n\\]\nВыделим полный квадрат для $b$:\n\\[\n\\left( b + \\frac{a - 1}{2} \\right)^2 - \\frac{(a - 1)^2}{4} + \\frac{a^2}{3} + 1\n\\]\nРаскроем скобки и приведем подобные слагаемые в оставшейся части:\n\\[\n- \\frac{a^2 - 2a + 1}{4} + \\frac{a^2}{3} + 1 = -\\frac{a^2}{4} + \\frac{a}{2} - \\frac{1}{4} + \\frac{a^2}{3} + 1 = \\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4}\n\\]\nТеперь выделим полный квадрат для $a$:\n\\[\n\\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4} = \\frac{1}{12} (a^2 + 6a + 9) = \\frac{1}{12} (a + 3)^2\n\\]\n\nТаким образом, для любых действительных $a$ и $b$ справедливо тождество:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx = \\left( b + \\frac{a - 1}{2} \\right)^2 + \\frac{1}{12} (a + 3)^2\n\\]\n\n**5. Нахождение функции $f(x)$**\nЗаметим, что правая часть тождества может быть равна нулю. Это происходит тогда и только тогда, когда оба квадрата равны нулю:\n1) $a + 3 = 0 \\implies a = -3$\n2) $b + \\frac{-3 - 1}{2} = 0 \\implies b - 2 = 0 \\implies b = 2$\n\nПодставим $a = -3$ и $b = 2$ в наше интегральное тождество:\n\\[\n\\int_0^1 (f(x) - (-3x + 2))^2 \\,dx = 0\n\\]\nПоскольку функция $f(x)$ непрерывна на отрезке $[0,1]$, функция $(f(x) - (2 - 3x))^2$ также непрерывна и неотрицательна. Интеграл от неотрицательной непрерывной функции равен нулю тогда и только тогда, когда сама функция тождественно равна нулю на всем отрезке интегрирования. \nСледовательно:\n\\[\nf(x) - (2 - 3x) = 0 \\implies f(x) = 2 - 3x \\quad \\text{для всех } x \\in [0,1].\n\\]\n*(Проверка: $\\int_0^1 (2-3x)^2 dx = \\int_0^1 (4-12x+9x^2)dx = 4 - 6 + 3 = 1$; $\\int_0^1 (2-3x)dx = 2 - 1.5 = 0.5$; $\\int_0^1 (2x-3x^2)dx = 1 - 1 = 0$. Функция действительно удовлетворяет всем условиям).*\n\n**6. Вычисление искомого интеграла**\nТеперь, зная явный вид функции $f(x)$, мы можем вычислить требуемый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2 - 3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx\n\\]\nВычисляем первообразную и применяем формулу Ньютона-Лейбница:\n\\[\n\\left[ \\frac{2x^3}{3} - \\frac{3x^4}{4} \\right]_0^1 = \\frac{2}{3} - \\frac{3}{4} = \\frac{8 - 9}{12} = -\\frac{1}{12}\n\\]\n\n**Вывод:**\nЕдинственной непрерывной функцией, удовлетворяющей заданным условиям, является $f(x) = 2 - 3x$. Искомый интеграл от $x^2 f(x)$ для этой функции равен $-\\frac{1}{12}$.\n\n**Ответ:** $-\\frac{1}{12}$",
+                  "type": "text"
+                }
+              ]
+            }
+          ],
+          "output_text": "Для решения этой задачи мы найдем саму функцию $f(x)$, доказав, что условия задачи однозначно определяют её в классе непрерывных функций. \n\n**1. Формализация условия и введение обозначений**\nНам дана функция $f \\in C[0,1]$ (непрерывная на отрезке $[0,1]$), удовлетворяющая трем условиям:\n1) $\\int_0^1 f^2(x)\\,dx = 1$\n2) $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n3) $\\int_0^1 x f(x)\\,dx = 0$\n\nТребуется найти значение интеграла $I = \\int_0^1 x^2 f(x)\\,dx$.\n\n**2. Оценка расстояния до линейной функции**\nРассмотрим интеграл от квадрата разности функции $f(x)$ и произвольной линейной функции $g(x) = ax + b$, где $a$ и $b$ — некоторые действительные числа. Поскольку подынтегральная функция неотрицательна, этот интеграл всегда больше или равен нулю:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx \\ge 0\n\\]\n\nРаскроем квадрат в подынтегральном выражении и разобьем интеграл на сумму интегралов, пользуясь линейностью:\n\\[\n\\int_0^1 \\left( f^2(x) - 2f(x)(ax + b) + (ax + b)^2 \\right) \\,dx \\ge 0\n\\]\n\\[\n\\int_0^1 f^2(x)\\,dx - 2a \\int_0^1 x f(x)\\,dx - 2b \\int_0^1 f(x)\\,dx + \\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx \\ge 0\n\\]\n\n**3. Подстановка известных значений**\nПодставим заданные в условии значения интегралов:\n*   $\\int_0^1 f^2(x)\\,dx = 1$\n*   $\\int_0^1 x f(x)\\,dx = 0$\n*   $\\int_0^1 f(x)\\,dx = \\frac{1}{2}$\n\nВычислим интеграл от многочлена:\n\\[\n\\int_0^1 (a^2 x^2 + 2ab x + b^2)\\,dx = \\left[ a^2 \\frac{x^3}{3} + 2ab \\frac{x^2}{2} + b^2 x \\right]_0^1 = \\frac{a^2}{3} + ab + b^2\n\\]\n\nПодставляя всё это в наше неравенство, получаем:\n\\[\n1 - 2a(0) - 2b\\left(\\frac{1}{2}\\right) + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\\[\n1 - b + \\frac{a^2}{3} + ab + b^2 \\ge 0\n\\]\n\n**4. Выделение полных квадратов**\nПреобразуем полученное выражение, рассматривая его как квадратный трехчлен относительно $b$:\n\\[\nb^2 + b(a - 1) + \\frac{a^2}{3} + 1\n\\]\nВыделим полный квадрат для $b$:\n\\[\n\\left( b + \\frac{a - 1}{2} \\right)^2 - \\frac{(a - 1)^2}{4} + \\frac{a^2}{3} + 1\n\\]\nРаскроем скобки и приведем подобные слагаемые в оставшейся части:\n\\[\n- \\frac{a^2 - 2a + 1}{4} + \\frac{a^2}{3} + 1 = -\\frac{a^2}{4} + \\frac{a}{2} - \\frac{1}{4} + \\frac{a^2}{3} + 1 = \\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4}\n\\]\nТеперь выделим полный квадрат для $a$:\n\\[\n\\frac{a^2}{12} + \\frac{a}{2} + \\frac{3}{4} = \\frac{1}{12} (a^2 + 6a + 9) = \\frac{1}{12} (a + 3)^2\n\\]\n\nТаким образом, для любых действительных $a$ и $b$ справедливо тождество:\n\\[\n\\int_0^1 (f(x) - (ax + b))^2 \\,dx = \\left( b + \\frac{a - 1}{2} \\right)^2 + \\frac{1}{12} (a + 3)^2\n\\]\n\n**5. Нахождение функции $f(x)$**\nЗаметим, что правая часть тождества может быть равна нулю. Это происходит тогда и только тогда, когда оба квадрата равны нулю:\n1) $a + 3 = 0 \\implies a = -3$\n2) $b + \\frac{-3 - 1}{2} = 0 \\implies b - 2 = 0 \\implies b = 2$\n\nПодставим $a = -3$ и $b = 2$ в наше интегральное тождество:\n\\[\n\\int_0^1 (f(x) - (-3x + 2))^2 \\,dx = 0\n\\]\nПоскольку функция $f(x)$ непрерывна на отрезке $[0,1]$, функция $(f(x) - (2 - 3x))^2$ также непрерывна и неотрицательна. Интеграл от неотрицательной непрерывной функции равен нулю тогда и только тогда, когда сама функция тождественно равна нулю на всем отрезке интегрирования. \nСледовательно:\n\\[\nf(x) - (2 - 3x) = 0 \\implies f(x) = 2 - 3x \\quad \\text{для всех } x \\in [0,1].\n\\]\n*(Проверка: $\\int_0^1 (2-3x)^2 dx = \\int_0^1 (4-12x+9x^2)dx = 4 - 6 + 3 = 1$; $\\int_0^1 (2-3x)dx = 2 - 1.5 = 0.5$; $\\int_0^1 (2x-3x^2)dx = 1 - 1 = 0$. Функция действительно удовлетворяет всем условиям).*\n\n**6. Вычисление искомого интеграла**\nТеперь, зная явный вид функции $f(x)$, мы можем вычислить требуемый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2 (2 - 3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx\n\\]\nВычисляем первообразную и применяем формулу Ньютона-Лейбница:\n\\[\n\\left[ \\frac{2x^3}{3} - \\frac{3x^4}{4} \\right]_0^1 = \\frac{2}{3} - \\frac{3}{4} = \\frac{8 - 9}{12} = -\\frac{1}{12}\n\\]\n\n**Вывод:**\nЕдинственной непрерывной функцией, удовлетворяющей заданным условиям, является $f(x) = 2 - 3x$. Искомый интеграл от $x^2 f(x)$ для этой функции равен $-\\frac{1}{12}$.\n\n**Ответ:** $-\\frac{1}{12}$",
+          "object": "interaction"
+        },
+        "usage": {
+          "input_tokens": 237,
+          "output_tokens": 1779,
+          "total_tokens": 7400,
+          "total_input_tokens": 237,
+          "total_output_tokens": 1779,
+          "total_thought_tokens": 5384,
+          "total_cached_tokens": null,
+          "output_tokens_details": {
+            "reasoning_tokens": 5384
+          },
+          "input_tokens_details": {
+            "cached_tokens": null
+          },
+          "billable_output_tokens": 7163
+        }
+      },
+      "usage": {
+        "input_tokens": 237,
+        "output_tokens": 1779,
+        "total_tokens": 7400,
+        "reasoning_tokens": 5384,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "input_tokens": 237,
+          "output_tokens": 1779,
+          "total_tokens": 7400,
+          "total_input_tokens": 237,
+          "total_output_tokens": 1779,
+          "total_thought_tokens": 5384,
+          "total_cached_tokens": null,
+          "output_tokens_details": {
+            "reasoning_tokens": 5384
+          },
+          "input_tokens_details": {
+            "cached_tokens": null
+          },
+          "billable_output_tokens": 7163
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 58565,
+        "monotonic_ms": 58565,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 58565,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.000474,
+        "output": 0.021348,
+        "cached_input": null,
+        "reasoning": 0.064608,
+        "native": null,
+        "total": 0.08643,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": null,
+        "tier": "short_context",
+        "tier_threshold_input_tokens": "[REDACTED]",
+        "note": "Gemini 3.1 Pro Preview Standard paid-list estimate; tier is selected by actual prompt/input tokens."
+      },
+      "finish_reason": "completed",
+      "provider_request_id": null,
+      "response_id": "v1_ChdNUVJOYXRQX0JyYmF4czBQN2ItRXVBSRIXTVFSTmF0UF9CcmJheHMwUDdiLUV1QUk",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

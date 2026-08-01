@@ -1,0 +1,17 @@
+START 2026-08-01T00:08:56.678099+00:00 math-cup-2026-final/task_01 xai:grok-4.5 cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-final/task_01.json --models xai:grok-4.5 --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-final_20260801_000856_task_01_xai_grok-4.5_256000
+Run 2026_08_01_00_08_56_math-cup-2026-final_20260801_000856_task_01_xai_grok-4.5_256000: math-cup-2026-final/task_01, 1 model(s), max_tokens=256000
+[1/1] START xai:grok-4.5
+[1/1] ERROR grok-4.5 in 4ms: Missing required environment variable: XAI_API_KEY
+| model    |   tokens |   cost_usd |   latency_ms | status   | error                                              |
+|----------|----------|------------|--------------|----------|----------------------------------------------------|
+| grok-4.5 |        0 |          0 |            0 | error    | Missing required environment variable: XAI_API_KEY |
+
+Run ID: 2026_08_01_00_08_56_math-cup-2026-final_20260801_000856_task_01_xai_grok-4.5_256000
+Competition: math-cup-2026-final (Math Cup 2026. Финал)
+Problem: task_01 (Произведение)
+Timestamp: 2026-08-01T00:08:56.900936Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-final/task_01/2026_08_01_00_08_56_math-cup-2026-final_20260801_000856_task_01_xai_grok-4.5_256000.json
+
+DONE 2026-08-01T00:08:57.024212+00:00 math-cup-2026-final/task_01 xai:grok-4.5 cap=256000 exit=0 elapsed_s=0.3

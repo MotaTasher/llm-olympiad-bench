@@ -1,0 +1,90 @@
+
+DETACH 2026-07-07T14:12:25.521521+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-final --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-final-model-batch --models new --problems 06 --max-tokens 256000 --workers 2 --provider-workers google=1,xai=1,zai=2 --only-missing --yes
+Pair count: 2
+provider	zai	$0.5636
+model	zai:glm-4.7-flash	$0.0000
+model	zai:glm-5.2	$0.5636
+total	$0.5636
+total_plus_20pct	$0.6763
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [1:00:02<?, ?run/s] 50%|█████     | 1/2 [1:00:02<1:00:02, 3602.45s/run]                                                     50%|█████     | 1/2 [1:00:02<1:00:02, 3602.45s/run]100%|██████████| 2/2 [1:00:02<00:00, 1801.25s/run]  
+Launching 2 pair(s), competition=math-cup-2026-final, workers=2, provider_workers={'google': 1, 'xai': 1, 'zai': 2}, run_group=math-cup-2026-final_20260707_141225
+START math-cup-2026-final/task_06 zai:glm-5.2 cap=128000
+START math-cup-2026-final/task_06 zai:glm-4.7-flash cap=128000
+OK task_06 zai:glm-5.2 exit=0 elapsed=3602.5s log=run-output/math-cup-2026-final-model-batch/task_06__zai_glm-5.2__128000.log
+OK task_06 zai:glm-4.7-flash exit=0 elapsed=3602.5s log=run-output/math-cup-2026-final-model-batch/task_06__zai_glm-4.7-flash__128000.log
+
+DETACH 2026-08-01T00:08:07.274510+00:00 COMMAND /opt/olympiad-scorer/venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-final --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-final-model-batch --models anthropic:claude-fable-5,anthropic:claude-opus-5,deepseek:deepseek-v4-pro,google:gemini-3.1-pro-preview,gigachat:GigaChat-3-Ultra,xai:grok-4.5,zai:glm-5.2,openai:gpt-5.6-sol,yandexgpt:aliceai-llm --problems 01 --max-tokens 256000 --workers 5 --provider-workers anthropic=1,deepseek=1,google=1,gigachat=1,xai=1,zai=1,openai=1,yandexgpt=1 --only-missing --yes
+Pair count: 7
+provider	anthropic	$19.2024
+provider	deepseek	$0.2228
+provider	gigachat	$0.0000
+provider	openai	$7.6808
+provider	xai	$1.5363
+provider	yandexgpt	$3.4142
+model	anthropic:claude-fable-5	$12.8016
+model	anthropic:claude-opus-5	$6.4008
+model	deepseek:deepseek-v4-pro	$0.2228
+model	gigachat:GigaChat-3-Ultra	$0.0000
+model	openai:gpt-5.6-sol	$7.6808
+model	xai:grok-4.5	$1.5363
+model	yandexgpt:aliceai-llm	$3.4142
+total	$32.0566
+total_plus_20pct	$38.4679
+  0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s] 14%|█▍        | 1/7 [00:00<00:03,  1.59run/s]                                               14%|█▍        | 1/7 [00:00<00:03,  1.59run/s]                                               29%|██▊       | 2/7 [00:00<00:03,  1.59run/s]                                               29%|██▊       | 2/7 [00:00<00:03,  1.59run/s]                                               29%|██▊       | 2/7 [00:00<00:03,  1.59run/s]                                               29%|██▊       | 2/7 [00:00<00:03,  1.59run/s]                                               43%|████▎     | 3/7 [00:00<00:02,  1.59run/s]                                               57%|█████▋    | 4/7 [00:01<00:01,  1.59run/s] 71%|███████▏  | 5/7 [00:01<00:00,  5.61run/s]                                               71%|███████▏  | 5/7 [00:01<00:00,  5.61run/s]                                               86%|████████▌ | 6/7 [00:01<00:00,  5.61run/s]100%|██████████| 7/7 [00:01<00:00,  6.61run/s]
+Launching 7 pair(s), competition=math-cup-2026-final, workers=5, provider_workers={'anthropic': 1, 'google': 1, 'gigachat': 1, 'openai': 1, 'xai': 1, 'yandexgpt': 1, 'zai': 1, 'deepseek': 1}, run_group=math-cup-2026-final_20260801_000807
+START math-cup-2026-final/task_01 anthropic:claude-fable-5 cap=256000
+START math-cup-2026-final/task_01 deepseek:deepseek-v4-pro cap=256000
+START math-cup-2026-final/task_01 gigachat:GigaChat-3-Ultra cap=256000
+START math-cup-2026-final/task_01 xai:grok-4.5 cap=256000
+FAIL task_01 anthropic:claude-fable-5 exit=1 elapsed=0.6s log=run-output/math-cup-2026-final-model-batch/task_01__anthropic_claude-fable-5__256000.log
+FAIL task_01 xai:grok-4.5 exit=1 elapsed=0.6s log=run-output/math-cup-2026-final-model-batch/task_01__xai_grok-4.5__256000.log
+START math-cup-2026-final/task_01 anthropic:claude-opus-5 cap=256000
+START math-cup-2026-final/task_01 openai:gpt-5.6-sol cap=256000
+START math-cup-2026-final/task_01 yandexgpt:aliceai-llm cap=256000
+FAIL task_01 gigachat:GigaChat-3-Ultra exit=1 elapsed=0.6s log=run-output/math-cup-2026-final-model-batch/task_01__gigachat_GigaChat-3-Ultra__256000.log
+FAIL task_01 deepseek:deepseek-v4-pro exit=1 elapsed=0.7s log=run-output/math-cup-2026-final-model-batch/task_01__deepseek_deepseek-v4-pro__256000.log
+FAIL task_01 yandexgpt:aliceai-llm exit=1 elapsed=0.4s log=run-output/math-cup-2026-final-model-batch/task_01__yandexgpt_aliceai-llm__256000.log
+FAIL task_01 openai:gpt-5.6-sol exit=1 elapsed=0.4s log=run-output/math-cup-2026-final-model-batch/task_01__openai_gpt-5.6-sol__256000.log
+FAIL task_01 anthropic:claude-opus-5 exit=1 elapsed=0.4s log=run-output/math-cup-2026-final-model-batch/task_01__anthropic_claude-opus-5__256000.log
+Failed pair(s):
+task_01	anthropic:claude-fable-5	exit=1	run-output/math-cup-2026-final-model-batch/task_01__anthropic_claude-fable-5__256000.log
+task_01	anthropic:claude-opus-5	exit=1	run-output/math-cup-2026-final-model-batch/task_01__anthropic_claude-opus-5__256000.log
+task_01	deepseek:deepseek-v4-pro	exit=1	run-output/math-cup-2026-final-model-batch/task_01__deepseek_deepseek-v4-pro__256000.log
+task_01	gigachat:GigaChat-3-Ultra	exit=1	run-output/math-cup-2026-final-model-batch/task_01__gigachat_GigaChat-3-Ultra__256000.log
+task_01	xai:grok-4.5	exit=1	run-output/math-cup-2026-final-model-batch/task_01__xai_grok-4.5__256000.log
+task_01	openai:gpt-5.6-sol	exit=1	run-output/math-cup-2026-final-model-batch/task_01__openai_gpt-5.6-sol__256000.log
+task_01	yandexgpt:aliceai-llm	exit=1	run-output/math-cup-2026-final-model-batch/task_01__yandexgpt_aliceai-llm__256000.log
+
+DETACH 2026-08-01T00:08:56.468599+00:00 COMMAND /opt/olympiad-scorer/venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-final --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/math-cup-2026-final-model-batch --models anthropic:claude-fable-5,anthropic:claude-opus-5,deepseek:deepseek-v4-pro,google:gemini-3.1-pro-preview,gigachat:GigaChat-3-Ultra,xai:grok-4.5,zai:glm-5.2,openai:gpt-5.6-sol,yandexgpt:aliceai-llm --problems 01 --max-tokens 256000 --workers 5 --provider-workers anthropic=1,deepseek=1,google=1,gigachat=1,xai=1,zai=1,openai=1,yandexgpt=1 --only-missing --yes
+Pair count: 7
+provider	anthropic	$19.2024
+provider	deepseek	$0.2228
+provider	gigachat	$0.0000
+provider	openai	$7.6808
+provider	xai	$1.5363
+provider	yandexgpt	$3.4142
+model	anthropic:claude-fable-5	$12.8016
+model	anthropic:claude-opus-5	$6.4008
+model	deepseek:deepseek-v4-pro	$0.2228
+model	gigachat:GigaChat-3-Ultra	$0.0000
+model	openai:gpt-5.6-sol	$7.6808
+model	xai:grok-4.5	$1.5363
+model	yandexgpt:aliceai-llm	$3.4142
+total	$32.0566
+total_plus_20pct	$38.4679
+  0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s]                                        0%|          | 0/7 [00:00<?, ?run/s] 14%|█▍        | 1/7 [00:00<00:02,  2.82run/s]                                               14%|█▍        | 1/7 [00:00<00:02,  2.82run/s]                                               14%|█▍        | 1/7 [00:02<00:02,  2.82run/s] 29%|██▊       | 2/7 [00:02<00:07,  1.47s/run]                                               29%|██▊       | 2/7 [00:02<00:07,  1.47s/run]                                               29%|██▊       | 2/7 [00:02<00:07,  1.47s/run]                                               29%|██▊       | 2/7 [00:03<00:07,  1.47s/run] 43%|████▎     | 3/7 [00:03<00:05,  1.38s/run]                                               43%|████▎     | 3/7 [00:09<00:05,  1.38s/run] 57%|█████▋    | 4/7 [00:09<00:09,  3.23s/run]                                               57%|█████▋    | 4/7 [00:11<00:09,  3.23s/run] 71%|███████▏  | 5/7 [00:11<00:05,  2.73s/run]                                               71%|███████▏  | 5/7 [00:14<00:05,  2.73s/run] 86%|████████▌ | 6/7 [00:14<00:02,  2.64s/run]                                               86%|████████▌ | 6/7 [00:16<00:02,  2.64s/run]100%|██████████| 7/7 [00:16<00:00,  2.57s/run]100%|██████████| 7/7 [00:16<00:00,  2.38s/run]
+Launching 7 pair(s), competition=math-cup-2026-final, workers=5, provider_workers={'anthropic': 1, 'google': 1, 'gigachat': 1, 'openai': 1, 'xai': 1, 'yandexgpt': 1, 'zai': 1, 'deepseek': 1}, run_group=math-cup-2026-final_20260801_000856
+START math-cup-2026-final/task_01 anthropic:claude-fable-5 cap=256000
+START math-cup-2026-final/task_01 deepseek:deepseek-v4-pro cap=256000
+START math-cup-2026-final/task_01 gigachat:GigaChat-3-Ultra cap=256000
+START math-cup-2026-final/task_01 xai:grok-4.5 cap=256000
+OK task_01 xai:grok-4.5 exit=0 elapsed=0.3s log=run-output/math-cup-2026-final-model-batch/task_01__xai_grok-4.5__256000.log
+START math-cup-2026-final/task_01 openai:gpt-5.6-sol cap=256000
+OK task_01 anthropic:claude-fable-5 exit=0 elapsed=2.6s log=run-output/math-cup-2026-final-model-batch/task_01__anthropic_claude-fable-5__256000.log
+START math-cup-2026-final/task_01 anthropic:claude-opus-5 cap=256000
+START math-cup-2026-final/task_01 yandexgpt:aliceai-llm cap=256000
+OK task_01 anthropic:claude-opus-5 exit=0 elapsed=1.3s log=run-output/math-cup-2026-final-model-batch/task_01__anthropic_claude-opus-5__256000.log
+OK task_01 yandexgpt:aliceai-llm exit=0 elapsed=7.3s log=run-output/math-cup-2026-final-model-batch/task_01__yandexgpt_aliceai-llm__256000.log
+OK task_01 gigachat:GigaChat-3-Ultra exit=0 elapsed=11.8s log=run-output/math-cup-2026-final-model-batch/task_01__gigachat_GigaChat-3-Ultra__256000.log
+OK task_01 openai:gpt-5.6-sol exit=0 elapsed=13.9s log=run-output/math-cup-2026-final-model-batch/task_01__openai_gpt-5.6-sol__256000.log
+OK task_01 deepseek:deepseek-v4-pro exit=0 elapsed=16.7s log=run-output/math-cup-2026-final-model-batch/task_01__deepseek_deepseek-v4-pro__256000.log

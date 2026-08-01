@@ -1,32 +1,32 @@
 {
   "evaluations": {
     "res_1acde6201d99f06edff82b41": {
-      "evaluation_id": "ev_3cf3a1137c534875b2f6ce8fa1f13f73",
+      "evaluation_id": "ev_443442a76c0947379405ff81551ce1ef",
       "result_id": "res_1acde6201d99f06edff82b41",
       "result_index": 1,
       "model_key": "gigachat:GigaChat-2",
       "model": "GigaChat-2",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
       "feedback": "WA",
-      "created_at": "2026-07-01T17:10:33.984123Z",
-      "updated_at": "2026-07-01T17:10:33.984123Z"
+      "created_at": "2026-07-27T12:45:48.731348Z",
+      "updated_at": "2026-07-27T12:45:48.731348Z"
     },
     "res_6e41a15c33e16c5d3f9547a6": {
-      "evaluation_id": "ev_f186baa93cca4ffe8ed72b00237208a4",
+      "evaluation_id": "ev_6a50ef2c8bb7442fbd109fdeb435cc5e",
       "result_id": "res_6e41a15c33e16c5d3f9547a6",
       "result_index": 0,
       "model_key": "gigachat:GigaChat-2-Max",
       "model": "GigaChat-2-Max",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "WA\r\nбред: Однако, вычисления становятся довольно громоздкими.\r\n\r\nОднако, можно заметить, что процесс является марковским процессом с поглощающим состоянием \r\n, и его поведение сходится к стационарному распределению. Это означает, что математическое ожидание числа шагов до поглощения конечно и может быть вычислено как сумма геометрической прогрессии",
-      "created_at": "2026-07-01T17:12:54.644943Z",
-      "updated_at": "2026-07-01T17:12:54.644943Z"
+      "feedback": "WA",
+      "created_at": "2026-07-27T12:43:11.460755Z",
+      "updated_at": "2026-07-27T12:43:11.460755Z"
     }
   },
   "evaluation_pool": {
@@ -44,6 +44,34 @@
         "feedback": "WA",
         "created_at": "2026-07-01T17:10:33.984123Z",
         "updated_at": "2026-07-01T17:10:33.984123Z"
+      },
+      {
+        "evaluation_id": "ev_c6fe6e6238af47c898d3addb38ca1681",
+        "result_id": "res_1acde6201d99f06edff82b41",
+        "result_index": 1,
+        "model_key": "gigachat:GigaChat-2",
+        "model": "GigaChat-2",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T17:41:25.641215Z",
+        "updated_at": "2026-07-25T17:41:25.641215Z"
+      },
+      {
+        "evaluation_id": "ev_443442a76c0947379405ff81551ce1ef",
+        "result_id": "res_1acde6201d99f06edff82b41",
+        "result_index": 1,
+        "model_key": "gigachat:GigaChat-2",
+        "model": "GigaChat-2",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-27T12:45:48.731348Z",
+        "updated_at": "2026-07-27T12:45:48.731348Z"
       }
     ],
     "res_6e41a15c33e16c5d3f9547a6": [
@@ -60,6 +88,34 @@
         "feedback": "WA\r\nбред: Однако, вычисления становятся довольно громоздкими.\r\n\r\nОднако, можно заметить, что процесс является марковским процессом с поглощающим состоянием \r\n, и его поведение сходится к стационарному распределению. Это означает, что математическое ожидание числа шагов до поглощения конечно и может быть вычислено как сумма геометрической прогрессии",
         "created_at": "2026-07-01T17:12:54.644943Z",
         "updated_at": "2026-07-01T17:12:54.644943Z"
+      },
+      {
+        "evaluation_id": "ev_2578bc8df43f485fa9bd054aed8df85e",
+        "result_id": "res_6e41a15c33e16c5d3f9547a6",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-25T17:40:13.841022Z",
+        "updated_at": "2026-07-25T17:40:13.841022Z"
+      },
+      {
+        "evaluation_id": "ev_6a50ef2c8bb7442fbd109fdeb435cc5e",
+        "result_id": "res_6e41a15c33e16c5d3f9547a6",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-27T12:43:11.460755Z",
+        "updated_at": "2026-07-27T12:43:11.460755Z"
       }
     ]
   },
@@ -67,5 +123,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_04",
   "run_id": "2026_06_29_22_18_58_math_cup_2026_final_task_04_gigachat_retry_16192",
-  "updated_at": "2026-07-01T17:12:54.644943Z"
+  "updated_at": "2026-07-27T12:45:48.731348Z"
 }

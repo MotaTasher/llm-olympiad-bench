@@ -1,0 +1,15 @@
+
+DETACH 2026-07-15T19:34:13.640323+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/qualifying-retry-20260715_193413-claude --models anthropic:claude-opus-4-8 --problems 01,02,08 --max-tokens 384000 --workers 1 --provider-workers anthropic=1 --run-group qualifying_retry_20260715_193413_claude --only-missing --yes
+Pair count: 3
+provider	anthropic	$28.8040
+model	anthropic:claude-opus-4-8	$28.8040
+total	$28.8040
+total_plus_20pct	$34.5649
+  0%|          | 0/3 [00:00<?, ?run/s]                                        0%|          | 0/3 [00:00<?, ?run/s]                                        0%|          | 0/3 [00:00<?, ?run/s]                                        0%|          | 0/3 [30:52<?, ?run/s] 33%|███▎      | 1/3 [30:52<1:01:45, 1852.54s/run]                                                   33%|███▎      | 1/3 [30:52<1:01:45, 1852.54s/run]                                                   33%|███▎      | 1/3 [57:13<1:01:45, 1852.54s/run] 67%|██████▋   | 2/3 [57:13<28:13, 1693.00s/run]                                                   67%|██████▋   | 2/3 [57:13<28:13, 1693.00s/run]                                                 67%|██████▋   | 2/3 [2:12:09<28:13, 1693.00s/run]100%|██████████| 3/3 [2:12:09<00:00, 2972.91s/run]100%|██████████| 3/3 [2:12:09<00:00, 2643.29s/run]
+Launching 3 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'anthropic': 1}, run_group=qualifying_retry_20260715_193413_claude
+START math-cup-2026-qualifying/task_01 anthropic:claude-opus-4-8 cap=384000
+OK task_01 anthropic:claude-opus-4-8 exit=0 elapsed=1852.5s log=run-output/qualifying-retry-20260715_193413-claude/task_01__anthropic_claude-opus-4-8__384000.log
+START math-cup-2026-qualifying/task_02 anthropic:claude-opus-4-8 cap=384000
+OK task_02 anthropic:claude-opus-4-8 exit=0 elapsed=1581.3s log=run-output/qualifying-retry-20260715_193413-claude/task_02__anthropic_claude-opus-4-8__384000.log
+START math-cup-2026-qualifying/task_08 anthropic:claude-opus-4-8 cap=384000
+OK task_08 anthropic:claude-opus-4-8 exit=0 elapsed=4496.0s log=run-output/qualifying-retry-20260715_193413-claude/task_08__anthropic_claude-opus-4-8__384000.log

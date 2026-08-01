@@ -1,0 +1,55 @@
+{
+  "evaluations": {
+    "res_790f61fe3589358f938ac171": {
+      "evaluation_id": "ev_2466b52613354012af6744e942869e3c",
+      "result_id": "res_790f61fe3589358f938ac171",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.4-mini",
+      "model": "gpt-5.4-mini",
+      "evaluator": "mofeyTEA",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "WA",
+      "created_at": "2026-07-29T10:20:04.297283Z",
+      "updated_at": "2026-07-29T10:20:04.297283Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_790f61fe3589358f938ac171": [
+      {
+        "evaluation_id": "ev_22f304b4b3ce457a94ebc849528f2116",
+        "result_id": "res_790f61fe3589358f938ac171",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-07T19:04:36.951592Z",
+        "updated_at": "2026-07-07T19:04:36.951592Z"
+      },
+      {
+        "evaluation_id": "ev_2466b52613354012af6744e942869e3c",
+        "result_id": "res_790f61fe3589358f938ac171",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-29T10:20:04.297283Z",
+        "updated_at": "2026-07-29T10:20:04.297283Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_05",
+  "run_id": "2026_07_05_10_44_46_openai_mini_task05_384k_timeout7200_20260705_104446",
+  "updated_at": "2026-07-29T10:20:04.297283Z"
+}

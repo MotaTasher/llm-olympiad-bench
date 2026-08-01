@@ -1,0 +1,17 @@
+START 2026-07-15T14:47:43.120938+00:00 math-cup-2026-qualifying/task_01 gigachat:GigaChat-2 cap=8192
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_01.json --models gigachat:GigaChat-2 --max-tokens 8192 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_01_gigachat_GigaChat-2_8192
+Run 2026_07_15_14_47_43_qualifying_missing_20260715_144724_task_01_gigachat_GigaChat-2_8192: math-cup-2026-qualifying/task_01, 1 model(s), max_tokens=8192
+[1/1] START gigachat:GigaChat-2
+[1/1] DONE  GigaChat-2 in 7.2s tokens=1031 cost_usd=0.000745
+| model      |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------|----------|------------|--------------|----------|---------|
+| GigaChat-2 |     1031 |   0.000745 |         7013 | ok       |         |
+
+Run ID: 2026_07_15_14_47_43_qualifying_missing_20260715_144724_task_01_gigachat_GigaChat-2_8192
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_01 (Муравей в большом квадрате)
+Timestamp: 2026-07-15T14:47:43.226056Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_01/2026_07_15_14_47_43_qualifying_missing_20260715_144724_task_01_gigachat_GigaChat-2_8192.json
+
+DONE 2026-07-15T14:47:50.596015+00:00 math-cup-2026-qualifying/task_01 gigachat:GigaChat-2 cap=8192 exit=0 elapsed_s=7.5

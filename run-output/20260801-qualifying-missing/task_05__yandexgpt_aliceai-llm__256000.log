@@ -1,0 +1,17 @@
+START 2026-08-01T00:33:15.292062+00:00 math-cup-2026-qualifying/task_05 yandexgpt:aliceai-llm cap=256000
+COMMAND /opt/olympiad-scorer/venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_05.json --models yandexgpt:aliceai-llm --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260801_001725_task_05_yandexgpt_aliceai-llm_256000
+Run 2026_08_01_00_33_15_math-cup-2026-qualifying_20260801_001725_task_05_yandexgpt_aliceai-llm_256000: math-cup-2026-qualifying/task_05, 1 model(s), max_tokens=256000
+[1/1] START yandexgpt:aliceai-llm
+[1/1] DONE  aliceai-llm in 8.0s tokens=1438 cost_usd=0.016918
+| model       |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-------------|----------|------------|--------------|----------|---------|
+| aliceai-llm |     1438 |   0.016918 |         7932 | ok       |         |
+
+Run ID: 2026_08_01_00_33_15_math-cup-2026-qualifying_20260801_001725_task_05_yandexgpt_aliceai-llm_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_05 (Прямоугольный бильярд)
+Timestamp: 2026-08-01T00:33:15.403601Z
+Git hash: 1413f2c
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_05/2026_08_01_00_33_15_math-cup-2026-qualifying_20260801_001725_task_05_yandexgpt_aliceai-llm_256000.json
+
+DONE 2026-08-01T00:33:23.505014+00:00 math-cup-2026-qualifying/task_05 yandexgpt:aliceai-llm cap=256000 exit=0 elapsed_s=8.2

@@ -1,0 +1,509 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_15_15_55_26_qualifying_missing_20260715_144724_task_03_openai_gpt-5.5_128000",
+  "timestamp": "2026-07-15T15:55:26.801305Z",
+  "started_at": "2026-07-15T15:55:26.801305Z",
+  "completed_at": "2026-07-15T15:56:30.893196Z",
+  "duration_ms": 64082,
+  "status": "completed",
+  "git_hash": "a5c99be",
+  "git": {
+    "hash": "a5c99be",
+    "full_hash": "a5c99be75b80798536aad586d62dca0193135cc1",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_03.json",
+      "--models",
+      "openai:gpt-5.5",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "qualifying_missing_20260715_144724_task_03_openai_gpt-5.5_128000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_03.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "openai:gpt-5.5",
+      "run_id": "qualifying_missing_20260715_144724_task_03_openai_gpt-5.5_128000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 128000
+    },
+    "requested_models": [
+      "openai:gpt-5.5"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.113.0",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.11.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "openai:gpt-5.5"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_03",
+  "problem_number": 3,
+  "problem_title": "Гена, возьми определитель",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_03.json",
+  "problem_text": "Найдите сумму всех положительных значений \\(a\\), при которых матрица\n\\[\nA=\\bigl(\\min(i,j)\\cdot a^{|i-j|}\\bigr)_{i,j=1}^{2026}\n\\]\nвырождена.",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_03",
+    "number": 3,
+    "title": "Гена, возьми определитель",
+    "statement": "Найдите сумму всех положительных значений \\(a\\), при которых матрица\n\\[\nA=\\bigl(\\min(i,j)\\cdot a^{|i-j|}\\bigr)_{i,j=1}^{2026}\n\\]\nвырождена.",
+    "answer": "\\(\\displaystyle \\sum_{i=2}^{2026}\\sqrt{\\frac{i}{i-1}}\\approx 2028.939215760406073\\)",
+    "solution": "Обозначим \\(n=2026\\).\n\nДля \\(i=n,n-1,\\ldots,2\\) заменим строку \\(R_i\\) на \\(R_i-aR_{i-1}\\). Исходная матрица\n\\[\n\\begin{pmatrix}\n1\\cdot a^0&1\\cdot a^1&1\\cdot a^2&\\cdots&1\\cdot a^{n-1}\\\\\n1\\cdot a^1&2\\cdot a^0&2\\cdot a^1&\\cdots&2\\cdot a^{n-2}\\\\\n1\\cdot a^2&2\\cdot a^1&3\\cdot a^0&\\cdots&3\\cdot a^{n-3}\\\\\n\\vdots&\\vdots&\\vdots&\\ddots&\\vdots\\\\\n1\\cdot a^{n-1}&2\\cdot a^{n-2}&3\\cdot a^{n-3}&\\cdots&n\\cdot a^0\n\\end{pmatrix}\n\\]\nпереходит в верхнетреугольную матрицу\n\\[\n\\begin{pmatrix}\n1\\cdot a^0&1\\cdot a^1&1\\cdot a^2&\\cdots&1\\cdot a^{n-1}\\\\\n0&(2-a^2)\\cdot a^0&(2-a^2)\\cdot a^1&\\cdots&(2-a^2)\\cdot a^{n-2}\\\\\n0&0&(3-2a^2)\\cdot a^0&\\cdots&(3-2a^2)\\cdot a^{n-3}\\\\\n\\vdots&\\vdots&\\vdots&\\ddots&\\vdots\\\\\n0&0&0&\\cdots&(n-(n-1)a^2)\\cdot a^0\n\\end{pmatrix}.\n\\]\n\nПосле этих преобразований определитель не поменялся, а матрица стала верхнетреугольной, поэтому\n\\[\n\\det A=\\prod_{i=2}^{n}\\bigl(i-(i-1)a^2\\bigr).\n\\]\nОтсюда\n\\[\na^2=\\frac{i}{i-1}\n\\]\nдля некоторого \\(i\\in\\{2,\\ldots,n\\}\\). Следовательно, сумма всех положительных значений \\(a\\) равна\n\\[\n\\sum_{i=2}^{2026}\\sqrt{\\frac{i}{i-1}}\\approx 2028.939215760406073.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "e4943f9b8156e422c7f3d1352fe602c8d748cd1bdd7ab30f1e90946b9cfd5825",
+  "problem_text_hash": "1456dc78baaac6387881de4d9d4e70a7e4f57c5864c6519689bbf87ec11eeb54",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 128000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_b09bf2d330e2499a8c385a55",
+      "result_index": 0,
+      "provider": "openai",
+      "alias": "openai:gpt-5.5",
+      "adapter_class": "models.gpt.gpt.GPTModel",
+      "requested_model_id": "gpt-5.5",
+      "resolved_model_id": "gpt-5.5-2026-04-23",
+      "model": "gpt-5.5",
+      "attempt": 1,
+      "started_at": "2026-07-15T15:55:26.823178Z",
+      "completed_at": "2026-07-15T15:56:30.884489Z",
+      "status": "success",
+      "request": {
+        "model": "gpt-5.5",
+        "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "input": "Найдите сумму всех положительных значений \\(a\\), при которых матрица\n\\[\nA=\\bigl(\\min(i,j)\\cdot a^{|i-j|}\\bigr)_{i,j=1}^{2026}\n\\]\nвырождена.",
+        "endpoint": "https://api.openai.com/v1/responses",
+        "stream": false,
+        "store": true,
+        "max_output_tokens_total": 128000,
+        "max_output_tokens_per_request": 128000,
+        "timeout_seconds": 7200.0,
+        "max_retries": null,
+        "reasoning": {
+          "effort": "high"
+        },
+        "steps": [
+          {
+            "endpoint": "https://api.openai.com/v1/responses",
+            "model": "gpt-5.5",
+            "input": "Найдите сумму всех положительных значений \\(a\\), при которых матрица\n\\[\nA=\\bigl(\\min(i,j)\\cdot a^{|i-j|}\\bigr)_{i,j=1}^{2026}\n\\]\nвырождена.",
+            "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+            "previous_response_id": null,
+            "max_output_tokens": 128000,
+            "store": true,
+            "stream": false,
+            "timeout_seconds": 7200.0,
+            "reasoning": {
+              "effort": "high"
+            }
+          }
+        ]
+      },
+      "answer": "Пусть для общего размера \\(n\\)\n\n\\[\nA_n(a)=\\bigl(\\min(i,j)a^{|i-j|}\\bigr)_{i,j=1}^n,\\qquad D_n(a)=\\det A_n(a).\n\\]\n\nНужно найти сумму всех \\(a>0\\), при которых \\(D_{2026}(a)=0\\).\n\nДокажем формулу для \\(D_n(a)\\).\n\nРассмотрим матрицу \\(A_n(a)\\) при \\(n\\ge 2\\). Выполним операцию со столбцами:\n\n\\[\nC_n \\leftarrow C_n-aC_{n-1}.\n\\]\n\nОпределитель при этом не меняется.\n\nДля строк \\(i=1,\\dots,n-1\\) имеем\n\n\\[\n(A_n)_{i,n}=i a^{n-i},\n\\]\n\nа также\n\n\\[\na(A_n)_{i,n-1}=a\\cdot i a^{n-1-i}=i a^{n-i}.\n\\]\n\nЗначит, после операции первые \\(n-1\\) элементов последнего столбца станут нулевыми.\n\nДля последней строки:\n\n\\[\n(A_n)_{n,n}=n,\\qquad a(A_n)_{n,n-1}=a\\cdot (n-1)a=(n-1)a^2.\n\\]\n\nПоэтому последний элемент нового последнего столбца равен\n\n\\[\nn-(n-1)a^2.\n\\]\n\nРазлагая определитель по последнему столбцу, получаем\n\n\\[\nD_n(a)=\\bigl(n-(n-1)a^2\\bigr)D_{n-1}(a).\n\\]\n\nТак как \\(D_1(a)=1\\), по индукции\n\n\\[\nD_n(a)=\\prod_{k=2}^n \\bigl(k-(k-1)a^2\\bigr).\n\\]\n\nДля \\(n=2026\\) матрица вырождена тогда и только тогда, когда\n\n\\[\nk-(k-1)a^2=0\n\\]\n\nдля некоторого \\(k=2,\\dots,2026\\). Отсюда\n\n\\[\na^2=\\frac{k}{k-1}.\n\\]\n\nТак как \\(a>0\\), получаем значения\n\n\\[\na=\\sqrt{\\frac{k}{k-1}},\\qquad k=2,\\dots,2026.\n\\]\n\nЭти значения различны, поскольку \\(\\frac{k}{k-1}=1+\\frac1{k-1}\\) строго убывает при росте \\(k\\).\n\nСледовательно, искомая сумма равна\n\n\\[\n\\boxed{\\sum_{k=2}^{2026}\\sqrt{\\frac{k}{k-1}}}\n\\]\n\nили, эквивалентно,\n\n\\[\n\\boxed{\\sum_{m=1}^{2025}\\sqrt{\\frac{m+1}{m}}}.\n\\]",
+      "prompt_tokens": 202,
+      "completion_tokens": 3778,
+      "cost_usd": 0.11435,
+      "latency_ms": 63499,
+      "raw_response": {
+        "endpoint": "https://api.openai.com/v1/responses",
+        "multi_request": {
+          "enabled": false,
+          "requests": 1,
+          "max_output_tokens_total": 128000,
+          "max_output_tokens_per_request": 128000,
+          "stopped_after_visible_output": true
+        },
+        "responses": [
+          {
+            "request": {
+              "endpoint": "https://api.openai.com/v1/responses",
+              "model": "gpt-5.5",
+              "input": "Найдите сумму всех положительных значений \\(a\\), при которых матрица\n\\[\nA=\\bigl(\\min(i,j)\\cdot a^{|i-j|}\\bigr)_{i,j=1}^{2026}\n\\]\nвырождена.",
+              "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+              "previous_response_id": null,
+              "max_output_tokens": 128000,
+              "store": true,
+              "stream": false,
+              "timeout_seconds": 7200.0,
+              "reasoning": {
+                "effort": "high"
+              }
+            },
+            "response": {
+              "id": "resp_0f9ad589fff2565d006a57ad70c768819db4ebed06d84c62a4",
+              "created_at": 1784130928.0,
+              "error": null,
+              "incomplete_details": null,
+              "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+              "metadata": {},
+              "model": "gpt-5.5-2026-04-23",
+              "object": "response",
+              "output": [
+                {
+                  "id": "rs_0f9ad589fff2565d006a57ad71a7a8819d8e4b6b2cc020a740",
+                  "summary": [],
+                  "type": "reasoning",
+                  "content": [],
+                  "encrypted_content": "gAAAAABqV62uF6RjfITkOpV2WADB0FW1mg_1kmZHIcbL4yzEKhQ9NTk30cyYvjCCx2iauPPW2FmNk2jPGJ7_zosFSo_vMZc9y04Vj_Z3kvLgG2b5xlKg7pY8y7agyZM2H3Q1y-RXbnTO9Fh7PxwWZYGzsN8npIxxF680w9UHkqSEBBxc23QNFlsUDmGiylI7VZoIF2p9itH-3SeR-GCbGWFdnZ4RxSl4wIuqzB6N3INrvSX_7Qb9B5YwK8osNtWb8BUZieORW-BijIVXI03CqyuF7uVpRF-YUTjhdQbfurD7_KedIEqF4UnQCeY-5Tj19QFLOI4N13cqndrNX0WyT5_ILKkAylxo8USC1jSincGtdkX-Q8uGdlgmnksZiUD05_gKykLf4--Ffv4eJjvshPbQ858V3Ti_zjkDaeJ4QQpi1b_g72eLMcQ2rvJNiTXfV9GO9aHhTDn5z-vFhnr8mcWyYXHRtp_MNjz98AXi6JdLnHMgjBDanRznk8XybB976VV4M-ZJbDFiRook9wojlQ4Bvhim_VyP2xOuBLByj6Y8Md15UyDurPDgh1jLhgR0lYngCo9xNk6K1zdkd8yjsGAmxyeqnkOipCFUJtzqdMskXn2ngcDhyns-5P1HINd22IK_r2vVzOSNZ1B5HGmhlS3z7yK74J4n3pTo5bWUrkPF6DGnEhfJC3yE-B89Vo1GSN9NUtJmdor78gR_KJD9gtTZxVeDXio7gqy5CQtxklOg01jr2pB4a3F1hqhs4FkoTIEalk56ki-yt7TyoVlxm2skFmECfqGvpnvwEyOmhcn1V6_cjX_l_QDo-o5VB8-6uNjoCib-gJVXlk9C3SYwXiCHX8fRn7tk325JXgb6rwpACVwJ2GSP_NJ55yP4mLqKcH1QPJ8uNRbMJPCThoXKTWuYUJyAL6nJjf_eRD-r2ofzbZ1IBpMIMWE_1Pw6pVgI0ygT_5Kp5rVCbQdY9C5YO5kd8VTKrkWd6m7z2x7DYAn-TiiqecnahQFmEsv4wrL5t7llo-UuviUoW4w1U-NWe0TKdkT-ZOYq46ySFKtZt_obzTskQRH-TKxem3jjH8rYoz3JLfsjrdjSDcjwa9bfQR7bGheAQPE9lsCheKafLqPhoGChT-7XKDLSsnhIIJlnJgYRgHWu3XMc-qrqDJ3dFQF0OD_XgkUPZQsd_537i5jWISUWeKKqxBOJCb7flVoV9QGasUMB8R9jlo4uPCmETRwfiT6JBdVOXAYtkxcNhQzslK5hZrbEoCRpC8WPEYYmMUIVdSjkNNlpMb5Lzsd9ktkv0b1WBBGLUT5IcnWGuKA5C0yeiZVrMuK9ii0KXyzme_W2wQSElmb91_h0IzYY0JIWFAJuwNfTCljS5e1dJ0k3ioxLXpXGTP-X8P2J7uKeNnkg-3RaoT4xazdRiMUy3HgYJCyIWoTEcIaT-75_Ek5tWm823S5gXzfhvJxdEmUEXNv609LXYVHxafS9YUe1uVKCVySUr50yajFUSl3i44TG_-7ve84Xlyx6W2BmQkZwr_euoi7FK-E_-MbsZBn8hh4YF9aBcd8nx8SbU2PiAH2pYWnSXcLB5BnhcLPUS6vUyQtQsNwG5G6N5zAqrgE7rxwGk4WuCbbnvaZmHW_2Xr-h3LrrSmMX5LwGJ31eiPTPZ8swRPxggYJX2yXdWgUc3rZfBr2ZutFKr2rjih--ZzbHTAm0tqwiJFOMETvXos2CaygryqRFb2SBN1-v1Ho7qyaFlSNwA9x9PMngnwb582zcHcP597O4qI17kam4rveTqiCSssNfhPeh8nucWD_MZvHMlrm5geqcUPKFhSil3YAzM2YMnQb1YJa620-O1gmUFknITA5J2e_2WgBbF4malqGl6V9lZWesmjnD6Wlu2rUbmiCOnxEC9_LC_vuJz1cRttZn0Sb7NT0begVHLm0Sw2BqxzPlD-tyJnNAMJSBNiPo2Hz0fasTI2d127ZOU-w8ZW4Bd02tzSxXmkF5Tz5Bw_E83-61xgKdaDR4-lPctg3CJYdhfSxIBP-rcnz3KeruFm6LVJLvKhLweABREC8-opo2gRbQ3y3XIOrY64m50JHQ9YXZZsoEcjeq2ibT3AIeiL_KgImvfk59uc3S91r6kSw4Nmo3HP6Lypnm4zuG6XeIS_huGbn6XLmRShqfjiFX67OFURseaJ6PVlTk9j0Bw7fmjvx_Rx1Yg7W1sdLYaiA_2RwmMqFsd4cLSKty6DyYYMAN89IVAB4bymJ-rrtJ1Jiib7Y6n7SUOOCDLqwoSfHAuF_lgttOJm8ADQUMgESkbzwQwQuWl-M0q7DFYlmQVikt5QJCr2_HLLUBDVxsS3GtgM31P_WH6_3TGNMg8QtOMQZDbCJieV89jhwFNyOxWxLVNLstad9Pp0JT6hLMFQMY0jsu5bATweVsDhK66ErTIMBpS4fbya-FHHLot43bS3VJFrh8wtlZFj1-NCJY3V6TT-vtN2-7fVkcWYvF-1I4VRiFoDVguVKwuHoWzIMU-7XNAUcHO8rS7fw8Qz4mBj89pylkdXV5Y_drLSDvtyvF1eiLZL8n0DsZx7qfPam2Y8F17jLx7_6bdxq36UuVjy6M6xCYSC1aU8zPNwXNGkqti4bkINp_4JpQPI3_XWNs9HLpG7CSOtsmGx4AR0zhA7Pq1KFsiMRv-NsCsaGtrkVQ6j2UT1atcZritfDYFXV7Kdlhhb91roi1jdIyApVHWeZRqV_8qzpUiymSO23Tv9G8Se_n2JVuET60__P7hUmsoSVGRNjezeL2pwCndzK1nP0dTvlkrtRivEFxE7kan7qa9rk3KJUZJbbZZwyzUyajRE8Sp9lOPeTNTKqZZDQmrn5USDOjLlzl2PxIKiie-C6CXhbV61jrXdUjLhfqQQoc0ewYUnCAb1tpu16R6ED3ky0lhzzxLc81VhS7PBt6OEBR-dK050QP4hCzjUKHWzjsr0mpTKJZnMWJs5GYklu9_8do6vSCJBGVzjJHQbXaqMQ-4IMosKlEO0ZWivcnnT3rsX-ryaBVdV0ccyZzFuCeXF9pZ3oqA7ZcwgL_BgjfLB4KJZ8cu-blBBVpUf96_5R_JIrTlYEM_UZZC8awasM2c08v1R-PxW06l6Ggu9qxlsHBjSNLd9pbCVZJc93w9gD6G1-pkOuvF0Kl4dOWe0OuRDwAVy8GsZM7VZvyA_l_wr4Ho5PbzsEweC8ocVwh5m_ikXHcakWgLbjhhAhriko3FH6jiDFdlH2m6elk7TjQcM7wAmkmO6Gr9zIRCJhQRtaVSbRpURe73ZBv5Su2pj4tSnlLfSKqs3XCVET42U6YdDVb9tfx0MLy8077AWXNeNNUzP0MxNEut7MoBj0BkCPE-utzWutN0JhHxKdmvVXLBXw1r5w3SeFjLkH5u9ikGE1tyN9Rcv_j_HWJpJ71Mm1skPopaciN_EUUxiTQXhspXni1mPdQVcI8_Z9lf3wjCfYN0frEqMg4CcOs1Y-4UE53fJQG891tqz24thCTEP3nowKPzFaSb3F1EQ82iQhJhmik8r6tT-OMw9sGS9FQfZzOWTTBQ_9QBN6X-ueihsGaGOuGc9CILzidPTcfq6YXKR35npg9L_xhJ9cMiywFjL_FNSCb1WYlaIzvub3xij7A2GEGbhKqt2M0rhrYINRyKzcbVyyBzuA-Tx0CJyzOrcJBdtFMxKo1_oVGGe7-ojNnaBxUqn7aUguQB4m6gwlKiWFbU_SB5DXJOfd5IBvlqWeoc5f-xIAexSQJwWQo9vG5-6dCm0-_nRhaO56ssdku9rLag_Ah4q9jmboYSQm3f5LSo3xuUnsOql-2olGlhvBpjTnCMclo10FjMu-zZStOou0DCQIuDV8k-DPfx-bsonIsWUOcaUG2G23Jfch-4VmYCeJDGh7XPmAQ8bifmmxZ5IuZCDq_kLsLkmee9DLJ1g72C_gNEPO-kR9jlFYqCaeihjmdfj8uxdMV3P_An7RudXPS8t0JmtbRK8_DjS6Mm49quiafkar6Solokkb2UqFkqhmXJwW1EhHcEYti-KMkrL-XbnIMyfwi9w1JVW8TWkqkkOgskKoAeaxQTaNjzLjAmkrPUDErU1VKhbQvcLGqA9YrwFBhKkD8MiqXS0bMdgJS5zzU0CS51F3iEfXvU8zDEQeIMCa4RBP5iwvlWAABS8dAQ3UIA3ROrrFv5SJwSjZxei2fyfOv3Ab0rZNTmnYcCrJdXN61CH7Amnln6XDQk-mFLQKtA29iza5f94gWV1kMgO70mrJSMHw11WcsRbpeDthNAfJrwNq7Vs-Zld7cEsZdh7KH_6IVO-B95ZqR6Fp-EMpf4uuYKAFX9KeNsfYLbtDSghrPODYcIFdto0IkYbaZMx5S9lO5E_cMt6_KZ55eLdDalA2AmgT8_Zhs37J-PzKYjAH6MeEie4RscynvpeV_k-zxR0SSsADMnkn8iDBRexCgxf7tTAMQmjZd9_yX42ACN6U390E_k98HllhCRqhBrJEpXfmmoUg28bx_i52pyLweZuapLgf-jY2zeiAPFYuRlbBYU4bnQ7hLCtymw2FZJ8LBE1UOlQiK-AK4_JT_eLvl3LUUoFArzWjxV8LDVlfwzcPQTPrf1yt3MsHXsy7NTTVzWArkCJ4_bKaiwTk1rY3gqsSyVE6chxmIzx-C5mjNThaN-2i7gi6jfqoci77sOTnkDodaDMClTNoNa4ssVHuYbfWZTEqngxcg2TIYPUJWOTX9L0aowp5hHChn3AJsxR9o_NkAG7qyIWxpLnYwsWAHtoFA5TvpqhWAAZ_T0OG1fqsQ-Vp_GkWe3fMNKoTiQ22BGxQ8xrbouux3FvTjR6H3FoWo1Cea9BP1fzpASbiLfY-fQ8r9qmptAA7u9LGSPXpIbxYvwND8-U_hkTt-hUO36wtwrPfvzIkaMNqlQEsL7Az_eqfoGjjJDLx9_fu8dMHdu_gZ8XSND3soVy3vcuBwWivSqBN_GC1s5cHAPaOfK0YYL9CvYdacwSnhXcX0OjPX-P3APhlYQxdmoAxTbfz6XBeC5nPaJZDnFlqUJCrZnX1wW8SUSB_bFmDUR_KJdeKD9e-hyDVD6YgkBWXTBAy-hk8s7CzeX7n2gZQo3QdxPe1_wYMNCe49pX6Bz8kMT8xZUjvIe0TnbZpnd0c6WkG8xgNOXmCOHjJd8NQ4EL6B_iN93HTvYdRoE3NVgobUVy87JAixo9otDMEbrBAJzzmDZJqilLVx0qdcQQ7z94noGsV_RkipjJodUealaPSPLwkxMZEv7eMtlEOyvbVtt9WNoqGQs2FLXHpaBr9P25KtIDZSsHcjKhp8Tge1yNveUcDziTnYarYbo9X_VO4A6KSIjjiw_PVCTCwynrkZEbCLzm_F1dlN1qYcjd84ZSF-qF1UExCS09LIk-o2zKr4arojbroMvj3fiyQXbPwaTzlcTN3O1VTJwm5ClfmrkYDBLBoUjvRs5tQFMJgPVQTTtuVliRoLKedcMDBN8rBgHDiWcyfAku-1q05NL_OYVx210PmlsfLGJoxSHLwMny1Lr4TMqlOCtUNdAn15m-U444-Wl5gnWxCLBqSpv0S02mT-n31KkGWWPisFNz_I4ijTzcwJq4uj30rJvsuIOLxHvT4qHmFgQx0mPGmmHAzIDXb8RtTL58t29IrOmvu8wCXxhHtVr8FQkEuDxIryKnS9MytRwaX1tXQozAJgGTuYzX2eMVN5jwPQa4VmZGusuS-Ijn-Segrjndy3Wvti2uFVeU133AohJ2uINixFBkhp_4V3E_rE_5_Q4bQ0LNMP2LPt2amzFeaFn9lOl6NeY5WOQFLZM8EFwBK0URs_ywd-sbfu-IxvEEoRhysa0ANaR_xJNfCzghXbV-FejkKxvErq6BLS12-o_Or0mGhrO-I2n5MTXokayHOlwwfUA63eH2ubc352DIF4-RFwX9k1PgJEAoGGHVe7dxUSd2HlDATxNgk6u3b98at7W6X3I7Ngj2QPGFd1Iy2J1L95H21KDNGzxmRfX6qgsKURFxi0LUvhLBRgUwVoK3FaXsyg3JVuhOEB8Fxf1x1WRdhf8M1ZkIBOiStpNPHJd4WYPd6xavdks6SeYqd2BI7BW78PlP4zFYwSs91POyxLdxFHTuGK8nITUhAJOKvJiMdZJvt6DslwpdLN4FO98IfnAo9kvbSb1W6EB3B_2VHUQtW1BDtR4_n1Th-Obwc3T18Sy9RUnN5sUgHvVj0_jxje941fUmxem5ZsZuef9trc3PvPRTEJid_jbqpPkdOk--hK0igCZjYnUjeKFq6Eel71wQp1roaKpAXLcRl30qxoFW43ujJackdPvgV3KRz4hkvH3Wjgqj2EVsn3rlBSzqSn1OrTRqBgH-KKkHNG8cCgD2_nEx0uLtbA42K6RdMJS4Xg3WptBthZlGZDNwwH-ew5wiEYYGAzH5vrtcaQDb6YBgwvefgBwNDpGCBHKp998je9NOrQ7LyPCjIHpr4BX0pncIRcwIit7_QSdOetMesx4i3je7Xfgkw7j2SMs0vi1Lz3n4ynBNgXrdEwEDP10AVuuAUyOXNHrTkfZVkrjUhdDWAYsT_u8ALnG-iDDPBK3x6JPLBzzY1iCn_8imTCrZ9pfEQ7_d_IWo-zLTL79opjWJeMtR5DiMpuAem_8fKR2yfq5rmfMdwTVU55LEMmKrTIObfAbGOi-A7xABQ1lAmuOPdN5SSrQvEUxM5l2pGnUOOqhKSMAMnbuWJvkYknLn17I8_cbTR8cW4x_DZgDSXyjOFZclo1IOqXGpDWvgj22WfKGqntirLcyYJXvdUOlVuhmWcwrF5y3W1_bQnZMbLATvsZYnFlYWQydsBwhYjCmuM1Qqta4RmX1foUXSH_diOV4Q1s_GtFBazKaIjqNzOYf6JTvqH7acJFlt64UfP5aXrdv-MqTjthKrlCYgDUX3Ne-Lb4dRmAs2cs9zr1mFgTBlNF5FxRUdeS2bduIln1cfXWCCJfvGeMr-EAqSMjNe-uRI4OBPhUXbjA89YPSpCzMNJ9wFUEL_YumQWYFSwE9tNctVO67r4GjEi1UdnO5oKSzqiaPt9YUs7GLp_qgdV8PPAYXAznSHg6OqJPTjz_AjJIwkb0-zUg_z8d-z7xb7UYFe9SKd2hATGQhIB8_HUQ7KyeIroK5lsDw5dMCAr0XMsOB5VwOlv8uEW_NPHHKkyuvUn60-O6sSy0cu9xNmqE8YF1I9IRxvYNIpsfTahX6kfONwVOVqWFtv71tI1CwDIn62Yy66HPTQD0MDjDSEQosla_dCTRDlfITEQJTHsoBBmb11mTGHUihn3_aELwZLM_arv4AExC3WDwkcB-SSSo3FzRengNTRaMJLp0CPSWUkLs-raqmOHrUcRlMZlPHn51ugCVju4xoyqBe2r95i9TL8NLCIvm7g6YWLFUEfsGh0qBvfYeqD6qDkwkCzlZO9jN_44bDZpejycImspRUP8g6Z4ejbE1CsR0j7zccMvfAHDTwsJ3au5hb_9NAVx1_Rh9GlYLr3eSRrC9o_3XX9cJni2jLyZQ1o2U9kKkjWUexIIV9KBcBtt36V1QOH-Sa0SZj1MLNXRhT7Jj9wS4HIRBPAd71ihWSwstDUVq760Qe9LQKGm-Z3PMNxL6an6qx0ENyjNu1gyB13wL7WWkcJntc0eDqYre4RE6EHPqqVM0pcIybt-f2xoHYA9z407j2qJgLmm31vQEnasH3Nbc08AxvIYXUQKdXappfg64gqmhdBKKmx8enpb40D4hULYEHqTAuqr_m35tcbJHO_5T-6VYXQbtmK5DjGqXcO-E26whOJyO_8qs6perKM3vfVzKNf8rObzWx6snKm1_VypOyMwZTl1dLYajCeTpq9FZADEv37OHH8SJ7xPDPJXzmdaH8OxGJbSiQB7MiAleZOZR9LYZMKdxA_E97vc9UhjlnVk8FDQ4gHPFa3muxImACsSUCJhfCdYPAZNP6QOw5nui8poXS4WpIKJMozv2ti8UGd5BXNkw1jlFi0qUsPYZFaWDVjs-nIQwvbYL_uf8iTdio5-LlmUyDHKftqbb2q8ExrdHDkIaAZxcsCxxMkejAz0tegILnr80d0qnPk4DqViDPuG6AIY4RfABbrd00QL4hmAuSk1cu9GvR_g5Kn2cJzYxU-fb4sl9ZSNbmeLM_5JpZyVjpIxGBuP6CCO--dnhDf3BoR9CDxyQBLjtrUk9N3333ridjeeDkauWnIuGeVNvwAMDsoImU2W17Y9c5vAGsxLOnhPQIx8KEaI1MfwBgL7Ylg1z0KXzMFnmcrgTqyuUFIKi5DSoeMdr4W3w8Nc7KLxQgIVVd-MhUMtKZc9gbc17Sx4VIzxAaFZJEB1sEoMbhv-JyEM7Gacr7pq3mXkuQhb8CeC-l9maIxRYtj_f1fMp3eJV7TqNLIcwZRzP3Yp8jfKHOujKvOYyWCP5oGJXxmt7GU1DuP_wg4gOJPnb8WnhVUTQwQTjrZ0hXDxqtV-bCXWhLVkFDPqxZEo4plDXoXQtiKSCQFWepKRDGPIG_Gdes2DYZ5dP1xGxbL3iFBpoKsXQ9092M2uQmsJNPuf5epymgkOEuwdlA4NC0kUpITrCBfxtRq7652DqP5NhiNkyaMddM6oegIbqbqCFlAZwWZQukMLb6rlP9sK1DWKbpzlR5ZFNt5IGXtH_oWHAm8ACPOF9Eg1JoHHWMKtxHgaTO-762NJB2SyPuDMVwU49jUQgFnmncv1YkgEVZz_1HQkCy11oEY2Nm4iUdZMYrBZxLzxQ69MJYLTahPidvAwrXgTSX0xv2C4UIuCMKM1D0WHdPr4hSFqVUZshFNN6a9SYNsjGzXYmSWVPBy-3v5qmn1ksZZytSgJohrVZ95ZJIa4FCYmcDfhPgcQul4xkFx_ucVEfk2bDTlin8wgkKiwNgDWXg7_X3kPAQMFnJ46C0UrwEymuWWmuzih0gs7OW1jdOfJpYSb2lxAE-aeZ0iphiGwU4nM1R17cFeAFHnuDVi75HS-BzNY8o6sYD5wUSsZn-YEJfmUAxXW1djotO3BEKS46XNbLineiv9oLkhBHeAqPmhSfOImPh2nc_ZZwtJ8IkrK8ILjXioahyFXXGekEBUxKtLtFWYCEhcy9G1O1efXQupY-9XJv4gk5DgjVPIoYnlc_lTCwOH8YWZklcI2fYHdCfPj-iXB_o4hwGeKB7yQEK7vfsNQuhju146p_p5zwFtcFfvFBIeznAbtTvaxMSYryhLr7JnLBnREvM0ILEcNazqCixR7ropEAkm5Yr1_Aa2STcZA3IE9y0zSsI5hsMZgP3iAWC8bZemsb9IQddfC6VYecSoXiPlQkrxEhyh5nNRHEfsC2nCXHe1rerXnEVcmTnOMW-kVSoOoSPFAHBKX_CiNpiIZkdA-LBjJeqi-YicdzLy3jDOe85aNexUURmb7BjeWnfDN_Ej64PYOmyv011QYxVHru3JkXErT_SumqijYYC8wEedts1wBCvqg8M2vjjOjLgCCab0RbBme1Xqa0GxCyuzvgTmcNJV26FxtrmDEYpyfl9kGtD8Zod1YRn4sX1DklSZFCK-tmuV3nyssirgiZmPJNpj4PPgDvF-d29Sp7NO4UZbl8HFgzSznrp1TEsEN38ZJP0cmIP0FO_LDRy0wpU3yemjol3AVxQWbzW25YvSGKWEqs2gTkGp8HJ0FAZy0Q7Tca7ZkG8jGh7s2PccH7PIXCp1e_-fh7FnWPFZVN4maFDdaI8urwUa7TQJU-T12Gs3Gu5O1bx-EMaBqbF-Yfuw3es6q-g7Pcmcw2Iw5twmbGYvNqOvTz7KTszhe5N5uOTl7joV8194AkA0Isz90cjcLXv1WnYUn4kwQd5RcV5kjE-L8vUsYzQtbvCdymEkDdMNRMzx8ApXfC1pUFVTqXnv75DQsqg8Pm8HhZuEPlN4AQ6Lp4dQggWwYvYK09apmW-D2L-QDL2EhLdCrocQAdlQxVK4FC4DZdhLnl7FJyrCuGgfitVdYNg3DQlzcuQZz2Fm65IGMX2_sH2EA3t2qXAmgxtO2CFz2pkk6V4NtKD1Pmmd4G20brM3TdWhIk1dA2aVa8AzJMYEnVbc4JuFY9x3muhlBKeodc4GfzLPnKW2O54GLkh2teXs5UGmDQZJMjFoqjaHYVcJEnXdYr2hot4Yvp1hsrEBMTqtb_7UusK2R4D2KTnMFjoBBKlHt_0ojHjC_6gNcFa8KkoF-KT8HqyuOvnwvpSIEYwlh7qqidoGhU1lNmF5IaR5ggWqN0h8xZU3JNUGWDu6ME3iGyjFaZxmONzeKG80zjAwQjm1PaFgR_Ph3Zv0y0blLblOaD_SDnhJnGrg20V4rioq6O6FcmRcz7h4TqiRjSlkqDdf8kq3rSGdBYCMBqWQ1cYLMSefXyN_xGQaDujO3IULmfMydWvvPQyJlo-HLtf4mU1QODTmz1yNh1kCHJrF6kgGtPoJ0qZ6Xec-VJAnNCYkyLWyH_cDaOhFJ1zqzFs0bdRw0v5dV4bIxhvA1oa0qfhqFjVvG0Du-s_wgABdDfa5wXBQr-B16tDZBLNJmjBNg-h3w0EwT1zkA8mUlMcrLWTiuhyqGrTypp7cYUC23c1lWbgAcPaR4SsC3ANEktoj9dSJay_1TufoyxLdLR2Q7kfFrLRna9l9W6XoQAc-mFkzXeQYFSIxmqL-2aGnDb389rUe-JNrKZ6Er9H37eUWas_ZKf1A_ipNgqtog7dotg8FmWVgXZCxRnv6xRuKz6HnpMpc-uj6dbvNRc2n28ay64WGmQM4L-DhZzRon2BEdNQeBCSbQBBnLd95af_MD6jBDMvXDl4ag1DbYLbHzZ3KVm6_MvTI82NJ01X6kfMMQ09SiFcfFKG4cjZuz02O7Po5bf96OrRGkj6jn5jeMxW19-PO0eyjdi0PEGh8g8AEYLRx8DtenjAdmSE58CBY0S7WSqH7NSJjBLJgi35aIVNRcN2MekvPvLnHZnekmY1iBtJ3xRXyuUYYuciUWr9Z-a0tWcRtbz29iObx6PvYhxr4RL0AVdxNdsSQUYT-eyG0a38oELlJ9qIdY-46opc08cZURLz8nNr8Bnk86mYpnGr1aFij9h2Qji_YuO2viX7sznno8JEwZG2QsUDiBT9ZehBGSTDc8LAJ5tnRJ3USiSqbN5_rI9pVQtFRcljr-2D6wHvqaCQNauEZRKKXj2c1iWSc1DuvXyqhYNA_ikGe0eNkxN6fFqosE4FDnbwLGRVPRuRcjhjOA6_IrvHs_Q-zh45ntiPusgXOCfmNmezu2dul1S55yFQkn_COQONfbBoMuvfP42VgzWhg_uSVG8CGLsEc9fMriKmge8YrcUnfLmMqBjO4Q3-b8B1J7_dsa-Mw0DLzhLrygoV04vEaon7mzz844nSO8Z-4IsqDbcnw7869DBPBhvu8YEX72r35X8u7zFu1DGOoqsrgOQvqIpwqUXuw2Ltxqwrmg-upPgL0TnCiEUv-bELackPG3SR2znM1XiLs5a-cKG3cj_sTKSXjx44d3vS59xFTGgdyKJRvn0aj_GkS7GqSxHARhfrvIiHuQN_iETgcVLMADEEYUsAyHqUw_I1GUiZVmED0YUrnrap_tMmzkY50bDReTLr8Fm1LNFdyo35Wg8DrngbbRm4fjXJ6zJz9p6qIc5U75AJ5aQmp81IFfpZwnPV52crfsDkWEZQJb94fErXMxdj_5aGMTf6VbYlG4eM97gEcL_s6mp1NPiGPDg5-8yWxi1o12EoDxFA5r3ZHTuRn2Zfp7eZEexs5dXeYew192PJ2UNE7IJsd4SWTifx0q0VLkts0g2UKH92MWnv2pE2WGbnKbzziYr4gu9T8a9BPrzfe0wX0S5g6yJ3Z9t-q4-bhNknqXqMSD5hf3FEgeT7MuYagoeNSu5rVXCOe4kXRSMF138bJ2Yo9Cu5lIgnCyBB_2C3NWIuR-s9T32MGuc--3aWO600clfwgCxJIZUzkuI90ZJlm1SozDNopgt1F6GjJ42VFXJqPGq21Lf9JzAo7mMZMfvh1pvHX1MDwNrJSOtJDaz4qhdFJ0g1i07quV9tZMWQeA9QlbpxeZHggwjwQ-26_PGNR7FD01nAesVMbhj7hD-stBa8NfGOBxQtqMYtXIaJkuapKrSj6tRD1vLqntRKJw4nq-5raulnVSfo6jaMjePajRoHha0AYoni99-_9b8wgApGVpPsGXAH-ZYni6Wkhqmpv8XhJvbnatY5a9V_7abUbiEa9-nSWqiouuvnijKnFRxZ_KnmMLFfHAg_EwCMxDCDRwcWXC4XyLLetPWY7lKfUdF7w4KYNeE7UJkSqDAMexOJRnM8OFhDLJiaZab8XdsehilIfZXG0_YAq2UzElAfef3TMBP3QpVrQUf_SgBHjxVc-pkkvEdr9-0Eb9JfFzJjKQOUPDXAuec0WuEonEqoc-OMVRFomZq4U5oF0RqvU3zIjJ4HIlxo7mwQB8MFl2hoHQjHitv506Rrm40_5tqo_XxyqK0WmsxIDI1jsdqjrgK9ZBvjRc7IJ1sxB4zxVosZYYJS4YeJUNfuFG6-mRotbWHAlvgD43Lp1GhpdLcVXYWCR-P85tuq-rn87jEwfoBEv0Q5Cw9a2sVaABbHz_SXOUGss8tt2if_tbR3zBSfEGUFFMfOgHY1cfODLfT3ZLmkK2QGNMUqlgV--34N_xIe1cjOyWtF46GO637iy0ljRvnk9mpvNfB1q-TqxADkpRgATbuSN_tW0ZR3_YZzToN5qcDxjCRdj1qlyIMhfiLY04vL8SeaT7ZwOsc0Y20-mXIcfdRv9P92G06g8xhj3cx0j2jpnFHvg7ipDTqO0tUih3CDcAhTlzZVVEUBNDYFyCrA1OoLmSH3VdniJkl0-s7xhVQg5VH8PkEq7XkrHWj8xvChbRmJYV_AyJHj7dyKHbc814em6p-0PRJQsAUMP4aqwQNC8Su61YSonF-eRgNnQybXRjcSHwraNKnG8evvzj41smg99bIAUyr_yN-Fyu3iIbzdAa98puCdZq3fn7La2WDLsNRmAMkq0qmphlk0yxqz3tj4lB4_k9l6ZC4xyUttw69zHEXtP5vwsCI1bytLdm1KkGjjudUoHjtvo2T-S0rqwRdKTWMv-Gr5MqgH0ZX3g26iHOl9sMx7okTUuM2icRwRTKq2hhsfld1Q4vV9KTi48YZbVT4-T_9gAY86hzbRUU6iZMaDUNbtz7im9xhjENQa5bLCu8AH2ZEnub6KrCFHnRuYTx0HhHYMrCAcAVCPd1f91J05WFFrLaQOe01ZDV_woV33n-o3hyGnEg5FIVYiirqqBxZyrH-7ffU7U-Ew0yZ6xauMAtUm7D_zxxwVYcqmRjDX3Mp3oxmsL6OaQRATPzUH2zTmX7-jLmBvbzpdxokjymkmZbQ2no0D_LyODbVYzxLnGEYOo6neK-xAw7ivlJsO_-fcZIe9DiDhzibXI-MeJ6_7DznpZLwNqVmMkSpTXLLePnoFSKBRL7SMpCuvgaWwspas1OEH6zz2P9x7YasnbwQPYaZXoSoflr7Hhx65YBx3YmkCxbDWgQTKsY-37LuEkXmnaOqfSEdUKr8owfR43agvIAXPYiv38uD18LK6gYKl9qcDtwY8A37khiVzyhBPuQ6a2LWcctubmZ0x_yyGHH9mwlN9FY8U9DQZskDyVgzh0j26viBWAFB-TWfMo-kmLiMFnBU9f2JEZmnJSMI-hoG-xj8RgRoX5ok9aK4PTatkreGO5KbkIpphWdkVoP6rthObK9SnGbcSFMkPXSxm2X2KJ7kJbRFQGc9KRZZDzpftxproEpZA777kvB6hsCvOBLxIUkf1RJn-2xu66UeNVPl0EqNjKF-EYmSUubQ3x9-2OIvREpLK-HffEnDfyEeqSLw11ZLWhJcE2FpxRS5airvLABnipJIFq_0S2CaENOr8lNL_5o3rpGTYcLMhRa_jXqcPmrPs4ItMODyZ81f37s0KT-6gI2wjuXUY4qO_1e617tYXAdL-FfNRbSfDHcw6ACQ7bWJ3ADFQcWMrMybQzzp_m96oM7XuuMpks_2UMXuowNOsAmZEA6fv9HyYbCtFWVgXQfiDz6l2gbOtAuhOo4T-nFd_rCGStdh9opCe2jbTEqVdkS5mfAC_P9OZcIw42UWpyoZjogzn75nORSld_AlncdAsfzPCy-FjnfPddzjZVHJhW-KuVhiE5JxjlcaHm3RveTpMrGOAtnMxEzyFYuTLbmRheMu-_U27M9KIrzJ7L3pqn9OCbKKaJBWAv6vaA9zQ0IJ3OGbFkjZCEbrrz3W9uQgZRRS4_Almu44t57yR5rcAWRkBWG4u4BxDsDeCyMGsyJYPmVbmQ0fRTFIuOAnhrH5WE_rpvVM2C9o5gjOnxyE5manRXk03OEwf4fvFAyTa_n8mFGriVbkMep7qYe0MGXcIS7VN0rHLlmJhIr6PjcKKVbVBqEpyFjas3FOwlHLShlZos1rqDP_FQT5yXaWWfWfLwlOc7vNTKQX5N9bImSeTv2Lef_II2NhnKxi9gajHW8PHC07ZlGPvnxGjPZup_4oziEIkDrgbkIwH8tmC42G0mhy_qN5N-SMZgTqMxkST72GJBpth0W-0eOyTuZHCC8bNw5pxdKUcmimW_ZR02V7dZeUGdsDW7ALbVvyfLKpgEIugT31eN1C2YpwTCJza5E-2q-KqbIJaEbvfP4LrqJQBDZ7ZLm8PVtugqqV59OPatBGySyO_GvdXJKQqwRvIOZrX3DJNxNznAQOG9SvF4bnQSP4B0kChaLlnR09XBlVsc_-F4hmXMRs2zTw57jTftHd3VhXtgq_FMMl_9gJnwZc_3EAdrEjzzWWX8qSgj2AkF-JddJYunE-MCYR655Am4yvnVGD-am7SZTxhnq8QUdV8mu8arnOb0fOUU-J8DJYnVm1QLUp6G0KafnQG2ujHEfQAGpcpDi1Fzmge1zZVKKgh5g37j9sCJAteoZC-WoJtkAKpiBTFpvBmErBWjkjMztw1E37cRrIPohd2OxQUV9xG7oQGsJDsGJ1LKvU7TC6pACt32mgnqN3Bq-znEpIVseRMYsRFZmUCCm3QEE6q1bWBAUfYEgC6mAt8zEMMYMpcihAZukMD5YsNyo8d2VPZ3vTCDkGw_f5hKUN_DVooCySdCk6Xd4fWZB4gdJN1mp7AZ5CmcN04ATZudRtzi27LUEvK-e4se6WwwAdWD8yCRUN2N_rtrHfVIkzIJ4arSxArV5AfmWOyMA0CXcpXZq0x6akPjmHgjy0A4N-WKmMvDakWvOdicwY5eMj60Yh88zidSwuKKcZ02p3ZzqkPiWZ7WFLVRSKbayEVqyEhoPhGDUJ4GuHkeuYnfXElK2_tgs90jR-1T-LzCQCaRvYGf1Qb4Tn8I8MMaX8P_4E8WB_WpUPcYaDsHono0gjXxev_tj7k8grI0ejig8QxKxWBvP57MDcyxDYXCdKZJvi-RBgYNXtBO63Aj8deZ5NqEm4JB521aBzwvBzqlRZP8-A_q8vQv0Ve9YEkIP4SqWmK4MHhrn5OYKMFjFPWtfFQqPVJLKSiMkL1GbiNAQVhRQBcnFh9KIX5AfHWEM9R3nB7zUL2a8mUZNKhJhytYpuXufmDajCwkWI1ZeZ-6yEVQPhM0tsfdbaRt5ELvnW_GgwWYWEgOYXBtmhY-zXpw3XWKx6ZUwd86BGk0lGRsWkhraD6kpEp-po1rCapKDFlHpkr1_71MF2gDb-FVxs7yCnlFqa6W-ApTsoIQwtqk0bZmekcGcwiALUz9KY7dF9DuomIocbXBAHRUw83czxwl7mTH-_Fd1e5TY3YaZ8lhzFytmwWI3vGzS1RMbKxsZnwd-WlSKRMRK_nZ5xwc00sbugHwUwHqcstd5OEWkFJhW2rC0AVB4iRY6sSE_VDWYPKegXJk8MsuCTLTeeqS3lwRPybzhhmdbraH_r6CxT7ewd-Lf4rilQZkom1vCEe6R6b5cvhxg9ZBM0SroSBHzwPQHXXrmMRjSIOtDNIKiqB-2x_2Tp3VNYMzqy8V-aKgAKNi0SvHWEoEHFLtJBC7spJf6Uqid4XMundrae0gAsejFis-zVdTgD4J1DC-CGdhgc580EZjIuaNRw_QnVAM5C0bOb08-nMYYf2OrTNAg_roc3oMTRworLJMDDAvffAMP8vT1FP00BPBpNydpnP3hgdwV7_6W-8-qet8zD1wBrfns9WUy4am1kb2kmFwxsHaTvcSCuXYI_x5hf4X8ua7dajayRurotBjgH26_5HgwKuB_VlQE4Xbkss0yxuKCAye-2ryezJWEwnKM_fRy97I2WCjKkb0hWvlmW3aDKTCs6d7_7ThiivLlglu82aol-c8zSv8iwNqfmtGf61nTm3k4lSkanJDx3TBBCo7cxfSE1QaIHmd6-4POoJV_zw-H7rJ6J7sqlYT08ltd9kvdZ3AQahY-ppi-GWQt9rOU_OCPwZp0q2eHHI9UeG9R2rdFa3Uo6-kYljuY1dDG3BxS3vwgz1vgasyf2LhZueJlxnp-06Orzehtsz1xNUNJEiBM8El5pFUz9wN4Z10qCELUqXUL_tT15U9-bww6yG4gpzZjoEsO6oIn4mjg42TfPejGxU_5KkWuaSC6tG7bzYivfQjbeqbk_J5pjFjucsX85X-q1oNJvraUp0VnQme_RAk6M8OElQbnThAeILXPJbs1cecsTvb9yY6OxPKKGaCcoLXYVhmy7ZJVi1KVcjG6qedUEHimO0zaU4iFnsKo7fQa0Zqop-P8viWvm8hPwzAKEWSj6qpd7ao0wQq73S_JI6_Qy6kp6Voj-smXGNNOC-sStUd6eydqJOU2-jU46MAPtRmCiyx4aAStvdFxvMh2oKQaJ7TicT80tS2oSLUeVFOhwmf6sZTffJdKyRV5IyUAhXFgpCN3lD9NpcNrv6RyJR9Q-A8cKCsGngRzaE4dlwNdwaw_KQevh7e8VjQ_hCD7VX_3xVuOhSFeQ9RurdZH8M9fRPlRqf0-EaVKSylcDMV7Hx0iUGQBkImAcr_qw38nFMnVgmdBVlHcL0-Fci-5V3FPeqjfPNk1hr4vA34Rlk2qi5lc8PiGcHXO7x6_NiZ7vyZokH_qvl8nzCvQh-UkoZkIR4097DTXmbpT1Nq7l6wL3QjUjXSGIFXihhFxJ_yVLxnG1GGu46mqzgH232L2DPy-tBIJB_n_lQH0UUNBl79Cn-nkex-T7C0rQVQrqZHLr-HRwvhhr0LNXCUCLuJu2XrrmpIC6Q4OZpb6is-F1xb95To7QtRDfi34s0Soy07y4HRpgR-0-0ZLfaYnl3tcNPP1sOymHWQR2NKIPEUbP9SemJETf8jaipd_Hdn4mOKy-k-uv1SEfL9YhngKHB8gLib24iNRSdg==",
+                  "status": null
+                },
+                {
+                  "id": "msg_0f9ad589fff2565d006a57ada785c4819d954dfe54c0c35883",
+                  "content": [
+                    {
+                      "annotations": [],
+                      "text": "Пусть для общего размера \\(n\\)\n\n\\[\nA_n(a)=\\bigl(\\min(i,j)a^{|i-j|}\\bigr)_{i,j=1}^n,\\qquad D_n(a)=\\det A_n(a).\n\\]\n\nНужно найти сумму всех \\(a>0\\), при которых \\(D_{2026}(a)=0\\).\n\nДокажем формулу для \\(D_n(a)\\).\n\nРассмотрим матрицу \\(A_n(a)\\) при \\(n\\ge 2\\). Выполним операцию со столбцами:\n\n\\[\nC_n \\leftarrow C_n-aC_{n-1}.\n\\]\n\nОпределитель при этом не меняется.\n\nДля строк \\(i=1,\\dots,n-1\\) имеем\n\n\\[\n(A_n)_{i,n}=i a^{n-i},\n\\]\n\nа также\n\n\\[\na(A_n)_{i,n-1}=a\\cdot i a^{n-1-i}=i a^{n-i}.\n\\]\n\nЗначит, после операции первые \\(n-1\\) элементов последнего столбца станут нулевыми.\n\nДля последней строки:\n\n\\[\n(A_n)_{n,n}=n,\\qquad a(A_n)_{n,n-1}=a\\cdot (n-1)a=(n-1)a^2.\n\\]\n\nПоэтому последний элемент нового последнего столбца равен\n\n\\[\nn-(n-1)a^2.\n\\]\n\nРазлагая определитель по последнему столбцу, получаем\n\n\\[\nD_n(a)=\\bigl(n-(n-1)a^2\\bigr)D_{n-1}(a).\n\\]\n\nТак как \\(D_1(a)=1\\), по индукции\n\n\\[\nD_n(a)=\\prod_{k=2}^n \\bigl(k-(k-1)a^2\\bigr).\n\\]\n\nДля \\(n=2026\\) матрица вырождена тогда и только тогда, когда\n\n\\[\nk-(k-1)a^2=0\n\\]\n\nдля некоторого \\(k=2,\\dots,2026\\). Отсюда\n\n\\[\na^2=\\frac{k}{k-1}.\n\\]\n\nТак как \\(a>0\\), получаем значения\n\n\\[\na=\\sqrt{\\frac{k}{k-1}},\\qquad k=2,\\dots,2026.\n\\]\n\nЭти значения различны, поскольку \\(\\frac{k}{k-1}=1+\\frac1{k-1}\\) строго убывает при росте \\(k\\).\n\nСледовательно, искомая сумма равна\n\n\\[\n\\boxed{\\sum_{k=2}^{2026}\\sqrt{\\frac{k}{k-1}}}\n\\]\n\nили, эквивалентно,\n\n\\[\n\\boxed{\\sum_{m=1}^{2025}\\sqrt{\\frac{m+1}{m}}}.\n\\]",
+                      "type": "output_text",
+                      "logprobs": []
+                    }
+                  ],
+                  "role": "assistant",
+                  "status": "completed",
+                  "type": "message",
+                  "phase": "final_answer"
+                }
+              ],
+              "parallel_tool_calls": true,
+              "temperature": 1.0,
+              "tool_choice": "auto",
+              "tools": [],
+              "top_p": 0.98,
+              "background": false,
+              "completed_at": 1784130990.0,
+              "conversation": null,
+              "max_output_tokens": 128000,
+              "max_tool_calls": null,
+              "moderation": null,
+              "previous_response_id": null,
+              "prompt": null,
+              "prompt_cache_key": null,
+              "prompt_cache_retention": "24h",
+              "reasoning": {
+                "context": "current_turn",
+                "effort": "high",
+                "generate_summary": null,
+                "summary": null,
+                "mode": "standard"
+              },
+              "safety_identifier": null,
+              "service_tier": "default",
+              "status": "completed",
+              "text": {
+                "format": {
+                  "type": "text"
+                },
+                "verbosity": "medium"
+              },
+              "top_logprobs": 0,
+              "truncation": "disabled",
+              "usage": {
+                "input_tokens": 202,
+                "input_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": "[REDACTED]"
+                },
+                "output_tokens": 3778,
+                "output_tokens_details": {
+                  "reasoning_tokens": 3146
+                },
+                "total_tokens": 3980
+              },
+              "user": null,
+              "billing": {
+                "payer": "developer"
+              },
+              "frequency_penalty": 0.0,
+              "presence_penalty": 0.0,
+              "store": true,
+              "tool_usage": {
+                "image_gen": {
+                  "input_tokens": 0,
+                  "input_tokens_details": {
+                    "image_tokens": "[REDACTED]",
+                    "text_tokens": "[REDACTED]"
+                  },
+                  "output_tokens": 0,
+                  "output_tokens_details": {
+                    "image_tokens": "[REDACTED]",
+                    "text_tokens": "[REDACTED]"
+                  },
+                  "total_tokens": 0
+                },
+                "web_search": {
+                  "num_requests": 0
+                }
+              }
+            },
+            "latency_ms": 63499,
+            "answer_chars": 1430
+          }
+        ],
+        "last_response": {
+          "id": "resp_0f9ad589fff2565d006a57ad70c768819db4ebed06d84c62a4",
+          "created_at": 1784130928.0,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+          "metadata": {},
+          "model": "gpt-5.5-2026-04-23",
+          "object": "response",
+          "output": [
+            {
+              "id": "rs_0f9ad589fff2565d006a57ad71a7a8819d8e4b6b2cc020a740",
+              "summary": [],
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqV62uF6RjfITkOpV2WADB0FW1mg_1kmZHIcbL4yzEKhQ9NTk30cyYvjCCx2iauPPW2FmNk2jPGJ7_zosFSo_vMZc9y04Vj_Z3kvLgG2b5xlKg7pY8y7agyZM2H3Q1y-RXbnTO9Fh7PxwWZYGzsN8npIxxF680w9UHkqSEBBxc23QNFlsUDmGiylI7VZoIF2p9itH-3SeR-GCbGWFdnZ4RxSl4wIuqzB6N3INrvSX_7Qb9B5YwK8osNtWb8BUZieORW-BijIVXI03CqyuF7uVpRF-YUTjhdQbfurD7_KedIEqF4UnQCeY-5Tj19QFLOI4N13cqndrNX0WyT5_ILKkAylxo8USC1jSincGtdkX-Q8uGdlgmnksZiUD05_gKykLf4--Ffv4eJjvshPbQ858V3Ti_zjkDaeJ4QQpi1b_g72eLMcQ2rvJNiTXfV9GO9aHhTDn5z-vFhnr8mcWyYXHRtp_MNjz98AXi6JdLnHMgjBDanRznk8XybB976VV4M-ZJbDFiRook9wojlQ4Bvhim_VyP2xOuBLByj6Y8Md15UyDurPDgh1jLhgR0lYngCo9xNk6K1zdkd8yjsGAmxyeqnkOipCFUJtzqdMskXn2ngcDhyns-5P1HINd22IK_r2vVzOSNZ1B5HGmhlS3z7yK74J4n3pTo5bWUrkPF6DGnEhfJC3yE-B89Vo1GSN9NUtJmdor78gR_KJD9gtTZxVeDXio7gqy5CQtxklOg01jr2pB4a3F1hqhs4FkoTIEalk56ki-yt7TyoVlxm2skFmECfqGvpnvwEyOmhcn1V6_cjX_l_QDo-o5VB8-6uNjoCib-gJVXlk9C3SYwXiCHX8fRn7tk325JXgb6rwpACVwJ2GSP_NJ55yP4mLqKcH1QPJ8uNRbMJPCThoXKTWuYUJyAL6nJjf_eRD-r2ofzbZ1IBpMIMWE_1Pw6pVgI0ygT_5Kp5rVCbQdY9C5YO5kd8VTKrkWd6m7z2x7DYAn-TiiqecnahQFmEsv4wrL5t7llo-UuviUoW4w1U-NWe0TKdkT-ZOYq46ySFKtZt_obzTskQRH-TKxem3jjH8rYoz3JLfsjrdjSDcjwa9bfQR7bGheAQPE9lsCheKafLqPhoGChT-7XKDLSsnhIIJlnJgYRgHWu3XMc-qrqDJ3dFQF0OD_XgkUPZQsd_537i5jWISUWeKKqxBOJCb7flVoV9QGasUMB8R9jlo4uPCmETRwfiT6JBdVOXAYtkxcNhQzslK5hZrbEoCRpC8WPEYYmMUIVdSjkNNlpMb5Lzsd9ktkv0b1WBBGLUT5IcnWGuKA5C0yeiZVrMuK9ii0KXyzme_W2wQSElmb91_h0IzYY0JIWFAJuwNfTCljS5e1dJ0k3ioxLXpXGTP-X8P2J7uKeNnkg-3RaoT4xazdRiMUy3HgYJCyIWoTEcIaT-75_Ek5tWm823S5gXzfhvJxdEmUEXNv609LXYVHxafS9YUe1uVKCVySUr50yajFUSl3i44TG_-7ve84Xlyx6W2BmQkZwr_euoi7FK-E_-MbsZBn8hh4YF9aBcd8nx8SbU2PiAH2pYWnSXcLB5BnhcLPUS6vUyQtQsNwG5G6N5zAqrgE7rxwGk4WuCbbnvaZmHW_2Xr-h3LrrSmMX5LwGJ31eiPTPZ8swRPxggYJX2yXdWgUc3rZfBr2ZutFKr2rjih--ZzbHTAm0tqwiJFOMETvXos2CaygryqRFb2SBN1-v1Ho7qyaFlSNwA9x9PMngnwb582zcHcP597O4qI17kam4rveTqiCSssNfhPeh8nucWD_MZvHMlrm5geqcUPKFhSil3YAzM2YMnQb1YJa620-O1gmUFknITA5J2e_2WgBbF4malqGl6V9lZWesmjnD6Wlu2rUbmiCOnxEC9_LC_vuJz1cRttZn0Sb7NT0begVHLm0Sw2BqxzPlD-tyJnNAMJSBNiPo2Hz0fasTI2d127ZOU-w8ZW4Bd02tzSxXmkF5Tz5Bw_E83-61xgKdaDR4-lPctg3CJYdhfSxIBP-rcnz3KeruFm6LVJLvKhLweABREC8-opo2gRbQ3y3XIOrY64m50JHQ9YXZZsoEcjeq2ibT3AIeiL_KgImvfk59uc3S91r6kSw4Nmo3HP6Lypnm4zuG6XeIS_huGbn6XLmRShqfjiFX67OFURseaJ6PVlTk9j0Bw7fmjvx_Rx1Yg7W1sdLYaiA_2RwmMqFsd4cLSKty6DyYYMAN89IVAB4bymJ-rrtJ1Jiib7Y6n7SUOOCDLqwoSfHAuF_lgttOJm8ADQUMgESkbzwQwQuWl-M0q7DFYlmQVikt5QJCr2_HLLUBDVxsS3GtgM31P_WH6_3TGNMg8QtOMQZDbCJieV89jhwFNyOxWxLVNLstad9Pp0JT6hLMFQMY0jsu5bATweVsDhK66ErTIMBpS4fbya-FHHLot43bS3VJFrh8wtlZFj1-NCJY3V6TT-vtN2-7fVkcWYvF-1I4VRiFoDVguVKwuHoWzIMU-7XNAUcHO8rS7fw8Qz4mBj89pylkdXV5Y_drLSDvtyvF1eiLZL8n0DsZx7qfPam2Y8F17jLx7_6bdxq36UuVjy6M6xCYSC1aU8zPNwXNGkqti4bkINp_4JpQPI3_XWNs9HLpG7CSOtsmGx4AR0zhA7Pq1KFsiMRv-NsCsaGtrkVQ6j2UT1atcZritfDYFXV7Kdlhhb91roi1jdIyApVHWeZRqV_8qzpUiymSO23Tv9G8Se_n2JVuET60__P7hUmsoSVGRNjezeL2pwCndzK1nP0dTvlkrtRivEFxE7kan7qa9rk3KJUZJbbZZwyzUyajRE8Sp9lOPeTNTKqZZDQmrn5USDOjLlzl2PxIKiie-C6CXhbV61jrXdUjLhfqQQoc0ewYUnCAb1tpu16R6ED3ky0lhzzxLc81VhS7PBt6OEBR-dK050QP4hCzjUKHWzjsr0mpTKJZnMWJs5GYklu9_8do6vSCJBGVzjJHQbXaqMQ-4IMosKlEO0ZWivcnnT3rsX-ryaBVdV0ccyZzFuCeXF9pZ3oqA7ZcwgL_BgjfLB4KJZ8cu-blBBVpUf96_5R_JIrTlYEM_UZZC8awasM2c08v1R-PxW06l6Ggu9qxlsHBjSNLd9pbCVZJc93w9gD6G1-pkOuvF0Kl4dOWe0OuRDwAVy8GsZM7VZvyA_l_wr4Ho5PbzsEweC8ocVwh5m_ikXHcakWgLbjhhAhriko3FH6jiDFdlH2m6elk7TjQcM7wAmkmO6Gr9zIRCJhQRtaVSbRpURe73ZBv5Su2pj4tSnlLfSKqs3XCVET42U6YdDVb9tfx0MLy8077AWXNeNNUzP0MxNEut7MoBj0BkCPE-utzWutN0JhHxKdmvVXLBXw1r5w3SeFjLkH5u9ikGE1tyN9Rcv_j_HWJpJ71Mm1skPopaciN_EUUxiTQXhspXni1mPdQVcI8_Z9lf3wjCfYN0frEqMg4CcOs1Y-4UE53fJQG891tqz24thCTEP3nowKPzFaSb3F1EQ82iQhJhmik8r6tT-OMw9sGS9FQfZzOWTTBQ_9QBN6X-ueihsGaGOuGc9CILzidPTcfq6YXKR35npg9L_xhJ9cMiywFjL_FNSCb1WYlaIzvub3xij7A2GEGbhKqt2M0rhrYINRyKzcbVyyBzuA-Tx0CJyzOrcJBdtFMxKo1_oVGGe7-ojNnaBxUqn7aUguQB4m6gwlKiWFbU_SB5DXJOfd5IBvlqWeoc5f-xIAexSQJwWQo9vG5-6dCm0-_nRhaO56ssdku9rLag_Ah4q9jmboYSQm3f5LSo3xuUnsOql-2olGlhvBpjTnCMclo10FjMu-zZStOou0DCQIuDV8k-DPfx-bsonIsWUOcaUG2G23Jfch-4VmYCeJDGh7XPmAQ8bifmmxZ5IuZCDq_kLsLkmee9DLJ1g72C_gNEPO-kR9jlFYqCaeihjmdfj8uxdMV3P_An7RudXPS8t0JmtbRK8_DjS6Mm49quiafkar6Solokkb2UqFkqhmXJwW1EhHcEYti-KMkrL-XbnIMyfwi9w1JVW8TWkqkkOgskKoAeaxQTaNjzLjAmkrPUDErU1VKhbQvcLGqA9YrwFBhKkD8MiqXS0bMdgJS5zzU0CS51F3iEfXvU8zDEQeIMCa4RBP5iwvlWAABS8dAQ3UIA3ROrrFv5SJwSjZxei2fyfOv3Ab0rZNTmnYcCrJdXN61CH7Amnln6XDQk-mFLQKtA29iza5f94gWV1kMgO70mrJSMHw11WcsRbpeDthNAfJrwNq7Vs-Zld7cEsZdh7KH_6IVO-B95ZqR6Fp-EMpf4uuYKAFX9KeNsfYLbtDSghrPODYcIFdto0IkYbaZMx5S9lO5E_cMt6_KZ55eLdDalA2AmgT8_Zhs37J-PzKYjAH6MeEie4RscynvpeV_k-zxR0SSsADMnkn8iDBRexCgxf7tTAMQmjZd9_yX42ACN6U390E_k98HllhCRqhBrJEpXfmmoUg28bx_i52pyLweZuapLgf-jY2zeiAPFYuRlbBYU4bnQ7hLCtymw2FZJ8LBE1UOlQiK-AK4_JT_eLvl3LUUoFArzWjxV8LDVlfwzcPQTPrf1yt3MsHXsy7NTTVzWArkCJ4_bKaiwTk1rY3gqsSyVE6chxmIzx-C5mjNThaN-2i7gi6jfqoci77sOTnkDodaDMClTNoNa4ssVHuYbfWZTEqngxcg2TIYPUJWOTX9L0aowp5hHChn3AJsxR9o_NkAG7qyIWxpLnYwsWAHtoFA5TvpqhWAAZ_T0OG1fqsQ-Vp_GkWe3fMNKoTiQ22BGxQ8xrbouux3FvTjR6H3FoWo1Cea9BP1fzpASbiLfY-fQ8r9qmptAA7u9LGSPXpIbxYvwND8-U_hkTt-hUO36wtwrPfvzIkaMNqlQEsL7Az_eqfoGjjJDLx9_fu8dMHdu_gZ8XSND3soVy3vcuBwWivSqBN_GC1s5cHAPaOfK0YYL9CvYdacwSnhXcX0OjPX-P3APhlYQxdmoAxTbfz6XBeC5nPaJZDnFlqUJCrZnX1wW8SUSB_bFmDUR_KJdeKD9e-hyDVD6YgkBWXTBAy-hk8s7CzeX7n2gZQo3QdxPe1_wYMNCe49pX6Bz8kMT8xZUjvIe0TnbZpnd0c6WkG8xgNOXmCOHjJd8NQ4EL6B_iN93HTvYdRoE3NVgobUVy87JAixo9otDMEbrBAJzzmDZJqilLVx0qdcQQ7z94noGsV_RkipjJodUealaPSPLwkxMZEv7eMtlEOyvbVtt9WNoqGQs2FLXHpaBr9P25KtIDZSsHcjKhp8Tge1yNveUcDziTnYarYbo9X_VO4A6KSIjjiw_PVCTCwynrkZEbCLzm_F1dlN1qYcjd84ZSF-qF1UExCS09LIk-o2zKr4arojbroMvj3fiyQXbPwaTzlcTN3O1VTJwm5ClfmrkYDBLBoUjvRs5tQFMJgPVQTTtuVliRoLKedcMDBN8rBgHDiWcyfAku-1q05NL_OYVx210PmlsfLGJoxSHLwMny1Lr4TMqlOCtUNdAn15m-U444-Wl5gnWxCLBqSpv0S02mT-n31KkGWWPisFNz_I4ijTzcwJq4uj30rJvsuIOLxHvT4qHmFgQx0mPGmmHAzIDXb8RtTL58t29IrOmvu8wCXxhHtVr8FQkEuDxIryKnS9MytRwaX1tXQozAJgGTuYzX2eMVN5jwPQa4VmZGusuS-Ijn-Segrjndy3Wvti2uFVeU133AohJ2uINixFBkhp_4V3E_rE_5_Q4bQ0LNMP2LPt2amzFeaFn9lOl6NeY5WOQFLZM8EFwBK0URs_ywd-sbfu-IxvEEoRhysa0ANaR_xJNfCzghXbV-FejkKxvErq6BLS12-o_Or0mGhrO-I2n5MTXokayHOlwwfUA63eH2ubc352DIF4-RFwX9k1PgJEAoGGHVe7dxUSd2HlDATxNgk6u3b98at7W6X3I7Ngj2QPGFd1Iy2J1L95H21KDNGzxmRfX6qgsKURFxi0LUvhLBRgUwVoK3FaXsyg3JVuhOEB8Fxf1x1WRdhf8M1ZkIBOiStpNPHJd4WYPd6xavdks6SeYqd2BI7BW78PlP4zFYwSs91POyxLdxFHTuGK8nITUhAJOKvJiMdZJvt6DslwpdLN4FO98IfnAo9kvbSb1W6EB3B_2VHUQtW1BDtR4_n1Th-Obwc3T18Sy9RUnN5sUgHvVj0_jxje941fUmxem5ZsZuef9trc3PvPRTEJid_jbqpPkdOk--hK0igCZjYnUjeKFq6Eel71wQp1roaKpAXLcRl30qxoFW43ujJackdPvgV3KRz4hkvH3Wjgqj2EVsn3rlBSzqSn1OrTRqBgH-KKkHNG8cCgD2_nEx0uLtbA42K6RdMJS4Xg3WptBthZlGZDNwwH-ew5wiEYYGAzH5vrtcaQDb6YBgwvefgBwNDpGCBHKp998je9NOrQ7LyPCjIHpr4BX0pncIRcwIit7_QSdOetMesx4i3je7Xfgkw7j2SMs0vi1Lz3n4ynBNgXrdEwEDP10AVuuAUyOXNHrTkfZVkrjUhdDWAYsT_u8ALnG-iDDPBK3x6JPLBzzY1iCn_8imTCrZ9pfEQ7_d_IWo-zLTL79opjWJeMtR5DiMpuAem_8fKR2yfq5rmfMdwTVU55LEMmKrTIObfAbGOi-A7xABQ1lAmuOPdN5SSrQvEUxM5l2pGnUOOqhKSMAMnbuWJvkYknLn17I8_cbTR8cW4x_DZgDSXyjOFZclo1IOqXGpDWvgj22WfKGqntirLcyYJXvdUOlVuhmWcwrF5y3W1_bQnZMbLATvsZYnFlYWQydsBwhYjCmuM1Qqta4RmX1foUXSH_diOV4Q1s_GtFBazKaIjqNzOYf6JTvqH7acJFlt64UfP5aXrdv-MqTjthKrlCYgDUX3Ne-Lb4dRmAs2cs9zr1mFgTBlNF5FxRUdeS2bduIln1cfXWCCJfvGeMr-EAqSMjNe-uRI4OBPhUXbjA89YPSpCzMNJ9wFUEL_YumQWYFSwE9tNctVO67r4GjEi1UdnO5oKSzqiaPt9YUs7GLp_qgdV8PPAYXAznSHg6OqJPTjz_AjJIwkb0-zUg_z8d-z7xb7UYFe9SKd2hATGQhIB8_HUQ7KyeIroK5lsDw5dMCAr0XMsOB5VwOlv8uEW_NPHHKkyuvUn60-O6sSy0cu9xNmqE8YF1I9IRxvYNIpsfTahX6kfONwVOVqWFtv71tI1CwDIn62Yy66HPTQD0MDjDSEQosla_dCTRDlfITEQJTHsoBBmb11mTGHUihn3_aELwZLM_arv4AExC3WDwkcB-SSSo3FzRengNTRaMJLp0CPSWUkLs-raqmOHrUcRlMZlPHn51ugCVju4xoyqBe2r95i9TL8NLCIvm7g6YWLFUEfsGh0qBvfYeqD6qDkwkCzlZO9jN_44bDZpejycImspRUP8g6Z4ejbE1CsR0j7zccMvfAHDTwsJ3au5hb_9NAVx1_Rh9GlYLr3eSRrC9o_3XX9cJni2jLyZQ1o2U9kKkjWUexIIV9KBcBtt36V1QOH-Sa0SZj1MLNXRhT7Jj9wS4HIRBPAd71ihWSwstDUVq760Qe9LQKGm-Z3PMNxL6an6qx0ENyjNu1gyB13wL7WWkcJntc0eDqYre4RE6EHPqqVM0pcIybt-f2xoHYA9z407j2qJgLmm31vQEnasH3Nbc08AxvIYXUQKdXappfg64gqmhdBKKmx8enpb40D4hULYEHqTAuqr_m35tcbJHO_5T-6VYXQbtmK5DjGqXcO-E26whOJyO_8qs6perKM3vfVzKNf8rObzWx6snKm1_VypOyMwZTl1dLYajCeTpq9FZADEv37OHH8SJ7xPDPJXzmdaH8OxGJbSiQB7MiAleZOZR9LYZMKdxA_E97vc9UhjlnVk8FDQ4gHPFa3muxImACsSUCJhfCdYPAZNP6QOw5nui8poXS4WpIKJMozv2ti8UGd5BXNkw1jlFi0qUsPYZFaWDVjs-nIQwvbYL_uf8iTdio5-LlmUyDHKftqbb2q8ExrdHDkIaAZxcsCxxMkejAz0tegILnr80d0qnPk4DqViDPuG6AIY4RfABbrd00QL4hmAuSk1cu9GvR_g5Kn2cJzYxU-fb4sl9ZSNbmeLM_5JpZyVjpIxGBuP6CCO--dnhDf3BoR9CDxyQBLjtrUk9N3333ridjeeDkauWnIuGeVNvwAMDsoImU2W17Y9c5vAGsxLOnhPQIx8KEaI1MfwBgL7Ylg1z0KXzMFnmcrgTqyuUFIKi5DSoeMdr4W3w8Nc7KLxQgIVVd-MhUMtKZc9gbc17Sx4VIzxAaFZJEB1sEoMbhv-JyEM7Gacr7pq3mXkuQhb8CeC-l9maIxRYtj_f1fMp3eJV7TqNLIcwZRzP3Yp8jfKHOujKvOYyWCP5oGJXxmt7GU1DuP_wg4gOJPnb8WnhVUTQwQTjrZ0hXDxqtV-bCXWhLVkFDPqxZEo4plDXoXQtiKSCQFWepKRDGPIG_Gdes2DYZ5dP1xGxbL3iFBpoKsXQ9092M2uQmsJNPuf5epymgkOEuwdlA4NC0kUpITrCBfxtRq7652DqP5NhiNkyaMddM6oegIbqbqCFlAZwWZQukMLb6rlP9sK1DWKbpzlR5ZFNt5IGXtH_oWHAm8ACPOF9Eg1JoHHWMKtxHgaTO-762NJB2SyPuDMVwU49jUQgFnmncv1YkgEVZz_1HQkCy11oEY2Nm4iUdZMYrBZxLzxQ69MJYLTahPidvAwrXgTSX0xv2C4UIuCMKM1D0WHdPr4hSFqVUZshFNN6a9SYNsjGzXYmSWVPBy-3v5qmn1ksZZytSgJohrVZ95ZJIa4FCYmcDfhPgcQul4xkFx_ucVEfk2bDTlin8wgkKiwNgDWXg7_X3kPAQMFnJ46C0UrwEymuWWmuzih0gs7OW1jdOfJpYSb2lxAE-aeZ0iphiGwU4nM1R17cFeAFHnuDVi75HS-BzNY8o6sYD5wUSsZn-YEJfmUAxXW1djotO3BEKS46XNbLineiv9oLkhBHeAqPmhSfOImPh2nc_ZZwtJ8IkrK8ILjXioahyFXXGekEBUxKtLtFWYCEhcy9G1O1efXQupY-9XJv4gk5DgjVPIoYnlc_lTCwOH8YWZklcI2fYHdCfPj-iXB_o4hwGeKB7yQEK7vfsNQuhju146p_p5zwFtcFfvFBIeznAbtTvaxMSYryhLr7JnLBnREvM0ILEcNazqCixR7ropEAkm5Yr1_Aa2STcZA3IE9y0zSsI5hsMZgP3iAWC8bZemsb9IQddfC6VYecSoXiPlQkrxEhyh5nNRHEfsC2nCXHe1rerXnEVcmTnOMW-kVSoOoSPFAHBKX_CiNpiIZkdA-LBjJeqi-YicdzLy3jDOe85aNexUURmb7BjeWnfDN_Ej64PYOmyv011QYxVHru3JkXErT_SumqijYYC8wEedts1wBCvqg8M2vjjOjLgCCab0RbBme1Xqa0GxCyuzvgTmcNJV26FxtrmDEYpyfl9kGtD8Zod1YRn4sX1DklSZFCK-tmuV3nyssirgiZmPJNpj4PPgDvF-d29Sp7NO4UZbl8HFgzSznrp1TEsEN38ZJP0cmIP0FO_LDRy0wpU3yemjol3AVxQWbzW25YvSGKWEqs2gTkGp8HJ0FAZy0Q7Tca7ZkG8jGh7s2PccH7PIXCp1e_-fh7FnWPFZVN4maFDdaI8urwUa7TQJU-T12Gs3Gu5O1bx-EMaBqbF-Yfuw3es6q-g7Pcmcw2Iw5twmbGYvNqOvTz7KTszhe5N5uOTl7joV8194AkA0Isz90cjcLXv1WnYUn4kwQd5RcV5kjE-L8vUsYzQtbvCdymEkDdMNRMzx8ApXfC1pUFVTqXnv75DQsqg8Pm8HhZuEPlN4AQ6Lp4dQggWwYvYK09apmW-D2L-QDL2EhLdCrocQAdlQxVK4FC4DZdhLnl7FJyrCuGgfitVdYNg3DQlzcuQZz2Fm65IGMX2_sH2EA3t2qXAmgxtO2CFz2pkk6V4NtKD1Pmmd4G20brM3TdWhIk1dA2aVa8AzJMYEnVbc4JuFY9x3muhlBKeodc4GfzLPnKW2O54GLkh2teXs5UGmDQZJMjFoqjaHYVcJEnXdYr2hot4Yvp1hsrEBMTqtb_7UusK2R4D2KTnMFjoBBKlHt_0ojHjC_6gNcFa8KkoF-KT8HqyuOvnwvpSIEYwlh7qqidoGhU1lNmF5IaR5ggWqN0h8xZU3JNUGWDu6ME3iGyjFaZxmONzeKG80zjAwQjm1PaFgR_Ph3Zv0y0blLblOaD_SDnhJnGrg20V4rioq6O6FcmRcz7h4TqiRjSlkqDdf8kq3rSGdBYCMBqWQ1cYLMSefXyN_xGQaDujO3IULmfMydWvvPQyJlo-HLtf4mU1QODTmz1yNh1kCHJrF6kgGtPoJ0qZ6Xec-VJAnNCYkyLWyH_cDaOhFJ1zqzFs0bdRw0v5dV4bIxhvA1oa0qfhqFjVvG0Du-s_wgABdDfa5wXBQr-B16tDZBLNJmjBNg-h3w0EwT1zkA8mUlMcrLWTiuhyqGrTypp7cYUC23c1lWbgAcPaR4SsC3ANEktoj9dSJay_1TufoyxLdLR2Q7kfFrLRna9l9W6XoQAc-mFkzXeQYFSIxmqL-2aGnDb389rUe-JNrKZ6Er9H37eUWas_ZKf1A_ipNgqtog7dotg8FmWVgXZCxRnv6xRuKz6HnpMpc-uj6dbvNRc2n28ay64WGmQM4L-DhZzRon2BEdNQeBCSbQBBnLd95af_MD6jBDMvXDl4ag1DbYLbHzZ3KVm6_MvTI82NJ01X6kfMMQ09SiFcfFKG4cjZuz02O7Po5bf96OrRGkj6jn5jeMxW19-PO0eyjdi0PEGh8g8AEYLRx8DtenjAdmSE58CBY0S7WSqH7NSJjBLJgi35aIVNRcN2MekvPvLnHZnekmY1iBtJ3xRXyuUYYuciUWr9Z-a0tWcRtbz29iObx6PvYhxr4RL0AVdxNdsSQUYT-eyG0a38oELlJ9qIdY-46opc08cZURLz8nNr8Bnk86mYpnGr1aFij9h2Qji_YuO2viX7sznno8JEwZG2QsUDiBT9ZehBGSTDc8LAJ5tnRJ3USiSqbN5_rI9pVQtFRcljr-2D6wHvqaCQNauEZRKKXj2c1iWSc1DuvXyqhYNA_ikGe0eNkxN6fFqosE4FDnbwLGRVPRuRcjhjOA6_IrvHs_Q-zh45ntiPusgXOCfmNmezu2dul1S55yFQkn_COQONfbBoMuvfP42VgzWhg_uSVG8CGLsEc9fMriKmge8YrcUnfLmMqBjO4Q3-b8B1J7_dsa-Mw0DLzhLrygoV04vEaon7mzz844nSO8Z-4IsqDbcnw7869DBPBhvu8YEX72r35X8u7zFu1DGOoqsrgOQvqIpwqUXuw2Ltxqwrmg-upPgL0TnCiEUv-bELackPG3SR2znM1XiLs5a-cKG3cj_sTKSXjx44d3vS59xFTGgdyKJRvn0aj_GkS7GqSxHARhfrvIiHuQN_iETgcVLMADEEYUsAyHqUw_I1GUiZVmED0YUrnrap_tMmzkY50bDReTLr8Fm1LNFdyo35Wg8DrngbbRm4fjXJ6zJz9p6qIc5U75AJ5aQmp81IFfpZwnPV52crfsDkWEZQJb94fErXMxdj_5aGMTf6VbYlG4eM97gEcL_s6mp1NPiGPDg5-8yWxi1o12EoDxFA5r3ZHTuRn2Zfp7eZEexs5dXeYew192PJ2UNE7IJsd4SWTifx0q0VLkts0g2UKH92MWnv2pE2WGbnKbzziYr4gu9T8a9BPrzfe0wX0S5g6yJ3Z9t-q4-bhNknqXqMSD5hf3FEgeT7MuYagoeNSu5rVXCOe4kXRSMF138bJ2Yo9Cu5lIgnCyBB_2C3NWIuR-s9T32MGuc--3aWO600clfwgCxJIZUzkuI90ZJlm1SozDNopgt1F6GjJ42VFXJqPGq21Lf9JzAo7mMZMfvh1pvHX1MDwNrJSOtJDaz4qhdFJ0g1i07quV9tZMWQeA9QlbpxeZHggwjwQ-26_PGNR7FD01nAesVMbhj7hD-stBa8NfGOBxQtqMYtXIaJkuapKrSj6tRD1vLqntRKJw4nq-5raulnVSfo6jaMjePajRoHha0AYoni99-_9b8wgApGVpPsGXAH-ZYni6Wkhqmpv8XhJvbnatY5a9V_7abUbiEa9-nSWqiouuvnijKnFRxZ_KnmMLFfHAg_EwCMxDCDRwcWXC4XyLLetPWY7lKfUdF7w4KYNeE7UJkSqDAMexOJRnM8OFhDLJiaZab8XdsehilIfZXG0_YAq2UzElAfef3TMBP3QpVrQUf_SgBHjxVc-pkkvEdr9-0Eb9JfFzJjKQOUPDXAuec0WuEonEqoc-OMVRFomZq4U5oF0RqvU3zIjJ4HIlxo7mwQB8MFl2hoHQjHitv506Rrm40_5tqo_XxyqK0WmsxIDI1jsdqjrgK9ZBvjRc7IJ1sxB4zxVosZYYJS4YeJUNfuFG6-mRotbWHAlvgD43Lp1GhpdLcVXYWCR-P85tuq-rn87jEwfoBEv0Q5Cw9a2sVaABbHz_SXOUGss8tt2if_tbR3zBSfEGUFFMfOgHY1cfODLfT3ZLmkK2QGNMUqlgV--34N_xIe1cjOyWtF46GO637iy0ljRvnk9mpvNfB1q-TqxADkpRgATbuSN_tW0ZR3_YZzToN5qcDxjCRdj1qlyIMhfiLY04vL8SeaT7ZwOsc0Y20-mXIcfdRv9P92G06g8xhj3cx0j2jpnFHvg7ipDTqO0tUih3CDcAhTlzZVVEUBNDYFyCrA1OoLmSH3VdniJkl0-s7xhVQg5VH8PkEq7XkrHWj8xvChbRmJYV_AyJHj7dyKHbc814em6p-0PRJQsAUMP4aqwQNC8Su61YSonF-eRgNnQybXRjcSHwraNKnG8evvzj41smg99bIAUyr_yN-Fyu3iIbzdAa98puCdZq3fn7La2WDLsNRmAMkq0qmphlk0yxqz3tj4lB4_k9l6ZC4xyUttw69zHEXtP5vwsCI1bytLdm1KkGjjudUoHjtvo2T-S0rqwRdKTWMv-Gr5MqgH0ZX3g26iHOl9sMx7okTUuM2icRwRTKq2hhsfld1Q4vV9KTi48YZbVT4-T_9gAY86hzbRUU6iZMaDUNbtz7im9xhjENQa5bLCu8AH2ZEnub6KrCFHnRuYTx0HhHYMrCAcAVCPd1f91J05WFFrLaQOe01ZDV_woV33n-o3hyGnEg5FIVYiirqqBxZyrH-7ffU7U-Ew0yZ6xauMAtUm7D_zxxwVYcqmRjDX3Mp3oxmsL6OaQRATPzUH2zTmX7-jLmBvbzpdxokjymkmZbQ2no0D_LyODbVYzxLnGEYOo6neK-xAw7ivlJsO_-fcZIe9DiDhzibXI-MeJ6_7DznpZLwNqVmMkSpTXLLePnoFSKBRL7SMpCuvgaWwspas1OEH6zz2P9x7YasnbwQPYaZXoSoflr7Hhx65YBx3YmkCxbDWgQTKsY-37LuEkXmnaOqfSEdUKr8owfR43agvIAXPYiv38uD18LK6gYKl9qcDtwY8A37khiVzyhBPuQ6a2LWcctubmZ0x_yyGHH9mwlN9FY8U9DQZskDyVgzh0j26viBWAFB-TWfMo-kmLiMFnBU9f2JEZmnJSMI-hoG-xj8RgRoX5ok9aK4PTatkreGO5KbkIpphWdkVoP6rthObK9SnGbcSFMkPXSxm2X2KJ7kJbRFQGc9KRZZDzpftxproEpZA777kvB6hsCvOBLxIUkf1RJn-2xu66UeNVPl0EqNjKF-EYmSUubQ3x9-2OIvREpLK-HffEnDfyEeqSLw11ZLWhJcE2FpxRS5airvLABnipJIFq_0S2CaENOr8lNL_5o3rpGTYcLMhRa_jXqcPmrPs4ItMODyZ81f37s0KT-6gI2wjuXUY4qO_1e617tYXAdL-FfNRbSfDHcw6ACQ7bWJ3ADFQcWMrMybQzzp_m96oM7XuuMpks_2UMXuowNOsAmZEA6fv9HyYbCtFWVgXQfiDz6l2gbOtAuhOo4T-nFd_rCGStdh9opCe2jbTEqVdkS5mfAC_P9OZcIw42UWpyoZjogzn75nORSld_AlncdAsfzPCy-FjnfPddzjZVHJhW-KuVhiE5JxjlcaHm3RveTpMrGOAtnMxEzyFYuTLbmRheMu-_U27M9KIrzJ7L3pqn9OCbKKaJBWAv6vaA9zQ0IJ3OGbFkjZCEbrrz3W9uQgZRRS4_Almu44t57yR5rcAWRkBWG4u4BxDsDeCyMGsyJYPmVbmQ0fRTFIuOAnhrH5WE_rpvVM2C9o5gjOnxyE5manRXk03OEwf4fvFAyTa_n8mFGriVbkMep7qYe0MGXcIS7VN0rHLlmJhIr6PjcKKVbVBqEpyFjas3FOwlHLShlZos1rqDP_FQT5yXaWWfWfLwlOc7vNTKQX5N9bImSeTv2Lef_II2NhnKxi9gajHW8PHC07ZlGPvnxGjPZup_4oziEIkDrgbkIwH8tmC42G0mhy_qN5N-SMZgTqMxkST72GJBpth0W-0eOyTuZHCC8bNw5pxdKUcmimW_ZR02V7dZeUGdsDW7ALbVvyfLKpgEIugT31eN1C2YpwTCJza5E-2q-KqbIJaEbvfP4LrqJQBDZ7ZLm8PVtugqqV59OPatBGySyO_GvdXJKQqwRvIOZrX3DJNxNznAQOG9SvF4bnQSP4B0kChaLlnR09XBlVsc_-F4hmXMRs2zTw57jTftHd3VhXtgq_FMMl_9gJnwZc_3EAdrEjzzWWX8qSgj2AkF-JddJYunE-MCYR655Am4yvnVGD-am7SZTxhnq8QUdV8mu8arnOb0fOUU-J8DJYnVm1QLUp6G0KafnQG2ujHEfQAGpcpDi1Fzmge1zZVKKgh5g37j9sCJAteoZC-WoJtkAKpiBTFpvBmErBWjkjMztw1E37cRrIPohd2OxQUV9xG7oQGsJDsGJ1LKvU7TC6pACt32mgnqN3Bq-znEpIVseRMYsRFZmUCCm3QEE6q1bWBAUfYEgC6mAt8zEMMYMpcihAZukMD5YsNyo8d2VPZ3vTCDkGw_f5hKUN_DVooCySdCk6Xd4fWZB4gdJN1mp7AZ5CmcN04ATZudRtzi27LUEvK-e4se6WwwAdWD8yCRUN2N_rtrHfVIkzIJ4arSxArV5AfmWOyMA0CXcpXZq0x6akPjmHgjy0A4N-WKmMvDakWvOdicwY5eMj60Yh88zidSwuKKcZ02p3ZzqkPiWZ7WFLVRSKbayEVqyEhoPhGDUJ4GuHkeuYnfXElK2_tgs90jR-1T-LzCQCaRvYGf1Qb4Tn8I8MMaX8P_4E8WB_WpUPcYaDsHono0gjXxev_tj7k8grI0ejig8QxKxWBvP57MDcyxDYXCdKZJvi-RBgYNXtBO63Aj8deZ5NqEm4JB521aBzwvBzqlRZP8-A_q8vQv0Ve9YEkIP4SqWmK4MHhrn5OYKMFjFPWtfFQqPVJLKSiMkL1GbiNAQVhRQBcnFh9KIX5AfHWEM9R3nB7zUL2a8mUZNKhJhytYpuXufmDajCwkWI1ZeZ-6yEVQPhM0tsfdbaRt5ELvnW_GgwWYWEgOYXBtmhY-zXpw3XWKx6ZUwd86BGk0lGRsWkhraD6kpEp-po1rCapKDFlHpkr1_71MF2gDb-FVxs7yCnlFqa6W-ApTsoIQwtqk0bZmekcGcwiALUz9KY7dF9DuomIocbXBAHRUw83czxwl7mTH-_Fd1e5TY3YaZ8lhzFytmwWI3vGzS1RMbKxsZnwd-WlSKRMRK_nZ5xwc00sbugHwUwHqcstd5OEWkFJhW2rC0AVB4iRY6sSE_VDWYPKegXJk8MsuCTLTeeqS3lwRPybzhhmdbraH_r6CxT7ewd-Lf4rilQZkom1vCEe6R6b5cvhxg9ZBM0SroSBHzwPQHXXrmMRjSIOtDNIKiqB-2x_2Tp3VNYMzqy8V-aKgAKNi0SvHWEoEHFLtJBC7spJf6Uqid4XMundrae0gAsejFis-zVdTgD4J1DC-CGdhgc580EZjIuaNRw_QnVAM5C0bOb08-nMYYf2OrTNAg_roc3oMTRworLJMDDAvffAMP8vT1FP00BPBpNydpnP3hgdwV7_6W-8-qet8zD1wBrfns9WUy4am1kb2kmFwxsHaTvcSCuXYI_x5hf4X8ua7dajayRurotBjgH26_5HgwKuB_VlQE4Xbkss0yxuKCAye-2ryezJWEwnKM_fRy97I2WCjKkb0hWvlmW3aDKTCs6d7_7ThiivLlglu82aol-c8zSv8iwNqfmtGf61nTm3k4lSkanJDx3TBBCo7cxfSE1QaIHmd6-4POoJV_zw-H7rJ6J7sqlYT08ltd9kvdZ3AQahY-ppi-GWQt9rOU_OCPwZp0q2eHHI9UeG9R2rdFa3Uo6-kYljuY1dDG3BxS3vwgz1vgasyf2LhZueJlxnp-06Orzehtsz1xNUNJEiBM8El5pFUz9wN4Z10qCELUqXUL_tT15U9-bww6yG4gpzZjoEsO6oIn4mjg42TfPejGxU_5KkWuaSC6tG7bzYivfQjbeqbk_J5pjFjucsX85X-q1oNJvraUp0VnQme_RAk6M8OElQbnThAeILXPJbs1cecsTvb9yY6OxPKKGaCcoLXYVhmy7ZJVi1KVcjG6qedUEHimO0zaU4iFnsKo7fQa0Zqop-P8viWvm8hPwzAKEWSj6qpd7ao0wQq73S_JI6_Qy6kp6Voj-smXGNNOC-sStUd6eydqJOU2-jU46MAPtRmCiyx4aAStvdFxvMh2oKQaJ7TicT80tS2oSLUeVFOhwmf6sZTffJdKyRV5IyUAhXFgpCN3lD9NpcNrv6RyJR9Q-A8cKCsGngRzaE4dlwNdwaw_KQevh7e8VjQ_hCD7VX_3xVuOhSFeQ9RurdZH8M9fRPlRqf0-EaVKSylcDMV7Hx0iUGQBkImAcr_qw38nFMnVgmdBVlHcL0-Fci-5V3FPeqjfPNk1hr4vA34Rlk2qi5lc8PiGcHXO7x6_NiZ7vyZokH_qvl8nzCvQh-UkoZkIR4097DTXmbpT1Nq7l6wL3QjUjXSGIFXihhFxJ_yVLxnG1GGu46mqzgH232L2DPy-tBIJB_n_lQH0UUNBl79Cn-nkex-T7C0rQVQrqZHLr-HRwvhhr0LNXCUCLuJu2XrrmpIC6Q4OZpb6is-F1xb95To7QtRDfi34s0Soy07y4HRpgR-0-0ZLfaYnl3tcNPP1sOymHWQR2NKIPEUbP9SemJETf8jaipd_Hdn4mOKy-k-uv1SEfL9YhngKHB8gLib24iNRSdg==",
+              "status": null
+            },
+            {
+              "id": "msg_0f9ad589fff2565d006a57ada785c4819d954dfe54c0c35883",
+              "content": [
+                {
+                  "annotations": [],
+                  "text": "Пусть для общего размера \\(n\\)\n\n\\[\nA_n(a)=\\bigl(\\min(i,j)a^{|i-j|}\\bigr)_{i,j=1}^n,\\qquad D_n(a)=\\det A_n(a).\n\\]\n\nНужно найти сумму всех \\(a>0\\), при которых \\(D_{2026}(a)=0\\).\n\nДокажем формулу для \\(D_n(a)\\).\n\nРассмотрим матрицу \\(A_n(a)\\) при \\(n\\ge 2\\). Выполним операцию со столбцами:\n\n\\[\nC_n \\leftarrow C_n-aC_{n-1}.\n\\]\n\nОпределитель при этом не меняется.\n\nДля строк \\(i=1,\\dots,n-1\\) имеем\n\n\\[\n(A_n)_{i,n}=i a^{n-i},\n\\]\n\nа также\n\n\\[\na(A_n)_{i,n-1}=a\\cdot i a^{n-1-i}=i a^{n-i}.\n\\]\n\nЗначит, после операции первые \\(n-1\\) элементов последнего столбца станут нулевыми.\n\nДля последней строки:\n\n\\[\n(A_n)_{n,n}=n,\\qquad a(A_n)_{n,n-1}=a\\cdot (n-1)a=(n-1)a^2.\n\\]\n\nПоэтому последний элемент нового последнего столбца равен\n\n\\[\nn-(n-1)a^2.\n\\]\n\nРазлагая определитель по последнему столбцу, получаем\n\n\\[\nD_n(a)=\\bigl(n-(n-1)a^2\\bigr)D_{n-1}(a).\n\\]\n\nТак как \\(D_1(a)=1\\), по индукции\n\n\\[\nD_n(a)=\\prod_{k=2}^n \\bigl(k-(k-1)a^2\\bigr).\n\\]\n\nДля \\(n=2026\\) матрица вырождена тогда и только тогда, когда\n\n\\[\nk-(k-1)a^2=0\n\\]\n\nдля некоторого \\(k=2,\\dots,2026\\). Отсюда\n\n\\[\na^2=\\frac{k}{k-1}.\n\\]\n\nТак как \\(a>0\\), получаем значения\n\n\\[\na=\\sqrt{\\frac{k}{k-1}},\\qquad k=2,\\dots,2026.\n\\]\n\nЭти значения различны, поскольку \\(\\frac{k}{k-1}=1+\\frac1{k-1}\\) строго убывает при росте \\(k\\).\n\nСледовательно, искомая сумма равна\n\n\\[\n\\boxed{\\sum_{k=2}^{2026}\\sqrt{\\frac{k}{k-1}}}\n\\]\n\nили, эквивалентно,\n\n\\[\n\\boxed{\\sum_{m=1}^{2025}\\sqrt{\\frac{m+1}{m}}}.\n\\]",
+                  "type": "output_text",
+                  "logprobs": []
+                }
+              ],
+              "role": "assistant",
+              "status": "completed",
+              "type": "message",
+              "phase": "final_answer"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "temperature": 1.0,
+          "tool_choice": "auto",
+          "tools": [],
+          "top_p": 0.98,
+          "background": false,
+          "completed_at": 1784130990.0,
+          "conversation": null,
+          "max_output_tokens": 128000,
+          "max_tool_calls": null,
+          "moderation": null,
+          "previous_response_id": null,
+          "prompt": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "high",
+            "generate_summary": null,
+            "summary": null,
+            "mode": "standard"
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "status": "completed",
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "top_logprobs": 0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 202,
+            "input_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": "[REDACTED]"
+            },
+            "output_tokens": 3778,
+            "output_tokens_details": {
+              "reasoning_tokens": 3146
+            },
+            "total_tokens": 3980
+          },
+          "user": null,
+          "billing": {
+            "payer": "developer"
+          },
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "store": true,
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": "[REDACTED]",
+                "text_tokens": "[REDACTED]"
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": "[REDACTED]",
+                "text_tokens": "[REDACTED]"
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 202,
+          "output_tokens": 3778,
+          "total_tokens": 3980,
+          "output_tokens_details": {
+            "reasoning_tokens": 3146
+          },
+          "input_tokens_details": {
+            "cached_tokens": null
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 202,
+        "output_tokens": 3778,
+        "total_tokens": 3980,
+        "reasoning_tokens": 3146,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "input_tokens": 202,
+          "output_tokens": 3778,
+          "total_tokens": 3980,
+          "output_tokens_details": {
+            "reasoning_tokens": 3146
+          },
+          "input_tokens_details": {
+            "cached_tokens": null
+          }
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 63499,
+        "monotonic_ms": 63499,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 63499,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00101,
+        "output": 0.11334,
+        "cached_input": null,
+        "reasoning": 0.09438,
+        "native": null,
+        "total": 0.11435,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null
+      },
+      "finish_reason": "completed",
+      "provider_request_id": null,
+      "response_id": "resp_0f9ad589fff2565d006a57ad70c768819db4ebed06d84c62a4",
+      "provider_timestamp": 1784130928.0,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

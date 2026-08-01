@@ -1,0 +1,17 @@
+START 2026-07-09T18:26:10.901132+00:00 math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=64000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_06.json --models anthropic:claude-haiku-4-5-20251001 --max-tokens 64000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-haiku-4-5-20251001_64000
+Run 2026_07_09_18_26_11_math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-haiku-4-5-20251001_64000: math-cup-2026-qualifying/task_06, 1 model(s), max_tokens=64000
+[1/1] START anthropic:claude-haiku-4-5-20251001
+[1/1] DONE  claude-haiku-4-5-20251001 in 1m30s tokens=17397 cost_usd=0.085493
+| model                     |   tokens |   cost_usd |   latency_ms | status   | error   |
+|---------------------------|----------|------------|--------------|----------|---------|
+| claude-haiku-4-5-20251001 |    17397 |   0.085493 |        89362 | ok       |         |
+
+Run ID: 2026_07_09_18_26_11_math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-haiku-4-5-20251001_64000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_06 (Занятые интегралы)
+Timestamp: 2026-07-09T18:26:11.008458Z
+Git hash: 78959a8
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_06/2026_07_09_18_26_11_math-cup-2026-qualifying_20260709_182610_task_06_anthropic_claude-haiku-4-5-20251001_64000.json
+
+DONE 2026-07-09T18:27:41.513973+00:00 math-cup-2026-qualifying/task_06 anthropic:claude-haiku-4-5-20251001 cap=64000 exit=0 elapsed_s=90.6

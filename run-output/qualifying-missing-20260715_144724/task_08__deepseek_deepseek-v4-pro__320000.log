@@ -1,0 +1,17 @@
+START 2026-07-15T17:08:08.729138+00:00 math-cup-2026-qualifying/task_08 deepseek:deepseek-v4-pro cap=320000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_08.json --models deepseek:deepseek-v4-pro --max-tokens 320000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_08_deepseek_deepseek-v4-pro_320000
+Run 2026_07_15_17_08_08_qualifying_missing_20260715_144724_task_08_deepseek_deepseek-v4-pro_320000: math-cup-2026-qualifying/task_08, 1 model(s), max_tokens=320000
+[1/1] START deepseek:deepseek-v4-pro
+[1/1] DONE  deepseek-v4-pro in 76m32s tokens=118971 cost_usd=0.103361
+| model           |   tokens |   cost_usd |   latency_ms | status   | error   |
+|-----------------|----------|------------|--------------|----------|---------|
+| deepseek-v4-pro |   118971 |   0.103361 |      4591409 | ok       |         |
+
+Run ID: 2026_07_15_17_08_08_qualifying_missing_20260715_144724_task_08_deepseek_deepseek-v4-pro_320000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_08 (Найдите общий язык)
+Timestamp: 2026-07-15T17:08:08.833337Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_08/2026_07_15_17_08_08_qualifying_missing_20260715_144724_task_08_deepseek_deepseek-v4-pro_320000.json
+
+DONE 2026-07-15T18:24:41.443542+00:00 math-cup-2026-qualifying/task_08 deepseek:deepseek-v4-pro cap=320000 exit=0 elapsed_s=4592.7

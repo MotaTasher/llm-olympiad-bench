@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_338f11e1f0a8258d59328591": {
+      "evaluation_id": "ev_ea0ad2e82722478680e3016350ccf0f6",
+      "result_id": "res_338f11e1f0a8258d59328591",
+      "result_index": 0,
+      "model_key": "zai:glm-4.7-flash",
+      "model": "glm-4.7-flash",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "Вывод неверен. эти прямые не радоси.",
+      "created_at": "2026-07-17T14:57:05.390001Z",
+      "updated_at": "2026-07-17T14:57:05.390001Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_338f11e1f0a8258d59328591": [
+      {
+        "evaluation_id": "ev_ea0ad2e82722478680e3016350ccf0f6",
+        "result_id": "res_338f11e1f0a8258d59328591",
+        "result_index": 0,
+        "model_key": "zai:glm-4.7-flash",
+        "model": "glm-4.7-flash",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "Вывод неверен. эти прямые не радоси.",
+        "created_at": "2026-07-17T14:57:05.390001Z",
+        "updated_at": "2026-07-17T14:57:05.390001Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_07_14_14_56_33_retry_final_20260714_122155_glm_task_09_zai_glm-4.7-flash_256000",
+  "updated_at": "2026-07-17T14:57:05.390001Z"
+}

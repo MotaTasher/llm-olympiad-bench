@@ -1,0 +1,522 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_00_56_11_math-cup-2026-qualifying_20260801_001725_task_06_xai_grok-4.5_256000",
+  "timestamp": "2026-08-01T00:56:11.090881Z",
+  "started_at": "2026-08-01T00:56:11.090881Z",
+  "completed_at": "2026-08-01T00:57:08.000270Z",
+  "duration_ms": 56896,
+  "status": "completed",
+  "git_hash": "1413f2c",
+  "git": {
+    "hash": "1413f2c",
+    "full_hash": "1413f2c404239d5054a772a2c936fe8d69c640fa",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "xai:grok-4.5",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260801_001725_task_06_xai_grok-4.5_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "xai:grok-4.5",
+      "run_id": "math-cup-2026-qualifying_20260801_001725_task_06_xai_grok-4.5_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "xai:grok-4.5"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "xai:grok-4.5"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения",
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_hash": "60c94c90558685c9fedf23297f68a871bdcea91f3f7f27b968cb129e377e913d",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_c23f606a0911feb8dd9ca93f",
+      "result_index": 0,
+      "provider": "xai",
+      "alias": "xai:grok-4.5",
+      "adapter_class": "models.grok.grok.GrokModel",
+      "requested_model_id": "grok-4.5",
+      "resolved_model_id": "grok-4.5",
+      "model": "grok-4.5",
+      "attempt": 1,
+      "started_at": "2026-08-01T00:56:11.120122Z",
+      "completed_at": "2026-08-01T00:57:07.993178Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.x.ai/v1/responses",
+        "model": "grok-4.5",
+        "input": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "stream": false,
+        "store": true,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_output_tokens_total": 256000,
+        "max_output_tokens_per_request": 256000,
+        "reasoning": {
+          "effort": "high"
+        },
+        "steps": [
+          {
+            "endpoint": "https://api.x.ai/v1/responses",
+            "model": "grok-4.5",
+            "input": [
+              {
+                "role": "system",
+                "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+              },
+              {
+                "role": "user",
+                "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+              }
+            ],
+            "previous_response_id": null,
+            "max_output_tokens": 256000,
+            "store": true,
+            "stream": false,
+            "timeout_seconds": 3600.0,
+            "reasoning": {
+              "effort": "high"
+            }
+          }
+        ]
+      },
+      "answer": "### Формализация условия.\nПусть \\( f \\in C[0,1] \\) — непрерывная функция, удовлетворяющая условиям\n\\[\n\\int_0^1 f^2(x)\\, dx = 1, \\qquad \\int_0^1 f(x)\\, dx = \\frac12, \\qquad \\int_0^1 x f(x)\\, dx = 0.\n\\]\nТребуется найти значение интеграла \\( \\int_0^1 x^2 f(x)\\, dx \\). (Как будет видно из дальнейшего, это значение однозначно определено условиями задачи.)\n\n### Вспомогательное наблюдение.\nРассмотрим многочлен первой степени \\( p(x) := 2 - 3x \\). Непосредственным вычислением проверяются следующие равенства:\n\\[\n\\int_0^1 p(x)\\, dx = \\int_0^1 (2-3x)\\, dx = \\Bigl[2x - \\frac32 x^2\\Bigr]_0^1 = 2 - \\frac32 = \\frac12,\n\\]\n\\[\n\\int_0^1 x p(x)\\, dx = \\int_0^1 x(2-3x)\\, dx = \\int_0^1 (2x - 3x^2)\\, dx = \\Bigl[x^2 - x^3\\Bigr]_0^1 = 1-1 = 0,\n\\]\n\\[\n\\int_0^1 p^2(x)\\, dx = \\int_0^1 (2-3x)^2\\, dx = \\int_0^1 (4 - 12x + 9x^2)\\, dx = \\Bigl[4x - 6x^2 + 3x^3\\Bigr]_0^1 = 4-6+3 = 1.\n\\]\nТаким образом, функция \\( p \\) сама удовлетворяет всем трём условиям задачи.\n\n### Доказательство совпадения \\( f \\) с \\( p \\).\nРассмотрим неотрицательный интеграл\n\\[\n\\int_0^1 \\bigl(f(x) - p(x)\\bigr)^2\\, dx \\ge 0.\n\\]\nРаскрывая квадрат, получаем\n\\[\n\\int_0^1 f^2(x)\\, dx - 2 \\int_0^1 f(x) p(x)\\, dx + \\int_0^1 p^2(x)\\, dx \\ge 0.\n\\]\nПодставляя известные значения \\( \\int_0^1 f^2 = 1 \\) и \\( \\int_0^1 p^2 = 1 \\), а также вычисляя смешанный интеграл\n\\[\n\\int_0^1 f(x) p(x)\\, dx = \\int_0^1 f(x)(2-3x)\\, dx = 2 \\int_0^1 f(x)\\, dx - 3 \\int_0^1 x f(x)\\, dx = 2 \\cdot \\frac12 - 3 \\cdot 0 = 1,\n\\]\nприходим к неравенству\n\\[\n1 - 2 \\cdot 1 + 1 \\ge 0, \\qquad \\text{т.е.} \\qquad 0 \\ge 0.\n\\]\nТаким образом, имеет место равенство \\( \\int_0^1 \\bigl(f(x) - p(x)\\bigr)^2\\, dx = 0 \\). Поскольку подынтегральная функция непрерывна и неотрицательна, отсюда следует, что \\( f(x) - p(x) \\equiv 0 \\) всюду на \\( [0,1] \\), т.е. \\( f(x) = 2-3x \\) для всех \\( x \\in [0,1] \\).\n\n### Вычисление искомого интеграла.\nТеперь\n\\[\n\\int_0^1 x^2 f(x)\\, dx = \\int_0^1 x^2 (2-3x)\\, dx = \\int_0^1 (2x^2 - 3x^3)\\, dx = \\Bigl[\\frac23 x^3 - \\frac34 x^4\\Bigr]_0^1 = \\frac23 - \\frac34 = -\\frac{1}{12}.\n\\]\n\n### Заключительное замечание о единственности.\nИз проведённого рассуждения вытекает, что всякая функция \\( f \\in C[0,1] \\), удовлетворяющая трём исходным условиям, необходимо совпадает с \\( p(x) = 2-3x \\). Следовательно, значение \\( \\int_0^1 x^2 f(x)\\, dx \\) определено однозначно и равно \\( -\\frac{1}{12} \\).\n\n(Заметим, что то же заключение можно получить из геометрических соображений в гильбертовом пространстве \\( L^2[0,1] \\): условия на \\( \\int f \\) и \\( \\int x f \\) означают, что ортогональная проекция \\( f \\) на двумерное подпространство, натянутое на \\( \\{1, x\\} \\), совпадает с \\( p \\), а условие \\( \\|f\\|_{L^2} = 1 = \\|p\\|_{L^2} \\) влечёт \\( f = p \\).)\n\n### Финальный ответ.\n\\[\n\\int_0^1 x^2 f(x)\\, dx = -\\dfrac{1}{12}.\n\\]",
+      "prompt_tokens": 431,
+      "completion_tokens": 4511,
+      "cost_usd": 0.0277104,
+      "latency_ms": 56289,
+      "raw_response": {
+        "endpoint": "https://api.x.ai/v1/responses",
+        "multi_request": {
+          "enabled": false,
+          "requests": 1,
+          "max_output_tokens_total": 256000,
+          "max_output_tokens_per_request": 256000,
+          "stopped_after_visible_output": true
+        },
+        "responses": [
+          {
+            "request": {
+              "endpoint": "https://api.x.ai/v1/responses",
+              "model": "grok-4.5",
+              "input": [
+                {
+                  "role": "system",
+                  "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+                },
+                {
+                  "role": "user",
+                  "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+                }
+              ],
+              "previous_response_id": null,
+              "max_output_tokens": 256000,
+              "store": true,
+              "stream": false,
+              "timeout_seconds": 3600.0,
+              "reasoning": {
+                "effort": "high"
+              }
+            },
+            "response": {
+              "id": "f63fbaf2-f8af-948f-ac83-7242ae5cd470",
+              "created_at": 1785545772.0,
+              "error": null,
+              "incomplete_details": null,
+              "instructions": null,
+              "metadata": {
+                "system_fingerprint": "fp_a39489019fa99b6e"
+              },
+              "model": "grok-4.5",
+              "object": "response",
+              "output": [
+                {
+                  "id": "rs_f63fbaf2-f8af-948f-ac83-7242ae5cd470",
+                  "summary": [
+                    {
+                      "text": "The problem states there's a continuous function \\( f \\) on [0,1] such that the integral of f squared is 1, integral of f is 1/2, and integral of x f is 0. I need to find the integral of x squared f d...The integral \\(\\int_0^1 x^2 f(x)\\, dx\\) equals \\(-\\frac{1}{12}\\).\n\nTo see this, consider the inner product \\(\\langle g, h \\rangle = \\int_0^1 g(x) h(x)\\, dx\\). The given conditions are \\(\\langle f, 1 \\rangle = \\frac{1}{2}\\), \\(\\langle f, x \\rangle = 0\\), and \\(\\langle f, f \\rangle = 1\\).\n\nLet \\(V\\) be the subspace spanned by \\(\\{1, x, x^2\\}\\), and let \\(p \\in V\\) be the orthogonal projection of \\(f\\) onto \\(V\\). Then \\(\\langle f, q \\rangle = \\langle p, q \\rangle\\) for all \\(q \\in V\\), so in particular \\(\\langle f, 1 \\rangle = \\langle p, 1 \\rangle\\), \\(\\langle f, x \\ \\rangle = \\langle p, x \\rangle\\), and \\(\\langle f, x^2 \\rangle = \\langle p, x^2 \\rangle\\).\n\nSince \\(p\\) is the unique element of \\(V\\) satisfying these moment conditions (the Gram matrix of \\(\\{1, x, x^2\\}\\ is positive definite), \\(p(x) = a + b x + c x^2\\) is determined by solving the system\n\\[\na + \\frac{b}{2} + \\frac{c}{3} = \\frac{1}{2}, \\quad \\frac{a}{2} + \\frac{b}{3 } + \\frac{c}{4} = 0, \\quad \\frac{a}{3} + \\frac{b}{4} + \\frac{c}{5} = m,\n\\]\nwhere \\(m = \\langle f, x^2 \\rangle\\).\n\nThe squared norm satisfies \\(\\|p\\|^2 = \\ \\langle p, 1 \\rangle \\cdot a + \\langle p, x \\rangle \\cdot b + \\langle p, x^2 \\rangle \\cdot c = \\frac{a}{2} + m c\\). For any \\(f\\) satisfying the conditions, \\(\\|p\\|^2 \\le \\|f \\|^2 = 1\\).\n\nNow restrict to the subspace \\(W = \\operatorname{span}\\{1, x\\}\\).",
+                      "type": "summary_text"
+                    }
+                  ],
+                  "type": "reasoning",
+                  "content": null,
+                  "encrypted_content": null,
+                  "status": "completed"
+                },
+                {
+                  "id": "msg_f63fbaf2-f8af-948f-ac83-7242ae5cd470",
+                  "content": [
+                    {
+                      "annotations": [],
+                      "text": "### Формализация условия.\nПусть \\( f \\in C[0,1] \\) — непрерывная функция, удовлетворяющая условиям\n\\[\n\\int_0^1 f^2(x)\\, dx = 1, \\qquad \\int_0^1 f(x)\\, dx = \\frac12, \\qquad \\int_0^1 x f(x)\\, dx = 0.\n\\]\nТребуется найти значение интеграла \\( \\int_0^1 x^2 f(x)\\, dx \\). (Как будет видно из дальнейшего, это значение однозначно определено условиями задачи.)\n\n### Вспомогательное наблюдение.\nРассмотрим многочлен первой степени \\( p(x) := 2 - 3x \\). Непосредственным вычислением проверяются следующие равенства:\n\\[\n\\int_0^1 p(x)\\, dx = \\int_0^1 (2-3x)\\, dx = \\Bigl[2x - \\frac32 x^2\\Bigr]_0^1 = 2 - \\frac32 = \\frac12,\n\\]\n\\[\n\\int_0^1 x p(x)\\, dx = \\int_0^1 x(2-3x)\\, dx = \\int_0^1 (2x - 3x^2)\\, dx = \\Bigl[x^2 - x^3\\Bigr]_0^1 = 1-1 = 0,\n\\]\n\\[\n\\int_0^1 p^2(x)\\, dx = \\int_0^1 (2-3x)^2\\, dx = \\int_0^1 (4 - 12x + 9x^2)\\, dx = \\Bigl[4x - 6x^2 + 3x^3\\Bigr]_0^1 = 4-6+3 = 1.\n\\]\nТаким образом, функция \\( p \\) сама удовлетворяет всем трём условиям задачи.\n\n### Доказательство совпадения \\( f \\) с \\( p \\).\nРассмотрим неотрицательный интеграл\n\\[\n\\int_0^1 \\bigl(f(x) - p(x)\\bigr)^2\\, dx \\ge 0.\n\\]\nРаскрывая квадрат, получаем\n\\[\n\\int_0^1 f^2(x)\\, dx - 2 \\int_0^1 f(x) p(x)\\, dx + \\int_0^1 p^2(x)\\, dx \\ge 0.\n\\]\nПодставляя известные значения \\( \\int_0^1 f^2 = 1 \\) и \\( \\int_0^1 p^2 = 1 \\), а также вычисляя смешанный интеграл\n\\[\n\\int_0^1 f(x) p(x)\\, dx = \\int_0^1 f(x)(2-3x)\\, dx = 2 \\int_0^1 f(x)\\, dx - 3 \\int_0^1 x f(x)\\, dx = 2 \\cdot \\frac12 - 3 \\cdot 0 = 1,\n\\]\nприходим к неравенству\n\\[\n1 - 2 \\cdot 1 + 1 \\ge 0, \\qquad \\text{т.е.} \\qquad 0 \\ge 0.\n\\]\nТаким образом, имеет место равенство \\( \\int_0^1 \\bigl(f(x) - p(x)\\bigr)^2\\, dx = 0 \\). Поскольку подынтегральная функция непрерывна и неотрицательна, отсюда следует, что \\( f(x) - p(x) \\equiv 0 \\) всюду на \\( [0,1] \\), т.е. \\( f(x) = 2-3x \\) для всех \\( x \\in [0,1] \\).\n\n### Вычисление искомого интеграла.\nТеперь\n\\[\n\\int_0^1 x^2 f(x)\\, dx = \\int_0^1 x^2 (2-3x)\\, dx = \\int_0^1 (2x^2 - 3x^3)\\, dx = \\Bigl[\\frac23 x^3 - \\frac34 x^4\\Bigr]_0^1 = \\frac23 - \\frac34 = -\\frac{1}{12}.\n\\]\n\n### Заключительное замечание о единственности.\nИз проведённого рассуждения вытекает, что всякая функция \\( f \\in C[0,1] \\), удовлетворяющая трём исходным условиям, необходимо совпадает с \\( p(x) = 2-3x \\). Следовательно, значение \\( \\int_0^1 x^2 f(x)\\, dx \\) определено однозначно и равно \\( -\\frac{1}{12} \\).\n\n(Заметим, что то же заключение можно получить из геометрических соображений в гильбертовом пространстве \\( L^2[0,1] \\): условия на \\( \\int f \\) и \\( \\int x f \\) означают, что ортогональная проекция \\( f \\) на двумерное подпространство, натянутое на \\( \\{1, x\\} \\), совпадает с \\( p \\), а условие \\( \\|f\\|_{L^2} = 1 = \\|p\\|_{L^2} \\) влечёт \\( f = p \\).)\n\n### Финальный ответ.\n\\[\n\\int_0^1 x^2 f(x)\\, dx = -\\dfrac{1}{12}.\n\\]",
+                      "type": "output_text",
+                      "logprobs": []
+                    }
+                  ],
+                  "role": "assistant",
+                  "status": "completed",
+                  "type": "message",
+                  "phase": null
+                }
+              ],
+              "parallel_tool_calls": true,
+              "temperature": 0.7,
+              "tool_choice": "auto",
+              "tools": [],
+              "top_p": 0.95,
+              "background": false,
+              "completed_at": 1785545827.0,
+              "conversation": null,
+              "max_output_tokens": 256000,
+              "max_tool_calls": null,
+              "moderation": null,
+              "previous_response_id": null,
+              "prompt": null,
+              "prompt_cache_key": null,
+              "prompt_cache_retention": null,
+              "reasoning": {
+                "context": null,
+                "effort": "high",
+                "generate_summary": null,
+                "summary": "detailed"
+              },
+              "safety_identifier": null,
+              "service_tier": "default",
+              "status": "completed",
+              "text": {
+                "format": {
+                  "type": "text"
+                },
+                "verbosity": null
+              },
+              "top_logprobs": 0,
+              "truncation": "disabled",
+              "usage": {
+                "input_tokens": 431,
+                "input_tokens_details": {
+                  "cached_tokens": 128
+                },
+                "output_tokens": 4511,
+                "output_tokens_details": {
+                  "reasoning_tokens": 3347
+                },
+                "total_tokens": 4942,
+                "num_sources_used": 0,
+                "num_server_side_tools_used": 0,
+                "cost_in_usd_ticks": 277104000,
+                "context_details": {
+                  "input_tokens": 431,
+                  "output_tokens": 4511
+                }
+              },
+              "user": null,
+              "store": true,
+              "presence_penalty": 0.0,
+              "frequency_penalty": 0.0
+            },
+            "latency_ms": 56289,
+            "answer_chars": 2752
+          }
+        ],
+        "last_response": {
+          "id": "f63fbaf2-f8af-948f-ac83-7242ae5cd470",
+          "created_at": 1785545772.0,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "metadata": {
+            "system_fingerprint": "fp_a39489019fa99b6e"
+          },
+          "model": "grok-4.5",
+          "object": "response",
+          "output": [
+            {
+              "id": "rs_f63fbaf2-f8af-948f-ac83-7242ae5cd470",
+              "summary": [
+                {
+                  "text": "The problem states there's a continuous function \\( f \\) on [0,1] such that the integral of f squared is 1, integral of f is 1/2, and integral of x f is 0. I need to find the integral of x squared f d...The integral \\(\\int_0^1 x^2 f(x)\\, dx\\) equals \\(-\\frac{1}{12}\\).\n\nTo see this, consider the inner product \\(\\langle g, h \\rangle = \\int_0^1 g(x) h(x)\\, dx\\). The given conditions are \\(\\langle f, 1 \\rangle = \\frac{1}{2}\\), \\(\\langle f, x \\rangle = 0\\), and \\(\\langle f, f \\rangle = 1\\).\n\nLet \\(V\\) be the subspace spanned by \\(\\{1, x, x^2\\}\\), and let \\(p \\in V\\) be the orthogonal projection of \\(f\\) onto \\(V\\). Then \\(\\langle f, q \\rangle = \\langle p, q \\rangle\\) for all \\(q \\in V\\), so in particular \\(\\langle f, 1 \\rangle = \\langle p, 1 \\rangle\\), \\(\\langle f, x \\ \\rangle = \\langle p, x \\rangle\\), and \\(\\langle f, x^2 \\rangle = \\langle p, x^2 \\rangle\\).\n\nSince \\(p\\) is the unique element of \\(V\\) satisfying these moment conditions (the Gram matrix of \\(\\{1, x, x^2\\}\\ is positive definite), \\(p(x) = a + b x + c x^2\\) is determined by solving the system\n\\[\na + \\frac{b}{2} + \\frac{c}{3} = \\frac{1}{2}, \\quad \\frac{a}{2} + \\frac{b}{3 } + \\frac{c}{4} = 0, \\quad \\frac{a}{3} + \\frac{b}{4} + \\frac{c}{5} = m,\n\\]\nwhere \\(m = \\langle f, x^2 \\rangle\\).\n\nThe squared norm satisfies \\(\\|p\\|^2 = \\ \\langle p, 1 \\rangle \\cdot a + \\langle p, x \\rangle \\cdot b + \\langle p, x^2 \\rangle \\cdot c = \\frac{a}{2} + m c\\). For any \\(f\\) satisfying the conditions, \\(\\|p\\|^2 \\le \\|f \\|^2 = 1\\).\n\nNow restrict to the subspace \\(W = \\operatorname{span}\\{1, x\\}\\).",
+                  "type": "summary_text"
+                }
+              ],
+              "type": "reasoning",
+              "content": null,
+              "encrypted_content": null,
+              "status": "completed"
+            },
+            {
+              "id": "msg_f63fbaf2-f8af-948f-ac83-7242ae5cd470",
+              "content": [
+                {
+                  "annotations": [],
+                  "text": "### Формализация условия.\nПусть \\( f \\in C[0,1] \\) — непрерывная функция, удовлетворяющая условиям\n\\[\n\\int_0^1 f^2(x)\\, dx = 1, \\qquad \\int_0^1 f(x)\\, dx = \\frac12, \\qquad \\int_0^1 x f(x)\\, dx = 0.\n\\]\nТребуется найти значение интеграла \\( \\int_0^1 x^2 f(x)\\, dx \\). (Как будет видно из дальнейшего, это значение однозначно определено условиями задачи.)\n\n### Вспомогательное наблюдение.\nРассмотрим многочлен первой степени \\( p(x) := 2 - 3x \\). Непосредственным вычислением проверяются следующие равенства:\n\\[\n\\int_0^1 p(x)\\, dx = \\int_0^1 (2-3x)\\, dx = \\Bigl[2x - \\frac32 x^2\\Bigr]_0^1 = 2 - \\frac32 = \\frac12,\n\\]\n\\[\n\\int_0^1 x p(x)\\, dx = \\int_0^1 x(2-3x)\\, dx = \\int_0^1 (2x - 3x^2)\\, dx = \\Bigl[x^2 - x^3\\Bigr]_0^1 = 1-1 = 0,\n\\]\n\\[\n\\int_0^1 p^2(x)\\, dx = \\int_0^1 (2-3x)^2\\, dx = \\int_0^1 (4 - 12x + 9x^2)\\, dx = \\Bigl[4x - 6x^2 + 3x^3\\Bigr]_0^1 = 4-6+3 = 1.\n\\]\nТаким образом, функция \\( p \\) сама удовлетворяет всем трём условиям задачи.\n\n### Доказательство совпадения \\( f \\) с \\( p \\).\nРассмотрим неотрицательный интеграл\n\\[\n\\int_0^1 \\bigl(f(x) - p(x)\\bigr)^2\\, dx \\ge 0.\n\\]\nРаскрывая квадрат, получаем\n\\[\n\\int_0^1 f^2(x)\\, dx - 2 \\int_0^1 f(x) p(x)\\, dx + \\int_0^1 p^2(x)\\, dx \\ge 0.\n\\]\nПодставляя известные значения \\( \\int_0^1 f^2 = 1 \\) и \\( \\int_0^1 p^2 = 1 \\), а также вычисляя смешанный интеграл\n\\[\n\\int_0^1 f(x) p(x)\\, dx = \\int_0^1 f(x)(2-3x)\\, dx = 2 \\int_0^1 f(x)\\, dx - 3 \\int_0^1 x f(x)\\, dx = 2 \\cdot \\frac12 - 3 \\cdot 0 = 1,\n\\]\nприходим к неравенству\n\\[\n1 - 2 \\cdot 1 + 1 \\ge 0, \\qquad \\text{т.е.} \\qquad 0 \\ge 0.\n\\]\nТаким образом, имеет место равенство \\( \\int_0^1 \\bigl(f(x) - p(x)\\bigr)^2\\, dx = 0 \\). Поскольку подынтегральная функция непрерывна и неотрицательна, отсюда следует, что \\( f(x) - p(x) \\equiv 0 \\) всюду на \\( [0,1] \\), т.е. \\( f(x) = 2-3x \\) для всех \\( x \\in [0,1] \\).\n\n### Вычисление искомого интеграла.\nТеперь\n\\[\n\\int_0^1 x^2 f(x)\\, dx = \\int_0^1 x^2 (2-3x)\\, dx = \\int_0^1 (2x^2 - 3x^3)\\, dx = \\Bigl[\\frac23 x^3 - \\frac34 x^4\\Bigr]_0^1 = \\frac23 - \\frac34 = -\\frac{1}{12}.\n\\]\n\n### Заключительное замечание о единственности.\nИз проведённого рассуждения вытекает, что всякая функция \\( f \\in C[0,1] \\), удовлетворяющая трём исходным условиям, необходимо совпадает с \\( p(x) = 2-3x \\). Следовательно, значение \\( \\int_0^1 x^2 f(x)\\, dx \\) определено однозначно и равно \\( -\\frac{1}{12} \\).\n\n(Заметим, что то же заключение можно получить из геометрических соображений в гильбертовом пространстве \\( L^2[0,1] \\): условия на \\( \\int f \\) и \\( \\int x f \\) означают, что ортогональная проекция \\( f \\) на двумерное подпространство, натянутое на \\( \\{1, x\\} \\), совпадает с \\( p \\), а условие \\( \\|f\\|_{L^2} = 1 = \\|p\\|_{L^2} \\) влечёт \\( f = p \\).)\n\n### Финальный ответ.\n\\[\n\\int_0^1 x^2 f(x)\\, dx = -\\dfrac{1}{12}.\n\\]",
+                  "type": "output_text",
+                  "logprobs": []
+                }
+              ],
+              "role": "assistant",
+              "status": "completed",
+              "type": "message",
+              "phase": null
+            }
+          ],
+          "parallel_tool_calls": true,
+          "temperature": 0.7,
+          "tool_choice": "auto",
+          "tools": [],
+          "top_p": 0.95,
+          "background": false,
+          "completed_at": 1785545827.0,
+          "conversation": null,
+          "max_output_tokens": 256000,
+          "max_tool_calls": null,
+          "moderation": null,
+          "previous_response_id": null,
+          "prompt": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "context": null,
+            "effort": "high",
+            "generate_summary": null,
+            "summary": "detailed"
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "status": "completed",
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": null
+          },
+          "top_logprobs": 0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 431,
+            "input_tokens_details": {
+              "cached_tokens": 128
+            },
+            "output_tokens": 4511,
+            "output_tokens_details": {
+              "reasoning_tokens": 3347
+            },
+            "total_tokens": 4942,
+            "num_sources_used": 0,
+            "num_server_side_tools_used": 0,
+            "cost_in_usd_ticks": 277104000,
+            "context_details": {
+              "input_tokens": 431,
+              "output_tokens": 4511
+            }
+          },
+          "user": null,
+          "store": true,
+          "presence_penalty": 0.0,
+          "frequency_penalty": 0.0
+        },
+        "usage": {
+          "input_tokens": 431,
+          "output_tokens": 4511,
+          "total_tokens": 4942,
+          "output_tokens_details": {
+            "reasoning_tokens": 3347
+          },
+          "input_tokens_details": {
+            "cached_tokens": 128
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 431,
+        "output_tokens": 4511,
+        "total_tokens": 4942,
+        "reasoning_tokens": 3347,
+        "cached_input_tokens": 128,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "input_tokens": 431,
+          "output_tokens": 4511,
+          "total_tokens": 4942,
+          "output_tokens_details": {
+            "reasoning_tokens": 3347
+          },
+          "input_tokens_details": {
+            "cached_tokens": 128
+          }
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 56289,
+        "monotonic_ms": 56289,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 56289,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.000606,
+        "output": 0.027066,
+        "cached_input": 3.84e-05,
+        "reasoning": null,
+        "native": null,
+        "total": 0.0277104,
+        "pricing_source": "provider_response",
+        "pricing_version": "2026-08-01",
+        "estimated": false,
+        "exchange_rate": null,
+        "note": "Provider-reported cost_in_usd_ticks overrides this local estimate when present.",
+        "provider_reported": {
+          "cost_in_usd_ticks": 277104000
+        }
+      },
+      "finish_reason": "completed",
+      "provider_request_id": null,
+      "response_id": "f63fbaf2-f8af-948f-ac83-7242ae5cd470",
+      "provider_timestamp": 1785545772.0,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+
+DETACH 2026-07-14T12:21:55.840970+00:00 COMMAND /opt/olympiad-scorer/venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-final --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/retry-final-20260714_122155/grok --models xai:grok-build-0.1 --problems 09 --max-tokens 256000 --workers 1 --provider-workers xai=1 --run-group retry_final_20260714_122155_grok_build --only-missing --yes
+Pair count: 1
+provider	xai	$0.5123
+model	xai:grok-build-0.1	$0.5123
+total	$0.5123
+total_plus_20pct	$0.6148
+  0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [00:00<?, ?run/s]                                        0%|          | 0/1 [29:58<?, ?run/s]100%|██████████| 1/1 [29:58<00:00, 1798.61s/run]100%|██████████| 1/1 [29:58<00:00, 1798.61s/run]
+Launching 1 pair(s), competition=math-cup-2026-final, workers=1, provider_workers={'google': 2, 'xai': 1, 'zai': 2}, run_group=retry_final_20260714_122155_grok_build
+START math-cup-2026-final/task_09 xai:grok-build-0.1 cap=256000
+OK task_09 xai:grok-build-0.1 exit=0 elapsed=1798.6s log=run-output/retry-final-20260714_122155/grok/task_09__xai_grok-build-0.1__256000.log

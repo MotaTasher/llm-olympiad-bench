@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_7ade0fca841692797bf73940": {
+      "evaluation_id": "ev_6f6527d1cceb4c6eaefeb7ac6c48937b",
+      "result_id": "res_7ade0fca841692797bf73940",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "evaluator": "b2_maxim",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "а) ок\r\n\r\nб) не считаю это доказательством:\r\n\r\n\"более точный комбинаторный анализ дисперсии числа вхождений (через автокорреляционные полиномы Гуибаса-Одлыжко\"\r\n\r\n\"При аккуратном подсчете констант (используя теорему о границах пересекающихся семейств слов\"",
+      "created_at": "2026-07-18T16:50:52.759726Z",
+      "updated_at": "2026-07-18T16:50:52.759726Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_7ade0fca841692797bf73940": [
+      {
+        "evaluation_id": "ev_6f6527d1cceb4c6eaefeb7ac6c48937b",
+        "result_id": "res_7ade0fca841692797bf73940",
+        "result_index": 0,
+        "model_key": "google:gemini-3.1-pro-preview",
+        "model": "gemini-3.1-pro-preview",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "а) ок\r\n\r\nб) не считаю это доказательством:\r\n\r\n\"более точный комбинаторный анализ дисперсии числа вхождений (через автокорреляционные полиномы Гуибаса-Одлыжко\"\r\n\r\n\"При аккуратном подсчете констант (используя теорему о границах пересекающихся семейств слов\"",
+        "created_at": "2026-07-18T16:50:52.759726Z",
+        "updated_at": "2026-07-18T16:50:52.759726Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_08",
+  "run_id": "2026_07_06_23_38_34_new_models_20260706_225754_task_08_google_gemini-3.1-pro-preview_256000",
+  "updated_at": "2026-07-18T16:50:52.759726Z"
+}

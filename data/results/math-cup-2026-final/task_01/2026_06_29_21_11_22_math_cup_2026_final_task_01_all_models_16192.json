@@ -15,32 +15,32 @@
       "updated_at": "2026-07-06T15:44:26.440117Z"
     },
     "res_df0d6cfb5ec4518e8f8805af": {
-      "evaluation_id": "ev_d0ffc7375da0414e9b78cf325d5c18d2",
+      "evaluation_id": "ev_9612dac0e7514d57ab6c31f3f1c9a95a",
       "result_id": "res_df0d6cfb5ec4518e8f8805af",
       "result_index": 9,
       "model_key": "yandexgpt:yandexgpt-5-lite",
       "model": "yandexgpt-5-lite",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
       "feedback": "",
-      "created_at": "2026-06-30T17:58:49.013187Z",
-      "updated_at": "2026-06-30T17:58:49.013187Z"
+      "created_at": "2026-07-15T07:42:33.157285Z",
+      "updated_at": "2026-07-15T07:42:33.157285Z"
     },
     "res_45ba8bd5db6a8342af4c75bf": {
-      "evaluation_id": "ev_0cbad6893f1b4357b5c8d5d8bee5c2b9",
+      "evaluation_id": "ev_71b7d58c2c9a460c8de635c84b0381a8",
       "result_id": "res_45ba8bd5db6a8342af4c75bf",
       "result_index": 8,
       "model_key": "yandexgpt:yandexgpt-5.1",
       "model": "yandexgpt-5.1",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
       "feedback": "",
-      "created_at": "2026-06-30T17:59:03.394103Z",
-      "updated_at": "2026-06-30T17:59:03.394103Z"
+      "created_at": "2026-07-15T07:42:22.278385Z",
+      "updated_at": "2026-07-15T07:42:22.278385Z"
     },
     "res_c1f47bee70c6c8d97b878887": {
       "evaluation_id": "ev_c36bf08a5d5f4f85891c1cf80c2a0936",
@@ -113,18 +113,18 @@
       "updated_at": "2026-07-06T15:31:44.270437Z"
     },
     "res_bb75bb1d967db29197b860d9": {
-      "evaluation_id": "ev_054310dc60854f5d8ff897b9a2311e04",
+      "evaluation_id": "ev_d11ff6055d8f48868de6c8ff6e23803f",
       "result_id": "res_bb75bb1d967db29197b860d9",
       "result_index": 1,
       "model_key": "openai:gpt-5.4-mini",
       "model": "gpt-5.4-mini",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 2,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-01T17:16:41.007289Z",
-      "updated_at": "2026-07-01T17:16:41.007289Z"
+      "created_at": "2026-07-15T07:41:57.489020Z",
+      "updated_at": "2026-07-15T07:41:57.489020Z"
     },
     "res_75c125e14bc63a0243c67cad": {
       "evaluation_id": "ev_2f8a1085427c4c40b611e3cbc80e0bab",
@@ -186,6 +186,20 @@
         "feedback": "",
         "created_at": "2026-06-30T17:58:49.013187Z",
         "updated_at": "2026-06-30T17:58:49.013187Z"
+      },
+      {
+        "evaluation_id": "ev_9612dac0e7514d57ab6c31f3f1c9a95a",
+        "result_id": "res_df0d6cfb5ec4518e8f8805af",
+        "result_index": 9,
+        "model_key": "yandexgpt:yandexgpt-5-lite",
+        "model": "yandexgpt-5-lite",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-15T07:42:33.157285Z",
+        "updated_at": "2026-07-15T07:42:33.157285Z"
       }
     ],
     "res_45ba8bd5db6a8342af4c75bf": [
@@ -202,6 +216,20 @@
         "feedback": "",
         "created_at": "2026-06-30T17:59:03.394103Z",
         "updated_at": "2026-06-30T17:59:03.394103Z"
+      },
+      {
+        "evaluation_id": "ev_71b7d58c2c9a460c8de635c84b0381a8",
+        "result_id": "res_45ba8bd5db6a8342af4c75bf",
+        "result_index": 8,
+        "model_key": "yandexgpt:yandexgpt-5.1",
+        "model": "yandexgpt-5.1",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-07-15T07:42:22.278385Z",
+        "updated_at": "2026-07-15T07:42:22.278385Z"
       }
     ],
     "res_c1f47bee70c6c8d97b878887": [
@@ -272,9 +300,9 @@
         "model_key": "deepseek:deepseek-v4-flash",
         "model": "deepseek-v4-flash",
         "evaluator": "b2_maxim",
-        "score": 0.2,
+        "score": 0,
         "max_score": 2,
-        "score_category": "partial",
+        "score_category": "zero",
         "feedback": "нет выкладок\r\n\r\n",
         "created_at": "2026-07-03T23:10:18.503114Z",
         "updated_at": "2026-07-03T23:10:18.503114Z"
@@ -368,6 +396,20 @@
         "feedback": "",
         "created_at": "2026-07-01T17:16:41.007289Z",
         "updated_at": "2026-07-01T17:16:41.007289Z"
+      },
+      {
+        "evaluation_id": "ev_d11ff6055d8f48868de6c8ff6e23803f",
+        "result_id": "res_bb75bb1d967db29197b860d9",
+        "result_index": 1,
+        "model_key": "openai:gpt-5.4-mini",
+        "model": "gpt-5.4-mini",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-15T07:41:57.489020Z",
+        "updated_at": "2026-07-15T07:41:57.489020Z"
       }
     ],
     "res_75c125e14bc63a0243c67cad": [
@@ -405,5 +447,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_01",
   "run_id": "2026_06_29_21_11_22_math_cup_2026_final_task_01_all_models_16192",
-  "updated_at": "2026-07-06T15:44:44.614991Z"
+  "updated_at": "2026-07-15T07:42:33.157285Z"
 }

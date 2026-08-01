@@ -1,0 +1,293 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_13_49_39_math-cup-2026-qualifying_20260707_134939_task_06_zai_glm-5.2_128000",
+  "timestamp": "2026-07-07T13:49:39.840647Z",
+  "started_at": "2026-07-07T13:49:39.840647Z",
+  "completed_at": "2026-07-07T13:51:16.751944Z",
+  "duration_ms": 96894,
+  "status": "completed",
+  "git_hash": "ea7e3e2",
+  "git": {
+    "hash": "ea7e3e2",
+    "full_hash": "ea7e3e2fe1f167d20051f55ea81e4f0c77345b71",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "zai:glm-5.2",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_134939_task_06_zai_glm-5.2_128000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "zai:glm-5.2",
+      "run_id": "math-cup-2026-qualifying_20260707_134939_task_06_zai_glm-5.2_128000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 128000
+    },
+    "requested_models": [
+      "zai:glm-5.2"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "zai:glm-5.2"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 128000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_1e0d88c3200a4199e3a7352a",
+      "result_index": 0,
+      "provider": "zai",
+      "alias": "zai:glm-5.2",
+      "adapter_class": "models.glm.glm.GLMModel",
+      "requested_model_id": "glm-5.2",
+      "resolved_model_id": "glm-5.2",
+      "model": "glm-5.2",
+      "attempt": 1,
+      "started_at": "2026-07-07T13:49:39.905867Z",
+      "completed_at": "2026-07-07T13:51:16.744792Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.z.ai/api/paas/v4/chat/completions",
+        "model": "glm-5.2",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "stream": false,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_tokens": 128000,
+        "thinking": {
+          "type": "enabled"
+        },
+        "reasoning_effort": "max"
+      },
+      "answer": "Формализуем условие. Введём скалярное произведение\n\\[\n\\langle u,v\\rangle=\\int_0^1 u(x)v(x)\\,dx.\n\\]\nДано:\n\\[\n\\langle f,f\\rangle=1,\\qquad \\langle f,1\\rangle=\\frac12,\\qquad \\langle f,x\\rangle=0.\n\\]\nТребуется найти \\(\\langle f,x^2\\rangle\\).\n\nРассмотрим функцию\n\\[\ng(x)=2-3x.\n\\]\nТогда\n\\[\n\\langle f,g\\rangle=\\int_0^1 f(x)(2-3x)\\,dx\n=2\\int_0^1 f(x)\\,dx-3\\int_0^1 x f(x)\\,dx\n=2\\cdot \\frac12-3\\cdot 0=1.\n\\]\nКроме того,\n\\[\n\\langle g,g\\rangle=\\int_0^1 (2-3x)^2\\,dx\n=\\int_0^1 (4-12x+9x^2)\\,dx\n=4-6+3=1.\n\\]\nЗначит,\n\\[\n\\int_0^1 (f(x)-g(x))^2\\,dx\n=\\langle f-g,f-g\\rangle\n=\\langle f,f\\rangle-2\\langle f,g\\rangle+\\langle g,g\\rangle\n=1-2\\cdot 1+1=0.\n\\]\nФункция \\((f-g)^2\\) непрерывна и неотрицательна. Если бы она была отлична от нуля в какой-то точке, то по непрерывности она была бы положительной на некотором интервале, и интеграл был бы положительным. Следовательно,\n\\[\nf(x)=g(x)=2-3x\n\\]\nна всём отрезке \\([0,1]\\).\n\nПроверим согласованность: для \\(g(x)=2-3x\\) выполнены\n\\[\n\\int_0^1 g\\,dx=\\frac12,\\qquad \\int_0^1 xg\\,dx=0,\\qquad \\int_0^1 g^2\\,dx=1,\n\\]\nпоэтому найденная функция действительно допустима.\n\nТеперь искомый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx\n=\\int_0^1 x^2(2-3x)\\,dx\n=\\int_0^1 (2x^2-3x^3)\\,dx\n=\\left[\\frac{2x^3}{3}-\\frac{3x^4}{4}\\right]_0^1\n=\\frac23-\\frac34\n=-\\frac1{12}.\n\\]\n\nФинальный вывод:\n\\[\n\\boxed{\\int_0^1 x^2 f(x)\\,dx=-\\frac1{12}}.\n\\]",
+      "prompt_tokens": 252,
+      "completion_tokens": 4139,
+      "cost_usd": 0.0185644,
+      "latency_ms": 94449,
+      "raw_response": {
+        "id": "2026070721494422b7a79cb0f04fe7",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Формализуем условие. Введём скалярное произведение\n\\[\n\\langle u,v\\rangle=\\int_0^1 u(x)v(x)\\,dx.\n\\]\nДано:\n\\[\n\\langle f,f\\rangle=1,\\qquad \\langle f,1\\rangle=\\frac12,\\qquad \\langle f,x\\rangle=0.\n\\]\nТребуется найти \\(\\langle f,x^2\\rangle\\).\n\nРассмотрим функцию\n\\[\ng(x)=2-3x.\n\\]\nТогда\n\\[\n\\langle f,g\\rangle=\\int_0^1 f(x)(2-3x)\\,dx\n=2\\int_0^1 f(x)\\,dx-3\\int_0^1 x f(x)\\,dx\n=2\\cdot \\frac12-3\\cdot 0=1.\n\\]\nКроме того,\n\\[\n\\langle g,g\\rangle=\\int_0^1 (2-3x)^2\\,dx\n=\\int_0^1 (4-12x+9x^2)\\,dx\n=4-6+3=1.\n\\]\nЗначит,\n\\[\n\\int_0^1 (f(x)-g(x))^2\\,dx\n=\\langle f-g,f-g\\rangle\n=\\langle f,f\\rangle-2\\langle f,g\\rangle+\\langle g,g\\rangle\n=1-2\\cdot 1+1=0.\n\\]\nФункция \\((f-g)^2\\) непрерывна и неотрицательна. Если бы она была отлична от нуля в какой-то точке, то по непрерывности она была бы положительной на некотором интервале, и интеграл был бы положительным. Следовательно,\n\\[\nf(x)=g(x)=2-3x\n\\]\nна всём отрезке \\([0,1]\\).\n\nПроверим согласованность: для \\(g(x)=2-3x\\) выполнены\n\\[\n\\int_0^1 g\\,dx=\\frac12,\\qquad \\int_0^1 xg\\,dx=0,\\qquad \\int_0^1 g^2\\,dx=1,\n\\]\nпоэтому найденная функция действительно допустима.\n\nТеперь искомый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx\n=\\int_0^1 x^2(2-3x)\\,dx\n=\\int_0^1 (2x^2-3x^3)\\,dx\n=\\left[\\frac{2x^3}{3}-\\frac{3x^4}{4}\\right]_0^1\n=\\frac23-\\frac34\n=-\\frac1{12}.\n\\]\n\nФинальный вывод:\n\\[\n\\boxed{\\int_0^1 x^2 f(x)\\,dx=-\\frac1{12}}.\n\\]",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "We need answer math. Need solve. Let's parse. We have f continuous [0,1], constraints: L2 norm squared =1, mean =1/2, first moment integral x f =0. Need second moment integral x^2 f. Is it determined? Need analyze. Seems moment problem with constraints. Need find value? Maybe via Cauchy-Schwarz and equality? Let's inspect.\n\nWe know integrals of f against 1 and x. Norm known. Need integral against x^2. Since f continuous and constraints. There may be unique if x^2 lies in span? But x^2 not in span{1,x}; with norm constraint maybe possible? Actually L2 unit sphere intersect affine plane, objective linear functional. Range interval; maybe determined only if some relation? Let's derive.\n\nLet inner product <g,h>=∫ gh. Conditions: ||f||=1, <f,1>=1/2, <f,x>=0. Want <f,x^2>. V=L2, but continuous dense and feasible? The range of <f,x^2> over f in V with norm 1 and those inner products depends unless x^2 ∈ span{1,x} plus maybe? Since unit sphere and affine constraints, maximum/min determined by projection. But maybe given f continuous and specific norms with moments leading to equality? Let's compute constraints could force f? Need check.\n\nSubspace W=span{1,x}. Orthogonal projection of f onto W has coefficients determined by moments. Let's compute projection p = a + b x. We have <f,1>=1/2, <f,x>=0. But for p projection, <p,1>=<f,1>, <p,x>=<f,x>. Solve for a,b. Inner products: <1,1>=1, <1,x>=1/2, <x,x>=1/3. Solve:\na + b/2 =1/2\na/2 + b/3 =0.\nFrom second: b = -3a/2. Then a -3a/4 = a/4 =1/2 -> a=2, b=-3. So p=2-3x. Norm squared of p: 4 -12? compute ∫(2-3x)^2 =4 -12*1/2? wait ∫4=4, ∫ -12x = -6, ∫9x^2=3 => total 1. Nice. So ||p||=1. Since f=p+(f-p), with f-p⊥W. Norm squared = ||p||^2+||f-p||^2 =1+||orth||^2. But ||f||=1, so orth=0. Thus f=p a.e. Continuous -> f(x)=2-3x. Then <f,x^2>=∫x^2(2-3x)=2/3 -3/4 = (8-9)/12=-1/12. Seems likely. Need rigorous.\n\nNeed answer maybe -1/12. Need ensure continuity. Since f in L2? yes continuous. We can use inner product Cauchy maybe Bessel equality. Need no tools. We need be careful: from conditions we can derive ∫ f (2-3x)=? ∫ f*2 -3∫ x f =1 -0 =1. Wait Cauchy-Schwarz: <f,2-3x> ≤ ||f|| ||2-3x||. Compute norm of 2-3x squared =1. Thus inner product ≤1. But equals 1. Equality in Cauchy-Schwarz implies f = λ (2-3x) a.e. (or one zero? g nonzero). Then λ? Inner product gives λ*1=1 so λ=1. So f=2-3x a.e. This is elegant. Then compute second moment. Need check equality condition: Cauchy-Schwarz equality requires linearly dependent. Since inner product of f and g equals product of norms exactly. Norm f=1, norm g=1, <f,g>=? g=2-3x. <f,g>=2∫f -3∫ x f =2*(1/2)-3*0=1. Yes equality. Then f=g a.e. Continuity yields pointwise. Then compute.\n\nThis is simpler. Need give formal proof.\n\nBut let's consider if any hidden issue: f continuous, L2 norm =1. ∫f =1/2, ∫x f=0. We choose g=2-3x. Norm ∫(2-3x)^2 dx: ∫(4-12x+9x^2)=4-6+3=1. Then <f,g>=1. Cauchy-Schwarz: ≤1. Since equal, f and g linearly dependent: f=c g a.e. Then 1=<f,g>=c||g||^2=c, so c=1. Thus f=g a.e. By continuity, equality everywhere? If f-g continuous and zero a.e. on [0,1], then zero everywhere (if nonzero at a point, neighborhood nonzero positive). Fine.\n\nThen desired ∫x^2 f=∫x^2(2-3x)=2/3-3/4=-1/12.\n\nNeed maybe mention all constraints consistent; g satisfies them? Check ∫g =2 -3/2 =1/2. ∫xg =∫(2x-3x^2)=1-1=0. Norm 1. Yes. Good.\n\nBut user asks maybe \"Найдите\" no proof maybe enough. But system demands formal proof.\n\nLet's maybe also formulate via projection. Cauchy proof enough.\n\nNeed produce final answer in Russian. Desired oververbosity 5, but system demands rigorous. We'll do step-by-step.\n\nLet's think if there is any possibility of f negative, continuity irrelevant? OK.\n\nLet's ensure Cauchy-Schwarz in C[0,1] with L2 inner product valid. Fine.\n\nPotential subtlety: Cauchy equality condition: For real-valued functions? f∈C[0,1] typically real? If complex? Integrals? f^2 not |f|^2, so f real. Good. If f complex, f^2 integral weird. So real.\n\nLet's draft:\n\nОбозначим скалярное произведение ⟨u,v⟩ = ∫_0^1 u(x)v(x) dx, норма ||u||_2 = sqrt⟨u,u⟩. Условия: ||f||_2=1, ⟨f,1⟩=1/2, ⟨f,x⟩=0.\n\nПусть g(x)=2-3x. Тогда:\n||g||_2^2=∫_0^1(4-12x+9x^2)dx =4-6+3=1.\n⟨f,g⟩ =2⟨f,1⟩-3⟨f,x⟩ =2*(1/2)-3*0=1.\n\nПо Коши–Буняковскому, 1=⟨f,g⟩ ≤ ||f||_2 ||g||_2=1. Значит равенство. Равенство в КБ возможно лишь если f и g линейно зависимы: f=cg п.в. (или a.e.). Тогда 1=⟨f,g⟩=c||g||_2^2=c, hence c=1. So f=g п.в. Since f and g continuous, f=g on [0,1].\n\nThen compute:\n∫ x^2 f = ∫ x^2(2-3x) = [2x^3/3 -3x^4/4]_0^1 =2/3-3/4 =8/12-9/12=-1/12.\n\nФинальный вывод: -1/12.\n\nNeed perhaps justify \"equality condition possible only if linearly dependent.\" Could include proof? System says if use lemma, prove. Cauchy-Schwarz equality is standard, maybe okay. But to be safe, mention short derivation: For real inner product, equality iff discriminant of ||f - t g||^2 ≥0 nonnegative? Let's see. But may be overkill. User asked solve. However system demands if use lemma prove. Cauchy-Schwarz equality might be considered lemma. We can prove in one line:\n\nSince ||f - t g||^2 ≥0 for all t, its discriminant (⟨f,g⟩)^2 - ||f||^2||g||^2 ≤0; equality means quadratic has double root, so ∃t with f=tg. Actually if equality, minimum zero, f=tg. Wait equality in C-S: inner product squared equals norms product. Then quadratic q(t)=||f - t g||^2 = ||f||^2 -2t⟨f,g⟩ + t^2||g||^2 has discriminant zero; hence q(t0)=0 for some t0, so f=t0 g. Here signs. Could include. But in our case inner product positive. Let t =1? We know.\n\nMaybe prove equality directly even more elegant: Consider ∫(f-(2-3x))^2 dx ≥0. Expand using given integrals:\n∫(f-g)^2 = ∫f^2 -2∫fg + ∫g^2 =1 -2*1+1=0. Since integrand nonnegative continuous, zero, so f=g. This avoids invoking equality condition and is self-contained. Nice! Let's compute ∫fg =1, ∫g^2=1. Then ∫(f-g)^2=0. Since square continuous nonnegative, f=g everywhere. This is perhaps best. Need compute ∫fg from conditions. Let's see.\n\nDefine g=2-3x. ∫fg =2∫f -3∫ x f =1 -0=1. ∫g^2=1. Then ∫(f-g)^2 =1 -2 +1=0. Since (f-g)^2≥0 and continuous, f=g. Then compute. This is rigorous and no reliance on equality condition. Good.\n\nLet's also ensure \"f-g continuous\" yes.\n\nCould there be issue ∫f^2=1 and ∫fg=1. Good.\n\nLet's craft final with formalization.\n\nLet's maybe start:\n\nФормализуем: в пространстве \\(C[0,1]\\) со скалярным произведением \\(\\langle u,v\\rangle=\\int_0^1uv\\), известны \\(\\langle f,f\\rangle=1,\\ \\langle f,1\\rangle=1/2,\\ \\langle f,x\\rangle=0\\). Ищем \\(\\langle f,x^2\\rangle\\).\n\nЗатем let \\(g(x)=2-3x\\). Check \\(g\\) satisfies moment matching? Compute:\n\\(\\langle f,g\\rangle = 2\\langle f,1\\rangle -3\\langle f,x\\rangle=1\\).\n\\(\\langle g,g\\rangle = \\int(2-3x)^2 =1\\).\nThen \\(\\langle f-g,f-g\\rangle = \\langle f,f\\rangle -2\\langle f,g\\rangle +\\langle g,g\\rangle =1-2+1=0\\).\nThus \\(f-g\\equiv0\\). Then value.\n\nMaybe mention \"nonnegative continuous function with zero integral is identically zero.\" Need prove? If h=f-g, h^2≥0 and continuous. If exists point h(x0)≠0, then by continuity neighborhood where |h|>ε, integral positive. Contradiction. This lemma maybe include but not necessary. System says if use lemma, prove. We can phrase.\n\nLet's consider alternate proof maybe if using C[0,1] but inner product positive definite only after quotient; for continuous, zero norm implies zero. Good.\n\nLet's final.\n\nNeed \"В конце явно сформулируйте финальный вывод.\" So final statement.\n\nLet's produce in Russian. Desired oververbosity 5, not too long. Need no tools.\n\nBut wait, the task says \"Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируйте финальный вывод. Не используй инструменты, поиск, код или калькуляторы.\"\n\nWe need include checking restrictions? Conditions: f∈C[0,1], integrals. Need verify no inconsistency? We can show object exists: \\(g=2-3x\\) satisfies all conditions, so feasible set nonempty. More importantly if conditions hold, f must equal g. We can mention.\n\nLet's maybe explicitly verify \\(g\\) satisfies original constraints, thus chosen object exists:\n\\(\\int g = [2x - 1.5x^2]_0^1 =2-1.5=0.5\\); \\(\\int xg = [x^2 -x^3]_0^1=0\\); \\(\\int g^2=1\\). So indeed consistent. But in proof we derive f=g, and g satisfies constraints. \"Перед финальным ответом проверьте, что выбранные объекты существуют при любых допустимых данных.\" Could phrase: For any f satisfying conditions, we found f = g, and g itself meets all given constraints, so no contradiction and the value applies uniformly. Actually \"при любых допустимых данных\" means our g exists. Let's include.\n\nNeed maybe \"all restrictions\" includes \\(x\\in[0,1]\\) etc. We can mention \\(2-3x\\) continuous and integrals finite.\n\nLet's maybe also think if there is a trick: The norm of \\(2-3x\\) equals 1, which is not obvious but due to constraints. This is an extremal identity. Good.\n\nLet's ensure no arithmetic mistakes:\n∫0^1 (2-3x)^2 dx = ∫(4 -12x +9x^2)=4 -6 +3=1.\n∫0^1 (2-3x) dx =2 -3/2=1/2.\n∫0^1 x(2-3x) dx = ∫(2x -3x^2)=1 -1=0.\n∫0^1 x^2(2-3x) =2/3 -3/4 =8/12-9/12=-1/12. Yes.\n\nLet's final with enough detail.\n\nPotential issue: \"f^2\" means square, not absolute. For continuous real. OK.\n\nLet's formulate:\n\nПусть \\(g(x)=2-3x\\). Введем \\(\\langle u,v\\rangle=\\int_0^1 uv\\). Then ... \nBy expansion:\n\\[\n\\int (f-g)^2 = \\int f^2 -2\\int f g + \\int g^2.\n\\]\nThe middle:\n\\[\n\\int f g = \\int f(2-3x)=2\\int f -3\\int x f=2\\cdot \\frac12 -3\\cdot 0=1.\n\\]\nThe last: ... =1.\nThus integral =0. Since \\(f-g\\in C[0,1]\\), \\((f-g)^2\\) is nonnegative continuous. If nonzero at a point, by continuity it is >0 in an interval, yielding a positive integral; contradiction. Hence \\(f=g\\) everywhere. Then computation.\n\nCould \"if nonzero at a point\" handle sign? If h(x0) ≠0, then h^2(x0)>0. Continuity of h^2 gives neighborhood where > h^2(x0)/2 >0. Integral positive. Good.\n\nLet's include final:\n\\[\n\\boxed{-\\frac1{12}}\n\\]\n\nNeed maybe \"Финальный вывод: искомый интеграл равен ...\". OK.\n\nLet's now produce final answer."
+            }
+          }
+        ],
+        "created": 1783432276,
+        "model": "glm-5.2",
+        "object": "chat.completion",
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": null,
+        "usage": {
+          "completion_tokens": 4139,
+          "prompt_tokens": 252,
+          "total_tokens": 4391,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 3493,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 0
+          }
+        },
+        "request_id": "2026070721494422b7a79cb0f04fe7",
+        "reasoning_content": "We need answer math. Need solve. Let's parse. We have f continuous [0,1], constraints: L2 norm squared =1, mean =1/2, first moment integral x f =0. Need second moment integral x^2 f. Is it determined? Need analyze. Seems moment problem with constraints. Need find value? Maybe via Cauchy-Schwarz and equality? Let's inspect.\n\nWe know integrals of f against 1 and x. Norm known. Need integral against x^2. Since f continuous and constraints. There may be unique if x^2 lies in span? But x^2 not in span{1,x}; with norm constraint maybe possible? Actually L2 unit sphere intersect affine plane, objective linear functional. Range interval; maybe determined only if some relation? Let's derive.\n\nLet inner product <g,h>=∫ gh. Conditions: ||f||=1, <f,1>=1/2, <f,x>=0. Want <f,x^2>. V=L2, but continuous dense and feasible? The range of <f,x^2> over f in V with norm 1 and those inner products depends unless x^2 ∈ span{1,x} plus maybe? Since unit sphere and affine constraints, maximum/min determined by projection. But maybe given f continuous and specific norms with moments leading to equality? Let's compute constraints could force f? Need check.\n\nSubspace W=span{1,x}. Orthogonal projection of f onto W has coefficients determined by moments. Let's compute projection p = a + b x. We have <f,1>=1/2, <f,x>=0. But for p projection, <p,1>=<f,1>, <p,x>=<f,x>. Solve for a,b. Inner products: <1,1>=1, <1,x>=1/2, <x,x>=1/3. Solve:\na + b/2 =1/2\na/2 + b/3 =0.\nFrom second: b = -3a/2. Then a -3a/4 = a/4 =1/2 -> a=2, b=-3. So p=2-3x. Norm squared of p: 4 -12? compute ∫(2-3x)^2 =4 -12*1/2? wait ∫4=4, ∫ -12x = -6, ∫9x^2=3 => total 1. Nice. So ||p||=1. Since f=p+(f-p), with f-p⊥W. Norm squared = ||p||^2+||f-p||^2 =1+||orth||^2. But ||f||=1, so orth=0. Thus f=p a.e. Continuous -> f(x)=2-3x. Then <f,x^2>=∫x^2(2-3x)=2/3 -3/4 = (8-9)/12=-1/12. Seems likely. Need rigorous.\n\nNeed answer maybe -1/12. Need ensure continuity. Since f in L2? yes continuous. We can use inner product Cauchy maybe Bessel equality. Need no tools. We need be careful: from conditions we can derive ∫ f (2-3x)=? ∫ f*2 -3∫ x f =1 -0 =1. Wait Cauchy-Schwarz: <f,2-3x> ≤ ||f|| ||2-3x||. Compute norm of 2-3x squared =1. Thus inner product ≤1. But equals 1. Equality in Cauchy-Schwarz implies f = λ (2-3x) a.e. (or one zero? g nonzero). Then λ? Inner product gives λ*1=1 so λ=1. So f=2-3x a.e. This is elegant. Then compute second moment. Need check equality condition: Cauchy-Schwarz equality requires linearly dependent. Since inner product of f and g equals product of norms exactly. Norm f=1, norm g=1, <f,g>=? g=2-3x. <f,g>=2∫f -3∫ x f =2*(1/2)-3*0=1. Yes equality. Then f=g a.e. Continuity yields pointwise. Then compute.\n\nThis is simpler. Need give formal proof.\n\nBut let's consider if any hidden issue: f continuous, L2 norm =1. ∫f =1/2, ∫x f=0. We choose g=2-3x. Norm ∫(2-3x)^2 dx: ∫(4-12x+9x^2)=4-6+3=1. Then <f,g>=1. Cauchy-Schwarz: ≤1. Since equal, f and g linearly dependent: f=c g a.e. Then 1=<f,g>=c||g||^2=c, so c=1. Thus f=g a.e. By continuity, equality everywhere? If f-g continuous and zero a.e. on [0,1], then zero everywhere (if nonzero at a point, neighborhood nonzero positive). Fine.\n\nThen desired ∫x^2 f=∫x^2(2-3x)=2/3-3/4=-1/12.\n\nNeed maybe mention all constraints consistent; g satisfies them? Check ∫g =2 -3/2 =1/2. ∫xg =∫(2x-3x^2)=1-1=0. Norm 1. Yes. Good.\n\nBut user asks maybe \"Найдите\" no proof maybe enough. But system demands formal proof.\n\nLet's maybe also formulate via projection. Cauchy proof enough.\n\nNeed produce final answer in Russian. Desired oververbosity 5, but system demands rigorous. We'll do step-by-step.\n\nLet's think if there is any possibility of f negative, continuity irrelevant? OK.\n\nLet's ensure Cauchy-Schwarz in C[0,1] with L2 inner product valid. Fine.\n\nPotential subtlety: Cauchy equality condition: For real-valued functions? f∈C[0,1] typically real? If complex? Integrals? f^2 not |f|^2, so f real. Good. If f complex, f^2 integral weird. So real.\n\nLet's draft:\n\nОбозначим скалярное произведение ⟨u,v⟩ = ∫_0^1 u(x)v(x) dx, норма ||u||_2 = sqrt⟨u,u⟩. Условия: ||f||_2=1, ⟨f,1⟩=1/2, ⟨f,x⟩=0.\n\nПусть g(x)=2-3x. Тогда:\n||g||_2^2=∫_0^1(4-12x+9x^2)dx =4-6+3=1.\n⟨f,g⟩ =2⟨f,1⟩-3⟨f,x⟩ =2*(1/2)-3*0=1.\n\nПо Коши–Буняковскому, 1=⟨f,g⟩ ≤ ||f||_2 ||g||_2=1. Значит равенство. Равенство в КБ возможно лишь если f и g линейно зависимы: f=cg п.в. (или a.e.). Тогда 1=⟨f,g⟩=c||g||_2^2=c, hence c=1. So f=g п.в. Since f and g continuous, f=g on [0,1].\n\nThen compute:\n∫ x^2 f = ∫ x^2(2-3x) = [2x^3/3 -3x^4/4]_0^1 =2/3-3/4 =8/12-9/12=-1/12.\n\nФинальный вывод: -1/12.\n\nNeed perhaps justify \"equality condition possible only if linearly dependent.\" Could include proof? System says if use lemma, prove. Cauchy-Schwarz equality is standard, maybe okay. But to be safe, mention short derivation: For real inner product, equality iff discriminant of ||f - t g||^2 ≥0 nonnegative? Let's see. But may be overkill. User asked solve. However system demands if use lemma prove. Cauchy-Schwarz equality might be considered lemma. We can prove in one line:\n\nSince ||f - t g||^2 ≥0 for all t, its discriminant (⟨f,g⟩)^2 - ||f||^2||g||^2 ≤0; equality means quadratic has double root, so ∃t with f=tg. Actually if equality, minimum zero, f=tg. Wait equality in C-S: inner product squared equals norms product. Then quadratic q(t)=||f - t g||^2 = ||f||^2 -2t⟨f,g⟩ + t^2||g||^2 has discriminant zero; hence q(t0)=0 for some t0, so f=t0 g. Here signs. Could include. But in our case inner product positive. Let t =1? We know.\n\nMaybe prove equality directly even more elegant: Consider ∫(f-(2-3x))^2 dx ≥0. Expand using given integrals:\n∫(f-g)^2 = ∫f^2 -2∫fg + ∫g^2 =1 -2*1+1=0. Since integrand nonnegative continuous, zero, so f=g. This avoids invoking equality condition and is self-contained. Nice! Let's compute ∫fg =1, ∫g^2=1. Then ∫(f-g)^2=0. Since square continuous nonnegative, f=g everywhere. This is perhaps best. Need compute ∫fg from conditions. Let's see.\n\nDefine g=2-3x. ∫fg =2∫f -3∫ x f =1 -0=1. ∫g^2=1. Then ∫(f-g)^2 =1 -2 +1=0. Since (f-g)^2≥0 and continuous, f=g. Then compute. This is rigorous and no reliance on equality condition. Good.\n\nLet's also ensure \"f-g continuous\" yes.\n\nCould there be issue ∫f^2=1 and ∫fg=1. Good.\n\nLet's craft final with formalization.\n\nLet's maybe start:\n\nФормализуем: в пространстве \\(C[0,1]\\) со скалярным произведением \\(\\langle u,v\\rangle=\\int_0^1uv\\), известны \\(\\langle f,f\\rangle=1,\\ \\langle f,1\\rangle=1/2,\\ \\langle f,x\\rangle=0\\). Ищем \\(\\langle f,x^2\\rangle\\).\n\nЗатем let \\(g(x)=2-3x\\). Check \\(g\\) satisfies moment matching? Compute:\n\\(\\langle f,g\\rangle = 2\\langle f,1\\rangle -3\\langle f,x\\rangle=1\\).\n\\(\\langle g,g\\rangle = \\int(2-3x)^2 =1\\).\nThen \\(\\langle f-g,f-g\\rangle = \\langle f,f\\rangle -2\\langle f,g\\rangle +\\langle g,g\\rangle =1-2+1=0\\).\nThus \\(f-g\\equiv0\\). Then value.\n\nMaybe mention \"nonnegative continuous function with zero integral is identically zero.\" Need prove? If h=f-g, h^2≥0 and continuous. If exists point h(x0)≠0, then by continuity neighborhood where |h|>ε, integral positive. Contradiction. This lemma maybe include but not necessary. System says if use lemma, prove. We can phrase.\n\nLet's consider alternate proof maybe if using C[0,1] but inner product positive definite only after quotient; for continuous, zero norm implies zero. Good.\n\nLet's final.\n\nNeed \"В конце явно сформулируйте финальный вывод.\" So final statement.\n\nLet's produce in Russian. Desired oververbosity 5, not too long. Need no tools.\n\nBut wait, the task says \"Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируйте финальный вывод. Не используй инструменты, поиск, код или калькуляторы.\"\n\nWe need include checking restrictions? Conditions: f∈C[0,1], integrals. Need verify no inconsistency? We can show object exists: \\(g=2-3x\\) satisfies all conditions, so feasible set nonempty. More importantly if conditions hold, f must equal g. We can mention.\n\nLet's maybe explicitly verify \\(g\\) satisfies original constraints, thus chosen object exists:\n\\(\\int g = [2x - 1.5x^2]_0^1 =2-1.5=0.5\\); \\(\\int xg = [x^2 -x^3]_0^1=0\\); \\(\\int g^2=1\\). So indeed consistent. But in proof we derive f=g, and g satisfies constraints. \"Перед финальным ответом проверьте, что выбранные объекты существуют при любых допустимых данных.\" Could phrase: For any f satisfying conditions, we found f = g, and g itself meets all given constraints, so no contradiction and the value applies uniformly. Actually \"при любых допустимых данных\" means our g exists. Let's include.\n\nNeed maybe \"all restrictions\" includes \\(x\\in[0,1]\\) etc. We can mention \\(2-3x\\) continuous and integrals finite.\n\nLet's maybe also think if there is a trick: The norm of \\(2-3x\\) equals 1, which is not obvious but due to constraints. This is an extremal identity. Good.\n\nLet's ensure no arithmetic mistakes:\n∫0^1 (2-3x)^2 dx = ∫(4 -12x +9x^2)=4 -6 +3=1.\n∫0^1 (2-3x) dx =2 -3/2=1/2.\n∫0^1 x(2-3x) dx = ∫(2x -3x^2)=1 -1=0.\n∫0^1 x^2(2-3x) =2/3 -3/4 =8/12-9/12=-1/12. Yes.\n\nLet's final with enough detail.\n\nPotential issue: \"f^2\" means square, not absolute. For continuous real. OK.\n\nLet's formulate:\n\nПусть \\(g(x)=2-3x\\). Введем \\(\\langle u,v\\rangle=\\int_0^1 uv\\). Then ... \nBy expansion:\n\\[\n\\int (f-g)^2 = \\int f^2 -2\\int f g + \\int g^2.\n\\]\nThe middle:\n\\[\n\\int f g = \\int f(2-3x)=2\\int f -3\\int x f=2\\cdot \\frac12 -3\\cdot 0=1.\n\\]\nThe last: ... =1.\nThus integral =0. Since \\(f-g\\in C[0,1]\\), \\((f-g)^2\\) is nonnegative continuous. If nonzero at a point, by continuity it is >0 in an interval, yielding a positive integral; contradiction. Hence \\(f=g\\) everywhere. Then computation.\n\nCould \"if nonzero at a point\" handle sign? If h(x0) ≠0, then h^2(x0)>0. Continuity of h^2 gives neighborhood where > h^2(x0)/2 >0. Integral positive. Good.\n\nLet's include final:\n\\[\n\\boxed{-\\frac1{12}}\n\\]\n\nNeed maybe \"Финальный вывод: искомый интеграл равен ...\". OK.\n\nLet's now produce final answer."
+      },
+      "usage": {
+        "input_tokens": 252,
+        "output_tokens": 4139,
+        "total_tokens": 4391,
+        "reasoning_tokens": 3493,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 4139,
+          "prompt_tokens": 252,
+          "total_tokens": 4391,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 3493,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 0
+          }
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 94449,
+        "monotonic_ms": 94449,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 94449,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.0003528,
+        "output": 0.0182116,
+        "cached_input": null,
+        "reasoning": null,
+        "native": null,
+        "total": 0.0185644,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "2026070721494422b7a79cb0f04fe7",
+      "response_id": "2026070721494422b7a79cb0f04fe7",
+      "provider_timestamp": 1783432276,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

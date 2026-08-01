@@ -1,0 +1,289 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_00_17_26_math-cup-2026-final_20260801_001725_task_02_gigachat_GigaChat-3-Ultra_256000",
+  "timestamp": "2026-08-01T00:17:26.053067Z",
+  "started_at": "2026-08-01T00:17:26.053067Z",
+  "completed_at": "2026-08-01T00:17:41.364966Z",
+  "duration_ms": 15257,
+  "status": "completed",
+  "git_hash": "1413f2c",
+  "git": {
+    "hash": "1413f2c",
+    "full_hash": "1413f2c404239d5054a772a2c936fe8d69c640fa",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-final/task_02.json",
+      "--models",
+      "gigachat:GigaChat-3-Ultra",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-final_20260801_001725_task_02_gigachat_GigaChat-3-Ultra_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-final/task_02.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "gigachat:GigaChat-3-Ultra",
+      "run_id": "math-cup-2026-final_20260801_001725_task_02_gigachat_GigaChat-3-Ultra_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "gigachat:GigaChat-3-Ultra"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "gigachat:GigaChat-3-Ultra"
+  ],
+  "competition_id": "math-cup-2026-final",
+  "competition_title": "Math Cup 2026. Финал",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-final",
+    "title": "Math Cup 2026. Финал",
+    "description": "Финал. Решения",
+    "date": "2026-05-17",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Финал",
+      "stage_index": 2,
+      "document_type": "Решения",
+      "score_step": 2
+    }
+  },
+  "problem_id": "task_02",
+  "problem_number": 2,
+  "problem_title": "Матрицы",
+  "problem_file": "data/competitions/math-cup-2026-final/task_02.json",
+  "problem_text": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_02",
+    "number": 2,
+    "title": "Матрицы",
+    "statement": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]",
+    "answer": null,
+    "solution": "\\[\nT^2=(AB-BA)^2=ABAB-AB\\cdot BA-BA\\cdot AB+BABA=AB+BA,\n\\]\n\\[\nT^3=(AB-BA)(AB+BA)=ABAB-BABA=AB-BA=T.\n\\]\n\n**Решение 1.** Для любого \\(x\\in V\\) запишем\n\\[\nx=(x-T^2x)+T^2x.\n\\]\nТогда\n\\[\nT(x-T^2x)=Tx-T^3x=0,\\qquad T^2x=T(Tx)\\in\\operatorname{Im}T.\n\\]\nЗначит, \\(x-T^2x\\in\\ker T\\), откуда \\(V=\\ker T+\\operatorname{Im}T\\).\n\nОсталось проверить, что сумма прямая. Для этого достаточно показать пустоту пересечения подпространств. Пусть \\(z\\in\\ker T\\cap\\operatorname{Im}T\\). Тогда \\(z=Ty\\) и \\(Tz=0\\), поэтому \\(T^2y=0\\). Следовательно,\n\\[\nz=Ty=T^3y=T(T^2y)=0.\n\\]\n\n**Решение 2.** Из \\(T^3=T\\) имеем\n\\[\nT^3-T=T(T-I)(T+I)=0.\n\\]\nПоэтому минимальный многочлен \\(T\\) делит \\(t(t-1)(t+1)\\), а значит, не имеет кратных корней. Следовательно, \\(T\\) диагонализуем и\n\\[\nV=\\ker T\\oplus\\ker(T-I)\\oplus\\ker(T+I).\n\\]\nДокажем, что\n\\[\n\\operatorname{Im}T=\\ker(T-I)\\oplus\\ker(T+I),\n\\]\nиз чего будет следовать требуемое.\n\n1. \\(\\ker(T-I)\\oplus\\ker(T+I)\\subseteq\\operatorname{Im}T\\). Если \\(Tv=\\lambda v\\), где \\(\\lambda=\\pm1\\), то \\(v=\\lambda Tv\\in\\operatorname{Im}T\\).\n2. \\(\\ker(T-I)\\oplus\\ker(T+I)\\supseteq\\operatorname{Im}T\\). Если \\(x=x_0+x_++x_-\\), где \\(x_0\\in\\ker T\\), \\(x_+\\in\\ker(T-I)\\), \\(x_-\\in\\ker(T+I)\\), то\n\\[\nTx=x_+-x_-\\in\\ker(T-I)\\oplus\\ker(T+I).\n\\]",
+    "tags": [],
+    "metadata": {
+      "source_pages": [
+        2
+      ],
+      "max_score": 2
+    }
+  },
+  "problem_hash": "c7ad8347b060d48892e78f687f671ffd488b153850264bd904fd965c6ec6ea05",
+  "problem_text_hash": "558c575c2d8f88709a2dc8d67b290d7472310d37e79cf36453809e2955ff9dde",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_921c7927cf2004913bf3516c",
+      "result_index": 0,
+      "provider": "gigachat",
+      "alias": "gigachat:GigaChat-3-Ultra",
+      "adapter_class": "models.gigachat.gigachat.GigaChatModel",
+      "requested_model_id": "GigaChat-3-Ultra",
+      "resolved_model_id": "GigaChat-3-Ultra:32.9.23.6",
+      "model": "GigaChat-3-Ultra",
+      "attempt": 1,
+      "started_at": "2026-08-01T00:17:26.152578Z",
+      "completed_at": "2026-08-01T00:17:41.359883Z",
+      "status": "success",
+      "request": {
+        "model": "GigaChat-3-Ultra",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Пусть \\(V\\) — векторное пространство над \\(\\mathbb R\\), а \\(A,B\\colon V\\to V\\) — линейные операторы, для которых выполнено\n\\[\nA^2=0,\\qquad B^2=0,\\qquad ABA=A,\\qquad BAB=B.\n\\]\nПусть \\(T=AB-BA\\). Докажите, что\n\\[\nV=\\ker T\\oplus\\operatorname{Im}T.\n\\]"
+          }
+        ],
+        "temperature": 0.1,
+        "top_p": 1.0,
+        "max_tokens": 256000,
+        "repetition_penalty": 1.0,
+        "endpoint": "https://api.giga.chat/v1/chat/completions",
+        "stream": false,
+        "requested_max_tokens": "[REDACTED]",
+        "provider_max_tokens": "[REDACTED]"
+      },
+      "answer": "Рассмотрим векторное пространство $V$ над $\\mathbb{R}$ и линейные операторы $A, B: V \\to V$, удовлетворяющие условиям:\n$$\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n$$\nВведем оператор $T = AB - BA$. Нам необходимо доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\nДля доказательства разложимости пространства в прямую сумму ядра и образа оператора $T$ достаточно показать, что оператор $T^2$ действует на $V$ как тождественный оператор на образе $\\operatorname{Im} T$ и аннулирует ядро $\\ker T$, а также что $V = \\ker T + \\operatorname{Im} T$. Более того, для линейного оператора на конечномерном пространстве (или в общем случае, если оператор обладает свойством $T^2 = \\text{id}$ на соответствующем подпространстве) равенство $V = \\ker T \\oplus \\operatorname{Im} T$ эквивалентно тому, что $T^2$ является проектором на $\\operatorname{Im} T$ вдоль $\\ker T$, или, что еще сильнее, $T^2 = T$ (идемпотентность) или $T^2 = \\text{id}$ на образе.\n\nВычислим $T^2$:\n$$\nT^2 = (AB - BA)(AB - BA) = ABAB - ABBA - BAAB + BABA.\n$$\nИспользуя условия $A^2 = 0$ и $B^2 = 0$, упростим слагаемые:\n1. $ABBA = A(B^2)A = A \\cdot 0 \\cdot A = 0$.\n2. $BAAB = B(A^2)B = B \\cdot 0 \\cdot B = 0$.\n\nОстаются слагаемые $ABAB$ и $BABA$. Воспользуемся условиями $ABA = A$ и $BAB = B$:\n1. $ABAB = A(BA)B$. Заметим, что $A(BAB) = AB$. Но у нас $ABAB$. Сгруппируем иначе: $(ABA)B = AB$.\n2. $BABA = B(AB)A$. Сгруппируем иначе: $(BAB)A = BA$.\n\nТаким образом:\n$$\nT^2 = AB - BA = T.\n$$\nМы установили, что оператор $T$ является **идемпотентным**, то есть $T^2 = T$. Такие операторы называются проекторами.\n\n### Доказательство разложения $V = \\ker T \\oplus \\operatorname{Im} T$\n\nДля любого идемпотентного оператора $T$ (где $T^2 = T$) пространство $V$ всегда разлагается в прямую сумму ядра и образа. Докажем это в два этапа.\n\n#### 1. Пересечение $\\ker T \\cap \\operatorname{Im} T$ тривиально\nПусть $v \\in \\ker T \\cap \\operatorname{Im} T$.\nТак как $v \\in \\operatorname{Im} T$, существует такой вектор $u \\in V$, что $v = T(u)$.\nТак как $v \\in \\ker T$, то $T(v) = 0$.\nПрименим оператор $T$ к равенству $v = T(u)$:\n$$\nT(v) = T(T(u)) = T^2(u).\n$$\nПоскольку $T^2 = T$, получаем:\n$$\nT(v) = T(u).\n$$\nНо $T(v) = 0$ (так как $v \\in \\ker T$), а $T(u) = v$. Следовательно:\n$$\n0 = v.\n$$\nЗначит, $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\n#### 2. Сумма $\\ker T + \\operatorname{Im} T$ дает все пространство $V$\nВозьмем произвольный вектор $x \\in V$. Представим его в виде:\n$$\nx = (x - T(x)) + T(x).\n$$\nПроверим принадлежность слагаемых соответствующим подпространствам:\n*   Рассмотрим $T(x)$. По определению, это образ оператора $T$, то есть $T(x) \\in \\operatorname{Im} T$.\n*   Рассмотрим $x - T(x)$. Применим к нему оператор $T$:\n    $$\n    T(x - T(x)) = T(x) - T(T(x)) = T(x) - T^2(x).\n    $$\n    Так как $T^2 = T$, имеем $T^2(x) = T(x)$. Следовательно:\n    $$\n    T(x - T(x)) = T(x) - T(x) = 0.\n    $$\n    Это означает, что $x - T(x) \\in \\ker T$.\n\nТаким образом, любой вектор $x \\in V$ представлен в виде суммы вектора из ядра и вектора из образа.\n\n### Заключение\nМы доказали, что:\n1. Любой вектор $x \\in V$ представим как $x = k + i$, где $k \\in \\ker T$ и $i \\in \\operatorname{Im} T$.\n2. Такое представление единственно, так как пересечение подпространств нулевое.\n\nСледовательно,\n$$\nV = \\ker T \\oplus \\operatorname{Im} T.\n$$\n\n**Финальный результат:**\n$V = \\ker T \\oplus \\operatorname{Im} T$.",
+      "prompt_tokens": 213,
+      "completion_tokens": 1148,
+      "cost_usd": 0.0,
+      "latency_ms": 14249,
+      "raw_response": {
+        "x_headers": {
+          "x-request-id": "c101067a-5bad-4a72-8212-09d3632bbfa8",
+          "x-session-id": "71e82e2f-a2b6-4f9b-adc3-0db12d23ad0a"
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "Рассмотрим векторное пространство $V$ над $\\mathbb{R}$ и линейные операторы $A, B: V \\to V$, удовлетворяющие условиям:\n$$\nA^2 = 0, \\quad B^2 = 0, \\quad ABA = A, \\quad BAB = B.\n$$\nВведем оператор $T = AB - BA$. Нам необходимо доказать, что $V = \\ker T \\oplus \\operatorname{Im} T$.\n\nДля доказательства разложимости пространства в прямую сумму ядра и образа оператора $T$ достаточно показать, что оператор $T^2$ действует на $V$ как тождественный оператор на образе $\\operatorname{Im} T$ и аннулирует ядро $\\ker T$, а также что $V = \\ker T + \\operatorname{Im} T$. Более того, для линейного оператора на конечномерном пространстве (или в общем случае, если оператор обладает свойством $T^2 = \\text{id}$ на соответствующем подпространстве) равенство $V = \\ker T \\oplus \\operatorname{Im} T$ эквивалентно тому, что $T^2$ является проектором на $\\operatorname{Im} T$ вдоль $\\ker T$, или, что еще сильнее, $T^2 = T$ (идемпотентность) или $T^2 = \\text{id}$ на образе.\n\nВычислим $T^2$:\n$$\nT^2 = (AB - BA)(AB - BA) = ABAB - ABBA - BAAB + BABA.\n$$\nИспользуя условия $A^2 = 0$ и $B^2 = 0$, упростим слагаемые:\n1. $ABBA = A(B^2)A = A \\cdot 0 \\cdot A = 0$.\n2. $BAAB = B(A^2)B = B \\cdot 0 \\cdot B = 0$.\n\nОстаются слагаемые $ABAB$ и $BABA$. Воспользуемся условиями $ABA = A$ и $BAB = B$:\n1. $ABAB = A(BA)B$. Заметим, что $A(BAB) = AB$. Но у нас $ABAB$. Сгруппируем иначе: $(ABA)B = AB$.\n2. $BABA = B(AB)A$. Сгруппируем иначе: $(BAB)A = BA$.\n\nТаким образом:\n$$\nT^2 = AB - BA = T.\n$$\nМы установили, что оператор $T$ является **идемпотентным**, то есть $T^2 = T$. Такие операторы называются проекторами.\n\n### Доказательство разложения $V = \\ker T \\oplus \\operatorname{Im} T$\n\nДля любого идемпотентного оператора $T$ (где $T^2 = T$) пространство $V$ всегда разлагается в прямую сумму ядра и образа. Докажем это в два этапа.\n\n#### 1. Пересечение $\\ker T \\cap \\operatorname{Im} T$ тривиально\nПусть $v \\in \\ker T \\cap \\operatorname{Im} T$.\nТак как $v \\in \\operatorname{Im} T$, существует такой вектор $u \\in V$, что $v = T(u)$.\nТак как $v \\in \\ker T$, то $T(v) = 0$.\nПрименим оператор $T$ к равенству $v = T(u)$:\n$$\nT(v) = T(T(u)) = T^2(u).\n$$\nПоскольку $T^2 = T$, получаем:\n$$\nT(v) = T(u).\n$$\nНо $T(v) = 0$ (так как $v \\in \\ker T$), а $T(u) = v$. Следовательно:\n$$\n0 = v.\n$$\nЗначит, $\\ker T \\cap \\operatorname{Im} T = \\{0\\}$.\n\n#### 2. Сумма $\\ker T + \\operatorname{Im} T$ дает все пространство $V$\nВозьмем произвольный вектор $x \\in V$. Представим его в виде:\n$$\nx = (x - T(x)) + T(x).\n$$\nПроверим принадлежность слагаемых соответствующим подпространствам:\n*   Рассмотрим $T(x)$. По определению, это образ оператора $T$, то есть $T(x) \\in \\operatorname{Im} T$.\n*   Рассмотрим $x - T(x)$. Применим к нему оператор $T$:\n    $$\n    T(x - T(x)) = T(x) - T(T(x)) = T(x) - T^2(x).\n    $$\n    Так как $T^2 = T$, имеем $T^2(x) = T(x)$. Следовательно:\n    $$\n    T(x - T(x)) = T(x) - T(x) = 0.\n    $$\n    Это означает, что $x - T(x) \\in \\ker T$.\n\nТаким образом, любой вектор $x \\in V$ представлен в виде суммы вектора из ядра и вектора из образа.\n\n### Заключение\nМы доказали, что:\n1. Любой вектор $x \\in V$ представим как $x = k + i$, где $k \\in \\ker T$ и $i \\in \\operatorname{Im} T$.\n2. Такое представление единственно, так как пересечение подпространств нулевое.\n\nСледовательно,\n$$\nV = \\ker T \\oplus \\operatorname{Im} T.\n$$\n\n**Финальный результат:**\n$V = \\ker T \\oplus \\operatorname{Im} T$.",
+              "function_call": null,
+              "name": null,
+              "attachments": null,
+              "data_for_context": null,
+              "functions_state_id": null,
+              "reasoning_content": null,
+              "id_": null
+            },
+            "index": 0,
+            "finish_reason": "stop"
+          }
+        ],
+        "created": 1785543461,
+        "model": "GigaChat-3-Ultra:32.9.23.6",
+        "thread_id": null,
+        "message_id": null,
+        "usage": {
+          "prompt_tokens": 213,
+          "completion_tokens": 1148,
+          "total_tokens": 1361,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "object_": "chat.completions"
+      },
+      "usage": {
+        "input_tokens": 213,
+        "output_tokens": 1148,
+        "total_tokens": 1361,
+        "reasoning_tokens": null,
+        "cached_input_tokens": "[REDACTED]",
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "prompt_tokens": 213,
+          "completion_tokens": 1148,
+          "total_tokens": 1361,
+          "precached_prompt_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 14249,
+        "monotonic_ms": 14249,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 14249,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": null,
+        "output": null,
+        "reasoning": null,
+        "native": {
+          "currency": "RUB",
+          "total": 0.0,
+          "reasoning": null,
+          "price_per_1k_total_tokens": "[REDACTED]"
+        },
+        "total": 0.0,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-08-01",
+        "estimated": true,
+        "exchange_rate": {
+          "RUB_PER_USD": 90.0
+        },
+        "note": "GigaChat 3 Ultra is currently available to individuals only through its Freemium allocation; no paid per-token Ultra tariff is published.",
+        "cached_input": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": "c101067a-5bad-4a72-8212-09d3632bbfa8",
+      "response_id": null,
+      "provider_timestamp": 1785543461,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

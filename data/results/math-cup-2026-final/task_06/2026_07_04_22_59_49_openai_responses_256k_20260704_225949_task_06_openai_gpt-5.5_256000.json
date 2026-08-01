@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_fd827a990c3320c0443b87f1": {
+      "evaluation_id": "ev_38bc03c0746642b1928e72783364c1c2",
+      "result_id": "res_fd827a990c3320c0443b87f1",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.5",
+      "model": "gpt-5.5",
+      "evaluator": "b2_maxim",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "а) ок\r\nб) ссылка на литературу",
+      "created_at": "2026-07-12T09:13:25.398440Z",
+      "updated_at": "2026-07-12T09:13:25.398440Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_fd827a990c3320c0443b87f1": [
+      {
+        "evaluation_id": "ev_38bc03c0746642b1928e72783364c1c2",
+        "result_id": "res_fd827a990c3320c0443b87f1",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.5",
+        "model": "gpt-5.5",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "а) ок\r\nб) ссылка на литературу",
+        "created_at": "2026-07-12T09:13:25.398440Z",
+        "updated_at": "2026-07-12T09:13:25.398440Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_07_04_22_59_49_openai_responses_256k_20260704_225949_task_06_openai_gpt-5.5_256000",
+  "updated_at": "2026-07-12T09:13:25.398440Z"
+}

@@ -7,9 +7,9 @@
       "model_key": "deepseek:deepseek-v4-flash",
       "model": "deepseek-v4-flash",
       "evaluator": "b2_maxim",
-      "score": 1.8,
+      "score": 2,
       "max_score": 2,
-      "score_category": "partial",
+      "score_category": "full",
       "feedback": "вычисления верны в пункте 6, но их нет в тексте",
       "created_at": "2026-07-03T23:57:30.089517Z",
       "updated_at": "2026-07-03T23:57:30.089517Z"
@@ -24,9 +24,9 @@
         "model_key": "deepseek:deepseek-v4-flash",
         "model": "deepseek-v4-flash",
         "evaluator": "b2_maxim",
-        "score": 1.8,
+        "score": 2,
         "max_score": 2,
-        "score_category": "partial",
+        "score_category": "full",
         "feedback": "вычисления верны в пункте 6, но их нет в тексте",
         "created_at": "2026-07-03T23:57:30.089517Z",
         "updated_at": "2026-07-03T23:57:30.089517Z"

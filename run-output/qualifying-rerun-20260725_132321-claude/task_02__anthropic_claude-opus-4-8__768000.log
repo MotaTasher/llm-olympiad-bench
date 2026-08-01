@@ -1,0 +1,17 @@
+START 2026-07-25T14:10:02.601401+00:00 math-cup-2026-qualifying/task_02 anthropic:claude-opus-4-8 cap=768000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_02.json --models anthropic:claude-opus-4-8 --max-tokens 768000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_rerun_20260725_132321_claude_task_02_anthropic_claude-opus-4-8_768000
+Run 2026_07_25_14_10_02_qualifying_rerun_20260725_132321_claude_task_02_anthropic_claude-opus-4-8_768000: math-cup-2026-qualifying/task_02, 1 model(s), max_tokens=768000
+[1/1] START anthropic:claude-opus-4-8
+[1/1] ERROR claude-opus-4-8 in 60m00s: peer closed connection without sending complete message body (incomplete chunked read)
+| model           |   tokens |   cost_usd |   latency_ms | status   | error                                                                                  |
+|-----------------|----------|------------|--------------|----------|----------------------------------------------------------------------------------------|
+| claude-opus-4-8 |        0 |          0 |            0 | error    | peer closed connection without sending complete message body (incomplete chunked read) |
+
+Run ID: 2026_07_25_14_10_02_qualifying_rerun_20260725_132321_claude_task_02_anthropic_claude-opus-4-8_768000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_02 (Ожерелье, плоскость, два гвоздя)
+Timestamp: 2026-07-25T14:10:02.701259Z
+Git hash: bbb60dc
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_02/2026_07_25_14_10_02_qualifying_rerun_20260725_132321_claude_task_02_anthropic_claude-opus-4-8_768000.json
+
+DONE 2026-07-25T15:10:03.908210+00:00 math-cup-2026-qualifying/task_02 anthropic:claude-opus-4-8 cap=768000 exit=0 elapsed_s=3601.3

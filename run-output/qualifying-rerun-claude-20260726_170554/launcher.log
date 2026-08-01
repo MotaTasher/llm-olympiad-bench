@@ -1,0 +1,13 @@
+
+DETACH 2026-07-26T17:05:54.748604+00:00 COMMAND /opt/olympiad-scorer/app/.venv/bin/python /opt/olympiad-scorer/app/scripts/run_model_batch.py --competition math-cup-2026-qualifying --repo-dir . --logs-dir /opt/olympiad-scorer/shared/logs --data-dir data/competitions --output-dir run-output/qualifying-rerun-claude-20260726_170554 --models anthropic:claude-opus-4-8 --problems 02,08 --max-tokens 768000 --workers 1 --provider-workers anthropic=1 --run-group qualifying_rerun_claude_20260726_170554 --yes
+Pair count: 2
+provider	anthropic	$38.4030
+model	anthropic:claude-opus-4-8	$38.4030
+total	$38.4030
+total_plus_20pct	$46.0836
+  0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [00:00<?, ?run/s]                                        0%|          | 0/2 [1:08:33<?, ?run/s] 50%|█████     | 1/2 [1:08:33<1:08:33, 4113.83s/run]                                                     50%|█████     | 1/2 [1:08:33<1:08:33, 4113.83s/run]                                                     50%|█████     | 1/2 [2:15:51<1:08:33, 4113.83s/run]100%|██████████| 2/2 [2:15:51<00:00, 4069.11s/run]  100%|██████████| 2/2 [2:15:51<00:00, 4075.82s/run]
+Launching 2 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'google': 2, 'xai': 2, 'zai': 2, 'anthropic': 1}, run_group=qualifying_rerun_claude_20260726_170554
+START math-cup-2026-qualifying/task_02 anthropic:claude-opus-4-8 cap=768000
+OK task_02 anthropic:claude-opus-4-8 exit=0 elapsed=4113.8s log=run-output/qualifying-rerun-claude-20260726_170554/task_02__anthropic_claude-opus-4-8__768000.log
+START math-cup-2026-qualifying/task_08 anthropic:claude-opus-4-8 cap=768000
+OK task_08 anthropic:claude-opus-4-8 exit=0 elapsed=4037.8s log=run-output/qualifying-rerun-claude-20260726_170554/task_08__anthropic_claude-opus-4-8__768000.log

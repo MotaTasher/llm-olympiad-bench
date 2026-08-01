@@ -1,0 +1,290 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_20_19_19_math-cup-2026-qualifying_20260707_201919_task_06_deepseek_deepseek-v4-pro_256000",
+  "timestamp": "2026-07-07T20:19:19.741570Z",
+  "started_at": "2026-07-07T20:19:19.741570Z",
+  "completed_at": "2026-07-07T20:20:31.868116Z",
+  "duration_ms": 72097,
+  "status": "completed",
+  "git_hash": "abcc89f",
+  "git": {
+    "hash": "abcc89f",
+    "full_hash": "abcc89f3ecd9edd8b11c8dca7bd067640ca2fe93",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "deepseek:deepseek-v4-pro",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_201919_task_06_deepseek_deepseek-v4-pro_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "deepseek:deepseek-v4-pro",
+      "run_id": "math-cup-2026-qualifying_20260707_201919_task_06_deepseek_deepseek-v4-pro_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "deepseek:deepseek-v4-pro"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.113.0",
+      "flask": "3.1.3",
+      "gigachat": "0.2.1",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "deepseek:deepseek-v4-pro"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_cbf9eac315b9bd33fec26d30",
+      "result_index": 0,
+      "provider": "deepseek",
+      "alias": "deepseek:deepseek-v4-pro",
+      "adapter_class": "models.deepseek.deepseek.DeepSeekModel",
+      "requested_model_id": "deepseek-v4-pro",
+      "resolved_model_id": "deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "attempt": 1,
+      "started_at": "2026-07-07T20:19:19.798021Z",
+      "completed_at": "2026-07-07T20:20:31.861123Z",
+      "status": "success",
+      "request": {
+        "model": "deepseek-v4-pro",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "temperature": 0.3,
+        "max_tokens": 256000,
+        "endpoint": "https://api.deepseek.com/chat/completions",
+        "stream": false
+      },
+      "answer": "Дана функция \\(f \\in C[0,1]\\), для которой  \n\\[\n\\int_0^1 f(x)^2\\,dx = 1,\\qquad \n\\int_0^1 f(x)\\,dx = \\frac12,\\qquad \n\\int_0^1 x f(x)\\,dx = 0.\n\\]\nТребуется найти \\(\\displaystyle \\int_0^1 x^2 f(x)\\,dx\\).\n\n**Решение.**  \nРассмотрим гильбертово пространство \\(L^2[0,1]\\) со стандартным скалярным произведением \\(\\langle u,v\\rangle = \\int_0^1 u(x)v(x)\\,dx\\). Условия задачи записываются в виде:\n\\[\n\\langle f, f\\rangle = 1,\\quad \\langle f, 1\\rangle = \\frac12,\\quad \\langle f, x\\rangle = 0.\n\\]\n\nПусть \\(V = \\operatorname{span}\\{1, x\\}\\) — двумерное подпространство многочленов степени не выше 1. Разложим \\(f\\) в ортогональную сумму:\n\\[\nf = g + h,\\qquad g\\in V,\\; h\\perp V.\n\\]\nТогда \\(\\langle f, 1\\rangle = \\langle g, 1\\rangle\\) и \\(\\langle f, x\\rangle = \\langle g, x\\rangle\\), а также \\(\\|f\\|^2 = \\|g\\|^2 + \\|h\\|^2\\).\n\nНайдём \\(g(x) = a + bx\\) из условий на моменты:\n\\[\n\\langle g, 1\\rangle = \\int_0^1 (a+bx)\\,dx = a + \\frac{b}{2} = \\frac12,\n\\]\n\\[\n\\langle g, x\\rangle = \\int_0^1 x(a+bx)\\,dx = \\frac{a}{2} + \\frac{b}{3} = 0.\n\\]\nРешая систему, получаем \\(b = -3\\), \\(a = 2\\). Итак, \\(g(x) = 2 - 3x\\).\n\nВычислим квадрат нормы \\(g\\):\n\\[\n\\|g\\|^2 = \\int_0^1 (2-3x)^2\\,dx = \\int_0^1 (4 - 12x + 9x^2)\\,dx = 4 - 6 + 3 = 1.\n\\]\nПоскольку \\(\\|f\\|^2 = 1 = \\|g\\|^2 + \\|h\\|^2\\), получаем \\(\\|h\\|^2 = 0\\), откуда \\(h = 0\\) почти всюду, а в силу непрерывности \\(f\\) имеем \\(f(x) = g(x) = 2 - 3x\\) для всех \\(x\\in[0,1]\\).\n\nОстаётся вычислить искомый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2(2-3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx = 2\\cdot\\frac13 - 3\\cdot\\frac14 = \\frac23 - \\frac34 = \\frac{8}{12} - \\frac{9}{12} = -\\frac{1}{12}.\n\\]\n\n**Ответ:** \\(\\displaystyle -\\frac{1}{12}\\).",
+      "prompt_tokens": 247,
+      "completion_tokens": 4900,
+      "cost_usd": 0.00437045,
+      "latency_ms": 70013,
+      "raw_response": {
+        "id": "0f201e70-17bb-4d07-839d-21e8aaafa16b",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "Дана функция \\(f \\in C[0,1]\\), для которой  \n\\[\n\\int_0^1 f(x)^2\\,dx = 1,\\qquad \n\\int_0^1 f(x)\\,dx = \\frac12,\\qquad \n\\int_0^1 x f(x)\\,dx = 0.\n\\]\nТребуется найти \\(\\displaystyle \\int_0^1 x^2 f(x)\\,dx\\).\n\n**Решение.**  \nРассмотрим гильбертово пространство \\(L^2[0,1]\\) со стандартным скалярным произведением \\(\\langle u,v\\rangle = \\int_0^1 u(x)v(x)\\,dx\\). Условия задачи записываются в виде:\n\\[\n\\langle f, f\\rangle = 1,\\quad \\langle f, 1\\rangle = \\frac12,\\quad \\langle f, x\\rangle = 0.\n\\]\n\nПусть \\(V = \\operatorname{span}\\{1, x\\}\\) — двумерное подпространство многочленов степени не выше 1. Разложим \\(f\\) в ортогональную сумму:\n\\[\nf = g + h,\\qquad g\\in V,\\; h\\perp V.\n\\]\nТогда \\(\\langle f, 1\\rangle = \\langle g, 1\\rangle\\) и \\(\\langle f, x\\rangle = \\langle g, x\\rangle\\), а также \\(\\|f\\|^2 = \\|g\\|^2 + \\|h\\|^2\\).\n\nНайдём \\(g(x) = a + bx\\) из условий на моменты:\n\\[\n\\langle g, 1\\rangle = \\int_0^1 (a+bx)\\,dx = a + \\frac{b}{2} = \\frac12,\n\\]\n\\[\n\\langle g, x\\rangle = \\int_0^1 x(a+bx)\\,dx = \\frac{a}{2} + \\frac{b}{3} = 0.\n\\]\nРешая систему, получаем \\(b = -3\\), \\(a = 2\\). Итак, \\(g(x) = 2 - 3x\\).\n\nВычислим квадрат нормы \\(g\\):\n\\[\n\\|g\\|^2 = \\int_0^1 (2-3x)^2\\,dx = \\int_0^1 (4 - 12x + 9x^2)\\,dx = 4 - 6 + 3 = 1.\n\\]\nПоскольку \\(\\|f\\|^2 = 1 = \\|g\\|^2 + \\|h\\|^2\\), получаем \\(\\|h\\|^2 = 0\\), откуда \\(h = 0\\) почти всюду, а в силу непрерывности \\(f\\) имеем \\(f(x) = g(x) = 2 - 3x\\) для всех \\(x\\in[0,1]\\).\n\nОстаётся вычислить искомый интеграл:\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2(2-3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx = 2\\cdot\\frac13 - 3\\cdot\\frac14 = \\frac23 - \\frac34 = \\frac{8}{12} - \\frac{9}{12} = -\\frac{1}{12}.\n\\]\n\n**Ответ:** \\(\\displaystyle -\\frac{1}{12}\\).",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "We are given f in C[0,1] with:\n\n∫_0^1 f(x)^2 dx = 1\n∫_0^1 f(x) dx = 1/2\n∫_0^1 x f(x) dx = 0\n\nWe are asked to find ∫_0^1 x^2 f(x) dx.\n\nWait, we must find it exactly? There is a specific value? Let's check. This looks like a problem about orthogonal projections or minimum norm problems, perhaps using Cauchy-Schwarz or something. The unknown is the integral of x^2 f(x) dx.\n\nGiven only three integrals of f, we cannot uniquely determine f, but perhaps the value of ∫ x^2 f(x) dx is forced by these constraints? Or maybe there's a unique value that can be deduced from some inequality and we need the exact value? Wait, the problem says \"Найдите\" which means \"Find\". This suggests that the value is uniquely determined.\n\nLet's think: We have a function f in C[0,1] with given L2 norm, and given inner products with 1 and x. We want the inner product with x^2.\n\nConsider the space L^2[0,1]. We are given a function f with norm 1, and known inner products with 1 and x. Since f is in the subspace spanned by {1, x, ...}, we might be able to find a condition that forces the inner product with x^2.\n\nWait, this looks like an application of the Gram matrix or moment problem. We have a positive definite sequence of moments? Actually, we know the first three moments of the measure f(x)dx? No, the integrals are of f(x) multiplied by 1, x, etc. It's not necessarily a probability density; f can be negative because it's just a continuous function, and L2 norm is 1. The given data: ⟨f, 1⟩ = 1/2, ⟨f, x⟩ = 0, ⟨f, f⟩ = 1.\n\nWe need to find ⟨f, x^2⟩.\n\nIs it determined? Let's frame it as: find the minimum possible value? No, it says \"Найдите\" without \"все возможные\" etc. Usually in such problems, there is a unique value.\n\nConsider the function g(x) = a + b x + c x^2. Write f = g + h, where h is orthogonal to 1, x, x^2. Then ⟨f, f⟩ = ⟨g, g⟩ + ⟨h, h⟩. Since ⟨h, h⟩ ≥ 0, we have ⟨g, g⟩ ≤ ⟨f, f⟩ = 1.\n\nWe know ⟨f, 1⟩ = ⟨g, 1⟩ = 1/2, ⟨f, x⟩ = ⟨g, x⟩ = 0. Let ⟨f, x^2⟩ = I, which is ⟨g, x^2⟩. Then g(x) = a + b x + c x^2. We have three equations:\n\n⟨g, 1⟩ = a⟨1,1⟩ + b⟨x,1⟩ + c⟨x^2,1⟩ = a*1 + b*(1/2) + c*(1/3) = 1/2.\n⟨g, x⟩ = a*(1/2) + b*(1/3) + c*(1/4) = 0.\n⟨g, x^2⟩ = a*(1/3) + b*(1/4) + c*(1/5) = I.\n\nWe also know that ⟨g, g⟩ ≤ 1. ⟨g, g⟩ = a^2*1 + b^2*(1/3) + c^2*(1/5) + 2ab*(1/2) + 2ac*(1/3) + 2bc*(1/4). Actually, we can use the inner product matrix.\n\nWe have g = c_1 * 1 + c_2 * x + c_3 * x^2, but standard basis is not orthogonal. But we can find the minimal norm of a function with given moments. Since f = g + h, and h ⟂ span{1,x,x^2}, we have ⟨f, f⟩ = ⟨g, g⟩ + ⟨h, h⟩ ≥ ⟨g, g⟩. We know ⟨f, f⟩ = 1 exactly. But we are not given that f has minimal norm; we just know its norm is 1. So ⟨g, g⟩ could be less than 1 if h is non-zero, but then I = ⟨g, x^2⟩ can vary? Wait, if we can choose h arbitrarily as long as it's orthogonal to {1,x,x^2} and has norm sqrt(1 - ⟨g,g⟩), does I vary? No, I is the inner product of f with x^2. Since h is orthogonal to x^2, ⟨f, x^2⟩ = ⟨g, x^2⟩ exactly! So I is exactly the third moment of g. And g is determined solely by the given inner products with 1 and x? Wait, we have three unknowns a,b,c but we only have two equations for moments of g? We have ⟨g,1⟩ = 1/2, ⟨g,x⟩ = 0, and we want ⟨g,x^2⟩ = I. But we don't know c; I is not given. However, we have the additional condition that ⟨f, f⟩ = 1. Since ⟨f,f⟩ = ⟨g,g⟩ + ⟨h,h⟩, and ⟨h,h⟩ ≥ 0, we have ⟨g,g⟩ ≤ 1.\n\nBut is ⟨g,g⟩ determined by the first two moments? No, g is not uniquely determined by the first two moments; there are many quadratic polynomials with those first two moments, depending on the coefficient of x^2. For each c, we can solve a,b from the first two equations, then compute I and ⟨g,g⟩. The condition ⟨g,g⟩ ≤ 1 gives a range for c, and hence a range for I. But the problem asks for a single value. So maybe f is not arbitrary; maybe there is an exact value forced by something else? Or maybe I misinterpreted and f is given with all these conditions, and there is a unique value because we also have the condition that f is in C[0,1] and there's an inequality like Cauchy-Schwarz that forces a specific value? But L2 space is infinite-dimensional; you can always add a function orthogonal to 1, x, x^2 and adjust its norm to keep total norm 1. That would change nothing in the moments up to x^2? Wait: if we add h orthogonal to 1, x, x^2, then ⟨f, x^2⟩ = ⟨g, x^2⟩ + ⟨h, x^2⟩ = ⟨g, x^2⟩ because h is orthogonal to x^2. So I is exactly the inner product of g with x^2. But g's inner products with 1 and x are fixed. However, g itself is not fixed; we can choose different polynomials g of degree ≤2 that satisfy ⟨g,1⟩=1/2, ⟨g,x⟩=0. Then ⟨g, x^2⟩ will vary. And we can always add an h to make ⟨f, f⟩ = 1 as long as ⟨g,g⟩ ≤ 1. So it seems I is not uniquely determined! Unless there is an additional constraint that I missed.\n\nLet's re-read the problem: \"Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]\"\nMaybe there is a unique value because we can find the minimum and maximum and they coincide? Let's check.\n\nLet f be any L^2 function with norm 1, mean 1/2, and first moment 0. We want to find the range of the second moment ∫ x^2 f(x) dx. Is it a single value?\n\nConsider the functional J(f) = ∫ x^2 f(x) dx subject to ∫ f^2 = 1, ∫ f = 1/2, ∫ x f = 0. Use Lagrange multipliers. We want to find critical points of J(f) subject to constraints. The critical points satisfy: x^2 = λ f + μ*1 + ν x, so f = (x^2 - μ - ν x)/λ. Then we can find λ, μ, ν from constraints. That might give a unique f? But the problem does not say f is an extremum. It just says given f satisfying those three conditions, find the integral. Perhaps the conditions are such that any f satisfying them must have a specific value for the fourth moment? That seems unlikely unless the constraints force f to be unique. Check if there exists a function f that satisfies all three and is continuous. There are many. For example, we can take f as a quadratic polynomial. Let's try to find a quadratic polynomial f(x) = ax^2 + bx + c that satisfies the three conditions. Three equations for a,b,c? We have three unknowns a,b,c. The conditions are three equations:\n1) ∫ f^2 dx = 1.\n2) ∫ f dx = 1/2.\n3) ∫ x f dx = 0.\nThree equations, three unknowns. There might be a unique quadratic polynomial solution (up to sign? But norm is fixed to 1, maybe multiple solutions). If there's a unique quadratic polynomial, then we can compute ∫ x^2 f dx. But the problem does not state f is a polynomial. It says f ∈ C[0,1] meeting those conditions. Could it be that any such f must be that polynomial? No, you can always add a function orthogonal to 1, x, x^2 and adjust norm? Wait, if we add a function h, we change the L2 norm. But we must keep ∫ f^2 = 1. If we have a quadratic f0 with norm 1, and we add h orthogonal to 1, x, x^2, then the norm becomes sqrt(1 + ||h||^2) which would be >1. So we cannot have norm exactly 1 and be different from f0 if we add h? We can make f = α f0 + h, with h orthogonal to f0 and to 1, x? But we have constraints on integrals with 1 and x. If f0 already satisfies those, then adding h orthogonal to 1 and x preserves those. But to keep norm 1, we need ||α f0 + h||^2 = α^2 ||f0||^2 + ||h||^2 = α^2 + ||h||^2 = 1. The moments with 1 and x: ⟨f,1⟩ = α ⟨f0,1⟩ + ⟨h,1⟩ = α * (1/2). We need this to be 1/2, so α = 1. Then ||h||^2 = 0, so h = 0 a.e. Thus f is uniquely determined in L^2? Wait, the constraints are: ∫ f = 1/2, ∫ x f = 0, ∫ f^2 = 1. That's three constraints. But the space is infinite-dimensional. The set of functions satisfying these is intersection of a hyperplane (dimension 2 affine subspace) and the unit sphere. The intersection of an affine plane and a sphere can be infinite (a sphere in the subspace). Indeed, if we fix the components of f along some directions, the remaining components can vary on a sphere. Let's formalize: In L^2[0,1], consider the subspace spanned by {1, x, x^2, ...}. The conditions ⟨f,1⟩=1/2, ⟨f,x⟩=0 fix the projection of f onto span{1, x}. But span{1, x} is 2-dimensional. The orthogonal complement is infinite-dimensional. We can write f = g + h, where g ∈ span{1, x} and h ⊥ span{1, x}. Then ⟨g,1⟩=1/2, ⟨g,x⟩=0. This uniquely determines g because it's a 2D system. The norm squared is ||g||^2 + ||h||^2 = 1. Thus ||h||^2 = 1 - ||g||^2. There is no constraint on the direction of h; any h in the orthogonal complement with norm sqrt(1 - ||g||^2) works. Now, what about ∫ x^2 f dx? That is ⟨f, x^2⟩ = ⟨g, x^2⟩ + ⟨h, x^2⟩. Here, x^2 is not in span{1, x} generally, but we can decompose x^2 into its projection onto span{1, x} and the orthogonal part. Let x^2 = p + q, where p ∈ span{1, x}, q ⊥ span{1, x}. Then ⟨h, x^2⟩ = ⟨h, q⟩ because h ⊥ p. This term depends on the direction of h relative to q. As h varies over the sphere of radius r in the orthogonal complement, ⟨h, q⟩ can take any value between -r||q|| and +r||q||, provided q ≠ 0. So ∫ x^2 f dx is not uniquely determined unless ||q|| = 0 (i.e., x^2 is in span{1, x}, which it's not) or r = 0 (i.e., ||h||=0, meaning f is exactly g). But r = sqrt(1 - ||g||^2). For f to be any continuous function satisfying the constraints, r could be non-zero if ||g||^2 < 1. So the value is not unique unless ||g||^2 = 1, forcing r=0. Let's check ||g||^2 where g ∈ span{1, x}, ⟨g,1⟩=1/2, ⟨g,x⟩=0. We can compute g and its norm. \n\nLet g(x) = a + b x. Then ⟨g,1⟩ = a + b/2 = 1/2. ⟨g,x⟩ = a/2 + b/3 = 0. Solve:\na + b/2 = 1/2\na/2 + b/3 = 0 => Multiply by 2: a + 2b/3 = 0.\nSubtract: (a + b/2) - (a + 2b/3) = 1/2 - 0 => b(1/2 - 2/3) = 1/2 => b(3/6 - 4/6) = -b/6 = 1/2 => b = -3.\nThen a = -2b/3 = 2.\nSo g(x) = 2 - 3x.\nCheck: ∫0^1 (2-3x) dx = 2 - 3/2 = 1/2. ∫0^1 x(2-3x) dx = 2*(1/2) - 3*(1/3) = 1 - 1 = 0. Correct.\nNow compute ||g||^2 = ∫0^1 (2-3x)^2 dx = ∫0^1 (4 - 12x + 9x^2) dx = 4 - 12*(1/2) + 9*(1/3) = 4 - 6 + 3 = 1.\nWow! ||g||^2 = 1 exactly. So the unique function in span{1, x} that satisfies the two moment conditions already has norm 1. Therefore, any f satisfying the three conditions must have h = 0 a.e., i.e., f = g = 2 - 3x almost everywhere. Since f is continuous, f(x) = 2 - 3x for all x ∈ [0,1].\n\nThen we can compute ∫0^1 x^2 f(x) dx = ∫0^1 x^2 (2 - 3x) dx = 2*(1/3) - 3*(1/4) = 2/3 - 3/4 = 8/12 - 9/12 = -1/12.\n\nLet's double-check if there's any other possibility: The constraints are exactly that f is in L^2 with norm 1, and its inner products with 1 and x are given. The function g is the orthogonal projection of f onto span{1,x}. Since ||f||^2 = ||g||^2 + ||h||^2, and we found ||g||^2 = 1, it forces ||h||=0. So f = g in L^2. Since f is continuous, f = g exactly. Hence ∫ x^2 f dx = ∫ x^2 g dx = -1/12.\n\nThus the answer is -1/12.\n\nWe can verify: f(x) = 2 - 3x.\n∫0^1 f^2 dx = ∫ (4 - 12x + 9x^2) dx = 4 - 6 + 3 = 1. Good.\n∫0^1 f dx = 2 - 3/2 = 1/2. Good.\n∫0^1 x f dx = ∫ (2x - 3x^2) dx = 1 - 1 = 0. Good.\n∫0^1 x^2 f dx = ∫ (2x^2 - 3x^3) dx = 2/3 - 3/4 = 8/12 - 9/12 = -1/12.\n\nSo the answer is indeed -1/12.\n\nNow I'll write a clear solution.\n\nApproach: Consider the Hilbert space L^2[0,1] with standard inner product. The conditions are ⟨f, f⟩ = 1, ⟨f, 1⟩ = 1/2, ⟨f, x⟩ = 0. Let V = span{1, x}. The orthogonal projection of f onto V is the unique function g ∈ V such that ⟨g, 1⟩ = ⟨f, 1⟩ and ⟨g, x⟩ = ⟨f, x⟩. Since g ∈ V, write g = a + b x. Solve the system: \n∫ (a + b x) dx = a + b/2 = 1/2\n∫ x(a + b x) dx = a/2 + b/3 = 0.\nFind a=2, b=-3, so g(x) = 2 - 3x.\nCompute ||g||^2 = ∫ (2-3x)^2 dx = 1.\nBy orthogonal decomposition, f = g + h with h ⊥ V. Then ||f||^2 = ||g||^2 + ||h||^2 => 1 = 1 + ||h||^2 => ||h|| = 0 => h = 0 a.e. So f = g.\nThus ∫ x^2 f dx = ∫ x^2 g dx = -1/12.\n\nDone."
+            }
+          }
+        ],
+        "created": 1783455563,
+        "model": "deepseek-v4-pro",
+        "object": "chat.completion",
+        "moderation": null,
+        "service_tier": null,
+        "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+        "usage": {
+          "completion_tokens": 4900,
+          "prompt_tokens": 247,
+          "total_tokens": 5147,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 4182,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "reasoning_content": "We are given f in C[0,1] with:\n\n∫_0^1 f(x)^2 dx = 1\n∫_0^1 f(x) dx = 1/2\n∫_0^1 x f(x) dx = 0\n\nWe are asked to find ∫_0^1 x^2 f(x) dx.\n\nWait, we must find it exactly? There is a specific value? Let's check. This looks like a problem about orthogonal projections or minimum norm problems, perhaps using Cauchy-Schwarz or something. The unknown is the integral of x^2 f(x) dx.\n\nGiven only three integrals of f, we cannot uniquely determine f, but perhaps the value of ∫ x^2 f(x) dx is forced by these constraints? Or maybe there's a unique value that can be deduced from some inequality and we need the exact value? Wait, the problem says \"Найдите\" which means \"Find\". This suggests that the value is uniquely determined.\n\nLet's think: We have a function f in C[0,1] with given L2 norm, and given inner products with 1 and x. We want the inner product with x^2.\n\nConsider the space L^2[0,1]. We are given a function f with norm 1, and known inner products with 1 and x. Since f is in the subspace spanned by {1, x, ...}, we might be able to find a condition that forces the inner product with x^2.\n\nWait, this looks like an application of the Gram matrix or moment problem. We have a positive definite sequence of moments? Actually, we know the first three moments of the measure f(x)dx? No, the integrals are of f(x) multiplied by 1, x, etc. It's not necessarily a probability density; f can be negative because it's just a continuous function, and L2 norm is 1. The given data: ⟨f, 1⟩ = 1/2, ⟨f, x⟩ = 0, ⟨f, f⟩ = 1.\n\nWe need to find ⟨f, x^2⟩.\n\nIs it determined? Let's frame it as: find the minimum possible value? No, it says \"Найдите\" without \"все возможные\" etc. Usually in such problems, there is a unique value.\n\nConsider the function g(x) = a + b x + c x^2. Write f = g + h, where h is orthogonal to 1, x, x^2. Then ⟨f, f⟩ = ⟨g, g⟩ + ⟨h, h⟩. Since ⟨h, h⟩ ≥ 0, we have ⟨g, g⟩ ≤ ⟨f, f⟩ = 1.\n\nWe know ⟨f, 1⟩ = ⟨g, 1⟩ = 1/2, ⟨f, x⟩ = ⟨g, x⟩ = 0. Let ⟨f, x^2⟩ = I, which is ⟨g, x^2⟩. Then g(x) = a + b x + c x^2. We have three equations:\n\n⟨g, 1⟩ = a⟨1,1⟩ + b⟨x,1⟩ + c⟨x^2,1⟩ = a*1 + b*(1/2) + c*(1/3) = 1/2.\n⟨g, x⟩ = a*(1/2) + b*(1/3) + c*(1/4) = 0.\n⟨g, x^2⟩ = a*(1/3) + b*(1/4) + c*(1/5) = I.\n\nWe also know that ⟨g, g⟩ ≤ 1. ⟨g, g⟩ = a^2*1 + b^2*(1/3) + c^2*(1/5) + 2ab*(1/2) + 2ac*(1/3) + 2bc*(1/4). Actually, we can use the inner product matrix.\n\nWe have g = c_1 * 1 + c_2 * x + c_3 * x^2, but standard basis is not orthogonal. But we can find the minimal norm of a function with given moments. Since f = g + h, and h ⟂ span{1,x,x^2}, we have ⟨f, f⟩ = ⟨g, g⟩ + ⟨h, h⟩ ≥ ⟨g, g⟩. We know ⟨f, f⟩ = 1 exactly. But we are not given that f has minimal norm; we just know its norm is 1. So ⟨g, g⟩ could be less than 1 if h is non-zero, but then I = ⟨g, x^2⟩ can vary? Wait, if we can choose h arbitrarily as long as it's orthogonal to {1,x,x^2} and has norm sqrt(1 - ⟨g,g⟩), does I vary? No, I is the inner product of f with x^2. Since h is orthogonal to x^2, ⟨f, x^2⟩ = ⟨g, x^2⟩ exactly! So I is exactly the third moment of g. And g is determined solely by the given inner products with 1 and x? Wait, we have three unknowns a,b,c but we only have two equations for moments of g? We have ⟨g,1⟩ = 1/2, ⟨g,x⟩ = 0, and we want ⟨g,x^2⟩ = I. But we don't know c; I is not given. However, we have the additional condition that ⟨f, f⟩ = 1. Since ⟨f,f⟩ = ⟨g,g⟩ + ⟨h,h⟩, and ⟨h,h⟩ ≥ 0, we have ⟨g,g⟩ ≤ 1.\n\nBut is ⟨g,g⟩ determined by the first two moments? No, g is not uniquely determined by the first two moments; there are many quadratic polynomials with those first two moments, depending on the coefficient of x^2. For each c, we can solve a,b from the first two equations, then compute I and ⟨g,g⟩. The condition ⟨g,g⟩ ≤ 1 gives a range for c, and hence a range for I. But the problem asks for a single value. So maybe f is not arbitrary; maybe there is an exact value forced by something else? Or maybe I misinterpreted and f is given with all these conditions, and there is a unique value because we also have the condition that f is in C[0,1] and there's an inequality like Cauchy-Schwarz that forces a specific value? But L2 space is infinite-dimensional; you can always add a function orthogonal to 1, x, x^2 and adjust its norm to keep total norm 1. That would change nothing in the moments up to x^2? Wait: if we add h orthogonal to 1, x, x^2, then ⟨f, x^2⟩ = ⟨g, x^2⟩ + ⟨h, x^2⟩ = ⟨g, x^2⟩ because h is orthogonal to x^2. So I is exactly the inner product of g with x^2. But g's inner products with 1 and x are fixed. However, g itself is not fixed; we can choose different polynomials g of degree ≤2 that satisfy ⟨g,1⟩=1/2, ⟨g,x⟩=0. Then ⟨g, x^2⟩ will vary. And we can always add an h to make ⟨f, f⟩ = 1 as long as ⟨g,g⟩ ≤ 1. So it seems I is not uniquely determined! Unless there is an additional constraint that I missed.\n\nLet's re-read the problem: \"Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]\"\nMaybe there is a unique value because we can find the minimum and maximum and they coincide? Let's check.\n\nLet f be any L^2 function with norm 1, mean 1/2, and first moment 0. We want to find the range of the second moment ∫ x^2 f(x) dx. Is it a single value?\n\nConsider the functional J(f) = ∫ x^2 f(x) dx subject to ∫ f^2 = 1, ∫ f = 1/2, ∫ x f = 0. Use Lagrange multipliers. We want to find critical points of J(f) subject to constraints. The critical points satisfy: x^2 = λ f + μ*1 + ν x, so f = (x^2 - μ - ν x)/λ. Then we can find λ, μ, ν from constraints. That might give a unique f? But the problem does not say f is an extremum. It just says given f satisfying those three conditions, find the integral. Perhaps the conditions are such that any f satisfying them must have a specific value for the fourth moment? That seems unlikely unless the constraints force f to be unique. Check if there exists a function f that satisfies all three and is continuous. There are many. For example, we can take f as a quadratic polynomial. Let's try to find a quadratic polynomial f(x) = ax^2 + bx + c that satisfies the three conditions. Three equations for a,b,c? We have three unknowns a,b,c. The conditions are three equations:\n1) ∫ f^2 dx = 1.\n2) ∫ f dx = 1/2.\n3) ∫ x f dx = 0.\nThree equations, three unknowns. There might be a unique quadratic polynomial solution (up to sign? But norm is fixed to 1, maybe multiple solutions). If there's a unique quadratic polynomial, then we can compute ∫ x^2 f dx. But the problem does not state f is a polynomial. It says f ∈ C[0,1] meeting those conditions. Could it be that any such f must be that polynomial? No, you can always add a function orthogonal to 1, x, x^2 and adjust norm? Wait, if we add a function h, we change the L2 norm. But we must keep ∫ f^2 = 1. If we have a quadratic f0 with norm 1, and we add h orthogonal to 1, x, x^2, then the norm becomes sqrt(1 + ||h||^2) which would be >1. So we cannot have norm exactly 1 and be different from f0 if we add h? We can make f = α f0 + h, with h orthogonal to f0 and to 1, x? But we have constraints on integrals with 1 and x. If f0 already satisfies those, then adding h orthogonal to 1 and x preserves those. But to keep norm 1, we need ||α f0 + h||^2 = α^2 ||f0||^2 + ||h||^2 = α^2 + ||h||^2 = 1. The moments with 1 and x: ⟨f,1⟩ = α ⟨f0,1⟩ + ⟨h,1⟩ = α * (1/2). We need this to be 1/2, so α = 1. Then ||h||^2 = 0, so h = 0 a.e. Thus f is uniquely determined in L^2? Wait, the constraints are: ∫ f = 1/2, ∫ x f = 0, ∫ f^2 = 1. That's three constraints. But the space is infinite-dimensional. The set of functions satisfying these is intersection of a hyperplane (dimension 2 affine subspace) and the unit sphere. The intersection of an affine plane and a sphere can be infinite (a sphere in the subspace). Indeed, if we fix the components of f along some directions, the remaining components can vary on a sphere. Let's formalize: In L^2[0,1], consider the subspace spanned by {1, x, x^2, ...}. The conditions ⟨f,1⟩=1/2, ⟨f,x⟩=0 fix the projection of f onto span{1, x}. But span{1, x} is 2-dimensional. The orthogonal complement is infinite-dimensional. We can write f = g + h, where g ∈ span{1, x} and h ⊥ span{1, x}. Then ⟨g,1⟩=1/2, ⟨g,x⟩=0. This uniquely determines g because it's a 2D system. The norm squared is ||g||^2 + ||h||^2 = 1. Thus ||h||^2 = 1 - ||g||^2. There is no constraint on the direction of h; any h in the orthogonal complement with norm sqrt(1 - ||g||^2) works. Now, what about ∫ x^2 f dx? That is ⟨f, x^2⟩ = ⟨g, x^2⟩ + ⟨h, x^2⟩. Here, x^2 is not in span{1, x} generally, but we can decompose x^2 into its projection onto span{1, x} and the orthogonal part. Let x^2 = p + q, where p ∈ span{1, x}, q ⊥ span{1, x}. Then ⟨h, x^2⟩ = ⟨h, q⟩ because h ⊥ p. This term depends on the direction of h relative to q. As h varies over the sphere of radius r in the orthogonal complement, ⟨h, q⟩ can take any value between -r||q|| and +r||q||, provided q ≠ 0. So ∫ x^2 f dx is not uniquely determined unless ||q|| = 0 (i.e., x^2 is in span{1, x}, which it's not) or r = 0 (i.e., ||h||=0, meaning f is exactly g). But r = sqrt(1 - ||g||^2). For f to be any continuous function satisfying the constraints, r could be non-zero if ||g||^2 < 1. So the value is not unique unless ||g||^2 = 1, forcing r=0. Let's check ||g||^2 where g ∈ span{1, x}, ⟨g,1⟩=1/2, ⟨g,x⟩=0. We can compute g and its norm. \n\nLet g(x) = a + b x. Then ⟨g,1⟩ = a + b/2 = 1/2. ⟨g,x⟩ = a/2 + b/3 = 0. Solve:\na + b/2 = 1/2\na/2 + b/3 = 0 => Multiply by 2: a + 2b/3 = 0.\nSubtract: (a + b/2) - (a + 2b/3) = 1/2 - 0 => b(1/2 - 2/3) = 1/2 => b(3/6 - 4/6) = -b/6 = 1/2 => b = -3.\nThen a = -2b/3 = 2.\nSo g(x) = 2 - 3x.\nCheck: ∫0^1 (2-3x) dx = 2 - 3/2 = 1/2. ∫0^1 x(2-3x) dx = 2*(1/2) - 3*(1/3) = 1 - 1 = 0. Correct.\nNow compute ||g||^2 = ∫0^1 (2-3x)^2 dx = ∫0^1 (4 - 12x + 9x^2) dx = 4 - 12*(1/2) + 9*(1/3) = 4 - 6 + 3 = 1.\nWow! ||g||^2 = 1 exactly. So the unique function in span{1, x} that satisfies the two moment conditions already has norm 1. Therefore, any f satisfying the three conditions must have h = 0 a.e., i.e., f = g = 2 - 3x almost everywhere. Since f is continuous, f(x) = 2 - 3x for all x ∈ [0,1].\n\nThen we can compute ∫0^1 x^2 f(x) dx = ∫0^1 x^2 (2 - 3x) dx = 2*(1/3) - 3*(1/4) = 2/3 - 3/4 = 8/12 - 9/12 = -1/12.\n\nLet's double-check if there's any other possibility: The constraints are exactly that f is in L^2 with norm 1, and its inner products with 1 and x are given. The function g is the orthogonal projection of f onto span{1,x}. Since ||f||^2 = ||g||^2 + ||h||^2, and we found ||g||^2 = 1, it forces ||h||=0. So f = g in L^2. Since f is continuous, f = g exactly. Hence ∫ x^2 f dx = ∫ x^2 g dx = -1/12.\n\nThus the answer is -1/12.\n\nWe can verify: f(x) = 2 - 3x.\n∫0^1 f^2 dx = ∫ (4 - 12x + 9x^2) dx = 4 - 6 + 3 = 1. Good.\n∫0^1 f dx = 2 - 3/2 = 1/2. Good.\n∫0^1 x f dx = ∫ (2x - 3x^2) dx = 1 - 1 = 0. Good.\n∫0^1 x^2 f dx = ∫ (2x^2 - 3x^3) dx = 2/3 - 3/4 = 8/12 - 9/12 = -1/12.\n\nSo the answer is indeed -1/12.\n\nNow I'll write a clear solution.\n\nApproach: Consider the Hilbert space L^2[0,1] with standard inner product. The conditions are ⟨f, f⟩ = 1, ⟨f, 1⟩ = 1/2, ⟨f, x⟩ = 0. Let V = span{1, x}. The orthogonal projection of f onto V is the unique function g ∈ V such that ⟨g, 1⟩ = ⟨f, 1⟩ and ⟨g, x⟩ = ⟨f, x⟩. Since g ∈ V, write g = a + b x. Solve the system: \n∫ (a + b x) dx = a + b/2 = 1/2\n∫ x(a + b x) dx = a/2 + b/3 = 0.\nFind a=2, b=-3, so g(x) = 2 - 3x.\nCompute ||g||^2 = ∫ (2-3x)^2 dx = 1.\nBy orthogonal decomposition, f = g + h with h ⊥ V. Then ||f||^2 = ||g||^2 + ||h||^2 => 1 = 1 + ||h||^2 => ||h|| = 0 => h = 0 a.e. So f = g.\nThus ∫ x^2 f dx = ∫ x^2 g dx = -1/12.\n\nDone."
+      },
+      "usage": {
+        "input_tokens": 247,
+        "output_tokens": 4900,
+        "total_tokens": 5147,
+        "reasoning_tokens": 4182,
+        "cached_input_tokens": 0,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 4900,
+          "prompt_tokens": 247,
+          "total_tokens": 5147,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 4182,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": "[REDACTED]",
+          "prompt_cache_miss_tokens": "[REDACTED]"
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 70013,
+        "monotonic_ms": 70013,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 70013,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00010744,
+        "output": 0.004263,
+        "cached_input": null,
+        "reasoning": null,
+        "native": null,
+        "total": 0.00437045,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-07-06",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "0f201e70-17bb-4d07-839d-21e8aaafa16b",
+      "provider_timestamp": 1783455563,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

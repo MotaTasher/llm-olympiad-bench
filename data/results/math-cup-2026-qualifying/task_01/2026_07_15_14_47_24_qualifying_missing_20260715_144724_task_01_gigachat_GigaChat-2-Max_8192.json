@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_27fb1f4bf5ba760e008d0cb9": {
-      "evaluation_id": "ev_0787a3d4d8674a409438b283be53fb98",
+      "evaluation_id": "ev_a810215d0712491ab410ccf3b45d87f1",
       "result_id": "res_27fb1f4bf5ba760e008d0cb9",
       "result_index": 0,
       "model_key": "gigachat:GigaChat-2-Max",
       "model": "GigaChat-2-Max",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
-      "max_score": 4,
+      "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "",
-      "created_at": "2026-07-24T20:40:38.305604Z",
-      "updated_at": "2026-07-24T20:40:38.305604Z"
+      "feedback": "WA",
+      "created_at": "2026-07-30T19:13:36.595311Z",
+      "updated_at": "2026-07-30T19:13:36.595311Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-07-24T20:40:38.305604Z",
         "updated_at": "2026-07-24T20:40:38.305604Z"
+      },
+      {
+        "evaluation_id": "ev_a810215d0712491ab410ccf3b45d87f1",
+        "result_id": "res_27fb1f4bf5ba760e008d0cb9",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-2-Max",
+        "model": "GigaChat-2-Max",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 4.0,
+        "score_category": "zero",
+        "feedback": "WA",
+        "created_at": "2026-07-30T19:13:36.595311Z",
+        "updated_at": "2026-07-30T19:13:36.595311Z"
       }
     ]
   },
@@ -37,5 +51,5 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_07_15_14_47_24_qualifying_missing_20260715_144724_task_01_gigachat_GigaChat-2-Max_8192",
-  "updated_at": "2026-07-24T20:40:38.305604Z"
+  "updated_at": "2026-07-30T19:13:36.595311Z"
 }

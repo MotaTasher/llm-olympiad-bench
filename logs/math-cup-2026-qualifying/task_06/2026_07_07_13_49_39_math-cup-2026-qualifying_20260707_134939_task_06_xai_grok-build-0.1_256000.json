@@ -1,0 +1,298 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_07_07_13_49_39_math-cup-2026-qualifying_20260707_134939_task_06_xai_grok-build-0.1_256000",
+  "timestamp": "2026-07-07T13:49:39.856766Z",
+  "started_at": "2026-07-07T13:49:39.856766Z",
+  "completed_at": "2026-07-07T13:50:13.962421Z",
+  "duration_ms": 34084,
+  "status": "completed",
+  "git_hash": "ea7e3e2",
+  "git": {
+    "hash": "ea7e3e2",
+    "full_hash": "ea7e3e2fe1f167d20051f55ea81e4f0c77345b71",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "xai:grok-build-0.1",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260707_134939_task_06_xai_grok-build-0.1_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "xai:grok-build-0.1",
+      "run_id": "math-cup-2026-qualifying_20260707_134939_task_06_xai_grok-build-0.1_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "xai:grok-build-0.1"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-71-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.3",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.2",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.05",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "0.9",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "3600"
+    }
+  },
+  "requested_models": [
+    "xai:grok-build-0.1"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения"
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 1
+    }
+  },
+  "problem_hash": "c9f04b4ea2bfb4233ca6a82235fe3f3e0fece8a72851adacb421f08b36d2ce9e",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_4bc1bb9c269b8e5ad2badb43",
+      "result_index": 0,
+      "provider": "xai",
+      "alias": "xai:grok-build-0.1",
+      "adapter_class": "models.grok.grok.GrokModel",
+      "requested_model_id": "grok-build-0.1",
+      "resolved_model_id": "grok-build-0.1",
+      "model": "grok-build-0.1",
+      "attempt": 1,
+      "started_at": "2026-07-07T13:49:39.908176Z",
+      "completed_at": "2026-07-07T13:50:13.957082Z",
+      "status": "success",
+      "request": {
+        "endpoint": "https://api.x.ai/v1/chat/completions",
+        "model": "grok-build-0.1",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+          },
+          {
+            "role": "user",
+            "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+          }
+        ],
+        "stream": false,
+        "timeout_seconds": 3600.0,
+        "max_retries": 0,
+        "max_tokens": 256000
+      },
+      "answer": "### Постановка и обозначения.\n\nПусть \\(f \\in C[0,1]\\) удовлетворяет условиям\n\\[\n\\langle f,f \\rangle = 1, \\qquad \\langle f,1 \\rangle = \\frac12, \\qquad \\langle f,x \\rangle = 0,\n\\]\nгде \\(\\langle u,v \\rangle = \\int_0^1 u(x)v(x)\\,dx\\) обозначает стандартное скалярное произведение в пространстве \\(L^2[0,1]\\). (Заметим, что непрерывность \\(f\\) на компакте автоматически обеспечивает \\(f \\in L^2[0,1]\\).) Требуется вычислить величину \\(\\langle f,x^2 \\rangle\\).\n\nРассмотрим подпространство \\(V = \\operatorname{span}\\{1,x\\} \\subset L^2[0,1]\\). Пусть \\(p\\) обозначает ортогональную проекцию \\(f\\) на \\(V\\). По определению проекции, остаток \\(f-p\\) ортогонален \\(V\\), откуда в разложении \\(f = p + (f-p)\\) получаем\n\\[\n\\langle f,f \\rangle = \\langle p,p \\rangle + \\langle f-p,f-p \\rangle,\n\\]\nпоскольку \\(\\langle p,f-p \\rangle = 0\\). Таким образом,\n\\[\n1 = \\|p\\|^2 + \\|f-p\\|^2 \\ge \\|p\\|^2,\n\\]\nпричем равенство достигается тогда и только тогда, когда \\(f-p = 0\\) в \\(L^2[0,1]\\).\n\n### Вычисление проекции.\n\nЗапишем \\(p(x) = a + bx\\). Условия ортогональности \\(f-p \\perp V\\) дают систему\n\\[\n\\langle f - a - bx, 1 \\rangle = 0, \\qquad \\langle f - a - bx, x \\rangle = 0.\n\\]\nПодставляя известные скалярные произведения, получаем уравнения\n\\[\n\\frac12 - a \\cdot 1 - b \\cdot \\frac12 = 0 \\quad \\Rightarrow \\quad a + \\frac{b}{2} = \\frac12, \\tag{1}\n\\]\n\\[\n0 - a \\cdot \\frac12 - b \\cdot \\frac13 = 0 \\quad \\Rightarrow \\quad \\frac{a}{2} + \\frac{b}{3} = 0. \\tag{2}\n\\]\nИз (2) следует \\(a = -\\frac{2b}{3}\\). Подставляя в (1), находим\n\\[\n-\\frac{2b}{3} + \\frac{b}{2} = \\frac12.\n\\]\nПриводя к общему знаменателю 6, получаем \\(-\\frac{4b}{6} + \\frac{3b}{6} = \\frac12\\), или \\(\\frac{-b}{6} = \\frac12\\), откуда \\(b = -3\\). Тогда \\(a = -\\frac{2(-3)}{3} = 2\\). Таким образом, \\(p(x) = 2 - 3x\\).\n\n### Вычисление нормы проекции.\n\nТеперь вычислим \\(\\|p\\|^2 = \\langle p,p \\rangle\\):\n\\[\n\\int_0^1 (2-3x)^2\\,dx = \\int_0^1 (4 - 12x + 9x^2)\\,dx = \\bigl[4x - 6x^2 + 3x^3\\bigr]_0^1 = 4 - 6 + 3 = 1.\n\\]\nТаким образом, \\(\\|p\\|^2 = 1\\), откуда \\(\\|f-p\\|^2 = 0\\). Следовательно, \\(f = p\\) в смысле \\(L^2[0,1]\\). Но поскольку обе функции непрерывны на \\([0,1]\\), имеем \\(f(x) = 2-3x\\) всюду на \\([0,1]\\).\n\n### Вычисление искомого интеграла.\n\nТеперь непосредственно находим\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2(2-3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx = \\Bigl[\\frac23 x^3 - \\frac34 x^4\\Bigr]_0^1 = \\frac23 - \\frac34 = \\frac{8-9}{12} = -\\frac1{12}.\n\\]\n(Заметим попутно, что полученная функция \\(f(x) = 2-3x\\) действительно удовлетворяет всем исходным условиям, что легко проверяется прямым интегрированием.)\n\nТаким образом, при любых допустимых данных искомый интеграл равен \\(-\\frac1{12}\\). (В частности, поскольку \\(f\\) однозначно определяется условиями, значение интеграла также определяется однозначно.) \n\n### Финальный вывод.\n\nЗначение \\(\\int_0^1 x^2 f(x)\\,dx\\) равно \\(-\\frac1{12}\\).",
+      "prompt_tokens": 344,
+      "completion_tokens": 1079,
+      "cost_usd": 0.0083688,
+      "latency_ms": 31752,
+      "raw_response": {
+        "id": "dd11aa21-8292-9e66-b37f-e5f75064b44d",
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "### Постановка и обозначения.\n\nПусть \\(f \\in C[0,1]\\) удовлетворяет условиям\n\\[\n\\langle f,f \\rangle = 1, \\qquad \\langle f,1 \\rangle = \\frac12, \\qquad \\langle f,x \\rangle = 0,\n\\]\nгде \\(\\langle u,v \\rangle = \\int_0^1 u(x)v(x)\\,dx\\) обозначает стандартное скалярное произведение в пространстве \\(L^2[0,1]\\). (Заметим, что непрерывность \\(f\\) на компакте автоматически обеспечивает \\(f \\in L^2[0,1]\\).) Требуется вычислить величину \\(\\langle f,x^2 \\rangle\\).\n\nРассмотрим подпространство \\(V = \\operatorname{span}\\{1,x\\} \\subset L^2[0,1]\\). Пусть \\(p\\) обозначает ортогональную проекцию \\(f\\) на \\(V\\). По определению проекции, остаток \\(f-p\\) ортогонален \\(V\\), откуда в разложении \\(f = p + (f-p)\\) получаем\n\\[\n\\langle f,f \\rangle = \\langle p,p \\rangle + \\langle f-p,f-p \\rangle,\n\\]\nпоскольку \\(\\langle p,f-p \\rangle = 0\\). Таким образом,\n\\[\n1 = \\|p\\|^2 + \\|f-p\\|^2 \\ge \\|p\\|^2,\n\\]\nпричем равенство достигается тогда и только тогда, когда \\(f-p = 0\\) в \\(L^2[0,1]\\).\n\n### Вычисление проекции.\n\nЗапишем \\(p(x) = a + bx\\). Условия ортогональности \\(f-p \\perp V\\) дают систему\n\\[\n\\langle f - a - bx, 1 \\rangle = 0, \\qquad \\langle f - a - bx, x \\rangle = 0.\n\\]\nПодставляя известные скалярные произведения, получаем уравнения\n\\[\n\\frac12 - a \\cdot 1 - b \\cdot \\frac12 = 0 \\quad \\Rightarrow \\quad a + \\frac{b}{2} = \\frac12, \\tag{1}\n\\]\n\\[\n0 - a \\cdot \\frac12 - b \\cdot \\frac13 = 0 \\quad \\Rightarrow \\quad \\frac{a}{2} + \\frac{b}{3} = 0. \\tag{2}\n\\]\nИз (2) следует \\(a = -\\frac{2b}{3}\\). Подставляя в (1), находим\n\\[\n-\\frac{2b}{3} + \\frac{b}{2} = \\frac12.\n\\]\nПриводя к общему знаменателю 6, получаем \\(-\\frac{4b}{6} + \\frac{3b}{6} = \\frac12\\), или \\(\\frac{-b}{6} = \\frac12\\), откуда \\(b = -3\\). Тогда \\(a = -\\frac{2(-3)}{3} = 2\\). Таким образом, \\(p(x) = 2 - 3x\\).\n\n### Вычисление нормы проекции.\n\nТеперь вычислим \\(\\|p\\|^2 = \\langle p,p \\rangle\\):\n\\[\n\\int_0^1 (2-3x)^2\\,dx = \\int_0^1 (4 - 12x + 9x^2)\\,dx = \\bigl[4x - 6x^2 + 3x^3\\bigr]_0^1 = 4 - 6 + 3 = 1.\n\\]\nТаким образом, \\(\\|p\\|^2 = 1\\), откуда \\(\\|f-p\\|^2 = 0\\). Следовательно, \\(f = p\\) в смысле \\(L^2[0,1]\\). Но поскольку обе функции непрерывны на \\([0,1]\\), имеем \\(f(x) = 2-3x\\) всюду на \\([0,1]\\).\n\n### Вычисление искомого интеграла.\n\nТеперь непосредственно находим\n\\[\n\\int_0^1 x^2 f(x)\\,dx = \\int_0^1 x^2(2-3x)\\,dx = \\int_0^1 (2x^2 - 3x^3)\\,dx = \\Bigl[\\frac23 x^3 - \\frac34 x^4\\Bigr]_0^1 = \\frac23 - \\frac34 = \\frac{8-9}{12} = -\\frac1{12}.\n\\]\n(Заметим попутно, что полученная функция \\(f(x) = 2-3x\\) действительно удовлетворяет всем исходным условиям, что легко проверяется прямым интегрированием.)\n\nТаким образом, при любых допустимых данных искомый интеграл равен \\(-\\frac1{12}\\). (В частности, поскольку \\(f\\) однозначно определяется условиями, значение интеграла также определяется однозначно.) \n\n### Финальный вывод.\n\nЗначение \\(\\int_0^1 x^2 f(x)\\,dx\\) равно \\(-\\frac1{12}\\).",
+              "refusal": null,
+              "role": "assistant",
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": null,
+              "reasoning_content": "The problem is in Russian, but I can translate it. We have a function \\( f \\) continuous on [0,1] such that:\nThe problem is to find ∫ x² f(x) dx given those conditions.\n\nSince f is continuous on [0,1], and we have these integrals, perhaps we can use the fact that for the functional or use Legendre polynomials shifted to [0,1].\n\nLet's try to use the method of assuming the minimal or use orthogonality.\n\nSuppose I consider the polynomial of degree 2 that is orthogonal or something.\n\nLet's consider the inner product <p,q> = ∫0^1 p q dx\n\nThen f is a unit vector with <f,1>=1/2, <f,x>=0, find <f ,x²>\n\nTo determine it, perhaps it's not unique, but let's see if I can find an example.\n\nSuppose I assume f is a polynomial of degree 2, say f(x) = a + b x + c x², then ∫f²=1, ∫f=1/2 ∫x f =0, and then ∫x²f will be determined.\n\nSince degree 2, ∫f² will be degree 4, but let's try."
+            }
+          }
+        ],
+        "created": 1783432183,
+        "model": "grok-build-0.1",
+        "object": "chat.completion",
+        "moderation": null,
+        "service_tier": "default",
+        "system_fingerprint": "fp_36bb860c5ab2a013",
+        "usage": {
+          "completion_tokens": 1079,
+          "prompt_tokens": 344,
+          "total_tokens": 4382,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 2959,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 64,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 83688000
+        }
+      },
+      "usage": {
+        "input_tokens": 344,
+        "output_tokens": 1079,
+        "total_tokens": 4382,
+        "reasoning_tokens": 2959,
+        "cached_input_tokens": 64,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "completion_tokens": 1079,
+          "prompt_tokens": 344,
+          "total_tokens": 4382,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": "[REDACTED]",
+            "audio_tokens": "[REDACTED]",
+            "reasoning_tokens": 2959,
+            "rejected_prediction_tokens": "[REDACTED]"
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": "[REDACTED]",
+            "cached_tokens": 64,
+            "text_tokens": "[REDACTED]",
+            "image_tokens": "[REDACTED]"
+          },
+          "num_sources_used": 0,
+          "cost_in_usd_ticks": 83688000
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 31752,
+        "monotonic_ms": 31752,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 31752,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00028,
+        "output": 0.002158,
+        "cached_input": 1.28e-05,
+        "reasoning": null,
+        "native": null,
+        "total": 0.0083688,
+        "pricing_source": "provider_response",
+        "pricing_version": "2026-07-06",
+        "estimated": false,
+        "exchange_rate": null,
+        "note": "Provider-reported cost_in_usd_ticks overrides this local estimate when present.",
+        "provider_reported": {
+          "cost_in_usd_ticks": 83688000
+        }
+      },
+      "finish_reason": "stop",
+      "provider_request_id": null,
+      "response_id": "dd11aa21-8292-9e66-b37f-e5f75064b44d",
+      "provider_timestamp": 1783432183,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

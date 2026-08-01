@@ -1,0 +1,17 @@
+START 2026-07-25T13:23:22.156766+00:00 math-cup-2026-qualifying/task_08 google:gemini-3.1-pro-preview cap=256000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_08.json --models google:gemini-3.1-pro-preview --max-tokens 256000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_rerun_20260725_132321_gemini_task_08_google_gemini-3.1-pro-preview_256000
+Run 2026_07_25_13_23_22_qualifying_rerun_20260725_132321_gemini_task_08_google_gemini-3.1-pro-preview_256000: math-cup-2026-qualifying/task_08, 1 model(s), max_tokens=256000
+[1/1] START google:gemini-3.1-pro-preview
+[1/1] DONE  gemini-3.1-pro-preview in 6m22s tokens=2061 cost_usd=0.644810
+| model                  |   tokens |   cost_usd |   latency_ms | status   | error   |
+|------------------------|----------|------------|--------------|----------|---------|
+| gemini-3.1-pro-preview |     2061 |    0.64481 |       380443 | ok       |         |
+
+Run ID: 2026_07_25_13_23_22_qualifying_rerun_20260725_132321_gemini_task_08_google_gemini-3.1-pro-preview_256000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_08 (Найдите общий язык)
+Timestamp: 2026-07-25T13:23:22.258962Z
+Git hash: bbb60dc
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_08/2026_07_25_13_23_22_qualifying_rerun_20260725_132321_gemini_task_08_google_gemini-3.1-pro-preview_256000.json
+
+DONE 2026-07-25T13:29:45.076406+00:00 math-cup-2026-qualifying/task_08 google:gemini-3.1-pro-preview cap=256000 exit=0 elapsed_s=382.9

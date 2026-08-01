@@ -1,0 +1,38 @@
+Pair count: 6
+provider	gigachat	$0.0000
+model	gigachat:GigaChat-3-Ultra	$0.0000
+total	$0.0000
+total_plus_20pct	$0.0000
+  0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:23<?, ?run/s] 17%|█▋        | 1/6 [00:23<01:55, 23.08s/run]                                               17%|█▋        | 1/6 [00:23<01:55, 23.08s/run]                                               17%|█▋        | 1/6 [00:54<01:55, 23.08s/run] 33%|███▎      | 2/6 [00:54<01:50, 27.71s/run]                                               33%|███▎      | 2/6 [00:54<01:50, 27.71s/run]                                               33%|███▎      | 2/6 [01:24<01:50, 27.71s/run] 50%|█████     | 3/6 [01:24<01:27, 29.13s/run]                                               50%|█████     | 3/6 [01:24<01:27, 29.13s/run]                                               50%|█████     | 3/6 [01:51<01:27, 29.13s/run] 67%|██████▋   | 4/6 [01:51<00:56, 28.34s/run]                                               67%|██████▋   | 4/6 [01:51<00:56, 28.34s/run]                                               67%|██████▋   | 4/6 [02:22<00:56, 28.34s/run] 83%|████████▎ | 5/6 [02:22<00:29, 29.28s/run]                                               83%|████████▎ | 5/6 [02:22<00:29, 29.28s/run]                                               83%|████████▎ | 5/6 [02:41<00:29, 29.28s/run]100%|██████████| 6/6 [02:41<00:00, 25.72s/run]100%|██████████| 6/6 [02:41<00:00, 26.96s/run]
+Launching 6 pair(s), competition=math-cup-2026-qualifying, workers=1, provider_workers={'anthropic': 1, 'google': 2, 'gigachat': 1, 'openai': 1, 'xai': 2, 'yandexgpt': 1, 'zai': 2}, run_group=math-cup-2026-qualifying_20260801_012143
+START math-cup-2026-qualifying/task_01 gigachat:GigaChat-3-Ultra cap=256000
+OK task_01 gigachat:GigaChat-3-Ultra exit=0 elapsed=23.1s log=run-output/20260801-gigachat-retry/qualifying/task_01__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-qualifying/task_02 gigachat:GigaChat-3-Ultra cap=256000
+OK task_02 gigachat:GigaChat-3-Ultra exit=0 elapsed=30.9s log=run-output/20260801-gigachat-retry/qualifying/task_02__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-qualifying/task_03 gigachat:GigaChat-3-Ultra cap=256000
+OK task_03 gigachat:GigaChat-3-Ultra exit=0 elapsed=30.8s log=run-output/20260801-gigachat-retry/qualifying/task_03__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-qualifying/task_05 gigachat:GigaChat-3-Ultra cap=256000
+OK task_05 gigachat:GigaChat-3-Ultra exit=0 elapsed=27.1s log=run-output/20260801-gigachat-retry/qualifying/task_05__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-qualifying/task_06 gigachat:GigaChat-3-Ultra cap=256000
+OK task_06 gigachat:GigaChat-3-Ultra exit=0 elapsed=31.0s log=run-output/20260801-gigachat-retry/qualifying/task_06__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-qualifying/task_08 gigachat:GigaChat-3-Ultra cap=256000
+OK task_08 gigachat:GigaChat-3-Ultra exit=0 elapsed=18.8s log=run-output/20260801-gigachat-retry/qualifying/task_08__gigachat_GigaChat-3-Ultra__256000.log
+Pair count: 6
+provider	gigachat	$0.0000
+model	gigachat:GigaChat-3-Ultra	$0.0000
+total	$0.0000
+total_plus_20pct	$0.0000
+  0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:00<?, ?run/s]                                        0%|          | 0/6 [00:26<?, ?run/s] 17%|█▋        | 1/6 [00:26<02:12, 26.43s/run]                                               17%|█▋        | 1/6 [00:26<02:12, 26.43s/run]                                               17%|█▋        | 1/6 [00:57<02:12, 26.43s/run] 33%|███▎      | 2/6 [00:57<01:56, 29.02s/run]                                               33%|███▎      | 2/6 [00:57<01:56, 29.02s/run]                                               33%|███▎      | 2/6 [01:28<01:56, 29.02s/run] 50%|█████     | 3/6 [01:28<01:29, 29.85s/run]                                               50%|█████     | 3/6 [01:28<01:29, 29.85s/run]                                               50%|█████     | 3/6 [01:58<01:29, 29.85s/run] 67%|██████▋   | 4/6 [01:58<01:00, 30.24s/run]                                               67%|██████▋   | 4/6 [01:58<01:00, 30.24s/run]                                               67%|██████▋   | 4/6 [02:29<01:00, 30.24s/run] 83%|████████▎ | 5/6 [02:29<00:30, 30.45s/run]                                               83%|████████▎ | 5/6 [02:29<00:30, 30.45s/run]                                               83%|████████▎ | 5/6 [03:00<00:30, 30.45s/run]100%|██████████| 6/6 [03:00<00:00, 30.57s/run]100%|██████████| 6/6 [03:00<00:00, 30.09s/run]
+Launching 6 pair(s), competition=math-cup-2026-final, workers=1, provider_workers={'anthropic': 1, 'google': 2, 'gigachat': 1, 'openai': 1, 'xai': 2, 'yandexgpt': 1, 'zai': 2}, run_group=math-cup-2026-final_20260801_012425
+START math-cup-2026-final/task_03 gigachat:GigaChat-3-Ultra cap=256000
+OK task_03 gigachat:GigaChat-3-Ultra exit=0 elapsed=26.4s log=run-output/20260801-gigachat-retry/final/task_03__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-final/task_04 gigachat:GigaChat-3-Ultra cap=256000
+OK task_04 gigachat:GigaChat-3-Ultra exit=0 elapsed=30.8s log=run-output/20260801-gigachat-retry/final/task_04__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-final/task_05 gigachat:GigaChat-3-Ultra cap=256000
+OK task_05 gigachat:GigaChat-3-Ultra exit=0 elapsed=30.8s log=run-output/20260801-gigachat-retry/final/task_05__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-final/task_06 gigachat:GigaChat-3-Ultra cap=256000
+OK task_06 gigachat:GigaChat-3-Ultra exit=0 elapsed=30.8s log=run-output/20260801-gigachat-retry/final/task_06__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-final/task_07 gigachat:GigaChat-3-Ultra cap=256000
+OK task_07 gigachat:GigaChat-3-Ultra exit=0 elapsed=30.8s log=run-output/20260801-gigachat-retry/final/task_07__gigachat_GigaChat-3-Ultra__256000.log
+START math-cup-2026-final/task_08 gigachat:GigaChat-3-Ultra cap=256000
+OK task_08 gigachat:GigaChat-3-Ultra exit=0 elapsed=30.8s log=run-output/20260801-gigachat-retry/final/task_08__gigachat_GigaChat-3-Ultra__256000.log

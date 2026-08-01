@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_e3b13192125d2bd3491f65ee": {
+      "evaluation_id": "ev_d8ececa8ace94505a09003b0084c5ad3",
+      "result_id": "res_e3b13192125d2bd3491f65ee",
+      "result_index": 0,
+      "model_key": "xai:grok-build-0.1",
+      "model": "grok-build-0.1",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "b)Тhe claimed bound follows, up to replacement of the constant 1000 by 1000/sqrt(2)\r\n (or any larger value) - логическая ошибка, нельзя так подменять в индукции. по сути тут никакую ассимптотику лучше константы нельзя получить из f(n-1)<=f(n)\r\n\r\na) пример строится по рекурсии и 1) не работает 2) на шаге n+1 такая же мощность что и на шаге n получается, это не то чего хочется",
+      "created_at": "2026-07-23T16:50:22.379311Z",
+      "updated_at": "2026-07-23T16:50:22.379311Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_e3b13192125d2bd3491f65ee": [
+      {
+        "evaluation_id": "ev_d8ececa8ace94505a09003b0084c5ad3",
+        "result_id": "res_e3b13192125d2bd3491f65ee",
+        "result_index": 0,
+        "model_key": "xai:grok-build-0.1",
+        "model": "grok-build-0.1",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "b)Тhe claimed bound follows, up to replacement of the constant 1000 by 1000/sqrt(2)\r\n (or any larger value) - логическая ошибка, нельзя так подменять в индукции. по сути тут никакую ассимптотику лучше константы нельзя получить из f(n-1)<=f(n)\r\n\r\na) пример строится по рекурсии и 1) не работает 2) на шаге n+1 такая же мощность что и на шаге n получается, это не то чего хочется",
+        "created_at": "2026-07-23T16:50:22.379311Z",
+        "updated_at": "2026-07-23T16:50:22.379311Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_08",
+  "run_id": "2026_07_07_00_01_16_new_models_20260706_225754_task_08_xai_grok-build-0.1_256000",
+  "updated_at": "2026-07-23T16:50:22.379311Z"
+}

@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_50306e322c223b0774bf7014": {
-      "evaluation_id": "ev_5b8ddb5d2fde40dcbbfe59334ff7797c",
+      "evaluation_id": "ev_ac4c0a42cb7e49e0ab6725e90a339336",
       "result_id": "res_50306e322c223b0774bf7014",
       "result_index": 0,
       "model_key": "anthropic:claude-opus-4-8",
       "model": "claude-opus-4-8",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 4,
-      "max_score": 4,
+      "max_score": 4.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-24T20:46:07.737972Z",
-      "updated_at": "2026-07-24T20:46:07.737972Z"
+      "created_at": "2026-07-30T19:50:10.308876Z",
+      "updated_at": "2026-07-30T19:50:10.308876Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-07-24T20:46:07.737972Z",
         "updated_at": "2026-07-24T20:46:07.737972Z"
+      },
+      {
+        "evaluation_id": "ev_ac4c0a42cb7e49e0ab6725e90a339336",
+        "result_id": "res_50306e322c223b0774bf7014",
+        "result_index": 0,
+        "model_key": "anthropic:claude-opus-4-8",
+        "model": "claude-opus-4-8",
+        "evaluator": "mofeyTEA",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-07-30T19:50:10.308876Z",
+        "updated_at": "2026-07-30T19:50:10.308876Z"
       }
     ]
   },
@@ -37,5 +51,5 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_07_15_16_30_42_qualifying_missing_20260715_144724_task_07_anthropic_claude-opus-4-8_128000",
-  "updated_at": "2026-07-24T20:46:07.737972Z"
+  "updated_at": "2026-07-30T19:50:10.308876Z"
 }

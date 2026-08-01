@@ -1,0 +1,17 @@
+START 2026-07-15T17:04:24.884846+00:00 math-cup-2026-qualifying/task_07 openai:gpt-5.4-mini cap=128000
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_07.json --models openai:gpt-5.4-mini --max-tokens 128000 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_07_openai_gpt-5.4-mini_128000
+Run 2026_07_15_17_04_24_qualifying_missing_20260715_144724_task_07_openai_gpt-5.4-mini_128000: math-cup-2026-qualifying/task_07, 1 model(s), max_tokens=128000
+[1/1] START openai:gpt-5.4-mini
+[1/1] DONE  gpt-5.4-mini in 5m33s tokens=44831 cost_usd=0.200832
+| model        |   tokens |   cost_usd |   latency_ms | status   | error   |
+|--------------|----------|------------|--------------|----------|---------|
+| gpt-5.4-mini |    44831 |   0.200832 |       332658 | ok       |         |
+
+Run ID: 2026_07_15_17_04_24_qualifying_missing_20260715_144724_task_07_openai_gpt-5.4-mini_128000
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_07 (Мумифицированный тетраэдр)
+Timestamp: 2026-07-15T17:04:24.979718Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_07/2026_07_15_17_04_24_qualifying_missing_20260715_144724_task_07_openai_gpt-5.4-mini_128000.json
+
+DONE 2026-07-15T17:09:58.714239+00:00 math-cup-2026-qualifying/task_07 openai:gpt-5.4-mini cap=128000 exit=0 elapsed_s=333.8

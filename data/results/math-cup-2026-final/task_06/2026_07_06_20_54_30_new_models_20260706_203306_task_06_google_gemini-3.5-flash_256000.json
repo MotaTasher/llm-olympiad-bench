@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_68d11c2aecb23aeaf56c1fbd": {
+      "evaluation_id": "ev_f152ae00e0a04e6484dbc31bbab92566",
+      "result_id": "res_68d11c2aecb23aeaf56c1fbd",
+      "result_index": 0,
+      "model_key": "google:gemini-3.5-flash",
+      "model": "gemini-3.5-flash",
+      "evaluator": "b2_maxim",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "created_at": "2026-07-24T20:00:30.663163Z",
+      "updated_at": "2026-07-24T20:00:30.663163Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_68d11c2aecb23aeaf56c1fbd": [
+      {
+        "evaluation_id": "ev_f152ae00e0a04e6484dbc31bbab92566",
+        "result_id": "res_68d11c2aecb23aeaf56c1fbd",
+        "result_index": 0,
+        "model_key": "google:gemini-3.5-flash",
+        "model": "gemini-3.5-flash",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-07-24T20:00:30.663163Z",
+        "updated_at": "2026-07-24T20:00:30.663163Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_07_06_20_54_30_new_models_20260706_203306_task_06_google_gemini-3.5-flash_256000",
+  "updated_at": "2026-07-24T20:00:30.663163Z"
+}

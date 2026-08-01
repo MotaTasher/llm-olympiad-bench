@@ -1,0 +1,17 @@
+START 2026-07-15T17:14:50.849026+00:00 math-cup-2026-qualifying/task_08 gigachat:GigaChat-2-Max cap=8192
+COMMAND /opt/olympiad-scorer/app/.venv/bin/python runner.py --problem data/competitions/math-cup-2026-qualifying/task_08.json --models gigachat:GigaChat-2-Max --max-tokens 8192 --logs-dir /opt/olympiad-scorer/shared/logs --run-id qualifying_missing_20260715_144724_task_08_gigachat_GigaChat-2-Max_8192
+Run 2026_07_15_17_14_50_qualifying_missing_20260715_144724_task_08_gigachat_GigaChat-2-Max_8192: math-cup-2026-qualifying/task_08, 1 model(s), max_tokens=8192
+[1/1] START gigachat:GigaChat-2-Max
+[1/1] DONE  GigaChat-2-Max in 10.5s tokens=769 cost_usd=0.005554
+| model          |   tokens |   cost_usd |   latency_ms | status   | error   |
+|----------------|----------|------------|--------------|----------|---------|
+| GigaChat-2-Max |      769 |   0.005554 |        10311 | ok       |         |
+
+Run ID: 2026_07_15_17_14_50_qualifying_missing_20260715_144724_task_08_gigachat_GigaChat-2-Max_8192
+Competition: math-cup-2026-qualifying (Math Cup 2026. Отборочный тур)
+Problem: task_08 (Найдите общий язык)
+Timestamp: 2026-07-15T17:14:50.949723Z
+Git hash: a5c99be
+Log written: /opt/olympiad-scorer/shared/logs/math-cup-2026-qualifying/task_08/2026_07_15_17_14_50_qualifying_missing_20260715_144724_task_08_gigachat_GigaChat-2-Max_8192.json
+
+DONE 2026-07-15T17:15:01.625118+00:00 math-cup-2026-qualifying/task_08 gigachat:GigaChat-2-Max cap=8192 exit=0 elapsed_s=10.8
