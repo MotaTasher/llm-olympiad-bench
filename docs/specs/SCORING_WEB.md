@@ -136,7 +136,7 @@ require an organizer comment. The latest editor and edit time are persisted.
 
 The competition matrix presents active model columns in fixed provider groups:
 `anthropic`, `deepseek`, `google`, `gigachat`, `xai`, `zai`, `openai`,
-`yandexgpt`. Unknown future providers sort after these groups. The
+`yandexgpt`, `kimi`. Unknown future providers sort after these groups. The
 `model_columns` order follows this provider order, and the order inside each
 provider follows the provider `VERSIONS` list instead of alphabetic model IDs.
 Every problem's `model_states` list is built in the same order as
@@ -159,6 +159,7 @@ competition["model_groups"] = [
   {"provider": "zai", "label": "GLM", "models": [...]},
   {"provider": "openai", "label": "OpenAI", "models": [...]},
   {"provider": "yandexgpt", "label": "Яндекс", "models": [...]},
+  {"provider": "kimi", "label": "Kimi", "models": [...]},
 ]
 ```
 
@@ -166,7 +167,7 @@ On `/competition/<competition_id>`, the matrix wrapper uses scoped
 `competition-matrix-wrap` / `competition-matrix` classes. It does not impose a
 fixed or viewport-derived vertical height; the page scrolls vertically, while
 the wrapper keeps horizontal scrolling for narrow screens and for the current
-9 active columns. The table uses compact fixed model columns and must not
+10 active columns. The table uses compact fixed model columns and must not
 expand from full model IDs in tooltips. The first column is scoped for long
 wrapping task titles and shows only the problem title as the anonymous-scoring
 link, prefixed by the problem number when one exists. It does not render problem

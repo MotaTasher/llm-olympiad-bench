@@ -196,10 +196,10 @@ models/<provider>/versions.py
 ```
 
 Эти файлы также задают активные колонки в scoring UI. Сейчас в активном
-бенчмарке 8 provider groups и 9 active model columns: `claude-fable-5`,
+бенчмарке 9 provider groups и 10 active model columns: `claude-fable-5`,
 `claude-opus-5`, `deepseek-v4-pro`, `gemini-3.1-pro-preview`,
 `GigaChat-3-Ultra`, `grok-4.5`, `glm-5.2`, `gpt-5.6-sol`,
-`aliceai-llm`. Исторические логи моделей вне `VERSIONS` не создают
+`aliceai-llm`, `kimi-k3`. Исторические логи моделей вне `VERSIONS` не создают
 отдельные колонки на сайте.
 
 Canonical provider IDs for new adapters are `google`, `xai` and `zai`.
@@ -215,7 +215,7 @@ legacy versions but no longer create scoring or public-results columns.
 `runner.load_env()` загружает корневой `.env` для обратной совместимости, затем provider secrets, затем `config/models.env`. Не храните выбор модели, temperature или лимиты токенов в secret-файлах.
 
 Матрицы scoring UI используют короткие подписи моделей и tooltip/title/aria-label
-с полным model ID. При 9 колонках таблицы нормально прокручиваются
+с полным model ID. При 10 колонках таблицы нормально прокручиваются
 горизонтально; столбец задач остаётся sticky, а страница отвечает за
 вертикальный scroll.
 

@@ -50,7 +50,7 @@ python scripts/export_public_results.py
 
 The default output is the ignored `public_results/generated/` directory. The
 export contains both Math Cup 2026 stages as independent competition records,
-all 9 configured model rows, and one JSON document for every selected
+all 10 configured model rows, and one JSON document for every selected
 successful answer. The public UI selects exactly one record at a time through
 benchmark, year and stage buttons. For each model/problem cell the selection
 policy is:
