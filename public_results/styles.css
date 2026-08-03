@@ -500,8 +500,10 @@ h1, h2, h3 {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 50px;
-  padding: 170px 0 155px;
+  padding: 150px 0 110px;
 }
+
+.method-section + .method-section { padding-top: 0; padding-bottom: 155px; }
 
 .method-section h2 {
   margin-bottom: 33px;
@@ -522,11 +524,12 @@ h1, h2, h3 {
   max-width: 700px;
   margin: 0;
   padding-left: 1.2em;
-  color: var(--muted);
+  color: var(--ink);
   font-size: 17px;
   line-height: 1.5;
 }
 
+.launch-rules li::marker { color: var(--acid); }
 .launch-rules li + li { margin-top: 10px; }
 
 .catalog-intro {
@@ -666,9 +669,9 @@ h1, h2, h3 {
 
 .site-footer {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 42px;
   padding: 38px 0;
   border-top: 1px solid var(--line);
   color: var(--muted);
@@ -676,8 +679,22 @@ h1, h2, h3 {
 }
 
 .site-footer img { display: block; width: 149px; height: auto; }
-.site-footer p { margin: 0; }
-.site-footer > a:last-child:hover { color: var(--ink); }
+.footer-brand { flex: 1 1 auto; }
+.footer-nav { flex: 0 0 auto; }
+.footer-contact {
+  display: grid;
+  flex: 1 1 auto;
+  justify-items: end;
+  gap: 3px;
+}
+.footer-contact span {
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.footer-contact a { color: var(--muted); font-size: 13px; transition: color .2s ease; }
+.footer-contact a:hover { color: var(--ink); }
 
 @media (max-width: 900px) {
   .leaderboard-intro { grid-template-columns: minmax(0, 1fr); align-items: start; min-height: 470px; gap: 25px; }
@@ -770,8 +787,8 @@ h1, h2, h3 {
   .reading-solution summary { padding: 27px 20px; font-size: 25px; }
   .reading-solution .prose { padding: 25px 20px; font-size: 15px; }
 
-  .site-footer { display: grid; grid-template-columns: 1fr auto; align-items: start; }
+  .site-footer { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 28px 16px; }
   .site-footer img { width: 132px; }
-  .site-footer p { display: none; }
-  .site-footer > a:last-child { text-align: right; }
+  .footer-nav { justify-content: flex-end; }
+  .footer-contact { grid-column: 1 / -1; justify-items: start; }
 }

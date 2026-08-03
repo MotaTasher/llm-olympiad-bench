@@ -72,6 +72,10 @@ The exporter also copies selected competition assets into
 in statements and official solutions to those public files. Plain HTTP(S) links
 in published Markdown are normalized to clickable links. The public HTML pages
 use the local CS Space SVG as their favicon.
+The fallback public metadata also supplies team member names and stage-specific
+competition rules. The leaderboard switches that rules block together with the
+selected release; generated model data continues to overlay only the result
+matrix.
 
 Each exported model row also contains `points`, the sum of all non-null
 absolute task scores for that stage. The public table uses this field for its

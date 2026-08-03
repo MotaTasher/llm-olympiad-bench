@@ -261,6 +261,17 @@
     document.querySelector("#stage-stack").innerHTML = selectedCompetitions
       .map(renderStage)
       .join("");
+    renderCompetitionRules(selectedCompetitions[0]);
+  }
+
+  function renderCompetitionRules(competition) {
+    const list = document.querySelector("#competition-rules");
+    if (!list) return;
+    const rules = competition?.competitionRules || [
+      "Для этого набора действуют те же требования к ответам моделей, что и к работам участников.",
+      "Каждая модель отвечает на задачу один раз."
+    ];
+    list.innerHTML = rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("");
   }
 
   function renderStage(competition) {
@@ -488,7 +499,6 @@
     const back = `index.html?release=${encodeURIComponent(release?.id || data.releases[0].id)}`;
 
     document.querySelector("#solution-back").href = back;
-    document.querySelector("#solution-footer-back").href = back;
     document.querySelector("#solution-competition").textContent = `${competition.title} · ${competition.stage}`;
     document.querySelector("#solution-task").textContent = task?.title || "Задача";
     document.querySelector("#solution-model").textContent = participant?.name || "Модель";

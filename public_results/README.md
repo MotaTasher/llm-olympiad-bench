@@ -1,6 +1,6 @@
-# Public results prototype
+# Reasoning Space public results
 
-This is a standalone local prototype for the public CS Space Arena. It contains:
+This is the standalone public Reasoning Space site. It contains:
 
 - `index.html`: benchmark, year and stage filters plus one selected leaderboard;
 - `competitions.html`: compact buttons for available competition releases;
@@ -38,6 +38,7 @@ is displayed on the integer `0..4` scale; the final remains on `0..2`. The
 three Math Cup 2026 final team rows come from `data.js`
 and participate in the same table sorting as model rows rather than appearing
 in a separate section.
+The fallback team rows include the published member names for both 2026 stages.
 Their source scoreboard contains penalties in solved cells; the public matrix
 ignores those penalty values and converts only solved status to the final's
 `0..2` task scale. Split tasks 6, 7 and 8 combine two equally weighted
@@ -59,6 +60,9 @@ Three visible button rows select benchmark, year and stage without a dropdown;
 qualifying and final are never rendered together. Only releases present in the
 public `releases` and `catalog` lists are shown; competition placeholders alone
 do not make an unpublished release visible.
+The competition-rules block follows the selected release: qualifying and final
+explain their participant format and the corresponding one-attempt model
+evaluation separately. Shared model-launch rules remain below it.
 
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. The required Marked,
