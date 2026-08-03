@@ -30,10 +30,12 @@ python3 -m http.server 8080 --directory public_results
 Then visit <http://127.0.0.1:8080>.
 
 The generated view includes all 9 configured model rows for qualifying and
-final. A cell uses the newest successful evaluated attempt when one exists and
-otherwise the newest successful attempt. Unreviewed answers remain clickable
-without a score. Scores from multiple evaluations are normalized and combined
-with the median on the task's current absolute scale. Math Cup 2026 qualifying
+final. A cell prefers a successful attempt with an effective organizer
+finalization, then a reviewed attempt, then the newest successful attempt.
+Answers remain clickable before finalization and are explicitly marked as not
+finalized. Public scores come only from the shared manual final score or the
+derived consensus of at least two unanimous extreme checks; individual-review
+medians are not published. Math Cup 2026 qualifying
 is displayed on the integer `0..4` scale; the final remains on `0..2`. The
 three Math Cup 2026 final team rows come from `data.js`
 and participate in the same table sorting as model rows rather than appearing

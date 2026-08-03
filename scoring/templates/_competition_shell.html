@@ -28,6 +28,11 @@
         href="{{ url_for('competition_checks_page', competition_id=competition.competition_id) }}"
         {% if active_tab == "checks" %}aria-current="page"{% endif %}
       >Все проверки</a>
+      <a
+        class="competition-tab"
+        href="{{ url_for('competition_finalization_page', competition_id=competition.competition_id) }}"
+        {% if active_tab == "finalization" %}aria-current="page"{% endif %}
+      >Итоговые баллы</a>
     </nav>
   </section>
 {%- endmacro %}

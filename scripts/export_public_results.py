@@ -7,11 +7,9 @@ import math
 import os
 import re
 import shutil
-import statistics
 import sys
 import tempfile
 from datetime import UTC, datetime
-from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from typing import Any
 
@@ -100,20 +98,16 @@ def public_score(
     *,
     round_to_integer: bool = False,
 ) -> float | int | None:
-    absolute_scores = []
-    for evaluation in attempt.get("evaluations") or []:
-        score = finite_number(evaluation.get("score"))
-        evaluation_max = finite_number(evaluation.get("max_score")) or max_score
-        if score is None or evaluation_max <= 0:
-            continue
-        absolute_scores.append(
-            max(0.0, min(max_score, score / evaluation_max * max_score))
-        )
-    if not absolute_scores:
+    finalization = attempt.get("finalization")
+    if not isinstance(finalization, dict):
         return None
-    value = float(statistics.median(absolute_scores))
+    value = finite_number(finalization.get("score"))
+    final_max = finite_number(finalization.get("max_score")) or max_score
+    if value is None or final_max <= 0:
+        return None
+    value = max(0.0, min(max_score, value / final_max * max_score))
     if round_to_integer:
-        return int(Decimal(str(value)).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+        return int(math.floor(value + 0.5))
     value = round(value, 1)
     return int(value) if value.is_integer() else value
 
@@ -125,8 +119,11 @@ def select_public_attempt(state: dict[str, Any]) -> dict[str, Any] | None:
         if attempt.get("successful_answer")
     ]
     return next(
-        (attempt for attempt in successful if attempt.get("evaluations")),
-        successful[0] if successful else None,
+        (attempt for attempt in successful if attempt.get("finalization")),
+        next(
+            (attempt for attempt in successful if attempt.get("evaluations")),
+            successful[0] if successful else None,
+        ),
     )
 
 
@@ -250,7 +247,7 @@ def solution_document(
             "answer": result.get("answer") or "",
             "score": score,
             "verdict": (
-                "Нет публичной оценки"
+                "Не финализировано"
                 if score is None
                 else "Полное решение"
                 if score >= max_score

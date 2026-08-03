@@ -58,6 +58,8 @@ try:
         checks_statistics,
         competition_statistics,
         delete_evaluation,
+        delete_finalization,
+        finalization_statistics,
         find_attempt,
         find_problem,
         format_score_value,
@@ -68,6 +70,7 @@ try:
         progress_counts_for_model_states,
         safe_id,
         save_evaluation,
+        save_finalization,
         selected_state,
         upsert_imported_evaluation,
     )
@@ -89,6 +92,8 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
         checks_statistics,
         competition_statistics,
         delete_evaluation,
+        delete_finalization,
+        finalization_statistics,
         find_attempt,
         find_problem,
         format_score_value,
@@ -99,6 +104,7 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
         progress_counts_for_model_states,
         safe_id,
         save_evaluation,
+        save_finalization,
         selected_state,
         upsert_imported_evaluation,
     )
@@ -598,6 +604,50 @@ def competition_checks_page(competition_id: str):
     )
 
 
+@app.get("/competition/<competition_id>/finalization")
+def competition_finalization_page(competition_id: str):
+    competition_id = clean_id(competition_id)
+    data = catalog()
+    competition = data["competition_map"].get(competition_id)
+    if not competition:
+        abort(404)
+    return render_template(
+        "finalization.html",
+        competition=competition,
+        finalization=finalization_statistics(competition),
+        warnings=data["warnings"],
+    )
+
+
+@app.get("/competition/<competition_id>/finalization/<problem_id>/<result_id>")
+def finalization_detail_page(competition_id: str, problem_id: str, result_id: str):
+    competition_id = clean_id(competition_id)
+    problem_id = clean_id(problem_id)
+    data = catalog()
+    competition = data["competition_map"].get(competition_id)
+    problem = find_problem(data, competition_id, problem_id)
+    if not competition or not problem:
+        abort(404)
+    attempt = next(
+        (
+            attempt
+            for state in problem.get("model_states", [])
+            for attempt in state.get("attempts", [])
+            if attempt.get("result_id") == result_id
+        ),
+        None,
+    )
+    if not attempt:
+        abort(404)
+    return render_template(
+        "finalize.html",
+        competition=competition,
+        problem=problem,
+        attempt=attempt,
+        warnings=data["warnings"],
+    )
+
+
 @app.get("/competition/<competition_id>/problem/<problem_id>")
 def problem_page(competition_id: str, problem_id: str):
     competition_id = clean_id(competition_id)
@@ -653,17 +703,6 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
     attempts = attempts_for_reviewer(anonymized_attempts(problem, seed), current_user.username)
     selected_index = min(positive_int(request.args.get("n")), len(attempts)) if attempts else 0
-    preferred_index = first_unscored_attempt_index(attempts)
-    if preferred_index and selected_index and attempts[selected_index - 1].get("score") is not None:
-        return redirect(
-            url_for(
-                "anonymous_problem_page",
-                competition_id=competition_id,
-                problem_id=problem_id,
-                seed=seed,
-                n=preferred_index,
-            )
-        )
     selected_attempt = attempts[selected_index - 1] if selected_index else None
     next_unscored_index = None
     if attempts and selected_index:
@@ -817,7 +856,7 @@ def score():
         max_score=max_score,
         feedback=request.form.get("feedback"),
     )
-    flash("Проверка добавлена.", "info")
+    flash("Проверка сохранена.", "info")
     next_redirect = redirect_to_next_unscored_after_save(
         mode=mode,
         competition_id=competition_id,
@@ -883,6 +922,78 @@ def delete_score():
         anonymous_seed=anonymous_seed,
         anonymous_index=anonymous_index,
     )
+
+
+@app.post("/finalization")
+def save_final_score():
+    competition_id = clean_id(request.form.get("competition_id", ""))
+    problem_id = clean_id(request.form.get("problem_id", ""))
+    run_id = clean_id(request.form.get("run_id", ""))
+    result_id = request.form.get("result_id", "")
+    data = catalog()
+    found = find_attempt(
+        data,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        result_id=result_id,
+    )
+    if not found:
+        abort(400, "result_id does not match this run")
+    problem, attempt = found
+    feedback = (request.form.get("feedback") or "").strip()
+    try:
+        value = float(request.form.get("score", ""))
+    except ValueError:
+        flash("Итоговая оценка должна быть числом.", "error")
+        return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
+    max_score = float(problem["max_score"])
+    if not math.isfinite(value) or not 0 <= value <= max_score:
+        flash(f"Итоговая оценка должна быть в диапазоне от 0 до {max_score:g}.", "error")
+        return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
+    if not attempt.get("evaluation_count"):
+        flash("Нельзя финализировать ответ без индивидуальной проверки.", "error")
+        return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
+    final_is_partial = 0 < value < max_score
+    if (attempt.get("comment_required") or final_is_partial) and not feedback:
+        flash("При частичном балле или расхождении проверок нужен комментарий организаторов.", "error")
+        return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
+    score_value: float | int = int(value) if value.is_integer() else value
+    save_finalization(
+        results_dir=Path(app.config["RESULTS_DIR"]),
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        result_id=result_id,
+        result_index=int(attempt["result_index"]),
+        model_key_value=attempt["model_key"],
+        model=attempt["model_id"],
+        score=score_value,
+        max_score=max_score,
+        feedback=feedback,
+        updated_by=current_user.username,
+    )
+    flash("Итоговая оценка сохранена.", "info")
+    return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
+
+
+@app.post("/finalization/delete")
+def delete_final_score():
+    competition_id = clean_id(request.form.get("competition_id", ""))
+    problem_id = clean_id(request.form.get("problem_id", ""))
+    run_id = clean_id(request.form.get("run_id", ""))
+    result_id = request.form.get("result_id", "")
+    if delete_finalization(
+        results_dir=Path(app.config["RESULTS_DIR"]),
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        result_id=result_id,
+    ):
+        flash("Ручная финализация снята.", "info")
+    else:
+        flash("Ручная финализация не найдена.", "error")
+    return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
 
 
 EVALUATION_CSV_FIELDS = [

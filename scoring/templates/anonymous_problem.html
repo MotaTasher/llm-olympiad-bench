@@ -106,7 +106,7 @@
                   min="0"
                   max="{{ "%g"|format(problem.max_score) }}"
                   step="{{ "%g"|format(problem.score_step) }}"
-                  value="0"
+                  value="{{ evaluation.score if evaluation.score is not none else 0 }}"
                   data-score-range
                   aria-label="Оценка по официальной шкале"
                 >
@@ -123,7 +123,7 @@
                     min="0"
                     max="{{ "%g"|format(problem.max_score) }}"
                     step="any"
-                    value=""
+                    value="{{ evaluation.score if evaluation.score is not none else '' }}"
                     autocomplete="off"
                     data-score-number
                     aria-label="Оценка вручную"
@@ -141,16 +141,16 @@
               </div>
 
               <label>Комментарий
-                <textarea name="feedback"></textarea>
+                <textarea name="feedback">{{ evaluation.feedback or '' }}</textarea>
               </label>
 
-              <button type="submit" data-score-submit>Добавить проверку</button>
+              <button type="submit" data-score-submit>{{ "Обновить проверку" if evaluation else "Сохранить проверку" }}</button>
             </form>
 
             {% if evaluation_pool %}
               <div class="evaluation-list">
-                <h3>Мои проверки</h3>
-                {% for item in evaluation_pool|reverse %}
+                <h3>Моя проверка</h3>
+                {% for item in evaluation_pool[-1:] %}
                   <div class="evaluation-card">
                     <header>
                       <strong>{{ item.evaluator or "Без имени" }}</strong>

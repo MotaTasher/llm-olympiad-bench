@@ -55,12 +55,15 @@ successful answer. The public UI selects exactly one record at a time through
 benchmark, year and stage buttons. For each model/problem cell the selection
 policy is:
 
-1. newest successful attempt that has at least one evaluation;
-2. otherwise, newest successful attempt without a public score;
-3. otherwise, no link for the cell.
+1. newest successful attempt with an effective finalization;
+2. otherwise, newest successful attempt that has at least one evaluation;
+3. otherwise, newest successful attempt without a public score;
+4. otherwise, no link for the cell.
 
-When several evaluations exist on the selected result, each score is converted
-to the task's current absolute scale and the public score is their median.
+The public score is the effective shared finalization: a persisted organizer
+decision or the derived unanimous two-review extreme. Individual checks and
+their median are never published as the result. Cells without an effective
+finalization are explicitly shown as not finalized.
 Math Cup 2026 qualifying uses the integer `0..4` scale and half-up rounding;
 the final keeps its existing `0..2` scale. Run logs and sidecars remain
 unchanged during export. The public documents omit
@@ -139,8 +142,10 @@ The web UI can export and import manual checks without touching model run logs:
 - import CSV from the same competition or task pages.
 
 CSV rows are matched by `competition_id`, `problem_id`, `run_id` and
-`result_id`. Existing rows with the same `evaluation_id` are replaced; rows
-without `evaluation_id` create new checks.
+`result_id`. Within a result, an imported named reviewer replaces that
+reviewer's current check (and the same `evaluation_id` is also replaced).
+Rows without a reviewer remain distinct by `evaluation_id` for legacy
+compatibility.
 
 ## Server sync
 

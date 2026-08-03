@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% import "_competition_shell.html" as shell %}
+{% import "_matrix.html" as matrix %}
+{% block crumbs %}
+  <a href="{{ url_for('index') }}">Соревнования</a> /
+  <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
+  Итоговые баллы
+{% endblock %}
+{% block content %}
+  <div class="stack">
+    {{ shell.render_competition_shell(competition, "finalization") }}
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <h2>Итоговые баллы</h2>
+          <div class="meta">
+            Финализировано: {{ finalization.finalized }} · не финализировано: {{ finalization.unfinalized }} ·
+            одна проверка: {{ finalization.one_review }} · расхождений: {{ finalization.disagreement }}
+          </div>
+        </div>
+      </div>
+      <p class="meta">0 и максимум выставляются автоматически при двух совпавших проверках. «1» — одна проверка, «≠» — расхождение, «✎» — нужен итоговый комментарий.</p>
+      <div class="table-wrap competition-matrix-wrap" role="region" aria-label="Финализация баллов" tabindex="0">
+        <table class="competition-matrix">
+          {{ matrix.render_model_colgroup(competition) }}
+          {{ matrix.render_model_header(competition) }}
+          <tbody>
+            {% for row in finalization.tasks %}
+              {% set problem = row.problem %}
+              <tr>
+                <td>{{ matrix.render_problem_cell(competition, problem, false) }}</td>
+                {% for model in competition.model_columns %}
+                  {% set cell = row.cells.get(model.model_key) %}
+                  <td>
+                    {% if cell.attempt %}
+                      <a
+                        class="matrix-cell {{ cell.css_class }}"
+                        href="{{ url_for('finalization_detail_page', competition_id=competition.competition_id, problem_id=problem.problem_id, result_id=cell.attempt.result_id) }}"
+                        title="{{ cell.aria_label }}"
+                        aria-label="{{ cell.aria_label }}"
+                      >{{ cell.text }}</a>
+                    {% else %}
+                      <span class="matrix-cell {{ cell.css_class }}" aria-label="{{ cell.aria_label }}"></span>
+                    {% endif %}
+                  </td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+{% endblock %}

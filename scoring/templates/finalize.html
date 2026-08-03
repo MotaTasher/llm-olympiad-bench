@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% import "_macros.html" as ui %}
+{% block crumbs %}
+  <a href="{{ url_for('index') }}">Соревнования</a> /
+  <a href="{{ url_for('competition_finalization_page', competition_id=competition.competition_id) }}">Итоговые баллы</a> /
+  {{ problem.problem_title }}
+{% endblock %}
+{% block content %}
+  {% set final = attempt.finalization or {} %}
+  <div class="stack">
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <h1>{% if problem.number is not none %}{{ problem.number }}. {% endif %}{{ problem.problem_title }}</h1>
+          <div class="meta">{{ attempt.model_key }} · result_id: {{ attempt.result_id }} · проверок: {{ attempt.evaluation_count }}</div>
+        </div>
+        <a class="button secondary" href="{{ url_for('competition_finalization_page', competition_id=competition.competition_id) }}">К таблице итогов</a>
+      </div>
+      {% if attempt.review_status == "one_review" %}
+        <div class="flash info">Предупреждение: этот ответ проверил только один человек. Ручная финализация разрешена.</div>
+      {% elif attempt.review_status == "disagreement" %}
+        <div class="flash error">Проверки расходятся. Для итогового балла обязателен комментарий организаторов.</div>
+      {% elif attempt.review_status == "partial" %}
+        <div class="flash info">Проверки дают частичный балл. Для итогового балла обязателен комментарий организаторов.</div>
+      {% elif attempt.review_status == "no_reviews" %}
+        <div class="flash error">Индивидуальных проверок нет: финализация пока недоступна.</div>
+      {% endif %}
+      {% if final %}
+        <p><strong>Текущий итог: {{ final.score|score_value }} / {{ problem.max_score|score_value }}</strong> · {{ "автоматически" if final.source == "automatic" else "вручную" }}</p>
+        {% if final.updated_by %}<div class="meta">Последнее изменение: {{ final.updated_by }} · {{ ui.human_datetime(final.updated_at) }}</div>{% endif %}
+      {% else %}
+        <p><strong>Не финализировано.</strong></p>
+      {% endif %}
+    </section>
+
+    <div class="layout">
+      <div class="stack">
+        <section class="panel">
+          <h2>Условие</h2>
+          <div class="rendered scrollable-content" data-markdown>{{ problem.statement }}</div>
+        </section>
+        {% if problem.answer or problem.solution %}
+          <details class="panel">
+            <summary>Показать эталонное решение</summary>
+            {% if problem.answer %}
+              <h3>Ответ</h3>
+              <div class="rendered scrollable-content" data-markdown>{{ problem.answer }}</div>
+            {% endif %}
+            {% if problem.solution %}
+              <h3>Решение</h3>
+              <div class="rendered scrollable-content" data-markdown>{{ problem.solution }}</div>
+            {% endif %}
+          </details>
+        {% endif %}
+        <section class="panel">
+          <h2>Ответ модели</h2>
+          <div class="rendered scrollable-content" data-markdown>{{ attempt.result.answer }}</div>
+        </section>
+        <section class="panel">
+          <h2>Индивидуальные проверки</h2>
+          {% if attempt.evaluations %}
+            <div class="evaluation-list">
+              {% for item in attempt.evaluations %}
+                <div class="evaluation-card">
+                  <header>
+                    <strong>{{ item.evaluator or "Без имени" }}</strong>
+                    <span class="meta">{{ item.score|score_value }} / {{ (item.max_score or problem.max_score)|score_value }} · {{ ui.human_datetime(item.updated_at or item.created_at) }}</span>
+                  </header>
+                  {% if item.feedback %}<div class="rendered" data-markdown>{{ item.feedback }}</div>{% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="empty">Проверок пока нет.</div>
+          {% endif %}
+        </section>
+      </div>
+
+      <aside class="panel">
+        <h2>Общий итог</h2>
+        <form class="score-form" method="post" action="{{ url_for('save_final_score') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+          <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+          <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
+          <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
+          <label>Итоговый балл
+            <input name="score" type="number" min="0" max="{{ '%g'|format(problem.max_score) }}" step="any" value="{{ final.score if final.score is not none else '' }}" {% if not attempt.evaluation_count %}disabled{% endif %} required>
+          </label>
+          <label>Комментарий организаторов{% if attempt.comment_required %} (обязательно){% endif %}
+            <textarea name="feedback" {% if attempt.comment_required %}required{% endif %}>{{ final.feedback or '' }}</textarea>
+          </label>
+          <div class="meta">Комментарий обязателен при любом частичном итоговом балле и при расхождении проверок.</div>
+          <button type="submit" {% if not attempt.evaluation_count %}disabled{% endif %}>{{ "Обновить итог" if final.source == "manual" else "Сохранить итог" }}</button>
+        </form>
+        {% if final.source == "manual" %}
+          <form method="post" action="{{ url_for('delete_final_score') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="competition_id" value="{{ competition.competition_id }}">
+            <input type="hidden" name="problem_id" value="{{ problem.problem_id }}">
+            <input type="hidden" name="run_id" value="{{ attempt.run_id }}">
+            <input type="hidden" name="result_id" value="{{ attempt.result_id }}">
+            <button class="secondary" type="submit">Снять ручную финализацию</button>
+          </form>
+        {% endif %}
+      </aside>
+    </div>
+  </div>
+{% endblock %}
