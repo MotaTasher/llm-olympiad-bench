@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+from copy import deepcopy
 from datetime import date, timedelta
 import io
 import math
@@ -8,6 +9,7 @@ import os
 from pathlib import Path
 import secrets
 import sys
+import threading
 from urllib.parse import urlsplit
 import warnings
 
@@ -286,16 +288,57 @@ def user_list():
         print(f"{row['username']}\t{row['status']}\t{row['created_at']}\t{row['updated_at']}")
 
 
-def catalog() -> dict:
-    return build_catalog(
-        competitions_dir=Path(app.config["COMPETITIONS_DIR"]),
-        logs_dir=Path(app.config["LOGS_DIR"]),
-        results_dir=Path(app.config["RESULTS_DIR"]),
+_catalog_cache_lock = threading.RLock()
+_catalog_cache_signature: tuple | None = None
+_catalog_cache_value: dict | None = None
+
+
+def json_tree_signature(root: Path) -> tuple:
+    root = root.resolve()
+    if not root.exists():
+        return (str(root), "missing")
+    entries = []
+    for path in sorted(root.rglob("*.json")):
+        try:
+            stat = path.stat()
+        except OSError:
+            continue
+        entries.append((str(path.relative_to(root)), stat.st_mtime_ns, stat.st_size))
+    return (str(root), tuple(entries))
+
+
+def catalog_source_signature() -> tuple:
+    return tuple(
+        json_tree_signature(Path(app.config[key]))
+        for key in ("COMPETITIONS_DIR", "LOGS_DIR", "RESULTS_DIR")
     )
 
 
+def clear_catalog_cache() -> None:
+    global _catalog_cache_signature, _catalog_cache_value
+    with _catalog_cache_lock:
+        _catalog_cache_signature = None
+        _catalog_cache_value = None
+
+
+def catalog() -> dict:
+    global _catalog_cache_signature, _catalog_cache_value
+    signature = catalog_source_signature()
+    with _catalog_cache_lock:
+        if _catalog_cache_value is not None and _catalog_cache_signature == signature:
+            return _catalog_cache_value
+        data = build_catalog(
+            competitions_dir=Path(app.config["COMPETITIONS_DIR"]),
+            logs_dir=Path(app.config["LOGS_DIR"]),
+            results_dir=Path(app.config["RESULTS_DIR"]),
+        )
+        _catalog_cache_signature = signature
+        _catalog_cache_value = data
+        return data
+
+
 def catalog_for_reviewer(reviewer: str) -> dict:
-    data = catalog()
+    data = deepcopy(catalog())
     scope_catalog_to_reviewer(data, reviewer)
     return data
 

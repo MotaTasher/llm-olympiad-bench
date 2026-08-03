@@ -7,11 +7,19 @@ import shutil
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 import runner
+from models.telemetry import normalize_run_log as actual_normalize_run_log
 
-from scoring.app import app as scoring_app, competition_card_description, competition_date
+from scoring.app import (
+    app as scoring_app,
+    catalog as cached_catalog,
+    clear_catalog_cache,
+    competition_card_description,
+    competition_date,
+)
 from scoring.auth import create_user, get_user_by_username, set_user_active
 from scoring.presentation import format_datetime_parts
 from scoring.repository import (
@@ -1207,6 +1215,66 @@ class ScoringWebTests(unittest.TestCase):
         ).get_data(as_text=True)
         self.assertIn('value="8"', html)
         self.assertIn('<textarea name="feedback">updated</textarea>', html)
+        matrix_html = self.client.get("/competition/math_2026/finalization").get_data(as_text=True)
+        matrix = CompetitionMatrixParser()
+        matrix.feed(matrix_html)
+        warning_cell = next(
+            cell
+            for cell in matrix.matrix_cells
+            if "cell-final-one" in cell["attrs"].get("class", "")
+        )
+        self.assertEqual(warning_cell["text"], "!")
+
+    def test_catalog_cache_reuses_catalog_until_a_json_file_changes(self) -> None:
+        clear_catalog_cache()
+        try:
+            with mock.patch("scoring.app.build_catalog", side_effect=[{"revision": 1}, {"revision": 2}]) as builder:
+                first = cached_catalog()
+                second = cached_catalog()
+                self.assertIs(first, second)
+                self.assertEqual(builder.call_count, 1)
+
+                write_json(self.results_dir / "competition" / "task" / "run.json", {"changed": True})
+                third = cached_catalog()
+                self.assertEqual(third["revision"], 2)
+                self.assertEqual(builder.call_count, 2)
+        finally:
+            clear_catalog_cache()
+
+    def test_build_catalog_reuses_normalized_unchanged_run_logs(self) -> None:
+        self.write_competition("math_2026", title="Math 2026")
+        self.write_run()
+        with mock.patch(
+            "scoring.repository.normalize_run_log",
+            wraps=actual_normalize_run_log,
+        ) as normalize:
+            build_catalog(
+                competitions_dir=self.competitions_dir,
+                logs_dir=self.logs_dir,
+                results_dir=self.results_dir,
+            )
+            build_catalog(
+                competitions_dir=self.competitions_dir,
+                logs_dir=self.logs_dir,
+                results_dir=self.results_dir,
+            )
+            self.assertEqual(normalize.call_count, 1)
+
+            write_json(self.results_dir / "math_2026" / "task_01" / "sidecar.json", {"changed": True})
+            build_catalog(
+                competitions_dir=self.competitions_dir,
+                logs_dir=self.logs_dir,
+                results_dir=self.results_dir,
+            )
+            self.assertEqual(normalize.call_count, 1)
+
+            self.write_run(answer="UPDATED_ANSWER")
+            build_catalog(
+                competitions_dir=self.competitions_dir,
+                logs_dir=self.logs_dir,
+                results_dir=self.results_dir,
+            )
+            self.assertEqual(normalize.call_count, 2)
 
     def test_finalization_auto_extremes_and_manual_disagreement(self) -> None:
         self.write_competition("math_2026", title="Math 2026")
