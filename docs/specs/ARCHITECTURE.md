@@ -105,9 +105,9 @@ Responses requests with `previous_response_id`; Gemini uses
 exhausted budget with no visible output is an adapter error. Other adapters
 receive `--max-tokens` as one provider-specific output/completion ceiling.
 The active benchmark set keeps one flagship per provider, except Anthropic,
-which keeps Fable and Opus. The current site/runner configured set is 8 provider
-groups and 9 active model columns: Claude, DeepSeek, Gemini, GigaChat, Grok,
-GLM, OpenAI and Yandex. Retired IDs may remain documented as legacy versions but do not create
+which keeps Fable and Opus. The current site/runner configured set is 9 provider
+groups and 10 active model columns: Claude, DeepSeek, Gemini, GigaChat, Grok,
+GLM, OpenAI, Yandex and Kimi. Retired IDs may remain documented as legacy versions but do not create
 scoring UI columns from historical logs. Legacy `grok-code-fast-1` results are
 canonicalized into `xai:grok-build-0.1`; they do not create a separate column.
 

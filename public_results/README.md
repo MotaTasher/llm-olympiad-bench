@@ -29,7 +29,7 @@ python3 -m http.server 8080 --directory public_results
 
 Then visit <http://127.0.0.1:8080>.
 
-The generated view includes all 9 configured model rows for qualifying and
+The generated view includes all 10 configured model rows for qualifying and
 final. A cell prefers a successful attempt with an effective organizer
 finalization, then a reviewed attempt, then the newest successful attempt.
 Answers remain clickable before finalization and are explicitly marked as not
