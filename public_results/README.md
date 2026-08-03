@@ -63,20 +63,24 @@ qualifying and final are never rendered together. Only releases present in the
 public `releases` and `catalog` lists are shown; competition placeholders alone
 do not make an unpublished release visible.
 The competition-rules block follows the selected release: qualifying and final
-explain their participant format and the corresponding one-attempt model
-evaluation separately. Shared model-launch rules remain below it.
+explain their participant format, the corresponding one-attempt model
+evaluation and the multi-expert final-verdict process separately. Shared
+model-launch rules remain below it.
 
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. The required Marked,
 DOMPurify and KaTeX browser assets (including fonts and their licenses) are
 versioned under `vendor/`, so rendering does not depend on a third-party CDN.
-A safe plain-text fallback remains in place. Both solution blocks are
-collapsible and open by default.
+A safe plain-text fallback remains in place. The renderer also replaces
+KaTeX's private-use negation overlay when a browser/font combination exposes it
+as a missing-glyph box. Both solution blocks are collapsible and open by
+default, and long prose is centered in a wider reading column.
 
 Every table column is sortable. The initial order is descending by `points`,
 which is the sum of all published absolute task scores, not the count of
 perfect answers. Cost/prize, sum, token and accuracy columns precede the task
 columns. Task scores fill the complete table cell, aggregate values use a
 larger type size, and competition-level costs are displayed to cents. The
-main-page hero uses the supplied CS Space 2026 formula-pattern SVGs directly
+participant column wraps full model, team and member names instead of eliding
+them. The main-page hero uses the supplied CS Space 2026 formula-pattern SVGs directly
 for desktop and mobile layouts; the logo is also served as a local SVG.

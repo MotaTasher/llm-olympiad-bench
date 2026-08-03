@@ -374,9 +374,9 @@ h1, h2, h3 {
   position: sticky;
   left: 54px;
   z-index: 4;
-  width: 240px;
-  min-width: 240px;
-  max-width: 240px;
+  width: 310px;
+  min-width: 310px;
+  max-width: 310px;
   background: var(--surface);
   text-align: left !important;
 }
@@ -408,8 +408,8 @@ h1, h2, h3 {
 }
 
 .participant-cell { padding-left: 18px !important; }
-.participant-name { display: block; overflow: hidden; color: var(--ink); font-family: Unbounded, Arial, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: -.045em; text-overflow: ellipsis; }
-.participant-meta { display: block; overflow: hidden; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 300; text-overflow: ellipsis; }
+.participant-name { display: block; color: var(--ink); font-family: Unbounded, Arial, sans-serif; font-size: 13px; font-weight: 600; line-height: 1.35; letter-spacing: -.045em; overflow-wrap: anywhere; white-space: normal; }
+.participant-meta { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 300; line-height: 1.4; overflow-wrap: anywhere; white-space: normal; }
 
 .task-column,
 .result-cell {
@@ -433,6 +433,7 @@ h1, h2, h3 {
   color: #070609;
   font-size: 14px;
   font-weight: 700;
+  text-align: center;
 }
 
 .result-cell:has(a):hover { box-shadow: inset 0 0 0 2px rgba(255,255,255,.65); }
@@ -443,6 +444,7 @@ h1, h2, h3 {
 .result-cell.score-empty { background: #27262b; }
 .score-empty > span,
 .score-empty > a { color: var(--faint); }
+.result-cell .review-status { min-width: 0; padding: 4px 2px; font-size: 10px; line-height: 1.05; white-space: normal; }
 
 .metric-column,
 .metric-cell {
@@ -608,7 +610,7 @@ h1, h2, h3 {
 }
 
 .task-copy { padding: clamp(32px, 5vw, 66px); }
-.prose { max-width: 88ch; color: rgba(248,248,249,.82); font-size: 16px; line-height: 1.72; }
+.prose { width: 100%; max-width: 1080px; margin-right: auto; margin-left: auto; color: rgba(248,248,249,.82); font-size: clamp(17px, 1.3vw, 19px); line-height: 1.74; }
 .prose p { margin: 0 0 1.35em; }
 .prose > *:last-child { margin-bottom: 0; }
 .prose h1,
@@ -632,6 +634,7 @@ h1, h2, h3 {
 .prose a { color: var(--acid); text-decoration: underline; text-underline-offset: 3px; }
 .prose img { max-width: 100%; height: auto; }
 .prose .katex-display { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 8px 0; }
+.prose .math-negation-slash { display: inline-block; font-family: KaTeX_Main, "Times New Roman", serif; font-style: normal; transform: translate(.02em, -.01em) rotate(-2deg); }
 .prose .preformatted { white-space: pre-wrap; overflow-wrap: anywhere; }
 
 .solution-metrics {
@@ -665,7 +668,7 @@ h1, h2, h3 {
 .reading-solution[open] summary { border-bottom: 1px solid var(--line); }
 .reading-solution summary b { flex: 0 0 auto; font-size: 32px; font-weight: 300; transition: transform .2s ease; }
 .reading-solution[open] summary b { transform: rotate(45deg); }
-.reading-solution .prose { padding: clamp(32px, 5vw, 66px); font-size: 16px; }
+.reading-solution .prose { padding: clamp(32px, 5vw, 66px); }
 
 .site-footer {
   display: flex;
@@ -749,7 +752,7 @@ h1, h2, h3 {
   .section-heading.compact h2 { font-size: 44px; }
   .leaderboard-meta { display: grid; padding: 14px; }
   .matrix-shell, .leaderboard-meta { margin-right: -14px; margin-left: -14px; }
-  .participant-column, .participant-cell { width: 185px; min-width: 185px; max-width: 185px; }
+  .participant-column, .participant-cell { width: 230px; min-width: 230px; max-width: 230px; }
   .participant-name { font-size: 11px; }
   .participant-meta { font-size: 10px; }
   .task-column, .result-cell { width: 55px; min-width: 55px; }
@@ -774,7 +777,7 @@ h1, h2, h3 {
   .solution-layout { padding: 35px 0 100px; }
   .solution-card, .solution-metrics, .reading-solution { border-radius: 24px; }
   .task-copy { padding: 28px 20px; }
-  .prose { font-size: 15px; }
+  .prose { font-size: 16px; }
   .solution-metrics { grid-template-columns: 1fr; padding: 8px 20px; }
   .solution-metrics div,
   .solution-metrics div:first-child,
@@ -785,7 +788,7 @@ h1, h2, h3 {
   }
   .solution-metrics div:last-child { border-bottom: 0; }
   .reading-solution summary { padding: 27px 20px; font-size: 25px; }
-  .reading-solution .prose { padding: 25px 20px; font-size: 15px; }
+  .reading-solution .prose { padding: 25px 20px; }
 
   .site-footer { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 28px 16px; }
   .site-footer img { width: 132px; }
