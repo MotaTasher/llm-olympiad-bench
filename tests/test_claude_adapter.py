@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from models.claude.claude import (
-    ANTHROPIC_CONTINUATION_INPUT,
+    ANTHROPIC_FINAL_ANSWER_INPUT,
     ANTHROPIC_NONSTREAMING_MAX_TOKENS,
     ClaudeModel,
 )
@@ -263,7 +263,12 @@ class ClaudeAdapterTests(unittest.TestCase):
         self.assertTrue(messages.create_called)
         self.assertEqual(messages.calls[1]["messages"][-2]["role"], "assistant")
         self.assertEqual(messages.calls[1]["messages"][-2]["content"][0]["type"], "thinking")
-        self.assertEqual(messages.calls[1]["messages"][-1], {"role": "user", "content": ANTHROPIC_CONTINUATION_INPUT})
+        self.assertEqual(
+            messages.calls[1]["messages"][-1],
+            {"role": "user", "content": ANTHROPIC_FINAL_ANSWER_INPUT},
+        )
+        self.assertIn("reasoning you have already completed", ANTHROPIC_FINAL_ANSWER_INPUT)
+        self.assertIn("complete final solution", ANTHROPIC_FINAL_ANSWER_INPUT)
         self.assertEqual(result.raw_response["multi_request"]["requests"], 2)
         self.assertTrue(result.raw_response["multi_request"]["stopped_after_visible_output"])
 

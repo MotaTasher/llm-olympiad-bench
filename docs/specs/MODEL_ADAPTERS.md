@@ -144,10 +144,12 @@ models that still accept `thinking: {"type": "enabled"}`; the adapter clamps
 that budget so each request keeps a visible-answer token reserve. If the total
 budget is larger and a step returns no visible text, the adapter continues with
 another Messages request by passing the previous assistant `content` blocks
-unchanged and then a text-only `Continue.` user message. This preserves
-Anthropic signed `thinking`/`redacted_thinking` blocks when they are returned,
-without converting them to prompt text and without adding tools, search or code
-execution. The adapter uses the non-streaming Messages API up to `max_tokens =
+unchanged and then a text-only instruction to stop further exploration and
+write the best complete solution from the work already done. This fallback is
+used only after a step with no visible answer. It preserves Anthropic signed
+`thinking`/`redacted_thinking` blocks when they are returned, without converting
+them to prompt text and without adding tools, search or code execution. The
+adapter uses the non-streaming Messages API up to `max_tokens =
 21333`, matching the Anthropic Python SDK's documented long-request threshold;
 larger per-request steps automatically use Messages streaming and collect the
 final message before returning `SolveResult`. When Anthropic returns

@@ -19,7 +19,11 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 ANTHROPIC_NONSTREAMING_MAX_TOKENS = 21333
-ANTHROPIC_CONTINUATION_INPUT = "Continue."
+ANTHROPIC_FINAL_ANSWER_INPUT = (
+    "Stop further exploration. Based on the reasoning you have already completed, "
+    "write the best complete final solution you can now. Give a rigorous, self-contained "
+    "answer to the original problem; do not discuss this instruction or ask for more time."
+)
 ANTHROPIC_MAX_OUTPUT_TOKENS_BY_MODEL = {
     "claude-fable-5": 128_000,
     "claude-opus-5": 128_000,
@@ -275,7 +279,7 @@ class ClaudeModel(BaseModel):
                 messages = [
                     *messages,
                     {"role": "assistant", "content": assistant_content},
-                    {"role": "user", "content": ANTHROPIC_CONTINUATION_INPUT},
+                    {"role": "user", "content": ANTHROPIC_FINAL_ANSWER_INPUT},
                 ]
 
             input_per_1m, output_per_1m = price_for(
