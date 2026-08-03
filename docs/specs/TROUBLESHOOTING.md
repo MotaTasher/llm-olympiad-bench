@@ -14,6 +14,7 @@ Start from the first missing or incorrect persisted artifact, not from the UI sy
 | GLM/Gemini has visible text but the solution is cut off | adapter stopped on text despite `length`/`incomplete` | `finish_reason`, `raw_response.multi_request`, answer tail | continue the preserved provider conversation and join visible fragments; a budget-exhausted incomplete result must remain an error |
 | all adapters fail similarly | shared environment or prompt/request logic | `runner.load_env`, `models/common.py` | env precedence, forbidden request keys, dependency versions |
 | run file exists but is absent from site | log discovery/metadata | `scoring/repository.py`, JSON file | valid JSON, canonical IDs, legacy group |
+| every admin page takes several seconds | catalog rebuilt or run cache missed | `scoring/app.py`, `scoring/repository.py` | compare cold/warm catalog time; unchanged logs should use path+mtime+size normalization cache |
 | canonical task absent from site | problem data loading | `data/competitions/`, diagnostics panel | valid `competition.json`, problem id matches filename |
 | score form returns an error | route input or run/result lookup | `POST /score`, `find_attempt` | IDs, `result_id`, score range |
 | score appears then disappears | sidecar path/write/sync issue | `data/results/`, `save_result_sidecar` | write permissions, matching IDs, remote pull overwrite |

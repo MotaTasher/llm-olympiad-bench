@@ -6,6 +6,7 @@ import json
 import math
 import re
 import statistics
+import threading
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
@@ -145,6 +146,9 @@ MONTH_NAMES = {
     "december": 12,
 }
 
+_NORMALIZED_RUN_CACHE: dict[tuple[str, str], tuple[tuple[int, int], dict[str, Any]]] = {}
+_NORMALIZED_RUN_CACHE_LOCK = threading.RLock()
+
 
 def utc_now() -> str:
     return datetime.now(UTC).isoformat().replace("+00:00", "Z")
@@ -183,6 +187,47 @@ def iter_log_paths(logs_dir: Path) -> list[Path]:
             continue
         paths.append(path)
     return sorted(paths)
+
+
+def normalized_run_for_path(
+    path: Path,
+    *,
+    logs_dir: Path,
+    warnings: list[str],
+) -> dict[str, Any] | None:
+    try:
+        stat = path.stat()
+    except OSError as exc:
+        warnings.append(f"{path}: не удалось прочитать метаданные: {exc}")
+        return None
+    root_key = str(logs_dir.resolve())
+    path_key = str(path.resolve())
+    signature = (stat.st_mtime_ns, stat.st_size)
+    cache_key = (root_key, path_key)
+    with _NORMALIZED_RUN_CACHE_LOCK:
+        cached = _NORMALIZED_RUN_CACHE.get(cache_key)
+        if cached and cached[0] == signature:
+            return cached[1]
+    data = load_json(path, warnings)
+    if not data:
+        return None
+    run = normalize_run_log(data, path, logs_dir)
+    with _NORMALIZED_RUN_CACHE_LOCK:
+        _NORMALIZED_RUN_CACHE[cache_key] = (signature, run)
+    return run
+
+
+def prune_normalized_run_cache(logs_dir: Path, active_paths: list[Path]) -> None:
+    root_key = str(logs_dir.resolve())
+    active = {str(path.resolve()) for path in active_paths}
+    with _NORMALIZED_RUN_CACHE_LOCK:
+        stale = [
+            cache_key
+            for cache_key in _NORMALIZED_RUN_CACHE
+            if cache_key[0] == root_key and cache_key[1] not in active
+        ]
+        for cache_key in stale:
+            _NORMALIZED_RUN_CACHE.pop(cache_key, None)
 
 
 def positive_finite_number(value: Any) -> float | None:
@@ -1070,11 +1115,12 @@ def build_catalog(
     warnings: list[str] = []
     competitions = canonical_competitions(competitions_dir, warnings)
     sidecars = read_sidecars(results_dir, warnings)
-    for path in iter_log_paths(logs_dir):
-        data = load_json(path, warnings)
-        if not data:
+    log_paths = iter_log_paths(logs_dir)
+    prune_normalized_run_cache(logs_dir, log_paths)
+    for path in log_paths:
+        run = normalized_run_for_path(path, logs_dir=logs_dir, warnings=warnings)
+        if not run:
             continue
-        run = normalize_run_log(data, path, logs_dir)
         attach_run(competitions, sidecars, run)
     return finalize_catalog(competitions, warnings)
 
@@ -1424,7 +1470,7 @@ def finalization_statistics(competition: dict[str, Any]) -> dict[str, Any]:
             else:
                 counts["unfinalized"] += 1
                 if review_status == "one_review":
-                    text, css_class, label = "1", "cell-final-one", "Не финализировано: только одна проверка"
+                    text, css_class, label = "!", "cell-final-one", "Не финализировано: только одна проверка"
                     counts["one_review"] += 1
                 elif review_status == "disagreement":
                     text, css_class, label = "≠", "cell-final-disagreement", "Не финализировано: оценки расходятся"

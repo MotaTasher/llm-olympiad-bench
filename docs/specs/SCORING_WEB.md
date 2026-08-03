@@ -79,6 +79,15 @@ Canonical competitions and problems are loaded first, so a task is visible even 
 
 Invalid JSON is collected as a diagnostic warning instead of crashing the whole site. The original log objects are not mutated while merging sidecar evaluations.
 
+The Flask process caches the completed global catalog while the JSON source
+signature is unchanged. The signature includes relative path, nanosecond mtime
+and size for competition, log and sidecar JSON files, so atomic runner/score
+writes invalidate it on the next request. Normalized run logs have a separate
+per-file cache keyed by path, mtime and size. Consequently, changing one score
+rebuilds the catalog from the new sidecar without repeatedly normalizing every
+large unchanged provider response. Reviewer-scoped views deep-copy the cached
+global catalog before filtering and therefore cannot mutate the shared value.
+
 ## Routes
 
 | Method/path | Behavior |
@@ -129,7 +138,7 @@ The separate `Итоговые баллы` matrix is global rather than reviewer
 selects a successful result for each model/task, preferring an already finalized
 result, then a reviewed result, then the newest successful result. Two or more
 checks automatically finalize only unanimous extremes: all zero or all maximum.
-One check is marked `1`, disagreement is marked `≠`, and a consistent partial
+One check is marked `!`, disagreement is marked `≠`, and a consistent partial
 score is marked `✎`. Any reviewer may save the single shared manual final score.
 One check is sufficient but keeps a warning; partial and disputed decisions
 require an organizer comment. The latest editor and edit time are persisted.
