@@ -139,6 +139,36 @@ class PublicResultsExportTests(unittest.TestCase):
         self.assertEqual(document["result"]["tokens"], 30)
         self.assertEqual(document["task"]["maxScore"], 2)
 
+    def test_unfinalized_solution_is_shown_as_under_review(self) -> None:
+        document = solution_document(
+            competition={
+                "competition_id": "cup",
+                "competition_title": "Cup",
+                "metadata": {"stage": "Final"},
+            },
+            problem={
+                "problem_id": "task",
+                "problem_title": "Task",
+                "statement": "Statement",
+                "solution": "Official solution",
+                "max_score": 2,
+            },
+            column={
+                "model_key": "anthropic:test",
+                "model_id": "test",
+                "short_label": "Test",
+                "provider": "anthropic",
+                "provider_label": "Anthropic",
+            },
+            attempt={
+                "model_key": "anthropic:test",
+                "result_id": "res_under_review",
+                "result": {"answer": "Model answer"},
+            },
+            score=None,
+        )
+        self.assertEqual(document["result"]["verdict"], "На проверке")
+
     def test_total_tokens_uses_structured_usage_first(self) -> None:
         self.assertEqual(
             total_tokens(

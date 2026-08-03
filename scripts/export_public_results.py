@@ -247,7 +247,7 @@ def solution_document(
             "answer": result.get("answer") or "",
             "score": score,
             "verdict": (
-                "Не финализировано"
+                "На проверке"
                 if score is None
                 else "Полное решение"
                 if score >= max_score

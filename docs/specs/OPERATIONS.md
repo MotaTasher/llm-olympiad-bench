@@ -63,7 +63,7 @@ policy is:
 The public score is the effective shared finalization: a persisted organizer
 decision or the derived unanimous two-review extreme. Individual checks and
 their median are never published as the result. Cells without an effective
-finalization are explicitly shown as not finalized.
+finalization are explicitly shown as `На проверке`.
 Math Cup 2026 qualifying uses the integer `0..4` scale and half-up rounding;
 the final keeps its existing `0..2` scale. Run logs and sidecars remain
 unchanged during export. The public documents omit
@@ -74,7 +74,10 @@ The exporter also copies selected competition assets into
 `generated/assets/<competition_id>/` and rewrites local `assets/...` references
 in statements and official solutions to those public files. Plain HTTP(S) links
 in published Markdown are normalized to clickable links. The public HTML pages
-use the local CS Space SVG as their favicon.
+use the local CS Space SVG as their favicon. Public solution rendering keeps
+model logs immutable, works around a missing KaTeX private-use negation glyph
+in the browser, and centers long prose in a wider reading column. Leaderboard
+participant and member names wrap without truncation.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the
 selected release; generated model data continues to overlay only the result
