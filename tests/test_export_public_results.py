@@ -29,7 +29,7 @@ class PublicResultsExportTests(unittest.TestCase):
             rendered,
         )
 
-    def test_prefers_newest_reviewed_success_over_newer_unreviewed_success(self) -> None:
+    def test_prefers_finalized_success_over_reviewed_and_unreviewed_success(self) -> None:
         newest_unreviewed = {
             "successful_answer": True,
             "evaluations": [],
@@ -40,6 +40,12 @@ class PublicResultsExportTests(unittest.TestCase):
             "evaluations": [{"score": 2, "max_score": 2}],
             "result": {"answer": "reviewed"},
         }
+        finalized = {
+            "successful_answer": True,
+            "evaluations": [{"score": 1, "max_score": 2}],
+            "finalization": {"score": 2, "max_score": 2},
+            "result": {"answer": "finalized"},
+        }
         failed = {
             "successful_answer": False,
             "evaluations": [{"score": 2, "max_score": 2}],
@@ -47,10 +53,10 @@ class PublicResultsExportTests(unittest.TestCase):
         }
 
         selected = select_public_attempt(
-            {"attempts": [newest_unreviewed, reviewed, failed]},
+            {"attempts": [newest_unreviewed, reviewed, finalized, failed]},
         )
 
-        self.assertIs(selected, reviewed)
+        self.assertIs(selected, finalized)
 
     def test_falls_back_to_newest_success_when_no_review_exists(self) -> None:
         newest = {
@@ -65,16 +71,18 @@ class PublicResultsExportTests(unittest.TestCase):
         }
         self.assertIs(select_public_attempt({"attempts": [newest, older]}), newest)
 
-    def test_public_score_is_median_on_current_absolute_scale(self) -> None:
+    def test_public_score_uses_only_effective_finalization(self) -> None:
         attempt = {
             "evaluations": [
                 {"score": 1, "max_score": 2},
                 {"score": 2, "max_score": 2},
                 {"score": 3, "max_score": 4},
-            ]
+            ],
+            "finalization": {"score": 1, "max_score": 2},
         }
-        self.assertEqual(public_score(attempt, 2), 1.5)
-        self.assertEqual(public_score(attempt, 2, round_to_integer=True), 2)
+        self.assertEqual(public_score(attempt, 2), 1)
+        self.assertEqual(public_score(attempt, 2, round_to_integer=True), 1)
+        self.assertIsNone(public_score({"evaluations": attempt["evaluations"]}, 2))
 
     def test_solution_document_excludes_private_review_fields(self) -> None:
         attempt = {

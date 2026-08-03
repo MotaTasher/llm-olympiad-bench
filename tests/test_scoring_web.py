@@ -997,7 +997,9 @@ class ScoringWebTests(unittest.TestCase):
             "/competition/math_2026/problem/task_01/anonymous?seed=fixed&n=1"
         ).get_data(as_text=True)
         for html in (problem_html, anonymous_html):
-            self.assertIn("Мои проверки", html)
+            self.assertIn("Моя проверка", html)
+            self.assertIn('value="7"', html)
+            self.assertIn('<textarea name="feedback">mine-visible-feedback</textarea>', html)
             self.assertIn("mine-visible-feedback", html)
             self.assertIn("проверок: 1", html)
             self.assertNotIn("other-hidden-feedback", html)
@@ -1040,10 +1042,10 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(parser.nav_row_count, 0)
         self.assertEqual(parser.onclick_count, 0)
         links = parser.navs[0]["links"]
-        self.assertEqual([link["text"] for link in links], ["Меню соревнования", "Статистика моделей", "Все проверки"])
+        self.assertEqual([link["text"] for link in links], ["Меню соревнования", "Статистика моделей", "Все проверки", "Итоговые баллы"])
         self.assertEqual(
             [link["attrs"].get("href") for link in links],
-            ["/competition/math_2026", "/competition/math_2026/stats", "/competition/math_2026/checks"],
+            ["/competition/math_2026", "/competition/math_2026/stats", "/competition/math_2026/checks", "/competition/math_2026/finalization"],
         )
         active = [link for link in links if link["attrs"].get("aria-current") == "page"]
         self.assertEqual(len(active), 1)
@@ -1056,6 +1058,7 @@ class ScoringWebTests(unittest.TestCase):
             ("/competition/math_2026", "Меню соревнования"),
             ("/competition/math_2026/stats", "Статистика моделей"),
             ("/competition/math_2026/checks", "Все проверки"),
+            ("/competition/math_2026/finalization", "Итоговые баллы"),
         ]
         for path, active_label in routes:
             with self.subTest(path=path):
@@ -1173,6 +1176,119 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(ok.status_code, 302)
         payload = json.loads(sidecar_path.read_text(encoding="utf-8"))
         self.assertEqual(payload["evaluation_pool"]["res_a"][0]["evaluator"], self.username)
+
+    def test_repeated_score_updates_single_evaluation_for_reviewer_and_result(self) -> None:
+        self.write_competition("math_2026", title="Math 2026")
+        self.write_run()
+        form = {
+            "competition_id": "math_2026",
+            "problem_id": "task_01",
+            "run_id": "run_active",
+            "result_id": "res_a",
+            "model_key": "openai:gpt-5.6-sol",
+        }
+        for score, feedback in (("4", "first"), ("8", "updated")):
+            response = self.authorized_post(
+                "/score",
+                {**form, "score": score, "feedback": feedback},
+                token_path="/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol",
+            )
+            self.assertEqual(response.status_code, 302)
+        payload = json.loads(
+            (self.results_dir / "math_2026" / "task_01" / "run_active.json").read_text(encoding="utf-8")
+        )
+        evaluations = payload["evaluation_pool"]["res_a"]
+        self.assertEqual(len(evaluations), 1)
+        self.assertEqual(evaluations[0]["score"], 8)
+        self.assertEqual(evaluations[0]["feedback"], "updated")
+
+        html = self.client.get(
+            "/competition/math_2026/problem/task_01?model=openai:gpt-5.6-sol"
+        ).get_data(as_text=True)
+        self.assertIn('value="8"', html)
+        self.assertIn('<textarea name="feedback">updated</textarea>', html)
+
+    def test_finalization_auto_extremes_and_manual_disagreement(self) -> None:
+        self.write_competition("math_2026", title="Math 2026")
+        self.write_run()
+        sidecar = self.results_dir / "math_2026" / "task_01" / "run_active.json"
+        evaluations = []
+        for index, score in enumerate((10, 10), start=1):
+            evaluations.append(
+                {
+                    "evaluation_id": f"ev_{index}",
+                    "result_id": "res_a",
+                    "result_index": 0,
+                    "model_key": "openai:gpt-5.6-sol",
+                    "model": "gpt-5.6-sol",
+                    "evaluator": f"reviewer-{index}",
+                    "score": score,
+                    "max_score": 10,
+                    "feedback": "",
+                    "created_at": f"2026-06-20T00:00:0{index}Z",
+                    "updated_at": f"2026-06-20T00:00:0{index}Z",
+                }
+            )
+        write_json(
+            sidecar,
+            {
+                "schema_version": 2,
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "evaluation_pool": {"res_a": evaluations},
+            },
+        )
+        matrix = self.client.get("/competition/math_2026/finalization").get_data(as_text=True)
+        self.assertIn("Финализировано: 1", matrix)
+        detail_path = "/competition/math_2026/finalization/task_01/res_a"
+        detail = self.client.get(detail_path).get_data(as_text=True)
+        self.assertIn("Текущий итог: 10 / 10", detail)
+        self.assertIn("автоматически", detail)
+
+        evaluations[1]["score"] = 0
+        write_json(
+            sidecar,
+            {
+                "schema_version": 2,
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "evaluation_pool": {"res_a": evaluations},
+            },
+        )
+        rejected = self.authorized_post(
+            "/finalization",
+            {
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "result_id": "res_a",
+                "score": "5",
+                "feedback": "",
+            },
+            token_path=detail_path,
+        )
+        self.assertEqual(rejected.status_code, 302)
+        self.assertNotIn("finalizations", json.loads(sidecar.read_text(encoding="utf-8")))
+
+        accepted = self.authorized_post(
+            "/finalization",
+            {
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "result_id": "res_a",
+                "score": "5",
+                "feedback": "Решение организаторов",
+            },
+            token_path=detail_path,
+        )
+        self.assertEqual(accepted.status_code, 302)
+        final = json.loads(sidecar.read_text(encoding="utf-8"))["finalizations"]["res_a"]
+        self.assertEqual(final["score"], 5)
+        self.assertEqual(final["feedback"], "Решение организаторов")
+        self.assertEqual(final["updated_by"], self.username)
 
     def test_model_tabs_are_compact_and_stably_grouped_by_review_status(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

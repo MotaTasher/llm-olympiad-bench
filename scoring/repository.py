@@ -461,6 +461,8 @@ def read_sidecars(results_dir: Path, warnings: list[str]) -> dict[tuple[str, str
         data["evaluations"] = evaluations
         pool = data.get("evaluation_pool")
         data["evaluation_pool"] = pool if isinstance(pool, dict) else {}
+        finalizations = data.get("finalizations")
+        data["finalizations"] = finalizations if isinstance(finalizations, dict) else {}
         sidecars[(competition_id, problem_id, run_id)] = data
     return sidecars
 
@@ -554,7 +556,89 @@ def evaluation_pool_for_result(result: dict[str, Any], sidecar: dict[str, Any] |
                 source="run_log_legacy",
             )
         )
-    return sorted(entries, key=lambda item: item.get("updated_at") or item.get("created_at") or "")
+    return deduplicate_evaluations(entries)
+
+
+def evaluation_timestamp(entry: dict[str, Any]) -> str:
+    return str(entry.get("updated_at") or entry.get("created_at") or "")
+
+
+def deduplicate_evaluations(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep only the newest evaluation for each named reviewer."""
+    newest: dict[str, dict[str, Any]] = {}
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            continue
+        evaluator = str(entry.get("evaluator") or "").strip()
+        key = f"reviewer:{evaluator}" if evaluator else f"anonymous:{entry.get('evaluation_id') or index}"
+        current = newest.get(key)
+        if current is None or evaluation_timestamp(entry) >= evaluation_timestamp(current):
+            newest[key] = entry
+    return sorted(newest.values(), key=evaluation_timestamp)
+
+
+def manual_finalization_for_result(
+    result: dict[str, Any], sidecar: dict[str, Any] | None
+) -> dict[str, Any] | None:
+    result_id = str(result.get("result_id") or "")
+    result_index = str(result.get("result_index"))
+    values = sidecar.get("finalizations") if isinstance(sidecar, dict) else None
+    if not isinstance(values, dict):
+        return None
+    value = values.get(result_id)
+    if not isinstance(value, dict):
+        value = values.get(result_index)
+    return {**value, "source": "manual"} if isinstance(value, dict) else None
+
+
+def finalization_state(
+    evaluations: list[dict[str, Any]],
+    max_score: float,
+    manual: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    scores = [score for item in evaluations if (score := parse_score(item.get("score"))) is not None]
+    count = len(scores)
+    distinct = {round(score, 9) for score in scores}
+    warning = "one_review" if count == 1 else None
+    automatic_score = None
+    if count >= 2:
+        if all(math.isclose(score, 0.0, abs_tol=1e-9) for score in scores):
+            automatic_score = 0.0
+        elif all(math.isclose(score, max_score, rel_tol=1e-9, abs_tol=1e-9) for score in scores):
+            automatic_score = max_score
+
+    if manual is not None and parse_score(manual.get("score")) is not None:
+        finalization = {**manual, "source": "manual"}
+    elif automatic_score is not None:
+        finalization = {
+            "score": automatic_score,
+            "max_score": max_score,
+            "score_category": score_category(automatic_score, max_score),
+            "feedback": "",
+            "source": "automatic",
+        }
+    else:
+        finalization = None
+
+    if count == 0:
+        review_status = "no_reviews"
+    elif count == 1:
+        review_status = "one_review"
+    elif len(distinct) > 1:
+        review_status = "disagreement"
+    elif score_category(scores[0], max_score) == "partial":
+        review_status = "partial"
+    else:
+        review_status = "consensus"
+    return {
+        "finalization": finalization,
+        "finalized": finalization is not None,
+        "review_status": review_status,
+        "warning": warning,
+        "evaluation_count": count,
+        "scores": scores,
+        "comment_required": review_status in {"disagreement", "partial"},
+    }
 
 
 def evaluation_for_result(result: dict[str, Any], sidecar: dict[str, Any] | None) -> dict[str, Any] | None:
@@ -576,11 +660,14 @@ def run_attempt(
     run: dict[str, Any],
     result: dict[str, Any],
     evaluation: dict[str, Any] | None,
+    manual_finalization: dict[str, Any] | None,
     max_score: float,
 ) -> dict[str, Any]:
     provider = canonical_provider(result.get("provider"), str(result.get("model") or ""))
     requested_model = result.get("requested_model_id") or result.get("model") or "unknown"
     key = canonical_model_key(str(provider), str(requested_model))
+    evaluations = evaluation.get("evaluation_pool", []) if evaluation else []
+    final_state = finalization_state(evaluations, max_score, manual_finalization)
     return {
         "model_key": key,
         "provider": provider,
@@ -592,10 +679,11 @@ def run_attempt(
         "result_id": result.get("result_id"),
         "result_index": result.get("result_index"),
         "evaluation": evaluation,
-        "evaluations": evaluation.get("evaluation_pool", []) if evaluation else [],
+        "evaluations": evaluations,
         "evaluation_count": evaluation.get("evaluation_count", 0) if evaluation else 0,
         "score": evaluation.get("score") if evaluation else None,
         "score_category": score_category(evaluation.get("score") if evaluation else None, max_score),
+        **final_state,
         "successful_answer": is_successful_answer(result),
         "error": result.get("error"),
         "sort_key": timestamp_key(result.get("completed_at") or run.get("completed_at") or run.get("timestamp")),
@@ -834,6 +922,7 @@ def attach_run(
             run=run,
             result=result,
             evaluation=evaluation,
+            manual_finalization=manual_finalization_for_result(result, sidecar),
             max_score=float(problem["max_score"]),
         )
         problem["attempts_by_model"].setdefault(attempt["model_key"], []).append(attempt)
@@ -1292,6 +1381,68 @@ def checks_statistics(competition: dict[str, Any], rows: list[dict[str, Any]]) -
     }
 
 
+def selected_finalization_attempt(state: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not state:
+        return None
+    successful = [attempt for attempt in state.get("attempts", []) if attempt.get("successful_answer")]
+    return next(
+        (attempt for attempt in successful if attempt.get("finalized")),
+        next(
+            (attempt for attempt in successful if attempt.get("evaluation_count")),
+            successful[0] if successful else None,
+        ),
+    )
+
+
+def finalization_statistics(competition: dict[str, Any]) -> dict[str, Any]:
+    tasks = []
+    counts = {"finalized": 0, "unfinalized": 0, "one_review": 0, "disagreement": 0}
+    for problem_id in competition.get("problem_order", []):
+        problem = competition["problems"][problem_id]
+        states = {state.get("model_key"): state for state in problem.get("model_states", [])}
+        cells = {}
+        for model in competition.get("model_columns", []):
+            attempt = selected_finalization_attempt(states.get(model["model_key"]))
+            if not attempt:
+                cells[model["model_key"]] = {
+                    "attempt": None,
+                    "text": "",
+                    "css_class": "cell-not-run",
+                    "aria_label": "Модель не запускалась или не дала успешного ответа",
+                }
+                continue
+            finalization = attempt.get("finalization")
+            review_status = attempt.get("review_status") or "no_reviews"
+            if finalization:
+                value = parse_score(finalization.get("score"))
+                category = score_category(value, float(problem["max_score"])) or "partial"
+                text = format_score_value(value)
+                css_class = SCORE_CLASS_BY_CATEGORY[category]
+                source = "автоматически" if finalization.get("source") == "automatic" else "вручную"
+                label = f"Финализировано {source}: {text} из {format_score_value(problem['max_score'])}"
+                counts["finalized"] += 1
+            else:
+                counts["unfinalized"] += 1
+                if review_status == "one_review":
+                    text, css_class, label = "1", "cell-final-one", "Не финализировано: только одна проверка"
+                    counts["one_review"] += 1
+                elif review_status == "disagreement":
+                    text, css_class, label = "≠", "cell-final-disagreement", "Не финализировано: оценки расходятся"
+                    counts["disagreement"] += 1
+                elif review_status == "partial":
+                    text, css_class, label = "✎", "cell-final-comment", "Не финализировано: частичный балл требует комментария"
+                else:
+                    text, css_class, label = "?", "cell-unscored", "Не финализировано: нет проверок"
+            cells[model["model_key"]] = {
+                "attempt": attempt,
+                "text": text,
+                "css_class": css_class,
+                "aria_label": f"{problem['problem_title']}; {model['label']}; {label}",
+            }
+        tasks.append({"problem": problem, "cells": cells})
+    return {"tasks": tasks, **counts}
+
+
 def neighbor_problem_ids(competition: dict[str, Any], problem_id: str) -> tuple[str | None, str | None]:
     order = competition.get("problem_order") or []
     if problem_id not in order:
@@ -1334,6 +1485,8 @@ def load_sidecar_payload(results_dir: Path, competition_id: str, problem_id: str
     if not isinstance(pool, dict):
         pool = {}
     payload["evaluation_pool"] = pool
+    finalizations = payload.get("finalizations")
+    payload["finalizations"] = finalizations if isinstance(finalizations, dict) else {}
     return payload
 
 
@@ -1391,8 +1544,19 @@ def save_evaluation(
     pool = payload.setdefault("evaluation_pool", {})
     updated_at = utc_now()
     evaluator_value = (evaluator or "").strip()
+    values = pool.setdefault(result_id, [])
+    if not isinstance(values, list):
+        values = []
+    existing = max(
+        (
+            item for item in values
+            if isinstance(item, dict) and str(item.get("evaluator") or "").strip() == evaluator_value
+        ),
+        key=evaluation_timestamp,
+        default=None,
+    )
     entry = {
-        "evaluation_id": f"ev_{uuid.uuid4().hex}",
+        "evaluation_id": str(existing.get("evaluation_id")) if existing else f"ev_{uuid.uuid4().hex}",
         "result_id": result_id,
         "result_index": result_index,
         "model_key": model_key_value,
@@ -1402,14 +1566,15 @@ def save_evaluation(
         "max_score": max_score,
         "score_category": score_category(score, max_score),
         "feedback": feedback or "",
-        "created_at": updated_at,
+        "created_at": (existing.get("created_at") or updated_at) if existing else updated_at,
         "updated_at": updated_at,
     }
-    values = pool.setdefault(result_id, [])
-    if not isinstance(values, list):
-        values = []
-        pool[result_id] = values
+    values = [
+        item for item in values
+        if not (isinstance(item, dict) and str(item.get("evaluator") or "").strip() == evaluator_value)
+    ]
     values.append(entry)
+    pool[result_id] = deduplicate_evaluations(values)
     sync_latest_evaluation_snapshot(payload, result_id)
     stamp_sidecar(
         payload,
@@ -1499,14 +1664,18 @@ def upsert_imported_evaluation(
     if not isinstance(values, list):
         values = []
         pool[result_id] = values
-    replaced = False
-    for index, item in enumerate(values):
-        if isinstance(item, dict) and str(item.get("evaluation_id")) == entry["evaluation_id"]:
-            values[index] = entry
-            replaced = True
-            break
-    if not replaced:
-        values.append(entry)
+    evaluator_value = str(entry.get("evaluator") or "").strip()
+    conflicts = [
+        item for item in values
+        if isinstance(item, dict)
+        and (
+            str(item.get("evaluation_id")) == entry["evaluation_id"]
+            or (evaluator_value and str(item.get("evaluator") or "").strip() == evaluator_value)
+        )
+    ]
+    values = [item for item in values if item not in conflicts]
+    values.append(max([*conflicts, entry], key=evaluation_timestamp))
+    pool[result_id] = deduplicate_evaluations(values)
     sync_latest_evaluation_snapshot(payload, result_id)
     stamp_sidecar(
         payload,
@@ -1516,6 +1685,74 @@ def upsert_imported_evaluation(
         updated_at=now,
     )
     atomic_write_json(path, payload)
+
+
+def save_finalization(
+    *,
+    results_dir: Path,
+    competition_id: str,
+    problem_id: str,
+    run_id: str,
+    result_id: str,
+    result_index: int,
+    model_key_value: str,
+    model: str,
+    score: float | int,
+    max_score: float,
+    feedback: str,
+    updated_by: str,
+) -> dict[str, Any]:
+    path = sidecar_path(results_dir, competition_id, problem_id, run_id)
+    payload = load_sidecar_payload(results_dir, competition_id, problem_id, run_id)
+    finalizations = payload.setdefault("finalizations", {})
+    now = utc_now()
+    existing = finalizations.get(result_id)
+    created_at = existing.get("created_at") if isinstance(existing, dict) else now
+    finalizations[result_id] = {
+        "result_id": result_id,
+        "result_index": result_index,
+        "model_key": model_key_value,
+        "model": model,
+        "score": score,
+        "max_score": max_score,
+        "score_category": score_category(score, max_score),
+        "feedback": feedback.strip(),
+        "updated_by": updated_by.strip(),
+        "created_at": created_at or now,
+        "updated_at": now,
+    }
+    stamp_sidecar(
+        payload,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        updated_at=now,
+    )
+    atomic_write_json(path, payload)
+    return payload
+
+
+def delete_finalization(
+    *, results_dir: Path, competition_id: str, problem_id: str, run_id: str, result_id: str
+) -> bool:
+    path = sidecar_path(results_dir, competition_id, problem_id, run_id)
+    if not path.exists():
+        return False
+    payload = load_sidecar_payload(results_dir, competition_id, problem_id, run_id)
+    finalizations = payload.setdefault("finalizations", {})
+    if result_id not in finalizations:
+        return False
+    del finalizations[result_id]
+    now = utc_now()
+    stamp_sidecar(
+        payload,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        updated_at=now,
+    )
+    atomic_write_json(path, payload)
+    return True
 
 
 def iter_evaluation_rows(

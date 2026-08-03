@@ -90,6 +90,8 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `GET /competition/<competition_id>` | matrix: rows are tasks, columns are models; task title opens anonymous scoring |
 | `GET /competition/<competition_id>/stats?model=<model_key>` | aggregate model statistics across all reviewers, with optional model detail |
 | `GET /competition/<competition_id>/checks` | separate all-checks statistics page; shows all reviewers, aggregate model-task scores and the raw evaluation table |
+| `GET /competition/<competition_id>/finalization` | organizer matrix of effective final scores and unresolved states |
+| `GET /competition/<competition_id>/finalization/<problem_id>/<result_id>` | shared final-score editor with all current individual checks |
 | `GET /competition/<competition_id>/problem/<problem_id>?model=<model_key>&attempt=<result_id>` | task statement, selected model attempt, metrics, score form, attempt switcher |
 | `GET /competition/<competition_id>/problem/<problem_id>/anonymous?seed=<seed>&n=<number>` | anonymous scoring page: one numbered answer at a time, without model/provider labels |
 | `GET /competition/<competition_id>/evaluations.csv?evaluator=<name>` | export evaluation pool for a competition, optionally filtered by reviewer; "my checks" links use `current_user.username` |
@@ -98,18 +100,39 @@ Invalid JSON is collected as a diagnostic warning instead of crashing the whole 
 | `POST /competition/<competition_id>/problem/<problem_id>/evaluations/import` | import evaluation-pool CSV for one task |
 | `GET /competition/<competition_id>/problem/<problem_id>/run/<run_id>` | compatibility redirect to the task page with a model and attempt selected |
 | `GET /run/<run_id>` | legacy lookup and redirect |
-| `POST /score` | validates run/result/score and appends a sidecar evaluation keyed by `result_id` |
+| `POST /score` | validates run/result/score and creates or updates the current reviewer's single evaluation for `result_id` |
 | `POST /score/delete` | deletes one evaluation from a result's evaluation pool |
+| `POST /finalization` | creates or updates the shared manual final score for one result |
+| `POST /finalization/delete` | removes the shared manual final score so automatic rules can apply again |
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
 
-The competition overview, model statistics and all-checks pages share a single
-competition shell. The shell renders the competition title and the three
-server-side navigation links: `Меню соревнования`, `Статистика моделей` and
-`Все проверки`. The active link is marked with `aria-current="page"`. The
+The competition overview, model statistics, all-checks and finalization pages
+share a single competition shell. The shell renders the competition title and
+the four server-side navigation links: `Меню соревнования`,
+`Статистика моделей`, `Все проверки` and `Итоговые баллы`. The active link is
+marked with `aria-current="page"`. The
 navigation is a normal `<nav class="competition-tabs">`; it is not a JavaScript
 tablist, because each section is a separate HTTP page. The same Jinja component
-is reused by `competition.html`, `stats.html` and `checks.html`.
+is reused by `competition.html`, `stats.html`, `checks.html` and
+`finalization.html`.
+
+## Individual and final scores
+
+Each authenticated reviewer has exactly one editable evaluation per concrete
+model result. Reopening that result prefills score and feedback; saving updates
+the same record instead of appending history. Existing duplicate records are
+logically collapsed to the newest one while reading and can be physically
+cleaned with `scripts/deduplicate_evaluations.py`.
+
+The separate `Итоговые баллы` matrix is global rather than reviewer-scoped. It
+selects a successful result for each model/task, preferring an already finalized
+result, then a reviewed result, then the newest successful result. Two or more
+checks automatically finalize only unanimous extremes: all zero or all maximum.
+One check is marked `1`, disagreement is marked `≠`, and a consistent partial
+score is marked `✎`. Any reviewer may save the single shared manual final score.
+One check is sufficient but keeps a warning; partial and disputed decisions
+require an organizer comment. The latest editor and edit time are persisted.
 
 The competition matrix presents active model columns in fixed provider groups:
 `anthropic`, `deepseek`, `google`, `gigachat`, `xai`, `zai`, `openai`,
@@ -329,7 +352,7 @@ The normal task page and anonymous page use a one-column review sequence:
 1. task statement;
 2. closed `<details>` block labeled `Показать эталонное решение`, containing any available `answer` and `solution`;
 3. selected LLM answer;
-4. score form, evaluation pool/history, telemetry, raw JSON and navigation.
+4. score form, the reviewer's current evaluation, telemetry, raw JSON and navigation.
 
 Authenticated reviewers see only their own evaluation entries, score summaries,
 cell statuses and evaluation counts on task pages, anonymous scoring pages and
@@ -386,13 +409,15 @@ such as `12.5`; `score_step` is a UI scale, not a server-side divisibility
 constraint. The `Половина` button is rendered only when `max_score / 2` lies on
 the official range grid.
 
-Each submitted score creates a new evaluation entry with its own
-`evaluation_id`. The latest evaluation is also copied to `evaluations[result_id]`
-for backward compatibility with older exporters. The reviewer identity for new
-evaluations is always `current_user.username`; `/score` does not read or trust
-any `evaluator` value submitted by the browser. Old sidecars with arbitrary
-`evaluator` values remain readable without migration. `/score/delete` only
-deletes evaluations owned by the authenticated reviewer.
+The first submitted score creates an evaluation entry with its own
+`evaluation_id`. Later submissions by the same reviewer for the same result
+update that entry and preserve its ID and creation time. The latest evaluation
+across reviewers is also copied to `evaluations[result_id]` for backward
+compatibility with older exporters. The reviewer identity for new evaluations
+is always `current_user.username`; `/score` does not read or trust any
+`evaluator` value submitted by the browser. Old sidecars with arbitrary
+`evaluator` values remain readable. `/score/delete` only deletes evaluations
+owned by the authenticated reviewer.
 
 ## Competition grouping
 

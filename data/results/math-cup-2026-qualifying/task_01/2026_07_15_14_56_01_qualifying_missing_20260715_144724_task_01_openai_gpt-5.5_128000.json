@@ -32,20 +32,6 @@
         "updated_at": "2026-07-24T20:43:27.920553Z"
       },
       {
-        "evaluation_id": "ev_947b49e8cb844e9db7e9e9925a99de1b",
-        "result_id": "res_9262d4b1c8068fccd0b1c50c",
-        "result_index": 0,
-        "model_key": "openai:gpt-5.5",
-        "model": "gpt-5.5",
-        "evaluator": "mofeyTEA",
-        "score": 0,
-        "max_score": 4,
-        "score_category": "zero",
-        "feedback": "",
-        "created_at": "2026-07-29T14:46:29.926440Z",
-        "updated_at": "2026-07-29T14:46:29.926440Z"
-      },
-      {
         "evaluation_id": "ev_2ea10a6fc55b42d289f8efd6cd6c66e2",
         "result_id": "res_9262d4b1c8068fccd0b1c50c",
         "result_index": 0,
@@ -65,5 +51,5 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_07_15_14_56_01_qualifying_missing_20260715_144724_task_01_openai_gpt-5.5_128000",
-  "updated_at": "2026-07-29T14:46:37.844735Z"
+  "updated_at": "2026-08-03T15:19:20.602285Z"
 }

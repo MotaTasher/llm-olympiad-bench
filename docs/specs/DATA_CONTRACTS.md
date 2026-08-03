@@ -323,14 +323,43 @@ New sidecar shape:
       "created_at": "2026-06-28T12:10:00Z",
       "updated_at": "2026-06-28T12:10:00Z"
     }
+  },
+  "finalizations": {
+    "res_0123456789abcdef01234567": {
+      "result_id": "res_0123456789abcdef01234567",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.5",
+      "model": "provider-model-id",
+      "score": 8,
+      "max_score": 10,
+      "score_category": "partial",
+      "feedback": "Итоговый комментарий организаторов",
+      "updated_by": "organizer",
+      "created_at": "2026-06-28T12:20:00Z",
+      "updated_at": "2026-06-28T12:20:00Z"
+    }
   }
 }
 ```
 
-`evaluation_pool` is authoritative and stores all manual checks for a result. A
-single model answer can have multiple checks from one or more reviewers.
+`evaluation_pool` is authoritative and stores at most one current manual check
+per `(result_id, evaluator)`. Saving again edits that check in place: its
+`evaluation_id` and `created_at` remain stable, while score, feedback and
+`updated_at` change. Different reviewers may each keep one check for the same
+answer. Readers and the deduplication migration retain the newest legacy record
+when one reviewer has duplicate checks for a result.
 `evaluations` is a compatibility snapshot of the latest check for each
 `result_id`; it must not be treated as the full history.
+
+`finalizations` stores an optional shared manual organizer decision per
+`result_id`. Any authenticated reviewer may update it; `updated_by` and
+`updated_at` identify the latest edit. An effective automatic finalization is
+derived at read time and is not persisted when at least two current evaluations
+all equal `0`, or all equal the task maximum. Partial scores and disagreements
+are never auto-finalized. A manual finalization may be made with one evaluation
+but the UI keeps the one-review warning; manual partial or disputed decisions
+require non-empty `feedback`. Public exports use only the effective manual or
+automatic finalization, never a median of individual evaluations.
 
 The evaluation key for new writes is `result_id`. Readers use this precedence:
 
@@ -351,6 +380,13 @@ currently requires `--score-step 1`. Run logs are never modified.
 For new web-scoring writes, `evaluator` is the authenticated
 `current_user.username` from the scoring site session. Older sidecars with any
 string `evaluator` remain valid and readable.
+
+Preview and then remove historical duplicate checks with:
+
+```bash
+python scripts/deduplicate_evaluations.py data/results
+python scripts/deduplicate_evaluations.py data/results --apply
+```
 
 ## Validation
 
