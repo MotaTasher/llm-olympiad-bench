@@ -133,9 +133,11 @@ OpenAI long Responses requests use `OPENAI_TIMEOUT_SECONDS` for the per-request
 HTTP timeout, defaulting to 7200 seconds so 128K reasoning/output calls are not
 cut off by the SDK's shorter default timeout. `OPENAI_MAX_RETRIES` may override
 the SDK retry count when operators want to avoid or allow replaying long calls.
-The Anthropic adapter treats `runner.py --max-tokens` as a total Claude output
-budget. Each Messages request is capped by the provider/model maximum
-(`claude-fable-5` and `claude-opus-5`: 128,000). Both active Claude models use
+The Anthropic adapter treats `runner.py --max-tokens` as Claude's primary
+reasoning/output budget. The provider/model maximum is 128,000 for
+`claude-fable-5` and `claude-opus-5`, while adaptive-thinking requests use a
+64,000-token operational step cap to avoid losing a single hour-long stream.
+Both active Claude models use
 current Anthropic adaptive thinking:
 `thinking: {"type": "adaptive", "display": "summarized"}` plus
 `output_config.effort` (`max` in the committed benchmark runtime config).
@@ -144,11 +146,14 @@ models that still accept `thinking: {"type": "enabled"}`; the adapter clamps
 that budget so each request keeps a visible-answer token reserve. If the total
 budget is larger and a step returns no visible text, the adapter continues with
 another Messages request by passing the previous assistant `content` blocks
-unchanged and then a text-only instruction to stop further exploration and
-write the best complete solution from the work already done. This fallback is
-used only after a step with no visible answer. It preserves Anthropic signed
-`thinking`/`redacted_thinking` blocks when they are returned, without converting
-them to prompt text and without adding tools, search or code execution. The
+unchanged. If the complete primary budget is exhausted with no visible answer,
+it performs one final-answer request with thinking and effort omitted, a
+16,384-token visible-answer cap, and an instruction to write the best complete
+solution from the work already done. This final allowance is outside the
+primary budget and is recorded separately in request telemetry. The preserved
+dialogue keeps Anthropic signed `thinking`/`redacted_thinking` blocks without
+converting them to prompt text and without adding tools, search or code
+execution. The
 adapter uses the non-streaming Messages API up to `max_tokens =
 21333`, matching the Anthropic Python SDK's documented long-request threshold;
 larger per-request steps automatically use Messages streaming and collect the
