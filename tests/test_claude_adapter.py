@@ -6,6 +6,8 @@ import unittest
 from unittest.mock import patch
 
 from models.claude.claude import (
+    ANTHROPIC_DEFAULT_FINAL_ANSWER_MAX_TOKENS,
+    ANTHROPIC_DEFAULT_REASONING_STEP_MAX_TOKENS,
     ANTHROPIC_FINAL_ANSWER_INPUT,
     ANTHROPIC_NONSTREAMING_MAX_TOKENS,
     ClaudeModel,
@@ -109,7 +111,7 @@ class ClaudeAdapterTests(unittest.TestCase):
         self.assertFalse(messages.create_called)
         self.assertTrue(messages.stream_called)
         self.assertTrue(messages.stream_final_called)
-        self.assertEqual(messages.kwargs["max_tokens"], 128000)
+        self.assertEqual(messages.kwargs["max_tokens"], ANTHROPIC_DEFAULT_REASONING_STEP_MAX_TOKENS)
         self.assertEqual(result.answer, "ok")
         self.assertTrue(result.request["stream"])
 
@@ -257,20 +259,108 @@ class ClaudeAdapterTests(unittest.TestCase):
         messages = FakeAnthropicClient.last_messages
         self.assertEqual(result.answer, "ok")
         self.assertEqual(len(messages.calls), 2)
-        self.assertEqual(messages.calls[0]["max_tokens"], 128000)
-        self.assertEqual(messages.calls[1]["max_tokens"], 2000)
+        self.assertEqual(messages.calls[0]["max_tokens"], 64000)
+        self.assertEqual(messages.calls[1]["max_tokens"], 64000)
         self.assertTrue(messages.stream_called)
-        self.assertTrue(messages.create_called)
+        self.assertFalse(messages.create_called)
         self.assertEqual(messages.calls[1]["messages"][-2]["role"], "assistant")
         self.assertEqual(messages.calls[1]["messages"][-2]["content"][0]["type"], "thinking")
         self.assertEqual(
             messages.calls[1]["messages"][-1],
-            {"role": "user", "content": ANTHROPIC_FINAL_ANSWER_INPUT},
+            {
+                "role": "user",
+                "content": "Continue working on the original problem. Preserve the work already completed.",
+            },
         )
         self.assertIn("reasoning you have already completed", ANTHROPIC_FINAL_ANSWER_INPUT)
         self.assertIn("complete final solution", ANTHROPIC_FINAL_ANSWER_INPUT)
         self.assertEqual(result.raw_response["multi_request"]["requests"], 2)
         self.assertTrue(result.raw_response["multi_request"]["stopped_after_visible_output"])
+
+    def test_exhausted_reasoning_gets_separate_no_thinking_final_answer_request(self) -> None:
+        class ThinkingBlock:
+            type = "thinking"
+
+            def model_dump(self):
+                return {"type": "thinking", "thinking": "work", "signature": "sig"}
+
+        class ThinkingOnlyMessage(FakeMessage):
+            stop_reason = "max_tokens"
+            content = [ThinkingBlock()]
+
+        class TextMessage(FakeMessage):
+            stop_reason = "end_turn"
+            content = [FakeBlock()]
+
+        class SequenceStream:
+            def __init__(self, messages, response):
+                self.messages = messages
+                self.response = response
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, traceback):
+                return False
+
+            def get_final_message(self):
+                self.messages.stream_final_called = True
+                return self.response
+
+        class SequenceMessages(FakeMessages):
+            def __init__(self):
+                super().__init__()
+                self.responses = [
+                    ThinkingOnlyMessage(),
+                    ThinkingOnlyMessage(),
+                    ThinkingOnlyMessage(),
+                    ThinkingOnlyMessage(),
+                    TextMessage(),
+                ]
+                self.calls = []
+
+            def create(self, **kwargs):
+                self.create_called = True
+                self.kwargs = kwargs
+                self.calls.append(kwargs)
+                return self.responses.pop(0)
+
+            def stream(self, **kwargs):
+                self.stream_called = True
+                self.kwargs = kwargs
+                self.calls.append(kwargs)
+                return SequenceStream(self, self.responses.pop(0))
+
+        class SequenceAnthropicClient(FakeAnthropicClient):
+            def __init__(self, api_key):
+                self.api_key = api_key
+                self.messages = SequenceMessages()
+                FakeAnthropicClient.last_messages = self.messages
+
+        module = types.SimpleNamespace(Anthropic=SequenceAnthropicClient)
+        with patch.dict(sys.modules, {"anthropic": module}), patch.dict(
+            "os.environ",
+            {
+                "ANTHROPIC_API_KEY": "test",
+                "ANTHROPIC_THINKING_BUDGET_TOKENS": "256000",
+            },
+            clear=False,
+        ):
+            result = ClaudeModel("claude-opus-5").solve("problem", max_tokens=256000)
+
+        calls = FakeAnthropicClient.last_messages.calls
+        self.assertEqual(result.answer, "ok")
+        self.assertEqual(len(calls), 5)
+        self.assertEqual([call["max_tokens"] for call in calls[:4]], [64000] * 4)
+        self.assertTrue(all(call["thinking"]["type"] == "adaptive" for call in calls[:4]))
+        self.assertEqual(calls[4]["max_tokens"], ANTHROPIC_DEFAULT_FINAL_ANSWER_MAX_TOKENS)
+        self.assertTrue(FakeAnthropicClient.last_messages.create_called)
+        self.assertNotIn("thinking", calls[4])
+        self.assertNotIn("output_config", calls[4])
+        self.assertEqual(calls[4]["messages"][-1], {"role": "user", "content": ANTHROPIC_FINAL_ANSWER_INPUT})
+        self.assertEqual(result.request["steps"][-1]["phase"], "final_answer")
+        self.assertTrue(result.raw_response["multi_request"]["finalization_requested"])
+        self.assertEqual(result.raw_response["multi_request"]["reasoning_requests"], 4)
 
     def test_empty_visible_answer_is_error(self) -> None:
         class EmptyBlock:

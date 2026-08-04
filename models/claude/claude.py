@@ -19,6 +19,9 @@ from .versions import DEFAULT as DEFAULT_VERSION
 
 
 ANTHROPIC_NONSTREAMING_MAX_TOKENS = 21333
+ANTHROPIC_REASONING_CONTINUATION_INPUT = (
+    "Continue working on the original problem. Preserve the work already completed."
+)
 ANTHROPIC_FINAL_ANSWER_INPUT = (
     "Stop further exploration. Based on the reasoning you have already completed, "
     "write the best complete final solution you can now. Give a rigorous, self-contained "
@@ -39,6 +42,8 @@ ANTHROPIC_ADAPTIVE_THINKING_MODEL_PREFIXES = (
 ANTHROPIC_DEFAULT_EFFORT = "max"
 ANTHROPIC_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
 ANTHROPIC_DEFAULT_FINAL_TOKEN_RESERVE = 4096
+ANTHROPIC_DEFAULT_REASONING_STEP_MAX_TOKENS = 64_000
+ANTHROPIC_DEFAULT_FINAL_ANSWER_MAX_TOKENS = 16_384
 
 
 def usage_value(usage: Any, *names: str) -> int | None:
@@ -63,6 +68,17 @@ def max_output_tokens_for_model(model_id: str) -> int:
         if model_id == prefix or model_id.startswith(f"{prefix}-"):
             return limit
     return ANTHROPIC_DEFAULT_MAX_OUTPUT_TOKENS
+
+
+def reasoning_step_limit_for_model(model_id: str) -> int:
+    provider_limit = max_output_tokens_for_model(model_id)
+    if not uses_adaptive_thinking(model_id):
+        return provider_limit
+    configured = positive_int_env(
+        "ANTHROPIC_REASONING_STEP_MAX_TOKENS",
+        ANTHROPIC_DEFAULT_REASONING_STEP_MAX_TOKENS,
+    )
+    return min(provider_limit, configured)
 
 
 def uses_adaptive_thinking(model_id: str) -> bool:
@@ -145,7 +161,12 @@ class ClaudeModel(BaseModel):
             else:
                 total_budget = int(env("ANTHROPIC_MAX_TOKENS", "4096") or "4096")
 
-            per_request_limit = max_output_tokens_for_model(self.model_id)
+            provider_request_limit = max_output_tokens_for_model(self.model_id)
+            per_request_limit = reasoning_step_limit_for_model(self.model_id)
+            final_answer_max_tokens = positive_int_env(
+                "ANTHROPIC_FINAL_ANSWER_MAX_TOKENS",
+                ANTHROPIC_DEFAULT_FINAL_ANSWER_MAX_TOKENS,
+            )
             remaining_budget = total_budget
             messages: list[dict[str, Any]] = [{"role": "user", "content": problem}]
             request_payload = {
@@ -154,6 +175,9 @@ class ClaudeModel(BaseModel):
                 "endpoint": sanitized_base_url("https://api.anthropic.com/v1/messages"),
                 "max_output_tokens_total": total_budget,
                 "max_output_tokens_per_request": per_request_limit,
+                "provider_max_output_tokens_per_request": provider_request_limit,
+                "final_answer_max_tokens": final_answer_max_tokens,
+                "final_answer_outside_reasoning_budget": True,
                 "stream": total_budget > ANTHROPIC_NONSTREAMING_MAX_TOKENS,
             }
             if thinking_budget is not None:
@@ -179,16 +203,24 @@ class ClaudeModel(BaseModel):
             cache_creation_input_tokens = 0
             answer = ""
             finish = None
+            finalization_pending = False
+            reasoning_requests = 0
+            finalization_requested = False
 
-            while remaining_budget > 0:
-                step_max_tokens = min(remaining_budget, per_request_limit)
+            while remaining_budget > 0 or finalization_pending:
+                is_finalization = remaining_budget <= 0 and finalization_pending
+                step_max_tokens = (
+                    final_answer_max_tokens
+                    if is_finalization
+                    else min(remaining_budget, per_request_limit)
+                )
                 kwargs: dict[str, Any] = {
                     "model": self.model_id,
                     "max_tokens": step_max_tokens,
                     "system": SYSTEM_PROMPT,
                     "messages": messages,
                 }
-                if budget_tokens > 0:
+                if budget_tokens > 0 and not is_finalization:
                     if uses_adaptive_thinking(self.model_id):
                         kwargs["thinking"] = adaptive_thinking_config()
                         kwargs["output_config"] = {"effort": effort_value()}
@@ -207,8 +239,9 @@ class ClaudeModel(BaseModel):
                     "messages": messages,
                     "endpoint": sanitized_base_url("https://api.anthropic.com/v1/messages"),
                     "stream": use_streaming,
+                    "phase": "final_answer" if is_finalization else "reasoning",
                 }
-                if budget_tokens > 0:
+                if budget_tokens > 0 and not is_finalization:
                     step_request["thinking"] = kwargs["thinking"]
                     if "output_config" in kwargs:
                         step_request["output_config"] = kwargs["output_config"]
@@ -269,18 +302,31 @@ class ClaudeModel(BaseModel):
                         "answer_chars": len(text.strip()),
                     }
                 )
-                remaining_budget -= step_max_tokens
+                if is_finalization:
+                    finalization_pending = False
+                    finalization_requested = True
+                else:
+                    remaining_budget -= step_max_tokens
+                    reasoning_requests += 1
                 if text.strip():
                     answer = text
+                    break
+                if is_finalization:
                     break
                 assistant_content = content_blocks_for_request(getattr(response, "content", None))
                 if not assistant_content:
                     break
+                next_prompt = (
+                    ANTHROPIC_REASONING_CONTINUATION_INPUT
+                    if remaining_budget > 0
+                    else ANTHROPIC_FINAL_ANSWER_INPUT
+                )
                 messages = [
                     *messages,
                     {"role": "assistant", "content": assistant_content},
-                    {"role": "user", "content": ANTHROPIC_FINAL_ANSWER_INPUT},
+                    {"role": "user", "content": next_prompt},
                 ]
+                finalization_pending = remaining_budget <= 0
 
             input_per_1m, output_per_1m = price_for(
                 self.model_id, PRICES_USD_PER_1M, PRICES_USD_PER_1M["claude-opus-4-5"]
@@ -303,6 +349,11 @@ class ClaudeModel(BaseModel):
                     "requests": len(responses),
                     "max_output_tokens_total": total_budget,
                     "max_output_tokens_per_request": per_request_limit,
+                    "provider_max_output_tokens_per_request": provider_request_limit,
+                    "reasoning_requests": reasoning_requests,
+                    "final_answer_max_tokens": final_answer_max_tokens,
+                    "finalization_requested": finalization_requested,
+                    "final_answer_outside_reasoning_budget": True,
                     "stopped_after_visible_output": bool(answer.strip()),
                     "continuation": "assistant_content_blocks",
                 },

@@ -216,6 +216,11 @@ Without an explicit token budget the launcher uses the common 256,000-token
 benchmark budget. An explicit `--max-tokens` overrides that default for every
 selected pair; adapters split larger totals across preserved-state continuation
 requests only when a provider API requires it.
+Claude treats that value as its primary reasoning/output budget. If all of it
+is consumed by thinking without visible text, the adapter preserves the signed
+assistant blocks and makes one separately logged final-answer request of up to
+16,384 tokens with thinking disabled, matching the rule published on the
+results site.
 `--models new` is the narrower operational shortcut for only the seven models
 introduced in the 2026-08-01 snapshot.
 Add `--detach --yes` on the server to start the run in a new session, write
