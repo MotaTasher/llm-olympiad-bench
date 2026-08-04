@@ -128,6 +128,21 @@ def successful_pairs(
     return found
 
 
+def successful_run_payload(payload: dict[str, Any] | None) -> bool:
+    if not payload or payload.get("status") != "completed":
+        return False
+    results = payload.get("results") or []
+    return bool(results) and all(
+        str(result.get("answer") or "").strip() and not result.get("error")
+        for result in results
+    )
+
+
+def emitted_run_path(*, logs_dir: Path, competition: str, problem_id: str, run_id: str) -> Path | None:
+    matches = sorted((logs_dir / competition / problem_id).glob(f"*{run_id}.json"))
+    return matches[-1] if matches else None
+
+
 def build_pairs(args: argparse.Namespace) -> list[Pair]:
     problems = problem_ids(args.problems)
     models = model_specs(args.models)
@@ -218,6 +233,19 @@ async def run_one(
             )
             code = await process.wait()
             elapsed = monotonic() - start
+            emitted_path = emitted_run_path(
+                logs_dir=Path(args.logs_dir),
+                competition=args.competition,
+                problem_id=pair.problem_id,
+                run_id=run_id,
+            )
+            semantic_success = successful_run_payload(json_data(emitted_path)) if emitted_path else False
+            if code == 0 and not semantic_success:
+                code = 2
+                stream.write(
+                    f"MODEL_RESULT_ERROR run_log={emitted_path or 'missing'} "
+                    "(runner process exited cleanly but model result was not successful)\n"
+                )
             stream.write(
                 f"\nDONE {datetime.now(UTC).isoformat()} {args.competition}/{pair.problem_id} "
                 f"{pair.model} cap={pair.max_tokens} exit={code} elapsed_s={elapsed:.1f}\n"
