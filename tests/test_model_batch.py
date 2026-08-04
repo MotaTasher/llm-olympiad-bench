@@ -1,12 +1,42 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from scripts import run_model_batch
 from scripts import run_new_models_math_cup_2026_final
 
 
 class ModelBatchTests(unittest.TestCase):
+    def test_batch_success_requires_completed_nonempty_model_result(self) -> None:
+        self.assertTrue(
+            run_model_batch.successful_run_payload(
+                {"status": "completed", "results": [{"answer": "solution", "error": None}]}
+            )
+        )
+        self.assertFalse(
+            run_model_batch.successful_run_payload(
+                {"status": "failed", "results": [{"answer": "", "error": "provider failed"}]}
+            )
+        )
+
+    def test_emitted_run_path_finds_runner_timestamp_prefix(self) -> None:
+        with TemporaryDirectory() as temporary:
+            task_dir = Path(temporary) / "cup" / "task_01"
+            task_dir.mkdir(parents=True)
+            expected = task_dir / "2026_08_04_00_00_00_group_task_01_model_256000.json"
+            expected.write_text("{}", encoding="utf-8")
+            self.assertEqual(
+                run_model_batch.emitted_run_path(
+                    logs_dir=Path(temporary),
+                    competition="cup",
+                    problem_id="task_01",
+                    run_id="group_task_01_model_256000",
+                ),
+                expected,
+            )
+
     def test_all_and_new_expand_to_curated_active_sets(self) -> None:
         self.assertEqual(
             run_model_batch.model_specs("all"),

@@ -226,6 +226,10 @@ introduced in the 2026-08-01 snapshot.
 Add `--detach --yes` on the server to start the run in a new session, write
 progress to `<output-dir>/launcher.log`, and allow the SSH connection to close
 without stopping child `runner.py` processes.
+The batch launcher does not equate a clean `runner.py` process exit with model
+success: it reads the emitted run JSON and reports failure unless the run is
+completed and every selected result contains a non-empty answer without an
+error.
 
 ## Generated artifacts
 
