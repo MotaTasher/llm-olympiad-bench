@@ -5,31 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#030207">
     <title>Решение — Reasoning Space</title>
-    <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
-    <link rel="stylesheet" href="vendor/katex/katex.min.css">
-    <link rel="stylesheet" href="styles.css?v=11">
-    <script src="vendor/marked/marked.min.js" defer></script>
-    <script src="vendor/dompurify/purify.min.js" defer></script>
-    <script src="vendor/katex/katex.min.js" defer></script>
-    <script src="vendor/katex/contrib/auto-render.min.js" defer></script>
-    <script src="data.js?v=9" defer></script>
-    <script src="generated/data.js?v=7" defer></script>
-    <script src="app.js?v=10" defer></script>
+    <link rel="icon" type="image/svg+xml" href="/assets/csspace-favicon.svg">
+    <link rel="stylesheet" href="/vendor/katex/katex.min.css">
+    <link rel="stylesheet" href="/styles.css?v=14">
+    <script src="/vendor/marked/marked.min.js" defer></script>
+    <script src="/vendor/dompurify/purify.min.js" defer></script>
+    <script src="/vendor/katex/katex.min.js" defer></script>
+    <script src="/vendor/katex/contrib/auto-render.min.js" defer></script>
+    <script src="/data.js?v=10" defer></script>
+    <script src="/generated/data.js?v=8" defer></script>
+    <script src="/app.js?v=12" defer></script>
   </head>
   <body data-page="solution">
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Reasoning Space">
-        <img src="assets/csspace-logo.svg" alt="CS Space">
-        <span>Reasoning Space</span>
-      </a>
+      <div class="brand">
+        <a class="brand-logo" href="https://csspace.io/" aria-label="Официальный сайт CS Space">
+          <img src="/assets/csspace-logo.svg" alt="CS Space">
+        </a>
+        <a class="brand-name" href="/">Reasoning Space</a>
+      </div>
       <nav aria-label="Основная навигация">
-        <a href="index.html">Главная</a>
-        <a href="competitions.html">Задачи</a>
+        <a href="/">Главная</a>
+        <a href="/problems">Задачи</a>
       </nav>
     </header>
 
     <main class="solution-main">
-      <a class="back-link" id="solution-back" href="index.html">← Назад к таблице</a>
+      <a class="back-link" id="solution-back" href="/">← Назад к таблице</a>
 
       <section class="solution-hero">
         <div>
@@ -49,10 +51,24 @@
           <div><dt>Токены</dt><dd id="solution-tokens">—</dd></div>
         </dl>
 
-        <article class="solution-card task-copy">
-          <p class="eyebrow">Условие</p>
+        <details class="reading-solution task-solution">
+          <summary>
+            <span><small>Задача</small>Условие</span>
+            <b aria-hidden="true">+</b>
+          </summary>
           <div class="prose" id="solution-statement"></div>
-        </article>
+        </details>
+
+        <section class="expert-review-section" id="expert-review-section" hidden>
+          <header class="expert-review-heading">
+            <div>
+              <p class="eyebrow">Экспертная проверка</p>
+              <h2>Оценки и комментарии</h2>
+            </div>
+            <p>Комментарии публикуются без имён проверяющих.</p>
+          </header>
+          <div class="expert-review-grid" id="expert-reviews"></div>
+        </section>
 
         <details class="reading-solution model-solution" open>
           <summary>
@@ -76,13 +92,15 @@
     </main>
 
     <footer class="site-footer">
-      <a class="brand footer-brand" href="index.html" aria-label="Reasoning Space">
-        <img src="assets/csspace-logo.svg" alt="CS Space">
-        <span>Reasoning Space</span>
-      </a>
+      <div class="brand footer-brand">
+        <a class="brand-logo" href="https://csspace.io/" aria-label="Официальный сайт CS Space">
+          <img src="/assets/csspace-logo.svg" alt="CS Space">
+        </a>
+        <a class="brand-name" href="/">Reasoning Space</a>
+      </div>
       <nav class="footer-nav" aria-label="Навигация в подвале">
-        <a href="index.html">Главная</a>
-        <a href="competitions.html">Задачи</a>
+        <a href="/">Главная</a>
+        <a href="/problems">Задачи</a>
       </nav>
       <div class="footer-contact">
         <span>Контакты</span>

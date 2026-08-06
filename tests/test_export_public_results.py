@@ -6,7 +6,9 @@ from tempfile import TemporaryDirectory
 
 from scripts.export_public_results import (
     atomic_write_text,
+    public_model_slug,
     public_score,
+    public_task_slug,
     rewrite_public_markdown,
     select_public_attempt,
     solution_document,
@@ -15,6 +17,18 @@ from scripts.export_public_results import (
 
 
 class PublicResultsExportTests(unittest.TestCase):
+    def test_clean_route_slugs_match_public_url_contract(self) -> None:
+        self.assertEqual(public_task_slug("task_01"), "task1")
+        self.assertEqual(public_task_slug("task-12"), "task12")
+        self.assertEqual(
+            public_model_slug({"model_id": "gpt-5.6-sol"}),
+            "gpt-5.6",
+        )
+        self.assertEqual(
+            public_model_slug({"model_id": "Claude Fable 5"}),
+            "claude-fable-5",
+        )
+
     def test_public_markdown_rewrites_assets_and_plain_links(self) -> None:
         rendered = rewrite_public_markdown(
             "![figure](assets/task_09_diagram.png) see `https://arxiv.org/abs/1234`",
@@ -84,7 +98,7 @@ class PublicResultsExportTests(unittest.TestCase):
         self.assertEqual(public_score(attempt, 2, round_to_integer=True), 1)
         self.assertIsNone(public_score({"evaluations": attempt["evaluations"]}, 2))
 
-    def test_solution_document_excludes_private_review_fields(self) -> None:
+    def test_solution_document_publishes_anonymized_expert_reviews(self) -> None:
         attempt = {
             "model_key": "openai:gpt-test",
             "result_id": "res_public",
@@ -98,6 +112,12 @@ class PublicResultsExportTests(unittest.TestCase):
                     "feedback": "private feedback",
                 }
             ],
+            "finalization": {
+                "score": 1,
+                "max_score": 2,
+                "feedback": "organizer feedback",
+                "updated_by": "private organizer",
+            },
             "result": {
                 "answer": "Model answer",
                 "cost_usd": 0.25,
@@ -132,9 +152,16 @@ class PublicResultsExportTests(unittest.TestCase):
         )
         serialized = str(document)
         self.assertNotIn("private reviewer", serialized)
-        self.assertNotIn("private feedback", serialized)
+        self.assertNotIn("private organizer", serialized)
         self.assertNotIn("private-run", serialized)
         self.assertNotIn("raw_response", serialized)
+        self.assertEqual(
+            document["review"],
+            {
+                "final": {"score": 1, "maxScore": 2, "feedback": "organizer feedback"},
+                "experts": [{"score": 1, "maxScore": 2, "feedback": "private feedback"}],
+            },
+        )
         self.assertEqual(document["result"]["answer"], "Model answer")
         self.assertEqual(document["result"]["tokens"], 30)
         self.assertEqual(document["task"]["maxScore"], 2)

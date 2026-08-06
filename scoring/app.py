@@ -997,10 +997,6 @@ def save_final_score():
     if not attempt.get("evaluation_count"):
         flash("Нельзя финализировать ответ без индивидуальной проверки.", "error")
         return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
-    final_is_partial = 0 < value < max_score
-    if (attempt.get("comment_required") or final_is_partial) and not feedback:
-        flash("При частичном балле или расхождении проверок нужен комментарий организаторов.", "error")
-        return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
     score_value: float | int = int(value) if value.is_integer() else value
     save_finalization(
         results_dir=Path(app.config["RESULTS_DIR"]),

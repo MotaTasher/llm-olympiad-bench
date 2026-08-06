@@ -1325,7 +1325,7 @@ class ScoringWebTests(unittest.TestCase):
                 "evaluation_pool": {"res_a": evaluations},
             },
         )
-        rejected = self.authorized_post(
+        accepted_without_comment = self.authorized_post(
             "/finalization",
             {
                 "competition_id": "math_2026",
@@ -1337,8 +1337,10 @@ class ScoringWebTests(unittest.TestCase):
             },
             token_path=detail_path,
         )
-        self.assertEqual(rejected.status_code, 302)
-        self.assertNotIn("finalizations", json.loads(sidecar.read_text(encoding="utf-8")))
+        self.assertEqual(accepted_without_comment.status_code, 302)
+        final = json.loads(sidecar.read_text(encoding="utf-8"))["finalizations"]["res_a"]
+        self.assertEqual(final["score"], 5)
+        self.assertEqual(final["feedback"], "")
 
         accepted = self.authorized_post(
             "/finalization",
@@ -1357,6 +1359,10 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(final["score"], 5)
         self.assertEqual(final["feedback"], "Решение организаторов")
         self.assertEqual(final["updated_by"], self.username)
+
+        detail = self.client.get(detail_path).get_data(as_text=True)
+        self.assertIn("Комментарий организаторов (необязательно)", detail)
+        self.assertNotIn("Для итогового балла обязателен комментарий", detail)
 
     def test_model_tabs_are_compact_and_stably_grouped_by_review_status(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

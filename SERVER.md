@@ -236,8 +236,10 @@ sqlite3 instance/scorer-auth.sqlite3 ".backup '/secure/backup/scorer-auth.sqlite
 
 ## Публичная витрина результатов
 
-Статический прототип из `public_results/` разворачивается на том же хосте,
-но отдельно от Flask scoring-сайта. Серверная раскладка:
+Статический прототип из `public_results/` разворачивается отдельно от Flask
+scoring-сайта. Scoring-домен остаётся закрытой админ-панелью и источником
+оценок, а публичная витрина может публиковаться на отдельном домене через
+Object Storage. Серверная раскладка для старого Nginx-релиза:
 
 ```text
 /opt/olympiad-scorer/public-results/
@@ -245,12 +247,24 @@ sqlite3 instance/scorer-auth.sqlite3 ".backup '/secure/backup/scorer-auth.sqlite
   current -> releases/<release_id>/
 ```
 
-Nginx публикует `current` внутри существующего scoring-домена по пути
-`/results/`; отдельный DNS-поддомен для витрины не требуется. Новый выпуск
+Nginx может публиковать `current` внутри scoring-домена по пути `/results/` как
+совместимый источник публичного экспорта. Новый выпуск
 сначала полностью копируется в отдельный каталог `releases/<release_id>`, после
 чего симлинк `current` переключается атомарно. Для отката достаточно направить
 `current` на предыдущий каталог и перезагрузить Nginx. Приватные IP, домены и
 SSH-параметры в репозиторий не добавляются.
+
+На отдельном публичном домене URL устроены так:
+
+```text
+/
+/problems
+/problems/<competition-id>/<task-slug>/<model-slug>
+```
+
+При публикации в Object Storage каталог и страницы решений загружаются также
+под точными extensionless object keys. Старые `index.html`,
+`competitions.html` и `solution.html?...` сохраняются для совместимости.
 
 Для `location ^~ /results/` Nginx должен отправлять
 `Cache-Control: no-cache, no-store, must-revalidate` и уже истёкший `Expires`. Имена

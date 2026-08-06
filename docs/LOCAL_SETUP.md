@@ -133,6 +133,12 @@ python3 -m http.server 8080 --directory public_results
 интерфейс использует встроенный демонстрационный срез. Подробности о выборе
 попыток и строках команд — в `public_results/README.md`.
 
+Production uses clean URLs (`/`, `/problems` and concrete
+`/problems/<competition>/<task>/<model>` routes). The simple local file server
+does not emulate extensionless Object Storage route objects, so use the legacy
+`/competitions.html` and `/solution.html?...` compatibility URLs when previewing
+without a reverse-proxy rewrite.
+
 Задача появляется в интерфейсе даже без run-лога. Логи и sidecar-оценки объединяются для матрицы моделей и страницы проверки.
 На главной странице соревнования сгруппированы по годам, извлеченным из `date`,
 ID или названия; внутри года соревнования идут от более ранних к более поздним.

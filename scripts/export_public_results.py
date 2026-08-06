@@ -143,6 +143,28 @@ def safe_component(value: Any, fallback: str) -> str:
     return cleaned or fallback
 
 
+def public_task_slug(value: Any) -> str:
+    """Return the stable task segment used by clean public solution URLs."""
+    raw = str(value or "")
+    match = re.fullmatch(r"task[_-]?0*(\d+)", raw, flags=re.IGNORECASE)
+    if match:
+        return f"task{int(match.group(1))}"
+    return safe_component(raw, "task").lower()
+
+
+def public_model_slug(column: dict[str, Any]) -> str:
+    """Return a provider-free model segment used by clean public URLs."""
+    slug = safe_component(
+        column.get("model_id") or column.get("short_label") or column.get("model_key"),
+        "model",
+    ).lower()
+    # The benchmark adapter suffix distinguishes its runtime preset, while the
+    # public model name and requested route remain GPT-5.6.
+    if slug.endswith("-sol"):
+        slug = slug.removesuffix("-sol")
+    return slug
+
+
 def stable_result_id(
     attempt: dict[str, Any],
     *,
@@ -170,6 +192,29 @@ def model_name(column: dict[str, Any]) -> str:
     if not prefix or short.casefold().startswith(prefix.casefold()):
         return short
     return f"{prefix} {short}"
+
+
+def public_review(
+    value: Any,
+    *,
+    fallback_max_score: float,
+    competition_id: str,
+) -> dict[str, Any] | None:
+    if not isinstance(value, dict):
+        return None
+    score = finite_number(value.get("score"))
+    max_score = finite_number(value.get("max_score")) or fallback_max_score
+    feedback = rewrite_public_markdown(
+        value.get("feedback"),
+        competition_id=competition_id,
+    ).strip()
+    if score is None and not feedback:
+        return None
+    return {
+        "score": int(score) if score is not None and score.is_integer() else score,
+        "maxScore": int(max_score) if max_score.is_integer() else max_score,
+        "feedback": feedback,
+    }
 
 
 def format_date(value: Any) -> str:
@@ -213,8 +258,25 @@ def solution_document(
     cost = finite_number(result.get("cost_usd"))
     latency = finite_number(result.get("latency_ms"))
     max_score = float(problem.get("max_score") or 0)
+    competition_id = competition["competition_id"]
+    expert_reviews = [
+        review
+        for evaluation in attempt.get("evaluations") or []
+        if (
+            review := public_review(
+                evaluation,
+                fallback_max_score=max_score,
+                competition_id=competition_id,
+            )
+        )
+    ]
+    final_review = public_review(
+        attempt.get("finalization"),
+        fallback_max_score=max_score,
+        competition_id=competition_id,
+    )
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "competition": {
             "id": competition["competition_id"],
             "title": competition["competition_title"],
@@ -237,6 +299,10 @@ def solution_document(
             "id": safe_component(column.get("model_key"), "model"),
             "name": model_name(column),
             "provider": column.get("provider_label") or column.get("provider") or "",
+        },
+        "review": {
+            "final": final_review,
+            "experts": expert_reviews,
         },
         "result": {
             "resultId": stable_result_id(
@@ -277,6 +343,7 @@ def export_competition(
         tasks.append(
             {
                 "id": problem_id,
+                "slug": public_task_slug(problem_id),
                 "short": f"{index:02d}",
                 "title": problem["problem_title"],
                 "maxScore": int(max_score) if max_score.is_integer() else max_score,
@@ -351,6 +418,7 @@ def export_competition(
         participants.append(
             {
                 "id": participant_id,
+                "slug": public_model_slug(column),
                 "type": "model",
                 "rank": rank,
                 "name": model_name(column),
