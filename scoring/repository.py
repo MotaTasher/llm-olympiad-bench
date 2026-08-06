@@ -682,7 +682,7 @@ def finalization_state(
         "warning": warning,
         "evaluation_count": count,
         "scores": scores,
-        "comment_required": review_status in {"disagreement", "partial"},
+        "comment_required": False,
     }
 
 

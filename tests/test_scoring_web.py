@@ -1362,6 +1362,7 @@ class ScoringWebTests(unittest.TestCase):
 
         detail = self.client.get(detail_path).get_data(as_text=True)
         self.assertIn("Комментарий организаторов (необязательно)", detail)
+        self.assertNotIn("name=\"feedback\" required", detail)
         self.assertNotIn("Для итогового балла обязателен комментарий", detail)
 
     def test_model_tabs_are_compact_and_stably_grouped_by_review_status(self) -> None:
