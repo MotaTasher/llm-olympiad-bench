@@ -2,36 +2,37 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8">
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#030207">
     <title>Решение — Reasoning Space</title>
-    <link rel="icon" type="image/svg+xml" href="/assets/csspace-favicon.svg">
-    <link rel="stylesheet" href="/vendor/katex/katex.min.css">
-    <link rel="stylesheet" href="/styles.css?v=14">
-    <script src="/vendor/marked/marked.min.js" defer></script>
-    <script src="/vendor/dompurify/purify.min.js" defer></script>
-    <script src="/vendor/katex/katex.min.js" defer></script>
-    <script src="/vendor/katex/contrib/auto-render.min.js" defer></script>
-    <script src="/data.js?v=10" defer></script>
-    <script src="/generated/data.js?v=8" defer></script>
-    <script src="/app.js?v=12" defer></script>
+    <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
+    <link rel="stylesheet" href="vendor/katex/katex.min.css">
+    <link rel="stylesheet" href="styles.css?v=14">
+    <script src="vendor/marked/marked.min.js" defer></script>
+    <script src="vendor/dompurify/purify.min.js" defer></script>
+    <script src="vendor/katex/katex.min.js" defer></script>
+    <script src="vendor/katex/contrib/auto-render.min.js" defer></script>
+    <script src="data.js?v=10" defer></script>
+    <script src="generated/data.js?v=8" defer></script>
+    <script src="app.js?v=13" defer></script>
   </head>
   <body data-page="solution">
     <header class="site-header">
       <div class="brand">
         <a class="brand-logo" href="https://csspace.io/" aria-label="Официальный сайт CS Space">
-          <img src="/assets/csspace-logo.svg" alt="CS Space">
+          <img src="assets/csspace-logo.svg" alt="CS Space">
         </a>
-        <a class="brand-name" href="/">Reasoning Space</a>
+        <a class="brand-name" data-site-link="home" href="./">Reasoning Space</a>
       </div>
       <nav aria-label="Основная навигация">
-        <a href="/">Главная</a>
-        <a href="/problems">Задачи</a>
+        <a data-site-link="home" href="./">Главная</a>
+        <a data-site-link="catalog" href="problems">Задачи</a>
       </nav>
     </header>
 
     <main class="solution-main">
-      <a class="back-link" id="solution-back" href="/">← Назад к таблице</a>
+      <a class="back-link" id="solution-back" href="./">← Назад к таблице</a>
 
       <section class="solution-hero">
         <div>
@@ -94,13 +95,13 @@
     <footer class="site-footer">
       <div class="brand footer-brand">
         <a class="brand-logo" href="https://csspace.io/" aria-label="Официальный сайт CS Space">
-          <img src="/assets/csspace-logo.svg" alt="CS Space">
+          <img src="assets/csspace-logo.svg" alt="CS Space">
         </a>
-        <a class="brand-name" href="/">Reasoning Space</a>
+        <a class="brand-name" data-site-link="home" href="./">Reasoning Space</a>
       </div>
       <nav class="footer-nav" aria-label="Навигация в подвале">
-        <a href="/">Главная</a>
-        <a href="/problems">Задачи</a>
+        <a data-site-link="home" href="./">Главная</a>
+        <a data-site-link="catalog" href="problems">Задачи</a>
       </nav>
       <div class="footer-contact">
         <span>Контакты</span>
