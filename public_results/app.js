@@ -41,6 +41,32 @@
   const sortByCompetition = new Map();
   let activeRelease = null;
 
+  function siteBasePath() {
+    const path = new URL(document.baseURI).pathname;
+    return path.endsWith("/") ? path : `${path}/`;
+  }
+
+  function isLegacyDeployment() {
+    return siteBasePath() !== "/";
+  }
+
+  function homeRoute(params = "") {
+    return `${siteBasePath()}${isLegacyDeployment() ? "index.html" : ""}${params}`;
+  }
+
+  function catalogRoute() {
+    return `${siteBasePath()}${isLegacyDeployment() ? "competitions.html" : "problems"}`;
+  }
+
+  function updateSiteLinks() {
+    document.querySelectorAll('[data-site-link="home"]').forEach((link) => {
+      link.href = homeRoute();
+    });
+    document.querySelectorAll('[data-site-link="catalog"]').forEach((link) => {
+      link.href = catalogRoute();
+    });
+  }
+
   function escapeHtml(value) {
     return String(value ?? "")
       .replaceAll("&", "&amp;")
@@ -55,7 +81,10 @@
   }
 
   function cleanSolutionRoute() {
-    const match = window.location.pathname.match(
+    const pathname = window.location.pathname.startsWith(siteBasePath())
+      ? `/${window.location.pathname.slice(siteBasePath().length)}`
+      : window.location.pathname;
+    const match = pathname.match(
       /^\/problems\/([^/]+)\/([^/]+)\/([^/]+)\/?$/
     );
     if (!match) return null;
@@ -85,6 +114,14 @@
   }
 
   function solutionRoute(competition, participant, task) {
+    if (isLegacyDeployment()) {
+      const params = new URLSearchParams({
+        competition: competition.id,
+        participant: participant.id,
+        task: task.id
+      });
+      return `${siteBasePath()}solution.html?${params}`;
+    }
     return `/problems/${encodeURIComponent(competition.id)}/${encodeURIComponent(taskRouteSlug(task))}/${encodeURIComponent(participantRouteSlug(participant))}`;
   }
 
@@ -327,7 +364,7 @@
         <div class="filter-options">
           ${options.map((option) => `
             <a class="filter-chip${option.active ? " active" : ""}"
-               href="/?competition=${encodeURIComponent(option.release.competitionIds[0])}"
+               href="${homeRoute(`?competition=${encodeURIComponent(option.release.competitionIds[0])}`)}"
                data-release="${escapeHtml(option.release.id)}"
                ${option.active ? 'aria-current="true"' : ""}>
               ${escapeHtml(option.label)}
@@ -555,7 +592,7 @@
   function renderCatalog() {
     const grid = document.querySelector("#competition-grid");
     grid.innerHTML = data.catalog.map((item) => {
-      const href = `/?competition=${encodeURIComponent(item.competitionId)}`;
+      const href = homeRoute(`?competition=${encodeURIComponent(item.competitionId)}`);
       const stages = item.stages.map((stage) => `<span>${escapeHtml(stage)}</span>`).join("");
       return `
         <a class="competition-card" href="${href}">
@@ -596,7 +633,7 @@
     const maxScore = Number(task?.maxScore || 0);
     const solutionPath = participant?.solutions?.[safeTaskIndex];
     const release = releaseForCompetition(competition.id);
-    const back = `/?release=${encodeURIComponent(release?.id || data.releases[0].id)}`;
+    const back = homeRoute(`?release=${encodeURIComponent(release?.id || data.releases[0].id)}`);
 
     document.querySelector("#solution-back").href = back;
     document.querySelector("#solution-competition").textContent = `${competition.title} · ${competition.stage}`;
@@ -621,7 +658,10 @@
     }
 
     try {
-      const response = await fetch(`/${solutionPath.replace(/^\/+/, "")}`, { cache: "no-store" });
+      const response = await fetch(
+        `${siteBasePath()}${solutionPath.replace(/^\/+/, "")}`,
+        { cache: "no-store" }
+      );
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const documentData = await response.json();
       const result = documentData.result || {};
@@ -662,6 +702,7 @@
     }
   }
 
+  updateSiteLinks();
   if (page === "leaderboard") renderLeaderboard();
   if (page === "competitions") renderCatalog();
   if (page === "solution") renderSolution();
