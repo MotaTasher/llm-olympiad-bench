@@ -1361,7 +1361,7 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual(final["updated_by"], self.username)
 
         detail = self.client.get(detail_path).get_data(as_text=True)
-        self.assertIn("Комментарий организаторов (необязательно)", detail)
+        self.assertIn("Итоговый комментарий (необязательно)", detail)
         self.assertNotIn("name=\"feedback\" required", detail)
         self.assertNotIn("Для итогового балла обязателен комментарий", detail)
 

@@ -64,11 +64,12 @@ available in the cell tooltip.
 
 Each selected answer is copied into a small sanitized JSON document used by the
 solution page. It includes the problem statement, unchanged model answer,
-official solution, public score, per-attempt metrics, anonymized individual
-expert scores and feedback, and an optional organizer finalization comment. It
-deliberately excludes reviewer and organizer identities, raw provider/request
-data, errors and internal filesystem paths. Run logs and evaluation sidecars
-are only read and are never modified.
+official solution, public score, per-attempt metrics and, when supplied, the
+single collegially approved finalization comment. It deliberately excludes all
+individual expert scores and comments, reviewer/organizer identities, raw
+provider/request data, errors and internal filesystem paths. There is no public
+`review.experts` list. Run logs and evaluation sidecars are only read and are
+never modified.
 
 Each published stage is an independent release with its own URL and table.
 Three visible button rows select benchmark, year and stage without a dropdown;
@@ -81,15 +82,15 @@ evaluation and the multi-expert final-verdict process separately. Shared
 model-launch rules remain below it.
 
 The solution page renders the exported problem statement, model answer and
-official solution as sanitized GitHub-flavored Markdown. The required Marked,
+official solution as sanitized GitHub-flavored Markdown. It shows the shared
+finalization-comment block only when that optional comment is non-empty. The required Marked,
 DOMPurify and KaTeX browser assets (including fonts and their licenses) are
 versioned under `vendor/`, so rendering does not depend on a third-party CDN.
 A safe plain-text fallback remains in place. The renderer also replaces
 KaTeX's private-use negation overlay when a browser/font combination exposes it
-as a missing-glyph box. The task statement is collapsed by default, followed by
-the expert-review cards and then the model solution. Model and official
-solutions remain collapsible and open by default, and long prose is centered in
-a wider reading column.
+as a missing-glyph box. The task statement is collapsed by default; model and
+official solutions remain collapsible and open by default, and long prose is
+centered in a wider reading column.
 
 Every table column is sortable. The initial order is descending by `points`,
 which is the sum of all published absolute task scores, not the count of

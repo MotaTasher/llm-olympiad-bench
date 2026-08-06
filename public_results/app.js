@@ -233,47 +233,16 @@
     renderMathInNode(node);
   }
 
-  function reviewCardMarkup(review, label, kind, fallbackMaxScore) {
-    const score = review?.score;
-    const maxScore = review?.maxScore ?? fallbackMaxScore;
-    const numericScore = score === null || score === undefined ? null : Number(score);
-    const numericMax = Number(maxScore || fallbackMaxScore || 0);
-    const scoreLabel = numericScore === null
-      ? "Без балла"
-      : `${String(score).replace(".", ",")} / ${String(maxScore).replace(".", ",")}`;
-    const feedback = String(review?.feedback || "").trim();
-    const scoreTone = scoreClass(numericScore, numericMax);
-    return `
-      <article class="expert-review-card ${kind}">
-        <header>
-          <h3>${escapeHtml(label)}</h3>
-          <span class="expert-score ${scoreTone}">${escapeHtml(scoreLabel)}</span>
-        </header>
-        <div class="expert-review-copy prose">
-          ${feedback
-            ? renderMarkdown(feedback, "")
-            : '<p class="review-no-comment">Комментарий не оставлен.</p>'}
-        </div>
-      </article>
-    `;
-  }
-
-  function renderExpertReviews(review, fallbackMaxScore) {
+  function renderFinalReview(review) {
     const section = document.querySelector("#expert-review-section");
     const container = document.querySelector("#expert-reviews");
     if (!section || !container) return;
-    const experts = Array.isArray(review?.experts) ? review.experts : [];
-    const cards = [];
-    if (review?.final?.feedback) {
-      cards.push(reviewCardMarkup(review.final, "Итог экспертизы", "final", fallbackMaxScore));
-    }
-    experts.forEach((item, index) => {
-      const label = experts.length === 1 ? "Эксперт" : `Эксперт ${index + 1}`;
-      cards.push(reviewCardMarkup(item, label, "individual", fallbackMaxScore));
-    });
-    container.innerHTML = cards.join("");
-    section.hidden = cards.length === 0;
-    if (cards.length) renderMathInNode(container);
+    const feedback = String(review?.final?.feedback || "").trim();
+    container.innerHTML = feedback
+      ? `<article class="expert-review-card final"><div class="expert-review-copy prose">${renderMarkdown(feedback, "")}</div></article>`
+      : "";
+    section.hidden = !feedback;
+    if (feedback) renderMathInNode(container);
   }
 
   function renderLeaderboard() {
@@ -648,8 +617,7 @@
     document.querySelector("#solution-text").innerHTML = "<p>Загружаем ответ…</p>";
     document.querySelector("#solution-statement").innerHTML = "<p>Загружаем условие…</p>";
     document.querySelector("#official-solution-text").innerHTML = "<p>Загружаем авторское решение…</p>";
-    renderExpertReviews(null, maxScore);
-
+    renderFinalReview(null);
     if (!solutionPath) {
       document.querySelector("#solution-text").innerHTML = "<p>Для этой ячейки нет опубликованного ответа.</p>";
       document.querySelector("#solution-statement").innerHTML = "<p>Условие недоступно.</p>";
@@ -680,7 +648,7 @@
         result.cost == null ? "—" : `$${Number(result.cost).toFixed(4)}`;
       document.querySelector("#solution-tokens").textContent =
         result.tokens == null ? "—" : number.format(result.tokens);
-      renderExpertReviews(documentData.review, documentMaxScore);
+      renderFinalReview(documentData.review);
       renderMarkdownInto(
         "#solution-statement",
         documentData.task?.statement,

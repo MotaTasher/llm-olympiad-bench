@@ -1,6 +1,8 @@
 # Server Workflow
 
 Инструкция для обмена логами со scoring-сервером. Доступ к серверу не нужен для локального запуска сайта; см. [docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md).
+Актуальная карта production-ролей, каталогов, публичного S3 и границ данных:
+[`docs/specs/DEPLOYMENT.md`](docs/specs/DEPLOYMENT.md).
 
 ## Кто может пушить
 
@@ -236,23 +238,11 @@ sqlite3 instance/scorer-auth.sqlite3 ".backup '/secure/backup/scorer-auth.sqlite
 
 ## Публичная витрина результатов
 
-Статический прототип из `public_results/` разворачивается отдельно от Flask
+Статический сайт из `public_results/` разворачивается отдельно от Flask
 scoring-сайта. Scoring-домен остаётся закрытой админ-панелью и источником
-оценок, а публичная витрина может публиковаться на отдельном домене через
-Object Storage. Серверная раскладка для старого Nginx-релиза:
-
-```text
-/opt/olympiad-scorer/public-results/
-  releases/<release_id>/
-  current -> releases/<release_id>/
-```
-
-Nginx может публиковать `current` внутри scoring-домена по пути `/results/` как
-совместимый источник публичного экспорта. Новый выпуск
-сначала полностью копируется в отдельный каталог `releases/<release_id>`, после
-чего симлинк `current` переключается атомарно. Для отката достаточно направить
-`current` на предыдущий каталог и перезагрузить Nginx. Приватные IP, домены и
-SSH-параметры в репозиторий не добавляются.
+оценок, а публичная витрина публикуется на отдельном домене через Object
+Storage. Старый путь scoring-домена `/results/` выведен из эксплуатации и
+возвращает `410 Gone`.
 
 На отдельном публичном домене URL устроены так:
 
@@ -266,32 +256,28 @@ SSH-параметры в репозиторий не добавляются.
 под точными extensionless object keys. Старые `index.html`,
 `competitions.html` и `solution.html?...` сохраняются для совместимости.
 
-Для `location ^~ /results/` Nginx должен отправлять
-`Cache-Control: no-cache, no-store, must-revalidate` и уже истёкший `Expires`. Имена
-статических файлов не меняются между release-каталогами, а
-`generated/data.js` обновляется таймером, поэтому без этих заголовков браузер
-может продолжать показывать предыдущий дизайн или устаревшие результаты.
-Для совместимости абсолютной базы Object Storage этот location также заменяет
-`<base href="/">` на `<base href="/results/">` через `sub_filter`; JS после
-загрузки выбирает старые `.html`-маршруты внутри `/results/` автоматически.
+Активная конфигурация Nginx должна содержать:
+
+```nginx
+location = /results { return 410; }
+location ^~ /results/ { return 410; }
+```
 
 Публичная витрина не пишет в run-логи или scoring sidecar. Безопасный срез
-создаёт `scripts/export_public_results.py`; на сервере его раз в минуту запускает
-`deploy/systemd/public-results-export.timer`. Экспорт читает активные каталоги
-scoring-сервиса, публикует обе стадии Math Cup 2026 и сохраняет результат в
-`current/generated/`. Scoring остаётся источником оценок, а статический сайт
+создаёт `scripts/export_public_results.py`. Scoring остаётся источником оценок, а статический сайт
 получает только разрешённый для публикации срез без имён проверяющих, внутренних
-комментариев и сырых ответов API.
+оценок/комментариев отдельных экспертов и сырых ответов API. Итоговый комментарий
+экспертов, если он заполнен при финализации, публикуется без имени.
 
-После обновления release-файлов установите или обновите unit-файлы:
+Старый таймер отключён и удалён из репозитория. Если его unit-файлы остались на
+сервере, убедитесь, что он не сможет запуститься автоматически:
 
 ```bash
-sudo cp deploy/systemd/public-results-export.service /etc/systemd/system/
-sudo cp deploy/systemd/public-results-export.timer /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now public-results-export.timer
-sudo systemctl start public-results-export.service
+sudo systemctl disable --now public-results-export.timer
 ```
+
+Пока отдельный S3 bridge не установлен и не проверен, standalone-витрина
+обновляется явной публикацией и не считается автоматически синхронизированной.
 
 ## Собрать датасет
 

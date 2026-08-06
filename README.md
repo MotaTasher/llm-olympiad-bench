@@ -150,6 +150,7 @@ model adapters → logs/.../run.json (schema_version 2)
 | локальный запуск сайта и CLI | [docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md) |
 | импорт задач из PDF/TXT | [docs/ADDING_PROBLEMS.md](docs/ADDING_PROBLEMS.md) |
 | серверная синхронизация | [SERVER.md](SERVER.md) |
+| production-серверы, каталоги и публичный S3 | [docs/specs/DEPLOYMENT.md](docs/specs/DEPLOYMENT.md) |
 | авторизация scoring-сайта | [scoring/README.md](scoring/README.md) |
 | инструкции для Codex/Claude/агентов | [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md), [CODEX.md](CODEX.md) |
 | архитектура и контракты | [docs/specs/INDEX.md](docs/specs/INDEX.md) |

@@ -14,6 +14,10 @@
 | `olympiad_data.py` | shared competition/problem loading and canonical directory scanning |
 | `.gitignore` | blocks credentials, caches and runtime artifacts |
 
+Production roles, assumed server paths, Object Storage layout and access
+boundaries are maintained in [`DEPLOYMENT.md`](DEPLOYMENT.md). Concrete private
+connection values remain in gitignored `config/server.env`.
+
 ## Runtime subsystems
 
 ```text
@@ -53,9 +57,6 @@ scripts/
   migrate_score_scale.py  explicit one-competition score-scale migration
   sync_logs.py            rsync push/pull for logs and score sidecars
 
-deploy/systemd/
-  public-results-export.service  one-shot server-side public export
-  public-results-export.timer    minute-based refresh schedule
 ```
 
 Current provider directories are `gpt`, `claude`, `deepseek`, `gemini`,

@@ -1476,7 +1476,7 @@ def finalization_statistics(competition: dict[str, Any]) -> dict[str, Any]:
                     text, css_class, label = "≠", "cell-final-disagreement", "Не финализировано: оценки расходятся"
                     counts["disagreement"] += 1
                 elif review_status == "partial":
-                    text, css_class, label = "✎", "cell-final-comment", "Не финализировано: частичный балл требует комментария"
+                    text, css_class, label = "✎", "cell-final-comment", "Не финализировано: частичный балл требует ручного итога"
                 else:
                     text, css_class, label = "?", "cell-unscored", "Не финализировано: нет проверок"
             cells[model["model_key"]] = {

@@ -98,7 +98,7 @@ class PublicResultsExportTests(unittest.TestCase):
         self.assertEqual(public_score(attempt, 2, round_to_integer=True), 1)
         self.assertIsNone(public_score({"evaluations": attempt["evaluations"]}, 2))
 
-    def test_solution_document_publishes_anonymized_expert_reviews(self) -> None:
+    def test_solution_document_publishes_only_shared_final_review(self) -> None:
         attempt = {
             "model_key": "openai:gpt-test",
             "result_id": "res_public",
@@ -152,16 +152,16 @@ class PublicResultsExportTests(unittest.TestCase):
         )
         serialized = str(document)
         self.assertNotIn("private reviewer", serialized)
+        self.assertNotIn("private feedback", serialized)
         self.assertNotIn("private organizer", serialized)
         self.assertNotIn("private-run", serialized)
         self.assertNotIn("raw_response", serialized)
         self.assertEqual(
             document["review"],
-            {
-                "final": {"score": 1, "maxScore": 2, "feedback": "organizer feedback"},
-                "experts": [{"score": 1, "maxScore": 2, "feedback": "private feedback"}],
-            },
+            {"final": {"score": 1, "maxScore": 2, "feedback": "organizer feedback"}},
         )
+        self.assertNotIn("experts", document["review"])
+        self.assertEqual(document["schemaVersion"], 2)
         self.assertEqual(document["result"]["answer"], "Model answer")
         self.assertEqual(document["result"]["tokens"], 30)
         self.assertEqual(document["task"]["maxScore"], 2)

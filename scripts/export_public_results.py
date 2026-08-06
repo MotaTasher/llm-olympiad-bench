@@ -259,17 +259,6 @@ def solution_document(
     latency = finite_number(result.get("latency_ms"))
     max_score = float(problem.get("max_score") or 0)
     competition_id = competition["competition_id"]
-    expert_reviews = [
-        review
-        for evaluation in attempt.get("evaluations") or []
-        if (
-            review := public_review(
-                evaluation,
-                fallback_max_score=max_score,
-                competition_id=competition_id,
-            )
-        )
-    ]
     final_review = public_review(
         attempt.get("finalization"),
         fallback_max_score=max_score,
@@ -302,7 +291,6 @@ def solution_document(
         },
         "review": {
             "final": final_review,
-            "experts": expert_reviews,
         },
         "result": {
             "resultId": stable_result_id(

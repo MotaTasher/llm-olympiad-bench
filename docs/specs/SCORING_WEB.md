@@ -140,10 +140,10 @@ result, then a reviewed result, then the newest successful result. Two or more
 checks automatically finalize only unanimous extremes: all zero or all maximum.
 One check is marked `!`, disagreement is marked `≠`, and a consistent partial
 score is marked `✎`. Any reviewer may save the single shared manual final score.
-One check is sufficient but keeps a warning. Organizer comments are optional
-for every score, including partial and disputed decisions. When present, the
-comment is persisted with the latest editor and edit time and is exported to
-the public solution page without the editor identity.
+One check is sufficient but keeps a warning. The shared organizer comment is
+optional for every score. When present, only this collegially approved final
+comment is published; individual reviewers' comments, scores and identities
+remain private. The latest editor and edit time are persisted but not published.
 
 The competition matrix presents active model columns in fixed provider groups:
 `anthropic`, `deepseek`, `google`, `gigachat`, `xai`, `zai`, `openai`,

@@ -66,11 +66,12 @@ their median are never published as the result. Cells without an effective
 finalization are explicitly shown as `На проверке`.
 Math Cup 2026 qualifying uses the integer `0..4` scale and half-up rounding;
 the final keeps its existing `0..2` scale. Run logs and sidecars remain
-unchanged during export. The public documents omit
-reviewer identities, raw provider responses, request payloads, errors and
-internal paths. They include the selected attempt's individual expert scores
-and feedback plus any organizer finalization comment, all without reviewer or
-organizer names.
+unchanged during export. A solution document may include the optional shared
+comment from its effective finalization as `review.final.feedback`. This is the
+single collegially approved public comment. The documents omit individual
+reviewer scores and comments, all reviewer/organizer identities, raw provider
+responses, request payloads, errors and internal paths. They never contain a
+`review.experts` collection.
 
 The exporter also copies selected competition assets into
 `generated/assets/<competition_id>/` and rewrites local `assets/...` references
@@ -80,9 +81,9 @@ use the local CS Space SVG as their favicon. Public solution rendering keeps
 model logs immutable, works around a missing KaTeX private-use negation glyph
 in the browser, and centers long prose in a wider reading column. Leaderboard
 participant and member names wrap without truncation.
-The problem statement is collapsed by default. An anonymized expert-review
-section appears between the statement and the model solution and shows each
-score together with its optional Markdown comment.
+The problem statement is collapsed by default. When the optional shared
+finalization comment is non-empty, one collegial-comment block appears before
+the model solution.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the
 selected release; generated model data continues to overlay only the result
@@ -122,32 +123,23 @@ sidecars. It rescales scores proportionally, rounds half up to an integer,
 writes atomically, and is idempotent. The migration currently requires
 `--score-step 1`.
 
-On the production host, install
-`deploy/systemd/public-results-export.{service,timer}` in `/etc/systemd/system/`
-and enable the timer. It refreshes the deployed release every minute from the
-same log, result, and competition paths used by the scoring service:
+The former scoring-host compatibility exporter is retired. Its timer must stay
+disabled, and Nginx must not serve public files from the scoring domain:
 
 ```bash
-sudo systemctl daemon-reload
-sudo systemctl enable --now public-results-export.timer
-sudo systemctl start public-results-export.service
+sudo systemctl disable --now public-results-export.timer
 ```
 
-Inspect it with:
+The active scoring-host Nginx configuration uses:
 
-```bash
-systemctl status public-results-export.timer --no-pager
-journalctl -u public-results-export.service -n 50 --no-pager
+```nginx
+location = /results { return 410; }
+location ^~ /results/ { return 410; }
 ```
 
-The generic Nginx `/results/` location must use `Cache-Control: no-cache` so
-HTML and `generated/data.js` are revalidated. Static asset locations
-`/results/assets/`, `/results/vendor/` and `/results/generated/assets/` should
-use `Cache-Control: public, max-age=604800`; this keeps backgrounds, logos,
-fonts and exported problem images across page transitions.
-Release directories reuse stable asset names, while `generated/data.js` changes
-in place every minute. HTML also carries a query-string asset version as a
-second cache-busting layer for clients that retained an older release.
+The standalone Object Storage site is the only public results surface. Generate
+and publish its sanitized snapshot explicitly until a separate S3 bridge is
+implemented and verified.
 
 ## Evaluation-pool CSV
 

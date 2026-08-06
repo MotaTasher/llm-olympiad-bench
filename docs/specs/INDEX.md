@@ -8,8 +8,10 @@ This directory is the first stop for coding agents. It describes the current imp
 
 1. [`PROJECT_MAP.md`](PROJECT_MAP.md) — where each subsystem lives.
 2. Read the specification matching the requested change.
-3. Read [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) before debugging.
-4. Read [`CHANGE_CHECKLIST.md`](CHANGE_CHECKLIST.md) before finishing.
+3. Read [`DEPLOYMENT.md`](DEPLOYMENT.md) for production hosts, paths and public
+   publication boundaries.
+4. Read [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) before debugging.
+5. Read [`CHANGE_CHECKLIST.md`](CHANGE_CHECKLIST.md) before finishing.
 
 ## Task-to-spec map
 
@@ -22,6 +24,7 @@ This directory is the first stop for coding agents. It describes the current imp
 | change Flask UI or scoring persistence | [`SCORING_WEB.md`](SCORING_WEB.md), [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md) |
 | change the public-results site or export | [`PROJECT_MAP.md`](PROJECT_MAP.md), [`OPERATIONS.md`](OPERATIONS.md), [`../LOCAL_SETUP.md`](../LOCAL_SETUP.md) |
 | change sync/export/secret checks | [`OPERATIONS.md`](OPERATIONS.md) |
+| deploy or diagnose production/scorer/public S3 | [`DEPLOYMENT.md`](DEPLOYMENT.md), [`OPERATIONS.md`](OPERATIONS.md) |
 | diagnose a failure | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) |
 | prepare a final agent response | [`CHANGE_CHECKLIST.md`](CHANGE_CHECKLIST.md) |
 

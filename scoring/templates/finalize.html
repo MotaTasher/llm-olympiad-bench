@@ -87,10 +87,10 @@
           <label>Итоговый балл
             <input name="score" type="number" min="0" max="{{ '%g'|format(problem.max_score) }}" step="any" value="{{ final.score if final.score is not none else '' }}" {% if not attempt.evaluation_count %}disabled{% endif %} required>
           </label>
-          <label>Комментарий организаторов (необязательно)
+          <label>Итоговый комментарий (необязательно)
             <textarea name="feedback">{{ final.feedback or '' }}</textarea>
           </label>
-          <div class="meta">Если комментарий оставить, он появится на публичной странице решения без имени проверяющего.</div>
+          <div class="meta">Публикуется на странице решения без имён.</div>
           <button type="submit" {% if not attempt.evaluation_count %}disabled{% endif %}>{{ "Обновить итог" if final.source == "manual" else "Сохранить итог" }}</button>
         </form>
         {% if final.source == "manual" %}
