@@ -67,8 +67,10 @@ finalization are explicitly shown as `На проверке`.
 Math Cup 2026 qualifying uses the integer `0..4` scale and half-up rounding;
 the final keeps its existing `0..2` scale. Run logs and sidecars remain
 unchanged during export. The public documents omit
-reviewer identities, feedback, raw provider responses, request payloads, errors,
-and internal paths.
+reviewer identities, raw provider responses, request payloads, errors and
+internal paths. They include the selected attempt's individual expert scores
+and feedback plus any organizer finalization comment, all without reviewer or
+organizer names.
 
 The exporter also copies selected competition assets into
 `generated/assets/<competition_id>/` and rewrites local `assets/...` references
@@ -78,6 +80,9 @@ use the local CS Space SVG as their favicon. Public solution rendering keeps
 model logs immutable, works around a missing KaTeX private-use negation glyph
 in the browser, and centers long prose in a wider reading column. Leaderboard
 participant and member names wrap without truncation.
+The problem statement is collapsed by default. An anonymized expert-review
+section appears between the statement and the model solution and shows each
+score together with its optional Markdown comment.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the
 selected release; generated model data continues to overlay only the result
@@ -87,6 +92,15 @@ Each exported model row also contains `points`, the sum of all non-null
 absolute task scores for that stage. The public table uses this field for its
 default descending order; it is distinct from `solved`, which remains the count
 of perfect-score cells for compatibility.
+
+The standalone Object Storage deployment uses `/` for the leaderboard,
+`/problems` for the catalog, and
+`/problems/<competition-id>/<task-slug>/<model-slug>` for model answers. Because
+Object Storage has no application router, deployment uploads the catalog HTML
+under the exact extensionless `problems` key and the solution shell under every
+concrete extensionless route key. Legacy `.html` objects remain for backward
+compatibility. Generated solution JSON must be uploaded before
+`generated/data.js`, so the matrix never links to a missing object.
 
 To change an existing competition's score scale, preview and then apply the
 explicit migration:

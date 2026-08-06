@@ -54,6 +54,40 @@
     return new URLSearchParams(window.location.search);
   }
 
+  function cleanSolutionRoute() {
+    const match = window.location.pathname.match(
+      /^\/problems\/([^/]+)\/([^/]+)\/([^/]+)\/?$/
+    );
+    if (!match) return null;
+    return {
+      competition: decodeURIComponent(match[1]),
+      task: decodeURIComponent(match[2]),
+      participant: decodeURIComponent(match[3])
+    };
+  }
+
+  function taskRouteSlug(task) {
+    if (task?.slug) return task.slug;
+    const match = String(task?.id || "").match(/^task[_-]?0*(\d+)$/i);
+    return match ? `task${Number(match[1])}` : String(task?.id || "task").toLowerCase();
+  }
+
+  function participantRouteSlug(participant) {
+    if (participant?.slug) return participant.slug;
+    let slug = String(participant?.id || "model").toLowerCase();
+    const providerPrefixes = [
+      "anthropic-", "deepseek-", "gigachat-", "google-", "openai-",
+      "xai-", "yandexgpt-", "zai-", "kimi-"
+    ];
+    const prefix = providerPrefixes.find((candidate) => slug.startsWith(candidate));
+    if (prefix) slug = slug.slice(prefix.length);
+    return slug.endsWith("-sol") ? slug.slice(0, -4) : slug;
+  }
+
+  function solutionRoute(competition, participant, task) {
+    return `/problems/${encodeURIComponent(competition.id)}/${encodeURIComponent(taskRouteSlug(task))}/${encodeURIComponent(participantRouteSlug(participant))}`;
+  }
+
   function competitionById(id) {
     return data.competitions.find((competition) => competition.id === id);
   }
@@ -130,9 +164,7 @@
     return restoreMath(sanitized, chunks);
   }
 
-  function renderMarkdownInto(selector, value, emptyText) {
-    const node = document.querySelector(selector);
-    node.innerHTML = renderMarkdown(value, emptyText);
+  function renderMathInNode(node) {
     if (!window.renderMathInElement) return;
     try {
       window.renderMathInElement(node, {
@@ -156,6 +188,55 @@
     } catch (_) {
       // Keep readable Markdown if one malformed formula cannot be rendered.
     }
+  }
+
+  function renderMarkdownInto(selector, value, emptyText) {
+    const node = document.querySelector(selector);
+    node.innerHTML = renderMarkdown(value, emptyText);
+    renderMathInNode(node);
+  }
+
+  function reviewCardMarkup(review, label, kind, fallbackMaxScore) {
+    const score = review?.score;
+    const maxScore = review?.maxScore ?? fallbackMaxScore;
+    const numericScore = score === null || score === undefined ? null : Number(score);
+    const numericMax = Number(maxScore || fallbackMaxScore || 0);
+    const scoreLabel = numericScore === null
+      ? "Без балла"
+      : `${String(score).replace(".", ",")} / ${String(maxScore).replace(".", ",")}`;
+    const feedback = String(review?.feedback || "").trim();
+    const scoreTone = scoreClass(numericScore, numericMax);
+    return `
+      <article class="expert-review-card ${kind}">
+        <header>
+          <h3>${escapeHtml(label)}</h3>
+          <span class="expert-score ${scoreTone}">${escapeHtml(scoreLabel)}</span>
+        </header>
+        <div class="expert-review-copy prose">
+          ${feedback
+            ? renderMarkdown(feedback, "")
+            : '<p class="review-no-comment">Комментарий не оставлен.</p>'}
+        </div>
+      </article>
+    `;
+  }
+
+  function renderExpertReviews(review, fallbackMaxScore) {
+    const section = document.querySelector("#expert-review-section");
+    const container = document.querySelector("#expert-reviews");
+    if (!section || !container) return;
+    const experts = Array.isArray(review?.experts) ? review.experts : [];
+    const cards = [];
+    if (review?.final?.feedback) {
+      cards.push(reviewCardMarkup(review.final, "Итог экспертизы", "final", fallbackMaxScore));
+    }
+    experts.forEach((item, index) => {
+      const label = experts.length === 1 ? "Эксперт" : `Эксперт ${index + 1}`;
+      cards.push(reviewCardMarkup(item, label, "individual", fallbackMaxScore));
+    });
+    container.innerHTML = cards.join("");
+    section.hidden = cards.length === 0;
+    if (cards.length) renderMathInNode(container);
   }
 
   function renderLeaderboard() {
@@ -246,7 +327,7 @@
         <div class="filter-options">
           ${options.map((option) => `
             <a class="filter-chip${option.active ? " active" : ""}"
-               href="index.html?competition=${encodeURIComponent(option.release.competitionIds[0])}"
+               href="/?competition=${encodeURIComponent(option.release.competitionIds[0])}"
                data-release="${escapeHtml(option.release.id)}"
                ${option.active ? 'aria-current="true"' : ""}>
               ${escapeHtml(option.label)}
@@ -376,7 +457,7 @@
         if (isTeam || !solution) {
           return `<td class="result-cell ${scoreClass(score, task.maxScore)}">${content}</td>`;
         }
-        const href = `solution.html?competition=${encodeURIComponent(competition.id)}&participant=${encodeURIComponent(participant.id)}&task=${encodeURIComponent(task.id)}`;
+        const href = solutionRoute(competition, participant, task);
         const label = score == null ? "ответ на проверке" : `${score} баллов`;
         return `<td class="result-cell ${scoreClass(score, task.maxScore)}"><a href="${href}" aria-label="${escapeHtml(participant.name)}, ${escapeHtml(task.title)}: ${label}">${content}</a></td>`;
       }).join("");
@@ -474,7 +555,7 @@
   function renderCatalog() {
     const grid = document.querySelector("#competition-grid");
     grid.innerHTML = data.catalog.map((item) => {
-      const href = `index.html?competition=${encodeURIComponent(item.competitionId)}`;
+      const href = `/?competition=${encodeURIComponent(item.competitionId)}`;
       const stages = item.stages.map((stage) => `<span>${escapeHtml(stage)}</span>`).join("");
       return `
         <a class="competition-card" href="${href}">
@@ -497,17 +578,25 @@
 
   async function renderSolution() {
     const params = query();
-    const competition = competitionById(params.get("competition")) || data.competitions[0];
-    const participant = competition.participants.find((item) => item.id === params.get("participant"))
+    const route = cleanSolutionRoute();
+    const competitionId = route?.competition || params.get("competition");
+    const participantId = route?.participant || params.get("participant");
+    const taskId = route?.task || params.get("task");
+    const competition = competitionById(competitionId) || data.competitions[0];
+    const participant = competition.participants.find(
+      (item) => item.id === participantId || participantRouteSlug(item) === participantId
+    )
       || competition.participants.find((item) => item.type === "model");
-    const taskIndex = competition.tasks.findIndex((item) => item.id === params.get("task"));
+    const taskIndex = competition.tasks.findIndex(
+      (item) => item.id === taskId || taskRouteSlug(item) === taskId
+    );
     const safeTaskIndex = taskIndex >= 0 ? taskIndex : 0;
     const task = competition.tasks[safeTaskIndex];
     const score = participant?.scores?.[safeTaskIndex];
     const maxScore = Number(task?.maxScore || 0);
     const solutionPath = participant?.solutions?.[safeTaskIndex];
     const release = releaseForCompetition(competition.id);
-    const back = `index.html?release=${encodeURIComponent(release?.id || data.releases[0].id)}`;
+    const back = `/?release=${encodeURIComponent(release?.id || data.releases[0].id)}`;
 
     document.querySelector("#solution-back").href = back;
     document.querySelector("#solution-competition").textContent = `${competition.title} · ${competition.stage}`;
@@ -522,6 +611,7 @@
     document.querySelector("#solution-text").innerHTML = "<p>Загружаем ответ…</p>";
     document.querySelector("#solution-statement").innerHTML = "<p>Загружаем условие…</p>";
     document.querySelector("#official-solution-text").innerHTML = "<p>Загружаем авторское решение…</p>";
+    renderExpertReviews(null, maxScore);
 
     if (!solutionPath) {
       document.querySelector("#solution-text").innerHTML = "<p>Для этой ячейки нет опубликованного ответа.</p>";
@@ -531,7 +621,7 @@
     }
 
     try {
-      const response = await fetch(solutionPath, { cache: "no-store" });
+      const response = await fetch(`/${solutionPath.replace(/^\/+/, "")}`, { cache: "no-store" });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const documentData = await response.json();
       const result = documentData.result || {};
@@ -550,6 +640,7 @@
         result.cost == null ? "—" : `$${Number(result.cost).toFixed(4)}`;
       document.querySelector("#solution-tokens").textContent =
         result.tokens == null ? "—" : number.format(result.tokens);
+      renderExpertReviews(documentData.review, documentMaxScore);
       renderMarkdownInto(
         "#solution-statement",
         documentData.task?.statement,

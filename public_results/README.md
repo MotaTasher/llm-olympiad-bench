@@ -11,6 +11,18 @@ This is the standalone public Reasoning Space site. It contains:
 - `generated/`: ignored public export created from real logs and sidecars;
 - `app.js`: release switching, generated-data merge and page rendering.
 
+The public URL contract uses clean, extension-free routes:
+
+- `/` for the leaderboard;
+- `/problems` for the published-problem catalog;
+- `/problems/<competition-id>/<task-slug>/<model-slug>` for a concrete model
+  answer, for example `/problems/math-cup-2026-final/task1/gpt-5.6`.
+
+Old `index.html`, `competitions.html` and query-string solution URLs remain
+usable as compatibility entry points. On object storage, `/problems` and every
+concrete solution route are extensionless HTML objects that contain the catalog
+or solution shell respectively; all page assets use root-relative URLs.
+
 The exporter copies each selected competition's `assets/` directory into
 `generated/assets/<competition-id>/` and rewrites `assets/...` references in
 published statements and official solutions. It also turns plain HTTP(S)
@@ -52,10 +64,11 @@ available in the cell tooltip.
 
 Each selected answer is copied into a small sanitized JSON document used by the
 solution page. It includes the problem statement, unchanged model answer,
-official solution, public score and per-attempt metrics. It deliberately excludes
-reviewer identities and comments, raw provider/request data, errors and internal
-filesystem paths. Run logs and evaluation sidecars are only read and are never
-modified.
+official solution, public score, per-attempt metrics, anonymized individual
+expert scores and feedback, and an optional organizer finalization comment. It
+deliberately excludes reviewer and organizer identities, raw provider/request
+data, errors and internal filesystem paths. Run logs and evaluation sidecars
+are only read and are never modified.
 
 Each published stage is an independent release with its own URL and table.
 Three visible button rows select benchmark, year and stage without a dropdown;
@@ -73,8 +86,10 @@ DOMPurify and KaTeX browser assets (including fonts and their licenses) are
 versioned under `vendor/`, so rendering does not depend on a third-party CDN.
 A safe plain-text fallback remains in place. The renderer also replaces
 KaTeX's private-use negation overlay when a browser/font combination exposes it
-as a missing-glyph box. Both solution blocks are collapsible and open by
-default, and long prose is centered in a wider reading column.
+as a missing-glyph box. The task statement is collapsed by default, followed by
+the expert-review cards and then the model solution. Model and official
+solutions remain collapsible and open by default, and long prose is centered in
+a wider reading column.
 
 Every table column is sortable. The initial order is descending by `points`,
 which is the sum of all published absolute task scores, not the count of

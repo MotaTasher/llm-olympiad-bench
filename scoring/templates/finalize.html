@@ -19,9 +19,9 @@
       {% if attempt.review_status == "one_review" %}
         <div class="flash info">Предупреждение: этот ответ проверил только один человек. Ручная финализация разрешена.</div>
       {% elif attempt.review_status == "disagreement" %}
-        <div class="flash error">Проверки расходятся. Для итогового балла обязателен комментарий организаторов.</div>
+        <div class="flash error">Проверки расходятся. Итоговый балл нужно выбрать вручную.</div>
       {% elif attempt.review_status == "partial" %}
-        <div class="flash info">Проверки дают частичный балл. Для итогового балла обязателен комментарий организаторов.</div>
+        <div class="flash info">Проверки дают частичный балл. Его можно подтвердить или изменить вручную.</div>
       {% elif attempt.review_status == "no_reviews" %}
         <div class="flash error">Индивидуальных проверок нет: финализация пока недоступна.</div>
       {% endif %}
@@ -87,10 +87,10 @@
           <label>Итоговый балл
             <input name="score" type="number" min="0" max="{{ '%g'|format(problem.max_score) }}" step="any" value="{{ final.score if final.score is not none else '' }}" {% if not attempt.evaluation_count %}disabled{% endif %} required>
           </label>
-          <label>Комментарий организаторов{% if attempt.comment_required %} (обязательно){% endif %}
-            <textarea name="feedback" {% if attempt.comment_required %}required{% endif %}>{{ final.feedback or '' }}</textarea>
+          <label>Комментарий организаторов (необязательно)
+            <textarea name="feedback">{{ final.feedback or '' }}</textarea>
           </label>
-          <div class="meta">Комментарий обязателен при любом частичном итоговом балле и при расхождении проверок.</div>
+          <div class="meta">Если комментарий оставить, он появится на публичной странице решения без имени проверяющего.</div>
           <button type="submit" {% if not attempt.evaluation_count %}disabled{% endif %}>{{ "Обновить итог" if final.source == "manual" else "Сохранить итог" }}</button>
         </form>
         {% if final.source == "manual" %}
