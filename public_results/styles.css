@@ -124,6 +124,8 @@ h1, h2, h3 {
   bottom: 35px;
   width: min(54vw, 760px);
   border-radius: 58px 68px 62px 54px / 52px 64px 56px 68px;
+  -webkit-mask: url("assets/torn-paper-mask.svg") center / 100% 100% no-repeat;
+  mask: url("assets/torn-paper-mask.svg") center / 100% 100% no-repeat;
   transform: rotate(-.25deg);
   content: "";
 }
@@ -134,7 +136,7 @@ h1, h2, h3 {
   background-image: url("assets/graphite-texture.svg");
   background-position: center;
   background-size: cover;
-  filter: url("#hero-paper-edge") drop-shadow(0 24px 34px rgba(0,0,0,.36));
+  filter: drop-shadow(0 24px 34px rgba(0,0,0,.36));
 }
 
 .leaderboard-intro::before {
@@ -142,7 +144,7 @@ h1, h2, h3 {
   background-image: url("assets/formula-pattern-desktop.svg");
   background-position: center;
   background-size: 195% auto;
-  filter: url("#hero-paper-edge") grayscale(1) invert(1) contrast(.72);
+  filter: grayscale(1) invert(1) contrast(.72);
   mix-blend-mode: screen;
   opacity: .29;
 }

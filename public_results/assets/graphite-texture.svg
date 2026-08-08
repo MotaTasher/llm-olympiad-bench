@@ -5,19 +5,17 @@
       <stop offset="0.52" stop-color="#393a3c"/>
       <stop offset="1" stop-color="#444547"/>
     </linearGradient>
-    <filter id="graphite-relief" x="-8%" y="-12%" width="116%" height="124%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.015" numOctaves="5" seed="29" result="graphite-noise"/>
-      <feGaussianBlur in="graphite-noise" stdDeviation="0.65" result="graphite-forms"/>
-      <feDiffuseLighting in="graphite-forms" surfaceScale="7" diffuseConstant="0.72" lighting-color="#b7b8ba" result="graphite-light">
-        <feDistantLight azimuth="228" elevation="42"/>
-      </feDiffuseLighting>
-      <feColorMatrix in="graphite-light" type="matrix" values="
-        0.62 0    0    0 0.05
-        0    0.62 0    0 0.05
-        0    0    0.62 0 0.05
-        0    0    0    0.46 0" result="graphite-tone"/>
-      <feBlend in="SourceGraphic" in2="graphite-tone" mode="soft-light"/>
+    <filter id="graphite-grain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="4" seed="29" stitchTiles="stitch" result="paper-body"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.38" numOctaves="2" seed="71" stitchTiles="stitch" result="paper-fibre"/>
+      <feBlend in="paper-body" in2="paper-fibre" mode="soft-light" result="paper-grain"/>
+      <feColorMatrix in="paper-grain" type="matrix" values="
+        0.34 0.34 0.34 0 0
+        0.34 0.34 0.34 0 0
+        0.34 0.34 0.34 0 0
+        0    0    0    0.38 0" result="paper-tone"/>
+      <feBlend in="SourceGraphic" in2="paper-tone" mode="soft-light"/>
     </filter>
   </defs>
-  <rect width="800" height="480" fill="url(#graphite-base)" filter="url(#graphite-relief)"/>
+  <rect width="800" height="480" fill="url(#graphite-base)" filter="url(#graphite-grain)"/>
 </svg>

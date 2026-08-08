@@ -8,7 +8,8 @@ This is the standalone public Reasoning Space site. It contains:
 - `data.js`: fallback release, team and catalog data;
 - `assets/csspace-logo.svg`: local vector CS Space logo used in headers and footers;
 - `assets/formula-pattern-{desktop,mobile}.svg`: original vector formula backgrounds;
-- `assets/graphite-texture.svg`: procedural vector graphite relief without a raster tile;
+- `assets/graphite-texture.svg`: procedural dry paper grain without a raster tile;
+- `assets/torn-paper-mask.svg`: shared irregular silhouette for the hero layers;
 - `generated/`: ignored public export created from real logs and sidecars;
 - `app.js`: release switching, generated-data merge and page rendering.
 
@@ -83,7 +84,7 @@ evaluation and the multi-expert final-verdict process separately. Shared
 model-launch rules remain below it.
 
 The main-page hero uses the original desktop and mobile formula-pattern SVGs on
-a procedural SVG graphite-relief texture built with
+a procedural SVG recycled-paper grain built with
 [`feTurbulence`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/feTurbulence)
 and diffuse lighting; it does not use a raster pattern.
 The natural edge is produced by an inline SVG turbulence/displacement filter
@@ -91,8 +92,8 @@ adapted from the MIT-licensed
 [TornPaper](https://github.com/happy358/TornPaper) technique. Graphite is also
 the interface accent for selected filters; green remains only as the semantic
 full-score color. The complete paper shape stays inside the hero so none of its
-four torn edges are clipped. The formula artwork reaches the displaced edge
-without a plain graphite inset and is enlarged independently of the sheet.
+four torn edges are clipped. A shared SVG mask lets the formula artwork reach
+the torn edge without distorting its straight lines or leaving a plain inset.
 
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. It shows the shared
