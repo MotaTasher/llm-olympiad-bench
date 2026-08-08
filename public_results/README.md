@@ -81,6 +81,9 @@ explain their participant format, the corresponding one-attempt model
 evaluation and the multi-expert final-verdict process separately. Shared
 model-launch rules remain below it.
 
+The main-page hero uses the original desktop and mobile formula-pattern SVGs on
+a graphite, subtly textured torn-paper shape; it does not use a raster pattern.
+
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. It shows the shared
 finalization-comment block only when that optional comment is non-empty. The required Marked,

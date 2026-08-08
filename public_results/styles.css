@@ -114,21 +114,46 @@ h1, h2, h3 {
   overflow: hidden;
 }
 
+.leaderboard-intro::before,
 .leaderboard-intro::after {
   position: absolute;
   top: 14px;
   right: -35px;
   bottom: 5px;
-  z-index: -1;
   width: min(58vw, 820px);
-  background-color: var(--acid);
+  border-radius: 72px 94px 68px 86px / 58px 78px 64px 82px;
+  clip-path: polygon(
+    3% 12%, 7% 8%, 14% 9%, 20% 5%, 29% 7%, 37% 3%, 46% 5%,
+    55% 3%, 64% 6%, 72% 4%, 81% 7%, 89% 6%, 95% 12%, 97% 20%,
+    98% 29%, 100% 38%, 98% 47%, 99% 57%, 97% 67%, 99% 77%,
+    96% 88%, 91% 94%, 83% 97%, 75% 96%, 66% 99%, 56% 97%,
+    46% 99%, 36% 96%, 27% 98%, 18% 95%, 11% 97%, 5% 91%, 3% 82%,
+    1% 73%, 2% 63%, 0 53%, 2% 43%, 1% 33%, 3% 23%, 2% 16%
+  );
+  transform: rotate(-.7deg);
+  content: "";
+}
+
+.leaderboard-intro::after {
+  z-index: -2;
+  background-color: #3f4042;
+  background-image:
+    radial-gradient(circle at 18% 24%, rgba(255,255,255,.055) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 72% 64%, rgba(0,0,0,.08) 0 1px, transparent 1.7px),
+    repeating-linear-gradient(8deg, rgba(255,255,255,.018) 0 1px, transparent 1px 5px),
+    linear-gradient(117deg, #464749 0%, #3b3c3e 48%, #434446 100%);
+  background-size: 13px 13px, 17px 17px, auto, auto;
+  filter: drop-shadow(0 24px 34px rgba(0,0,0,.36));
+}
+
+.leaderboard-intro::before {
+  z-index: -1;
   background-image: url("assets/formula-pattern-desktop.svg");
   background-position: center;
   background-size: cover;
-  clip-path: polygon(8% 10%, 28% 3%, 52% 7%, 73% 2%, 94% 15%, 100% 38%, 95% 66%, 100% 89%, 77% 98%, 50% 93%, 24% 99%, 3% 84%, 8% 61%, 0 37%);
-  opacity: .92;
-  transform: rotate(-1.5deg);
-  content: "";
+  filter: grayscale(1) invert(1) contrast(.72);
+  mix-blend-mode: screen;
+  opacity: .29;
 }
 
 .leaderboard-intro h1,
@@ -768,7 +793,9 @@ h1, h2, h3 {
 
 @media (max-width: 900px) {
   .leaderboard-intro { grid-template-columns: minmax(0, 1fr); align-items: start; min-height: 470px; gap: 25px; }
-  .leaderboard-intro::after { top: 55px; right: -80px; bottom: 0; width: 620px; opacity: .72; }
+  .leaderboard-intro::before,
+  .leaderboard-intro::after { top: 55px; right: -80px; bottom: 0; width: 620px; }
+  .leaderboard-intro::before { opacity: .23; }
   .intro-copy { max-width: 500px; }
   .section-heading { grid-template-columns: 1fr; }
   .stage-heading { grid-template-columns: 1fr; }
@@ -794,13 +821,17 @@ h1, h2, h3 {
   .leaderboard-intro { min-height: 440px; padding: 48px 0 38px; }
   .leaderboard-intro h1,
   .catalog-intro h1 { font-size: clamp(42px, 13vw, 58px); }
+  .leaderboard-intro::before,
   .leaderboard-intro::after {
     top: 112px;
     right: -115px;
     bottom: 0;
     width: 390px;
+    border-radius: 54px 68px 48px 64px / 46px 60px 52px 66px;
+  }
+  .leaderboard-intro::before {
     background-image: url("assets/formula-pattern-mobile.svg");
-    opacity: .7;
+    opacity: .24;
   }
   .intro-copy { max-width: calc(100% - 28px); padding: 17px 18px; font-size: 14px; }
 
