@@ -119,10 +119,10 @@ h1, h2, h3 {
 .leaderboard-intro::before,
 .leaderboard-intro::after {
   position: absolute;
-  top: -12px;
-  right: -55px;
-  bottom: -18px;
-  width: min(69.6vw, 984px);
+  top: 30px;
+  right: 30px;
+  bottom: 20px;
+  width: min(54vw, 760px);
   border-radius: 58px 68px 62px 54px / 52px 64px 56px 68px;
   transform: rotate(-.25deg);
   content: "";
@@ -144,7 +144,7 @@ h1, h2, h3 {
   z-index: -1;
   background-image: url("assets/formula-pattern-desktop.svg");
   background-position: center;
-  background-size: 120% auto;
+  background-size: 130% auto;
   clip-path: inset(2.4% 2.1% round 48px 58px 52px 46px);
   filter: grayscale(1) invert(1) contrast(.72);
   mix-blend-mode: screen;
@@ -838,14 +838,15 @@ h1, h2, h3 {
   .catalog-intro h1 { font-size: clamp(42px, 13vw, 58px); }
   .leaderboard-intro::before,
   .leaderboard-intro::after {
-    top: 92px;
-    right: -130px;
-    bottom: -12px;
-    width: 468px;
+    top: 155px;
+    right: 40px;
+    bottom: 30px;
+    width: min(71vw, 275px);
     border-radius: 46px 54px 48px 42px / 42px 50px 44px 56px;
   }
   .leaderboard-intro::before {
     background-image: url("assets/formula-pattern-mobile.svg");
+    background-size: 170% auto;
     opacity: .24;
   }
   .intro-copy { max-width: calc(100% - 28px); padding: 17px 18px; font-size: 14px; }

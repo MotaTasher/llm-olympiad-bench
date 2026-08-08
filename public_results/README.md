@@ -87,8 +87,8 @@ The natural edge is produced by an inline SVG turbulence/displacement filter
 adapted from the MIT-licensed
 [TornPaper](https://github.com/happy358/TornPaper) technique. Graphite is also
 the interface accent for selected filters; green remains only as the semantic
-full-score color. The paper and formula pattern are enlarged to keep the hero
-art visually close rather than isolated at the far edge of the layout.
+full-score color. The complete paper shape stays inside the hero so none of its
+four torn edges are clipped; only the formula artwork inside it is enlarged.
 
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. It shows the shared
