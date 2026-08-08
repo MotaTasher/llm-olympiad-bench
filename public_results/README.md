@@ -82,7 +82,12 @@ evaluation and the multi-expert final-verdict process separately. Shared
 model-launch rules remain below it.
 
 The main-page hero uses the original desktop and mobile formula-pattern SVGs on
-a graphite, subtly textured torn-paper shape; it does not use a raster pattern.
+a graphite, stone-speckled torn-paper shape; it does not use a raster pattern.
+The natural edge is produced by an inline SVG turbulence/displacement filter
+adapted from the MIT-licensed
+[TornPaper](https://github.com/happy358/TornPaper) technique. Graphite is also
+the interface accent for selected filters; green remains only as the semantic
+full-score color.
 
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. It shows the shared
