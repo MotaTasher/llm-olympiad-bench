@@ -8,14 +8,14 @@
     <title>Решение — Reasoning Space</title>
     <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
     <link rel="stylesheet" href="vendor/katex/katex.min.css">
-    <link rel="stylesheet" href="styles.css?v=18">
+    <link rel="stylesheet" href="styles.css?v=19">
     <script src="vendor/marked/marked.min.js" defer></script>
     <script src="vendor/dompurify/purify.min.js" defer></script>
     <script src="vendor/katex/katex.min.js" defer></script>
     <script src="vendor/katex/contrib/auto-render.min.js" defer></script>
     <script src="data.js?v=10" defer></script>
     <script src="generated/data.js?v=8" defer></script>
-    <script src="app.js?v=16" defer></script>
+    <script src="app.js?v=17" defer></script>
   </head>
   <body data-page="solution">
     <header class="site-header">
@@ -39,15 +39,15 @@
           <p class="eyebrow" id="solution-competition">Math Cup 2026</p>
           <h1 id="solution-task">Задача</h1>
         </div>
-        <div class="solution-verdict">
+        <div class="solution-verdict solution-result-badge score-empty">
           <span>Результат</span>
-          <strong id="solution-score">—</strong>
+          <strong id="solution-score" data-solution-score>—</strong>
         </div>
       </section>
 
       <section class="solution-layout">
         <dl class="metrics-list solution-metrics">
-          <div><dt>Вердикт</dt><dd id="solution-verdict">—</dd></div>
+          <div><dt>Вердикт</dt><dd id="solution-verdict" data-solution-verdict>—</dd></div>
           <div><dt>Стоимость</dt><dd id="solution-cost">—</dd></div>
           <div><dt>Токены</dt><dd id="solution-tokens">—</dd></div>
         </dl>
@@ -85,6 +85,17 @@
             <p>Блок занимает ту же читательскую ширину, что и ответ модели, поэтому длинные доказательства и разборы можно будет читать без узкой боковой колонки.</p>
           </div>
         </details>
+
+        <section class="solution-result-repeat" aria-label="Результат проверки">
+          <div>
+            <p class="eyebrow">Результат</p>
+            <h2 data-solution-verdict>—</h2>
+          </div>
+          <div class="solution-verdict solution-result-badge score-empty">
+            <span>Баллы</span>
+            <strong data-solution-score>—</strong>
+          </div>
+        </section>
       </section>
     </main>
 

@@ -170,6 +170,21 @@
     return score === null || score === undefined ? "—" : `${score}`;
   }
 
+  function renderSolutionResult(score, maxScore, verdict) {
+    const resultClass = scoreClass(score, maxScore);
+    const scoreLabel = score == null ? "На проверке" : `${score} / ${maxScore}`;
+    document.querySelectorAll("[data-solution-score]").forEach((element) => {
+      element.textContent = scoreLabel;
+    });
+    document.querySelectorAll("[data-solution-verdict]").forEach((element) => {
+      element.textContent = verdict;
+    });
+    document.querySelectorAll(".solution-result-badge").forEach((element) => {
+      element.classList.remove("score-full", "score-partial", "score-zero", "score-empty");
+      element.classList.add(resultClass);
+    });
+  }
+
   function protectMath(source) {
     const chunks = [];
     const pattern = /(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\))/g;
@@ -608,10 +623,10 @@
     document.querySelector("#solution-competition").textContent = `${competition.title} · ${competition.stage}`;
     document.querySelector("#solution-task").textContent = task?.title || "Задача";
     document.querySelector("#solution-model").textContent = participant?.name || "Модель";
-    document.querySelector("#solution-score").textContent = score == null ? "На проверке" : `${score} / ${maxScore}`;
-    document.querySelector("#solution-verdict").textContent = score == null
+    const initialVerdict = score == null
       ? "На проверке"
       : score >= maxScore ? "Полное решение" : score > 0 ? "Частичное решение" : "Не зачтено";
+    renderSolutionResult(score, maxScore, initialVerdict);
     document.querySelector("#solution-cost").textContent = "—";
     document.querySelector("#solution-tokens").textContent = "—";
     document.querySelector("#solution-text").innerHTML = "<p>Загружаем ответ…</p>";
@@ -642,8 +657,11 @@
           : competitionTitle;
       document.querySelector("#solution-task").textContent = documentData.task?.title || task?.title || "Задача";
       document.querySelector("#solution-model").textContent = documentData.model?.name || participant?.name || "Модель";
-      document.querySelector("#solution-score").textContent = result.score == null ? "На проверке" : `${result.score} / ${documentMaxScore}`;
-      document.querySelector("#solution-verdict").textContent = result.verdict || "Нет публичной оценки";
+      renderSolutionResult(
+        result.score,
+        documentMaxScore,
+        result.verdict || (result.score == null ? "На проверке" : "Нет публичной оценки")
+      );
       document.querySelector("#solution-cost").textContent =
         result.cost == null ? "—" : `$${Number(result.cost).toFixed(4)}`;
       document.querySelector("#solution-tokens").textContent =

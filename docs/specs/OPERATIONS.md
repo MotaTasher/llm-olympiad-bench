@@ -83,7 +83,10 @@ in the browser, and centers long prose in a wider reading column. Leaderboard
 participant and member names wrap without truncation.
 The problem statement is collapsed by default. When the optional shared
 finalization comment is non-empty, one collegial-comment block appears before
-the model solution.
+the model solution. On the solution page, the public score badge reuses the
+leaderboard cell's full/partial/zero/pending color. The verdict and score are
+also repeated after the official solution so the result remains discoverable
+after reading the full answer.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the
 selected release; generated model data continues to overlay only the result

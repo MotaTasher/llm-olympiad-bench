@@ -87,13 +87,17 @@ The natural edge is produced by an inline SVG turbulence/displacement filter
 adapted from the MIT-licensed
 [TornPaper](https://github.com/happy358/TornPaper) technique. Graphite is also
 the interface accent for selected filters; green remains only as the semantic
-full-score color.
+full-score color. The paper and formula pattern are enlarged to keep the hero
+art visually close rather than isolated at the far edge of the layout.
 
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. It shows the shared
 finalization-comment block only when that optional comment is non-empty. The required Marked,
 DOMPurify and KaTeX browser assets (including fonts and their licenses) are
 versioned under `vendor/`, so rendering does not depend on a third-party CDN.
+A solution's score badge uses the same full/partial/zero/pending color as its
+leaderboard cell. The verdict and score are repeated after the official
+solution so readers encounter the result again after finishing the page.
 A safe plain-text fallback remains in place. The renderer also replaces
 KaTeX's private-use negation overlay when a browser/font combination exposes it
 as a missing-glyph box. The task statement is collapsed by default; model and
