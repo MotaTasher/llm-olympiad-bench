@@ -1,0 +1,114 @@
+{
+  "title": "Финал 2026, задача 9 — ответ Gemini 3.1 Pro",
+  "source": "верный шаг про равные образы и неверный вывод про окружность подобия",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "points",
+    "fit": "step",
+    "padding": 0.12
+  },
+  "setup": [
+    "O=(0,0)",
+    "A=(-0.08716,0.99619)",
+    "B=(-0.93969,-0.34202)",
+    "C=(0.93969,-0.34202)",
+    "om=Circle(O,1)",
+    "SetColor(om,0.15,0.32,0.6)",
+    "SetLineThickness(om,4)",
+    "SetCaption(om,\"ω\")",
+    "SetLabelMode(om,3)",
+    "ShowLabel(om,true)",
+    "GA=(0.07131,-0.81507)",
+    "bgA=Circle(GA,1.818182)",
+    "SetColor(bgA,0.85,0.5,0.1)",
+    "SetLineThickness(bgA,4)",
+    "SetCaption(bgA,\"Ω_A\")",
+    "SetLabelMode(bgA,3)",
+    "ShowLabel(bgA,true)",
+    "SetCaption(GA,\"центр Ω_A\")",
+    "SetLabelMode(GA,3)",
+    "GB=(0.53432,0.19448)",
+    "bgB=Circle(GB,1.568609)",
+    "SetColor(bgB,0.85,0.5,0.1)",
+    "SetLineThickness(bgB,4)",
+    "SetCaption(bgB,\"Ω_B\")",
+    "SetLabelMode(bgB,3)",
+    "ShowLabel(bgB,true)",
+    "SetCaption(GB,\"центр Ω_B\")",
+    "SetLabelMode(GB,3)",
+    "GC=(-0.44375,0.16151)",
+    "bgC=Circle(GC,1.472224)",
+    "SetColor(bgC,0.85,0.5,0.1)",
+    "SetLineThickness(bgC,4)",
+    "SetCaption(bgC,\"Ω_C\")",
+    "SetLabelMode(bgC,3)",
+    "ShowLabel(bgC,true)",
+    "SetCaption(GC,\"центр Ω_C\")",
+    "SetLabelMode(GC,3)"
+  ],
+  "steps": [
+    {
+      "title": "Верный шаг: образы Ω_B и Ω_C равны",
+      "text": "При инверсии с центром A окружности Ω_B и Ω_C переходят в равные окружности — радиусы образов совпадают (1.0957). Это в решении получено правильно.",
+      "commands": [
+        "SetPointSize(A,5)",
+        "SetPointSize(B,5)",
+        "SetPointSize(C,5)",
+        "SetCaption(A,\"A\")",
+        "SetLabelMode(A,3)",
+        "ShowLabel(A,true)",
+        "SetCaption(B,\"B\")",
+        "SetLabelMode(B,3)",
+        "ShowLabel(B,true)",
+        "SetCaption(C,\"C\")",
+        "SetLabelMode(C,3)",
+        "ShowLabel(C,true)",
+        "txtI=Text(\"радиусы образов Ω_B и Ω_C: 1.0957 = 1.0957\",(-3.0,2.9))",
+        "SetColor(txtI,0.16,0.47,0.34)"
+      ],
+      "highlight": [
+        "bgB",
+        "bgC"
+      ]
+    },
+    {
+      "title": "Шаг, на котором решение ломается",
+      "text": "Дальше сказано: «если инверсия с центром A переводит две окружности в равные, то A лежит на окружности подобия этих окружностей». Окружность подобия — это ГМТ точек, для которых отношение расстояний до центров равно отношению радиусов.",
+      "commands": [
+        "AP=(-7.67662,-0.08227)",
+        "apo=Circle(AP,7.710780)",
+        "SetVisibleInView(AP,1,false)",
+        "SetColor(apo,0.45,0.25,0.65)",
+        "SetLineThickness(apo,4)",
+        "SetLineStyle(apo,2)",
+        "SetCaption(apo,\"окружность подобия Ω_B и Ω_C\")",
+        "SetLabelMode(apo,3)",
+        "ShowLabel(apo,true)"
+      ],
+      "highlight": [
+        "apo"
+      ]
+    },
+    {
+      "title": "A на ней не лежит",
+      "text": "Отношение расстояний от A до центров равно 1.1176, а отношение радиусов R_B/R_C = 1.0655. Это разные числа, значит A вне окружности подобия, и вывод решения не проходит. Равенство образов при инверсии и принадлежность окружности подобия — разные условия.",
+      "commands": [
+        "sgB=Segment(A,GB)",
+        "sgC=Segment(A,GC)",
+        "SetColor(sgB,0.55,0.55,0.55)",
+        "SetLineThickness(sgB,2)",
+        "SetColor(sgC,0.55,0.55,0.55)",
+        "SetLineThickness(sgC,2)",
+        "txtR=Text(\"|A−O_B| / |A−O_C| = 1.1176\",(-3.0,-2.6))",
+        "SetColor(txtR,0.72,0.11,0.11)",
+        "txtK=Text(\"R_B / R_C = 1.0655\",(-3.0,-3.1))",
+        "SetColor(txtK,0.72,0.11,0.11)"
+      ],
+      "highlight": [
+        "A"
+      ]
+    }
+  ]
+}
