@@ -7,29 +7,29 @@
       "model_key": "google:gemini-3.1-pro-preview",
       "model": "gemini-3.1-pro-preview",
       "evaluator": "mofeyTEA",
-      "score": 2,
+      "score": 1.5,
       "max_score": 4.0,
       "score_category": "partial",
       "feedback": "Пример не объяснён. Почему такой наклон существует? Почему он будет обладать нужными свойствами?",
       "created_at": "2026-07-30T20:23:35.528819Z",
-      "updated_at": "2026-07-30T20:23:35.528819Z"
+      "updated_at": "2026-08-05T21:56:01.254840Z"
     }
   },
   "evaluation_pool": {
     "res_27e78d35c0714e23df1eb9fa": [
       {
-        "evaluation_id": "ev_564130815dfb47638f78c74fb8dcaf8a",
+        "evaluation_id": "ev_9c0ed2a9488249ddb007ed686e68400b",
         "result_id": "res_27e78d35c0714e23df1eb9fa",
         "result_index": 0,
         "model_key": "google:gemini-3.1-pro-preview",
         "model": "gemini-3.1-pro-preview",
         "evaluator": "b2_maxim",
-        "score": 1,
-        "max_score": 4,
+        "score": 1.5,
+        "max_score": 4.0,
         "score_category": "partial",
         "feedback": "",
-        "created_at": "2026-07-24T20:57:49.663628Z",
-        "updated_at": "2026-07-24T20:57:49.663628Z"
+        "created_at": "2026-08-01T21:31:54.443838Z",
+        "updated_at": "2026-08-01T21:31:54.443838Z"
       },
       {
         "evaluation_id": "ev_ca0f142d091842fe8fa0596a4f0d0d04",
@@ -38,12 +38,12 @@
         "model_key": "google:gemini-3.1-pro-preview",
         "model": "gemini-3.1-pro-preview",
         "evaluator": "mofeyTEA",
-        "score": 2,
+        "score": 1.5,
         "max_score": 4.0,
         "score_category": "partial",
         "feedback": "Пример не объяснён. Почему такой наклон существует? Почему он будет обладать нужными свойствами?",
         "created_at": "2026-07-30T20:23:35.528819Z",
-        "updated_at": "2026-07-30T20:23:35.528819Z"
+        "updated_at": "2026-08-05T21:56:01.254840Z"
       }
     ]
   },
@@ -51,5 +51,20 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_07_15_16_40_20_qualifying_missing_20260715_144724_task_07_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-07-30T20:23:35.528819Z"
+  "updated_at": "2026-08-11T16:56:57.792553Z",
+  "finalizations": {
+    "res_27e78d35c0714e23df1eb9fa": {
+      "result_id": "res_27e78d35c0714e23df1eb9fa",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "тест",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T13:17:48.819359Z",
+      "updated_at": "2026-08-11T16:56:57.792553Z"
+    }
+  }
 }

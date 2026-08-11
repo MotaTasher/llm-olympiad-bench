@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_1afd96427d1fe8617c09ff64": {
-      "evaluation_id": "ev_28a39896a1c742a29bfb04e62621f97f",
+      "evaluation_id": "ev_db0ee336655a49fb97ba1699dbadc493",
       "result_id": "res_1afd96427d1fe8617c09ff64",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 1,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "а) ок\r\nб) \"По обобщённой Cycle Lemma ...\" эта формула неверна просто.",
-      "created_at": "2026-07-03T22:16:17.131055Z",
-      "updated_at": "2026-07-03T22:16:17.131055Z"
+      "feedback": "а - гуд\r\nб - после \"По обобщённой Cycle Lemma\" - бредик. Для x = \"1\" сумма f будет inf, а не конечная (тк для любого отрицательного будет подходить)",
+      "created_at": "2026-08-11T18:00:25.101825Z",
+      "updated_at": "2026-08-11T18:00:25.101825Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "а) ок\r\nб) \"По обобщённой Cycle Lemma ...\" эта формула неверна просто.",
         "created_at": "2026-07-03T22:16:17.131055Z",
         "updated_at": "2026-07-03T22:16:17.131055Z"
+      },
+      {
+        "evaluation_id": "ev_db0ee336655a49fb97ba1699dbadc493",
+        "result_id": "res_1afd96427d1fe8617c09ff64",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "а - гуд\r\nб - после \"По обобщённой Cycle Lemma\" - бредик. Для x = \"1\" сумма f будет inf, а не конечная (тк для любого отрицательного будет подходить)",
+        "created_at": "2026-08-11T18:00:25.101825Z",
+        "updated_at": "2026-08-11T18:00:25.101825Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_08",
   "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_08_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-07-03T22:16:17.131055Z"
+  "updated_at": "2026-08-11T18:00:25.101825Z",
+  "finalizations": {}
 }

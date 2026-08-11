@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_fe1c92fd7e492a3a4ca0dd92": {
+      "evaluation_id": "ev_848de928caad482f901a3019301ab173",
+      "result_id": "res_fe1c92fd7e492a3a4ca0dd92",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "evaluator": "mofeyTEA",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "Пример не объяснён",
+      "created_at": "2026-08-05T22:03:07.293833Z",
+      "updated_at": "2026-08-05T22:03:07.293833Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_fe1c92fd7e492a3a4ca0dd92": [
+      {
+        "evaluation_id": "ev_0f28ccea2b24470abcc50bfb12cfd303",
+        "result_id": "res_fe1c92fd7e492a3a4ca0dd92",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "b2_maxim",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "В примере зачем-то паролелограмм покрывают(не удивительно, что пример не доведён)",
+        "created_at": "2026-08-01T21:56:32.314043Z",
+        "updated_at": "2026-08-01T21:56:32.314043Z"
+      },
+      {
+        "evaluation_id": "ev_848de928caad482f901a3019301ab173",
+        "result_id": "res_fe1c92fd7e492a3a4ca0dd92",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "mofeyTEA",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "Пример не объяснён",
+        "created_at": "2026-08-05T22:03:07.293833Z",
+        "updated_at": "2026-08-05T22:03:07.293833Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_00_57_08_math-cup-2026-qualifying_20260801_001725_task_07_xai_grok-4.5_256000",
+  "updated_at": "2026-08-10T13:18:08.865386Z",
+  "finalizations": {
+    "res_fe1c92fd7e492a3a4ca0dd92": {
+      "result_id": "res_fe1c92fd7e492a3a4ca0dd92",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T13:18:08.865386Z",
+      "updated_at": "2026-08-10T13:18:08.865386Z"
+    }
+  }
+}

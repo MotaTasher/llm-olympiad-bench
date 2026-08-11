@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_a016863587a42a82776ce4d1": {
+      "evaluation_id": "ev_eb8dea1298384eb6b89bc973351bc787",
+      "result_id": "res_a016863587a42a82776ce4d1",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "evaluator": "MotaTasher",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-09T23:50:30.072693Z",
+      "updated_at": "2026-08-09T23:50:30.072693Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_a016863587a42a82776ce4d1": [
+      {
+        "evaluation_id": "ev_58161b1410d3408687f4530c8ab4df11",
+        "result_id": "res_a016863587a42a82776ce4d1",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "b2_maxim",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "Корректный явный пример",
+        "created_at": "2026-08-02T18:00:25.990228Z",
+        "updated_at": "2026-08-02T18:00:25.990228Z"
+      },
+      {
+        "evaluation_id": "ev_290c648399464b7f9b9f570aa6d003a1",
+        "result_id": "res_a016863587a42a82776ce4d1",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-05T21:40:19.210847Z",
+        "updated_at": "2026-08-05T21:40:19.210847Z"
+      },
+      {
+        "evaluation_id": "ev_eb8dea1298384eb6b89bc973351bc787",
+        "result_id": "res_a016863587a42a82776ce4d1",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-09T23:50:30.072693Z",
+        "updated_at": "2026-08-09T23:50:30.072693Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_00_33_12_math-cup-2026-final_20260801_001725_task_07_openai_gpt-5.6-sol_256000",
+  "updated_at": "2026-08-09T23:50:30.072693Z",
+  "finalizations": {}
+}

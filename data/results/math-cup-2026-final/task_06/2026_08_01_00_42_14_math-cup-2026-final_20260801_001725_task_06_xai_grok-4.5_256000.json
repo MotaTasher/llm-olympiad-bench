@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_20ae7dc3abb2e103580700cf": {
+      "evaluation_id": "ev_15e0e9d189b64d86aaa223ac000829e3",
+      "result_id": "res_20ae7dc3abb2e103580700cf",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "evaluator": "MotaTasher",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "а - гуд, дфс + оценка // после созвона с Максом - индукция по графам в которых есть гамильтонов путь. Но после удаления одной вершины, если граф остался связным - то он может не покрываться \r\nб - рекурсией спускаются до n_0 и дальше в рекурсии всегда возвращают путь оттуда ( $f(n) \\geq  f(n/2)$ - те ничего к найденому пути не добавляется)",
+      "created_at": "2026-08-09T13:03:21.006771Z",
+      "updated_at": "2026-08-10T11:16:22.527354Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_20ae7dc3abb2e103580700cf": [
+      {
+        "evaluation_id": "ev_4de47d2b016a455eba5f075a460cfec2",
+        "result_id": "res_20ae7dc3abb2e103580700cf",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а)\"(при c(G−s)=1 оба подпути лежат в единственной компоненте, но тогда G[C] допускает покрытие двумя путями; однако в силу структуры рёбер DFS и индуктивного предположения… случай покрытия 2 сводится к исходному масштабированием основания логарифма)\" неверное\r\n\r\n\r\nб)алгоритм возвращает путь константной длины",
+        "created_at": "2026-08-02T18:46:55.775327Z",
+        "updated_at": "2026-08-02T18:46:55.775327Z"
+      },
+      {
+        "evaluation_id": "ev_15e0e9d189b64d86aaa223ac000829e3",
+        "result_id": "res_20ae7dc3abb2e103580700cf",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а - гуд, дфс + оценка // после созвона с Максом - индукция по графам в которых есть гамильтонов путь. Но после удаления одной вершины, если граф остался связным - то он может не покрываться \r\nб - рекурсией спускаются до n_0 и дальше в рекурсии всегда возвращают путь оттуда ( $f(n) \\geq  f(n/2)$ - те ничего к найденому пути не добавляется)",
+        "created_at": "2026-08-09T13:03:21.006771Z",
+        "updated_at": "2026-08-10T11:16:22.527354Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_01_00_42_14_math-cup-2026-final_20260801_001725_task_06_xai_grok-4.5_256000",
+  "updated_at": "2026-08-10T11:16:22.527354Z",
+  "finalizations": {
+    "res_20ae7dc3abb2e103580700cf": {
+      "result_id": "res_20ae7dc3abb2e103580700cf",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T11:15:55.888567Z",
+      "updated_at": "2026-08-10T11:15:55.888567Z"
+    }
+  }
+}

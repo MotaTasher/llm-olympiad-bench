@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_6e01e0421686e0a83a60e50a": {
-      "evaluation_id": "ev_1a09ead44b2042e3a354a3900b27f58d",
+      "evaluation_id": "ev_d49e0b6ada0748acbf1b3a58bb1f96b6",
       "result_id": "res_6e01e0421686e0a83a60e50a",
       "result_index": 0,
       "model_key": "yandexgpt:aliceai-llm",
       "model": "aliceai-llm",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "\"то все c_j должны быть целыми числами.\" неверно просто для x(x+1)/2",
-      "created_at": "2026-08-01T09:14:59.336367Z",
-      "updated_at": "2026-08-01T09:14:59.336367Z"
+      "feedback": "Ошибка в 4 шаге",
+      "created_at": "2026-08-04T09:36:16.621643Z",
+      "updated_at": "2026-08-04T09:36:16.621643Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "\"то все c_j должны быть целыми числами.\" неверно просто для x(x+1)/2",
         "created_at": "2026-08-01T09:14:59.336367Z",
         "updated_at": "2026-08-01T09:14:59.336367Z"
+      },
+      {
+        "evaluation_id": "ev_d49e0b6ada0748acbf1b3a58bb1f96b6",
+        "result_id": "res_6e01e0421686e0a83a60e50a",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "Ошибка в 4 шаге",
+        "created_at": "2026-08-04T09:36:16.621643Z",
+        "updated_at": "2026-08-04T09:36:16.621643Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_03",
   "run_id": "2026_08_01_00_17_48_math-cup-2026-final_20260801_001725_task_03_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-01T09:14:59.336367Z"
+  "updated_at": "2026-08-04T09:36:16.621643Z",
+  "finalizations": {}
 }

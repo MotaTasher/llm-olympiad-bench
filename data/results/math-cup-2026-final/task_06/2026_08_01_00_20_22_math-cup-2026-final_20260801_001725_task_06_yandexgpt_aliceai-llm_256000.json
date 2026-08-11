@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_8bd1122aa6908003d12b1618": {
+      "evaluation_id": "ev_3546b511c99a4bdfae1d886ab3b72bba",
+      "result_id": "res_8bd1122aa6908003d12b1618",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "evaluator": "MotaTasher",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "не доказано, что гамильтонов путь можно искать в P",
+      "created_at": "2026-08-09T14:09:08.539676Z",
+      "updated_at": "2026-08-09T14:09:08.539676Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_8bd1122aa6908003d12b1618": [
+      {
+        "evaluation_id": "ev_6a5dddc2054348d89e29dc236aac68a6",
+        "result_id": "res_8bd1122aa6908003d12b1618",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-02T18:53:43.812531Z",
+        "updated_at": "2026-08-02T18:53:43.812531Z"
+      },
+      {
+        "evaluation_id": "ev_3546b511c99a4bdfae1d886ab3b72bba",
+        "result_id": "res_8bd1122aa6908003d12b1618",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "не доказано, что гамильтонов путь можно искать в P",
+        "created_at": "2026-08-09T14:09:08.539676Z",
+        "updated_at": "2026-08-09T14:09:08.539676Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_01_00_20_22_math-cup-2026-final_20260801_001725_task_06_yandexgpt_aliceai-llm_256000",
+  "updated_at": "2026-08-09T14:09:08.539676Z",
+  "finalizations": {}
+}

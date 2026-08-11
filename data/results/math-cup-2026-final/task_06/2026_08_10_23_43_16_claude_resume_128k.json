@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_a915eaf8dc226524ccdee72f": {
+      "evaluation_id": "ev_ca356f3185034b30902b62c6dc3e9fdb",
+      "result_id": "res_a915eaf8dc226524ccdee72f",
+      "result_index": 0,
+      "model_key": "anthropic:claude-opus-5",
+      "model": "claude-opus-5",
+      "evaluator": "b2_maxim",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "created_at": "2026-08-11T16:43:27.053468Z",
+      "updated_at": "2026-08-11T16:43:27.053468Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_a915eaf8dc226524ccdee72f": [
+      {
+        "evaluation_id": "ev_73986bfeb806413a9d0b974cb6a82223",
+        "result_id": "res_a915eaf8dc226524ccdee72f",
+        "result_index": 0,
+        "model_key": "anthropic:claude-opus-5",
+        "model": "claude-opus-5",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "a - гуд\r\nb - не понятно почему мы можем выбрать какой-то h_min так что либо найдется меньше либо рольнется дерево глубины хотя бы k",
+        "created_at": "2026-08-11T13:35:38.006284Z",
+        "updated_at": "2026-08-11T13:35:38.006284Z"
+      },
+      {
+        "evaluation_id": "ev_ca356f3185034b30902b62c6dc3e9fdb",
+        "result_id": "res_a915eaf8dc226524ccdee72f",
+        "result_index": 0,
+        "model_key": "anthropic:claude-opus-5",
+        "model": "claude-opus-5",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-08-11T16:43:27.053468Z",
+        "updated_at": "2026-08-11T16:43:27.053468Z"
+      }
+    ]
+  },
+  "finalizations": {
+    "res_a915eaf8dc226524ccdee72f": {
+      "result_id": "res_a915eaf8dc226524ccdee72f",
+      "result_index": 0,
+      "model_key": "anthropic:claude-opus-5",
+      "model": "claude-opus-5",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-11T16:46:38.192627Z",
+      "updated_at": "2026-08-11T16:46:38.192627Z"
+    }
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_10_23_43_16_claude_resume_128k",
+  "updated_at": "2026-08-11T16:46:38.192627Z"
+}

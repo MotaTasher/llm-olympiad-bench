@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_0fdfb491756e70901d19a09c": {
+      "evaluation_id": "ev_63ef7b360a874efb8b17baa1862d971a",
+      "result_id": "res_0fdfb491756e70901d19a09c",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "evaluator": "b2_maxim",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "Лемма 2 неверна. 1 балл за решения пунка а первого запроса.",
+      "created_at": "2026-08-11T16:45:04.176092Z",
+      "updated_at": "2026-08-11T16:45:04.176092Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_0fdfb491756e70901d19a09c": [
+      {
+        "evaluation_id": "ev_a4543c3794cc4e1db98d27803c11cd64",
+        "result_id": "res_0fdfb491756e70901d19a09c",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а - \"Гамильтонов путь должен посетить вершины всех трёх поддеревьев. Чтобы перейти из одного дочернего поддерева в другое, он обязан пройти через \r\n. Но простой путь может посетить \r\n только один раз и потому может соединить через \r\n не более двух дочерних поддеревьев.\" - не верно. Путь может уйти выше v и после оттуда спуститься ниже v - те перейти из одного поддерева в другое не проходя через v\r\n\r\n\r\nб - \"После  шагов отмечено не более  интервалов. Следовательно, на каждом шаге имеется не более  существенных классов вариантов. Условная вероятность того, что первым в случайном порядке окажется нужный класс, не меньше .\" - классы не сбалансированны. Так что нужный класс может с любой вероятностью появляться\r\n\r\n",
+        "created_at": "2026-08-11T13:52:34.028762Z",
+        "updated_at": "2026-08-11T13:52:34.028762Z"
+      },
+      {
+        "evaluation_id": "ev_63ef7b360a874efb8b17baa1862d971a",
+        "result_id": "res_0fdfb491756e70901d19a09c",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "Лемма 2 неверна. 1 балл за решения пунка а первого запроса.",
+        "created_at": "2026-08-11T16:45:04.176092Z",
+        "updated_at": "2026-08-11T16:45:04.176092Z"
+      }
+    ]
+  },
+  "finalizations": {},
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_10_22_43_40_clarified_into_final_task06_gpt",
+  "updated_at": "2026-08-11T16:45:04.176092Z"
+}

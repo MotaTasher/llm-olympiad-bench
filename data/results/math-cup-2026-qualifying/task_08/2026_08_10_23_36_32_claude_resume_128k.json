@@ -1,0 +1,42 @@
+{
+  "evaluations": {
+    "res_6f8c9208ef8a28dcc90df34d": {
+      "evaluation_id": "ev_592ba0a44a714ce39f2054fedf56fe9a",
+      "result_id": "res_6f8c9208ef8a28dcc90df34d",
+      "result_index": 0,
+      "model_key": "anthropic:claude-fable-5",
+      "model": "claude-fable-5",
+      "evaluator": "b2_maxim",
+      "score": 3,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "created_at": "2026-08-11T16:51:28.696958Z",
+      "updated_at": "2026-08-11T16:51:28.696958Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_6f8c9208ef8a28dcc90df34d": [
+      {
+        "evaluation_id": "ev_592ba0a44a714ce39f2054fedf56fe9a",
+        "result_id": "res_6f8c9208ef8a28dcc90df34d",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "b2_maxim",
+        "score": 3,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-08-11T16:51:28.696958Z",
+        "updated_at": "2026-08-11T16:51:28.696958Z"
+      }
+    ]
+  },
+  "finalizations": {},
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_08",
+  "run_id": "2026_08_10_23_36_32_claude_resume_128k",
+  "updated_at": "2026-08-11T16:51:28.696958Z"
+}

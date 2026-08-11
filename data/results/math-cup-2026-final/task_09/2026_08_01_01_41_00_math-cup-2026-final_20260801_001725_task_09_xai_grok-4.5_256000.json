@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_1f8c6fee8be883c93ac60322": {
+      "evaluation_id": "ev_77c6e837df7e4dd780c60253bde5fda2",
+      "result_id": "res_1f8c6fee8be883c93ac60322",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "evaluator": "b2_maxim",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "\"Аccordingly, \\( h \\) preserves \\(\\Omega_A\\). But \\( X_B \\) is a point of intersection of \\(\\Omega_A\\) and \\(\\Omega_C\\), so that \\( h(X_B) \\) is a point of intersection of \\( h(\\Omega_A) = \\Omega_A \\) and \\( h(\\Omega_C) = \\Omega_B \\).\"\r\n\r\nвот тут неверно, по сути доводится заменой гомотетии на инверсию(но делать что-то надо)",
+      "created_at": "2026-08-02T17:44:00.246147Z",
+      "updated_at": "2026-08-02T17:44:00.246147Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_1f8c6fee8be883c93ac60322": [
+      {
+        "evaluation_id": "ev_77c6e837df7e4dd780c60253bde5fda2",
+        "result_id": "res_1f8c6fee8be883c93ac60322",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "\"Аccordingly, \\( h \\) preserves \\(\\Omega_A\\). But \\( X_B \\) is a point of intersection of \\(\\Omega_A\\) and \\(\\Omega_C\\), so that \\( h(X_B) \\) is a point of intersection of \\( h(\\Omega_A) = \\Omega_A \\) and \\( h(\\Omega_C) = \\Omega_B \\).\"\r\n\r\nвот тут неверно, по сути доводится заменой гомотетии на инверсию(но делать что-то надо)",
+        "created_at": "2026-08-02T17:44:00.246147Z",
+        "updated_at": "2026-08-02T17:44:00.246147Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_08_01_01_41_00_math-cup-2026-final_20260801_001725_task_09_xai_grok-4.5_256000",
+  "updated_at": "2026-08-02T17:44:00.246147Z"
+}

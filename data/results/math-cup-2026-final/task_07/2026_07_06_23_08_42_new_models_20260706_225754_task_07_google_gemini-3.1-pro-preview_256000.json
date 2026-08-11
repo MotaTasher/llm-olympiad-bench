@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_e01f92957ea89ecf0aef234f": {
-      "evaluation_id": "ev_4f822341a4134bcb993b1e7f73570eee",
+      "evaluation_id": "ev_c3e1a2a370da44c9abb180ea67eeafc8",
       "result_id": "res_e01f92957ea89ecf0aef234f",
       "result_index": 0,
       "model_key": "google:gemini-3.1-pro-preview",
       "model": "gemini-3.1-pro-preview",
-      "evaluator": "mofeyTEA",
+      "evaluator": "MotaTasher",
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-28T11:47:35.603715Z",
-      "updated_at": "2026-07-28T11:47:35.603715Z"
+      "created_at": "2026-08-10T00:01:24.484854Z",
+      "updated_at": "2026-08-10T00:01:24.484854Z"
     }
   },
   "evaluation_pool": {
@@ -44,6 +44,20 @@
         "feedback": "",
         "created_at": "2026-07-28T11:47:35.603715Z",
         "updated_at": "2026-07-28T11:47:35.603715Z"
+      },
+      {
+        "evaluation_id": "ev_c3e1a2a370da44c9abb180ea67eeafc8",
+        "result_id": "res_e01f92957ea89ecf0aef234f",
+        "result_index": 0,
+        "model_key": "google:gemini-3.1-pro-preview",
+        "model": "gemini-3.1-pro-preview",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-10T00:01:24.484854Z",
+        "updated_at": "2026-08-10T00:01:24.484854Z"
       }
     ]
   },
@@ -51,5 +65,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_07",
   "run_id": "2026_07_06_23_08_42_new_models_20260706_225754_task_07_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-07-28T11:47:35.603715Z"
+  "updated_at": "2026-08-10T00:01:24.484854Z",
+  "finalizations": {}
 }

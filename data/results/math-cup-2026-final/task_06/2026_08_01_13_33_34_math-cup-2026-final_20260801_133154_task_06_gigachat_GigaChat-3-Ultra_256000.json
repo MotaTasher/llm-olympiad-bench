@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_5cd4fdad5413d479844ec30b": {
+      "evaluation_id": "ev_4dbdfd03a9d04eae9c370777bae87cc9",
+      "result_id": "res_5cd4fdad5413d479844ec30b",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "evaluator": "MotaTasher",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "а - ассимптотика не учитывает, что нужно хранить множества\r\nб - не поженилось, без дальнейших комментариев ",
+      "created_at": "2026-08-09T12:52:15.704070Z",
+      "updated_at": "2026-08-09T12:52:15.704070Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_5cd4fdad5413d479844ec30b": [
+      {
+        "evaluation_id": "ev_8557173f6ed5432f932d57e4946d90a0",
+        "result_id": "res_5cd4fdad5413d479844ec30b",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-02T18:54:17.217468Z",
+        "updated_at": "2026-08-02T18:54:17.217468Z"
+      },
+      {
+        "evaluation_id": "ev_4dbdfd03a9d04eae9c370777bae87cc9",
+        "result_id": "res_5cd4fdad5413d479844ec30b",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а - ассимптотика не учитывает, что нужно хранить множества\r\nб - не поженилось, без дальнейших комментариев ",
+        "created_at": "2026-08-09T12:52:15.704070Z",
+        "updated_at": "2026-08-09T12:52:15.704070Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_01_13_33_34_math-cup-2026-final_20260801_133154_task_06_gigachat_GigaChat-3-Ultra_256000",
+  "updated_at": "2026-08-09T12:52:15.704070Z",
+  "finalizations": {}
+}

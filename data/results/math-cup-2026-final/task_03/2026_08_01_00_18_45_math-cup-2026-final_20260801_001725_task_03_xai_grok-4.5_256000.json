@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_155355aec5c2409dfc642c33": {
+      "evaluation_id": "ev_55fcb7a275f246c492d320bf722dcde6",
+      "result_id": "res_155355aec5c2409dfc642c33",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "evaluator": "mofeyTEA",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-04T09:35:28.563337Z",
+      "updated_at": "2026-08-04T09:35:28.563337Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_155355aec5c2409dfc642c33": [
+      {
+        "evaluation_id": "ev_1783cd738d1649df9a9244200fdbf6ed",
+        "result_id": "res_155355aec5c2409dfc642c33",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "b2_maxim",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "Невероятно НЕ интуитивные выкладки, но всё верно",
+        "created_at": "2026-08-01T22:35:54.009062Z",
+        "updated_at": "2026-08-01T22:35:54.009062Z"
+      },
+      {
+        "evaluation_id": "ev_55fcb7a275f246c492d320bf722dcde6",
+        "result_id": "res_155355aec5c2409dfc642c33",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-04T09:35:28.563337Z",
+        "updated_at": "2026-08-04T09:35:28.563337Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_03",
+  "run_id": "2026_08_01_00_18_45_math-cup-2026-final_20260801_001725_task_03_xai_grok-4.5_256000",
+  "updated_at": "2026-08-04T09:35:28.563337Z",
+  "finalizations": {}
+}

@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_90aaa8bee85d49ed7989aaba": {
+      "evaluation_id": "ev_fa60b893f665468099530e2135a7c149",
+      "result_id": "res_90aaa8bee85d49ed7989aaba",
+      "result_index": 0,
+      "model_key": "anthropic:claude-fable-5",
+      "model": "claude-fable-5",
+      "evaluator": "mofeyTEA",
+      "score": 4,
+      "max_score": 4.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-03T20:20:59.078320Z",
+      "updated_at": "2026-08-03T20:20:59.078320Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_90aaa8bee85d49ed7989aaba": [
+      {
+        "evaluation_id": "ev_e97cacf1ff2a4f4da8f92599fc76bb58",
+        "result_id": "res_90aaa8bee85d49ed7989aaba",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "b2_maxim",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-01T14:56:18.745765Z",
+        "updated_at": "2026-08-01T14:56:18.745765Z"
+      },
+      {
+        "evaluation_id": "ev_fa60b893f665468099530e2135a7c149",
+        "result_id": "res_90aaa8bee85d49ed7989aaba",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "mofeyTEA",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-03T20:20:59.078320Z",
+        "updated_at": "2026-08-03T20:20:59.078320Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_04",
+  "run_id": "2026_08_01_12_49_18_math-cup-2026-qualifying_20260801_104901_task_04_anthropic_claude-fable-5_256000",
+  "updated_at": "2026-08-03T20:20:59.078320Z",
+  "finalizations": {}
+}

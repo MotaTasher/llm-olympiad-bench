@@ -85,18 +85,18 @@
       "updated_at": "2026-07-06T15:26:02.612001Z"
     },
     "res_3961196ed6eceb8622540235": {
-      "evaluation_id": "ev_d7e3a01891144d518f82f9e66e7291c9",
+      "evaluation_id": "ev_93b36fd4acff4fe4b28d981b133fe67a",
       "result_id": "res_3961196ed6eceb8622540235",
       "result_index": 4,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "evaluator": "mofeyTEA",
+      "evaluator": "MotaTasher",
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-06T15:24:38.234657Z",
-      "updated_at": "2026-07-06T15:24:38.234657Z"
+      "created_at": "2026-08-09T21:26:03.932878Z",
+      "updated_at": "2026-08-09T21:26:03.932878Z"
     },
     "res_59d4d449dcb3133c94b20706": {
       "evaluation_id": "ev_f2b64d24b98d4fcdbbbf38c3d4705974",
@@ -350,6 +350,20 @@
         "feedback": "",
         "created_at": "2026-07-06T15:24:38.234657Z",
         "updated_at": "2026-07-06T15:24:38.234657Z"
+      },
+      {
+        "evaluation_id": "ev_93b36fd4acff4fe4b28d981b133fe67a",
+        "result_id": "res_3961196ed6eceb8622540235",
+        "result_index": 4,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-09T21:26:03.932878Z",
+        "updated_at": "2026-08-09T21:26:03.932878Z"
       }
     ],
     "res_59d4d449dcb3133c94b20706": [
@@ -447,5 +461,5 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_01",
   "run_id": "2026_06_29_21_11_22_math_cup_2026_final_task_01_all_models_16192",
-  "updated_at": "2026-07-15T07:42:33.157285Z"
+  "updated_at": "2026-08-09T21:26:03.932878Z"
 }

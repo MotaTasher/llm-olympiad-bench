@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_71e0b335631d036d04a80fec": {
-      "evaluation_id": "ev_c9fd3ae9328949a0ba0064d6deb17e1a",
+      "evaluation_id": "ev_77ec5a8fcf5b4f1fb594cb038f9a0b68",
       "result_id": "res_71e0b335631d036d04a80fec",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 1,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "а) ок, если считать сведение к детерминированности известным фактом \r\n\r\nб) просто ссылка на литературу, поставил 0 за это",
-      "created_at": "2026-07-03T23:03:07.865981Z",
-      "updated_at": "2026-07-03T23:03:07.865981Z"
+      "feedback": "а - гуд color-coding\r\nb - не объясненно ни ассимптотика ни почему работает",
+      "created_at": "2026-08-09T14:05:49.510237Z",
+      "updated_at": "2026-08-09T14:05:49.510237Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "а) ок, если считать сведение к детерминированности известным фактом \r\n\r\nб) просто ссылка на литературу, поставил 0 за это",
         "created_at": "2026-07-03T23:03:07.865981Z",
         "updated_at": "2026-07-03T23:03:07.865981Z"
+      },
+      {
+        "evaluation_id": "ev_77ec5a8fcf5b4f1fb594cb038f9a0b68",
+        "result_id": "res_71e0b335631d036d04a80fec",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "а - гуд color-coding\r\nb - не объясненно ни ассимптотика ни почему работает",
+        "created_at": "2026-08-09T14:05:49.510237Z",
+        "updated_at": "2026-08-09T14:05:49.510237Z"
       }
     ]
   },
@@ -37,5 +51,20 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_06_30_10_09_20_retry_320k_20260630_100919_task_06_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-07-03T23:03:13.673549Z"
+  "updated_at": "2026-08-10T13:19:17.985529Z",
+  "finalizations": {
+    "res_71e0b335631d036d04a80fec": {
+      "result_id": "res_71e0b335631d036d04a80fec",
+      "result_index": 0,
+      "model_key": "deepseek:deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T13:19:17.985529Z",
+      "updated_at": "2026-08-10T13:19:17.985529Z"
+    }
+  }
 }

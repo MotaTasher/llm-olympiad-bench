@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_743144edc2a5fb60d21302c8": {
+      "evaluation_id": "ev_b5136b4c496e4713b858e0a138aeed7d",
+      "result_id": "res_743144edc2a5fb60d21302c8",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "evaluator": "mofeyTEA",
+      "score": 4,
+      "max_score": 4.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-05T22:04:35.815813Z",
+      "updated_at": "2026-08-05T22:04:35.815813Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_743144edc2a5fb60d21302c8": [
+      {
+        "evaluation_id": "ev_531d58a05b8a4d25998c1bc3a097e841",
+        "result_id": "res_743144edc2a5fb60d21302c8",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "b2_maxim",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "Часть \"2. Прямоугольная развёртка поверхности\" - пиздец, но в целом норм решение",
+        "created_at": "2026-08-01T21:47:16.144523Z",
+        "updated_at": "2026-08-01T21:47:16.144523Z"
+      },
+      {
+        "evaluation_id": "ev_b5136b4c496e4713b858e0a138aeed7d",
+        "result_id": "res_743144edc2a5fb60d21302c8",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "mofeyTEA",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-05T22:04:35.815813Z",
+        "updated_at": "2026-08-05T22:04:35.815813Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_00_47_54_math-cup-2026-qualifying_20260801_001725_task_07_openai_gpt-5.6-sol_256000",
+  "updated_at": "2026-08-05T22:04:35.815813Z",
+  "finalizations": {}
+}

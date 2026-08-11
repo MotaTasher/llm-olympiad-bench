@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_a292ea0f2869bb50ed5fedd9": {
+      "evaluation_id": "ev_187fc28f1fd04547899f6851b0a53635",
+      "result_id": "res_a292ea0f2869bb50ed5fedd9",
+      "result_index": 0,
+      "model_key": "anthropic:claude-fable-5",
+      "model": "claude-fable-5",
+      "evaluator": "MotaTasher",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-09T23:51:36.883241Z",
+      "updated_at": "2026-08-09T23:51:36.883241Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_a292ea0f2869bb50ed5fedd9": [
+      {
+        "evaluation_id": "ev_034dd377785a46f08ea401f39d68b23d",
+        "result_id": "res_a292ea0f2869bb50ed5fedd9",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "b2_maxim",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-02T17:54:13.864820Z",
+        "updated_at": "2026-08-02T17:54:13.864820Z"
+      },
+      {
+        "evaluation_id": "ev_0819e39d9bce481da6a590cb61bad6a0",
+        "result_id": "res_a292ea0f2869bb50ed5fedd9",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-05T21:33:31.967906Z",
+        "updated_at": "2026-08-05T21:33:31.967906Z"
+      },
+      {
+        "evaluation_id": "ev_187fc28f1fd04547899f6851b0a53635",
+        "result_id": "res_a292ea0f2869bb50ed5fedd9",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-09T23:51:36.883241Z",
+        "updated_at": "2026-08-09T23:51:36.883241Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_18_31_54_math-cup-2026-final_20260801_171126_task_07_anthropic_claude-fable-5_256000",
+  "updated_at": "2026-08-09T23:51:36.883241Z",
+  "finalizations": {}
+}

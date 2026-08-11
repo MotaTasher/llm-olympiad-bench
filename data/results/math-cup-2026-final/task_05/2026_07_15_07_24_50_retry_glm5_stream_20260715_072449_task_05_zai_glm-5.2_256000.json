@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_e45527543abc6fd7630128b8": {
-      "evaluation_id": "ev_6f5be651e2b64da18b4308fc957862eb",
+      "evaluation_id": "ev_b52f392755d644ca90e0a419b87e0d73",
       "result_id": "res_e45527543abc6fd7630128b8",
       "result_index": 0,
       "model_key": "zai:glm-5.2",
       "model": "glm-5.2",
-      "evaluator": "mofeyTEA",
+      "evaluator": "MotaTasher",
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "WA",
-      "created_at": "2026-07-29T10:18:52.438440Z",
-      "updated_at": "2026-07-29T10:18:52.438440Z"
+      "feedback": "",
+      "created_at": "2026-08-09T14:36:52.010273Z",
+      "updated_at": "2026-08-09T14:36:52.010273Z"
     }
   },
   "evaluation_pool": {
@@ -44,6 +44,20 @@
         "feedback": "WA",
         "created_at": "2026-07-29T10:18:52.438440Z",
         "updated_at": "2026-07-29T10:18:52.438440Z"
+      },
+      {
+        "evaluation_id": "ev_b52f392755d644ca90e0a419b87e0d73",
+        "result_id": "res_e45527543abc6fd7630128b8",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-09T14:36:52.010273Z",
+        "updated_at": "2026-08-09T14:36:52.010273Z"
       }
     ]
   },
@@ -51,5 +65,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_07_15_07_24_50_retry_glm5_stream_20260715_072449_task_05_zai_glm-5.2_256000",
-  "updated_at": "2026-07-29T10:18:52.438440Z"
+  "updated_at": "2026-08-09T14:36:52.010273Z",
+  "finalizations": {}
 }

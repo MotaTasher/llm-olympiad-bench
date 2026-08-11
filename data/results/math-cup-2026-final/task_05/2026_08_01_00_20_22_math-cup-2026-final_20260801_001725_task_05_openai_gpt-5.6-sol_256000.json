@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_a993328f6ed8abe8d977825f": {
-      "evaluation_id": "ev_f72f43c359614b479994504286cb6dd1",
+      "evaluation_id": "ev_2afc2a0dce3c437fbc565bb1155f9c3c",
       "result_id": "res_a993328f6ed8abe8d977825f",
       "result_index": 0,
       "model_key": "openai:gpt-5.6-sol",
       "model": "gpt-5.6-sol",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-08-01T08:53:04.268169Z",
-      "updated_at": "2026-08-01T08:53:04.268169Z"
+      "created_at": "2026-08-09T14:38:15.820951Z",
+      "updated_at": "2026-08-09T14:38:15.820951Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,34 @@
         "feedback": "",
         "created_at": "2026-08-01T08:53:04.268169Z",
         "updated_at": "2026-08-01T08:53:04.268169Z"
+      },
+      {
+        "evaluation_id": "ev_ab19945667e14868b4a1d7721b3118b8",
+        "result_id": "res_a993328f6ed8abe8d977825f",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-04T22:49:54.831606Z",
+        "updated_at": "2026-08-04T22:49:54.831606Z"
+      },
+      {
+        "evaluation_id": "ev_2afc2a0dce3c437fbc565bb1155f9c3c",
+        "result_id": "res_a993328f6ed8abe8d977825f",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-09T14:38:15.820951Z",
+        "updated_at": "2026-08-09T14:38:15.820951Z"
       }
     ]
   },
@@ -37,5 +65,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_08_01_00_20_22_math-cup-2026-final_20260801_001725_task_05_openai_gpt-5.6-sol_256000",
-  "updated_at": "2026-08-01T08:53:04.268169Z"
+  "updated_at": "2026-08-09T14:38:15.820951Z",
+  "finalizations": {}
 }

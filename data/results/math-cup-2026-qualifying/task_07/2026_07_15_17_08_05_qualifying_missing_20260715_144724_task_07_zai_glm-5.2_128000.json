@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_579ebadc4cf4622b965f5f7e": {
-      "evaluation_id": "ev_91c9d06e2d3d4ba1bb09522d12d0e275",
+      "evaluation_id": "ev_31de4ef095f44e5c90ed148586d3b5fc",
       "result_id": "res_579ebadc4cf4622b965f5f7e",
       "result_index": 0,
       "model_key": "zai:glm-5.2",
       "model": "glm-5.2",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 1.5,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "",
-      "created_at": "2026-07-31T21:50:20.572593Z",
-      "updated_at": "2026-07-31T21:50:20.572593Z"
+      "feedback": "нет доказательства конструкции",
+      "created_at": "2026-08-05T22:03:58.353932Z",
+      "updated_at": "2026-08-05T22:03:58.353932Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-07-31T21:50:20.572593Z",
         "updated_at": "2026-07-31T21:50:20.572593Z"
+      },
+      {
+        "evaluation_id": "ev_31de4ef095f44e5c90ed148586d3b5fc",
+        "result_id": "res_579ebadc4cf4622b965f5f7e",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "mofeyTEA",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "нет доказательства конструкции",
+        "created_at": "2026-08-05T22:03:58.353932Z",
+        "updated_at": "2026-08-05T22:03:58.353932Z"
       }
     ]
   },
@@ -37,5 +51,20 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_07_15_17_08_05_qualifying_missing_20260715_144724_task_07_zai_glm-5.2_128000",
-  "updated_at": "2026-07-31T21:50:41.545403Z"
+  "updated_at": "2026-08-10T13:18:17.517998Z",
+  "finalizations": {
+    "res_579ebadc4cf4622b965f5f7e": {
+      "result_id": "res_579ebadc4cf4622b965f5f7e",
+      "result_index": 0,
+      "model_key": "zai:glm-5.2",
+      "model": "glm-5.2",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T13:18:17.517998Z",
+      "updated_at": "2026-08-10T13:18:17.517998Z"
+    }
+  }
 }

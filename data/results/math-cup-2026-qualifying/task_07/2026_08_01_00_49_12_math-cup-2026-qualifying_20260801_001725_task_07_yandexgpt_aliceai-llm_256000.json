@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_d3bf97a65b99985209f37176": {
+      "evaluation_id": "ev_d9d331c0cc7146b1b05603cc0e897d67",
+      "result_id": "res_d3bf97a65b99985209f37176",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "evaluator": "mofeyTEA",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "нет конструкции",
+      "created_at": "2026-08-05T22:05:10.076789Z",
+      "updated_at": "2026-08-05T22:05:10.076789Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_d3bf97a65b99985209f37176": [
+      {
+        "evaluation_id": "ev_96d587072c15440eb012f8d7c495a988",
+        "result_id": "res_d3bf97a65b99985209f37176",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "b2_maxim",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-08-01T21:21:52.466783Z",
+        "updated_at": "2026-08-01T21:21:52.466783Z"
+      },
+      {
+        "evaluation_id": "ev_d9d331c0cc7146b1b05603cc0e897d67",
+        "result_id": "res_d3bf97a65b99985209f37176",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "mofeyTEA",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "нет конструкции",
+        "created_at": "2026-08-05T22:05:10.076789Z",
+        "updated_at": "2026-08-05T22:05:10.076789Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_00_49_12_math-cup-2026-qualifying_20260801_001725_task_07_yandexgpt_aliceai-llm_256000",
+  "updated_at": "2026-08-10T13:18:26.526836Z",
+  "finalizations": {
+    "res_d3bf97a65b99985209f37176": {
+      "result_id": "res_d3bf97a65b99985209f37176",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T13:18:26.526836Z",
+      "updated_at": "2026-08-10T13:18:26.526836Z"
+    }
+  }
+}

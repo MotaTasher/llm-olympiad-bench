@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_2863eafdc60c2235c9b599f2": {
-      "evaluation_id": "ev_47dcd47d59b4457588afa4d4d03104ac",
+      "evaluation_id": "ev_b0252a975d91472ba3db60c296635b73",
       "result_id": "res_2863eafdc60c2235c9b599f2",
       "result_index": 0,
       "model_key": "zai:glm-5.2",
       "model": "glm-5.2",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "а) DAG тут ни причём\r\nб) ссылка на несуществующую теорему про sqrt(n)",
-      "created_at": "2026-07-24T19:30:44.321911Z",
-      "updated_at": "2026-07-24T19:30:44.321911Z"
+      "feedback": "а - не объясненно, почему будет направленный 1-2-3-...-k путь после color-coding. Это можно было бы решать дп-шкой по набору цветов. Почему так работает - мне не известно\r\nб - нет оценок, почему достигнется \\Omega( \\sqrt(n) ), почему за такую ассимптотику. ",
+      "created_at": "2026-08-09T13:12:33.393877Z",
+      "updated_at": "2026-08-09T13:12:33.393877Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "а) DAG тут ни причём\r\nб) ссылка на несуществующую теорему про sqrt(n)",
         "created_at": "2026-07-24T19:30:44.321911Z",
         "updated_at": "2026-07-24T19:30:44.321911Z"
+      },
+      {
+        "evaluation_id": "ev_b0252a975d91472ba3db60c296635b73",
+        "result_id": "res_2863eafdc60c2235c9b599f2",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а - не объясненно, почему будет направленный 1-2-3-...-k путь после color-coding. Это можно было бы решать дп-шкой по набору цветов. Почему так работает - мне не известно\r\nб - нет оценок, почему достигнется \\Omega( \\sqrt(n) ), почему за такую ассимптотику. ",
+        "created_at": "2026-08-09T13:12:33.393877Z",
+        "updated_at": "2026-08-09T13:12:33.393877Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_07_14_12_35_28_retry_final_20260714_122155_glm_task_06_zai_glm-5.2_256000",
-  "updated_at": "2026-07-24T19:30:44.321911Z"
+  "updated_at": "2026-08-09T13:12:33.393877Z",
+  "finalizations": {}
 }

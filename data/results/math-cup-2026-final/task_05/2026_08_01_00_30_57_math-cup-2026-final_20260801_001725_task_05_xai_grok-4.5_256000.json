@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_0159e4bdecd1d30f004c2f06": {
-      "evaluation_id": "ev_367497072b5345c999ad17c59e0da70c",
+      "evaluation_id": "ev_0ab37c9bf16c45a09f46bcae7571d7ca",
       "result_id": "res_0159e4bdecd1d30f004c2f06",
       "result_index": 0,
       "model_key": "xai:grok-4.5",
       "model": "grok-4.5",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-08-01T08:55:48.176584Z",
-      "updated_at": "2026-08-01T08:55:48.176584Z"
+      "created_at": "2026-08-09T14:32:42.567460Z",
+      "updated_at": "2026-08-09T14:32:42.567460Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,34 @@
         "feedback": "",
         "created_at": "2026-08-01T08:55:48.176584Z",
         "updated_at": "2026-08-01T08:55:48.176584Z"
+      },
+      {
+        "evaluation_id": "ev_4a7426df1bad40c79945649884a8d17f",
+        "result_id": "res_0159e4bdecd1d30f004c2f06",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "mofeyTEA",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "не пояснено, почему 3 и 4 невозможны",
+        "created_at": "2026-08-04T22:49:18.197176Z",
+        "updated_at": "2026-08-04T22:49:18.197176Z"
+      },
+      {
+        "evaluation_id": "ev_0ab37c9bf16c45a09f46bcae7571d7ca",
+        "result_id": "res_0159e4bdecd1d30f004c2f06",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-09T14:32:42.567460Z",
+        "updated_at": "2026-08-09T14:32:42.567460Z"
       }
     ]
   },
@@ -37,5 +65,20 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_08_01_00_30_57_math-cup-2026-final_20260801_001725_task_05_xai_grok-4.5_256000",
-  "updated_at": "2026-08-01T08:55:48.176584Z"
+  "updated_at": "2026-08-10T10:51:31.688758Z",
+  "finalizations": {
+    "res_0159e4bdecd1d30f004c2f06": {
+      "result_id": "res_0159e4bdecd1d30f004c2f06",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "Можно было бы подробнее объяснить почему фигуры из трёх и четырёх клеток невозможны. Снимать за это не стали",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T10:51:31.688758Z",
+      "updated_at": "2026-08-10T10:51:31.688758Z"
+    }
+  }
 }

@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_9c21371ad3fd726abd42a2eb": {
+      "evaluation_id": "ev_8b43e90217584925a6700d2d022285e2",
+      "result_id": "res_9c21371ad3fd726abd42a2eb",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "evaluator": "MotaTasher",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-08-09T14:29:22.316181Z",
+      "updated_at": "2026-08-09T14:29:22.316181Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_9c21371ad3fd726abd42a2eb": [
+      {
+        "evaluation_id": "ev_fdc9e0ba77dc4ca9a2bb0c7e9b7a2507",
+        "result_id": "res_9c21371ad3fd726abd42a2eb",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-01T15:00:14.847891Z",
+        "updated_at": "2026-08-01T15:00:14.847891Z"
+      },
+      {
+        "evaluation_id": "ev_830a9b559d9d4a66bc44e700f1218666",
+        "result_id": "res_9c21371ad3fd726abd42a2eb",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-04T22:47:49.278789Z",
+        "updated_at": "2026-08-04T22:47:49.278789Z"
+      },
+      {
+        "evaluation_id": "ev_8b43e90217584925a6700d2d022285e2",
+        "result_id": "res_9c21371ad3fd726abd42a2eb",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-09T14:29:22.316181Z",
+        "updated_at": "2026-08-09T14:29:22.316181Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_05",
+  "run_id": "2026_08_01_13_32_51_math-cup-2026-final_20260801_133154_task_05_gigachat_GigaChat-3-Ultra_256000",
+  "updated_at": "2026-08-09T14:29:22.316181Z",
+  "finalizations": {}
+}

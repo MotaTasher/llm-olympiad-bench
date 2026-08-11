@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_90e42d7c82939397f1eb17b9": {
+      "evaluation_id": "ev_a2a03b51a1634d1590e2c8840bfab279",
+      "result_id": "res_90e42d7c82939397f1eb17b9",
+      "result_index": 0,
+      "model_key": "kimi:kimi-k3",
+      "model": "kimi-k3",
+      "evaluator": "mofeyTEA",
+      "score": 4,
+      "max_score": 4.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-03T20:36:20.624650Z",
+      "updated_at": "2026-08-03T20:36:20.624650Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_90e42d7c82939397f1eb17b9": [
+      {
+        "evaluation_id": "ev_d256df7997994bf8ba2df19f06c788d4",
+        "result_id": "res_90e42d7c82939397f1eb17b9",
+        "result_index": 0,
+        "model_key": "kimi:kimi-k3",
+        "model": "kimi-k3",
+        "evaluator": "b2_maxim",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-01T21:12:58.293331Z",
+        "updated_at": "2026-08-01T21:12:58.293331Z"
+      },
+      {
+        "evaluation_id": "ev_a2a03b51a1634d1590e2c8840bfab279",
+        "result_id": "res_90e42d7c82939397f1eb17b9",
+        "result_index": 0,
+        "model_key": "kimi:kimi-k3",
+        "model": "kimi-k3",
+        "evaluator": "mofeyTEA",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-03T20:36:20.624650Z",
+        "updated_at": "2026-08-03T20:36:20.624650Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_06",
+  "run_id": "2026_08_01_16_18_34_math-cup-2026-qualifying_20260801_132918_task_06_kimi_kimi-k3_256000",
+  "updated_at": "2026-08-03T20:36:20.624650Z",
+  "finalizations": {}
+}

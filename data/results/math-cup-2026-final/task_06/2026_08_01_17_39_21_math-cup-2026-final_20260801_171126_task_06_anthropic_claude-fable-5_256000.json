@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_2d637f6a314b2d2324c48555": {
+      "evaluation_id": "ev_15e2d8dae06b497e9a9b53e8a0be165e",
+      "result_id": "res_2d637f6a314b2d2324c48555",
+      "result_index": 0,
+      "model_key": "anthropic:claude-fable-5",
+      "model": "claude-fable-5",
+      "evaluator": "MotaTasher",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "а - гуд\r\nб - ссылка на 2003 верна, собственное док-во не сделано (и не является аналогом статьи 2003)",
+      "created_at": "2026-08-09T14:04:04.244420Z",
+      "updated_at": "2026-08-09T14:04:04.244420Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_2d637f6a314b2d2324c48555": [
+      {
+        "evaluation_id": "ev_94d4921ed6a4452f92c3bbd856a5d898",
+        "result_id": "res_2d637f6a314b2d2324c48555",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "б) всё работает по модулю \"Теорема 7(существование большой лестницы; комбинаторное ядро)\". Не нашёл такую теорему",
+        "created_at": "2026-08-02T18:52:05.803476Z",
+        "updated_at": "2026-08-02T18:52:05.803476Z"
+      },
+      {
+        "evaluation_id": "ev_15e2d8dae06b497e9a9b53e8a0be165e",
+        "result_id": "res_2d637f6a314b2d2324c48555",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "а - гуд\r\nб - ссылка на 2003 верна, собственное док-во не сделано (и не является аналогом статьи 2003)",
+        "created_at": "2026-08-09T14:04:04.244420Z",
+        "updated_at": "2026-08-09T14:04:04.244420Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_01_17_39_21_math-cup-2026-final_20260801_171126_task_06_anthropic_claude-fable-5_256000",
+  "updated_at": "2026-08-10T13:19:10.158056Z",
+  "finalizations": {
+    "res_2d637f6a314b2d2324c48555": {
+      "result_id": "res_2d637f6a314b2d2324c48555",
+      "result_index": 0,
+      "model_key": "anthropic:claude-fable-5",
+      "model": "claude-fable-5",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T13:19:10.158056Z",
+      "updated_at": "2026-08-10T13:19:10.158056Z"
+    }
+  }
+}

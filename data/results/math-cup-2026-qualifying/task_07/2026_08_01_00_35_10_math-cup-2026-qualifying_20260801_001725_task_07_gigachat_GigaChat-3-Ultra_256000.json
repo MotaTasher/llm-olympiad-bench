@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_3cd639158ae8e30d0b082963": {
+      "evaluation_id": "ev_71643e45f5a0438f84cd0c70eb8ecb6e",
+      "result_id": "res_3cd639158ae8e30d0b082963",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "evaluator": "mofeyTEA",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "created_at": "2026-08-05T21:56:29.479924Z",
+      "updated_at": "2026-08-05T21:56:29.479924Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_3cd639158ae8e30d0b082963": [
+      {
+        "evaluation_id": "ev_bb2bfd6b59b245c0b6306104bdd95cb1",
+        "result_id": "res_3cd639158ae8e30d0b082963",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "b2_maxim",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-08-01T21:30:13.436877Z",
+        "updated_at": "2026-08-01T21:30:13.436877Z"
+      },
+      {
+        "evaluation_id": "ev_71643e45f5a0438f84cd0c70eb8ecb6e",
+        "result_id": "res_3cd639158ae8e30d0b082963",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "mofeyTEA",
+        "score": 1.5,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-08-05T21:56:29.479924Z",
+        "updated_at": "2026-08-05T21:56:29.479924Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_00_35_10_math-cup-2026-qualifying_20260801_001725_task_07_gigachat_GigaChat-3-Ultra_256000",
+  "updated_at": "2026-08-10T13:17:58.986175Z",
+  "finalizations": {
+    "res_3cd639158ae8e30d0b082963": {
+      "result_id": "res_3cd639158ae8e30d0b082963",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "score": 1.5,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T13:17:58.986175Z",
+      "updated_at": "2026-08-10T13:17:58.986175Z"
+    }
+  }
+}

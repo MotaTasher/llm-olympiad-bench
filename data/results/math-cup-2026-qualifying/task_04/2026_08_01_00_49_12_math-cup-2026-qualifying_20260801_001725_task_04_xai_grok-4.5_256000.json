@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_62be1c814d81e441237cba59": {
-      "evaluation_id": "ev_9fb1e23e6e7d4181b0ffa9b9e899f33e",
+      "evaluation_id": "ev_d8078516799848638f4fda14e1ce81a4",
       "result_id": "res_62be1c814d81e441237cba59",
       "result_index": 0,
       "model_key": "xai:grok-4.5",
       "model": "grok-4.5",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 4,
       "max_score": 4.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-08-01T09:06:08.748818Z",
-      "updated_at": "2026-08-01T09:06:08.748818Z"
+      "created_at": "2026-08-03T20:25:44.948027Z",
+      "updated_at": "2026-08-03T20:25:44.948027Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-08-01T09:06:08.748818Z",
         "updated_at": "2026-08-01T09:06:08.748818Z"
+      },
+      {
+        "evaluation_id": "ev_d8078516799848638f4fda14e1ce81a4",
+        "result_id": "res_62be1c814d81e441237cba59",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "mofeyTEA",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-03T20:25:44.948027Z",
+        "updated_at": "2026-08-03T20:25:44.948027Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_04",
   "run_id": "2026_08_01_00_49_12_math-cup-2026-qualifying_20260801_001725_task_04_xai_grok-4.5_256000",
-  "updated_at": "2026-08-01T09:06:08.748818Z"
+  "updated_at": "2026-08-03T20:25:44.948027Z",
+  "finalizations": {}
 }

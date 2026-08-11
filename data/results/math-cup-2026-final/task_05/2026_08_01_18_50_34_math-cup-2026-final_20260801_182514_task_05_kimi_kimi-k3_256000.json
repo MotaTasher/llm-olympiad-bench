@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_1373150c0471afb3427f6618": {
+      "evaluation_id": "ev_c9103de5b6df4710b2e5dab9342ac7b3",
+      "result_id": "res_1373150c0471afb3427f6618",
+      "result_index": 0,
+      "model_key": "kimi:kimi-k3",
+      "model": "kimi-k3",
+      "evaluator": "MotaTasher",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "",
+      "created_at": "2026-08-09T14:40:02.601251Z",
+      "updated_at": "2026-08-09T14:40:02.601251Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_1373150c0471afb3427f6618": [
+      {
+        "evaluation_id": "ev_4a8d693ac29448c68113f48f75e4377c",
+        "result_id": "res_1373150c0471afb3427f6618",
+        "result_index": 0,
+        "model_key": "kimi:kimi-k3",
+        "model": "kimi-k3",
+        "evaluator": "b2_maxim",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-01T23:29:08.209604Z",
+        "updated_at": "2026-08-01T23:29:08.209604Z"
+      },
+      {
+        "evaluation_id": "ev_72c2e2805e9e46e8ad6ccc5d662a7a68",
+        "result_id": "res_1373150c0471afb3427f6618",
+        "result_index": 0,
+        "model_key": "kimi:kimi-k3",
+        "model": "kimi-k3",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-04T18:06:51.280614Z",
+        "updated_at": "2026-08-04T18:06:51.280614Z"
+      },
+      {
+        "evaluation_id": "ev_c9103de5b6df4710b2e5dab9342ac7b3",
+        "result_id": "res_1373150c0471afb3427f6618",
+        "result_index": 0,
+        "model_key": "kimi:kimi-k3",
+        "model": "kimi-k3",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-09T14:40:02.601251Z",
+        "updated_at": "2026-08-09T14:40:02.601251Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_05",
+  "run_id": "2026_08_01_18_50_34_math-cup-2026-final_20260801_182514_task_05_kimi_kimi-k3_256000",
+  "updated_at": "2026-08-09T14:40:02.601251Z",
+  "finalizations": {}
+}

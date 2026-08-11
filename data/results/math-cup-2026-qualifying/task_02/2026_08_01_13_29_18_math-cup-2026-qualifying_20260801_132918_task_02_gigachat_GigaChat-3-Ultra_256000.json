@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_b3c3f7acf9701c7a7b7fa010": {
+      "evaluation_id": "ev_699492f12ab743df849498ef9ef5fe27",
+      "result_id": "res_b3c3f7acf9701c7a7b7fa010",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "evaluator": "mofeyTEA",
+      "score": 0,
+      "max_score": 4.0,
+      "score_category": "zero",
+      "feedback": "",
+      "created_at": "2026-08-03T20:15:06.111958Z",
+      "updated_at": "2026-08-03T20:15:06.111958Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_b3c3f7acf9701c7a7b7fa010": [
+      {
+        "evaluation_id": "ev_7f72c6d0bb434af9af4b511e43cd10ee",
+        "result_id": "res_b3c3f7acf9701c7a7b7fa010",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 4.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-01T14:46:14.418146Z",
+        "updated_at": "2026-08-01T14:46:14.418146Z"
+      },
+      {
+        "evaluation_id": "ev_699492f12ab743df849498ef9ef5fe27",
+        "result_id": "res_b3c3f7acf9701c7a7b7fa010",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 4.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-03T20:15:06.111958Z",
+        "updated_at": "2026-08-03T20:15:06.111958Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_02",
+  "run_id": "2026_08_01_13_29_18_math-cup-2026-qualifying_20260801_132918_task_02_gigachat_GigaChat-3-Ultra_256000",
+  "updated_at": "2026-08-03T20:15:06.111958Z",
+  "finalizations": {}
+}

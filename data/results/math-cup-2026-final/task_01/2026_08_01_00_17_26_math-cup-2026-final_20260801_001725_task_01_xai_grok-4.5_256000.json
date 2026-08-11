@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_cbb74e6280f9d90ac2364148": {
-      "evaluation_id": "ev_a3f1097134654218b572bfe2c90d1be6",
+      "evaluation_id": "ev_9fe9dc73a8964bd3bbbbbe0c9160a9f8",
       "result_id": "res_cbb74e6280f9d90ac2364148",
       "result_index": 0,
       "model_key": "xai:grok-4.5",
       "model": "grok-4.5",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-08-01T08:40:28.289456Z",
-      "updated_at": "2026-08-01T08:40:28.289456Z"
+      "created_at": "2026-08-09T21:19:58.539242Z",
+      "updated_at": "2026-08-09T21:19:58.539242Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,34 @@
         "feedback": "",
         "created_at": "2026-08-01T08:40:28.289456Z",
         "updated_at": "2026-08-01T08:40:28.289456Z"
+      },
+      {
+        "evaluation_id": "ev_582c1a6565554b05942e4f9205505f63",
+        "result_id": "res_cbb74e6280f9d90ac2364148",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "mofeyTEA",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-04T08:07:02.368239Z",
+        "updated_at": "2026-08-04T08:07:02.368239Z"
+      },
+      {
+        "evaluation_id": "ev_9fe9dc73a8964bd3bbbbbe0c9160a9f8",
+        "result_id": "res_cbb74e6280f9d90ac2364148",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-09T21:19:58.539242Z",
+        "updated_at": "2026-08-09T21:19:58.539242Z"
       }
     ]
   },
@@ -37,5 +65,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_01",
   "run_id": "2026_08_01_00_17_26_math-cup-2026-final_20260801_001725_task_01_xai_grok-4.5_256000",
-  "updated_at": "2026-08-01T08:40:28.289456Z"
+  "updated_at": "2026-08-09T21:19:58.539242Z",
+  "finalizations": {}
 }

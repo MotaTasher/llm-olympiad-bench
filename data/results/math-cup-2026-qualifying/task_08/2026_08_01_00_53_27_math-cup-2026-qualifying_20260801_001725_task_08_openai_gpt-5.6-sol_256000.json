@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_cde0495f6f17a77fa8fe554b": {
+      "evaluation_id": "ev_9ff2d962d3c045a395083ccd12dce067",
+      "result_id": "res_cde0495f6f17a77fa8fe554b",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "evaluator": "b2_maxim",
+      "score": 1,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "\"Для получения численного ответа именно для слов требуется отдельно учитывать все совпадения между 22 типами деревьев с тремя \r\n-узлами; из приведённого условия не следует обычно подразумеваемый простой ответ.\" \r\nмодель поняла, что для B=3 у неё лажа, но подумала что так ответ должен быть простым оставить как есть",
+      "created_at": "2026-08-01T22:11:39.019521Z",
+      "updated_at": "2026-08-01T22:11:39.019521Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_cde0495f6f17a77fa8fe554b": [
+      {
+        "evaluation_id": "ev_9ff2d962d3c045a395083ccd12dce067",
+        "result_id": "res_cde0495f6f17a77fa8fe554b",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "\"Для получения численного ответа именно для слов требуется отдельно учитывать все совпадения между 22 типами деревьев с тремя \r\n-узлами; из приведённого условия не следует обычно подразумеваемый простой ответ.\" \r\nмодель поняла, что для B=3 у неё лажа, но подумала что так ответ должен быть простым оставить как есть",
+        "created_at": "2026-08-01T22:11:39.019521Z",
+        "updated_at": "2026-08-01T22:11:39.019521Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-qualifying",
+  "problem_id": "task_08",
+  "run_id": "2026_08_01_00_53_27_math-cup-2026-qualifying_20260801_001725_task_08_openai_gpt-5.6-sol_256000",
+  "updated_at": "2026-08-01T22:11:39.019521Z"
+}

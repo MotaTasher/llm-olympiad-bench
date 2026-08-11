@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_eaac1858e22ac330aea94ad9": {
+      "evaluation_id": "ev_f2b95098c20e4d20b67149806378e704",
+      "result_id": "res_eaac1858e22ac330aea94ad9",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "evaluator": "MotaTasher",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "a - для положительных в точке роста функции её касательная впереди пересекается лишь с конечнмы числом, а сзади в какой-то момент становится отрицательной до пересечения счетного числа раз",
+      "created_at": "2026-08-09T18:50:35.895162Z",
+      "updated_at": "2026-08-09T18:50:35.895162Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_eaac1858e22ac330aea94ad9": [
+      {
+        "evaluation_id": "ev_9a66fc0ffe594fdb90d6b9eb072893cb",
+        "result_id": "res_eaac1858e22ac330aea94ad9",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а) для бесконечного косичества пересечений, касательная должна проходить через (0,0). Но таких точек не более чем счётно",
+        "created_at": "2026-08-01T23:18:21.493682Z",
+        "updated_at": "2026-08-01T23:18:21.493682Z"
+      },
+      {
+        "evaluation_id": "ev_702fd453b29e426795a79547a3e9aa4b",
+        "result_id": "res_eaac1858e22ac330aea94ad9",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "mofeyTEA",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-05T21:36:35.631680Z",
+        "updated_at": "2026-08-05T21:36:35.631680Z"
+      },
+      {
+        "evaluation_id": "ev_f2b95098c20e4d20b67149806378e704",
+        "result_id": "res_eaac1858e22ac330aea94ad9",
+        "result_index": 0,
+        "model_key": "gigachat:GigaChat-3-Ultra",
+        "model": "GigaChat-3-Ultra",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "a - для положительных в точке роста функции её касательная впереди пересекается лишь с конечнмы числом, а сзади в какой-то момент становится отрицательной до пересечения счетного числа раз",
+        "created_at": "2026-08-09T18:50:35.895162Z",
+        "updated_at": "2026-08-09T18:50:35.895162Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_13_34_14_math-cup-2026-final_20260801_133154_task_07_gigachat_GigaChat-3-Ultra_256000",
+  "updated_at": "2026-08-09T18:50:35.895162Z",
+  "finalizations": {}
+}

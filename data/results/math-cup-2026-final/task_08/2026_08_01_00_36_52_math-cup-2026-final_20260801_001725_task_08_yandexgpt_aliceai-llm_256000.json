@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_28de865833b9ae288c0ed19b": {
+      "evaluation_id": "ev_2988dbc0140d4e7383bd50f8740c485b",
+      "result_id": "res_28de865833b9ae288c0ed19b",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "evaluator": "MotaTasher",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "а - 0, это ужас просто\r\nб - аналогично",
+      "created_at": "2026-08-11T17:19:33.908572Z",
+      "updated_at": "2026-08-11T17:19:33.908572Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_28de865833b9ae288c0ed19b": [
+      {
+        "evaluation_id": "ev_502a71bc42ab4f409f89ce4ec0c44213",
+        "result_id": "res_28de865833b9ae288c0ed19b",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-02T18:20:11.707770Z",
+        "updated_at": "2026-08-02T18:20:11.707770Z"
+      },
+      {
+        "evaluation_id": "ev_2988dbc0140d4e7383bd50f8740c485b",
+        "result_id": "res_28de865833b9ae288c0ed19b",
+        "result_index": 0,
+        "model_key": "yandexgpt:aliceai-llm",
+        "model": "aliceai-llm",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а - 0, это ужас просто\r\nб - аналогично",
+        "created_at": "2026-08-11T17:19:33.908572Z",
+        "updated_at": "2026-08-11T17:19:33.908572Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_08",
+  "run_id": "2026_08_01_00_36_52_math-cup-2026-final_20260801_001725_task_08_yandexgpt_aliceai-llm_256000",
+  "updated_at": "2026-08-11T17:19:33.908572Z",
+  "finalizations": {}
+}

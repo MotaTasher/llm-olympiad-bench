@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_613eaeef1362a1eb137a943d": {
-      "evaluation_id": "ev_f81853b7d8664249b86d2a61ea59e3cb",
+      "evaluation_id": "ev_d8656d400d3e47bb8d93a425ab3eb8ab",
       "result_id": "res_613eaeef1362a1eb137a943d",
       "result_index": 0,
       "model_key": "zai:glm-5.2",
       "model": "glm-5.2",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "а) пример некорректный\r\n\r\nб)\"Применяя неравенство типа Эйкена или изопериметрическое неравенство для гиперкуба, можно показать, что , а с учетом непересечения множества значений \r\n и  достигается граница\" это не доказательство",
-      "created_at": "2026-07-18T16:43:01.277245Z",
-      "updated_at": "2026-07-18T16:43:01.277245Z"
+      "feedback": "б - \"По свойству мартингала\" дальше нер-во не в ту сторону \r\n\r\nа - нет",
+      "created_at": "2026-08-11T17:09:10.259669Z",
+      "updated_at": "2026-08-11T17:09:10.259669Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "а) пример некорректный\r\n\r\nб)\"Применяя неравенство типа Эйкена или изопериметрическое неравенство для гиперкуба, можно показать, что , а с учетом непересечения множества значений \r\n и  достигается граница\" это не доказательство",
         "created_at": "2026-07-18T16:43:01.277245Z",
         "updated_at": "2026-07-18T16:43:01.277245Z"
+      },
+      {
+        "evaluation_id": "ev_d8656d400d3e47bb8d93a425ab3eb8ab",
+        "result_id": "res_613eaeef1362a1eb137a943d",
+        "result_index": 0,
+        "model_key": "zai:glm-5.2",
+        "model": "glm-5.2",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "б - \"По свойству мартингала\" дальше нер-во не в ту сторону \r\n\r\nа - нет",
+        "created_at": "2026-08-11T17:09:10.259669Z",
+        "updated_at": "2026-08-11T17:09:10.259669Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_08",
   "run_id": "2026_07_15_08_03_00_retry_glm5_stream_20260715_072449_task_08_zai_glm-5.2_256000",
-  "updated_at": "2026-08-03T15:19:20.566949Z"
+  "updated_at": "2026-08-11T17:09:10.259669Z",
+  "finalizations": {}
 }

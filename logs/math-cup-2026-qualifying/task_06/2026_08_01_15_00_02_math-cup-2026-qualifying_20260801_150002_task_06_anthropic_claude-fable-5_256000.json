@@ -1,0 +1,390 @@
+{
+  "schema_version": 2,
+  "run_id": "2026_08_01_15_00_02_math-cup-2026-qualifying_20260801_150002_task_06_anthropic_claude-fable-5_256000",
+  "timestamp": "2026-08-01T15:00:02.484039Z",
+  "started_at": "2026-08-01T15:00:02.484039Z",
+  "completed_at": "2026-08-01T15:01:13.873752Z",
+  "duration_ms": 71369,
+  "status": "completed",
+  "git_hash": "ac078c9",
+  "git": {
+    "hash": "ac078c9",
+    "full_hash": "ac078c9ca8a7f93c037feddc99cf1ae9a815699e",
+    "branch": "main",
+    "dirty": true
+  },
+  "runtime": {
+    "command": [
+      "runner.py",
+      "--problem",
+      "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "--models",
+      "anthropic:claude-fable-5",
+      "--max-tokens",
+      "[REDACTED]",
+      "--logs-dir",
+      "/opt/olympiad-scorer/shared/logs",
+      "--run-id",
+      "math-cup-2026-qualifying_20260801_150002_task_06_anthropic_claude-fable-5_256000"
+    ],
+    "cli": {
+      "problem": "data/competitions/math-cup-2026-qualifying/task_06.json",
+      "competition": null,
+      "competition_title": null,
+      "models": "anthropic:claude-fable-5",
+      "run_id": "math-cup-2026-qualifying_20260801_150002_task_06_anthropic_claude-fable-5_256000",
+      "logs_dir": "/opt/olympiad-scorer/shared/logs",
+      "allow_env_model_overrides": false,
+      "max_tokens": 256000
+    },
+    "requested_models": [
+      "anthropic:claude-fable-5"
+    ],
+    "python": {
+      "version": "3.12.3",
+      "implementation": "CPython",
+      "executable": "python"
+    },
+    "platform": {
+      "system": "Linux",
+      "release": "6.8.0-136-generic",
+      "machine": "aarch64"
+    },
+    "packages": {
+      "anthropic": "0.112.0",
+      "flask": "3.0.3",
+      "gigachat": "0.2.1",
+      "google-genai": "2.10.0",
+      "openai": "2.44.0",
+      "python-dotenv": "1.2.2",
+      "requests": "2.34.2"
+    },
+    "environment": {
+      "ANTHROPIC_EFFORT": "max",
+      "ANTHROPIC_FINAL_TOKEN_RESERVE": "[REDACTED]",
+      "ANTHROPIC_MAX_TOKENS": "[REDACTED]",
+      "ANTHROPIC_THINKING_BUDGET_TOKENS": "[REDACTED]",
+      "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+      "DEEPSEEK_MAX_TOKENS": "[REDACTED]",
+      "DEEPSEEK_TEMPERATURE": "0.1",
+      "GEMINI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "GEMINI_TEMPERATURE": "0.1",
+      "GEMINI_THINKING_LEVEL": "high",
+      "GEMINI_TIMEOUT_SECONDS": "3600",
+      "GIGACHAT_MAX_TOKENS": "[REDACTED]",
+      "GIGACHAT_REPETITION_PENALTY": "1.0",
+      "GIGACHAT_SCOPE": "GIGACHAT_API_PERS",
+      "GIGACHAT_TEMPERATURE": "0.1",
+      "GIGACHAT_TOP_P": "1.0",
+      "GIGACHAT_VERIFY_SSL": "false",
+      "OPENAI_MAX_COMPLETION_TOKENS": "[REDACTED]",
+      "OPENAI_REASONING_EFFORT": "high",
+      "RUB_PER_USD": "90",
+      "XAI_BASE_URL": "https://api.x.ai/v1",
+      "XAI_MAX_OUTPUT_TOKENS": "[REDACTED]",
+      "XAI_MAX_RETRIES": "0",
+      "XAI_REASONING_EFFORT": "high",
+      "XAI_TIMEOUT_SECONDS": "3600",
+      "YANDEX_MAX_TOKENS": "[REDACTED]",
+      "YANDEX_REASONING_MODE": "ENABLED_HIDDEN",
+      "YANDEX_TEMPERATURE": "0.1",
+      "ZAI_BASE_URL": "https://api.z.ai/api/paas/v4/",
+      "ZAI_MAX_RETRIES": "0",
+      "ZAI_MAX_TOKENS": "[REDACTED]",
+      "ZAI_REASONING_EFFORT": "max",
+      "ZAI_TEMPERATURE": "0.1",
+      "ZAI_THINKING": "enabled",
+      "ZAI_TIMEOUT_SECONDS": "7200"
+    }
+  },
+  "requested_models": [
+    "anthropic:claude-fable-5"
+  ],
+  "competition_id": "math-cup-2026-qualifying",
+  "competition_title": "Math Cup 2026. Отборочный тур",
+  "competition": {
+    "schema_version": 1,
+    "id": "math-cup-2026-qualifying",
+    "title": "Math Cup 2026. Отборочный тур",
+    "description": "Отборочный тур. Решения",
+    "date": "2026-05-10",
+    "source": "https://csspace.io/competition/2026spring-math-cup",
+    "metadata": {
+      "series": "Math Cup",
+      "organizer": "CS Space",
+      "season": "Весна",
+      "year": 2026,
+      "stage": "Отборочный тур",
+      "stage_index": 1,
+      "document_type": "Решения",
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_id": "task_06",
+  "problem_number": 6,
+  "problem_title": "Занятые интегралы",
+  "problem_file": "data/competitions/math-cup-2026-qualifying/task_06.json",
+  "problem_text": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+  "problem": {
+    "schema_version": 1,
+    "id": "task_06",
+    "number": 6,
+    "title": "Занятые интегралы",
+    "statement": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]",
+    "answer": "\\(-\\frac1{12}\\)",
+    "solution": "Рассмотрим функцию \\(g(x)=2-3x\\). Тогда\n\\[\n\\int_0^1 g^2(x)\\,dx=\\int_0^1(2-3x)^2\\,dx=1.\n\\]\nКроме того,\n\\[\n\\int_0^1 f(x)g(x)\\,dx=2\\int_0^1f(x)\\,dx-3\\int_0^1xf(x)\\,dx=1.\n\\]\nПо неравенству Коши–Буняковского–Шварца\n\\[\n1=\\int_0^1f(x)g(x)\\,dx\\le\\sqrt{\\int_0^1f^2(x)\\,dx}\\sqrt{\\int_0^1g^2(x)\\,dx}=1.\n\\]\nЗначит, в неравенстве достигается равенство, поэтому \\(f\\) пропорциональна \\(g\\). Так как их скалярное произведение и нормы равны \\(1\\), получаем\n\\[\nf(x)=g(x)=2-3x.\n\\]\nСледовательно,\n\\[\n\\int_0^1x^2f(x)\\,dx=\\int_0^1x^2(2-3x)\\,dx=2\\int_0^1x^2\\,dx-3\\int_0^1x^3\\,dx=\\frac23-\\frac34=-\\frac1{12}.\n\\]",
+    "tags": [],
+    "metadata": {
+      "max_score": 4,
+      "score_step": 1
+    }
+  },
+  "problem_hash": "60c94c90558685c9fedf23297f68a871bdcea91f3f7f27b968cb129e377e913d",
+  "problem_text_hash": "d07d65b497ee0deed6fea0428535ee7ddf6b7ca07ffa632133abb967673de5c7",
+  "system_prompt": {
+    "version": "2026-06-29",
+    "sha256": "8219ac1fb41b1141fb00678b344d7c25227c202e49d3c260ce00f93b875f6eed",
+    "text": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы."
+  },
+  "runtime_settings": {
+    "text_only": true,
+    "sequential": true,
+    "max_tokens": 256000,
+    "reasoning_budget_tokens": "[REDACTED]",
+    "max_final_tokens": "[REDACTED]"
+  },
+  "results": [
+    {
+      "result_id": "res_1c83bfb2ff63a57d93c367a4",
+      "result_index": 0,
+      "provider": "anthropic",
+      "alias": "anthropic:claude-fable-5",
+      "adapter_class": "models.claude.claude.ClaudeModel",
+      "requested_model_id": "claude-fable-5",
+      "resolved_model_id": "claude-fable-5",
+      "model": "claude-fable-5",
+      "attempt": 1,
+      "started_at": "2026-08-01T15:00:02.518032Z",
+      "completed_at": "2026-08-01T15:01:13.865568Z",
+      "status": "success",
+      "request": {
+        "model": "claude-fable-5",
+        "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "max_output_tokens_total": 256000,
+        "max_output_tokens_per_request": 128000,
+        "stream": true,
+        "thinking": {
+          "type": "adaptive",
+          "display": "summarized"
+        },
+        "output_config": {
+          "effort": "max"
+        },
+        "steps": [
+          {
+            "model": "claude-fable-5",
+            "max_tokens": 128000,
+            "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+              }
+            ],
+            "endpoint": "https://api.anthropic.com/v1/messages",
+            "stream": true,
+            "thinking": {
+              "type": "adaptive",
+              "display": "summarized"
+            },
+            "output_config": {
+              "effort": "max"
+            }
+          }
+        ]
+      },
+      "answer": "## Формализация и обозначения\n\nДано: $f\\in C[0,1]$, причём\n\n$$\n(1)\\ \\int_0^1 f^2(x)\\,dx=1,\\qquad\n(2)\\ \\int_0^1 f(x)\\,dx=\\frac12,\\qquad\n(3)\\ \\int_0^1 xf(x)\\,dx=0.\n$$\n\nТребуется найти $J=\\displaystyle\\int_0^1 x^2 f(x)\\,dx$, т.е. показать, что условия (1)–(3) определяют $J$ однозначно, и вычислить его.\n\n**План.** Покажем, что условия (1)–(3) вынуждают $f$ совпадать с конкретной линейной функцией $g(x)=2-3x$, после чего $J$ вычислится напрямую.\n\n## Шаг 1. Кандидат $g$ и проверка согласованности условий\n\nИщем линейную функцию $g(x)=a+bx$, удовлетворяющую (2) и (3):\n\n$$\n\\int_0^1 g\\,dx=a+\\frac b2=\\frac12,\\qquad\n\\int_0^1 xg\\,dx=\\frac a2+\\frac b3=0.\n$$\n\nИз второго уравнения $a=-\\tfrac{2b}{3}$; подстановка в первое даёт $-\\tfrac{2b}{3}+\\tfrac b2=\\tfrac12$, т.е. $-\\tfrac b6=\\tfrac12$, откуда $b=-3$, $a=2$. Итак,\n\n$$\ng(x)=2-3x.\n$$\n\nПроверим **все три** условия для $g$:\n\n$$\n\\int_0^1 (2-3x)\\,dx=\\Big[2x-\\tfrac{3x^2}{2}\\Big]_0^1=2-\\tfrac32=\\tfrac12\\quad\\checkmark\n$$\n$$\n\\int_0^1 x(2-3x)\\,dx=\\Big[x^2-x^3\\Big]_0^1=0\\quad\\checkmark\n$$\n$$\n\\int_0^1 (2-3x)^2dx=\\int_0^1(4-12x+9x^2)\\,dx=4-6+3=1\\quad\\checkmark\n$$\n\nЗначит, $g$ — допустимая функция; **множество функций, удовлетворяющих (1)–(3), непусто**, задача корректна.\n\n## Шаг 2. Ключевое вычисление: $\\int_0^1 (f-g)^2\\,dx=0$\n\nПользуясь линейностью интеграла и условиями (2), (3):\n\n$$\n\\int_0^1 f(x)g(x)\\,dx=\\int_0^1 (2-3x)f(x)\\,dx\n=2\\int_0^1 f\\,dx-3\\int_0^1 xf\\,dx\n=2\\cdot\\frac12-3\\cdot 0=1.\n$$\n\nТогда, раскрывая квадрат и используя (1) и $\\int_0^1 g^2=1$ (Шаг 1):\n\n$$\n\\int_0^1 \\bigl(f(x)-g(x)\\bigr)^2dx\n=\\int_0^1 f^2\\,dx-2\\int_0^1 fg\\,dx+\\int_0^1 g^2\\,dx\n=1-2\\cdot 1+1=0.\n$$\n\n## Шаг 3. Лемма и вывод $f\\equiv g$\n\n**Лемма.** Если $h\\in C[0,1]$ и $\\displaystyle\\int_0^1 h^2(x)\\,dx=0$, то $h(x)=0$ для всех $x\\in[0,1]$.\n\n*Доказательство.* Предположим противное: $h(x_0)\\neq0$ для некоторого $x_0\\in[0,1]$. Положим $c=h^2(x_0)>0$. Функция $h^2$ непрерывна, поэтому существует $\\delta>0$ такое, что $h^2(x)>\\tfrac c2$ для всех $x\\in[0,1]$ с $|x-x_0|<\\delta$. Внутри $[0,1]$ найдётся отрезок $[\\alpha,\\beta]\\subseteq[0,1]\\cap(x_0-\\delta,x_0+\\delta)$ положительной длины $\\ell=\\beta-\\alpha>0$: если $x_0\\le\\tfrac12$, годится $[\\,x_0,\\ x_0+\\min(\\tfrac\\delta2,\\tfrac12)\\,]$, а если $x_0>\\tfrac12$ — отрезок $[\\,x_0-\\min(\\tfrac\\delta2,\\tfrac12),\\ x_0\\,]$. Так как $h^2\\ge0$ всюду на $[0,1]$,\n\n$$\n0=\\int_0^1 h^2\\,dx\\ \\ge\\ \\int_\\alpha^\\beta h^2\\,dx\\ \\ge\\ \\frac c2\\,\\ell>0,\n$$\n\n— противоречие. Значит, $h\\equiv0$. $\\blacksquare$\n\nФункция $h=f-g$ непрерывна на $[0,1]$, и по Шагу 2 $\\int_0^1 h^2=0$. По лемме $h\\equiv 0$, т.е.\n\n$$\nf(x)=2-3x\\quad\\text{для всех } x\\in[0,1].\n$$\n\nВ частности, условия (1)–(3) определяют $f$ (а значит, и искомый интеграл) **однозначно**.\n\n## Шаг 4. Вычисление ответа\n\n$$\nJ=\\int_0^1 x^2(2-3x)\\,dx=\\int_0^1\\bigl(2x^2-3x^3\\bigr)\\,dx\n=\\Big[\\frac{2x^3}{3}-\\frac{3x^4}{4}\\Big]_0^1\n=\\frac23-\\frac34=\\frac{8-9}{12}=-\\frac1{12}.\n$$\n\n**Замечание (откуда взялась $g$).** Условия (2), (3) — это скалярные произведения $f$ с функциями $1$ и $x$ в $L^2(0,1)$; функция $g$ — ортогональная проекция любой допустимой $f$ на $\\mathrm{span}\\{1,x\\}$, и равенство $\\int f^2=\\int g^2=1$ означает, что «перпендикулярная» составляющая $f-g$ нулевая, что и было строго проверено в Шагах 2–3.\n\n## Финальный вывод\n\nУсловия задачи выполняются ровно для одной функции $f(x)=2-3x$ (она существует и допустима, см. Шаг 1), и поэтому\n\n$$\n\\boxed{\\ \\int_0^1 x^2 f(x)\\,dx=-\\frac{1}{12}\\ }\n$$",
+      "prompt_tokens": 352,
+      "completion_tokens": 7297,
+      "cost_usd": 0.36837,
+      "latency_ms": 70487,
+      "raw_response": {
+        "endpoint": "https://api.anthropic.com/v1/messages",
+        "multi_request": {
+          "enabled": true,
+          "requests": 1,
+          "max_output_tokens_total": 256000,
+          "max_output_tokens_per_request": 128000,
+          "stopped_after_visible_output": true,
+          "continuation": "assistant_content_blocks"
+        },
+        "responses": [
+          {
+            "request": {
+              "model": "claude-fable-5",
+              "max_tokens": 128000,
+              "system": "Ты решаешь олимпиадные задачи строго и аккуратно. Сначала формализуй условие, введи обозначения и проверь все ограничения. Затем дай полное доказательство без скачков, перебора несуществующих случаев и неподтвержденных утверждений. Если используешь лемму, докажи ее. Не доказывай утверждение частным примером, если требуется доказательство для всех случаев. Перед финальным ответом проверь, что выбранные объекты действительно существуют при любых допустимых данных. В конце явно сформулируй финальный вывод. Не используй инструменты, поиск, код или калькуляторы.",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Дана \\(f\\in C[0,1]\\), для которой\n\\[\n\\int_0^1 f^2(x)\\,dx=1,\n\\]\n\\[\n\\int_0^1 f(x)\\,dx=\\frac12,\n\\]\n\\[\n\\int_0^1 x f(x)\\,dx=0.\n\\]\nНайдите\n\\[\n\\int_0^1 x^2 f(x)\\,dx.\n\\]"
+                }
+              ],
+              "endpoint": "https://api.anthropic.com/v1/messages",
+              "stream": true,
+              "thinking": {
+                "type": "adaptive",
+                "display": "summarized"
+              },
+              "output_config": {
+                "effort": "max"
+              }
+            },
+            "response": {
+              "id": "msg_011CdcEB7BvVv9NrSA1vhGaF",
+              "container": null,
+              "content": [
+                {
+                  "signature": "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",
+                  "thinking": "I'm looking at a problem where I have a continuous function on [0,1] with three integral constraints, and I need to determine whether these constraints uniquely specify the value of ∫x²f. Let me think about whether the constraints are sufficient to pin down this particular integral.\n\nThe key insight is that the minimal-norm function satisfying the linear constraints ∫f = 1/2 and ∫xf = 0 must lie in the span of the constraint functions. So I'm setting f₀ = a + bx and solving the system: a + b/2 = 1/2 and a/2 + b/3 = 0. From the second equation, a = -2b/3, which gives b = -3 and a = 2, so f₀ = 2 - 3x. Checking: ∫(2-3x)² = 4 - 6 + 3 = 1, which matches the third constraint perfectly.\n\nSince f = f₀ + h where h satisfies ∫h = 0 and ∫xh = 0, I can decompose ∫f² = ∫f₀² + 2∫f₀h + ∫h². The orthogonality conditions force the cross term to vanish, leaving ∫f² = 1 + ∫h². But we're told ∫f² = 1, so ∫h² = 0, meaning h = 0 and f = f₀ everywhere. Now I can compute ∫₀¹ x²f₀ = ∫₀¹ (2x² - 3x³)dx = 2/3 - 3/4 = -1/12. Now I'm organizing the proof more formally in Russian, starting with a clear setup of the problem and notation. I'll verify that the candidate solution $f(x) = 2 - 3x$ satisfies all the constraints, establish the key lemma about continuous nonnegative functions with zero integral, and then conclude that this is the unique minimizer and compute the final answer. That gives $\\int fg = 1$, so $\\int h^2 = 1 - 2(1) + 1 = 0$, which means $h = 0$ almost everywhere and therefore $f = g$ uniquely.\n\nNow I need to verify this with a key lemma: if a continuous function $h$ on $[0,1]$ satisfies $h^2 \\geq 0$ and $\\int_0^1 h^2 = 0$, then $h$ must be identically zero. The proof assumes $h(x_0) \\neq 0$ for some point, which would make $h^2(x_0) > 0$, and by continuity this positivity persists in a neighborhood around $x_0$, creating a positive contribution to the integral that contradicts it being zero. So $h^2 \\geq 0$ everywhere, which validates the inequality. This means $f(x) = 2 - 3x$ for all $x$, giving $\\int_0^1 x^2 f = \\int_0^1 (2x^2 - 3x^3) dx = 2/3 - 3/4 = -1/12$. I should verify the arithmetic and consider whether to include a remark about how $g$ was constructed, though the main write-up needs to stay rigorous. Let me verify the final step: $\\int fg = 1$ and $\\int (f-g)^2 = 0$, which confirms everything is consistent. Now I'll write the complete solution in Russian, organizing it with formalization, verification of the candidate function $g(x) = 2 - 3x$, the calculation showing $(f-g)^2$ integrates to zero, and then applying the lemma that a continuous non-negative function with zero integral must be identically zero to conclude $f = g$ uniquely.\n\nFor the lemma proof, I need to carefully establish that if $h$ is continuous on $[0,1]$ and $\\int_0^1 h^2 = 0$, then $h \\equiv 0$: if $h(x_0) \\neq 0$ for some point, then $h^2(x_0) > 0$, and by continuity there exists a neighborhood around $x_0$ where $h^2$ stays bounded away from zero, making the integral positive—a contradiction. I'll also mention as a remark that $g$ was found as the orthogonal projection of $f$ onto the span of $\\{1, x\\}$, which motivates why this approach works, then compute the final answer $-1/12$. non-zero interval where $h^2 > c/2$, which leads to a contradiction when I integrate—the integral of $h^2$ over the whole interval would be positive, but we know it equals zero. So $h$ must be identically zero, meaning $f = g$ and we're done. I'm also noting how the monotonicity of integration works here: since $h^2 \\geq 0$ everywhere, the integral over the full interval equals the sum of integrals over any partition of subintervals.\n\nNow I need to write this up cleanly in Russian with proper rigor, including a remark about the geometric motivation involving projections, and make sure the final answer $-\\tfrac{1}{12}$ is boxed. The structure should start with formalizing what we're given and what we need to find, then explain the key idea about how the conditions determine the integral through $L^2$ norms and inner products.\n\nFor the candidate linear function, I'm solving the system of constraints: the integral of $g$ equals $1/2$ and the integral of $xg$ equals $0$. From the second equation I get $a = -2b/3$, and substituting into the first gives me a relation for $b$ that I need to solve carefully.\n\nOnce I have $g(x) = 2 - 3x$, I can verify it satisfies all conditions including $\\int g^2 = 1$, which confirms the feasible set is nonempty. Then I'll show that $(f - g)^2$ integrates to zero by computing $\\int fg$ and expanding, which forces $f \\equiv g$. Finally, I can calculate $J = -1/12$. Writing the solution...",
+                  "type": "thinking"
+                },
+                {
+                  "citations": null,
+                  "text": "## Формализация и обозначения\n\nДано: $f\\in C[0,1]$, причём\n\n$$\n(1)\\ \\int_0^1 f^2(x)\\,dx=1,\\qquad\n(2)\\ \\int_0^1 f(x)\\,dx=\\frac12,\\qquad\n(3)\\ \\int_0^1 xf(x)\\,dx=0.\n$$\n\nТребуется найти $J=\\displaystyle\\int_0^1 x^2 f(x)\\,dx$, т.е. показать, что условия (1)–(3) определяют $J$ однозначно, и вычислить его.\n\n**План.** Покажем, что условия (1)–(3) вынуждают $f$ совпадать с конкретной линейной функцией $g(x)=2-3x$, после чего $J$ вычислится напрямую.\n\n## Шаг 1. Кандидат $g$ и проверка согласованности условий\n\nИщем линейную функцию $g(x)=a+bx$, удовлетворяющую (2) и (3):\n\n$$\n\\int_0^1 g\\,dx=a+\\frac b2=\\frac12,\\qquad\n\\int_0^1 xg\\,dx=\\frac a2+\\frac b3=0.\n$$\n\nИз второго уравнения $a=-\\tfrac{2b}{3}$; подстановка в первое даёт $-\\tfrac{2b}{3}+\\tfrac b2=\\tfrac12$, т.е. $-\\tfrac b6=\\tfrac12$, откуда $b=-3$, $a=2$. Итак,\n\n$$\ng(x)=2-3x.\n$$\n\nПроверим **все три** условия для $g$:\n\n$$\n\\int_0^1 (2-3x)\\,dx=\\Big[2x-\\tfrac{3x^2}{2}\\Big]_0^1=2-\\tfrac32=\\tfrac12\\quad\\checkmark\n$$\n$$\n\\int_0^1 x(2-3x)\\,dx=\\Big[x^2-x^3\\Big]_0^1=0\\quad\\checkmark\n$$\n$$\n\\int_0^1 (2-3x)^2dx=\\int_0^1(4-12x+9x^2)\\,dx=4-6+3=1\\quad\\checkmark\n$$\n\nЗначит, $g$ — допустимая функция; **множество функций, удовлетворяющих (1)–(3), непусто**, задача корректна.\n\n## Шаг 2. Ключевое вычисление: $\\int_0^1 (f-g)^2\\,dx=0$\n\nПользуясь линейностью интеграла и условиями (2), (3):\n\n$$\n\\int_0^1 f(x)g(x)\\,dx=\\int_0^1 (2-3x)f(x)\\,dx\n=2\\int_0^1 f\\,dx-3\\int_0^1 xf\\,dx\n=2\\cdot\\frac12-3\\cdot 0=1.\n$$\n\nТогда, раскрывая квадрат и используя (1) и $\\int_0^1 g^2=1$ (Шаг 1):\n\n$$\n\\int_0^1 \\bigl(f(x)-g(x)\\bigr)^2dx\n=\\int_0^1 f^2\\,dx-2\\int_0^1 fg\\,dx+\\int_0^1 g^2\\,dx\n=1-2\\cdot 1+1=0.\n$$\n\n## Шаг 3. Лемма и вывод $f\\equiv g$\n\n**Лемма.** Если $h\\in C[0,1]$ и $\\displaystyle\\int_0^1 h^2(x)\\,dx=0$, то $h(x)=0$ для всех $x\\in[0,1]$.\n\n*Доказательство.* Предположим противное: $h(x_0)\\neq0$ для некоторого $x_0\\in[0,1]$. Положим $c=h^2(x_0)>0$. Функция $h^2$ непрерывна, поэтому существует $\\delta>0$ такое, что $h^2(x)>\\tfrac c2$ для всех $x\\in[0,1]$ с $|x-x_0|<\\delta$. Внутри $[0,1]$ найдётся отрезок $[\\alpha,\\beta]\\subseteq[0,1]\\cap(x_0-\\delta,x_0+\\delta)$ положительной длины $\\ell=\\beta-\\alpha>0$: если $x_0\\le\\tfrac12$, годится $[\\,x_0,\\ x_0+\\min(\\tfrac\\delta2,\\tfrac12)\\,]$, а если $x_0>\\tfrac12$ — отрезок $[\\,x_0-\\min(\\tfrac\\delta2,\\tfrac12),\\ x_0\\,]$. Так как $h^2\\ge0$ всюду на $[0,1]$,\n\n$$\n0=\\int_0^1 h^2\\,dx\\ \\ge\\ \\int_\\alpha^\\beta h^2\\,dx\\ \\ge\\ \\frac c2\\,\\ell>0,\n$$\n\n— противоречие. Значит, $h\\equiv0$. $\\blacksquare$\n\nФункция $h=f-g$ непрерывна на $[0,1]$, и по Шагу 2 $\\int_0^1 h^2=0$. По лемме $h\\equiv 0$, т.е.\n\n$$\nf(x)=2-3x\\quad\\text{для всех } x\\in[0,1].\n$$\n\nВ частности, условия (1)–(3) определяют $f$ (а значит, и искомый интеграл) **однозначно**.\n\n## Шаг 4. Вычисление ответа\n\n$$\nJ=\\int_0^1 x^2(2-3x)\\,dx=\\int_0^1\\bigl(2x^2-3x^3\\bigr)\\,dx\n=\\Big[\\frac{2x^3}{3}-\\frac{3x^4}{4}\\Big]_0^1\n=\\frac23-\\frac34=\\frac{8-9}{12}=-\\frac1{12}.\n$$\n\n**Замечание (откуда взялась $g$).** Условия (2), (3) — это скалярные произведения $f$ с функциями $1$ и $x$ в $L^2(0,1)$; функция $g$ — ортогональная проекция любой допустимой $f$ на $\\mathrm{span}\\{1,x\\}$, и равенство $\\int f^2=\\int g^2=1$ означает, что «перпендикулярная» составляющая $f-g$ нулевая, что и было строго проверено в Шагах 2–3.\n\n## Финальный вывод\n\nУсловия задачи выполняются ровно для одной функции $f(x)=2-3x$ (она существует и допустима, см. Шаг 1), и поэтому\n\n$$\n\\boxed{\\ \\int_0^1 x^2 f(x)\\,dx=-\\frac{1}{12}\\ }\n$$",
+                  "type": "text",
+                  "parsed_output": null
+                }
+              ],
+              "model": "claude-fable-5",
+              "role": "assistant",
+              "stop_details": null,
+              "stop_reason": "end_turn",
+              "stop_sequence": null,
+              "type": "message",
+              "usage": {
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": "[REDACTED]",
+                  "ephemeral_5m_input_tokens": "[REDACTED]"
+                },
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "inference_geo": "global",
+                "input_tokens": 352,
+                "output_tokens": 7297,
+                "output_tokens_details": null,
+                "server_tool_use": null,
+                "service_tier": "standard"
+              }
+            },
+            "latency_ms": 70487,
+            "answer_chars": 3419
+          }
+        ],
+        "last_response": {
+          "id": "msg_011CdcEB7BvVv9NrSA1vhGaF",
+          "container": null,
+          "content": [
+            {
+              "signature": "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",
+              "thinking": "I'm looking at a problem where I have a continuous function on [0,1] with three integral constraints, and I need to determine whether these constraints uniquely specify the value of ∫x²f. Let me think about whether the constraints are sufficient to pin down this particular integral.\n\nThe key insight is that the minimal-norm function satisfying the linear constraints ∫f = 1/2 and ∫xf = 0 must lie in the span of the constraint functions. So I'm setting f₀ = a + bx and solving the system: a + b/2 = 1/2 and a/2 + b/3 = 0. From the second equation, a = -2b/3, which gives b = -3 and a = 2, so f₀ = 2 - 3x. Checking: ∫(2-3x)² = 4 - 6 + 3 = 1, which matches the third constraint perfectly.\n\nSince f = f₀ + h where h satisfies ∫h = 0 and ∫xh = 0, I can decompose ∫f² = ∫f₀² + 2∫f₀h + ∫h². The orthogonality conditions force the cross term to vanish, leaving ∫f² = 1 + ∫h². But we're told ∫f² = 1, so ∫h² = 0, meaning h = 0 and f = f₀ everywhere. Now I can compute ∫₀¹ x²f₀ = ∫₀¹ (2x² - 3x³)dx = 2/3 - 3/4 = -1/12. Now I'm organizing the proof more formally in Russian, starting with a clear setup of the problem and notation. I'll verify that the candidate solution $f(x) = 2 - 3x$ satisfies all the constraints, establish the key lemma about continuous nonnegative functions with zero integral, and then conclude that this is the unique minimizer and compute the final answer. That gives $\\int fg = 1$, so $\\int h^2 = 1 - 2(1) + 1 = 0$, which means $h = 0$ almost everywhere and therefore $f = g$ uniquely.\n\nNow I need to verify this with a key lemma: if a continuous function $h$ on $[0,1]$ satisfies $h^2 \\geq 0$ and $\\int_0^1 h^2 = 0$, then $h$ must be identically zero. The proof assumes $h(x_0) \\neq 0$ for some point, which would make $h^2(x_0) > 0$, and by continuity this positivity persists in a neighborhood around $x_0$, creating a positive contribution to the integral that contradicts it being zero. So $h^2 \\geq 0$ everywhere, which validates the inequality. This means $f(x) = 2 - 3x$ for all $x$, giving $\\int_0^1 x^2 f = \\int_0^1 (2x^2 - 3x^3) dx = 2/3 - 3/4 = -1/12$. I should verify the arithmetic and consider whether to include a remark about how $g$ was constructed, though the main write-up needs to stay rigorous. Let me verify the final step: $\\int fg = 1$ and $\\int (f-g)^2 = 0$, which confirms everything is consistent. Now I'll write the complete solution in Russian, organizing it with formalization, verification of the candidate function $g(x) = 2 - 3x$, the calculation showing $(f-g)^2$ integrates to zero, and then applying the lemma that a continuous non-negative function with zero integral must be identically zero to conclude $f = g$ uniquely.\n\nFor the lemma proof, I need to carefully establish that if $h$ is continuous on $[0,1]$ and $\\int_0^1 h^2 = 0$, then $h \\equiv 0$: if $h(x_0) \\neq 0$ for some point, then $h^2(x_0) > 0$, and by continuity there exists a neighborhood around $x_0$ where $h^2$ stays bounded away from zero, making the integral positive—a contradiction. I'll also mention as a remark that $g$ was found as the orthogonal projection of $f$ onto the span of $\\{1, x\\}$, which motivates why this approach works, then compute the final answer $-1/12$. non-zero interval where $h^2 > c/2$, which leads to a contradiction when I integrate—the integral of $h^2$ over the whole interval would be positive, but we know it equals zero. So $h$ must be identically zero, meaning $f = g$ and we're done. I'm also noting how the monotonicity of integration works here: since $h^2 \\geq 0$ everywhere, the integral over the full interval equals the sum of integrals over any partition of subintervals.\n\nNow I need to write this up cleanly in Russian with proper rigor, including a remark about the geometric motivation involving projections, and make sure the final answer $-\\tfrac{1}{12}$ is boxed. The structure should start with formalizing what we're given and what we need to find, then explain the key idea about how the conditions determine the integral through $L^2$ norms and inner products.\n\nFor the candidate linear function, I'm solving the system of constraints: the integral of $g$ equals $1/2$ and the integral of $xg$ equals $0$. From the second equation I get $a = -2b/3$, and substituting into the first gives me a relation for $b$ that I need to solve carefully.\n\nOnce I have $g(x) = 2 - 3x$, I can verify it satisfies all conditions including $\\int g^2 = 1$, which confirms the feasible set is nonempty. Then I'll show that $(f - g)^2$ integrates to zero by computing $\\int fg$ and expanding, which forces $f \\equiv g$. Finally, I can calculate $J = -1/12$. Writing the solution...",
+              "type": "thinking"
+            },
+            {
+              "citations": null,
+              "text": "## Формализация и обозначения\n\nДано: $f\\in C[0,1]$, причём\n\n$$\n(1)\\ \\int_0^1 f^2(x)\\,dx=1,\\qquad\n(2)\\ \\int_0^1 f(x)\\,dx=\\frac12,\\qquad\n(3)\\ \\int_0^1 xf(x)\\,dx=0.\n$$\n\nТребуется найти $J=\\displaystyle\\int_0^1 x^2 f(x)\\,dx$, т.е. показать, что условия (1)–(3) определяют $J$ однозначно, и вычислить его.\n\n**План.** Покажем, что условия (1)–(3) вынуждают $f$ совпадать с конкретной линейной функцией $g(x)=2-3x$, после чего $J$ вычислится напрямую.\n\n## Шаг 1. Кандидат $g$ и проверка согласованности условий\n\nИщем линейную функцию $g(x)=a+bx$, удовлетворяющую (2) и (3):\n\n$$\n\\int_0^1 g\\,dx=a+\\frac b2=\\frac12,\\qquad\n\\int_0^1 xg\\,dx=\\frac a2+\\frac b3=0.\n$$\n\nИз второго уравнения $a=-\\tfrac{2b}{3}$; подстановка в первое даёт $-\\tfrac{2b}{3}+\\tfrac b2=\\tfrac12$, т.е. $-\\tfrac b6=\\tfrac12$, откуда $b=-3$, $a=2$. Итак,\n\n$$\ng(x)=2-3x.\n$$\n\nПроверим **все три** условия для $g$:\n\n$$\n\\int_0^1 (2-3x)\\,dx=\\Big[2x-\\tfrac{3x^2}{2}\\Big]_0^1=2-\\tfrac32=\\tfrac12\\quad\\checkmark\n$$\n$$\n\\int_0^1 x(2-3x)\\,dx=\\Big[x^2-x^3\\Big]_0^1=0\\quad\\checkmark\n$$\n$$\n\\int_0^1 (2-3x)^2dx=\\int_0^1(4-12x+9x^2)\\,dx=4-6+3=1\\quad\\checkmark\n$$\n\nЗначит, $g$ — допустимая функция; **множество функций, удовлетворяющих (1)–(3), непусто**, задача корректна.\n\n## Шаг 2. Ключевое вычисление: $\\int_0^1 (f-g)^2\\,dx=0$\n\nПользуясь линейностью интеграла и условиями (2), (3):\n\n$$\n\\int_0^1 f(x)g(x)\\,dx=\\int_0^1 (2-3x)f(x)\\,dx\n=2\\int_0^1 f\\,dx-3\\int_0^1 xf\\,dx\n=2\\cdot\\frac12-3\\cdot 0=1.\n$$\n\nТогда, раскрывая квадрат и используя (1) и $\\int_0^1 g^2=1$ (Шаг 1):\n\n$$\n\\int_0^1 \\bigl(f(x)-g(x)\\bigr)^2dx\n=\\int_0^1 f^2\\,dx-2\\int_0^1 fg\\,dx+\\int_0^1 g^2\\,dx\n=1-2\\cdot 1+1=0.\n$$\n\n## Шаг 3. Лемма и вывод $f\\equiv g$\n\n**Лемма.** Если $h\\in C[0,1]$ и $\\displaystyle\\int_0^1 h^2(x)\\,dx=0$, то $h(x)=0$ для всех $x\\in[0,1]$.\n\n*Доказательство.* Предположим противное: $h(x_0)\\neq0$ для некоторого $x_0\\in[0,1]$. Положим $c=h^2(x_0)>0$. Функция $h^2$ непрерывна, поэтому существует $\\delta>0$ такое, что $h^2(x)>\\tfrac c2$ для всех $x\\in[0,1]$ с $|x-x_0|<\\delta$. Внутри $[0,1]$ найдётся отрезок $[\\alpha,\\beta]\\subseteq[0,1]\\cap(x_0-\\delta,x_0+\\delta)$ положительной длины $\\ell=\\beta-\\alpha>0$: если $x_0\\le\\tfrac12$, годится $[\\,x_0,\\ x_0+\\min(\\tfrac\\delta2,\\tfrac12)\\,]$, а если $x_0>\\tfrac12$ — отрезок $[\\,x_0-\\min(\\tfrac\\delta2,\\tfrac12),\\ x_0\\,]$. Так как $h^2\\ge0$ всюду на $[0,1]$,\n\n$$\n0=\\int_0^1 h^2\\,dx\\ \\ge\\ \\int_\\alpha^\\beta h^2\\,dx\\ \\ge\\ \\frac c2\\,\\ell>0,\n$$\n\n— противоречие. Значит, $h\\equiv0$. $\\blacksquare$\n\nФункция $h=f-g$ непрерывна на $[0,1]$, и по Шагу 2 $\\int_0^1 h^2=0$. По лемме $h\\equiv 0$, т.е.\n\n$$\nf(x)=2-3x\\quad\\text{для всех } x\\in[0,1].\n$$\n\nВ частности, условия (1)–(3) определяют $f$ (а значит, и искомый интеграл) **однозначно**.\n\n## Шаг 4. Вычисление ответа\n\n$$\nJ=\\int_0^1 x^2(2-3x)\\,dx=\\int_0^1\\bigl(2x^2-3x^3\\bigr)\\,dx\n=\\Big[\\frac{2x^3}{3}-\\frac{3x^4}{4}\\Big]_0^1\n=\\frac23-\\frac34=\\frac{8-9}{12}=-\\frac1{12}.\n$$\n\n**Замечание (откуда взялась $g$).** Условия (2), (3) — это скалярные произведения $f$ с функциями $1$ и $x$ в $L^2(0,1)$; функция $g$ — ортогональная проекция любой допустимой $f$ на $\\mathrm{span}\\{1,x\\}$, и равенство $\\int f^2=\\int g^2=1$ означает, что «перпендикулярная» составляющая $f-g$ нулевая, что и было строго проверено в Шагах 2–3.\n\n## Финальный вывод\n\nУсловия задачи выполняются ровно для одной функции $f(x)=2-3x$ (она существует и допустима, см. Шаг 1), и поэтому\n\n$$\n\\boxed{\\ \\int_0^1 x^2 f(x)\\,dx=-\\frac{1}{12}\\ }\n$$",
+              "type": "text",
+              "parsed_output": null
+            }
+          ],
+          "model": "claude-fable-5",
+          "role": "assistant",
+          "stop_details": null,
+          "stop_reason": "end_turn",
+          "stop_sequence": null,
+          "type": "message",
+          "usage": {
+            "cache_creation": {
+              "ephemeral_1h_input_tokens": "[REDACTED]",
+              "ephemeral_5m_input_tokens": "[REDACTED]"
+            },
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "inference_geo": "global",
+            "input_tokens": 352,
+            "output_tokens": 7297,
+            "output_tokens_details": null,
+            "server_tool_use": null,
+            "service_tier": "standard"
+          }
+        },
+        "usage": {
+          "input_tokens": 352,
+          "output_tokens": 7297,
+          "total_tokens": 7649,
+          "output_tokens_details": {
+            "reasoning_tokens": null,
+            "thinking_tokens": null
+          },
+          "cache_read_input_tokens": null,
+          "cache_creation_input_tokens": null
+        }
+      },
+      "usage": {
+        "input_tokens": 352,
+        "output_tokens": 7297,
+        "total_tokens": 7649,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "cache_creation_input_tokens": null,
+        "raw": {
+          "input_tokens": 352,
+          "output_tokens": 7297,
+          "total_tokens": 7649,
+          "output_tokens_details": {
+            "reasoning_tokens": null,
+            "thinking_tokens": null
+          },
+          "cache_read_input_tokens": null,
+          "cache_creation_input_tokens": null
+        },
+        "source": "provider_response"
+      },
+      "timing": {
+        "wall_ms": 70487,
+        "monotonic_ms": 70487,
+        "time_to_first_token_ms": null,
+        "reasoning_ms": null,
+        "retry_durations_ms": [],
+        "attempts_total_ms": 70487,
+        "source": "runner"
+      },
+      "cost": {
+        "currency": "USD",
+        "input": 0.00352,
+        "output": 0.36485,
+        "cached_input": null,
+        "reasoning": 0.0,
+        "native": null,
+        "total": 0.36837,
+        "pricing_source": "models/pricing.py",
+        "pricing_version": "2026-08-01",
+        "estimated": true,
+        "exchange_rate": null,
+        "note": null
+      },
+      "finish_reason": "end_turn",
+      "provider_request_id": null,
+      "response_id": "msg_011CdcEB7BvVv9NrSA1vhGaF",
+      "provider_timestamp": null,
+      "error": null,
+      "error_info": null,
+      "score": null,
+      "scored_by": null,
+      "scored_at": null,
+      "score_comment": null
+    }
+  ]
+}

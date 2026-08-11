@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_017765698fb8ae1439d4924d": {
+      "evaluation_id": "ev_b20bbfc6c9d347859f839f385e5fd060",
+      "result_id": "res_017765698fb8ae1439d4924d",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "evaluator": "MotaTasher",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "а - 011 в А, 110 в В. Какие пары выкидываются и почему их остается достаточно так и не понятно\r\n\r\nб - откуда линейность на E(m^2) <= Cn?! там же снизу оценка уже n^2 \\alpha^2?!",
+      "created_at": "2026-08-11T17:01:22.076332Z",
+      "updated_at": "2026-08-11T17:01:22.076332Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_017765698fb8ae1439d4924d": [
+      {
+        "evaluation_id": "ev_79bba3e0b7314402969e4989b31a1455",
+        "result_id": "res_017765698fb8ae1439d4924d",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "b2_maxim",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "",
+        "created_at": "2026-08-02T18:19:38.088582Z",
+        "updated_at": "2026-08-02T18:19:38.088582Z"
+      },
+      {
+        "evaluation_id": "ev_b20bbfc6c9d347859f839f385e5fd060",
+        "result_id": "res_017765698fb8ae1439d4924d",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "а - 011 в А, 110 в В. Какие пары выкидываются и почему их остается достаточно так и не понятно\r\n\r\nб - откуда линейность на E(m^2) <= Cn?! там же снизу оценка уже n^2 \\alpha^2?!",
+        "created_at": "2026-08-11T17:01:22.076332Z",
+        "updated_at": "2026-08-11T17:01:22.076332Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_08",
+  "run_id": "2026_08_01_01_15_15_math-cup-2026-final_20260801_001725_task_08_xai_grok-4.5_256000",
+  "updated_at": "2026-08-11T17:01:22.076332Z",
+  "finalizations": {}
+}

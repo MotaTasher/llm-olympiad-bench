@@ -1,0 +1,41 @@
+{
+  "evaluations": {
+    "res_5ac8047c7deeea7e58e375d1": {
+      "evaluation_id": "ev_30c5d0b63845440f91d1ac7a84886e69",
+      "result_id": "res_5ac8047c7deeea7e58e375d1",
+      "result_index": 0,
+      "model_key": "kimi:kimi-k3",
+      "model": "kimi-k3",
+      "evaluator": "b2_maxim",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "В 1 степень точки правильно посчитана, но там была самосокращающаяся ошибка - не стал снимать",
+      "created_at": "2026-08-02T17:37:10.010542Z",
+      "updated_at": "2026-08-02T17:37:10.010542Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_5ac8047c7deeea7e58e375d1": [
+      {
+        "evaluation_id": "ev_30c5d0b63845440f91d1ac7a84886e69",
+        "result_id": "res_5ac8047c7deeea7e58e375d1",
+        "result_index": 0,
+        "model_key": "kimi:kimi-k3",
+        "model": "kimi-k3",
+        "evaluator": "b2_maxim",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "В 1 степень точки правильно посчитана, но там была самосокращающаяся ошибка - не стал снимать",
+        "created_at": "2026-08-02T17:37:10.010542Z",
+        "updated_at": "2026-08-02T17:37:10.010542Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_09",
+  "run_id": "2026_08_01_21_48_15_math-cup-2026-final_20260801_182514_task_09_kimi_kimi-k3_256000",
+  "updated_at": "2026-08-02T17:37:10.010542Z"
+}

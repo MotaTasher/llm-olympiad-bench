@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_a309574afd7b980a9bcd98a4": {
-      "evaluation_id": "ev_5bf04f276c7d43deafe36d94bdfdeb37",
+      "evaluation_id": "ev_90de054bad7c4b8e85f4a43872a57759",
       "result_id": "res_a309574afd7b980a9bcd98a4",
       "result_index": 0,
       "model_key": "google:gemini-3.1-pro-preview",
       "model": "gemini-3.1-pro-preview",
-      "evaluator": "mofeyTEA",
-      "score": 0,
+      "evaluator": "MotaTasher",
+      "score": 0.01,
       "max_score": 2.0,
-      "score_category": "zero",
-      "feedback": "3/8 и 3/7 не сходятся",
-      "created_at": "2026-07-29T17:57:18.663909Z",
-      "updated_at": "2026-07-29T17:57:18.663909Z"
+      "score_category": "partial",
+      "feedback": "Пример верный, оценка - нет",
+      "created_at": "2026-08-09T14:28:25.585197Z",
+      "updated_at": "2026-08-09T14:28:25.585197Z"
     }
   },
   "evaluation_pool": {
@@ -44,6 +44,20 @@
         "feedback": "3/8 и 3/7 не сходятся",
         "created_at": "2026-07-29T17:57:18.663909Z",
         "updated_at": "2026-07-29T17:57:18.663909Z"
+      },
+      {
+        "evaluation_id": "ev_90de054bad7c4b8e85f4a43872a57759",
+        "result_id": "res_a309574afd7b980a9bcd98a4",
+        "result_index": 0,
+        "model_key": "google:gemini-3.1-pro-preview",
+        "model": "gemini-3.1-pro-preview",
+        "evaluator": "MotaTasher",
+        "score": 0.01,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "Пример верный, оценка - нет",
+        "created_at": "2026-08-09T14:28:25.585197Z",
+        "updated_at": "2026-08-09T14:28:25.585197Z"
       }
     ]
   },
@@ -51,5 +65,20 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_07_06_20_39_58_new_models_20260706_203306_task_05_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-07-29T17:57:18.663909Z"
+  "updated_at": "2026-08-10T11:09:18.291815Z",
+  "finalizations": {
+    "res_a309574afd7b980a9bcd98a4": {
+      "result_id": "res_a309574afd7b980a9bcd98a4",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "score": 0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "",
+      "updated_by": "b2_maxim",
+      "created_at": "2026-08-10T11:09:18.291815Z",
+      "updated_at": "2026-08-10T11:09:18.291815Z"
+    }
+  }
 }

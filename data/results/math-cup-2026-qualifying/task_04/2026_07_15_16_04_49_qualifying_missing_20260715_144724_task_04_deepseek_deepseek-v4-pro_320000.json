@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_e2736c8c6b3e406fba5e2a26": {
-      "evaluation_id": "ev_779916389eeb4c8b930188472f67b7e4",
+      "evaluation_id": "ev_cabf7b07a7a5415fb7c46e1eb1cc6c82",
       "result_id": "res_e2736c8c6b3e406fba5e2a26",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 4,
-      "max_score": 4,
+      "max_score": 4.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-07-24T21:18:33.117010Z",
-      "updated_at": "2026-07-24T21:18:33.117010Z"
+      "created_at": "2026-08-03T20:21:15.677021Z",
+      "updated_at": "2026-08-03T20:21:15.677021Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-07-24T21:18:33.117010Z",
         "updated_at": "2026-07-24T21:18:33.117010Z"
+      },
+      {
+        "evaluation_id": "ev_cabf7b07a7a5415fb7c46e1eb1cc6c82",
+        "result_id": "res_e2736c8c6b3e406fba5e2a26",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "mofeyTEA",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-03T20:21:15.677021Z",
+        "updated_at": "2026-08-03T20:21:15.677021Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_04",
   "run_id": "2026_07_15_16_04_49_qualifying_missing_20260715_144724_task_04_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-07-24T21:18:33.117010Z"
+  "updated_at": "2026-08-03T20:21:15.677021Z",
+  "finalizations": {}
 }

@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_7b776b8a16c2582cce4e6ea7": {
-      "evaluation_id": "ev_c673b66f528349d19a14ebeae8854aa4",
+      "evaluation_id": "ev_135c1ed114f8429f9b23caec267cc386",
       "result_id": "res_7b776b8a16c2582cce4e6ea7",
       "result_index": 0,
       "model_key": "openai:gpt-5.6-sol",
       "model": "gpt-5.6-sol",
-      "evaluator": "b2_maxim",
+      "evaluator": "mofeyTEA",
       "score": 4,
       "max_score": 4.0,
       "score_category": "full",
       "feedback": "",
-      "created_at": "2026-08-01T09:05:17.562963Z",
-      "updated_at": "2026-08-01T09:05:17.562963Z"
+      "created_at": "2026-08-03T20:36:12.309618Z",
+      "updated_at": "2026-08-03T20:36:12.309618Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-08-01T09:05:17.562963Z",
         "updated_at": "2026-08-01T09:05:17.562963Z"
+      },
+      {
+        "evaluation_id": "ev_135c1ed114f8429f9b23caec267cc386",
+        "result_id": "res_7b776b8a16c2582cce4e6ea7",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "mofeyTEA",
+        "score": 4,
+        "max_score": 4.0,
+        "score_category": "full",
+        "feedback": "",
+        "created_at": "2026-08-03T20:36:12.309618Z",
+        "updated_at": "2026-08-03T20:36:12.309618Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_06",
   "run_id": "2026_08_01_00_34_42_math-cup-2026-qualifying_20260801_001725_task_06_openai_gpt-5.6-sol_256000",
-  "updated_at": "2026-08-01T09:05:17.562963Z"
+  "updated_at": "2026-08-03T20:36:12.309618Z",
+  "finalizations": {}
 }

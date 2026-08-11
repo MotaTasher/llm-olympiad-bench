@@ -1,0 +1,70 @@
+{
+  "evaluations": {
+    "res_1de474e83df1c73221f7be51": {
+      "evaluation_id": "ev_4e6772339d6941d9a6a1231e19b471c5",
+      "result_id": "res_1de474e83df1c73221f7be51",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "evaluator": "MotaTasher",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "касательная в 0 пересекатеся конечне число точек",
+      "created_at": "2026-08-09T19:17:23.563735Z",
+      "updated_at": "2026-08-09T19:17:23.563735Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_1de474e83df1c73221f7be51": [
+      {
+        "evaluation_id": "ev_ed8cb199935b4e4d9f1ae2f709048004",
+        "result_id": "res_1de474e83df1c73221f7be51",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "Не знаю что ставить. по сути это то же человеческое решение с кусочно параболическими функциями, но не одно место, где замяли аргументы.\r\n\r\n\"Выбирая длину фазы достаточно большой (что возможно, ибо отношение притягивается к среднему u'), добиваемся…\"\r\n\r\n\"можно выбрать подпоследовательности, в которых точки с  g>1 и g<−1 строго чередуются\"\r\n\r\n\"g(x)=(1−m)x−u(x)−C (с подходящей константой C)\"",
+        "created_at": "2026-08-02T18:07:20.576736Z",
+        "updated_at": "2026-08-02T18:07:20.576736Z"
+      },
+      {
+        "evaluation_id": "ev_6648fb306c704dbb9157b399e730d94a",
+        "result_id": "res_1de474e83df1c73221f7be51",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "mofeyTEA",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": " после чего полагаем rn = qn \r\n\r\nтут функция производной становится разрывной но это легко латается",
+        "created_at": "2026-08-05T21:38:43.882508Z",
+        "updated_at": "2026-08-05T21:38:43.882508Z"
+      },
+      {
+        "evaluation_id": "ev_4e6772339d6941d9a6a1231e19b471c5",
+        "result_id": "res_1de474e83df1c73221f7be51",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "касательная в 0 пересекатеся конечне число точек",
+        "created_at": "2026-08-09T19:17:23.563735Z",
+        "updated_at": "2026-08-09T19:17:23.563735Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_07",
+  "run_id": "2026_08_01_01_03_38_math-cup-2026-final_20260801_001725_task_07_xai_grok-4.5_256000",
+  "updated_at": "2026-08-09T19:17:23.563735Z",
+  "finalizations": {}
+}

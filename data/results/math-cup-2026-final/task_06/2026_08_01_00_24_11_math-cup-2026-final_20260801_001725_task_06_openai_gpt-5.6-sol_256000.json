@@ -1,0 +1,56 @@
+{
+  "evaluations": {
+    "res_3e6d5ef1b40887fcafecf5f0": {
+      "evaluation_id": "ev_bb171ab100084204a6b77a5f40dd2692",
+      "result_id": "res_3e6d5ef1b40887fcafecf5f0",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "evaluator": "MotaTasher",
+      "score": 1.1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "created_at": "2026-08-09T13:39:51.840634Z",
+      "updated_at": "2026-08-09T13:39:51.840634Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_3e6d5ef1b40887fcafecf5f0": [
+      {
+        "evaluation_id": "ev_1074f65b362f41cd9efab3840758b336",
+        "result_id": "res_3e6d5ef1b40887fcafecf5f0",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "б)\"«в среднем полиномиальное время» математически не определено.\"",
+        "created_at": "2026-08-02T18:38:29.720261Z",
+        "updated_at": "2026-08-02T18:38:29.720261Z"
+      },
+      {
+        "evaluation_id": "ev_bb171ab100084204a6b77a5f40dd2692",
+        "result_id": "res_3e6d5ef1b40887fcafecf5f0",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "MotaTasher",
+        "score": 1.1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-08-09T13:39:51.840634Z",
+        "updated_at": "2026-08-09T13:39:51.840634Z"
+      }
+    ]
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_01_00_24_11_math-cup-2026-final_20260801_001725_task_06_openai_gpt-5.6-sol_256000",
+  "updated_at": "2026-08-09T13:39:51.840634Z",
+  "finalizations": {}
+}
