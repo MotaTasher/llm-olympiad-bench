@@ -1,0 +1,207 @@
+{
+  "title": "Финал 2026, задача 9 — решение Opus 5",
+  "source": "инверсия + комплексные координаты; ω нормирована как единичная окружность",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "points",
+    "fit": "step",
+    "padding": 0.12
+  },
+  "setup": [
+    "O=(0,0)",
+    "A=(-0.08716,0.99619)",
+    "B=(-0.93969,-0.34202)",
+    "C=(0.93969,-0.34202)",
+    "om=Circle(O,1)",
+    "SetColor(om,0.15,0.32,0.6)",
+    "SetLineThickness(om,5)",
+    "SetCaption(om,\"ω\")",
+    "SetLabelMode(om,3)",
+    "ShowLabel(om,true)"
+  ],
+  "steps": [
+    {
+      "title": "§1. Нормировка: ω — единичная окружность",
+      "text": "Утверждение инвариантно относительно подобия, поэтому ω считаем единичной окружностью с центром O = 0, а точки — комплексными числами. Стороны треугольника: a = |B−C|, b = |C−A|, c = |A−B|.",
+      "commands": [
+        "tri=Polygon(A,B,C)",
+        "SetColor(tri,0.55,0.55,0.55)",
+        "SetLineThickness(tri,3)",
+        "SetFilling(tri,0.06)"
+      ],
+      "highlight": [
+        "om"
+      ]
+    },
+    {
+      "title": "§2. Лемма 1: центр ω_X лежит на луче OX",
+      "text": "Из касания центры ω_X, O и точка X коллинеарны, а внешнее касание даёт центр (1 + r_X)·X — за точкой X, если смотреть из O.",
+      "commands": [
+        "WA=(-0.11292,1.29067)",
+        "segA=Segment(O,WA)",
+        "SetColor(segA,0.55,0.55,0.55)",
+        "SetLineThickness(segA,2)",
+        "SetCaption(WA,\"центр ω_A\")",
+        "SetLabelMode(WA,3)",
+        "WB=(-1.31102,-0.47717)",
+        "segB=Segment(O,WB)",
+        "SetColor(segB,0.55,0.55,0.55)",
+        "SetLineThickness(segB,2)",
+        "SetCaption(WB,\"центр ω_B\")",
+        "SetLabelMode(WB,3)",
+        "WC=(1.38208,-0.50304)",
+        "segC=Segment(O,WC)",
+        "SetColor(segC,0.55,0.55,0.55)",
+        "SetLineThickness(segC,2)",
+        "SetCaption(WC,\"центр ω_C\")",
+        "SetLabelMode(WC,3)"
+      ],
+      "highlight": [
+        "WA",
+        "WB",
+        "WC"
+      ]
+    },
+    {
+      "title": "§2. Малые окружности ω_A, ω_B, ω_C",
+      "text": "Радиусы связаны с одним параметром s: f_X = r_X/(1+r_X), причём f_A·a² = f_B·b² = f_C·c² = s/4.",
+      "commands": [
+        "smA=Circle(WA,0.295599)",
+        "SetColor(smA,0.16,0.47,0.34)",
+        "SetLineThickness(smA,4)",
+        "SetCaption(smA,\"ω_A\")",
+        "SetLabelMode(smA,3)",
+        "ShowLabel(smA,true)",
+        "smB=Circle(WB,0.395156)",
+        "SetColor(smB,0.16,0.47,0.34)",
+        "SetLineThickness(smB,4)",
+        "SetCaption(smB,\"ω_B\")",
+        "SetLabelMode(smB,3)",
+        "ShowLabel(smB,true)",
+        "smC=Circle(WC,0.470781)",
+        "SetColor(smC,0.16,0.47,0.34)",
+        "SetLineThickness(smC,4)",
+        "SetCaption(smC,\"ω_C\")",
+        "SetLabelMode(smC,3)",
+        "ShowLabel(smC,true)"
+      ],
+      "highlight": [
+        "smA",
+        "smB",
+        "smC"
+      ]
+    },
+    {
+      "title": "§2. Большие окружности: центр по другую сторону от O",
+      "text": "Центр Ω_X равен −k_X·X, то есть лежит на луче, противоположном OX, а радиус равен 1 + k_X. Видно, что Ω_X касается ω именно в точке X и накрывает две другие малые окружности.",
+      "commands": [
+        "GA=(0.07131,-0.81507)",
+        "bgA=Circle(GA,1.818182)",
+        "SetColor(bgA,0.85,0.5,0.1)",
+        "SetLineThickness(bgA,4)",
+        "SetCaption(bgA,\"Ω_A\")",
+        "SetLabelMode(bgA,3)",
+        "ShowLabel(bgA,true)",
+        "SetCaption(GA,\"центр Ω_A\")",
+        "SetLabelMode(GA,3)",
+        "GB=(0.53432,0.19448)",
+        "bgB=Circle(GB,1.568609)",
+        "SetColor(bgB,0.85,0.5,0.1)",
+        "SetLineThickness(bgB,4)",
+        "SetCaption(bgB,\"Ω_B\")",
+        "SetLabelMode(bgB,3)",
+        "ShowLabel(bgB,true)",
+        "SetCaption(GB,\"центр Ω_B\")",
+        "SetLabelMode(GB,3)",
+        "GC=(-0.44375,0.16151)",
+        "bgC=Circle(GC,1.472224)",
+        "SetColor(bgC,0.85,0.5,0.1)",
+        "SetLineThickness(bgC,4)",
+        "SetCaption(bgC,\"Ω_C\")",
+        "SetLabelMode(bgC,3)",
+        "ShowLabel(bgC,true)",
+        "SetCaption(GC,\"центр Ω_C\")",
+        "SetLabelMode(GC,3)"
+      ],
+      "highlight": [
+        "GA",
+        "GB",
+        "GC"
+      ]
+    },
+    {
+      "title": "§4. Точки X_A, X_B, X_C",
+      "text": "Из двух точек пересечения Ω_B и Ω_C ровно одна лежит внутри Ω_A — это X_A; аналогично X_B и X_C.",
+      "commands": [
+        "XA=(-0.05612,-1.25877)",
+        "SetCaption(XA,\"X_A\")",
+        "SetLabelMode(XA,3)",
+        "SetPointSize(XA,6)",
+        "XB=(0.87510,0.81579)",
+        "SetCaption(XB,\"X_B\")",
+        "SetLabelMode(XB,3)",
+        "SetPointSize(XB,6)",
+        "XC=(-0.95548,0.68543)",
+        "SetCaption(XC,\"X_C\")",
+        "SetLabelMode(XC,3)",
+        "SetPointSize(XC,6)"
+      ],
+      "highlight": [
+        "XA",
+        "XB",
+        "XC"
+      ]
+    },
+    {
+      "title": "Три прямые пересекаются в точке Y",
+      "text": "Прямые AX_A, BX_B, CX_C проходят через одну точку.",
+      "commands": [
+        "mA=Line(A,XA)",
+        "SetColor(mA,0.72,0.11,0.11)",
+        "SetLineThickness(mA,5)",
+        "SetCaption(mA,\"AX_A\")",
+        "SetLabelMode(mA,3)",
+        "ShowLabel(mA,true)",
+        "mB=Line(B,XB)",
+        "SetColor(mB,0.72,0.11,0.11)",
+        "SetLineThickness(mB,5)",
+        "SetCaption(mB,\"BX_B\")",
+        "SetLabelMode(mB,3)",
+        "ShowLabel(mB,true)",
+        "mC=Line(C,XC)",
+        "SetColor(mC,0.72,0.11,0.11)",
+        "SetLineThickness(mC,5)",
+        "SetCaption(mC,\"CX_C\")",
+        "SetLabelMode(mC,3)",
+        "ShowLabel(mC,true)",
+        "Y=(-0.07632,0.20880)",
+        "SetCaption(Y,\"Y\")",
+        "SetLabelMode(Y,3)",
+        "SetPointSize(Y,8)",
+        "SetColor(Y,0.72,0.11,0.11)"
+      ],
+      "highlight": [
+        "Y"
+      ]
+    },
+    {
+      "title": "Вывод решения: Y лежит на векторе a²A + b²B + c²C",
+      "text": "Направляющий вектор AX_A равен b²(B−A) + c²(C−A) + Ψ·A с симметричным по A, B, C числом Ψ. Отсюда общая точка равна (a²A + b²B + c²C)/(a²+b²+c²−Ψ) — то есть лежит на луче OV, где V = a²A + b²B + c²C. На чертеже Y действительно на этом луче.",
+      "commands": [
+        "V=(-0.61568,1.68444)",
+        "SetCaption(V,\"V = a²A + b²B + c²C\")",
+        "SetLabelMode(V,3)",
+        "SetPointSize(V,5)",
+        "SetColor(V,0.45,0.25,0.65)",
+        "rayV=Ray(O,V)",
+        "SetColor(rayV,0.45,0.25,0.65)",
+        "SetLineThickness(rayV,3)"
+      ],
+      "highlight": [
+        "Y"
+      ]
+    }
+  ]
+}
