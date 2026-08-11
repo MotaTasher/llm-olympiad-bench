@@ -7,6 +7,7 @@ import io
 import json
 import math
 import os
+import re
 from pathlib import Path
 import secrets
 import sys
@@ -765,12 +766,22 @@ def anonymous_problem_page(competition_id: str, problem_id: str):
             if attempts[index - 1].get("score") is None:
                 next_unscored_index = index
                 break
+    scene_available = False
+    if selected_attempt:
+        selected_result_id = str(selected_attempt.get("result_id") or "")
+        scene_available = geogebra_scene_file(
+            competition_id,
+            problem_id,
+            geogebra_model_key_for_result(problem, selected_result_id),
+            selected_result_id,
+        ) is not None
     return render_template(
         "anonymous_problem.html",
         competition=competition,
         problem=problem,
         attempts=attempts,
         selected_attempt=selected_attempt,
+        geogebra_scene_available=scene_available,
         selected_index=selected_index,
         next_index=next_unscored_index or ((selected_index % len(attempts) + 1) if attempts else None),
         seed=seed,
@@ -833,6 +844,92 @@ def geogebra_scene_file(
         if candidate.is_file():
             return candidate
     return None
+
+
+# Vendor names that must never reach an anonymous review page. The scene text
+# is written by hand and mentions the model it explains, so it has to be
+# scrubbed before it is served there.
+GEOGEBRA_VENDOR_WORDS = (
+    "claude", "opus", "fable", "haiku", "sonnet", "anthropic",
+    "gpt", "openai", "o3", "o4",
+    "gemini", "google", "grok", "xai", "glm", "zai", "zhipu",
+    "gigachat", "сбер", "sber", "kimi", "moonshot", "deepseek",
+    "alice", "алиса", "yandex", "яндекс", "qwen", "llama", "mistral",
+)
+GEOGEBRA_VENDOR_RE = re.compile(
+    r"(?iu)\b(?:" + "|".join(GEOGEBRA_VENDOR_WORDS) + r")\b"
+    r"(?:[\s\-]*(?:[\d.]+|sol|flash|ultra|pro|mini|max|lite|preview|thinking|build|k\d))*"
+)
+
+
+def _scrub_vendor(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: _scrub_vendor(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_scrub_vendor(item) for item in value]
+    if isinstance(value, str):
+        return GEOGEBRA_VENDOR_RE.sub("модель", value)
+    return value
+
+
+def anonymize_scene(scene: Any) -> Any:
+    """Strip model identity from a scene without touching its geometry.
+
+    Only the scene's own title is replaced; step titles keep their meaning and
+    are merely scrubbed, because they are what a reviewer follows.
+    """
+    cleaned = _scrub_vendor(scene)
+    if isinstance(cleaned, dict):
+        cleaned["title"] = "Построение по этому решению"
+        cleaned.pop("source", None)
+    return cleaned
+
+
+def geogebra_model_key_for_result(problem: dict, result_id: str) -> str | None:
+    for state in problem.get("model_states", []):
+        for attempt in state.get("attempts", []):
+            if str(attempt.get("result_id")) == result_id:
+                return state.get("model_key")
+    return None
+
+
+@app.get("/geogebra/anonymous/<competition_id>/<problem_id>/<result_id>")
+def geogebra_anonymous_scene(competition_id: str, problem_id: str, result_id: str):
+    """Scene for the anonymous review page: same construction, no model name.
+
+    The reviewer must not learn which model wrote the answer, so the scene is
+    looked up by the attempt and every vendor mention is removed. Commands are
+    left alone: they carry geometry, not identity.
+    """
+    competition_id = clean_id(competition_id)
+    problem_id = clean_id(problem_id)
+    result_id = clean_id(result_id)
+
+    data = catalog_for_reviewer(current_user.username)
+    problem = find_problem(data, competition_id, problem_id)
+    if not problem:
+        abort(404)
+    path = geogebra_scene_file(
+        competition_id,
+        problem_id,
+        geogebra_model_key_for_result(problem, result_id),
+        result_id,
+    )
+    if path is None:
+        abort(404)
+    try:
+        scene = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        return Response(
+            json.dumps({"error": f"сцена не читается: {error}"}, ensure_ascii=False),
+            status=500,
+            mimetype="application/json",
+        )
+    return Response(
+        json.dumps({"scene": anonymize_scene(scene)}, ensure_ascii=False),
+        mimetype="application/json",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/geogebra/viewer.js")

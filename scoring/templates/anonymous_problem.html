@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_scene_panel.html" as scene %}
 {% import "_macros.html" as ui %}
 {% block crumbs %}
   <a href="{{ url_for('index') }}">Соревнования</a> /
@@ -26,9 +27,12 @@
           <button class="secondary" type="submit">Импорт CSV проверок</button>
         </form>
       </div>
+      {% if geogebra_scene_available %}
+        {{ scene.scene_toggle("построение по этому решению") }}
+      {% endif %}
     </section>
 
-    <div class="review-layout">
+    <div class="review-layout" data-scene-layout>
       <div class="stack">
         <section class="panel">
           <div class="section-head">
@@ -207,6 +211,9 @@
           {% endif %}
         </div>
       </div>
+      {% if geogebra_scene_available %}
+        {{ scene.scene_panel(url_for('geogebra_anonymous_scene', competition_id=competition.competition_id, problem_id=problem.problem_id, result_id=selected_attempt.result_id), url_for('geogebra_viewer_js')) }}
+      {% endif %}
     </div>
   </div>
 {% endblock %}

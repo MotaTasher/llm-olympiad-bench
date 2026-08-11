@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "_macros.html" as ui %}
+{% import "_scene_panel.html" as scene %}
 {% block crumbs %}
   <a href="{{ url_for('index') }}">Соревнования</a> /
   <a href="{{ url_for('competition_page', competition_id=competition.competition_id) }}">{{ competition.competition_title }}</a> /
@@ -23,10 +24,7 @@
         </div>
       </div>
       {% if geogebra_scene_name %}
-        <div class="scene-actions">
-          <button class="secondary" type="button" data-scene-toggle aria-pressed="false">Показать построение</button>
-          <span class="meta">сцена: {{ geogebra_scene_name }}</span>
-        </div>
+        {{ scene.scene_toggle("сцена: " ~ geogebra_scene_name) }}
       {% endif %}
       <div class="csv-actions">
         <a class="button secondary" href="{{ url_for('problem_evaluations_csv', competition_id=competition.competition_id, problem_id=problem.problem_id) }}">CSV всех проверок задачи</a>
@@ -277,144 +275,8 @@
       </div>
 
       {% if geogebra_scene_name %}
-        <aside class="scene-panel" data-scene-panel hidden aria-label="Построение решения">
-          <div class="scene-panel-head">
-            <b data-scene-heading>Построение</b>
-            <button class="secondary compact" type="button" data-scene-close>Скрыть</button>
-          </div>
-          <div class="scene-mount" data-scene-mount></div>
-          <div class="scene-controls">
-            <button class="secondary" type="button" data-scene-act="prev" title="Предыдущий шаг">←</button>
-            <span class="scene-counter" data-scene-counter>—</span>
-            <button class="secondary" type="button" data-scene-act="next" title="Следующий шаг">→</button>
-            <button class="secondary" type="button" data-scene-act="play" title="Проиграть шаги">▶</button>
-            <select data-scene-select aria-label="Шаг построения"></select>
-          </div>
-          <div class="scene-step-title" data-scene-title></div>
-          <div class="scene-step-text" data-scene-text></div>
-          <div class="scene-errors" data-scene-errors></div>
-        </aside>
+        {{ scene.scene_panel(url_for('geogebra_scene', competition_id=competition.competition_id, problem_id=problem.problem_id, model=selected_state.model_key if selected_state else none, result_id=selected_attempt.result_id if selected_attempt else none), url_for('geogebra_viewer_js')) }}
       {% endif %}
     </div>
   </div>
-
-  {% if geogebra_scene_name %}
-    <script>
-      (function () {
-        var layout = document.querySelector('[data-scene-layout]');
-        var panel = document.querySelector('[data-scene-panel]');
-        var toggle = document.querySelector('[data-scene-toggle]');
-        var mount = panel.querySelector('[data-scene-mount]');
-        var counter = panel.querySelector('[data-scene-counter]');
-        var select = panel.querySelector('[data-scene-select]');
-        var titleBox = panel.querySelector('[data-scene-title]');
-        var textBox = panel.querySelector('[data-scene-text]');
-        var errorBox = panel.querySelector('[data-scene-errors]');
-        var heading = panel.querySelector('[data-scene-heading]');
-        var STORAGE_KEY = 'geogebra-panel-open';
-        var sceneUrl = {{ url_for('geogebra_scene', competition_id=competition.competition_id, problem_id=problem.problem_id, model=selected_state.model_key if selected_state else none, result_id=selected_attempt.result_id if selected_attempt else none) | tojson }};
-        var engine = null;
-        var loading = false;
-
-        function loadScript(src) {
-          return new Promise(function (resolve, reject) {
-            var tag = document.createElement('script');
-            tag.src = src;
-            tag.onload = resolve;
-            tag.onerror = function () { reject(new Error(src)); };
-            document.head.appendChild(tag);
-          });
-        }
-
-        function render(state) {
-          var scene = state.scene;
-          if (!scene) { return; }
-          heading.textContent = scene.title || 'Построение';
-          counter.textContent = (state.step + 1) + ' / ' + state.total;
-          if (select.options.length !== state.total) {
-            select.innerHTML = '';
-            scene.steps.forEach(function (s, i) {
-              var option = document.createElement('option');
-              option.value = String(i);
-              option.textContent = (i + 1) + '. ' + (s.title || 'Шаг ' + (i + 1));
-              select.appendChild(option);
-            });
-          }
-          select.value = String(state.step);
-          panel.querySelector('[data-scene-act="prev"]').disabled = state.step === 0;
-          panel.querySelector('[data-scene-act="next"]').disabled = state.step === state.total - 1;
-          panel.querySelector('[data-scene-act="play"]').textContent = state.playing ? '⏸' : '▶';
-
-          var current = scene.steps[state.step] || {};
-          titleBox.textContent = current.title || '';
-          textBox.textContent = current.text || '';
-
-          errorBox.innerHTML = '';
-          state.failures.slice(0, 6).forEach(function (f) {
-            var row = document.createElement('div');
-            row.innerHTML = 'не построено: <code></code>';
-            row.querySelector('code').textContent = f.command;
-            errorBox.appendChild(row);
-          });
-          state.notes.slice(-3).forEach(function (n) {
-            var row = document.createElement('div');
-            row.textContent = n;
-            errorBox.appendChild(row);
-          });
-        }
-
-        function start() {
-          if (engine || loading) { return; }
-          loading = true;
-          errorBox.textContent = 'Загружаем GeoGebra…';
-          var deploy = window.GGBApplet
-            ? Promise.resolve()
-            : loadScript('https://www.geogebra.org/apps/deployggb.js');
-          Promise.all([
-            deploy,
-            window.GeoGebraSteps ? Promise.resolve() : loadScript({{ url_for('geogebra_viewer_js') | tojson }}),
-            fetch(sceneUrl, { cache: 'no-store' }).then(function (r) {
-              if (!r.ok) { throw new Error('сцена не найдена (' + r.status + ')'); }
-              return r.json();
-            })
-          ]).then(function (results) {
-            errorBox.textContent = '';
-            engine = window.GeoGebraSteps.create({ mount: mount, onState: render });
-            engine.setScene(results[2].scene);
-          }).catch(function (error) {
-            errorBox.textContent = 'Не удалось показать построение: ' + error.message +
-              '. Для апплета нужен интернет.';
-          }).then(function () { loading = false; });
-        }
-
-        function setOpen(open) {
-          panel.hidden = !open;
-          layout.classList.toggle('scene-open', open);
-          toggle.setAttribute('aria-pressed', open ? 'true' : 'false');
-          toggle.textContent = open ? 'Скрыть построение' : 'Показать построение';
-          try { localStorage.setItem(STORAGE_KEY, open ? '1' : '0'); } catch (e) {}
-          if (open) { start(); } else if (engine) { engine.stop(); }
-          if (open && engine) { setTimeout(function () { engine.resize(); }, 50); }
-        }
-
-        toggle.addEventListener('click', function () { setOpen(panel.hidden); });
-        panel.querySelector('[data-scene-close]').addEventListener('click', function () { setOpen(false); });
-        panel.addEventListener('click', function (ev) {
-          var act = ev.target.getAttribute && ev.target.getAttribute('data-scene-act');
-          if (!act || !engine) { return; }
-          if (act === 'prev') { engine.prev(); }
-          else if (act === 'next') { engine.next(); }
-          else if (act === 'play') { engine.togglePlay(); }
-        });
-        select.addEventListener('change', function () {
-          if (engine) { engine.goto(parseInt(select.value, 10) || 0); }
-        });
-        window.addEventListener('resize', function () { if (engine && !panel.hidden) { engine.resize(); } });
-
-        var remembered = '0';
-        try { remembered = localStorage.getItem(STORAGE_KEY) || '0'; } catch (e) {}
-        setOpen(remembered === '1');
-      })();
-    </script>
-  {% endif %}
 {% endblock %}
