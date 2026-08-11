@@ -111,6 +111,50 @@
       ]
     },
     {
+      "title": "Дезарг: соответствующие стороны встречаются на оси Монжа",
+      "text": "Сторона BC и сторона X_BX_C пересекаются ровно в центре подобия S_BC (-15.38; -0.34); то же для двух других пар — S_CA (-2.64; 4.32) и S_AB (3.44; 6.54). Все три точки лежат на оси Монжа, значит треугольники ABC и X_AX_BX_C перспективны относительно неё — и по Дезаргу имеют центр перспективы.",
+      "commands": [
+        "XXA=(-0.05612,-1.25877)",
+        "XXB=(0.87510,0.81579)",
+        "XXC=(-0.95548,0.68543)",
+        "sBC=Line(B,C)",
+        "sXBC=Line(XXB,XXC)",
+        "sCA=Line(C,A)",
+        "sXCA=Line(XXC,XXA)",
+        "SetColor(sBC,0.55,0.55,0.55)",
+        "SetLineThickness(sBC,2)",
+        "SetLineStyle(sBC,2)",
+        "SetColor(sCA,0.55,0.55,0.55)",
+        "SetLineThickness(sCA,2)",
+        "SetLineStyle(sCA,2)",
+        "SetColor(sXBC,0.72,0.11,0.11)",
+        "SetLineThickness(sXBC,2)",
+        "SetLineStyle(sXBC,2)",
+        "SetColor(sXCA,0.72,0.11,0.11)",
+        "SetLineThickness(sXCA,2)",
+        "SetLineStyle(sXCA,2)",
+        "SCA=(-2.63556,4.31734)",
+        "SetPointSize(SCA,6)",
+        "SetColor(SCA,0.45,0.25,0.65)",
+        "SetCaption(SCA,\"S_CA\")",
+        "SetLabelMode(SCA,3)",
+        "ShowLabel(SCA,true)",
+        "SAB=(3.44442,6.53965)",
+        "SetPointSize(SAB,6)",
+        "SetColor(SAB,0.45,0.25,0.65)",
+        "SetCaption(SAB,\"S_AB\")",
+        "SetLabelMode(SAB,3)",
+        "ShowLabel(SAB,true)",
+        "SetVisibleInView(XXA,1,false)",
+        "SetVisibleInView(XXB,1,false)",
+        "SetVisibleInView(XXC,1,false)"
+      ],
+      "highlight": [
+        "sXBC",
+        "sXCA"
+      ]
+    },
+    {
       "title": "Итоговая картина",
       "text": "По Дезаргу треугольники ABC и X_AX_BX_C перспективны относительно оси Монжа, значит прямые AX_A, BX_B, CX_C проходят через одну точку — центр перспективы.",
       "commands": [

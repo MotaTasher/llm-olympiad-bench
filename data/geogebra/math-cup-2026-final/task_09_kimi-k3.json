@@ -125,6 +125,37 @@
       ]
     },
     {
+      "title": "§2. Образы Ω_B, Ω_C и точка X′_A",
+      "text": "При той же инверсии степени 2r образы Ω_B и Ω_C — окружности радиусов 2.191 и 2.191; их пересечение внутри полосы и есть X′_A. Дальше решение считает через λ положение этой точки и возвращается обратно.",
+      "commands": [
+        "JB=(-0.95541,2.11626)",
+        "jb=Circle(JB,2.191480)",
+        "JC=(0.44365,2.23866)",
+        "jc=Circle(JC,2.191480)",
+        "XAi=(-0.07495,0.10943)",
+        "SetPointSize(XAi,7)",
+        "SetColor(XAi,0.72,0.11,0.11)",
+        "SetVisibleInView(JB,1,false)",
+        "SetVisibleInView(JC,1,false)",
+        "SetColor(jb,0.85,0.5,0.1)",
+        "SetLineThickness(jb,3)",
+        "SetCaption(jb,\"образ Ω_B\")",
+        "SetLabelMode(jb,3)",
+        "ShowLabel(jb,true)",
+        "SetColor(jc,0.85,0.5,0.1)",
+        "SetLineThickness(jc,3)",
+        "SetCaption(jc,\"образ Ω_C\")",
+        "SetLabelMode(jc,3)",
+        "ShowLabel(jc,true)",
+        "SetCaption(XAi,\"X′_A\")",
+        "SetLabelMode(XAi,3)",
+        "ShowLabel(XAi,true)"
+      ],
+      "highlight": [
+        "XAi"
+      ]
+    },
+    {
       "title": "Итог",
       "text": "Из соотношений на λ решение считает положение X_A и доказывает, что прямые AX_A, BX_B, CX_C проходят через одну точку.",
       "commands": [

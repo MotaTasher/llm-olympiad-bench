@@ -1,13 +1,13 @@
 {
   "title": "Финал 2026, задача 9 — ответ GLM 5.2",
-  "source": "решение выводит, что все радиусы равны и ABC — правильный треугольник",
+  "source": "инверсия относительно самой ω по шагам решения, затем проверка вывода о равенстве радиусов",
   "app": "classic",
   "view": {
     "axes": false,
     "grid": false,
     "labels": "points",
     "fit": "step",
-    "padding": 0.12
+    "padding": 0.13
   },
   "setup": [
     "O=(0,0)",
@@ -40,6 +40,7 @@
     "SetLabelMode(smA,3)",
     "ShowLabel(smA,true)",
     "SetVisibleInView(WA,1,false)",
+    "SetVisibleInView(smA,1,false)",
     "WB=(-1.31102,-0.47717)",
     "smB=Circle(WB,0.395156)",
     "SetColor(smB,0.16,0.47,0.34)",
@@ -48,6 +49,7 @@
     "SetLabelMode(smB,3)",
     "ShowLabel(smB,true)",
     "SetVisibleInView(WB,1,false)",
+    "SetVisibleInView(smB,1,false)",
     "WC=(1.38208,-0.50304)",
     "smC=Circle(WC,0.470781)",
     "SetColor(smC,0.16,0.47,0.34)",
@@ -56,6 +58,7 @@
     "SetLabelMode(smC,3)",
     "ShowLabel(smC,true)",
     "SetVisibleInView(WC,1,false)",
+    "SetVisibleInView(smC,1,false)",
     "GA=(0.07131,-0.81507)",
     "bgA=Circle(GA,1.818182)",
     "SetColor(bgA,0.85,0.5,0.1)",
@@ -64,6 +67,7 @@
     "SetLabelMode(bgA,3)",
     "ShowLabel(bgA,true)",
     "SetVisibleInView(GA,1,false)",
+    "SetVisibleInView(bgA,1,false)",
     "GB=(0.53432,0.19448)",
     "bgB=Circle(GB,1.568609)",
     "SetColor(bgB,0.85,0.5,0.1)",
@@ -72,6 +76,7 @@
     "SetLabelMode(bgB,3)",
     "ShowLabel(bgB,true)",
     "SetVisibleInView(GB,1,false)",
+    "SetVisibleInView(bgB,1,false)",
     "GC=(-0.44375,0.16151)",
     "bgC=Circle(GC,1.472224)",
     "SetColor(bgC,0.85,0.5,0.1)",
@@ -79,46 +84,165 @@
     "SetCaption(bgC,\"Ω_C\")",
     "SetLabelMode(bgC,3)",
     "ShowLabel(bgC,true)",
-    "SetVisibleInView(GC,1,false)"
+    "SetVisibleInView(GC,1,false)",
+    "SetVisibleInView(bgC,1,false)",
+    "BWA=(-0.07096,0.81113)",
+    "bsA=Circle(BWA,0.185771)",
+    "SetColor(bsA,0.16,0.47,0.34)",
+    "SetLineThickness(bsA,3)",
+    "SetCaption(bsA,\"ω̄_A\")",
+    "SetLabelMode(bsA,3)",
+    "ShowLabel(bsA,true)",
+    "SetVisibleInView(BWA,1,false)",
+    "SetVisibleInView(bsA,1,false)",
+    "BGA=(-0.02705,0.30916)",
+    "bbA=Circle(BGA,0.689655)",
+    "SetColor(bbA,0.85,0.5,0.1)",
+    "SetLineThickness(bbA,3)",
+    "SetCaption(bbA,\"Ω̄_A\")",
+    "SetLabelMode(bbA,3)",
+    "ShowLabel(bbA,true)",
+    "SetVisibleInView(BGA,1,false)",
+    "SetVisibleInView(bbA,1,false)",
+    "BWB=(-0.73228,-0.26653)",
+    "bsB=Circle(BWB,0.220719)",
+    "SetColor(bsB,0.16,0.47,0.34)",
+    "SetLineThickness(bsB,3)",
+    "SetCaption(bsB,\"ω̄_B\")",
+    "SetLabelMode(bsB,3)",
+    "ShowLabel(bsB,true)",
+    "SetVisibleInView(BWB,1,false)",
+    "SetVisibleInView(bsB,1,false)",
+    "BGB=(-0.25001,-0.09099)",
+    "bbB=Circle(BGB,0.733949)",
+    "SetColor(bbB,0.85,0.5,0.1)",
+    "SetLineThickness(bbB,3)",
+    "SetCaption(bbB,\"Ω̄_B\")",
+    "SetLabelMode(bbB,3)",
+    "ShowLabel(bbB,true)",
+    "SetVisibleInView(BGB,1,false)",
+    "SetVisibleInView(bbB,1,false)",
+    "BWC=(0.71184,-0.25909)",
+    "bsC=Circle(BWC,0.242475)",
+    "SetColor(bsC,0.16,0.47,0.34)",
+    "SetLineThickness(bsC,3)",
+    "SetCaption(bsC,\"ω̄_C\")",
+    "SetLabelMode(bsC,3)",
+    "ShowLabel(bsC,true)",
+    "SetVisibleInView(BWC,1,false)",
+    "SetVisibleInView(bsC,1,false)",
+    "BGC=(0.22821,-0.08306)",
+    "bbC=Circle(BGC,0.757142)",
+    "SetColor(bbC,0.85,0.5,0.1)",
+    "SetLineThickness(bbC,3)",
+    "SetCaption(bbC,\"Ω̄_C\")",
+    "SetLabelMode(bbC,3)",
+    "ShowLabel(bbC,true)",
+    "SetVisibleInView(BGC,1,false)",
+    "SetVisibleInView(bbC,1,false)"
   ],
   "steps": [
     {
-      "title": "Что доказывает решение",
-      "text": "Шаг 4: «все радиусы равны: r_A = r_B = r_C и R_A = R_B = R_C». Шаг 5: «A, B, C — вершины правильного треугольника».",
+      "title": "1. Исходная конфигурация",
+      "text": "ω радиуса 1 с центром O; малые ω_A, ω_B, ω_C снаружи, большие Ω_A, Ω_B, Ω_C содержат ω внутри.",
       "commands": [
+        "SetVisibleInView(smA,1,true)",
+        "SetVisibleInView(smB,1,true)",
+        "SetVisibleInView(smC,1,true)",
         "SetVisibleInView(bgA,1,true)",
         "SetVisibleInView(bgB,1,true)",
-        "SetVisibleInView(bgC,1,true)",
+        "SetVisibleInView(bgC,1,true)"
+      ],
+      "highlight": [
+        "om"
+      ]
+    },
+    {
+      "title": "2. Шаг 1 решения: инверсия относительно ω",
+      "text": "ω переходит в себя, ω_A — в окружность, внутренне касающуюся ω в A, радиуса a = r_A/(1+2r_A) = 0.1858 с центром (1−a)·Â. Формула решения совпала с расчётом.",
+      "commands": [
+        "SetVisibleInView(bgA,1,false)",
+        "SetVisibleInView(bgB,1,false)",
+        "SetVisibleInView(bgC,1,false)",
+        "SetVisibleInView(smA,1,false)",
+        "SetVisibleInView(smB,1,false)",
+        "SetVisibleInView(smC,1,false)",
+        "SetVisibleInView(bsA,1,true)",
+        "SetVisibleInView(bsB,1,true)",
+        "SetVisibleInView(bsC,1,true)",
+        "txta=Text(\"a = r_A/(1+2r_A) = 0.1858\",(-2.9,2.4))",
+        "SetColor(txta,0.16,0.47,0.34)"
+      ],
+      "highlight": [
+        "bsA",
+        "bsB",
+        "bsC"
+      ]
+    },
+    {
+      "title": "3. Образы больших окружностей",
+      "text": "Ω_A переходит в окружность радиуса ā = R_A/(2R_A−1) = 0.6897, тоже внутренне касающуюся ω в A. Все образы лежат внутри ω — картинка решения именно такая.",
+      "commands": [
+        "SetVisibleInView(bbA,1,true)",
+        "SetVisibleInView(bbB,1,true)",
+        "SetVisibleInView(bbC,1,true)",
+        "txtab=Text(\"ā = R_A/(2R_A−1) = 0.6897\",(-2.9,1.95))",
+        "SetColor(txtab,0.85,0.50,0.10)"
+      ],
+      "highlight": [
+        "bbA",
+        "bbB",
+        "bbC"
+      ]
+    },
+    {
+      "title": "4. Шаг 2 решения: касание Ω̄_A и ω̄_B — внешнее",
+      "text": "Проверено: расстояние между центрами 0.9104 равно сумме радиусов 0.9104. Лемма решения верна, и из неё выводится соотношение между косинусами.",
+      "commands": [
+        "seg=Segment(BGA,BWB)",
+        "SetColor(seg,0.45,0.25,0.65)",
+        "SetLineThickness(seg,3)",
+        "txtt=Text(\"|центры| = 0.9104 = сумма радиусов 0.9104\",(-2.9,-2.5))",
+        "SetColor(txtt,0.45,0.25,0.65)"
+      ],
+      "highlight": [
+        "bbA",
+        "bsB"
+      ]
+    },
+    {
+      "title": "5. Шаг 4 решения — вот здесь ошибка",
+      "text": "Из соотношений решение выводит «все радиусы равны: r_A = r_B = r_C» и затем «ABC — правильный треугольник». Но эта конфигурация удовлетворяет всем условиям задачи, а радиусы у неё разные: 0.296, 0.395, 0.471, стороны 1.879, 1.687, 1.587.",
+      "commands": [
+        "SetVisibleInView(bbA,1,false)",
+        "SetVisibleInView(bbB,1,false)",
+        "SetVisibleInView(bbC,1,false)",
+        "SetVisibleInView(bsA,1,false)",
+        "SetVisibleInView(bsB,1,false)",
+        "SetVisibleInView(bsC,1,false)",
+        "SetVisibleInView(smA,1,true)",
+        "SetVisibleInView(smB,1,true)",
+        "SetVisibleInView(smC,1,true)",
         "tri=Polygon(A,B,C)",
         "SetColor(tri,0.55,0.55,0.55)",
         "SetLineThickness(tri,3)",
-        "SetFilling(tri,0.05)"
+        "SetFilling(tri,0.05)",
+        "txtr=Text(\"r_A = 0.296,  r_B = 0.395,  r_C = 0.471\",(-3.1,2.9))",
+        "SetColor(txtr,0.72,0.11,0.11)",
+        "txts=Text(\"a = 1.879,  b = 1.687,  c = 1.587\",(-3.1,2.45))",
+        "SetColor(txts,0.72,0.11,0.11)"
       ],
       "highlight": [
         "tri"
       ]
     },
     {
-      "title": "Но конфигурация задачи существует и без этого",
-      "text": "На чертеже все условия задачи выполнены (это проверено по каждому касанию), при этом радиусы малых окружностей равны 0.296, 0.395, 0.471, больших — 1.818, 1.569, 1.472, а стороны треугольника — 1.879, 1.687, 1.587.",
-      "commands": [
-        "txtr=Text(\"r_A = 0.296,  r_B = 0.395,  r_C = 0.471\",(-3.2,2.9))",
-        "SetColor(txtr,0.16,0.47,0.34)",
-        "txtR=Text(\"R_A = 1.818,  R_B = 1.569,  R_C = 1.472\",(-3.2,2.45))",
-        "SetColor(txtR,0.85,0.50,0.10)",
-        "txts=Text(\"a = 1.879,  b = 1.687,  c = 1.587\",(-3.2,2.0))",
-        "SetColor(txts,0.72,0.11,0.11)"
-      ],
-      "highlight": [
-        "smA",
-        "smB",
-        "smC"
-      ]
-    },
-    {
       "title": "Итоговая картина",
-      "text": "Утверждение задачи верно и для этого, неправильного, треугольника — а решение GLM разбирает только правильный случай, к которому свело задачу ошибочно.",
+      "text": "Утверждение задачи выполняется и для неправильного треугольника — решение же свело задачу к правильному случаю и разобрало только его.",
       "commands": [
+        "SetVisibleInView(bgA,1,true)",
+        "SetVisibleInView(bgB,1,true)",
+        "SetVisibleInView(bgC,1,true)",
         "XA=(-0.05612,-1.25877)",
         "XB=(0.87510,0.81579)",
         "XC=(-0.95548,0.68543)",
