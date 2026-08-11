@@ -4,6 +4,7 @@ import csv
 from copy import deepcopy
 from datetime import date, timedelta
 import io
+import json
 import math
 import os
 from pathlib import Path
@@ -114,6 +115,8 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
 LOGS_DIR = BASE_DIR / "logs"
 RESULTS_DIR = BASE_DIR / "data" / "results"
 COMPETITIONS_DIR = BASE_DIR / "data" / "competitions"
+GEOGEBRA_DIR = BASE_DIR / "data" / "geogebra"
+GEOGEBRA_VIEWER_DIR = BASE_DIR / "scripts" / "geogebra_viewer"
 
 app = Flask(__name__)
 
@@ -147,6 +150,7 @@ app.config.setdefault(
     "COMPETITIONS_DIR",
     Path(os.environ.get("SCORER_COMPETITIONS_DIR", COMPETITIONS_DIR)),
 )
+app.config.setdefault("GEOGEBRA_DIR", Path(os.environ.get("SCORER_GEOGEBRA_DIR", GEOGEBRA_DIR)))
 app.config.setdefault("AUTH_DB", Path(os.environ.get("SCORER_AUTH_DB", "")) if os.environ.get("SCORER_AUTH_DB") else None)
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
@@ -703,6 +707,12 @@ def problem_page(competition_id: str, problem_id: str):
     state = state_for_reviewer(selected_state(problem, request.args.get("model")), current_user.username)
     attempt = selected_attempt_for(state, request.args.get("attempt"))
     previous_id, next_id = neighbor_problem_ids(competition, problem_id)
+    scene_file = geogebra_scene_file(
+        competition_id,
+        problem_id,
+        state.get("model_key") if state else None,
+        attempt.get("result_id") if attempt else None,
+    )
     return render_template(
         "problem.html",
         competition=competition,
@@ -713,6 +723,7 @@ def problem_page(competition_id: str, problem_id: str):
         previous_id=previous_id,
         next_id=next_id,
         warnings=data["warnings"],
+        geogebra_scene_name=scene_file.name if scene_file else None,
     )
 
 
@@ -786,6 +797,74 @@ def problem_directory_asset(competition_id: str, asset_path: str):
 def problem_asset(competition_id: str, problem_id: str, asset_path: str):
     clean_id(problem_id)
     return serve_competition_asset(competition_id, asset_path)
+
+
+def geogebra_scene_file(
+    competition_id: str,
+    problem_id: str,
+    model_key: str | None = None,
+    result_id: str | None = None,
+) -> Path | None:
+    """Most specific scene wins: attempt, then model, then the whole problem.
+
+    Scenes are hand-written and live outside the benchmark data contracts; a
+    missing scene is the normal case, not an error.
+    """
+    directory = Path(app.config["GEOGEBRA_DIR"]) / competition_id
+    if not directory.is_dir():
+        return None
+
+    candidates: list[str] = []
+    if result_id:
+        candidates.append(f"{problem_id}_{result_id}")
+    if model_key:
+        # model_key is "provider:model_id"; both parts may appear in a filename.
+        flat = model_key.replace(":", "_").replace("/", "_")
+        candidates.append(f"{problem_id}_{flat}")
+        if ":" in model_key:
+            candidates.append(f"{problem_id}_{model_key.split(':', 1)[1].replace('/', '_')}")
+    candidates.append(problem_id)
+
+    for stem in candidates:
+        # Reject anything that could escape the competition directory.
+        if "/" in stem or "\\" in stem or ".." in stem:
+            continue
+        candidate = directory / f"{stem}.json"
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+@app.get("/geogebra/viewer.js")
+def geogebra_viewer_js():
+    return send_from_directory(GEOGEBRA_VIEWER_DIR, "viewer.js", mimetype="application/javascript")
+
+
+@app.get("/geogebra/scene/<competition_id>/<problem_id>")
+def geogebra_scene(competition_id: str, problem_id: str):
+    competition_id = clean_id(competition_id)
+    problem_id = clean_id(problem_id)
+    path = geogebra_scene_file(
+        competition_id,
+        problem_id,
+        request.args.get("model"),
+        request.args.get("result_id"),
+    )
+    if path is None:
+        abort(404)
+    try:
+        scene = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        return Response(
+            json.dumps({"error": f"сцена не читается: {error}"}, ensure_ascii=False),
+            status=500,
+            mimetype="application/json",
+        )
+    return Response(
+        json.dumps({"scene": scene, "name": path.name}, ensure_ascii=False),
+        mimetype="application/json",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/competition/<competition_id>/problem/<problem_id>/run/<run_id>")

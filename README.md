@@ -149,6 +149,7 @@ model adapters → logs/.../run.json (schema_version 2)
 | --- | --- |
 | локальный запуск сайта и CLI | [docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md) |
 | импорт задач из PDF/TXT | [docs/ADDING_PROBLEMS.md](docs/ADDING_PROBLEMS.md) |
+| просмотр решения как построения в GeoGebra | [docs/GEOGEBRA_VIEWER.md](docs/GEOGEBRA_VIEWER.md) |
 | серверная синхронизация | [SERVER.md](SERVER.md) |
 | production-серверы, каталоги и публичный S3 | [docs/specs/DEPLOYMENT.md](docs/specs/DEPLOYMENT.md) |
 | авторизация scoring-сайта | [scoring/README.md](scoring/README.md) |
@@ -237,6 +238,18 @@ legacy versions but no longer create scoring or public-results columns.
 ```
 
 Задача лежит непосредственно в папке соревнования, а имя файла совпадает с `id`: `data/competitions/<competition_id>/task_01.json`.
+
+## Посмотреть решение как построение
+
+Геометрическое решение можно смотреть чертежом, а не текстом: сцена из шагов
+проигрывается в GeoGebra, шаг за шагом.
+
+```bash
+python scripts/geogebra_view.py scripts/geogebra_viewer/examples/euler_line.json
+```
+
+Пока сервер работает, файл сцены можно править — страница обновится сама.
+Формат сцены и грабли: [docs/GEOGEBRA_VIEWER.md](docs/GEOGEBRA_VIEWER.md).
 
 ## Ручная оценка и экспорт
 

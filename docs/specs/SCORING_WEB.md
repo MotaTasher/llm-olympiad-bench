@@ -15,9 +15,30 @@ http://127.0.0.1:8000
 ```
 
 The app is a local Flask/Jinja application. It does not instantiate provider clients and does not require model credentials to browse logs or score answers.
+
 By default it reads data paths relative to the repository root. Deployments can
 override those paths with `SCORER_LOGS_DIR`, `SCORER_RESULTS_DIR` and
 `SCORER_COMPETITIONS_DIR`.
+
+The UI works fully offline. Browser-side Markdown, sanitizing and formula
+rendering are served from the repository, not from a CDN:
+
+```text
+scoring/static/vendor/marked/marked.min.js
+scoring/static/vendor/dompurify/purify.min.js
+scoring/static/vendor/mathjax/tex-svg-full.js
+```
+
+MathJax uses the `tex-svg-full` build on purpose. SVG output embeds glyph
+outlines, so no web fonts are fetched at render time, and the `-full` bundle
+carries every TeX extension, so the `autoload` package never tries to fetch a
+missing extension mid-render. Templates must reference these files through
+`url_for('static', ...)`; adding a CDN `<script>` or `<link>` back to
+`base.html` breaks offline review.
+
+Verified offline with a headless Chrome run that aborts every non-localhost
+request: a Math Cup task page rendered 440 formulas as SVG with zero MathJax
+errors, zero JavaScript errors and zero outbound requests.
 The site is closed by default. Without a successful login, only `/login` and
 Flask static resources are public; all current and future scoring routes are
 blocked by a centralized `before_request` rule. HTML GET requests redirect to
@@ -113,6 +134,8 @@ global catalog before filtering and therefore cannot mutate the shared value.
 | `POST /score/delete` | deletes one evaluation from a result's evaluation pool |
 | `POST /finalization` | creates or updates the shared manual final score for one result |
 | `POST /finalization/delete` | removes the shared manual final score so automatic rules can apply again |
+| `GET /geogebra/scene/<competition_id>/<problem_id>?model=<model_key>&result_id=<result_id>` | scene JSON for the construction panel; `404` when the task has no scene |
+| `GET /geogebra/viewer.js` | the shared scene player from `scripts/geogebra_viewer/viewer.js` |
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
 
@@ -467,6 +490,32 @@ month names to day and minute precision, for example `29 июня 2026` and `13:
 on separate lines in main UI blocks. Raw timestamp strings remain unchanged in
 logs, sidecars, CSV, hidden fields and machine-readable `datetime`/`title`
 attributes.
+
+## Construction panel
+
+The task page can show a GeoGebra construction beside the answer. The panel is
+opt-in per reader: a `Показать построение` button appears only when a scene
+exists, the open/closed state is kept in `localStorage`, and nothing is loaded
+until the panel is opened for the first time. The page layout stays a single
+column when the panel is closed, so reading and scrolling an answer are
+unaffected.
+
+Scene lookup goes from most specific to least, under `GEOGEBRA_DIR`
+(`data/geogebra/` by default, `SCORER_GEOGEBRA_DIR` overrides):
+
+1. `<competition_id>/<problem_id>_<result_id>.json` — one attempt;
+2. `<competition_id>/<problem_id>_<provider>_<model_id>.json`;
+3. `<competition_id>/<problem_id>_<model_id>.json`;
+4. `<competition_id>/<problem_id>.json` — any model.
+
+A missing scene is the normal case and must stay silent: the button is not
+rendered and `/geogebra/scene/...` answers `404`. Scenes are read-only input
+for the UI; the panel never writes them.
+
+The player itself is `scripts/geogebra_viewer/viewer.js`, shared with the
+standalone viewer, and the applet is fetched from `geogebra.org`, so the panel
+needs network access even though the rest of the site does not. Scene format
+and authoring rules: [`../GEOGEBRA_VIEWER.md`](../GEOGEBRA_VIEWER.md).
 
 ## Web-change validation
 

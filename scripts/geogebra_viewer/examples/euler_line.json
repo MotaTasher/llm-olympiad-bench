@@ -1,0 +1,86 @@
+{
+  "title": "Прямая Эйлера",
+  "source": "пример сцены: docs/GEOGEBRA_VIEWER.md",
+  "app": "classic",
+  "view": { "axes": false, "grid": false },
+  "setup": [
+    "A=(0,0)",
+    "B=(8,0)",
+    "C=(2.4,5.6)",
+    "SetFixed(A,true)",
+    "SetFixed(B,true)",
+    "SetFixed(C,true)"
+  ],
+  "steps": [
+    {
+      "title": "Треугольник ABC",
+      "text": "Берём произвольный неравнобедренный треугольник.",
+      "commands": [
+        "tri=Polygon(A,B,C)",
+        "SetColor(tri,0.15,0.3,0.55)",
+        "SetFilling(tri,0.08)"
+      ],
+      "highlight": ["tri"]
+    },
+    {
+      "title": "Центроид G",
+      "text": "Две медианы пересекаются в центроиде; третья проходит через ту же точку.",
+      "commands": [
+        "Ma=Midpoint(B,C)",
+        "Mb=Midpoint(A,C)",
+        "ma=Segment(A,Ma)",
+        "mb=Segment(B,Mb)",
+        "G=Intersect(ma,mb)",
+        "SetColor(ma,0.4,0.4,0.4)",
+        "SetColor(mb,0.4,0.4,0.4)"
+      ],
+      "highlight": ["G"]
+    },
+    {
+      "title": "Центр описанной окружности O",
+      "text": "O равноудалён от вершин, поэтому лежит на пересечении серединных перпендикуляров.",
+      "commands": [
+        "circ=Circle(A,B,C)",
+        "O=Center(circ)",
+        "SetColor(circ,0.25,0.5,0.35)",
+        "SetLineStyle(circ,2)"
+      ],
+      "highlight": ["O"]
+    },
+    {
+      "title": "Ортоцентр H",
+      "text": "Пересечение двух высот; третья высота проходит через него же.",
+      "commands": [
+        "ha=PerpendicularLine(A,Line(B,C))",
+        "hb=PerpendicularLine(B,Line(A,C))",
+        "H=Intersect(ha,hb)",
+        "SetColor(ha,0.55,0.55,0.55)",
+        "SetColor(hb,0.55,0.55,0.55)",
+        "SetLineStyle(ha,3)",
+        "SetLineStyle(hb,3)"
+      ],
+      "highlight": ["H"]
+    },
+    {
+      "title": "O, G и H на одной прямой",
+      "text": "Прямая Эйлера. Видно и соотношение OG : GH = 1 : 2.",
+      "commands": [
+        "euler=Line(O,H)",
+        "SetColor(euler,0.72,0.11,0.11)",
+        "SetLineThickness(euler,5)",
+        "ratio=Text(\"OG : GH = 1 : \" + round(100 Distance(G,H) / Distance(O,G)) / 100, (-0.6, 5.4))"
+      ],
+      "highlight": ["euler"]
+    },
+    {
+      "title": "Окружность девяти точек",
+      "text": "Её центр — середина OH, радиус вдвое меньше описанной окружности.",
+      "commands": [
+        "N=Midpoint(O,H)",
+        "nine=Circle(N,Distance(N,Midpoint(A,B)))",
+        "SetColor(nine,0.72,0.35,0.11)"
+      ],
+      "highlight": ["nine", "N"]
+    }
+  ]
+}

@@ -812,6 +812,59 @@
     }
     .nav-row { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
     .flash { margin-bottom: 12px; }
+
+    /* GeoGebra construction panel: sits beside the solution and never above
+       it, so reading and scrolling the answer stay exactly as before. */
+    .scene-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .layout.scene-open { grid-template-columns: minmax(0, 1fr) minmax(380px, 38vw); }
+    .scene-panel {
+      position: sticky;
+      top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: calc(100vh - 24px);
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      min-width: 0;
+    }
+    .scene-panel[hidden] { display: none; }
+    .scene-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .scene-panel-head b { font-size: 15px; }
+    /* A fixed 4:3 applet keeps the picture close to the aspect ratio scenes
+       are framed for; stretching it to full panel height only adds empty
+       space above and below the construction. */
+    .scene-mount {
+      flex: 0 0 auto;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .scene-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .scene-controls button { min-height: 30px; padding: 3px 9px; }
+    .scene-counter {
+      font-variant-numeric: tabular-nums;
+      color: var(--muted-ink, #5b6b6e);
+      font-size: 13px;
+      min-width: 4.2em;
+      text-align: center;
+    }
+    .scene-controls select { flex: 1 1 140px; min-width: 0; max-width: 100%; }
+    .scene-step-title { font-weight: 650; }
+    .scene-step-text { font-size: 13.5px; line-height: 1.5; overflow-y: auto; max-height: 22vh; }
+    .scene-errors { font-size: 12.5px; color: var(--accent); }
+    .scene-errors:empty { display: none; }
+    .scene-errors code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
     @media (max-width: 1100px) {
       .competition-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
@@ -824,7 +877,9 @@
     @media (max-width: 900px) {
       .topbar, main { width: min(100% - 20px, 1440px); }
       .topbar { grid-template-columns: 1fr; align-items: stretch; }
-      .layout { grid-template-columns: 1fr; }
+      .layout, .layout.scene-open { grid-template-columns: 1fr; }
+      .scene-panel { position: static; max-height: none; }
+      .scene-mount { min-height: 60vh; }
       .review-layout, .answer-layout { grid-template-columns: 1fr; }
       .attempt-sidebar { position: static; max-height: none; overflow: visible; }
       .metric-grid { grid-template-columns: 1fr; }
@@ -864,15 +919,15 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+  <script src="{{ url_for('static', filename='vendor/marked/marked.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/dompurify/purify.min.js') }}"></script>
   <script>
     window.MathJax = {
       tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
       startup: { typeset: false }
     };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script src="{{ url_for('static', filename='vendor/mathjax/tex-svg-full.js') }}"></script>
   <script>
     function escapeHtml(value) {
       return value

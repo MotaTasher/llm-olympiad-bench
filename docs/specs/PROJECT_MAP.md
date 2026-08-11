@@ -56,6 +56,11 @@ scripts/
   export_public_results.py sanitized read-only public matrix and solution export
   migrate_score_scale.py  explicit one-competition score-scale migration
   sync_logs.py            rsync push/pull for logs and score sidecars
+  geogebra_view.py        local step-by-step GeoGebra viewer server and static export
+  geogebra_viewer/
+    viewer.js             scene player shared by the standalone viewer and the scoring panel
+    index.html            viewer page: step list, applet, replay controls
+    examples/             sample scenes
 
 ```
 
@@ -69,6 +74,7 @@ are `models/gemini/`, `models/grok/` and `models/glm/`.
 | Path | Contents | Mutability |
 | --- | --- | --- |
 | `data/competitions/` | source competitions and problem sets | versioned source data |
+| `data/geogebra/<competition_id>/` | hand-written viewer scenes, `<problem_id>_<model>.json` | versioned source data |
 | `logs/` | model run records | generated, versioned benchmark data |
 | `data/results/` | manual score sidecars and exports | generated, versioned review data |
 | `notebooks/` | exploratory/manual workflows | not authoritative |
@@ -98,4 +104,6 @@ data/competitions/<competition_id>/
 - Shared API policy, result serialization and telemetry helpers: `models/common.py`, `models/base.py` and `models/telemetry.py`.
 - User documentation: root README, `docs/` and provider READMEs.
 - Agent contracts: `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `docs/specs/`.
+- GeoGebra scenes: hand-written JSON outside the benchmark data contracts; the
+  viewer reads them and writes nothing back. Format: `docs/GEOGEBRA_VIEWER.md`.
 - Scoring user accounts: `instance/scorer-auth.sqlite3` by default or `SCORER_AUTH_DB`.

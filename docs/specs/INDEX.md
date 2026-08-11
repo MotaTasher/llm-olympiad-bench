@@ -25,6 +25,7 @@ This directory is the first stop for coding agents. It describes the current imp
 | change the public-results site or export | [`PROJECT_MAP.md`](PROJECT_MAP.md), [`OPERATIONS.md`](OPERATIONS.md), [`../LOCAL_SETUP.md`](../LOCAL_SETUP.md) |
 | change sync/export/secret checks | [`OPERATIONS.md`](OPERATIONS.md) |
 | deploy or diagnose production/scorer/public S3 | [`DEPLOYMENT.md`](DEPLOYMENT.md), [`OPERATIONS.md`](OPERATIONS.md) |
+| change the GeoGebra solution viewer | [`PROJECT_MAP.md`](PROJECT_MAP.md), [`../GEOGEBRA_VIEWER.md`](../GEOGEBRA_VIEWER.md) |
 | diagnose a failure | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) |
 | prepare a final agent response | [`CHANGE_CHECKLIST.md`](CHANGE_CHECKLIST.md) |
 
