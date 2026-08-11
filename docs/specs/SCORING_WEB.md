@@ -135,6 +135,7 @@ global catalog before filtering and therefore cannot mutate the shared value.
 | `POST /finalization` | creates or updates the shared manual final score for one result |
 | `POST /finalization/delete` | removes the shared manual final score so automatic rules can apply again |
 | `GET /geogebra/scene/<competition_id>/<problem_id>?model=<model_key>&result_id=<result_id>` | scene JSON for the construction panel; `404` when the task has no scene |
+| `GET /geogebra/anonymous/<competition_id>/<problem_id>/<result_id>` | same scene with the model identity removed, for anonymous review |
 | `GET /geogebra/viewer.js` | the shared scene player from `scripts/geogebra_viewer/viewer.js` |
 
 `model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
@@ -511,6 +512,13 @@ Scene lookup goes from most specific to least, under `GEOGEBRA_DIR`
 A missing scene is the normal case and must stay silent: the button is not
 rendered and `/geogebra/scene/...` answers `404`. Scenes are read-only input
 for the UI; the panel never writes them.
+
+Anonymous review shows the same panel, served by the anonymous route. That
+route replaces the scene title, drops `source` and scrubs every vendor name
+from the text, so the picture cannot reveal which model wrote the answer.
+Step titles and commands are left intact: the first are what a reviewer
+follows, the second carry geometry rather than identity. Both pages render
+the panel from one macro, `templates/_scene_panel.html`.
 
 The player itself is `scripts/geogebra_viewer/viewer.js`, shared with the
 standalone viewer, and the applet is fetched from `geogebra.org`, so the panel
