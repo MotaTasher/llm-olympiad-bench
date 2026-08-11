@@ -159,6 +159,7 @@
     // out. Points and circles are what has to be on screen.
     function contentBounds(pad, onlyVisible) {
       var xs = [], ys = [];
+      var lineXs = [], lineYs = [];   // fallback when nothing else is shown
       var names = [];
       var count = applet.getObjectNumber();
       for (var i = 0; i < count; i++) { names.push(applet.getObjectName(i)); }
@@ -186,17 +187,36 @@
             xs.push(cx - r, cx + r);
             ys.push(cy - r, cy + r);
           }
+        } else if (type === "line" || type === "segment" || type === "ray") {
+          // A line is infinite and cannot bound the window on its own, but a
+          // step showing only lines still has to be framed on them: take one
+          // point of each so at least their spread is covered.
+          applet.evalCommand("ggbTmpOn=Point(" + name + ")");
+          var lx = applet.getXcoord("ggbTmpOn");
+          var ly = applet.getYcoord("ggbTmpOn");
+          applet.evalCommand("Delete(ggbTmpOn)");
+          if (isFinite(lx) && isFinite(ly)) { lineXs.push(lx); lineYs.push(ly); }
         }
       }
-      if (!xs.length) { return null; }
+      var spread = function (a) {
+        return a.length ? Math.max.apply(null, a) - Math.min.apply(null, a) : 0;
+      };
+      // Points and circles frame the picture, but a step showing one point and
+      // three lines would collapse the window onto that point — so fall back
+      // to the lines whenever what we have has no real extent.
+      if (Math.max(spread(xs), spread(ys)) < 1e-6 && lineXs.length >= 2) {
+        xs = xs.concat(lineXs);
+        ys = ys.concat(lineYs);
+      }
+      if (xs.length < 2 || Math.max(spread(xs), spread(ys)) < 1e-6) { return null; }
 
       var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs);
       var ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys);
       var cx0 = (xmin + xmax) / 2, cy0 = (ymin + ymax) / 2;
       var w = (xmax - xmin) * (1 + 2 * pad);
       var h = (ymax - ymin) * (1 + 2 * pad);
-      // A single point (or a vertical pair) has no extent in some direction.
-      var span = Math.max(w, h, 1e-6);
+      // A vertical or horizontal pair has no extent in one direction.
+      var span = Math.max(w, h);
       if (w < span * 0.02) { w = span; }
       if (h < span * 0.02) { h = span; }
       return { xmin: cx0 - w / 2, xmax: cx0 + w / 2, ymin: cy0 - h / 2, ymax: cy0 + h / 2 };
