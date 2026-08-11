@@ -1,0 +1,155 @@
+{
+  "title": "Финал 2026, задача 9 — ответ Grok Build 0.1 (теорема Микеля)",
+  "source": "решение сводит задачу к теореме Микеля о четырёх окружностях",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "points",
+    "fit": "step",
+    "padding": 0.12
+  },
+  "setup": [
+    "O=(0,0)",
+    "A=(-0.08716,0.99619)",
+    "B=(-0.93969,-0.34202)",
+    "C=(0.93969,-0.34202)",
+    "om=Circle(O,1)",
+    "SetColor(om,0.15,0.32,0.6)",
+    "SetLineThickness(om,5)",
+    "SetCaption(om,\"ω\")",
+    "SetLabelMode(om,3)",
+    "ShowLabel(om,true)",
+    "GA=(0.07131,-0.81507)",
+    "bgA=Circle(GA,1.818182)",
+    "SetColor(bgA,0.85,0.5,0.1)",
+    "SetLineThickness(bgA,4)",
+    "SetCaption(bgA,\"Ω_A\")",
+    "SetLabelMode(bgA,3)",
+    "ShowLabel(bgA,true)",
+    "GB=(0.53432,0.19448)",
+    "bgB=Circle(GB,1.568609)",
+    "SetColor(bgB,0.85,0.5,0.1)",
+    "SetLineThickness(bgB,4)",
+    "SetCaption(bgB,\"Ω_B\")",
+    "SetLabelMode(bgB,3)",
+    "ShowLabel(bgB,true)",
+    "GC=(-0.44375,0.16151)",
+    "bgC=Circle(GC,1.472224)",
+    "SetColor(bgC,0.85,0.5,0.1)",
+    "SetLineThickness(bgC,4)",
+    "SetCaption(bgC,\"Ω_C\")",
+    "SetLabelMode(bgC,3)",
+    "ShowLabel(bgC,true)",
+    "SetVisibleInView(bgA,1,false)",
+    "SetVisibleInView(bgB,1,false)",
+    "SetVisibleInView(bgC,1,false)"
+  ],
+  "steps": [
+    {
+      "title": "Четыре окружности вместо семи",
+      "text": "Ответ выбрасывает малые ω_A, ω_B, ω_C и работает только с четвёркой S = ω, P = Ω_A, Q = Ω_B, R = Ω_C.",
+      "commands": [
+        "SetVisibleInView(bgA,1,true)",
+        "SetVisibleInView(bgB,1,true)",
+        "SetVisibleInView(bgC,1,true)"
+      ],
+      "highlight": [
+        "om"
+      ]
+    },
+    {
+      "title": "Три точки касания: A, B, C",
+      "text": "S ∩ P = {A}, S ∩ Q = {B}, S ∩ R = {C}. Это касания, то есть точки двойные — именно эту оговорку ответ делает в скобках и дальше не проверяет.",
+      "commands": [
+        "SetCaption(A,\"A\")",
+        "SetLabelMode(A,3)",
+        "ShowLabel(A,true)",
+        "SetCaption(B,\"B\")",
+        "SetLabelMode(B,3)",
+        "ShowLabel(B,true)",
+        "SetCaption(C,\"C\")",
+        "SetLabelMode(C,3)",
+        "ShowLabel(C,true)",
+        "SetPointSize(A,6)",
+        "SetPointSize(B,6)",
+        "SetPointSize(C,6)"
+      ],
+      "highlight": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "title": "Три точки пересечения больших окружностей",
+      "text": "X_A ∈ Q ∩ R, X_B ∈ R ∩ P, X_C ∈ P ∩ Q. Каждая пара пересекается по-настоящему, в двух точках; выбрана та, что лежит внутри третьей окружности.",
+      "commands": [
+        "XA=(-0.05612,-1.25877)",
+        "XB=(0.87510,0.81579)",
+        "XC=(-0.95548,0.68543)",
+        "SetCaption(XA,\"X_A\")",
+        "SetLabelMode(XA,3)",
+        "ShowLabel(XA,true)",
+        "SetCaption(XB,\"X_B\")",
+        "SetLabelMode(XB,3)",
+        "ShowLabel(XB,true)",
+        "SetCaption(XC,\"X_C\")",
+        "SetLabelMode(XC,3)",
+        "ShowLabel(XC,true)",
+        "SetPointSize(XA,6)",
+        "SetPointSize(XB,6)",
+        "SetPointSize(XC,6)"
+      ],
+      "highlight": [
+        "XA",
+        "XB",
+        "XC"
+      ]
+    },
+    {
+      "title": "Теорема Микеля: соединяем противоположные точки",
+      "text": "Точка касания S с P соединяется с пересечением двух остальных, Q ∩ R. Это и есть прямые AX_A, BX_B, CX_C.",
+      "commands": [
+        "mA=Line(A,XA)",
+        "mB=Line(B,XB)",
+        "mC=Line(C,XC)",
+        "SetColor(mA,0.72,0.11,0.11)",
+        "SetLineThickness(mA,5)",
+        "SetColor(mB,0.72,0.11,0.11)",
+        "SetLineThickness(mB,5)",
+        "SetColor(mC,0.72,0.11,0.11)",
+        "SetLineThickness(mC,5)",
+        "SetCaption(mA,\"AX_A\")",
+        "SetLabelMode(mA,3)",
+        "ShowLabel(mA,true)",
+        "SetCaption(mB,\"BX_B\")",
+        "SetLabelMode(mB,3)",
+        "ShowLabel(mB,true)",
+        "SetCaption(mC,\"CX_C\")",
+        "SetLabelMode(mC,3)",
+        "ShowLabel(mC,true)"
+      ],
+      "highlight": [
+        "mA",
+        "mB",
+        "mC"
+      ]
+    },
+    {
+      "title": "Три прямые сходятся",
+      "text": "Утверждение выполняется. Вопрос к ответу не в результате, а в том, что теорема Микеля применена к вырожденному случаю (касания вместо пересечений) без разбора — в самом ответе это отмечено одной фразой в скобках.",
+      "commands": [
+        "Y=(-0.07632,0.20880)",
+        "SetPointSize(Y,8)",
+        "SetColor(Y,0.72,0.11,0.11)",
+        "SetCaption(Y,\"Y\")",
+        "SetLabelMode(Y,3)",
+        "ShowLabel(Y,true)"
+      ],
+      "highlight": [
+        "Y"
+      ]
+    }
+  ]
+}
