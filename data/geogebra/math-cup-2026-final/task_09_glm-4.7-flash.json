@@ -1,0 +1,182 @@
+{
+  "title": "Финал 2026, задача 9 — разбор ответа GLM 4.7 Flash",
+  "source": "ответ не доказывает утверждение; сцена показывает, где рассуждение рвётся",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "points",
+    "fit": "step",
+    "padding": 0.12
+  },
+  "setup": [
+    "O=(0,0)",
+    "A=(-0.08716,0.99619)",
+    "B=(-0.93969,-0.34202)",
+    "C=(0.93969,-0.34202)",
+    "om=Circle(O,1)",
+    "SetColor(om,0.15,0.32,0.6)",
+    "SetLineThickness(om,5)",
+    "SetCaption(om,\"ω\")",
+    "SetLabelMode(om,3)",
+    "ShowLabel(om,true)",
+    "WA=(-0.11292,1.29067)",
+    "smA=Circle(WA,0.295599)",
+    "SetColor(smA,0.16,0.47,0.34)",
+    "SetLineThickness(smA,4)",
+    "SetCaption(smA,\"ω_A\")",
+    "SetLabelMode(smA,3)",
+    "ShowLabel(smA,true)",
+    "SetVisibleInView(WA,1,false)",
+    "WB=(-1.31102,-0.47717)",
+    "smB=Circle(WB,0.395156)",
+    "SetColor(smB,0.16,0.47,0.34)",
+    "SetLineThickness(smB,4)",
+    "SetCaption(smB,\"ω_B\")",
+    "SetLabelMode(smB,3)",
+    "ShowLabel(smB,true)",
+    "SetVisibleInView(WB,1,false)",
+    "WC=(1.38208,-0.50304)",
+    "smC=Circle(WC,0.470781)",
+    "SetColor(smC,0.16,0.47,0.34)",
+    "SetLineThickness(smC,4)",
+    "SetCaption(smC,\"ω_C\")",
+    "SetLabelMode(smC,3)",
+    "ShowLabel(smC,true)",
+    "SetVisibleInView(WC,1,false)",
+    "GA=(0.07131,-0.81507)",
+    "bgA=Circle(GA,1.818182)",
+    "SetColor(bgA,0.85,0.5,0.1)",
+    "SetLineThickness(bgA,4)",
+    "SetCaption(bgA,\"Ω_A\")",
+    "SetLabelMode(bgA,3)",
+    "ShowLabel(bgA,true)",
+    "GB=(0.53432,0.19448)",
+    "bgB=Circle(GB,1.568609)",
+    "SetColor(bgB,0.85,0.5,0.1)",
+    "SetLineThickness(bgB,4)",
+    "SetCaption(bgB,\"Ω_B\")",
+    "SetLabelMode(bgB,3)",
+    "ShowLabel(bgB,true)",
+    "GC=(-0.44375,0.16151)",
+    "bgC=Circle(GC,1.472224)",
+    "SetColor(bgC,0.85,0.5,0.1)",
+    "SetLineThickness(bgC,4)",
+    "SetCaption(bgC,\"Ω_C\")",
+    "SetLabelMode(bgC,3)",
+    "ShowLabel(bgC,true)",
+    "SetVisibleInView(smA,1,false)",
+    "SetVisibleInView(smB,1,false)",
+    "SetVisibleInView(smC,1,false)",
+    "SetVisibleInView(bgA,1,false)",
+    "SetVisibleInView(bgB,1,false)",
+    "SetVisibleInView(bgC,1,false)"
+  ],
+  "steps": [
+    {
+      "title": "Что дано (по формализации самого решения)",
+      "text": "Центры O_A, O_B, O_C лежат на лучах OA, OB, OC, и OO_X = R + r_X. Это в решении записано верно.",
+      "commands": [
+        "SetVisibleInView(smA,1,true)",
+        "SetVisibleInView(smB,1,true)",
+        "SetVisibleInView(smC,1,true)",
+        "tri=Polygon(A,B,C)",
+        "SetColor(tri,0.55,0.55,0.55)",
+        "SetLineThickness(tri,3)",
+        "SetFilling(tri,0.05)"
+      ],
+      "highlight": [
+        "smA",
+        "smB",
+        "smC"
+      ]
+    },
+    {
+      "title": "Три большие окружности — и их радиусы",
+      "text": "Радиусы Ω_A, Ω_B, Ω_C различны. Уже отсюда видно, что никакое движение или гомотетия не может переставить их по циклу.",
+      "commands": [
+        "SetVisibleInView(bgA,1,true)",
+        "SetVisibleInView(bgB,1,true)",
+        "SetVisibleInView(bgC,1,true)",
+        "txtA=Text(\"R(Ω_A) = 1.818\",(-3.1,2.60))",
+        "SetColor(txtA,0.85,0.50,0.10)",
+        "txtB=Text(\"R(Ω_B) = 1.569\",(-3.1,2.15))",
+        "SetColor(txtB,0.85,0.50,0.10)",
+        "txtC=Text(\"R(Ω_C) = 1.472\",(-3.1,1.70))",
+        "SetColor(txtC,0.85,0.50,0.10)"
+      ],
+      "highlight": [
+        "bgA",
+        "bgB",
+        "bgC"
+      ]
+    },
+    {
+      "title": "Что утверждает решение: одна спиральная гомотетия S",
+      "text": "Решение вводит S, переводящую Ω_A→Ω_B→Ω_C и одновременно A→B→C. Применим к Ω_A поворот вокруг O, переводящий A в B (пунктир) — образ не совпал с Ω_B: у них разные радиусы. Такой S не существует.",
+      "commands": [
+        "Aimg=(-0.93969,-0.34202)",
+        "Gimg=(0.76884,0.27983)",
+        "bgimg=Circle(Gimg,1.818182)",
+        "SetColor(bgimg,0.45,0.25,0.65)",
+        "SetLineThickness(bgimg,4)",
+        "SetLineStyle(bgimg,2)",
+        "SetCaption(bgimg,\"образ Ω_A\")",
+        "SetLabelMode(bgimg,3)",
+        "ShowLabel(bgimg,true)",
+        "txtS=Text(\"образ Ω_A: R = 1.818,  а R(Ω_B) = 1.569\",(-3.1,-2.6))",
+        "SetColor(txtS,0.45,0.25,0.65)"
+      ],
+      "highlight": [
+        "bgimg"
+      ]
+    },
+    {
+      "title": "Вывод решения: «A, B, C коллинеарны»",
+      "text": "Упершись в противоречие, решение заключает, что точки A, B, C лежат на одной прямой, и дальше разбирает этот случай. Но A, B, C — три различные точки окружности ω, они образуют невырожденный треугольник; коллинеарными они быть не могут.",
+      "commands": [
+        "linAB=Line(A,B)",
+        "SetColor(linAB,0.72,0.11,0.11)",
+        "SetLineThickness(linAB,3)",
+        "SetLineStyle(linAB,2)",
+        "txtC=Text(\"C не лежит на AB: расстояние 1.585\",(-3.1,-3.1))",
+        "SetColor(txtC,0.72,0.11,0.11)"
+      ],
+      "highlight": [
+        "tri"
+      ]
+    },
+    {
+      "title": "Как выглядит настоящий ответ",
+      "text": "Точки X_A, X_B, X_C и три прямые действительно проходят через одну точку — но это решение до неё не дошло.",
+      "commands": [
+        "XA=(-0.05612,-1.25877)",
+        "XB=(0.87510,0.81579)",
+        "XC=(-0.95548,0.68543)",
+        "SetCaption(XA,\"X_A\")",
+        "SetLabelMode(XA,3)",
+        "SetCaption(XB,\"X_B\")",
+        "SetLabelMode(XB,3)",
+        "SetCaption(XC,\"X_C\")",
+        "SetLabelMode(XC,3)",
+        "mA=Line(A,XA)",
+        "mB=Line(B,XB)",
+        "mC=Line(C,XC)",
+        "SetColor(mA,0.72,0.11,0.11)",
+        "SetLineThickness(mA,4)",
+        "SetColor(mB,0.72,0.11,0.11)",
+        "SetLineThickness(mB,4)",
+        "SetColor(mC,0.72,0.11,0.11)",
+        "SetLineThickness(mC,4)",
+        "Y=(-0.07632,0.20880)",
+        "SetPointSize(Y,8)",
+        "SetColor(Y,0.72,0.11,0.11)",
+        "SetCaption(Y,\"Y\")",
+        "SetLabelMode(Y,3)"
+      ],
+      "highlight": [
+        "Y"
+      ]
+    }
+  ]
+}
