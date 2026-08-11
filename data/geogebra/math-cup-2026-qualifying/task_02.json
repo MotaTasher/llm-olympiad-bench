@@ -1,0 +1,170 @@
+{
+  "title": "Отборочный 2026, задача 2 — ожерелье и два гвоздя",
+  "source": "data/competitions/math-cup-2026-qualifying/task_02.json",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "none",
+    "fit": "step",
+    "padding": 0.14
+  },
+  "setup": [
+    "P1=(0.0000,3.0000)",
+    "P2=(-2.8532,0.9271)",
+    "P3=(-1.7634,-2.4271)",
+    "P4=(1.7634,-2.4271)",
+    "P5=(2.8532,0.9271)",
+    "Q1=(0.7452,4.5279)",
+    "R1=(-0.7452,4.5279)",
+    "Q2=(-4.0760,2.1080)",
+    "R2=(-4.5366,0.6905)",
+    "Q3=(-3.2644,-3.2252)",
+    "R3=(-2.0586,-4.1012)",
+    "Q4=(2.0586,-4.1012)",
+    "R4=(3.2644,-3.2252)",
+    "Q5=(4.5366,0.6905)",
+    "R5=(4.0760,2.1080)",
+    "SetPointSize(P1,4)",
+    "SetColor(P1,0.2,0.2,0.2)",
+    "SetPointSize(P2,4)",
+    "SetColor(P2,0.2,0.2,0.2)",
+    "SetPointSize(P3,4)",
+    "SetColor(P3,0.2,0.2,0.2)",
+    "SetPointSize(P4,4)",
+    "SetColor(P4,0.2,0.2,0.2)",
+    "SetPointSize(P5,4)",
+    "SetColor(P5,0.2,0.2,0.2)",
+    "SetPointSize(Q1,4)",
+    "SetColor(Q1,0.2,0.2,0.2)",
+    "SetPointSize(Q2,4)",
+    "SetColor(Q2,0.2,0.2,0.2)",
+    "SetPointSize(Q3,4)",
+    "SetColor(Q3,0.2,0.2,0.2)",
+    "SetPointSize(Q4,4)",
+    "SetColor(Q4,0.2,0.2,0.2)",
+    "SetPointSize(Q5,4)",
+    "SetColor(Q5,0.2,0.2,0.2)",
+    "SetPointSize(R1,4)",
+    "SetColor(R1,0.2,0.2,0.2)",
+    "SetPointSize(R2,4)",
+    "SetColor(R2,0.2,0.2,0.2)",
+    "SetPointSize(R3,4)",
+    "SetColor(R3,0.2,0.2,0.2)",
+    "SetPointSize(R4,4)",
+    "SetColor(R4,0.2,0.2,0.2)",
+    "SetPointSize(R5,4)",
+    "SetColor(R5,0.2,0.2,0.2)"
+  ],
+  "steps": [
+    {
+      "title": "Цикл длины 5",
+      "text": "Основа ожерелья — цикл C_5. Вершины и рёбра не пронумерованы, поэтому повороты и отражения картинки дают ту же укладку.",
+      "commands": [
+        "cyc=Polygon(P1,P2,P3,P4,P5)",
+        "SetColor(cyc,0.15,0.32,0.6)",
+        "SetLineThickness(cyc,5)",
+        "SetFilling(cyc,0)"
+      ],
+      "highlight": [
+        "cyc"
+      ]
+    },
+    {
+      "title": "Подвеска в одной вершине",
+      "text": "К вершине цикла присоединён треугольник, совпадающий с ней ровно одной вершиной.",
+      "commands": [
+        "t1=Polygon(P1,Q1,R1)",
+        "SetColor(t1,0.16,0.47,0.34)",
+        "SetLineThickness(t1,5)",
+        "SetFilling(t1,0)"
+      ],
+      "highlight": [
+        "t1"
+      ]
+    },
+    {
+      "title": "Ожерелье целиком",
+      "text": "Треугольник висит на каждой из пяти вершин: 15 вершин и 20 рёбер.",
+      "commands": [
+        "t2=Polygon(P2,Q2,R2)",
+        "SetColor(t2,0.16,0.47,0.34)",
+        "SetLineThickness(t2,5)",
+        "SetFilling(t2,0)",
+        "t3=Polygon(P3,Q3,R3)",
+        "SetColor(t3,0.16,0.47,0.34)",
+        "SetLineThickness(t3,5)",
+        "SetFilling(t3,0)",
+        "t4=Polygon(P4,Q4,R4)",
+        "SetColor(t4,0.16,0.47,0.34)",
+        "SetLineThickness(t4,5)",
+        "SetFilling(t4,0)",
+        "t5=Polygon(P5,Q5,R5)",
+        "SetColor(t5,0.16,0.47,0.34)",
+        "SetLineThickness(t5,5)",
+        "SetFilling(t5,0)"
+      ],
+      "highlight": [
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ]
+    },
+    {
+      "title": "Граней ровно семь",
+      "text": "V − E + F = 15 − 20 + F = 2, значит F = 7: внутренность цикла, пять внутренностей треугольников и внешняя грань. Гвоздь лежит строго внутри одной из них.",
+      "commands": [
+        "SetFilling(cyc,0.10)",
+        "SetFilling(t1,0.16)",
+        "SetFilling(t2,0.16)",
+        "SetFilling(t3,0.16)",
+        "SetFilling(t4,0.16)",
+        "SetFilling(t5,0.16)",
+        "lblC=Text(\"внутренность цикла\",(-1.5,0.2))",
+        "lblO=Text(\"внешняя грань\",(-6.2,-4.2))",
+        "SetColor(lblC,0.15,0.32,0.60)",
+        "SetColor(lblO,0.35,0.35,0.35)"
+      ],
+      "highlight": []
+    },
+    {
+      "title": "Два гвоздя",
+      "text": "Гвозди не лежат на рёбрах и вершинах. Укладку можно двигать по плоскости, но проводить ребро через гвоздь нельзя — поэтому важно, в какие грани гвозди попали. Здесь один внутри цикла, второй — во внешней грани.",
+      "commands": [
+        "N1=(0.9,-0.5)",
+        "N2=(-5.0,3.2)",
+        "SetColor(N1,0.72,0.11,0.11)",
+        "SetPointSize(N1,8)",
+        "SetColor(N2,0.72,0.11,0.11)",
+        "SetPointSize(N2,8)",
+        "SetCaption(N1,\"гвоздь 1\")",
+        "SetLabelMode(N1,3)",
+        "ShowLabel(N1,true)",
+        "SetCaption(N2,\"гвоздь 2\")",
+        "SetLabelMode(N2,3)",
+        "ShowLabel(N2,true)"
+      ],
+      "highlight": [
+        "N1",
+        "N2"
+      ]
+    },
+    {
+      "title": "Другая укладка — гвоздь в другой грани",
+      "text": "Тот же граф уложен иначе: подвеска верхней вершины уходит внутрь цикла и накрывает гвоздь 1. Перевести одну укладку в другую, не проводя ребро через гвоздь, нельзя. Подсчёт таких классов и даёт ответ 1104.",
+      "commands": [
+        "Delete(t1)",
+        "Qin=(-0.6334,1.7012)",
+        "Rin=(0.6334,1.7012)",
+        "tin=Polygon(P1,Qin,Rin)",
+        "SetColor(tin,0.72,0.11,0.11)",
+        "SetLineThickness(tin,5)",
+        "SetFilling(tin,0.16)"
+      ],
+      "highlight": [
+        "tin"
+      ]
+    }
+  ]
+}
