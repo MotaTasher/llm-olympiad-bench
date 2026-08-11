@@ -1,0 +1,145 @@
+{
+  "title": "Финал 2026, задача 9 — ответ Grok 4.3 (Микель + Менелай + Дезарг)",
+  "source": "ключевой шаг: A, X_B, X_A, B лежат на одной окружности",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "points",
+    "fit": "step",
+    "padding": 0.12
+  },
+  "setup": [
+    "O=(0,0)",
+    "A=(-0.08716,0.99619)",
+    "B=(-0.93969,-0.34202)",
+    "C=(0.93969,-0.34202)",
+    "om=Circle(O,1)",
+    "SetColor(om,0.15,0.32,0.6)",
+    "SetLineThickness(om,5)",
+    "SetCaption(om,\"ω\")",
+    "SetLabelMode(om,3)",
+    "ShowLabel(om,true)",
+    "GA=(0.07131,-0.81507)",
+    "bgA=Circle(GA,1.818182)",
+    "SetColor(bgA,0.85,0.5,0.1)",
+    "SetLineThickness(bgA,4)",
+    "SetCaption(bgA,\"Ω_A\")",
+    "SetLabelMode(bgA,3)",
+    "ShowLabel(bgA,true)",
+    "GB=(0.53432,0.19448)",
+    "bgB=Circle(GB,1.568609)",
+    "SetColor(bgB,0.85,0.5,0.1)",
+    "SetLineThickness(bgB,4)",
+    "SetCaption(bgB,\"Ω_B\")",
+    "SetLabelMode(bgB,3)",
+    "ShowLabel(bgB,true)",
+    "GC=(-0.44375,0.16151)",
+    "bgC=Circle(GC,1.472224)",
+    "SetColor(bgC,0.85,0.5,0.1)",
+    "SetLineThickness(bgC,4)",
+    "SetCaption(bgC,\"Ω_C\")",
+    "SetLabelMode(bgC,3)",
+    "ShowLabel(bgC,true)"
+  ],
+  "steps": [
+    {
+      "title": "Четыре окружности в цепочке",
+      "text": "Grok берёт цепочку ω, Ω_A, Ω_C, Ω_B и отмечает точки пересечения соседних: P₁ = ω ∩ Ω_A = A, P₂ = Ω_A ∩ Ω_C = X_B, P₃ = Ω_C ∩ Ω_B = X_A, P₄ = Ω_B ∩ ω = B.",
+      "commands": [
+        "XA=(-0.05612,-1.25877)",
+        "XB=(0.87510,0.81579)",
+        "XC=(-0.95548,0.68543)",
+        "SetCaption(XA,\"X_A\")",
+        "SetLabelMode(XA,3)",
+        "ShowLabel(XA,true)",
+        "SetCaption(XB,\"X_B\")",
+        "SetLabelMode(XB,3)",
+        "ShowLabel(XB,true)",
+        "SetCaption(XC,\"X_C\")",
+        "SetLabelMode(XC,3)",
+        "ShowLabel(XC,true)",
+        "SetCaption(A,\"A\")",
+        "SetLabelMode(A,3)",
+        "ShowLabel(A,true)",
+        "SetCaption(B,\"B\")",
+        "SetLabelMode(B,3)",
+        "ShowLabel(B,true)",
+        "SetPointSize(A,6)",
+        "SetPointSize(B,6)",
+        "SetPointSize(XA,6)",
+        "SetPointSize(XB,6)"
+      ],
+      "highlight": [
+        "A",
+        "B",
+        "XA",
+        "XB"
+      ]
+    },
+    {
+      "title": "Теорема Микеля: четыре точки на одной окружности",
+      "text": "По теореме Микеля для цепочки из четырёх окружностей точки A, X_B, X_A, B лежат на одной окружности. Построена окружность через A, X_B, X_A — точка B действительно на ней.",
+      "commands": [
+        "MC=(0.20021,-0.12755)",
+        "miq=Circle(MC,1.159900)",
+        "SetVisibleInView(MC,1,false)",
+        "SetColor(miq,0.45,0.25,0.65)",
+        "SetLineThickness(miq,4)",
+        "SetCaption(miq,\"окружность Микеля\")",
+        "SetLabelMode(miq,3)",
+        "ShowLabel(miq,true)",
+        "txtM=Text(\"R = 1.1599;  |B − центр| = 1.1599\",(-3.2,-2.8))",
+        "SetColor(txtM,0.45,0.25,0.65)"
+      ],
+      "highlight": [
+        "miq"
+      ]
+    },
+    {
+      "title": "Вторая цепочка — та же конструкция",
+      "text": "Аналогично B, X_C, X_B, C лежат на одной окружности. Из таких цепочек Grok и собирает дальнейшее рассуждение через Менелая и Дезарга.",
+      "commands": [
+        "MC2=(0.00000,0.18626)",
+        "miq2=Circle(MC2,1.078011)",
+        "SetVisibleInView(MC2,1,false)",
+        "SetColor(miq2,0.45,0.25,0.65)",
+        "SetLineThickness(miq2,3)",
+        "SetLineStyle(miq2,2)",
+        "SetCaption(miq2,\"вторая окружность Микеля\")",
+        "SetLabelMode(miq2,3)",
+        "ShowLabel(miq2,true)",
+        "SetCaption(C,\"C\")",
+        "SetLabelMode(C,3)",
+        "ShowLabel(C,true)"
+      ],
+      "highlight": [
+        "miq2"
+      ]
+    },
+    {
+      "title": "Итог",
+      "text": "Прямые AX_A, BX_B, CX_C пересекаются в одной точке. Отдельно стоит проверить оговорку решения: касание ω с каждой Ω — вырожденный случай теоремы Микеля, и в ответе он проговорён, но не разобран.",
+      "commands": [
+        "mA=Line(A,XA)",
+        "mB=Line(B,XB)",
+        "mC=Line(C,XC)",
+        "SetColor(mA,0.72,0.11,0.11)",
+        "SetLineThickness(mA,4)",
+        "SetColor(mB,0.72,0.11,0.11)",
+        "SetLineThickness(mB,4)",
+        "SetColor(mC,0.72,0.11,0.11)",
+        "SetLineThickness(mC,4)",
+        "Y=(-0.07632,0.20880)",
+        "SetPointSize(Y,8)",
+        "SetColor(Y,0.72,0.11,0.11)",
+        "SetCaption(Y,\"Y\")",
+        "SetLabelMode(Y,3)",
+        "ShowLabel(Y,true)"
+      ],
+      "highlight": [
+        "Y"
+      ]
+    }
+  ]
+}

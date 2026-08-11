@@ -1,0 +1,173 @@
+{
+  "title": "Финал 2026, задача 9 — решение Gemini 3.5 Flash",
+  "source": "инверсия с центром A и координаты в инверсной плоскости: x = a, x = −b, x = c",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "points",
+    "fit": "step",
+    "padding": 0.14
+  },
+  "setup": [
+    "A=(-0.08716,0.99619)",
+    "SetPointSize(A,6)",
+    "SetCaption(A,\"A\")",
+    "SetLabelMode(A,3)",
+    "ShowLabel(A,true)"
+  ],
+  "steps": [
+    {
+      "title": "Инверсия с центром A: ω и ω_A → параллельные прямые",
+      "text": "В системе координат с началом A и осью Ox вдоль линии центров образ ω — прямая x = a, образ ω_A — прямая x = −b. Здесь a = 0.500, b = 1.691.",
+      "commands": [
+        "E1=(-3.23140,0.21920)",
+        "E2=(3.14425,0.77700)",
+        "lw=Line(E1,E2)",
+        "F1=(-3.42240,2.40234)",
+        "F2=(2.95325,2.96014)",
+        "lA=Line(F1,F2)",
+        "SetVisibleInView(E1,1,false)",
+        "SetVisibleInView(E2,1,false)",
+        "SetVisibleInView(F1,1,false)",
+        "SetVisibleInView(F2,1,false)",
+        "SetColor(lw,0.15,0.32,0.6)",
+        "SetLineThickness(lw,4)",
+        "SetCaption(lw,\"образ ω:  x = a\")",
+        "SetLabelMode(lw,3)",
+        "ShowLabel(lw,true)",
+        "SetColor(lA,0.16,0.47,0.34)",
+        "SetLineThickness(lA,4)",
+        "SetCaption(lA,\"образ ω_A:  x = −b\")",
+        "SetLabelMode(lA,3)",
+        "ShowLabel(lA,true)"
+      ],
+      "highlight": [
+        "lw",
+        "lA"
+      ]
+    },
+    {
+      "title": "Образ Ω_A — третья параллельная прямая, 0 < c < a",
+      "text": "Ω_A тоже проходит через A, поэтому её образ — прямая x = c. Из того, что Ω_A содержит ω, следует c < a. Здесь c = 0.275.",
+      "commands": [
+        "H1=(-3.25101,0.44334)",
+        "H2=(3.12464,1.00114)",
+        "LA=Line(H1,H2)",
+        "SetVisibleInView(H1,1,false)",
+        "SetVisibleInView(H2,1,false)",
+        "SetColor(LA,0.85,0.5,0.1)",
+        "SetLineThickness(LA,4)",
+        "SetCaption(LA,\"образ Ω_A:  x = c\")",
+        "SetLabelMode(LA,3)",
+        "ShowLabel(LA,true)",
+        "txtabc=Text(\"a = 0.500,  b = 1.691,  c = 0.275\",(2.12578,3.23908))",
+        "SetColor(txtabc,0.2,0.2,0.2)"
+      ],
+      "highlight": [
+        "LA"
+      ]
+    },
+    {
+      "title": "ω_B и ω_C вписаны в полосу c ≤ x ≤ a",
+      "text": "Обе касаются и x = c, и x = a, значит их диаметр равен a − c, а центры лежат на x = (a+c)/2. Радиус (a−c)/2 = 0.1125 — совпадает с посчитанными радиусами образов.",
+      "commands": [
+        "IB=(-0.43559,0.57673)",
+        "ib=Circle(IB,0.112500)",
+        "IC=(0.26394,0.63793)",
+        "ic=Circle(IC,0.112500)",
+        "Bp=(-0.42578,0.46466)",
+        "Cp=(0.27375,0.52586)",
+        "SetVisibleInView(IB,1,false)",
+        "SetVisibleInView(IC,1,false)",
+        "SetColor(ib,0.45,0.25,0.65)",
+        "SetLineThickness(ib,4)",
+        "SetCaption(ib,\"ω_B′\")",
+        "SetLabelMode(ib,3)",
+        "ShowLabel(ib,true)",
+        "SetColor(ic,0.45,0.25,0.65)",
+        "SetLineThickness(ic,4)",
+        "SetCaption(ic,\"ω_C′\")",
+        "SetLabelMode(ic,3)",
+        "ShowLabel(ic,true)",
+        "SetCaption(Bp,\"B′\")",
+        "SetLabelMode(Bp,3)",
+        "ShowLabel(Bp,true)",
+        "SetCaption(Cp,\"C′\")",
+        "SetLabelMode(Cp,3)",
+        "ShowLabel(Cp,true)",
+        "txtr=Text(\"радиусы образов: 0.1125 = 0.1125 = (a−c)/2\",(-2.65595,2.82073))",
+        "SetColor(txtr,0.45,0.25,0.65)"
+      ],
+      "highlight": [
+        "ib",
+        "ic"
+      ]
+    },
+    {
+      "title": "Обратно в исходную картину",
+      "text": "Из этой полосы решение достаёт координаты X_A и завершает доказательство. Итоговая картина — три прямые через одну точку.",
+      "commands": [
+        "om=Circle((0,0),1)",
+        "SetColor(om,0.15,0.32,0.6)",
+        "SetLineThickness(om,3)",
+        "SetCaption(om,\"ω\")",
+        "SetLabelMode(om,3)",
+        "ShowLabel(om,true)",
+        "B=(-0.93969,-0.34202)",
+        "C=(0.93969,-0.34202)",
+        "SetCaption(B,\"B\")",
+        "SetLabelMode(B,3)",
+        "ShowLabel(B,true)",
+        "SetCaption(C,\"C\")",
+        "SetLabelMode(C,3)",
+        "ShowLabel(C,true)",
+        "GA=(0.07131,-0.81507)",
+        "GB=(0.53432,0.19448)",
+        "GC=(-0.44375,0.16151)",
+        "bgA=Circle(GA,1.818182)",
+        "bgB=Circle(GB,1.568609)",
+        "bgC=Circle(GC,1.472224)",
+        "SetColor(bgA,0.85,0.5,0.1)",
+        "SetLineThickness(bgA,3)",
+        "SetColor(bgB,0.85,0.5,0.1)",
+        "SetLineThickness(bgB,3)",
+        "SetColor(bgC,0.85,0.5,0.1)",
+        "SetLineThickness(bgC,3)",
+        "SetVisibleInView(GA,1,false)",
+        "SetVisibleInView(GB,1,false)",
+        "SetVisibleInView(GC,1,false)",
+        "XA=(-0.05612,-1.25877)",
+        "XB=(0.87510,0.81579)",
+        "XC=(-0.95548,0.68543)",
+        "SetCaption(XA,\"X_A\")",
+        "SetLabelMode(XA,3)",
+        "ShowLabel(XA,true)",
+        "SetCaption(XB,\"X_B\")",
+        "SetLabelMode(XB,3)",
+        "ShowLabel(XB,true)",
+        "SetCaption(XC,\"X_C\")",
+        "SetLabelMode(XC,3)",
+        "ShowLabel(XC,true)",
+        "mA=Line(A,XA)",
+        "mB=Line(B,XB)",
+        "mC=Line(C,XC)",
+        "SetColor(mA,0.72,0.11,0.11)",
+        "SetLineThickness(mA,4)",
+        "SetColor(mB,0.72,0.11,0.11)",
+        "SetLineThickness(mB,4)",
+        "SetColor(mC,0.72,0.11,0.11)",
+        "SetLineThickness(mC,4)",
+        "Y=(-0.07632,0.20880)",
+        "SetPointSize(Y,8)",
+        "SetColor(Y,0.72,0.11,0.11)",
+        "SetCaption(Y,\"Y\")",
+        "SetLabelMode(Y,3)",
+        "ShowLabel(Y,true)"
+      ],
+      "highlight": [
+        "Y"
+      ]
+    }
+  ]
+}
