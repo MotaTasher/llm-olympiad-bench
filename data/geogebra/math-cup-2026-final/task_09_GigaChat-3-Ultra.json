@@ -224,7 +224,7 @@
     },
     {
       "title": "4. «X_A — центр гомотетии Ω_B → Ω_C»",
-      "text": "Это ключевое утверждение решения. Любой центр гомотетии двух окружностей лежит на прямой через их центры; расстояние от X_A до этой прямой равно 1.433, то есть X_A на ней не лежит.",
+      "text": "Это ключевое утверждение решения. Любой центр гомотетии двух окружностей лежит на прямой через их центры; расстояние от X_A до этой прямой равно 1.433, то есть X_A на ней не лежит. Дальше решение опирается на этот шаг, поэтому построение здесь остановлено.",
       "commands": [
         "SetVisibleInView(dsA,1,false)",
         "SetVisibleInView(dsB,1,false)",
@@ -257,45 +257,6 @@
       ],
       "highlight": [
         "lQ"
-      ]
-    },
-    {
-      "title": "Итоговая картина",
-      "text": "Утверждение задачи верно, но рассуждение GigaChat на этом шаге рвётся.",
-      "commands": [
-        "SetVisibleInView(bgA,1,true)",
-        "SetVisibleInView(bgB,1,true)",
-        "SetVisibleInView(bgC,1,true)",
-        "XA=(-0.05612,-1.25877)",
-        "XB=(0.87510,0.81579)",
-        "XC=(-0.95548,0.68543)",
-        "SetCaption(XA,\"X_A\")",
-        "SetLabelMode(XA,3)",
-        "ShowLabel(XA,true)",
-        "SetCaption(XB,\"X_B\")",
-        "SetLabelMode(XB,3)",
-        "ShowLabel(XB,true)",
-        "SetCaption(XC,\"X_C\")",
-        "SetLabelMode(XC,3)",
-        "ShowLabel(XC,true)",
-        "mA=Line(A,XA)",
-        "mB=Line(B,XB)",
-        "mC=Line(C,XC)",
-        "SetColor(mA,0.72,0.11,0.11)",
-        "SetLineThickness(mA,4)",
-        "SetColor(mB,0.72,0.11,0.11)",
-        "SetLineThickness(mB,4)",
-        "SetColor(mC,0.72,0.11,0.11)",
-        "SetLineThickness(mC,4)",
-        "Y=(-0.07632,0.20880)",
-        "SetPointSize(Y,8)",
-        "SetColor(Y,0.72,0.11,0.11)",
-        "SetCaption(Y,\"Y\")",
-        "SetLabelMode(Y,3)",
-        "ShowLabel(Y,true)"
-      ],
-      "highlight": [
-        "Y"
       ]
     }
   ]
