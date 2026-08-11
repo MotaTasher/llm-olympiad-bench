@@ -1,0 +1,78 @@
+{
+  "title": "Финал 2026, задача 9 — ответ Alice AI",
+  "source": "решение ссылается на симметрию инверсной картины относительно образа Ω_A",
+  "app": "classic",
+  "view": {
+    "axes": false,
+    "grid": false,
+    "labels": "points",
+    "fit": "step",
+    "padding": 0.12
+  },
+  "setup": [
+    "A=(-0.08716,0.99619)",
+    "SetPointSize(A,6)",
+    "SetCaption(A,\"A\")",
+    "SetLabelMode(A,3)",
+    "ShowLabel(A,true)"
+  ],
+  "steps": [
+    {
+      "title": "Инверсная картина",
+      "text": "После инверсии с центром A окружности ω, ω_A, Ω_A становятся тремя параллельными прямыми, а ω_B, ω_C — окружностями между ними.",
+      "commands": [
+        "E1=(-3.23140,0.21920)",
+        "E2=(3.14425,0.77700)",
+        "lw=Line(E1,E2)",
+        "H1=(-3.25101,0.44334)",
+        "H2=(3.12464,1.00114)",
+        "LA=Line(H1,H2)",
+        "SetVisibleInView(E1,1,false)",
+        "SetVisibleInView(E2,1,false)",
+        "SetVisibleInView(H1,1,false)",
+        "SetVisibleInView(H2,1,false)",
+        "SetColor(lw,0.15,0.32,0.6)",
+        "SetLineThickness(lw,4)",
+        "SetCaption(lw,\"образ ω\")",
+        "SetLabelMode(lw,3)",
+        "ShowLabel(lw,true)",
+        "SetColor(LA,0.85,0.5,0.1)",
+        "SetLineThickness(LA,4)",
+        "SetCaption(LA,\"образ Ω_A\")",
+        "SetLabelMode(LA,3)",
+        "ShowLabel(LA,true)"
+      ],
+      "highlight": [
+        "LA"
+      ]
+    },
+    {
+      "title": "Наблюдение решения — верное",
+      "text": "Образы X_B и X_C действительно лежат на прямой — образе Ω_A: обе точки принадлежат Ω_A, а её образ и есть эта прямая. Решение называет это симметрией относительно Ω′_A.",
+      "commands": [
+        "XBi=(0.91678,0.80798)",
+        "XCi=(-1.10804,0.63083)",
+        "SetPointSize(XBi,6)",
+        "SetPointSize(XCi,6)",
+        "SetCaption(XBi,\"X_B′\")",
+        "SetLabelMode(XBi,3)",
+        "ShowLabel(XBi,true)",
+        "SetCaption(XCi,\"X_C′\")",
+        "SetLabelMode(XCi,3)",
+        "ShowLabel(XCi,true)",
+        "txt=Text(\"обе точки на образе Ω_A\",(1.92920,0.89655))",
+        "SetColor(txt,0.85,0.50,0.10)"
+      ],
+      "highlight": [
+        "XBi",
+        "XCi"
+      ]
+    },
+    {
+      "title": "Но вывод из него не следует",
+      "text": "Дальше решение пишет: «из симметрии преобразованной конфигурации следует, что прямые пересекаются в одной точке» — без вычислений и без построения самой точки. Принадлежность X_B′ и X_C′ одной прямой конкурентности не даёт: это верно в любой такой конфигурации, включая те, где ничего доказывать не требуется.",
+      "commands": [],
+      "highlight": []
+    }
+  ]
+}
