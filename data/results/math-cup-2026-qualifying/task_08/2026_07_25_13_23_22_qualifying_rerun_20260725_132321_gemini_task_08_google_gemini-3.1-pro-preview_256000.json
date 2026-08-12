@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_e622be056707772e4d657d07": {
-      "evaluation_id": "ev_25929a2fc65442089e1136431805a90f",
+      "evaluation_id": "ev_f95f9d21d49b4807830cb8ab938559a7",
       "result_id": "res_e622be056707772e4d657d07",
       "result_index": 0,
       "model_key": "google:gemini-3.1-pro-preview",
       "model": "gemini-3.1-pro-preview",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 1,
-      "max_score": 4,
+      "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "",
-      "created_at": "2026-07-25T13:36:38.372771Z",
-      "updated_at": "2026-07-25T13:36:38.372771Z"
+      "feedback": "Описание G1 + подсчет для #b = 5",
+      "created_at": "2026-08-11T22:31:52.327177Z",
+      "updated_at": "2026-08-11T22:31:52.327177Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-07-25T13:36:38.372771Z",
         "updated_at": "2026-07-25T13:36:38.372771Z"
+      },
+      {
+        "evaluation_id": "ev_f95f9d21d49b4807830cb8ab938559a7",
+        "result_id": "res_e622be056707772e4d657d07",
+        "result_index": 0,
+        "model_key": "google:gemini-3.1-pro-preview",
+        "model": "gemini-3.1-pro-preview",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "Описание G1 + подсчет для #b = 5",
+        "created_at": "2026-08-11T22:31:52.327177Z",
+        "updated_at": "2026-08-11T22:31:52.327177Z"
       }
     ]
   },
@@ -37,5 +51,20 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_07_25_13_23_22_qualifying_rerun_20260725_132321_gemini_task_08_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-07-25T13:36:38.372771Z"
+  "updated_at": "2026-08-12T10:30:32.637590Z",
+  "finalizations": {
+    "res_e622be056707772e4d657d07": {
+      "result_id": "res_e622be056707772e4d657d07",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "score": 1,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "MotaTasher",
+      "created_at": "2026-08-12T10:30:32.637590Z",
+      "updated_at": "2026-08-12T10:30:32.637590Z"
+    }
+  }
 }

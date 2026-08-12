@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_e58db18175a00b67765ffe8d": {
-      "evaluation_id": "ev_f2e9381560e942c18b3648d6d12480c8",
+      "evaluation_id": "ev_a5b1adfd69fc43339e8dfe9808443c3a",
       "result_id": "res_e58db18175a00b67765ffe8d",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 1,
-      "max_score": 4,
+      "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "",
-      "created_at": "2026-07-24T21:33:05.410041Z",
-      "updated_at": "2026-07-24T21:33:05.410041Z"
+      "feedback": "Описание G1 + подсчет для #b = 5",
+      "created_at": "2026-08-11T22:29:08.184417Z",
+      "updated_at": "2026-08-11T22:29:08.184417Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-07-24T21:33:05.410041Z",
         "updated_at": "2026-07-24T21:33:05.410041Z"
+      },
+      {
+        "evaluation_id": "ev_a5b1adfd69fc43339e8dfe9808443c3a",
+        "result_id": "res_e58db18175a00b67765ffe8d",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "Описание G1 + подсчет для #b = 5",
+        "created_at": "2026-08-11T22:29:08.184417Z",
+        "updated_at": "2026-08-11T22:29:08.184417Z"
       }
     ]
   },
@@ -37,5 +51,20 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_07_15_17_08_08_qualifying_missing_20260715_144724_task_08_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-07-24T21:33:05.410041Z"
+  "updated_at": "2026-08-12T10:30:26.437081Z",
+  "finalizations": {
+    "res_e58db18175a00b67765ffe8d": {
+      "result_id": "res_e58db18175a00b67765ffe8d",
+      "result_index": 0,
+      "model_key": "deepseek:deepseek-v4-pro",
+      "model": "deepseek-v4-pro",
+      "score": 1,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "MotaTasher",
+      "created_at": "2026-08-12T10:30:26.437081Z",
+      "updated_at": "2026-08-12T10:30:26.437081Z"
+    }
+  }
 }

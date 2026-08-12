@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_42ed0e74e637c4aaec4ace13": {
-      "evaluation_id": "ev_d60956954ea74c5587488320230ad4f9",
+      "evaluation_id": "ev_c96125eb7c124c52b5d206df5612836c",
       "result_id": "res_42ed0e74e637c4aaec4ace13",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 0,
-      "max_score": 2,
+      "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "то, что пересечение прямый это рад центр w_A, w_B, w_C неверно.",
-      "created_at": "2026-07-03T23:47:19.076364Z",
-      "updated_at": "2026-07-03T23:47:19.076364Z"
+      "feedback": "Радось окружностей не переходит в радось, если она до этого не проходила через центр инверсии\r\n\r\nТе образ рад.центра уже не лежит на радоси образов окружностей",
+      "created_at": "2026-08-12T11:33:05.073841Z",
+      "updated_at": "2026-08-12T11:33:05.073841Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "то, что пересечение прямый это рад центр w_A, w_B, w_C неверно.",
         "created_at": "2026-07-03T23:47:19.076364Z",
         "updated_at": "2026-07-03T23:47:19.076364Z"
+      },
+      {
+        "evaluation_id": "ev_c96125eb7c124c52b5d206df5612836c",
+        "result_id": "res_42ed0e74e637c4aaec4ace13",
+        "result_index": 0,
+        "model_key": "deepseek:deepseek-v4-pro",
+        "model": "deepseek-v4-pro",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "Радось окружностей не переходит в радось, если она до этого не проходила через центр инверсии\r\n\r\nТе образ рад.центра уже не лежит на радоси образов окружностей",
+        "created_at": "2026-08-12T11:33:05.073841Z",
+        "updated_at": "2026-08-12T11:33:05.073841Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_09_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-07-03T23:47:24.200551Z"
+  "updated_at": "2026-08-12T11:33:05.073841Z",
+  "finalizations": {}
 }

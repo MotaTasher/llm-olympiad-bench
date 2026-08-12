@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_6a67fb998d12d74a60b147c4": {
-      "evaluation_id": "ev_1a095c8e713347beb32c4a8bc273aa7e",
+      "evaluation_id": "ev_3c62646aa57a4a92875af4e6d4a1158b",
       "result_id": "res_6a67fb998d12d74a60b147c4",
       "result_index": 0,
       "model_key": "anthropic:claude-fable-5",
       "model": "claude-fable-5",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
-      "feedback": "",
-      "created_at": "2026-08-02T17:50:25.831976Z",
-      "updated_at": "2026-08-02T17:50:25.831976Z"
+      "feedback": "Для ускорения проверки счета была использована LLM, чат с ней можете найти по\r\nссылке\r\n\r\nhttps://chatgpt.com/share/6a7c6bab-f034-83eb-85e4-1089e07c1856",
+      "created_at": "2026-08-12T12:49:22.252594Z",
+      "updated_at": "2026-08-12T13:00:43.557026Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-08-02T17:50:25.831976Z",
         "updated_at": "2026-08-02T17:50:25.831976Z"
+      },
+      {
+        "evaluation_id": "ev_3c62646aa57a4a92875af4e6d4a1158b",
+        "result_id": "res_6a67fb998d12d74a60b147c4",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "Для ускорения проверки счета была использована LLM, чат с ней можете найти по\r\nссылке\r\n\r\nhttps://chatgpt.com/share/6a7c6bab-f034-83eb-85e4-1089e07c1856",
+        "created_at": "2026-08-12T12:49:22.252594Z",
+        "updated_at": "2026-08-12T13:00:43.557026Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_08_01_19_04_06_math-cup-2026-final_20260801_171126_task_09_anthropic_claude-fable-5_256000",
-  "updated_at": "2026-08-02T17:50:25.831976Z"
+  "updated_at": "2026-08-12T13:00:43.557026Z",
+  "finalizations": {}
 }

@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_e821e6ac56ce527d5c8a5356": {
-      "evaluation_id": "ev_f327a8aa487f4f0a83574d5c9b4d5af9",
+      "evaluation_id": "ev_de6731bfa8d2490196e508193d7e2cca",
       "result_id": "res_e821e6ac56ce527d5c8a5356",
       "result_index": 0,
       "model_key": "google:gemini-3.1-pro-preview",
       "model": "gemini-3.1-pro-preview",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "\"центр инверсии А лежит на окружности подобия\" \r\nНет, лежит на другой окружности(средней окружности, окружности антиподобия)",
-      "created_at": "2026-07-31T04:09:54.090650Z",
-      "updated_at": "2026-07-31T04:09:54.090650Z"
+      "feedback": "X_A отностиельно S_A имеет степень 0, но не лежит на w - значит AX_A не может быть радосью\r\n\r\n",
+      "created_at": "2026-08-12T12:07:14.189492Z",
+      "updated_at": "2026-08-12T12:07:14.189492Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "\"центр инверсии А лежит на окружности подобия\" \r\nНет, лежит на другой окружности(средней окружности, окружности антиподобия)",
         "created_at": "2026-07-31T04:09:54.090650Z",
         "updated_at": "2026-07-31T04:09:54.090650Z"
+      },
+      {
+        "evaluation_id": "ev_de6731bfa8d2490196e508193d7e2cca",
+        "result_id": "res_e821e6ac56ce527d5c8a5356",
+        "result_index": 0,
+        "model_key": "google:gemini-3.1-pro-preview",
+        "model": "gemini-3.1-pro-preview",
+        "evaluator": "MotaTasher",
+        "score": 0,
+        "max_score": 2.0,
+        "score_category": "zero",
+        "feedback": "X_A отностиельно S_A имеет степень 0, но не лежит на w - значит AX_A не может быть радосью\r\n\r\n",
+        "created_at": "2026-08-12T12:07:14.189492Z",
+        "updated_at": "2026-08-12T12:07:14.189492Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_07_07_00_22_14_new_models_20260706_225754_task_09_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-07-31T04:10:16.580623Z"
+  "updated_at": "2026-08-12T12:07:14.189492Z",
+  "finalizations": {}
 }

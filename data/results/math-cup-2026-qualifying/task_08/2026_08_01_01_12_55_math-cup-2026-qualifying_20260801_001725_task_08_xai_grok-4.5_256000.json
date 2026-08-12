@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_dfb0af1430f31ccc46e03c5a": {
-      "evaluation_id": "ev_b66f2696aa3e4ef9bfac3416febdc782",
+      "evaluation_id": "ev_ced2aa0c863c4d128f090d04877bd6f4",
       "result_id": "res_dfb0af1430f31ccc46e03c5a",
       "result_index": 0,
       "model_key": "xai:grok-4.5",
       "model": "grok-4.5",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 1,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "",
-      "created_at": "2026-08-01T22:08:43.276842Z",
-      "updated_at": "2026-08-01T22:08:43.276842Z"
+      "feedback": "Описание G1 + подсчет для #b = 5",
+      "created_at": "2026-08-11T22:36:24.860773Z",
+      "updated_at": "2026-08-11T22:36:24.860773Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-08-01T22:08:43.276842Z",
         "updated_at": "2026-08-01T22:08:43.276842Z"
+      },
+      {
+        "evaluation_id": "ev_ced2aa0c863c4d128f090d04877bd6f4",
+        "result_id": "res_dfb0af1430f31ccc46e03c5a",
+        "result_index": 0,
+        "model_key": "xai:grok-4.5",
+        "model": "grok-4.5",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "Описание G1 + подсчет для #b = 5",
+        "created_at": "2026-08-11T22:36:24.860773Z",
+        "updated_at": "2026-08-11T22:36:24.860773Z"
       }
     ]
   },
@@ -37,5 +51,20 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_08_01_01_12_55_math-cup-2026-qualifying_20260801_001725_task_08_xai_grok-4.5_256000",
-  "updated_at": "2026-08-01T22:08:43.276842Z"
+  "updated_at": "2026-08-12T10:30:38.734194Z",
+  "finalizations": {
+    "res_dfb0af1430f31ccc46e03c5a": {
+      "result_id": "res_dfb0af1430f31ccc46e03c5a",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "score": 1,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "MotaTasher",
+      "created_at": "2026-08-12T10:30:38.734194Z",
+      "updated_at": "2026-08-12T10:30:38.734194Z"
+    }
+  }
 }

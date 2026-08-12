@@ -65,6 +65,20 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_07",
   "run_id": "2026_08_01_01_03_38_math-cup-2026-final_20260801_001725_task_07_xai_grok-4.5_256000",
-  "updated_at": "2026-08-09T19:17:23.563735Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T13:22:47.113862Z",
+  "finalizations": {
+    "res_1de474e83df1c73221f7be51": {
+      "result_id": "res_1de474e83df1c73221f7be51",
+      "result_index": 0,
+      "model_key": "xai:grok-4.5",
+      "model": "grok-4.5",
+      "score": 2,
+      "max_score": 2.0,
+      "score_category": "full",
+      "feedback": "При устной проверке r_n = q_n + 1, \"достаточно долго, чтоб среднее\" и разрыва производной залатываются",
+      "updated_by": "MotaTasher",
+      "created_at": "2026-08-12T13:22:47.113862Z",
+      "updated_at": "2026-08-12T13:22:47.113862Z"
+    }
+  }
 }

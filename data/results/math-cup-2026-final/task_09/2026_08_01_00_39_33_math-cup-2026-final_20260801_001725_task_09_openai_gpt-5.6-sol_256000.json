@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_a98c198972b0794582e9758a": {
-      "evaluation_id": "ev_22035186a7b74579afba25eba243a515",
+      "evaluation_id": "ev_df44d7d050e94b27b98773134b2bab63",
       "result_id": "res_a98c198972b0794582e9758a",
       "result_index": 0,
       "model_key": "openai:gpt-5.6-sol",
       "model": "gpt-5.6-sol",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
-      "feedback": "",
-      "created_at": "2026-08-01T23:43:59.927671Z",
-      "updated_at": "2026-08-01T23:43:59.927671Z"
+      "feedback": "Бешенный счет в бариках и векторах! \r\n\r\nПризнаюсь, что финальный счет в бариках я смог только как скетч прочитать и отдал ллм проверку равенств. Но это очень круто!!!",
+      "created_at": "2026-08-12T12:37:55.186094Z",
+      "updated_at": "2026-08-12T12:37:55.186094Z"
     }
   },
   "evaluation_pool": {
@@ -30,6 +30,20 @@
         "feedback": "",
         "created_at": "2026-08-01T23:43:59.927671Z",
         "updated_at": "2026-08-01T23:43:59.927671Z"
+      },
+      {
+        "evaluation_id": "ev_df44d7d050e94b27b98773134b2bab63",
+        "result_id": "res_a98c198972b0794582e9758a",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "MotaTasher",
+        "score": 2,
+        "max_score": 2.0,
+        "score_category": "full",
+        "feedback": "Бешенный счет в бариках и векторах! \r\n\r\nПризнаюсь, что финальный счет в бариках я смог только как скетч прочитать и отдал ллм проверку равенств. Но это очень круто!!!",
+        "created_at": "2026-08-12T12:37:55.186094Z",
+        "updated_at": "2026-08-12T12:37:55.186094Z"
       }
     ]
   },
@@ -37,5 +51,6 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_08_01_00_39_33_math-cup-2026-final_20260801_001725_task_09_openai_gpt-5.6-sol_256000",
-  "updated_at": "2026-08-01T23:43:59.927671Z"
+  "updated_at": "2026-08-12T12:37:55.186094Z",
+  "finalizations": {}
 }

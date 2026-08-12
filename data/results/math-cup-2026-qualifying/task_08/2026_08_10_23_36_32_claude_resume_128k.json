@@ -1,18 +1,18 @@
 {
   "evaluations": {
     "res_6f8c9208ef8a28dcc90df34d": {
-      "evaluation_id": "ev_592ba0a44a714ce39f2054fedf56fe9a",
+      "evaluation_id": "ev_78d65e785496409693f463ddf6f91700",
       "result_id": "res_6f8c9208ef8a28dcc90df34d",
       "result_index": 0,
       "model_key": "anthropic:claude-fable-5",
       "model": "claude-fable-5",
-      "evaluator": "b2_maxim",
+      "evaluator": "MotaTasher",
       "score": 3,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "",
-      "created_at": "2026-08-11T16:51:28.696958Z",
-      "updated_at": "2026-08-11T16:51:28.696958Z"
+      "feedback": "Для жаждущих разобраться - https://chatgpt.com/share/6a7b986a-8cac-83ed-8222-fa25ad69871c\r\n\r\nВроде, все шаги верные, но чертовски много не проговорено",
+      "created_at": "2026-08-11T22:08:30.681348Z",
+      "updated_at": "2026-08-11T22:08:30.681348Z"
     }
   },
   "evaluation_pool": {
@@ -30,13 +30,41 @@
         "feedback": "",
         "created_at": "2026-08-11T16:51:28.696958Z",
         "updated_at": "2026-08-11T16:51:28.696958Z"
+      },
+      {
+        "evaluation_id": "ev_78d65e785496409693f463ddf6f91700",
+        "result_id": "res_6f8c9208ef8a28dcc90df34d",
+        "result_index": 0,
+        "model_key": "anthropic:claude-fable-5",
+        "model": "claude-fable-5",
+        "evaluator": "MotaTasher",
+        "score": 3,
+        "max_score": 4.0,
+        "score_category": "partial",
+        "feedback": "Для жаждущих разобраться - https://chatgpt.com/share/6a7b986a-8cac-83ed-8222-fa25ad69871c\r\n\r\nВроде, все шаги верные, но чертовски много не проговорено",
+        "created_at": "2026-08-11T22:08:30.681348Z",
+        "updated_at": "2026-08-11T22:08:30.681348Z"
       }
     ]
   },
-  "finalizations": {},
+  "finalizations": {
+    "res_6f8c9208ef8a28dcc90df34d": {
+      "result_id": "res_6f8c9208ef8a28dcc90df34d",
+      "result_index": 0,
+      "model_key": "anthropic:claude-fable-5",
+      "model": "claude-fable-5",
+      "score": 3,
+      "max_score": 4.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "MotaTasher",
+      "created_at": "2026-08-12T10:30:11.491327Z",
+      "updated_at": "2026-08-12T10:30:11.491327Z"
+    }
+  },
   "schema_version": 2,
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_08_10_23_36_32_claude_resume_128k",
-  "updated_at": "2026-08-11T16:51:28.696958Z"
+  "updated_at": "2026-08-12T10:30:11.491327Z"
 }

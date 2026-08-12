@@ -51,6 +51,20 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_08",
   "run_id": "2026_07_06_23_38_34_new_models_20260706_225754_task_08_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-08-11T18:13:24.434387Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T10:27:17.191658Z",
+  "finalizations": {
+    "res_7ade0fca841692797bf73940": {
+      "result_id": "res_7ade0fca841692797bf73940",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "updated_by": "MotaTasher",
+      "created_at": "2026-08-12T10:26:52.177464Z",
+      "updated_at": "2026-08-12T10:27:17.191658Z"
+    }
+  }
 }
