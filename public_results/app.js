@@ -248,16 +248,39 @@
     renderMathInNode(node);
   }
 
+  function reviewScoreLabel(review) {
+    if (review?.score == null) return "";
+    const max = review.maxScore == null ? "" : ` из ${scoreText(review.maxScore)}`;
+    return `${scoreText(review.score)}${max}`;
+  }
+
+  function reviewCard(review, title, extraClass = "") {
+    const score = reviewScoreLabel(review);
+    const feedback = String(review?.feedback || "").trim();
+    const head = `<p class="expert-review-label">${title}${score ? ` · ${score}` : ""}</p>`;
+    const body = feedback
+      ? `<div class="expert-review-copy prose">${renderMarkdown(feedback, "")}</div>`
+      : `<p class="expert-review-empty">Без комментария</p>`;
+    return `<article class="expert-review-card ${extraClass}">${head}${body}</article>`;
+  }
+
+  // Показываем все проверки, а не только итоговую: по ним видно, как эксперты
+  // пришли к баллу и где разошлись.
   function renderFinalReview(review) {
     const section = document.querySelector("#expert-review-section");
     const container = document.querySelector("#expert-reviews");
     if (!section || !container) return;
-    const feedback = String(review?.final?.feedback || "").trim();
-    container.innerHTML = feedback
-      ? `<article class="expert-review-card final"><div class="expert-review-copy prose">${renderMarkdown(feedback, "")}</div></article>`
-      : "";
-    section.hidden = !feedback;
-    if (feedback) renderMathInNode(container);
+    const experts = Array.isArray(review?.experts) ? review.experts : [];
+    const final = review?.final;
+    const cards = experts.map((item, index) =>
+      reviewCard(item, `Проверка ${index + 1}`)
+    );
+    if (final && (String(final.feedback || "").trim() || final.score != null)) {
+      cards.push(reviewCard(final, "Итоговая оценка", "final"));
+    }
+    container.innerHTML = cards.join("");
+    section.hidden = !cards.length;
+    if (cards.length) renderMathInNode(container);
   }
 
   function renderLeaderboard() {

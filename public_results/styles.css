@@ -688,6 +688,16 @@ h1, h2, h3 {
   background: rgba(3, 2, 7, .45);
 }
 .expert-review-card.final { border-color: var(--accent-light); }
+.expert-review-label {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.expert-review-card.final .expert-review-label { color: var(--accent-light); }
+.expert-review-empty { margin: 0; color: var(--muted); font-size: 14px; font-style: italic; }
 .expert-review-card header {
   display: flex;
   align-items: center;

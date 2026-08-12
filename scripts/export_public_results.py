@@ -264,6 +264,20 @@ def solution_document(
         fallback_max_score=max_score,
         competition_id=competition_id,
     )
+    # Все проверки, а не только итоговая: по ним видно, как эксперты пришли к
+    # баллу и где именно разошлись. Имена проверяющих в публичный срез не идут.
+    expert_reviews = [
+        review
+        for evaluation in attempt.get("evaluations") or []
+        if (
+            review := public_review(
+                evaluation,
+                fallback_max_score=max_score,
+                competition_id=competition_id,
+            )
+        )
+        is not None
+    ]
     return {
         "schemaVersion": 2,
         "competition": {
@@ -291,6 +305,7 @@ def solution_document(
         },
         "review": {
             "final": final_review,
+            "experts": expert_reviews,
         },
         "result": {
             "resultId": stable_result_id(
