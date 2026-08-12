@@ -816,7 +816,10 @@
     /* GeoGebra construction panel: sits beside the solution and never above
        it, so reading and scrolling the answer stay exactly as before. */
     .scene-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-    .layout.scene-open { grid-template-columns: minmax(0, 1fr) minmax(380px, 38vw); }
+    /* The task page grid is .layout, anonymous review uses .review-layout;
+       both need the second column, or the panel drops below the answer. */
+    .layout.scene-open,
+    .review-layout.scene-open { grid-template-columns: minmax(0, 1fr) minmax(380px, 38vw); }
     .scene-panel {
       position: sticky;
       top: 12px;
@@ -877,7 +880,7 @@
     @media (max-width: 900px) {
       .topbar, main { width: min(100% - 20px, 1440px); }
       .topbar { grid-template-columns: 1fr; align-items: stretch; }
-      .layout, .layout.scene-open { grid-template-columns: 1fr; }
+      .layout, .layout.scene-open, .review-layout.scene-open { grid-template-columns: 1fr; }
       .scene-panel { position: static; max-height: none; }
       .scene-mount { min-height: 60vh; }
       .review-layout, .answer-layout { grid-template-columns: 1fr; }
