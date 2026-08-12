@@ -315,6 +315,16 @@ h1, h2, h3 {
   background: var(--surface);
 }
 
+/* Таблице разрешено выходить за колонку текста до краёв окна: иначе
+   последняя задача финала не помещается и её приходится доскроллировать. */
+@media (min-width: 1100px) {
+  .leaderboard-meta,
+  .matrix-shell {
+    width: min(calc(100vw - 56px), max(var(--max-width), 1500px));
+    margin-inline: calc(50% - min(calc(50vw - 28px), max(var(--max-width), 1500px) / 2));
+  }
+}
+
 .matrix-scroll {
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -396,9 +406,9 @@ h1, h2, h3 {
   position: sticky;
   left: 54px;
   z-index: 4;
-  width: 310px;
-  min-width: 310px;
-  max-width: 310px;
+  width: 344px;
+  min-width: 344px;
+  max-width: 344px;
   background: var(--surface);
   text-align: left !important;
 }
@@ -430,8 +440,10 @@ h1, h2, h3 {
 }
 
 .participant-cell { padding-left: 18px !important; }
-.participant-name { display: block; color: var(--ink); font-family: Unbounded, Arial, sans-serif; font-size: 13px; font-weight: 600; line-height: 1.35; letter-spacing: -.045em; overflow-wrap: anywhere; white-space: normal; }
-.participant-meta { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 300; line-height: 1.4; overflow-wrap: anywhere; white-space: normal; }
+.participant-title { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.participant-name { display: block; min-width: 0; color: var(--ink); font-family: Unbounded, Arial, sans-serif; font-size: 13px; font-weight: 600; line-height: 1.35; letter-spacing: -.045em; overflow-wrap: anywhere; white-space: normal; }
+/* Состав команды держим одной строкой: перенос одной фамилии вниз рвал ритм строк. */
+.participant-meta { display: block; margin-top: 6px; overflow: hidden; color: var(--muted); font-size: 11px; font-weight: 300; line-height: 1.4; white-space: nowrap; text-overflow: ellipsis; }
 
 .task-column,
 .result-cell {
@@ -470,8 +482,8 @@ h1, h2, h3 {
 
 .metric-column,
 .metric-cell {
-  width: 132px;
-  min-width: 132px;
+  width: 116px;
+  min-width: 116px;
 }
 
 .metric-cell {

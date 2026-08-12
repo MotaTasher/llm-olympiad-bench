@@ -327,7 +327,7 @@ window.RESULTS_DATA = {
           medal: "🥇",
           rank: 1,
           name: "Фанаты КСП",
-          members: "Барсуков, Игнатьев, Плюснин",
+          members: "Сергей Барсуков, Даниил Игнатьев, Антон Плюснин",
           scores: [4, 4, 4, 4, 4, 4, 1.5, 2],
           points: 27.5,
           accuracy: 85.9
@@ -338,7 +338,7 @@ window.RESULTS_DATA = {
           medal: "🥈",
           rank: 2,
           name: "ZigIsTheBestLanguage",
-          members: "Осипова, Мискин",
+          members: "Надежда Осипова, Александр Мискин",
           scores: [0, 4, 4, 4, 4, 4, 4, 2],
           points: 26,
           accuracy: 81.3
@@ -349,7 +349,7 @@ window.RESULTS_DATA = {
           medal: "🥉",
           rank: 3,
           name: "ФМШТО",
-          members: "Кузнецов, Янин, Киприянов",
+          members: "Герман Кузнецов, Алексей Янин, Георгий Киприянов",
           scores: [4, 1, 4, 4, 4, 4, 4, 0],
           points: 25,
           accuracy: 78.1

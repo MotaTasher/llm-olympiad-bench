@@ -465,9 +465,12 @@
 
     const body = rows.map((participant) => {
       const isTeam = participant.type === "team";
-      const rank = isTeam
-        ? `<span class="medal" aria-label="${participant.rank} место">${participant.medal}</span>`
-        : String(ranks.get(participant.id)).padStart(2, "0");
+      // Номер общего рейтинга стоит у всех строк; медаль команды переехала
+      // к названию, иначе в одном столбце соседствуют номер и значок.
+      const rank = String(ranks.get(participant.id)).padStart(2, "0");
+      const medal = isTeam
+        ? `<span class="medal" aria-label="${participant.rank} место в олимпиаде" title="${participant.rank} место в олимпиаде">${participant.medal}</span>`
+        : "";
 
       const cells = competition.tasks.map((task, index) => {
         const score = participant.scores[index];
@@ -487,8 +490,11 @@
         <tr class="${isTeam ? "team-row" : "model-row"}">
           <td class="rank-cell">${rank}</td>
           <th class="participant-cell" scope="row">
-            <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
-            ${isTeam ? `<span class="participant-meta">${escapeHtml(participant.members)}</span>` : ""}
+            <span class="participant-title">
+              ${medal}
+              <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
+            </span>
+            ${isTeam ? `<span class="participant-meta" title="${escapeHtml(participant.members)}">${escapeHtml(participant.members)}</span>` : ""}
           </th>
           ${moneyCell(participant)}
           <td class="metric-cell strong">${formatPoints(participantPoints(participant))}</td>
@@ -561,15 +567,18 @@
     const rightValue = sortValue(right, state.key, ranks);
     const leftMissing = leftValue === null || leftValue === undefined;
     const rightMissing = rightValue === null || rightValue === undefined;
+    // Равные значения разводим общим рейтингом, а не алфавитом: иначе номера
+    // в столбце «#» идут вразнобой (04, 06, 05) при сортировке по сумме.
+    const byRank = (ranks.get(left.id) ?? 0) - (ranks.get(right.id) ?? 0);
     if (leftMissing !== rightMissing) return leftMissing ? 1 : -1;
-    if (leftMissing) return left.name.localeCompare(right.name, "ru");
+    if (leftMissing) return byRank;
     let comparison;
     if (typeof leftValue === "string") {
       comparison = leftValue.localeCompare(rightValue, "ru");
     } else {
       comparison = leftValue - rightValue;
     }
-    if (comparison === 0) return left.name.localeCompare(right.name, "ru");
+    if (comparison === 0) return byRank;
     return state.direction === "asc" ? comparison : -comparison;
   }
 
