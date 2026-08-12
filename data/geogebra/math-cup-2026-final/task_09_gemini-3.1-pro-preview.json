@@ -1,13 +1,13 @@
 {
   "title": "Финал 2026, задача 9 — ответ Gemini 3.1 Pro",
-  "source": "инверсия с центром A по шагам решения, затем проверка вывода про окружность подобия",
+  "source": "верный шаг про равные образы и подмена окружности подобия окружностью антиподобия",
   "app": "classic",
   "view": {
     "axes": false,
     "grid": false,
     "labels": "points",
     "fit": "step",
-    "padding": 0.13
+    "padding": 0.12
   },
   "setup": [
     "O=(0,0)",
@@ -20,9 +20,9 @@
     "SetCaption(om,\"ω\")",
     "SetLabelMode(om,3)",
     "ShowLabel(om,true)",
-    "SetPointSize(A,5)",
-    "SetPointSize(B,5)",
-    "SetPointSize(C,5)",
+    "SetPointSize(A,6)",
+    "SetPointSize(B,6)",
+    "SetPointSize(C,6)",
     "SetCaption(A,\"A\")",
     "SetLabelMode(A,3)",
     "ShowLabel(A,true)",
@@ -32,6 +32,30 @@
     "SetCaption(C,\"C\")",
     "SetLabelMode(C,3)",
     "ShowLabel(C,true)",
+    "WA=(-0.11292,1.29067)",
+    "smA=Circle(WA,0.295599)",
+    "SetColor(smA,0.16,0.47,0.34)",
+    "SetLineThickness(smA,3)",
+    "SetCaption(smA,\"ω_A\")",
+    "SetLabelMode(smA,3)",
+    "ShowLabel(smA,true)",
+    "SetVisibleInView(WA,1,false)",
+    "WB=(-1.31102,-0.47717)",
+    "smB=Circle(WB,0.395156)",
+    "SetColor(smB,0.16,0.47,0.34)",
+    "SetLineThickness(smB,3)",
+    "SetCaption(smB,\"ω_B\")",
+    "SetLabelMode(smB,3)",
+    "ShowLabel(smB,true)",
+    "SetVisibleInView(WB,1,false)",
+    "WC=(1.38208,-0.50304)",
+    "smC=Circle(WC,0.470781)",
+    "SetColor(smC,0.16,0.47,0.34)",
+    "SetLineThickness(smC,3)",
+    "SetCaption(smC,\"ω_C\")",
+    "SetLabelMode(smC,3)",
+    "ShowLabel(smC,true)",
+    "SetVisibleInView(WC,1,false)",
     "GA=(0.07131,-0.81507)",
     "bgA=Circle(GA,1.818182)",
     "SetColor(bgA,0.85,0.5,0.1)",
@@ -40,7 +64,6 @@
     "SetLabelMode(bgA,3)",
     "ShowLabel(bgA,true)",
     "SetVisibleInView(GA,1,false)",
-    "SetVisibleInView(bgA,1,false)",
     "GB=(0.53432,0.19448)",
     "bgB=Circle(GB,1.568609)",
     "SetColor(bgB,0.85,0.5,0.1)",
@@ -49,7 +72,6 @@
     "SetLabelMode(bgB,3)",
     "ShowLabel(bgB,true)",
     "SetVisibleInView(GB,1,false)",
-    "SetVisibleInView(bgB,1,false)",
     "GC=(-0.44375,0.16151)",
     "bgC=Circle(GC,1.472224)",
     "SetColor(bgC,0.85,0.5,0.1)",
@@ -57,52 +79,53 @@
     "SetCaption(bgC,\"Ω_C\")",
     "SetLabelMode(bgC,3)",
     "ShowLabel(bgC,true)",
-    "SetVisibleInView(GC,1,false)",
-    "SetVisibleInView(bgC,1,false)",
-    "SetPointSize(A,6)"
+    "SetVisibleInView(GC,1,false)"
   ],
   "steps": [
     {
-      "title": "1. Инверсия с центром A: ω → прямая",
-      "text": "Окружность ω проходит через центр инверсии, поэтому её образ — прямая L_ω.",
-      "commands": [
-        "E1=(-3.62988,0.18434)",
-        "E2=(3.54272,0.81186)",
-        "lw=Line(E1,E2)",
-        "SetVisibleInView(E1,1,false)",
-        "SetVisibleInView(E2,1,false)",
-        "SetColor(lw,0.15,0.32,0.6)",
-        "SetLineThickness(lw,4)",
-        "SetCaption(lw,\"L_ω\")",
-        "SetLabelMode(lw,3)",
-        "ShowLabel(lw,true)"
-      ],
+      "title": "1. Конфигурация целиком",
+      "text": "ω, малые ω_A, ω_B, ω_C и большие Ω_A, Ω_B, Ω_C. Каждая большая касается ω в своей точке и обеих «чужих» малых.",
+      "commands": [],
       "highlight": [
-        "lw"
+        "bgB",
+        "bgC"
       ]
     },
     {
-      "title": "2. ω_A → параллельная прямая",
-      "text": "ω_A касается ω внешним образом в A, поэтому её образ параллелен L_ω и не совпадает с ним: внутренние области лежат по разные стороны от общей касательной.",
+      "title": "2. Инверсия с центром A: ω и ω_A → параллельные прямые",
+      "text": "Обе окружности проходят через центр инверсии, поэтому переходят в параллельные прямые.",
       "commands": [
-        "F1=(-3.82088,2.36748)",
-        "F2=(3.35172,2.99500)",
+        "E1=(-3.43064,0.20177)",
+        "E2=(3.34348,0.79443)",
+        "lw=Line(E1,E2)",
+        "F1=(-3.62164,2.38491)",
+        "F2=(3.15248,2.97757)",
         "lA=Line(F1,F2)",
+        "SetVisibleInView(E1,1,false)",
+        "SetVisibleInView(E2,1,false)",
         "SetVisibleInView(F1,1,false)",
         "SetVisibleInView(F2,1,false)",
+        "SetColor(lw,0.15,0.32,0.6)",
+        "SetLineThickness(lw,3)",
+        "SetLineStyle(lw,2)",
+        "SetCaption(lw,\"L_ω\")",
+        "SetLabelMode(lw,3)",
+        "ShowLabel(lw,true)",
         "SetColor(lA,0.16,0.47,0.34)",
-        "SetLineThickness(lA,4)",
+        "SetLineThickness(lA,3)",
+        "SetLineStyle(lA,2)",
         "SetCaption(lA,\"L_ω_A\")",
         "SetLabelMode(lA,3)",
         "ShowLabel(lA,true)"
       ],
       "highlight": [
+        "lw",
         "lA"
       ]
     },
     {
-      "title": "3. Ω_B и Ω_C переходят в равные окружности",
-      "text": "Образы Ω′_B и Ω′_C касаются обеих параллельных прямых, значит их диаметры равны расстоянию между прямыми. Радиусы образов: 1.0957 и 1.0957 — этот шаг решения верен.",
+      "title": "3. Верный шаг: образы Ω_B и Ω_C равны",
+      "text": "Оба образа вписаны между этими прямыми, поэтому их радиусы совпадают: 1.0957 = 1.0957. Это в решении получено правильно.",
       "commands": [
         "JB=(-0.52128,1.55623)",
         "jb=Circle(JB,1.095740)",
@@ -110,18 +133,18 @@
         "jc=Circle(JC,1.095740)",
         "SetVisibleInView(JB,1,false)",
         "SetVisibleInView(JC,1,false)",
-        "SetColor(jb,0.85,0.5,0.1)",
-        "SetLineThickness(jb,4)",
+        "SetColor(jb,0.45,0.25,0.65)",
+        "SetLineThickness(jb,3)",
         "SetCaption(jb,\"Ω′_B\")",
         "SetLabelMode(jb,3)",
         "ShowLabel(jb,true)",
-        "SetColor(jc,0.85,0.5,0.1)",
-        "SetLineThickness(jc,4)",
+        "SetColor(jc,0.45,0.25,0.65)",
+        "SetLineThickness(jc,3)",
         "SetCaption(jc,\"Ω′_C\")",
         "SetLabelMode(jc,3)",
         "ShowLabel(jc,true)",
-        "txtI=Text(\"радиусы образов: 1.0957 = 1.0957\",(2.31195,3.40594))",
-        "SetColor(txtI,0.16,0.47,0.34)"
+        "txtI=Text(\"радиусы образов: 1.0957 = 1.0957\",(2.22105,3.29760))",
+        "SetColor(txtI,0.45,0.25,0.65)"
       ],
       "highlight": [
         "jb",
@@ -129,41 +152,40 @@
       ]
     },
     {
-      "title": "4. Шаг, на котором решение ломается",
-      "text": "Дальше сказано: раз инверсия с центром A переводит Ω_B и Ω_C в равные окружности, то A лежит на их окружности подобия — ГМТ точек, у которых отношение расстояний до центров равно отношению радиусов. Построим эту окружность.",
+      "title": "4. Решение называет окружность подобия — но A не на ней",
+      "text": "Окружность подобия Ω_B и Ω_C — это ГМТ точек, где отношение расстояний до центров равно отношению радиусов. Здесь |A−O_B|/|A−O_C| = 1.1176, а R_B/R_C = 1.0655; A промахивается мимо неё на 0.0451.",
       "commands": [
-        "SetVisibleInView(bgB,1,true)",
-        "SetVisibleInView(bgC,1,true)",
-        "AP=(-7.67662,-0.08227)",
-        "apo=Circle(AP,7.710780)",
-        "SetVisibleInView(AP,1,false)",
-        "SetColor(apo,0.45,0.25,0.65)",
-        "SetLineThickness(apo,4)",
-        "SetLineStyle(apo,2)",
-        "SetCaption(apo,\"окружность подобия Ω_B и Ω_C\")",
-        "SetLabelMode(apo,3)",
-        "ShowLabel(apo,true)"
+        "SIM=(-7.67662,-0.08227)",
+        "sim=Circle(SIM,7.710780)",
+        "SetVisibleInView(SIM,1,false)",
+        "SetColor(sim,0.55,0.55,0.55)",
+        "SetLineThickness(sim,3)",
+        "SetLineStyle(sim,2)",
+        "SetCaption(sim,\"окружность подобия\")",
+        "SetLabelMode(sim,3)",
+        "ShowLabel(sim,true)"
       ],
       "highlight": [
-        "apo"
+        "sim"
       ]
     },
     {
-      "title": "5. A на этой окружности не лежит",
-      "text": "Отношение расстояний от A до центров равно 1.1176, отношение радиусов R_B/R_C = 1.0655. Числа разные, значит A вне окружности подобия: равенство образов при инверсии и принадлежность окружности подобия — не одно и то же. Дальше решение опирается на этот шаг, поэтому построение здесь остановлено.",
+      "title": "5. A лежит на окружности антиподобия — это другая окружность",
+      "text": "Равенство образов при инверсии из точки характеризует не окружность подобия, а окружность антиподобия (среднюю): ту, инверсия относительно которой меняет Ω_B и Ω_C местами. Её центр — внешний центр подобия (-15.38; -0.34), радиус √k = 15.3543, и |A − центр| = 15.3543 — совпадает точно. То есть решение перепутало две окружности; дальше оно опирается на это название, поэтому построение здесь остановлено.",
       "commands": [
-        "sgB=Segment(A,GB)",
-        "sgC=Segment(A,GC)",
-        "SetColor(sgB,0.55,0.55,0.55)",
-        "SetLineThickness(sgB,2)",
-        "SetColor(sgC,0.55,0.55,0.55)",
-        "SetLineThickness(sgC,2)",
-        "txtR=Text(\"|A−O_B| / |A−O_C| = 1.1176\",(-3.0,-2.7))",
-        "SetColor(txtR,0.72,0.11,0.11)",
-        "txtK=Text(\"R_B / R_C = 1.0655\",(-3.0,-3.2))",
-        "SetColor(txtK,0.72,0.11,0.11)"
+        "SS=(-15.38302,-0.34202)",
+        "anti=Circle(SS,15.354293)",
+        "SetVisibleInView(SS,1,false)",
+        "SetColor(anti,0.72,0.11,0.11)",
+        "SetLineThickness(anti,4)",
+        "SetCaption(anti,\"окружность антиподобия\")",
+        "SetLabelMode(anti,3)",
+        "ShowLabel(anti,true)",
+        "txtA=Text(\"|A − центр| = 15.3543 = радиус 15.3543\",(-2.75993,2.86183))",
+        "SetColor(txtA,0.72,0.11,0.11)"
       ],
       "highlight": [
+        "anti",
         "A"
       ]
     }
