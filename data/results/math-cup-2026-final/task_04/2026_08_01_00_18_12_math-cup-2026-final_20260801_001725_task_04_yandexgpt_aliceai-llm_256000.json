@@ -65,6 +65,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_04",
   "run_id": "2026_08_01_00_18_12_math-cup-2026-final_20260801_001725_task_04_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-09T11:42:05.459861Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.085447Z",
+  "finalizations": {
+    "res_8022ce17fd6762f23b850973": {
+      "result_id": "res_8022ce17fd6762f23b850973",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "После записи рекуррентных соотношений делается необоснованное предположение о линейности ожидания, а ответ 6 проверяется только на одном уравнении. Верное значение не получено.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.085447Z",
+      "updated_at": "2026-08-12T20:51:09.085447Z"
+    }
+  }
 }

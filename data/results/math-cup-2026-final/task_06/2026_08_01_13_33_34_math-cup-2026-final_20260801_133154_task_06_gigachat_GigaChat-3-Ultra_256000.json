@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_08_01_13_33_34_math-cup-2026-final_20260801_133154_task_06_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-09T12:52:15.704070Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.090476Z",
+  "finalizations": {
+    "res_5cd4fdad5413d479844ec30b": {
+      "result_id": "res_5cd4fdad5413d479844ec30b",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "В пункте а оценка сложности не учитывает хранение множеств состояний. Пункт б не доведён до алгоритма и доказательства требуемой длины пути.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.090476Z",
+      "updated_at": "2026-08-12T20:51:09.090476Z"
+    }
+  }
 }

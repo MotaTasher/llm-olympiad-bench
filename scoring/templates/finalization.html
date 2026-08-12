@@ -15,11 +15,12 @@
           <h2>Итоговые баллы</h2>
           <div class="meta">
             Финализировано: {{ finalization.finalized }} · не финализировано: {{ finalization.unfinalized }} ·
-            одна проверка: {{ finalization.one_review }} · расхождений: {{ finalization.disagreement }}
+            одна проверка: {{ finalization.one_review }} · расхождений: {{ finalization.disagreement }} ·
+            без комментария: {{ finalization.missing_comment }} · GPT-черновиков: {{ finalization.gpt_review }}
           </div>
         </div>
       </div>
-      <p class="meta">0 и максимум выставляются автоматически при двух совпавших проверках. «!» — одна проверка, «≠» — расхождение, «✎» — нужен ручной итог.</p>
+      <p class="meta">0 и максимум выставляются автоматически при двух совпавших проверках. «!» — одна проверка, «≠» — расхождение, «✎» — нужен ручной итог, «💬» — неполному баллу нужен комментарий, «GPT» — черновик нужно прочитать и подтвердить.</p>
       <div class="table-wrap competition-matrix-wrap" role="region" aria-label="Финализация баллов" tabindex="0">
         <table class="competition-matrix">
           {{ matrix.render_model_colgroup(competition) }}

@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_08_01_00_37_04_math-cup-2026-final_20260801_001725_task_09_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-11T23:40:15.360683Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.098854Z",
+  "finalizations": {
+    "res_129c9fa5bdd8f0c179bbb38d": {
+      "result_id": "res_129c9fa5bdd8f0c179bbb38d",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "В решении без основания предполагается касание окружностей, которого нет в условии. Остальная часть остаётся перебором идей без доказательства.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.098854Z",
+      "updated_at": "2026-08-12T20:51:09.098854Z"
+    }
+  }
 }

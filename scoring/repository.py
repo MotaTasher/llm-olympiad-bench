@@ -682,7 +682,15 @@ def finalization_state(
         "warning": warning,
         "evaluation_count": count,
         "scores": scores,
-        "comment_required": False,
+        "comment_required": bool(
+            finalization
+            and parse_score(finalization.get("score")) is not None
+            and float(finalization["score"]) < max_score
+            and not str(finalization.get("feedback") or "").strip()
+        ),
+        "feedback_review_required": bool(
+            finalization and finalization.get("feedback_review_required")
+        ),
     }
 
 
@@ -1442,7 +1450,14 @@ def selected_finalization_attempt(state: dict[str, Any] | None) -> dict[str, Any
 
 def finalization_statistics(competition: dict[str, Any]) -> dict[str, Any]:
     tasks = []
-    counts = {"finalized": 0, "unfinalized": 0, "one_review": 0, "disagreement": 0}
+    counts = {
+        "finalized": 0,
+        "unfinalized": 0,
+        "one_review": 0,
+        "disagreement": 0,
+        "missing_comment": 0,
+        "gpt_review": 0,
+    }
     for problem_id in competition.get("problem_order", []):
         problem = competition["problems"][problem_id]
         states = {state.get("model_key"): state for state in problem.get("model_states", [])}
@@ -1466,6 +1481,19 @@ def finalization_statistics(competition: dict[str, Any]) -> dict[str, Any]:
                 css_class = SCORE_CLASS_BY_CATEGORY[category]
                 source = "автоматически" if finalization.get("source") == "automatic" else "вручную"
                 label = f"Финализировано {source}: {text} из {format_score_value(problem['max_score'])}"
+                feedback = str(finalization.get("feedback") or "").strip()
+                feedback_review_required = bool(finalization.get("feedback_review_required"))
+                comment_required = bool(value is not None and value < float(problem["max_score"]) and not feedback)
+                if feedback_review_required:
+                    text = f"{text} GPT"
+                    css_class = f"{css_class} cell-gpt-review"
+                    label += "; GPT-черновик комментария нужно проверить"
+                    counts["gpt_review"] += 1
+                elif comment_required:
+                    text = f"{text} 💬"
+                    css_class = f"{css_class} cell-comment-missing"
+                    label += "; нужно написать итоговый комментарий"
+                    counts["missing_comment"] += 1
                 counts["finalized"] += 1
             else:
                 counts["unfinalized"] += 1
@@ -1747,6 +1775,7 @@ def save_finalization(
     max_score: float,
     feedback: str,
     updated_by: str,
+    feedback_review_required: bool = False,
 ) -> dict[str, Any]:
     path = sidecar_path(results_dir, competition_id, problem_id, run_id)
     payload = load_sidecar_payload(results_dir, competition_id, problem_id, run_id)
@@ -1763,6 +1792,7 @@ def save_finalization(
         "max_score": max_score,
         "score_category": score_category(score, max_score),
         "feedback": feedback.strip(),
+        "feedback_review_required": bool(feedback.strip() and feedback_review_required),
         "updated_by": updated_by.strip(),
         "created_at": created_at or now,
         "updated_at": now,

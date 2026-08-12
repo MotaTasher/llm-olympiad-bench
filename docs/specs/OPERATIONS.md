@@ -72,6 +72,9 @@ single collegially approved public comment. The documents omit individual
 reviewer scores and comments, all reviewer/organizer identities, raw provider
 responses, request payloads, errors and internal paths. They never contain a
 `review.experts` collection.
+Final comments carrying `feedback_review_required: true` are editorial drafts,
+not approved comments, and the exporter suppresses their text until the flag is
+cleared in the scoring UI.
 
 The exporter also copies selected competition assets into
 `generated/assets/<competition_id>/` and rewrites local `assets/...` references

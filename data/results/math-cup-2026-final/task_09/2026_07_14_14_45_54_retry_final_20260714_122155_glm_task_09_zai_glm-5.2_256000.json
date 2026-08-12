@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_07_14_14_45_54_retry_final_20260714_122155_glm_task_09_zai_glm-5.2_256000",
-  "updated_at": "2026-08-12T12:21:43.526567Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.099950Z",
+  "finalizations": {
+    "res_def35046089a640988a23559": {
+      "result_id": "res_def35046089a640988a23559",
+      "result_index": 0,
+      "model_key": "zai:glm-5.2",
+      "model": "glm-5.2",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "В решении ошибочно утверждается, что все радиусы равны; последующее алгебраическое преобразование также не выполняется.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.099950Z",
+      "updated_at": "2026-08-12T20:51:09.099950Z"
+    }
+  }
 }

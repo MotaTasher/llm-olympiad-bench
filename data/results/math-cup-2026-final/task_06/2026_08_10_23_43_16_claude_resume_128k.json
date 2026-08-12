@@ -56,15 +56,16 @@
       "score": 1,
       "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "",
-      "updated_by": "b2_maxim",
+      "feedback": "Пункт а решён верно. В пункте б не доказано, почему выбранный порог гарантирует либо короткий спуск, либо дерево нужной глубины.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-11T16:46:38.192627Z",
-      "updated_at": "2026-08-11T16:46:38.192627Z"
+      "updated_at": "2026-08-12T20:51:09.089328Z"
     }
   },
   "schema_version": 2,
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_08_10_23_43_16_claude_resume_128k",
-  "updated_at": "2026-08-11T16:46:38.192627Z"
+  "updated_at": "2026-08-12T20:51:09.089328Z"
 }

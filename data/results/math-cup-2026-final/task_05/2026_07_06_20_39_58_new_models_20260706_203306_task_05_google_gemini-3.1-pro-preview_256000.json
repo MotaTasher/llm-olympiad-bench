@@ -65,7 +65,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_07_06_20_39_58_new_models_20260706_203306_task_05_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-08-11T19:50:26.020401Z",
+  "updated_at": "2026-08-12T20:51:09.086441Z",
   "finalizations": {
     "res_a309574afd7b980a9bcd98a4": {
       "result_id": "res_a309574afd7b980a9bcd98a4",
@@ -75,10 +75,11 @@
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "",
-      "updated_by": "b2_maxim",
+      "feedback": "Пример приведён верно, но оценки 3/8 и 3/7 противоречат друг другу, а верхняя граница остаётся без доказательства.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-10T11:09:18.291815Z",
-      "updated_at": "2026-08-10T11:09:18.291815Z"
+      "updated_at": "2026-08-12T20:51:09.086441Z"
     }
   }
 }

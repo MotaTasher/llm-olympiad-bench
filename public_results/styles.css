@@ -651,11 +651,13 @@ h1, h2, h3 {
   border: 1px solid rgba(var(--result-accent-rgb), .3);
   border-radius: 32px;
   background:
-    linear-gradient(135deg,
-      rgba(3, 2, 7, .98) 0%,
-      rgba(10, 9, 13, .96) 42%,
-      rgba(var(--result-accent-rgb), .16) 76%,
-      rgba(var(--result-accent-rgb), .34) 100%);
+    radial-gradient(ellipse at 92% 4%, rgba(var(--result-accent-rgb), .42), transparent 39%),
+    radial-gradient(ellipse at 72% 112%, rgba(var(--result-accent-rgb), .2), transparent 48%),
+    linear-gradient(112deg,
+      rgba(3, 2, 7, .99) 0%,
+      rgba(8, 7, 11, .98) 47%,
+      rgba(var(--result-accent-rgb), .1) 72%,
+      rgba(var(--result-accent-rgb), .22) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .035),
     0 22px 55px rgba(0, 0, 0, .16);
@@ -776,6 +778,9 @@ h1, h2, h3 {
 .metrics-list dd { margin: 0; font-family: Unbounded, Arial, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: -.04em; }
 
 .reading-solution { overflow: hidden; }
+.reading-solution summary {
+  background: linear-gradient(90deg, transparent 0 58%, rgba(var(--result-accent-rgb), .07) 100%);
+}
 .reading-solution[open] {
   border-color: rgba(var(--result-accent-rgb), .48);
   box-shadow:
@@ -787,6 +792,12 @@ h1, h2, h3 {
 .reading-solution summary small { display: block; margin-bottom: 12px; color: var(--muted); font-family: Inter, Arial, sans-serif; font-size: 11px; font-weight: 400; letter-spacing: .09em; text-transform: uppercase; }
 .reading-solution summary::-webkit-details-marker { display: none; }
 .reading-solution[open] summary { border-bottom: 1px solid var(--line); }
+.reading-solution[open] summary {
+  border-bottom-color: rgba(var(--result-accent-rgb), .22);
+  background:
+    radial-gradient(circle at 93% 50%, rgba(var(--result-accent-rgb), .17), transparent 24%),
+    linear-gradient(90deg, transparent, rgba(var(--result-accent-rgb), .055));
+}
 .reading-solution summary b { flex: 0 0 auto; font-size: 32px; font-weight: 300; transition: transform .2s ease; }
 .reading-solution[open] summary b { transform: rotate(45deg); }
 .reading-solution .prose { padding: clamp(32px, 5vw, 66px); }
@@ -800,7 +811,9 @@ h1, h2, h3 {
   padding: clamp(28px, 4vw, 48px);
   border: 1px solid rgba(var(--result-accent-rgb), .38);
   border-radius: 32px;
-  background: linear-gradient(135deg, #09080b 0%, rgba(var(--result-accent-rgb), .26) 100%);
+  background:
+    radial-gradient(circle at 88% 20%, rgba(var(--result-accent-rgb), .34), transparent 34%),
+    linear-gradient(115deg, #050408 0%, #0d0c10 48%, rgba(var(--result-accent-rgb), .2) 100%);
 }
 .solution-result-repeat .eyebrow { margin-bottom: 12px; }
 .solution-result-repeat h2 { margin: 0; font-size: clamp(27px, 3.5vw, 46px); line-height: 1.08; }

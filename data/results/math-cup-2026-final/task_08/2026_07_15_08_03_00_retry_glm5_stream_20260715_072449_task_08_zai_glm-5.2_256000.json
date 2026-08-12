@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_08",
   "run_id": "2026_07_15_08_03_00_retry_glm5_stream_20260715_072449_task_08_zai_glm-5.2_256000",
-  "updated_at": "2026-08-11T17:09:10.259669Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.096889Z",
+  "finalizations": {
+    "res_613eaeef1362a1eb137a943d": {
+      "result_id": "res_613eaeef1362a1eb137a943d",
+      "result_index": 0,
+      "model_key": "zai:glm-5.2",
+      "model": "glm-5.2",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "Пример в пункте а некорректен. В пункте б ссылка на изопериметрическое неравенство не заменяет доказательство, а одно из неравенств записано в неверную сторону.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.096889Z",
+      "updated_at": "2026-08-12T20:51:09.096889Z"
+    }
+  }
 }

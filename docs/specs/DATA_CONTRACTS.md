@@ -334,6 +334,7 @@ New sidecar shape:
       "max_score": 10,
       "score_category": "partial",
       "feedback": "Итоговый комментарий организаторов",
+      "feedback_review_required": false,
       "updated_by": "organizer",
       "created_at": "2026-06-28T12:20:00Z",
       "updated_at": "2026-06-28T12:20:00Z"
@@ -357,9 +358,14 @@ when one reviewer has duplicate checks for a result.
 derived at read time and is not persisted when at least two current evaluations
 all equal `0`, or all equal the task maximum. Partial scores and disagreements
 are never auto-finalized. A manual finalization may be made with one evaluation
-but the UI keeps the one-review warning; manual partial or disputed decisions
-require non-empty `feedback`. Public exports use only the effective manual or
+but the UI keeps the one-review warning. The shared `feedback` remains optional
+for every score. Public exports use only the effective manual or
 automatic finalization, never a median of individual evaluations.
+`feedback_review_required` marks a machine-assisted editorial draft. Such a
+draft remains private even though it is stored in the shared finalization: the
+public exporter replaces its feedback with an empty string. A reviewer must
+read and edit the text as needed, then clear the flag in the finalization UI
+before the comment can be published.
 
 The evaluation key for new writes is `result_id`. Readers use this precedence:
 

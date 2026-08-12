@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_08",
   "run_id": "2026_07_06_23_38_34_new_models_20260706_225754_task_08_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-08-12T10:27:17.191658Z",
+  "updated_at": "2026-08-12T20:51:09.095379Z",
   "finalizations": {
     "res_7ade0fca841692797bf73940": {
       "result_id": "res_7ade0fca841692797bf73940",
@@ -61,10 +61,11 @@
       "score": 1,
       "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "",
-      "updated_by": "MotaTasher",
+      "feedback": "Пункт а решён верно. В пункте б ключевая оценка объявлена следствием «более точного анализа», но сам анализ и доказательство не приведены.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-12T10:26:52.177464Z",
-      "updated_at": "2026-08-12T10:27:17.191658Z"
+      "updated_at": "2026-08-12T20:51:09.095379Z"
     }
   }
 }

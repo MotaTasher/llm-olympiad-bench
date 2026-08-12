@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_08_01_19_10_41_math-cup-2026-final_20260801_182514_task_06_kimi_kimi-k3_256000",
-  "updated_at": "2026-08-10T13:18:52.147954Z",
+  "updated_at": "2026-08-12T20:51:09.092722Z",
   "finalizations": {
     "res_9b5db4f805a0eb7205f76104": {
       "result_id": "res_9b5db4f805a0eb7205f76104",
@@ -61,10 +61,11 @@
       "score": 1,
       "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "",
-      "updated_by": "b2_maxim",
+      "feedback": "Пункт а решён верно. В пункте б приведена ссылка на утверждение без собственного доказательства; одной ссылки для зачёта недостаточно.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-10T13:18:52.147954Z",
-      "updated_at": "2026-08-10T13:18:52.147954Z"
+      "updated_at": "2026-08-12T20:51:09.092722Z"
     }
   }
 }

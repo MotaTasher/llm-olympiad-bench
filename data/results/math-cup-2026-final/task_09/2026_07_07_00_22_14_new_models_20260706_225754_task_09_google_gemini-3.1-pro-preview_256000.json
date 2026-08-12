@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_07_07_00_22_14_new_models_20260706_225754_task_09_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-08-12T12:07:14.189492Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.098271Z",
+  "finalizations": {
+    "res_e821e6ac56ce527d5c8a5356": {
+      "result_id": "res_e821e6ac56ce527d5c8a5356",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "Центр инверсии перепутан с точкой на другой окружности, а утверждение о радикальной оси не следует из нулевой степени точки.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.098271Z",
+      "updated_at": "2026-08-12T20:51:09.098271Z"
+    }
+  }
 }

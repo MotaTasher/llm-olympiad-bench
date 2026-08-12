@@ -27,6 +27,8 @@
       {% endif %}
       {% if final %}
         <p><strong>Текущий итог: {{ final.score|score_value }} / {{ problem.max_score|score_value }}</strong> · {{ "автоматически" if final.source == "automatic" else "вручную" }}</p>
+        {% if attempt.feedback_review_required %}<div class="flash info"><strong>GPT-черновик.</strong> Прочитайте комментарий, поправьте формулировку при необходимости и снимите флаг перед публикацией.</div>{% endif %}
+        {% if attempt.comment_required %}<div class="flash error">Для неполного балла ещё не написан итоговый комментарий.</div>{% endif %}
         {% if final.updated_by %}<div class="meta">Последнее изменение: {{ final.updated_by }} · {{ ui.human_datetime(final.updated_at) }}</div>{% endif %}
       {% else %}
         <p><strong>Не финализировано.</strong></p>
@@ -90,7 +92,8 @@
           <label>Итоговый комментарий (необязательно)
             <textarea name="feedback">{{ final.feedback or '' }}</textarea>
           </label>
-          <div class="meta">Публикуется на странице решения без имён.</div>
+          <label class="review-flag"><input name="feedback_review_required" type="checkbox" value="1" {% if attempt.feedback_review_required %}checked{% endif %}> <span><strong>GPT — проверить комментарий</strong><small>Пока флаг установлен, комментарий не публикуется на сайте. Снимите его после проверки текста.</small></span></label>
+          <div class="meta">Проверенный комментарий публикуется на странице решения без имён.</div>
           <button type="submit" {% if not attempt.evaluation_count %}disabled{% endif %}>{{ "Обновить итог" if final.source == "manual" else "Сохранить итог" }}</button>
         </form>
         {% if final.source == "manual" %}

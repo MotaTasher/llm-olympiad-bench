@@ -1161,6 +1161,7 @@ def save_final_score():
         abort(400, "result_id does not match this run")
     problem, attempt = found
     feedback = (request.form.get("feedback") or "").strip()
+    feedback_review_required = request.form.get("feedback_review_required") == "1"
     try:
         value = float(request.form.get("score", ""))
     except ValueError:
@@ -1186,6 +1187,7 @@ def save_final_score():
         score=score_value,
         max_score=max_score,
         feedback=feedback,
+        feedback_review_required=feedback_review_required,
         updated_by=current_user.username,
     )
     flash("Итоговая оценка сохранена.", "info")

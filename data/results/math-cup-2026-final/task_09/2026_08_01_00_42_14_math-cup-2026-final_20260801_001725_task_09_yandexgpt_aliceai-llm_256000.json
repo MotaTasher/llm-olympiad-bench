@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_08_01_00_42_14_math-cup-2026-final_20260801_001725_task_09_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-11T23:28:00.238488Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.100501Z",
+  "finalizations": {
+    "res_670a1ef850e81d35fda79526": {
+      "result_id": "res_670a1ef850e81d35fda79526",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "После инверсии окружности ω′B и ω′C не обязаны касаться ω′A. Основная конфигурация доказательства поэтому неверна.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.100501Z",
+      "updated_at": "2026-08-12T20:51:09.100501Z"
+    }
+  }
 }

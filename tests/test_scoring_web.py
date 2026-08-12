@@ -1341,6 +1341,8 @@ class ScoringWebTests(unittest.TestCase):
         final = json.loads(sidecar.read_text(encoding="utf-8"))["finalizations"]["res_a"]
         self.assertEqual(final["score"], 5)
         self.assertEqual(final["feedback"], "")
+        matrix = self.client.get("/competition/math_2026/finalization").get_data(as_text=True)
+        self.assertIn("5 💬", matrix)
 
         accepted = self.authorized_post(
             "/finalization",
@@ -1364,6 +1366,43 @@ class ScoringWebTests(unittest.TestCase):
         self.assertIn("Итоговый комментарий (необязательно)", detail)
         self.assertNotIn("name=\"feedback\" required", detail)
         self.assertNotIn("Для итогового балла обязателен комментарий", detail)
+
+        draft = self.authorized_post(
+            "/finalization",
+            {
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "result_id": "res_a",
+                "score": "5",
+                "feedback": "Черновик причины снижения",
+                "feedback_review_required": "1",
+            },
+            token_path=detail_path,
+        )
+        self.assertEqual(draft.status_code, 302)
+        final = json.loads(sidecar.read_text(encoding="utf-8"))["finalizations"]["res_a"]
+        self.assertTrue(final["feedback_review_required"])
+        matrix = self.client.get("/competition/math_2026/finalization").get_data(as_text=True)
+        self.assertIn("5 GPT", matrix)
+        detail = self.client.get(detail_path).get_data(as_text=True)
+        self.assertIn("GPT-черновик", detail)
+
+        reviewed = self.authorized_post(
+            "/finalization",
+            {
+                "competition_id": "math_2026",
+                "problem_id": "task_01",
+                "run_id": "run_active",
+                "result_id": "res_a",
+                "score": "5",
+                "feedback": "Проверенная причина снижения",
+            },
+            token_path=detail_path,
+        )
+        self.assertEqual(reviewed.status_code, 302)
+        final = json.loads(sidecar.read_text(encoding="utf-8"))["finalizations"]["res_a"]
+        self.assertFalse(final["feedback_review_required"])
 
     def test_model_tabs_are_compact_and_stably_grouped_by_review_status(self) -> None:
         self.write_competition("math_2026", title="Math 2026", date="2026-06-01")

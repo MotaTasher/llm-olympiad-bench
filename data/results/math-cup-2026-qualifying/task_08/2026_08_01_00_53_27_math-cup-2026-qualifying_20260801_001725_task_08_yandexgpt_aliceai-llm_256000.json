@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_08_01_00_53_27_math-cup-2026-qualifying_20260801_001725_task_08_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-11T22:15:55.702632Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.065783Z",
+  "finalizations": {
+    "res_aed2d270cb788986b5a9f08e": {
+      "result_id": "res_aed2d270cb788986b5a9f08e",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "score": 0.0,
+      "max_score": 4.0,
+      "score_category": "zero",
+      "feedback": "Число букв b во второй грамматике кратно пяти, а не четырём. Ошибка ломает весь последующий подсчёт.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.065783Z",
+      "updated_at": "2026-08-12T20:51:09.065783Z"
+    }
+  }
 }

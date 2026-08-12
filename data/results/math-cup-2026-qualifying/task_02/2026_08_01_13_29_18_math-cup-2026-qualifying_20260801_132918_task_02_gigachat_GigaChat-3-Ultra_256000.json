@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_02",
   "run_id": "2026_08_01_13_29_18_math-cup-2026-qualifying_20260801_132918_task_02_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-03T20:15:06.111958Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.057440Z",
+  "finalizations": {
+    "res_b3c3f7acf9701c7a7b7fa010": {
+      "result_id": "res_b3c3f7acf9701c7a7b7fa010",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "score": 0.0,
+      "max_score": 4.0,
+      "score_category": "zero",
+      "feedback": "Классификация сведена к девяти случаям без корректного учёта вложений графа, внешней грани и симметрий. Итоговый подсчёт неверен.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.057440Z",
+      "updated_at": "2026-08-12T20:51:09.057440Z"
+    }
+  }
 }

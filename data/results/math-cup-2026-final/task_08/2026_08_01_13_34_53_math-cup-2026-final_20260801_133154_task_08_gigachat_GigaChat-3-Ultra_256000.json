@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_08",
   "run_id": "2026_08_01_13_34_53_math-cup-2026-final_20260801_133154_task_08_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-11T18:19:40.804763Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.095897Z",
+  "finalizations": {
+    "res_bd5bd64608f33602e691d3e6": {
+      "result_id": "res_bd5bd64608f33602e691d3e6",
+      "result_index": 0,
+      "model_key": "gigachat:GigaChat-3-Ultra",
+      "model": "GigaChat-3-Ultra",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "В пункте а решение само приходит к выводу, что предложенная идея не помогает. В пункте б получена оценка другого порядка, не отвечающая условию.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.095897Z",
+      "updated_at": "2026-08-12T20:51:09.095897Z"
+    }
+  }
 }

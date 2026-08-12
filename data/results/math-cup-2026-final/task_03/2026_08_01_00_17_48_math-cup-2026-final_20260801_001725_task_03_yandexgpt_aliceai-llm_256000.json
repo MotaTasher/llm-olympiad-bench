@@ -51,6 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_03",
   "run_id": "2026_08_01_00_17_48_math-cup-2026-final_20260801_001725_task_03_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-04T09:36:16.621643Z",
-  "finalizations": {}
+  "updated_at": "2026-08-12T20:51:09.067643Z",
+  "finalizations": {
+    "res_6e01e0421686e0a83a60e50a": {
+      "result_id": "res_6e01e0421686e0a83a60e50a",
+      "result_index": 0,
+      "model_key": "yandexgpt:aliceai-llm",
+      "model": "aliceai-llm",
+      "score": 0.0,
+      "max_score": 2.0,
+      "score_category": "zero",
+      "feedback": "Утверждение, что все коэффициенты должны быть целыми, неверно уже для многочлена x(x+1)/2. Поэтому четвёртый шаг и итоговый вывод не работают.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.067643Z",
+      "updated_at": "2026-08-12T20:51:09.067643Z"
+    }
+  }
 }

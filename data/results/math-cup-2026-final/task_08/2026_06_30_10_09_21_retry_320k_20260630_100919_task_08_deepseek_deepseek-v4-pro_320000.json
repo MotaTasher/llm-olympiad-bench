@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_08",
   "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_08_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-08-12T10:26:42.551153Z",
+  "updated_at": "2026-08-12T20:51:09.094819Z",
   "finalizations": {
     "res_1afd96427d1fe8617c09ff64": {
       "result_id": "res_1afd96427d1fe8617c09ff64",
@@ -61,10 +61,11 @@
       "score": 1,
       "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "",
-      "updated_by": "MotaTasher",
+      "feedback": "Пункт а решён верно. Формула после ссылки на обобщённую Cycle Lemma в пункте б неверна, поэтому вторая часть не доказана.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-12T10:26:42.551153Z",
-      "updated_at": "2026-08-12T10:26:42.551153Z"
+      "updated_at": "2026-08-12T20:51:09.094819Z"
     }
   }
 }

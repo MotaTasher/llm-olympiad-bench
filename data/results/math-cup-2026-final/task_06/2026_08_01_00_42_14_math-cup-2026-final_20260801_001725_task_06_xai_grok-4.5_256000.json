@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_08_01_00_42_14_math-cup-2026-final_20260801_001725_task_06_xai_grok-4.5_256000",
-  "updated_at": "2026-08-10T11:16:22.527354Z",
+  "updated_at": "2026-08-12T20:51:09.090889Z",
   "finalizations": {
     "res_20ae7dc3abb2e103580700cf": {
       "result_id": "res_20ae7dc3abb2e103580700cf",
@@ -61,10 +61,11 @@
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "",
-      "updated_by": "b2_maxim",
+      "feedback": "Индукция в пункте а ломается после удаления вершины: оставшийся связный граф может не иметь нужного покрытия путями. В пункте б рекурсия не увеличивает найденный путь.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-10T11:15:55.888567Z",
-      "updated_at": "2026-08-10T11:15:55.888567Z"
+      "updated_at": "2026-08-12T20:51:09.090889Z"
     }
   }
 }

@@ -168,6 +168,11 @@ One check is sufficient but keeps a warning. The shared organizer comment is
 optional for every score. When present, only this collegially approved final
 comment is published; individual reviewers' comments, scores and identities
 remain private. The latest editor and edit time are persisted but not published.
+In the finalization matrix, `💬` marks a non-full effective score whose shared
+comment is still empty. `GPT` marks a generated comment draft that must be
+checked. The detail editor exposes the same flag; while it remains set, the
+public exporter suppresses the draft. Saving the reviewed text with the flag
+cleared makes it eligible for publication.
 
 The competition matrix presents active model columns in fixed provider groups:
 `anthropic`, `deepseek`, `google`, `gigachat`, `xai`, `zai`, `openai`,

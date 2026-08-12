@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_07_06_20_52_50_new_models_20260706_203306_task_06_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-08-10T13:19:35.918387Z",
+  "updated_at": "2026-08-12T20:51:09.090082Z",
   "finalizations": {
     "res_e26cc3473e3b15327f2b60c3": {
       "result_id": "res_e26cc3473e3b15327f2b60c3",
@@ -61,10 +61,11 @@
       "score": 1,
       "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "",
-      "updated_by": "b2_maxim",
+      "feedback": "Пункт а решён верно. В пункте б результат фактически заменён ссылкой на работу, причём нужное утверждение в ней не подтверждено.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-10T13:19:35.918387Z",
-      "updated_at": "2026-08-10T13:19:35.918387Z"
+      "updated_at": "2026-08-12T20:51:09.090082Z"
     }
   }
 }

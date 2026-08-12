@@ -205,7 +205,7 @@ def public_review(
     score = finite_number(value.get("score"))
     max_score = finite_number(value.get("max_score")) or fallback_max_score
     feedback = rewrite_public_markdown(
-        value.get("feedback"),
+        "" if value.get("feedback_review_required") else value.get("feedback"),
         competition_id=competition_id,
     ).strip()
     if score is None and not feedback:

@@ -51,5 +51,21 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_07_15_14_49_10_qualifying_gemini_retry_20260715_144909_task_01_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-07-30T19:13:11.490173Z"
+  "updated_at": "2026-08-12T20:51:09.025884Z",
+  "finalizations": {
+    "res_be9b447f40a7b4b18615dede": {
+      "result_id": "res_be9b447f40a7b4b18615dede",
+      "result_index": 0,
+      "model_key": "google:gemini-3.1-pro-preview",
+      "model": "gemini-3.1-pro-preview",
+      "score": 0.0,
+      "max_score": 4.0,
+      "score_category": "zero",
+      "feedback": "Итоговая формула неверна: изопериметрической оценки недостаточно, поскольку нужно учитывать положение центра квадрата на границе пути.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T20:51:09.025884Z",
+      "updated_at": "2026-08-12T20:51:09.025884Z"
+    }
+  }
 }

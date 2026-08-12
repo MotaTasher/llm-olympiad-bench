@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_08_01_16_51_23_math-cup-2026-qualifying_20260801_132918_task_08_kimi_kimi-k3_256000",
-  "updated_at": "2026-08-12T10:30:53.567953Z",
+  "updated_at": "2026-08-12T20:51:09.066227Z",
   "finalizations": {
     "res_df422c9c6d1e9feccc8d7126": {
       "result_id": "res_df422c9c6d1e9feccc8d7126",
@@ -61,10 +61,11 @@
       "score": 1,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "",
-      "updated_by": "MotaTasher",
+      "feedback": "Верно разобран случай с пятью буквами b и компактно описана первая грамматика, но полный подсчёт для длины 95 отсутствует.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
       "created_at": "2026-08-12T10:30:49.774206Z",
-      "updated_at": "2026-08-12T10:30:53.567953Z"
+      "updated_at": "2026-08-12T20:51:09.066227Z"
     }
   }
 }

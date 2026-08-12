@@ -55,6 +55,7 @@ scripts/
   export_scoring.py       merge run logs and sidecars into CSV/JSONL
   export_public_results.py sanitized read-only public matrix and solution export
   migrate_score_scale.py  explicit one-competition score-scale migration
+  draft_missing_final_comments.py one-off, review-gated final-comment drafts
   sync_logs.py            rsync push/pull for logs and score sidecars
   geogebra_view.py        local step-by-step GeoGebra viewer server and static export
   geogebra_viewer/

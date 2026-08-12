@@ -196,6 +196,29 @@ class PublicResultsExportTests(unittest.TestCase):
         )
         self.assertEqual(document["result"]["verdict"], "На проверке")
 
+    def test_gpt_draft_feedback_is_not_published_before_review(self) -> None:
+        attempt = {
+            "model_key": "openai:gpt-test",
+            "result_id": "res_draft",
+            "result_index": 0,
+            "finalization": {
+                "score": 1,
+                "max_score": 2,
+                "feedback": "Draft that still needs review",
+                "feedback_review_required": True,
+            },
+            "result": {"answer": "Model answer"},
+        }
+        document = solution_document(
+            competition={"competition_id": "cup", "competition_title": "Cup", "metadata": {}},
+            problem={"problem_id": "task", "problem_title": "Task", "statement": "S", "solution": "O", "max_score": 2},
+            column={"model_key": "openai:gpt-test", "model_id": "gpt-test", "short_label": "GPT Test", "provider": "openai"},
+            attempt=attempt,
+            score=1,
+        )
+        self.assertEqual(document["review"]["final"]["feedback"], "")
+        self.assertNotIn("Draft that still needs review", str(document))
+
     def test_total_tokens_uses_structured_usage_first(self) -> None:
         self.assertEqual(
             total_tokens(
