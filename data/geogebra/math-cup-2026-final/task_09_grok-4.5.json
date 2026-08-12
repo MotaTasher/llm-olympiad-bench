@@ -1,6 +1,6 @@
 {
-  "title": "Финал 2026, задача 9 — решение Grok 4.5 (Монж + Дезарг)",
-  "source": "внешние центры подобия и ось Монжа; треугольники ABC и X_AX_BX_C перспективны",
+  "title": "Финал 2026, задача 9 — ответ Grok 4.5",
+  "source": "Монж и ось Монжа верны; обоснование перспективы через гомотетию — нет",
   "app": "classic",
   "view": {
     "axes": false,
@@ -59,41 +59,29 @@
   ],
   "steps": [
     {
-      "title": "Внешний центр подобия ω и Ω_B — это точка касания B",
-      "text": "Ω_B касается ω изнутри, поэтому точка касания и есть внешний центр подобия этой пары. Проверено: центр подобия совпал с B точно.",
-      "commands": [
-        "SetVisibleInView(bgA,1,true)",
-        "SetVisibleInView(bgB,1,true)",
-        "SetVisibleInView(bgC,1,true)"
-      ],
+      "title": "1. Внешний центр подобия ω и Ω_B — точка касания B",
+      "text": "Ω_B касается ω изнутри, поэтому точка касания и есть внешний центр подобия пары. Здесь решение право.",
+      "commands": [],
       "highlight": [
         "B"
       ]
     },
     {
-      "title": "Теорема Монжа: S_BC лежит на прямой BC",
-      "text": "Для тройки Ω_B, Ω_C, ω три внешних центра подобия коллинеарны. Два из них — точки B и C, значит третий, S_BC, лежит на прямой BC. Расстояние от него до BC равно нулю с точностью до машинной.",
+      "title": "2. Монж: S_BC лежит на прямой BC",
+      "text": "Для тройки Ω_B, Ω_C, ω два внешних центра подобия — это B и C, значит третий, S_BC, лежит на прямой BC. Проверено: расстояние до прямой нулевое.",
       "commands": [
         "lBC=Line(B,C)",
-        "lCA=Line(C,A)",
-        "lAB=Line(A,B)",
         "SetColor(lBC,0.55,0.55,0.55)",
         "SetLineThickness(lBC,2)",
-        "SetLineStyle(lBC,2)",
-        "SetColor(lCA,0.55,0.55,0.55)",
-        "SetLineThickness(lCA,2)",
-        "SetLineStyle(lCA,2)",
-        "SetColor(lAB,0.55,0.55,0.55)",
-        "SetLineThickness(lAB,2)",
-        "SetLineStyle(lAB,2)"
+        "SetLineStyle(lBC,2)"
       ],
       "highlight": [
         "lBC"
       ]
     },
     {
-      "title": "Ось Монжа для тройки Ω_A, Ω_B, Ω_C",
-      "text": "Второе применение теоремы: S_AB, S_BC, S_CA сами лежат на одной прямой — это ось Монжа. Точки уходят далеко за кадр (S_BC ≈ (−15.4; −0.3)), поэтому показана сама прямая.",
+      "title": "3. Ось Монжа",
+      "text": "Второе применение теоремы: S_AB, S_BC, S_CA лежат на одной прямой. Точки уходят далеко за кадр — S_BC ≈ (-15.4; -0.3), — поэтому показана сама прямая. До сих пор всё верно.",
       "commands": [
         "SBC=(-15.38302,-0.34202)",
         "SCA=(-2.63556,4.31734)",
@@ -111,83 +99,53 @@
       ]
     },
     {
-      "title": "Дезарг: соответствующие стороны встречаются на оси Монжа",
-      "text": "Сторона BC и сторона X_BX_C пересекаются ровно в центре подобия S_BC (-15.38; -0.34); то же для двух других пар — S_CA (-2.64; 4.32) и S_AB (3.44; 6.54). Все три точки лежат на оси Монжа, значит треугольники ABC и X_AX_BX_C перспективны относительно неё — и по Дезаргу имеют центр перспективы.",
+      "title": "4. Гомотетия h переводит Ω_C в Ω_B — верно",
+      "text": "Решение вводит гомотетию h с центром S_BC и коэффициентом k = R_B/R_C = 1.0655. Она действительно переводит Ω_C в Ω_B: образ совпал с Ω_B точно.",
       "commands": [
-        "XXA=(-0.05612,-1.25877)",
-        "XXB=(0.87510,0.81579)",
-        "XXC=(-0.95548,0.68543)",
-        "sBC=Line(B,C)",
-        "sXBC=Line(XXB,XXC)",
-        "sCA=Line(C,A)",
-        "sXCA=Line(XXC,XXA)",
-        "SetColor(sBC,0.55,0.55,0.55)",
-        "SetLineThickness(sBC,2)",
-        "SetLineStyle(sBC,2)",
-        "SetColor(sCA,0.55,0.55,0.55)",
-        "SetLineThickness(sCA,2)",
-        "SetLineStyle(sCA,2)",
-        "SetColor(sXBC,0.72,0.11,0.11)",
-        "SetLineThickness(sXBC,2)",
-        "SetLineStyle(sXBC,2)",
-        "SetColor(sXCA,0.72,0.11,0.11)",
-        "SetLineThickness(sXCA,2)",
-        "SetLineStyle(sXCA,2)",
-        "SCA=(-2.63556,4.31734)",
-        "SetPointSize(SCA,6)",
-        "SetColor(SCA,0.45,0.25,0.65)",
-        "SetCaption(SCA,\"S_CA\")",
-        "SetLabelMode(SCA,3)",
-        "ShowLabel(SCA,true)",
-        "SAB=(3.44442,6.53965)",
-        "SetPointSize(SAB,6)",
-        "SetColor(SAB,0.45,0.25,0.65)",
-        "SetCaption(SAB,\"S_AB\")",
-        "SetLabelMode(SAB,3)",
-        "ShowLabel(SAB,true)",
-        "SetVisibleInView(XXA,1,false)",
-        "SetVisibleInView(XXB,1,false)",
-        "SetVisibleInView(XXC,1,false)"
+        "txtk=Text(\"k = R_B / R_C = 1.0655\",(-3.0,2.9))",
+        "SetColor(txtk,0.45,0.25,0.65)"
       ],
       "highlight": [
-        "sXBC",
-        "sXCA"
+        "bgB",
+        "bgC"
       ]
     },
     {
-      "title": "Итоговая картина",
-      "text": "По Дезаргу треугольники ABC и X_AX_BX_C перспективны относительно оси Монжа, значит прямые AX_A, BX_B, CX_C проходят через одну точку — центр перспективы.",
+      "title": "5. Здесь решение ломается: h не сохраняет Ω_A",
+      "text": "Дальше сказано: «the image h(Ω_A) coincides with Ω_A», и из этого выводится h(X_B) = X_C. Но образ Ω_A под той же гомотетией — другая окружность: её центр смещён на 1.012, радиус 1.937 против 1.818 у Ω_A. Следствие тоже не проходит: h(X_B) отстоит от X_C на 2.902. Дальше решение строит вывод на этом шаге, поэтому построение здесь остановлено.",
       "commands": [
-        "XA=(-0.05612,-1.25877)",
+        "IA=(1.08309,-0.84604)",
+        "imgA=Circle(IA,1.937217)",
+        "SetVisibleInView(IA,1,false)",
+        "SetColor(imgA,0.72,0.11,0.11)",
+        "SetLineThickness(imgA,4)",
+        "SetLineStyle(imgA,2)",
+        "SetCaption(imgA,\"h(Ω_A) — не совпадает с Ω_A\")",
+        "SetLabelMode(imgA,3)",
+        "ShowLabel(imgA,true)",
         "XB=(0.87510,0.81579)",
         "XC=(-0.95548,0.68543)",
-        "SetCaption(XA,\"X_A\")",
-        "SetLabelMode(XA,3)",
-        "ShowLabel(XA,true)",
+        "HXB=(1.93951,0.89159)",
         "SetCaption(XB,\"X_B\")",
         "SetLabelMode(XB,3)",
         "ShowLabel(XB,true)",
         "SetCaption(XC,\"X_C\")",
         "SetLabelMode(XC,3)",
         "ShowLabel(XC,true)",
-        "mA=Line(A,XA)",
-        "mB=Line(B,XB)",
-        "mC=Line(C,XC)",
-        "SetColor(mA,0.72,0.11,0.11)",
-        "SetLineThickness(mA,4)",
-        "SetColor(mB,0.72,0.11,0.11)",
-        "SetLineThickness(mB,4)",
-        "SetColor(mC,0.72,0.11,0.11)",
-        "SetLineThickness(mC,4)",
-        "Y=(-0.07632,0.20880)",
-        "SetPointSize(Y,8)",
-        "SetColor(Y,0.72,0.11,0.11)",
-        "SetCaption(Y,\"Y\")",
-        "SetLabelMode(Y,3)",
-        "ShowLabel(Y,true)"
+        "SetCaption(HXB,\"h(X_B)\")",
+        "SetLabelMode(HXB,3)",
+        "ShowLabel(HXB,true)",
+        "SetPointSize(XB,6)",
+        "SetPointSize(XC,6)",
+        "SetPointSize(HXB,7)",
+        "SetColor(HXB,0.72,0.11,0.11)",
+        "txts=Text(\"смещение центра 1.012, радиус 1.937 против 1.818\",(-3.0,-2.7))",
+        "SetColor(txts,0.72,0.11,0.11)",
+        "txtm=Text(\"h(X_B) мимо X_C на 2.902\",(-3.0,-3.2))",
+        "SetColor(txtm,0.72,0.11,0.11)"
       ],
       "highlight": [
-        "Y"
+        "imgA"
       ]
     }
   ]
