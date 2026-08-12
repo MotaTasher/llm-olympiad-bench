@@ -87,6 +87,11 @@ the model solution. On the solution page, the public score badge reuses the
 leaderboard cell's full/partial/zero/pending color. The verdict and score are
 also repeated after the official solution so the result remains discoverable
 after reading the full answer.
+The statement, model answer and official solution cards also carry a
+black-to-result-color gradient so the score remains visible while reading.
+Their independent open/closed states are saved in browser local storage and
+restored across task navigation and later visits; storage failure falls back to
+the HTML defaults without blocking the page.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the
 selected release; generated model data continues to overlay only the result

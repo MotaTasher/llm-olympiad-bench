@@ -108,6 +108,10 @@ KaTeX's private-use negation overlay when a browser/font combination exposes it
 as a missing-glyph box. The task statement is collapsed by default; model and
 official solutions remain collapsible and open by default, and long prose is
 centered in a wider reading column.
+The browser remembers the independent open or closed state of all three
+reading sections in local storage and restores it between tasks and later
+visits. Their cards use a restrained black-to-result gradient: green for a full
+score, yellow for a partial score, red for zero and graphite while pending.
 
 Every table column is sortable. The initial order is descending by `points`,
 which is the sum of all published absolute task scores, not the count of

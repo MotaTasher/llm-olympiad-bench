@@ -39,6 +39,7 @@
   const page = document.body.dataset.page;
   const number = new Intl.NumberFormat("ru-RU");
   const sortByCompetition = new Map();
+  const readingPreferencesKey = "reasoning-space:solution-sections:v1";
   let activeRelease = null;
 
   function siteBasePath() {
@@ -182,6 +183,37 @@
     document.querySelectorAll(".solution-result-badge").forEach((element) => {
       element.classList.remove("score-full", "score-partial", "score-zero", "score-empty");
       element.classList.add(resultClass);
+    });
+    document.body.dataset.resultState = resultClass.replace("score-", "");
+  }
+
+  function readReadingPreferences() {
+    try {
+      const value = JSON.parse(window.localStorage.getItem(readingPreferencesKey) || "{}");
+      return value && typeof value === "object" ? value : {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function rememberReadingPreferences() {
+    const preferences = {};
+    document.querySelectorAll("details[data-reading-section]").forEach((details) => {
+      preferences[details.dataset.readingSection] = details.open;
+    });
+    try {
+      window.localStorage.setItem(readingPreferencesKey, JSON.stringify(preferences));
+    } catch (_) {
+      // Private browsing or a storage policy may disable persistence.
+    }
+  }
+
+  function restoreReadingPreferences() {
+    const preferences = readReadingPreferences();
+    document.querySelectorAll("details[data-reading-section]").forEach((details) => {
+      const remembered = preferences[details.dataset.readingSection];
+      if (typeof remembered === "boolean") details.open = remembered;
+      details.addEventListener("toggle", rememberReadingPreferences);
     });
   }
 
@@ -607,6 +639,7 @@
   }
 
   async function renderSolution() {
+    restoreReadingPreferences();
     const params = query();
     const route = cleanSolutionRoute();
     const competitionId = route?.competition || params.get("competition");
