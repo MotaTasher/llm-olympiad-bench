@@ -65,21 +65,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_07",
   "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_07_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-08-12T20:51:09.093213Z",
+  "updated_at": "2026-08-14T16:09:31.587277Z",
   "finalizations": {
     "res_71f4c339dc88b2fad3241b11": {
       "result_id": "res_71f4c339dc88b2fad3241b11",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "score": 0.0,
+      "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "Решение не даёт корректной конструкции для требуемых касательных и не доказывает бесконечность числа пересечений.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "В каждом из пунктов а) и б) доказано отсутствие примера, хотя на самом деле он существует.",
+      "feedback_review_required": false,
+      "updated_by": "b2_maxim",
       "created_at": "2026-08-12T20:51:09.093213Z",
-      "updated_at": "2026-08-12T20:51:09.093213Z"
+      "updated_at": "2026-08-14T16:09:31.587277Z"
     }
   }
 }

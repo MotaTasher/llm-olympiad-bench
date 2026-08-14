@@ -65,21 +65,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_08_01_00_19_14_math-cup-2026-final_20260801_001725_task_05_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-12T20:51:09.088225Z",
+  "updated_at": "2026-08-14T14:45:05.392975Z",
   "finalizations": {
     "res_dfd576e1fd8e4c6bf2b41d62": {
       "result_id": "res_dfd576e1fd8e4c6bf2b41d62",
       "result_index": 0,
       "model_key": "yandexgpt:aliceai-llm",
       "model": "aliceai-llm",
-      "score": 0.0,
+      "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "Верхняя оценка плотности не доказана, а предложенная периодическая раскладка не проверена на всех соседних клетках.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Оценка — не доказана, пример не проверен на всех клетках.",
+      "feedback_review_required": false,
+      "updated_by": "mofeyTEA",
       "created_at": "2026-08-12T20:51:09.088225Z",
-      "updated_at": "2026-08-12T20:51:09.088225Z"
+      "updated_at": "2026-08-14T14:45:05.392975Z"
     }
   }
 }

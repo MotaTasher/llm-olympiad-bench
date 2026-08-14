@@ -65,7 +65,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_07_15_07_24_50_retry_glm5_stream_20260715_072449_task_05_zai_glm-5.2_256000",
-  "updated_at": "2026-08-14T14:35:08.099919Z",
+  "updated_at": "2026-08-14T14:43:52.127822Z",
   "finalizations": {
     "res_e45527543abc6fd7630128b8": {
       "result_id": "res_e45527543abc6fd7630128b8",
@@ -75,11 +75,11 @@
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "Ошибка в оценки плотности примера.",
-      "feedback_review_required": true,
+      "feedback": "Ошибка в оценке: из δ(G[S]) ≥ 1 следует только E(S) = 1/2 * Σ_{v∈S} d_S(v) ≥ |S|/2, а не E(S) ≥ |S|. Поэтому вывод |M| ≤ n²/3 не обоснован.",
+      "feedback_review_required": false,
       "updated_by": "mofeyTEA",
       "created_at": "2026-08-12T20:51:09.087603Z",
-      "updated_at": "2026-08-14T14:35:08.099919Z"
+      "updated_at": "2026-08-14T14:43:52.127822Z"
     }
   }
 }
