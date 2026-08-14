@@ -106,8 +106,11 @@ DOMPurify and KaTeX browser assets (including fonts and their licenses) are
 versioned under `vendor/`, so rendering does not depend on a third-party CDN.
 A solution's score badge uses the same full/partial/zero/pending color as its
 leaderboard cell. The verdict, score and metrics sit in one colored-outline
-panel immediately above the model solution. When a shared final comment exists,
-it appears in that same panel; without a comment the result panel remains.
+panel at the start of the single-cell page. When a shared final comment exists,
+it appears in that same panel; without a comment the result panel remains. The
+page order is result/comment, statement, model solution, official solution.
+Final comments pass through the same sanitized Markdown and KaTeX renderer as
+the solution text, including inline and display LaTeX.
 A safe plain-text fallback remains in place. The renderer also replaces
 KaTeX's private-use negation overlay when a browser/font combination exposes it
 as a missing-glyph box. The statement, model answer and official solution are

@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_08_01_17_39_21_math-cup-2026-final_20260801_171126_task_06_anthropic_claude-fable-5_256000",
-  "updated_at": "2026-08-12T20:51:09.088886Z",
+  "updated_at": "2026-08-14T17:44:43.539783Z",
   "finalizations": {
     "res_2d637f6a314b2d2324c48555": {
       "result_id": "res_2d637f6a314b2d2324c48555",
@@ -61,11 +61,11 @@
       "score": 1,
       "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "Пункт а решён верно. В пункте б всё опирается на теорему о большой лестнице, которой в указанном виде нет; собственного доказательства тоже не приведено.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Пункт а) выполнен верно. В пункте б) ссылка на статью 2003 года верна, однако собственное доказательство не приведено; одной ссылки для получения баллов недостаточно.",
+      "feedback_review_required": false,
+      "updated_by": "b2_maxim",
       "created_at": "2026-08-10T13:19:10.158056Z",
-      "updated_at": "2026-08-12T20:51:09.088886Z"
+      "updated_at": "2026-08-14T17:44:43.539783Z"
     }
   }
 }

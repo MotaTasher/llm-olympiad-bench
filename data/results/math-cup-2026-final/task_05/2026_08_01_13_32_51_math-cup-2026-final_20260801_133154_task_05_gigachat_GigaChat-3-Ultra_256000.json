@@ -65,7 +65,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_08_01_13_32_51_math-cup-2026-final_20260801_133154_task_05_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-14T14:33:23.256886Z",
+  "updated_at": "2026-08-14T20:03:49.017829Z",
   "finalizations": {
     "res_9c21371ad3fd726abd42a2eb": {
       "result_id": "res_9c21371ad3fd726abd42a2eb",
@@ -75,11 +75,11 @@
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "Заявлено, что в графе без изолированных вершин есть паросочетание, насыщающее почти все вершины, но это неверно. Поэтому верхняя оценка 3/7 не доказана.",
+      "feedback": "Заявлено, что в графе без изолированных вершин есть паросочетание, насыщающее почти все вершины, но это неверно. Поэтому верхняя оценка $\\frac{3}{7}$ не доказана.",
       "feedback_review_required": false,
-      "updated_by": "mofeyTEA",
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T20:51:09.087051Z",
-      "updated_at": "2026-08-14T14:33:23.256886Z"
+      "updated_at": "2026-08-14T20:03:49.017829Z"
     }
   }
 }

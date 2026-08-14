@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_08_01_00_53_27_math-cup-2026-qualifying_20260801_001725_task_08_openai_gpt-5.6-sol_256000",
-  "updated_at": "2026-08-12T13:06:19.385188Z",
+  "updated_at": "2026-08-14T20:03:49.014593Z",
   "finalizations": {
     "res_cde0495f6f17a77fa8fe554b": {
       "result_id": "res_cde0495f6f17a77fa8fe554b",
@@ -61,10 +61,11 @@
       "score": 0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Полное отсуствие объяснения откуда взялось C(44, 4) было принято считать достаточно важным, чтоб не начислять за это баллы",
-      "updated_by": "MotaTasher",
+      "feedback": "Полное отсутствие объяснения, откуда взялось $\\binom{44}{4}$, было принято считать достаточно важным, чтобы не начислять за это баллы.",
+      "feedback_review_required": false,
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T13:06:19.385188Z",
-      "updated_at": "2026-08-12T13:06:19.385188Z"
+      "updated_at": "2026-08-14T20:03:49.014593Z"
     }
   }
 }

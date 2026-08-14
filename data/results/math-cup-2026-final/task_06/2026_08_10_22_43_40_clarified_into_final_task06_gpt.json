@@ -47,22 +47,7 @@
       }
     ]
   },
-  "finalizations": {
-    "res_0fdfb491756e70901d19a09c": {
-      "result_id": "res_0fdfb491756e70901d19a09c",
-      "result_index": 0,
-      "model_key": "openai:gpt-5.6-sol",
-      "model": "gpt-5.6-sol",
-      "score": 1,
-      "max_score": 2.0,
-      "score_category": "partial",
-      "feedback": "Пункт а из первой попытки решён верно. В пункте б используется неверная лемма 2, поэтому продолжение не засчитывается.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
-      "created_at": "2026-08-12T10:27:27.728835Z",
-      "updated_at": "2026-08-12T20:51:09.091751Z"
-    }
-  },
+  "finalizations": {},
   "schema_version": 2,
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",

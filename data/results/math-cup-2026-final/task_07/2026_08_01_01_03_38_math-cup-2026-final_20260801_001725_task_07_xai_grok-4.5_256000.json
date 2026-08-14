@@ -65,7 +65,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_07",
   "run_id": "2026_08_01_01_03_38_math-cup-2026-final_20260801_001725_task_07_xai_grok-4.5_256000",
-  "updated_at": "2026-08-12T13:22:47.113862Z",
+  "updated_at": "2026-08-14T20:03:49.018736Z",
   "finalizations": {
     "res_1de474e83df1c73221f7be51": {
       "result_id": "res_1de474e83df1c73221f7be51",
@@ -75,10 +75,11 @@
       "score": 2,
       "max_score": 2.0,
       "score_category": "full",
-      "feedback": "При устной проверке r_n = q_n + 1, \"достаточно долго, чтоб среднее\" и разрыва производной залатываются",
-      "updated_by": "MotaTasher",
+      "feedback": "При устной проверке $r_n=q_n+1$, «достаточно долго, чтобы среднее» и разрыв производной уточняются.",
+      "feedback_review_required": false,
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T13:22:47.113862Z",
-      "updated_at": "2026-08-12T13:22:47.113862Z"
+      "updated_at": "2026-08-14T20:03:49.018736Z"
     }
   }
 }

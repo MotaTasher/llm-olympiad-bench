@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_06",
   "run_id": "2026_06_30_10_09_20_retry_320k_20260630_100919_task_06_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-08-12T20:51:09.089703Z",
+  "updated_at": "2026-08-14T19:37:56.618657Z",
   "finalizations": {
     "res_71e0b335631d036d04a80fec": {
       "result_id": "res_71e0b335631d036d04a80fec",
@@ -61,11 +61,11 @@
       "score": 1,
       "max_score": 2.0,
       "score_category": "partial",
-      "feedback": "Для пункта а идея с color-coding подходит. В пункте б приведена только ссылка на литературу, без доказательства результата и нужной асимптотики.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Пункт а) рещён верно. В пункте б) приведена только ссылка на литературу, без доказательства результата и нужной асимптотики.",
+      "feedback_review_required": false,
+      "updated_by": "b2_maxim",
       "created_at": "2026-08-10T13:19:17.985529Z",
-      "updated_at": "2026-08-12T20:51:09.089703Z"
+      "updated_at": "2026-08-14T19:37:56.618657Z"
     }
   }
 }

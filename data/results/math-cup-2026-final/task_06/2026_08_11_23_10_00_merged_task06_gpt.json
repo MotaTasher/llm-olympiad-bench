@@ -1,0 +1,71 @@
+{
+  "evaluations": {
+    "res_0b52707150c145908953b6b9": {
+      "evaluation_id": "ev_9b7dd232b21141f7a4c5ae15fcebf6ac",
+      "result_id": "res_0b52707150c145908953b6b9",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "evaluator": "MotaTasher",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "",
+      "created_at": "2026-08-11T13:52:34.028762Z",
+      "updated_at": "2026-08-14T19:21:00.223916Z"
+    }
+  },
+  "evaluation_pool": {
+    "res_0b52707150c145908953b6b9": [
+      {
+        "evaluation_id": "ev_a6a27ea46be645b29be3f0696bbe10da",
+        "result_id": "res_0b52707150c145908953b6b9",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "b2_maxim",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "Лемма 2 неверна. 1 балл за решения пунка а первого запроса.",
+        "created_at": "2026-08-11T16:45:04.176092Z",
+        "updated_at": "2026-08-14T19:21:00.223916Z"
+      },
+      {
+        "evaluation_id": "ev_9b7dd232b21141f7a4c5ae15fcebf6ac",
+        "result_id": "res_0b52707150c145908953b6b9",
+        "result_index": 0,
+        "model_key": "openai:gpt-5.6-sol",
+        "model": "gpt-5.6-sol",
+        "evaluator": "MotaTasher",
+        "score": 1,
+        "max_score": 2.0,
+        "score_category": "partial",
+        "feedback": "",
+        "created_at": "2026-08-11T13:52:34.028762Z",
+        "updated_at": "2026-08-14T19:21:00.223916Z"
+      }
+    ]
+  },
+  "finalizations": {
+    "res_0b52707150c145908953b6b9": {
+      "result_id": "res_0b52707150c145908953b6b9",
+      "result_index": 0,
+      "model_key": "openai:gpt-5.6-sol",
+      "model": "gpt-5.6-sol",
+      "score": 1,
+      "max_score": 2.0,
+      "score_category": "partial",
+      "feedback": "Пункт а из первой попытки решён верно. В пункте б используется неверная лемма 2, поэтому продолжение не засчитывается.",
+      "feedback_review_required": true,
+      "updated_by": "gpt-draft",
+      "created_at": "2026-08-12T10:27:27.728835Z",
+      "updated_at": "2026-08-14T19:21:00.223916Z"
+    }
+  },
+  "schema_version": 2,
+  "competition_id": "math-cup-2026-final",
+  "problem_id": "task_06",
+  "run_id": "2026_08_11_23_10_00_merged_task06_gpt",
+  "updated_at": "2026-08-14T19:21:00.223916Z"
+}

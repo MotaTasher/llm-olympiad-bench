@@ -56,16 +56,16 @@
       "score": 3,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "Формула получена верно, но ключевые переходы почти не объяснены, поэтому решение нельзя считать полным.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Формула получена верно, однако ключевые переходы почти не объяснены, поэтому решение нельзя считать полным.",
+      "feedback_review_required": false,
+      "updated_by": "b2_maxim",
       "created_at": "2026-08-12T10:30:11.491327Z",
-      "updated_at": "2026-08-12T20:51:09.062616Z"
+      "updated_at": "2026-08-14T17:06:21.894924Z"
     }
   },
   "schema_version": 2,
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_08_10_23_36_32_claude_resume_128k",
-  "updated_at": "2026-08-12T20:51:09.062616Z"
+  "updated_at": "2026-08-14T17:06:21.894924Z"
 }

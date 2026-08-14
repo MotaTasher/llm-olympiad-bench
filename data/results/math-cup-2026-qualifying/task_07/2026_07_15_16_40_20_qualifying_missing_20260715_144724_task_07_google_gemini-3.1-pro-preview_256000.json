@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_07_15_16_40_20_qualifying_missing_20260715_144724_task_07_google_gemini-3.1-pro-preview_256000",
-  "updated_at": "2026-08-11T16:56:57.792553Z",
+  "updated_at": "2026-08-14T16:24:18.425894Z",
   "finalizations": {
     "res_27e78d35c0714e23df1eb9fa": {
       "result_id": "res_27e78d35c0714e23df1eb9fa",
@@ -61,10 +61,11 @@
       "score": 1.5,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "тест",
+      "feedback": "Пример не объяснён.",
+      "feedback_review_required": true,
       "updated_by": "b2_maxim",
       "created_at": "2026-08-10T13:17:48.819359Z",
-      "updated_at": "2026-08-11T16:56:57.792553Z"
+      "updated_at": "2026-08-14T16:24:18.425894Z"
     }
   }
 }

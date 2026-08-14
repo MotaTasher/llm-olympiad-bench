@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_07_15_17_08_08_qualifying_missing_20260715_144724_task_08_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-08-12T20:51:09.063491Z",
+  "updated_at": "2026-08-14T20:03:49.011617Z",
   "finalizations": {
     "res_e58db18175a00b67765ffe8d": {
       "result_id": "res_e58db18175a00b67765ffe8d",
@@ -61,11 +61,11 @@
       "score": 1,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "Верно описан язык первой грамматики и разобран случай с пятью буквами b, но полного подсчёта слов длины 95 нет.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Верно разобран случай $B=1$ и компактно описана первая грамматика.\n\nВ случае $B=3$ подсчитано число деревьев вывода, что не совпадает с числом слов, поскольку грамматика неоднозначна.",
+      "feedback_review_required": false,
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T10:30:26.437081Z",
-      "updated_at": "2026-08-12T20:51:09.063491Z"
+      "updated_at": "2026-08-14T20:03:49.011617Z"
     }
   }
 }

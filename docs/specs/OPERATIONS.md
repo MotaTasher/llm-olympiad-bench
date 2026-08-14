@@ -89,10 +89,12 @@ JSON documents that are no longer referenced by the new `generated/data.js`;
 this prevents obsolete schemas or retired attempts from remaining addressable.
 The problem statement is collapsed by default. When the optional shared
 finalization comment is non-empty, one final-comment block appears inside the
-result section. On a single-model solution page the reading order is statement,
-official solution, result, then model solution. The result is therefore always
-visible immediately above the model answer; its optional shared comment appears
-in the same score-colored card. The statement and official
+result section. Final comments use the same sanitized Markdown and KaTeX
+pipeline as solutions, so mathematical notation must be stored as LaTeX inside
+`$...$` or `$$...$$`. On a single-model solution page the reading order is
+result and optional comment, statement, model solution, then official solution.
+The result is therefore the first content card and its optional shared comment
+appears in the same score-colored card. The statement and official
 solution keep neutral card outlines that do not change with the score; only the
 model solution and result use the score-colored outline. The result section
 contains the verdict, score, metrics and optional shared comment.
@@ -271,6 +273,21 @@ The batch launcher does not equate a clean `runner.py` process exit with model
 success: it reads the emitted run JSON and reports failure unless the run is
 completed and every selected result contains a non-empty answer without an
 error.
+
+## Formatting math in published final comments
+
+The reviewed one-off migration for approved Math Cup final comments is dry-run
+by default and applies only when the stored text still matches the audited
+original exactly:
+
+```bash
+python scripts/format_final_comment_math.py
+python scripts/format_final_comment_math.py --apply
+```
+
+It converts formula fragments to the `$...$` LaTeX form used by the public
+Markdown/KaTeX renderer. It refuses comments awaiting review and refuses to
+overwrite a later human edit.
 
 ## Generated artifacts
 

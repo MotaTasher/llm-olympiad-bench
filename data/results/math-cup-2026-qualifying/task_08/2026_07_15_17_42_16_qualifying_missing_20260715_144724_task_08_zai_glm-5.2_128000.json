@@ -51,21 +51,21 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_07_15_17_42_16_qualifying_missing_20260715_144724_task_08_zai_glm-5.2_128000",
-  "updated_at": "2026-08-12T20:51:09.065239Z",
+  "updated_at": "2026-08-14T20:03:49.014171Z",
   "finalizations": {
     "res_891a1740598d690d052d5b7b": {
       "result_id": "res_891a1740598d690d052d5b7b",
       "result_index": 0,
       "model_key": "zai:glm-5.2",
       "model": "glm-5.2",
-      "score": 0.0,
+      "score": 0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Разбор грамматик содержит неверные ограничения на расстояния между буквами b, поэтому вывод о пустом пересечении ошибочен.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Вывод части «2. Анализ грамматики $G_2$» неверен: между соседними буквами $b$ может быть любое чётное ненулевое количество букв $a$, а не только $2$. Это ломает все дальнейшие рассуждения.",
+      "feedback_review_required": false,
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T20:51:09.065239Z",
-      "updated_at": "2026-08-12T20:51:09.065239Z"
+      "updated_at": "2026-08-14T20:03:49.014171Z"
     }
   }
 }

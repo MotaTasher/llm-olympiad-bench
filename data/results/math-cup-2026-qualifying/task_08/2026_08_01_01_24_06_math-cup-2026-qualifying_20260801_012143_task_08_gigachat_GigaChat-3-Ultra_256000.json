@@ -51,21 +51,21 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_08",
   "run_id": "2026_08_01_01_24_06_math-cup-2026-qualifying_20260801_012143_task_08_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-12T20:51:09.064413Z",
+  "updated_at": "2026-08-14T20:03:49.013180Z",
   "finalizations": {
     "res_28e4a6c14917e34775d9a741": {
       "result_id": "res_28e4a6c14917e34775d9a741",
       "result_index": 0,
       "model_key": "gigachat:GigaChat-3-Ultra",
       "model": "GigaChat-3-Ultra",
-      "score": 0.0,
+      "score": 0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Неверно утверждается, что все слова второй грамматики имеют чётную длину. Из-за этого пересечение языков посчитано неправильно.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "В части «2. Анализ грамматики» неверно утверждается, что все слова $G_2$ имеют чётную длину. Это ломает все последующие рассуждения.",
+      "feedback_review_required": false,
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T20:51:09.064413Z",
-      "updated_at": "2026-08-12T20:51:09.064413Z"
+      "updated_at": "2026-08-14T20:03:49.013180Z"
     }
   }
 }

@@ -65,7 +65,7 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_02",
   "run_id": "2026_08_01_00_17_33_math-cup-2026-final_20260801_001725_task_02_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-14T14:10:36.115707Z",
+  "updated_at": "2026-08-14T20:03:49.016416Z",
   "finalizations": {
     "res_b407d351135c5348c037f63a": {
       "result_id": "res_b407d351135c5348c037f63a",
@@ -75,11 +75,11 @@
       "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "В доказательстве неверно используется свойство проектора AB + BA. Для u = (AB + BA)v не будет выполнено (AB+BA)u = Tv.",
+      "feedback": "В доказательстве неверно используется свойство проектора $AB+BA$. Для $u=(AB+BA)v$ не будет выполнено $(AB+BA)u=Tv$.",
       "feedback_review_required": false,
-      "updated_by": "mofeyTEA",
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T20:51:09.067208Z",
-      "updated_at": "2026-08-14T14:10:36.115707Z"
+      "updated_at": "2026-08-14T20:03:49.016416Z"
     }
   }
 }

@@ -51,21 +51,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_09",
   "run_id": "2026_06_30_10_09_21_retry_320k_20260630_100919_task_09_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-08-12T20:51:09.097791Z",
+  "updated_at": "2026-08-14T20:03:49.019315Z",
   "finalizations": {
     "res_42ed0e74e637c4aaec4ace13": {
       "result_id": "res_42ed0e74e637c4aaec4ace13",
       "result_index": 0,
       "model_key": "deepseek:deepseek-v4-pro",
       "model": "deepseek-v4-pro",
-      "score": 0.0,
+      "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "Неверно утверждается, что инверсия переводит радиальный центр пары окружностей в радиальный центр их образов. Из-за этого ключевая прямая определена неправильно.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Ключевое утверждение «прямые $AX_A$, $BX_B$, $CX_C$ не являются попарными радикальными осями $\\omega_A$, $\\omega_B$, $\\omega_C$» неверно.\n\nОсновные ошибки в рассуждениях:\n\nВместо «Нужный знак (точки пересечения внутри $\\Omega_A$) даёт $u=c+d$, $v=b+d$» должно быть «$u=b$, $v=c$».\n\nПосле инверсии радикальная ось окружностей не переходит в радикальную ось.",
+      "feedback_review_required": false,
+      "updated_by": "latex-formatting",
       "created_at": "2026-08-12T20:51:09.097791Z",
-      "updated_at": "2026-08-12T20:51:09.097791Z"
+      "updated_at": "2026-08-14T20:03:49.019315Z"
     }
   }
 }
