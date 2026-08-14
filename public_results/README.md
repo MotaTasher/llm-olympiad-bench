@@ -121,6 +121,8 @@ reading sections in local storage and restores it between tasks and later
 visits. Reference cards keep a neutral outline; the result panel and model
 answer use a solid dark surface with a score-colored outline: green for a full
 score, yellow for a partial score, red for zero and graphite while pending.
+An expanded reading card also closes when its empty background is clicked;
+clicking rendered text, formulas, links or controls does not close it.
 
 Ranking and aggregate table columns are sortable; task headers open the task
 page instead of sorting. The initial order is descending by `points`,

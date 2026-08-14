@@ -259,6 +259,18 @@
     });
   }
 
+  function enableReadingBackgroundCollapse() {
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const details = event.target.closest("details.reading-solution[open]");
+      if (!details || event.target.closest("summary, a, button, input, select, textarea, label")) return;
+      const isEmptyCardSurface = event.target.matches(
+        ".reading-solution, .task-model-body, .prose"
+      );
+      if (isEmptyCardSurface) details.open = false;
+    });
+  }
+
   function protectMath(source) {
     const chunks = [];
     const pattern = /(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\))/g;
@@ -945,6 +957,7 @@
   }
 
   updateSiteLinks();
+  enableReadingBackgroundCollapse();
   if (page === "leaderboard") renderLeaderboard();
   if (page === "competitions") renderCatalog();
   if (page === "solution") renderSolution();

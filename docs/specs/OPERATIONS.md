@@ -102,7 +102,9 @@ Solution cards use a solid dark surface and a score-colored outline matching
 the leaderboard cell; result gradients are not used. Their independent
 open/closed states are saved in browser local storage and restored across task
 navigation and later visits; storage failure falls back to the collapsed HTML
-defaults without blocking the page. Task headers in the leaderboard are links,
+defaults without blocking the page. Clicking an empty background area inside
+an expanded reading card collapses it, while text, formulas, links and controls
+keep their normal interaction. Task headers in the leaderboard are links,
 not sort controls. `/problems/<competition-id>/<task-slug>` opens the task
 statement, official solution and every model answer in leaderboard model order,
 with all sections initially collapsed and each model card carrying its verdict.
