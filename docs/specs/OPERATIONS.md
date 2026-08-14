@@ -122,7 +122,8 @@ concrete task key and the solution shell under every concrete model key. Legacy
 `generated/data.js`, so the matrix never links to a missing object.
 
 For the qualifying stage's answer-only tasks 1–6, the approved bulk operation
-for every non-full selected result is explicit and idempotent:
+for every zero-score selected result is explicit and idempotent. Partial-credit
+results keep their specific organizer comments:
 
 ```bash
 python scripts/approve_qualifying_wrong_answers.py

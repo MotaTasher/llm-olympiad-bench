@@ -23,7 +23,7 @@ FINAL_FEEDBACK = "Неверный ответ."
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Approve the standard final comment for non-full answers in "
+            "Approve the standard final comment for zero-score answers in "
             "Math Cup 2026 qualifying tasks 1–6."
         ),
     )
@@ -50,7 +50,7 @@ def main() -> int:
         for cell in row["cells"].values():
             attempt = cell["attempt"]
             final = attempt.get("finalization") if attempt else None
-            if not final or float(final["score"]) >= float(problem["max_score"]):
+            if not final or float(final["score"]) != 0:
                 continue
             if (
                 str(final.get("feedback") or "").strip() == FINAL_FEEDBACK
@@ -59,7 +59,7 @@ def main() -> int:
                 continue
             targets.append((problem, attempt, final))
 
-    print(f"Would approve {len(targets)} non-full answers with: {FINAL_FEEDBACK}")
+    print(f"Would approve {len(targets)} zero-score answers with: {FINAL_FEEDBACK}")
     if not args.apply:
         return 0
     for problem, attempt, final in targets:
