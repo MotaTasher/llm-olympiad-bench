@@ -52,6 +52,11 @@ def main() -> int:
             final = attempt.get("finalization") if attempt else None
             if not final or float(final["score"]) >= float(problem["max_score"]):
                 continue
+            if (
+                str(final.get("feedback") or "").strip() == FINAL_FEEDBACK
+                and not final.get("feedback_review_required")
+            ):
+                continue
             targets.append((problem, attempt, final))
 
     print(f"Would approve {len(targets)} non-full answers with: {FINAL_FEEDBACK}")

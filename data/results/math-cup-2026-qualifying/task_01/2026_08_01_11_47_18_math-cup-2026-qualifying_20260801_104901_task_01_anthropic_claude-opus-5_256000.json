@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_08_01_11_47_18_math-cup-2026-qualifying_20260801_104901_task_01_anthropic_claude-opus-5_256000",
-  "updated_at": "2026-08-14T14:38:30.262273Z",
+  "updated_at": "2026-08-14T14:41:26.585166Z",
   "finalizations": {
     "res_38c4d39869e505b676eccdae": {
       "result_id": "res_38c4d39869e505b676eccdae",
@@ -65,7 +65,7 @@
       "feedback_review_required": false,
       "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:08.849686Z",
-      "updated_at": "2026-08-14T14:38:30.262273Z"
+      "updated_at": "2026-08-14T14:41:26.585166Z"
     }
   }
 }

@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_05",
   "run_id": "2026_08_01_00_33_15_math-cup-2026-qualifying_20260801_001725_task_05_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-14T14:38:30.274496Z",
+  "updated_at": "2026-08-14T14:41:26.597694Z",
   "finalizations": {
     "res_ceb4dda4c5b1312620badcbb": {
       "result_id": "res_ceb4dda4c5b1312620badcbb",
@@ -65,7 +65,7 @@
       "feedback_review_required": false,
       "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:09.059858Z",
-      "updated_at": "2026-08-14T14:38:30.274496Z"
+      "updated_at": "2026-08-14T14:41:26.597694Z"
     }
   }
 }

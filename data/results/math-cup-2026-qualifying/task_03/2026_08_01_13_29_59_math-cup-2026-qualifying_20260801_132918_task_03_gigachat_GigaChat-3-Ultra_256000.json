@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_03",
   "run_id": "2026_08_01_13_29_59_math-cup-2026-qualifying_20260801_132918_task_03_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-14T14:38:30.272717Z",
+  "updated_at": "2026-08-14T14:41:26.595728Z",
   "finalizations": {
     "res_1c73f49d8ad9f879c5a4cc77": {
       "result_id": "res_1c73f49d8ad9f879c5a4cc77",
@@ -65,7 +65,7 @@
       "feedback_review_required": false,
       "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:09.058281Z",
-      "updated_at": "2026-08-14T14:38:30.272717Z"
+      "updated_at": "2026-08-14T14:41:26.595728Z"
     }
   }
 }
