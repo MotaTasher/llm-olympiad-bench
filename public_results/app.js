@@ -790,7 +790,13 @@
     );
     const safeTaskIndex = taskIndex >= 0 ? taskIndex : 0;
     const task = competition.tasks[safeTaskIndex];
-    const models = competition.participants.filter((item) => item.type === "model");
+    const rankedParticipants = competition.participants.filter(
+      (item) => item.type === "model" || item.type === "team"
+    );
+    const ranks = rankingFor(rankedParticipants);
+    const models = competition.participants
+      .filter((item) => item.type === "model")
+      .sort((left, right) => compareParticipants(left, right, sortState(competition.id), ranks));
     const release = releaseForCompetition(competition.id);
     document.title = `${task?.title || "Задача"} — Reasoning Space`;
     document.querySelector("#task-back").href = homeRoute(

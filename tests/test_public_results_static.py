@@ -33,6 +33,7 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn('class="task-header-link"', app)
         self.assertNotIn('sortableHeader(`task:', app)
         self.assertIn('data-reading-section="model:', app)
+        self.assertIn("compareParticipants(left, right, sortState(competition.id), ranks)", app)
 
 
 if __name__ == "__main__":
