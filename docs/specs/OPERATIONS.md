@@ -88,11 +88,12 @@ After a successful projection build, the exporter removes generated solution
 JSON documents that are no longer referenced by the new `generated/data.js`;
 this prevents obsolete schemas or retired attempts from remaining addressable.
 The problem statement is collapsed by default. When the optional shared
-finalization comment is non-empty, one collegial-comment block appears before
-the model solution. On the solution page, the public score badge reuses the
-leaderboard cell's full/partial/zero/pending color. The verdict and score are
-also repeated after the official solution so the result remains discoverable
-after reading the full answer.
+finalization comment is non-empty, one final-comment block appears inside the
+result section. On a single-model solution page the reading order is statement,
+official solution, model solution, then result. The statement and official
+solution are borderless collapsible sections; only the model solution keeps the
+score-colored card outline. The final result section contains the verdict,
+score, metrics and optional shared comment.
 Solution cards use a solid dark surface and a score-colored outline matching
 the leaderboard cell; result gradients are not used. Their independent
 open/closed states are saved in browser local storage and restored across task

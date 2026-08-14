@@ -804,12 +804,32 @@ h1, h2, h3 {
 .reading-solution[open] summary b { transform: rotate(45deg); }
 .reading-solution .prose { padding: clamp(32px, 5vw, 66px); }
 
+.reading-reference,
+.reading-reference[open] {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.reading-reference summary,
+.reading-reference[open] summary {
+  padding-right: 0;
+  padding-left: 0;
+  border-bottom: 1px solid var(--line);
+}
+.reading-reference .prose {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.solution-result-section { display: grid; gap: 14px; margin-top: 22px; }
+
 .solution-result-repeat {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  margin-top: 22px;
+  margin-top: 0;
   padding: clamp(28px, 4vw, 48px);
   border: 1px solid var(--line);
   border-radius: 32px;

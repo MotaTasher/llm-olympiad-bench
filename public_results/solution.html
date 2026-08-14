@@ -8,7 +8,7 @@
     <title>Решение — Reasoning Space</title>
     <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
     <link rel="stylesheet" href="vendor/katex/katex.min.css">
-    <link rel="stylesheet" href="styles.css?v=25">
+    <link rel="stylesheet" href="styles.css?v=26">
     <script src="vendor/marked/marked.min.js" defer></script>
     <script src="vendor/dompurify/purify.min.js" defer></script>
     <script src="vendor/katex/katex.min.js" defer></script>
@@ -39,20 +39,10 @@
           <p class="eyebrow" id="solution-competition">Math Cup 2026</p>
           <h1 id="solution-task">Задача</h1>
         </div>
-        <div class="solution-verdict solution-result-badge score-empty">
-          <span>Результат</span>
-          <strong id="solution-score" data-solution-score>—</strong>
-        </div>
       </section>
 
       <section class="solution-layout">
-        <dl class="metrics-list solution-metrics">
-          <div><dt>Вердикт</dt><dd id="solution-verdict" data-solution-verdict>—</dd></div>
-          <div><dt>Стоимость</dt><dd id="solution-cost">—</dd></div>
-          <div><dt>Токены</dt><dd id="solution-tokens">—</dd></div>
-        </dl>
-
-        <details class="reading-solution task-solution" data-reading-section="statement">
+        <details class="reading-solution reading-reference task-solution" data-reading-section="statement">
           <summary>
             <span><small>Задача</small>Условие</span>
             <b aria-hidden="true">+</b>
@@ -60,12 +50,15 @@
           <div class="prose" id="solution-statement"></div>
         </details>
 
-        <section class="expert-review-section" id="expert-review-section" hidden>
-          <header class="expert-review-heading">
-            <h2>Комментарий экспертов</h2>
-          </header>
-          <div class="expert-review-grid" id="expert-reviews"></div>
-        </section>
+        <details class="reading-solution reading-reference official-solution" data-reading-section="official">
+          <summary>
+            <span><small>Эталон</small>Авторское решение</span>
+            <b aria-hidden="true">+</b>
+          </summary>
+          <div class="prose" id="official-solution-text">
+            <p>Авторское решение загружается…</p>
+          </div>
+        </details>
 
         <details class="reading-solution model-solution" data-reading-section="model">
           <summary>
@@ -75,26 +68,30 @@
           <div class="prose" id="solution-text"></div>
         </details>
 
-        <details class="reading-solution official-solution" data-reading-section="official">
-          <summary>
-            <span><small>Эталон</small>Авторское решение</span>
-            <b aria-hidden="true">+</b>
-          </summary>
-          <div class="prose" id="official-solution-text">
-            <p>В первом прототипе здесь показано место для авторского решения. Полный текст будет подключён вместе с публичным экспортом условий и решений задач.</p>
-            <p>Блок занимает ту же читательскую ширину, что и ответ модели, поэтому длинные доказательства и разборы можно будет читать без узкой боковой колонки.</p>
-          </div>
-        </details>
+        <section class="solution-result-section" aria-label="Результат проверки">
+          <section class="solution-result-repeat">
+            <div>
+              <p class="eyebrow">Результат</p>
+              <h2 data-solution-verdict>—</h2>
+            </div>
+            <div class="solution-verdict solution-result-badge score-empty">
+              <span>Баллы</span>
+              <strong data-solution-score>—</strong>
+            </div>
+          </section>
 
-        <section class="solution-result-repeat" aria-label="Результат проверки">
-          <div>
-            <p class="eyebrow">Результат</p>
-            <h2 data-solution-verdict>—</h2>
-          </div>
-          <div class="solution-verdict solution-result-badge score-empty">
-            <span>Баллы</span>
-            <strong data-solution-score>—</strong>
-          </div>
+          <dl class="metrics-list solution-metrics">
+            <div><dt>Вердикт</dt><dd id="solution-verdict" data-solution-verdict>—</dd></div>
+            <div><dt>Стоимость</dt><dd id="solution-cost">—</dd></div>
+            <div><dt>Токены</dt><dd id="solution-tokens">—</dd></div>
+          </dl>
+
+          <section class="expert-review-section" id="expert-review-section" hidden>
+            <header class="expert-review-heading">
+              <h2>Комментарий экспертов</h2>
+            </header>
+            <div class="expert-review-grid" id="expert-reviews"></div>
+          </section>
         </section>
       </section>
     </main>
