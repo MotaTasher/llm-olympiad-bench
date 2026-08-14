@@ -415,7 +415,8 @@ window.RESULTS_DATA = {
       series: "Math Cup",
       year: "2026",
       title: "Math Cup 2026",
-      stages: ["Финал · 9 задач"],
+      stageLabel: "Финал",
+      taskLabel: "9 задач",
       competitionId: "math-cup-2026-final",
       accent: "dark"
     },
@@ -424,7 +425,8 @@ window.RESULTS_DATA = {
       series: "Math Cup",
       year: "2026",
       title: "Math Cup 2026",
-      stages: ["Отбор · 8 задач"],
+      stageLabel: "Отбор",
+      taskLabel: "8 задач",
       competitionId: "math-cup-2026-qualifying",
       accent: "dark"
     }

@@ -667,7 +667,6 @@
     grid.innerHTML = data.catalog.map((item) => {
       const resultsHref = homeRoute(`?competition=${encodeURIComponent(item.competitionId)}`);
       const problemsHref = problemSetRoute(item.competitionId);
-      const stages = item.stages.map((stage) => `<span>${escapeHtml(stage)}</span>`).join("");
       return `
         <article class="competition-card">
           <a class="competition-card-link" href="${resultsHref}" aria-label="Открыть таблицу результатов: ${escapeHtml(item.title)}"></a>
@@ -677,7 +676,8 @@
           </div>
           <div class="competition-card-body">
             <h2>${escapeHtml(item.title)}</h2>
-            <div class="competition-stage-tags">${stages}</div>
+            <p class="competition-card-stage">${escapeHtml(item.stageLabel)}</p>
+            <div class="competition-stage-tags"><span>${escapeHtml(item.taskLabel)}</span></div>
           </div>
           <div class="competition-card-actions">
             <a class="catalog-action secondary" href="${problemsHref}">Условия и авторские решения</a>
