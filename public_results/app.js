@@ -307,14 +307,14 @@
   }
 
   function renderFinalReview(review) {
-    const section = document.querySelector("#expert-review-section");
+    const comment = document.querySelector("#expert-review-comment");
     const container = document.querySelector("#expert-reviews");
-    if (!section || !container) return;
+    if (!comment || !container) return;
     const feedback = String(review?.final?.feedback || "").trim();
     container.innerHTML = feedback
       ? `<article class="expert-review-card final"><div class="expert-review-copy prose">${renderMarkdown(feedback, "")}</div></article>`
       : "";
-    section.hidden = !feedback;
+    comment.hidden = !feedback;
     if (feedback) renderMathInNode(container);
   }
 
@@ -822,8 +822,14 @@
             </span>
           </summary>
           <div class="task-model-body">
+            <div class="task-result-panel">
+              <div class="task-result-line">
+                <span>Результат</span>
+                <strong>${escapeHtml(taskVerdict(score, maxScore))} · ${score == null ? "—" : escapeHtml(`${score} / ${maxScore}`)}</strong>
+              </div>
+              <div class="task-final-comment" data-task-comment hidden></div>
+            </div>
             <div class="prose" data-task-answer><p>Загружаем ответ…</p></div>
-            <div class="task-final-comment" data-task-comment hidden></div>
           </div>
         </details>
       `;

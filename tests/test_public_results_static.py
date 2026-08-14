@@ -13,11 +13,13 @@ class PublicResultsStaticTests(unittest.TestCase):
         statement = html.index('data-reading-section="statement"')
         official = html.index('data-reading-section="official"')
         model = html.index('data-reading-section="model"')
-        result = html.index('class="solution-result-section"')
+        result = html.index('class="solution-review-section"')
         self.assertLess(statement, official)
-        self.assertLess(official, model)
-        self.assertLess(model, result)
+        self.assertLess(official, result)
+        self.assertLess(result, model)
         self.assertEqual(html.count('data-solution-score'), 1)
+        self.assertNotIn('id="expert-review-section" hidden', html)
+        self.assertIn('id="expert-review-comment" hidden', html)
 
     def test_solution_ui_persists_sections_and_colors_cards_by_result(self) -> None:
         app = (ROOT / "public_results" / "app.js").read_text(encoding="utf-8")
@@ -30,7 +32,7 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn("border-color: rgba(var(--result-accent-rgb)", styles)
         self.assertNotIn('data-reading-section="model" open', (ROOT / "public_results" / "solution.html").read_text(encoding="utf-8"))
         self.assertIn(".reading-reference[open]", styles)
-        reference_css = styles[styles.index(".reading-reference,"):styles.index(".solution-result-section")]
+        reference_css = styles[styles.index(".reading-reference,"):styles.index(".task-model-list")]
         self.assertIn("border-color: var(--line);", reference_css)
         self.assertNotIn("rgba(var(--result-accent-rgb)", reference_css)
 
@@ -47,6 +49,7 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertNotIn('sortableHeader(`task:', app)
         self.assertIn('data-reading-section="model:', app)
         self.assertIn("compareParticipants(left, right, sortState(competition.id), ranks)", app)
+        self.assertLess(app.index('class="task-result-panel"'), app.index('data-task-answer'))
 
 
 if __name__ == "__main__":

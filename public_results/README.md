@@ -105,19 +105,21 @@ finalization-comment block only when that optional comment is non-empty. The req
 DOMPurify and KaTeX browser assets (including fonts and their licenses) are
 versioned under `vendor/`, so rendering does not depend on a third-party CDN.
 A solution's score badge uses the same full/partial/zero/pending color as its
-leaderboard cell. The verdict and score are repeated after the official
-solution so readers encounter the result again after finishing the page.
+leaderboard cell. The verdict, score and metrics sit in one colored-outline
+panel immediately above the model solution. When a shared final comment exists,
+it appears in that same panel; without a comment the result panel remains.
 A safe plain-text fallback remains in place. The renderer also replaces
 KaTeX's private-use negation overlay when a browser/font combination exposes it
-as a missing-glyph box. The task statement is collapsed by default; model and
-official solutions remain collapsible and open by default, and long prose is
-centered in a wider reading column.
+as a missing-glyph box. The statement, model answer and official solution are
+collapsed by default, and long prose is centered in a wider reading column.
 The browser remembers the independent open or closed state of all three
 reading sections in local storage and restores it between tasks and later
-visits. Their cards use a restrained black-to-result gradient: green for a full
+visits. Reference cards keep a neutral outline; the result panel and model
+answer use a solid dark surface with a score-colored outline: green for a full
 score, yellow for a partial score, red for zero and graphite while pending.
 
-Every table column is sortable. The initial order is descending by `points`,
+Ranking and aggregate table columns are sortable; task headers open the task
+page instead of sorting. The initial order is descending by `points`,
 which is the sum of all published absolute task scores, not the count of
 perfect answers. Cost/prize, sum, token and accuracy columns precede the task
 columns. Task scores fill the complete table cell, aggregate values use a

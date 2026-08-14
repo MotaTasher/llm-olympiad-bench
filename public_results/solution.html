@@ -8,14 +8,14 @@
     <title>Решение — Reasoning Space</title>
     <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
     <link rel="stylesheet" href="vendor/katex/katex.min.css">
-    <link rel="stylesheet" href="styles.css?v=26">
+    <link rel="stylesheet" href="styles.css?v=27">
     <script src="vendor/marked/marked.min.js" defer></script>
     <script src="vendor/dompurify/purify.min.js" defer></script>
     <script src="vendor/katex/katex.min.js" defer></script>
     <script src="vendor/katex/contrib/auto-render.min.js" defer></script>
     <script src="data.js?v=10" defer></script>
     <script src="generated/data.js?v=9" defer></script>
-    <script src="app.js?v=20" defer></script>
+    <script src="app.js?v=21" defer></script>
   </head>
   <body data-page="solution">
     <header class="site-header">
@@ -60,16 +60,8 @@
           </div>
         </details>
 
-        <details class="reading-solution model-solution" data-reading-section="model">
-          <summary>
-            <span><small>Решение модели</small><span id="solution-model">Модель</span></span>
-            <b aria-hidden="true">+</b>
-          </summary>
-          <div class="prose" id="solution-text"></div>
-        </details>
-
-        <section class="solution-result-section" aria-label="Результат проверки">
-          <section class="solution-result-repeat">
+        <section class="solution-review-section" id="expert-review-section" aria-label="Результат проверки">
+          <header class="solution-review-summary">
             <div>
               <p class="eyebrow">Результат</p>
               <h2 data-solution-verdict>—</h2>
@@ -78,7 +70,7 @@
               <span>Баллы</span>
               <strong data-solution-score>—</strong>
             </div>
-          </section>
+          </header>
 
           <dl class="metrics-list solution-metrics">
             <div><dt>Вердикт</dt><dd id="solution-verdict" data-solution-verdict>—</dd></div>
@@ -86,13 +78,19 @@
             <div><dt>Токены</dt><dd id="solution-tokens">—</dd></div>
           </dl>
 
-          <section class="expert-review-section" id="expert-review-section" hidden>
-            <header class="expert-review-heading">
-              <h2>Комментарий экспертов</h2>
-            </header>
+          <section class="expert-review-comment" id="expert-review-comment" hidden>
+            <p class="eyebrow">Комментарий экспертов</p>
             <div class="expert-review-grid" id="expert-reviews"></div>
           </section>
         </section>
+
+        <details class="reading-solution model-solution" data-reading-section="model">
+          <summary>
+            <span><small>Решение модели</small><span id="solution-model">Модель</span></span>
+            <b aria-hidden="true">+</b>
+          </summary>
+          <div class="prose" id="solution-text"></div>
+        </details>
       </section>
     </main>
 

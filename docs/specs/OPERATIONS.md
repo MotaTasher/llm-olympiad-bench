@@ -90,9 +90,11 @@ this prevents obsolete schemas or retired attempts from remaining addressable.
 The problem statement is collapsed by default. When the optional shared
 finalization comment is non-empty, one final-comment block appears inside the
 result section. On a single-model solution page the reading order is statement,
-official solution, model solution, then result. The statement and official
+official solution, result, then model solution. The result is therefore always
+visible immediately above the model answer; its optional shared comment appears
+in the same score-colored card. The statement and official
 solution keep neutral card outlines that do not change with the score; only the
-model solution uses the score-colored outline. The final result section
+model solution and result use the score-colored outline. The result section
 contains the verdict, score, metrics and optional shared comment.
 Solution cards use a solid dark surface and a score-colored outline matching
 the leaderboard cell; result gradients are not used. Their independent
@@ -102,6 +104,8 @@ defaults without blocking the page. Task headers in the leaderboard are links,
 not sort controls. `/problems/<competition-id>/<task-slug>` opens the task
 statement, official solution and every model answer in leaderboard model order,
 with all sections initially collapsed and each model card carrying its verdict.
+Inside an expanded model card, the result and optional shared comment precede
+the answer and use the same score color as the card outline.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the
 selected release; generated model data continues to overlay only the result
