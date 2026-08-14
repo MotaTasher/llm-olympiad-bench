@@ -7,6 +7,7 @@ from tempfile import TemporaryDirectory
 from scripts.export_public_results import (
     atomic_write_text,
     public_model_slug,
+    remove_stale_solution_documents,
     public_score,
     public_task_slug,
     rewrite_public_markdown,
@@ -17,6 +18,21 @@ from scripts.export_public_results import (
 
 
 class PublicResultsExportTests(unittest.TestCase):
+    def test_public_export_removes_unreferenced_solution_documents(self) -> None:
+        with TemporaryDirectory() as directory:
+            output = Path(directory)
+            current = output / "solutions" / "cup" / "current.json"
+            stale = output / "solutions" / "cup" / "stale.json"
+            atomic_write_text(current, "{}\n")
+            atomic_write_text(stale, '{"review":{"experts":[]}}\n')
+            removed = remove_stale_solution_documents(
+                output,
+                {"generated/solutions/cup/current.json"},
+            )
+            self.assertEqual(removed, 1)
+            self.assertTrue(current.exists())
+            self.assertFalse(stale.exists())
+
     def test_clean_route_slugs_match_public_url_contract(self) -> None:
         self.assertEqual(public_task_slug("task_01"), "task1")
         self.assertEqual(public_task_slug("task-12"), "task12")

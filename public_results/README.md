@@ -4,7 +4,8 @@ This is the standalone public Reasoning Space site. It contains:
 
 - `index.html`: benchmark, year and stage filters plus one selected leaderboard;
 - `competitions.html`: compact buttons for available competition releases;
-- `solution.html`: full-width model and official solution reading layout;
+- `solution.html`: full-width single-model solution reading layout;
+- `task.html`: statement, official solution and all model answers for one task;
 - `data.js`: fallback release, team and catalog data;
 - `assets/csspace-logo.svg`: local vector CS Space logo used in headers and footers;
 - `assets/formula-pattern-{desktop,mobile}.svg`: original vector formula backgrounds;
@@ -17,13 +18,15 @@ The public URL contract uses clean, extension-free routes:
 
 - `/` for the leaderboard;
 - `/problems` for the published-problem catalog;
+- `/problems/<competition-id>/<task-slug>` for every model answer to one task;
 - `/problems/<competition-id>/<task-slug>/<model-slug>` for a concrete model
   answer, for example `/problems/math-cup-2026-final/task1/gpt-5.6`.
 
-Old `index.html`, `competitions.html` and query-string solution URLs remain
-usable as compatibility entry points. On object storage, `/problems` and every
-concrete solution route are extensionless HTML objects that contain the catalog
-or solution shell respectively; all page assets use root-relative URLs.
+Old `index.html`, `competitions.html`, `task.html` and query-string solution URLs
+remain usable as compatibility entry points. On object storage, `/problems` and
+every concrete task or solution route are extensionless HTML objects that
+contain the matching catalog, task or solution shell; all page assets use
+root-relative URLs.
 
 The exporter copies each selected competition's `assets/` directory into
 `generated/assets/<competition-id>/` and rewrites `assets/...` references in
@@ -32,7 +35,8 @@ links, including links accidentally wrapped in inline code, into clickable
 Markdown links. The CS Space SVG is used as the favicon on every public page.
 
 It deliberately does not import Flask, modify scoring routes, or write to run
-logs and evaluation sidecars.
+logs and evaluation sidecars. Each export also removes obsolete generated
+solution JSON files that are no longer referenced by the current projection.
 
 Generate the current public projection, then open it locally:
 

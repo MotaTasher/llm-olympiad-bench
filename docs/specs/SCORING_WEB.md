@@ -172,7 +172,11 @@ In the finalization matrix, `💬` marks a non-full effective score whose shared
 comment is still empty. `GPT` marks a generated comment draft that must be
 checked. The detail editor exposes the same flag; while it remains set, the
 public exporter suppresses the draft. Saving the reviewed text with the flag
-cleared makes it eligible for publication.
+cleared makes it eligible for publication. After a finalization is complete,
+the editor opens the next cell that still needs an organizer action. The order
+is model-by-model within the current task and then task-by-task; complete cells
+and cells without an individual check are skipped. An incomplete comment or a
+remaining GPT flag keeps the editor on the current cell.
 
 The competition matrix presents active model columns in fixed provider groups:
 `anthropic`, `deepseek`, `google`, `gigachat`, `xai`, `zai`, `openai`,

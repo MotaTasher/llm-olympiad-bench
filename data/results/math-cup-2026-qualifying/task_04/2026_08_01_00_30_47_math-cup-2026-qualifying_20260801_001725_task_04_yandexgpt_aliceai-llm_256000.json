@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_04",
   "run_id": "2026_08_01_00_30_47_math-cup-2026-qualifying_20260801_001725_task_04_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-12T20:51:09.059296Z",
+  "updated_at": "2026-08-14T14:38:30.273937Z",
   "finalizations": {
     "res_451b392ed56d32a4559a84bb": {
       "result_id": "res_451b392ed56d32a4559a84bb",
@@ -61,11 +61,11 @@
       "score": 0.0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Рекуррентные уравнения не решены, а итоговое значение подставлено без вывода. Оно не совпадает с правильным ожиданием.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Неверный ответ.",
+      "feedback_review_required": false,
+      "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:09.059296Z",
-      "updated_at": "2026-08-12T20:51:09.059296Z"
+      "updated_at": "2026-08-14T14:38:30.273937Z"
     }
   }
 }

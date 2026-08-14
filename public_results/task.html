@@ -5,14 +5,19 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#030207">
-    <title>Задачи — Reasoning Space</title>
+    <title>Задача — Reasoning Space</title>
     <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
+    <link rel="stylesheet" href="vendor/katex/katex.min.css">
     <link rel="stylesheet" href="styles.css?v=25">
+    <script src="vendor/marked/marked.min.js" defer></script>
+    <script src="vendor/dompurify/purify.min.js" defer></script>
+    <script src="vendor/katex/katex.min.js" defer></script>
+    <script src="vendor/katex/contrib/auto-render.min.js" defer></script>
     <script src="data.js?v=10" defer></script>
     <script src="generated/data.js?v=9" defer></script>
     <script src="app.js?v=20" defer></script>
   </head>
-  <body data-page="competitions">
+  <body data-page="task">
     <header class="site-header">
       <div class="brand">
         <a class="brand-logo" href="https://csspace.io/" aria-label="Официальный сайт CS Space">
@@ -26,22 +31,27 @@
       </nav>
     </header>
 
-    <main>
-      <section class="catalog-intro">
-        <p class="eyebrow">Архив</p>
-        <h1>Задачи</h1>
-        <p>Здесь собраны соревнования и наборы задач, на которых мы проверяем модели.</p>
+    <main class="solution-main task-main">
+      <a class="back-link" id="task-back" href="./">← Назад к таблице</a>
+      <section class="solution-hero task-hero">
+        <div>
+          <p class="eyebrow" id="task-competition">Math Cup 2026</p>
+          <h1 id="task-title">Задача</h1>
+        </div>
       </section>
 
-      <section class="catalog-section" aria-labelledby="available-title">
-        <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">Опубликовано</p>
-            <h2 id="available-title">Опубликованные</h2>
-          </div>
-          <p class="section-note">Для каждого этапа есть отдельная таблица с результатами моделей и участников.</p>
-        </div>
-        <div class="competition-grid" id="competition-grid"></div>
+      <section class="solution-layout task-solutions-layout">
+        <details class="reading-solution task-solution neutral-solution" data-reading-section="statement">
+          <summary><span><small>Задача</small>Условие</span><b aria-hidden="true">+</b></summary>
+          <div class="prose" id="task-statement"><p>Загружаем условие…</p></div>
+        </details>
+
+        <details class="reading-solution official-solution neutral-solution" data-reading-section="official">
+          <summary><span><small>Эталон</small>Авторское решение</span><b aria-hidden="true">+</b></summary>
+          <div class="prose" id="task-official"><p>Загружаем авторское решение…</p></div>
+        </details>
+
+        <div class="task-model-list" id="task-model-solutions"></div>
       </section>
     </main>
 

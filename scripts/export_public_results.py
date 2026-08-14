@@ -246,6 +246,26 @@ def atomic_write_text(path: Path, value: str) -> None:
         temporary.unlink(missing_ok=True)
 
 
+def remove_stale_solution_documents(output_dir: Path, current_paths: set[str]) -> int:
+    """Remove old generated answer documents that are no longer in data.js."""
+    solutions_dir = (output_dir / "solutions").resolve()
+    if not solutions_dir.is_dir():
+        return 0
+    expected = {
+        (output_dir / path.removeprefix("generated/")).resolve()
+        for path in current_paths
+        if path.startswith("generated/solutions/")
+    }
+    removed = 0
+    for path in solutions_dir.rglob("*.json"):
+        resolved = path.resolve()
+        if solutions_dir not in resolved.parents or resolved in expected:
+            continue
+        path.unlink()
+        removed += 1
+    return removed
+
+
 def solution_document(
     *,
     competition: dict[str, Any],
@@ -477,6 +497,14 @@ def export_public_results(
             for competition_id in competition_ids
         ],
     }
+    current_solution_paths = {
+        path
+        for competition in document["competitions"]
+        for participant in competition["participants"]
+        for path in participant["solutions"]
+        if path
+    }
+    remove_stale_solution_documents(output_dir, current_solution_paths)
     atomic_write_text(
         output_dir / "data.js",
         "window.RESULTS_DATA_GENERATED = "

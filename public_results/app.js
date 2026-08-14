@@ -96,6 +96,18 @@
     };
   }
 
+  function cleanTaskRoute() {
+    const pathname = window.location.pathname.startsWith(siteBasePath())
+      ? `/${window.location.pathname.slice(siteBasePath().length)}`
+      : window.location.pathname;
+    const match = pathname.match(/^\/problems\/([^/]+)\/([^/]+)\/?$/);
+    if (!match) return null;
+    return {
+      competition: decodeURIComponent(match[1]),
+      task: decodeURIComponent(match[2])
+    };
+  }
+
   function taskRouteSlug(task) {
     if (task?.slug) return task.slug;
     const match = String(task?.id || "").match(/^task[_-]?0*(\d+)$/i);
@@ -124,6 +136,17 @@
       return `${siteBasePath()}solution.html?${params}`;
     }
     return `/problems/${encodeURIComponent(competition.id)}/${encodeURIComponent(taskRouteSlug(task))}/${encodeURIComponent(participantRouteSlug(participant))}`;
+  }
+
+  function taskRoute(competition, task) {
+    if (isLegacyDeployment()) {
+      const params = new URLSearchParams({
+        competition: competition.id,
+        task: task.id
+      });
+      return `${siteBasePath()}task.html?${params}`;
+    }
+    return `/problems/${encodeURIComponent(competition.id)}/${encodeURIComponent(taskRouteSlug(task))}`;
   }
 
   function competitionById(id) {
@@ -197,7 +220,7 @@
   }
 
   function rememberReadingPreferences() {
-    const preferences = {};
+    const preferences = readReadingPreferences();
     document.querySelectorAll("details[data-reading-section]").forEach((details) => {
       preferences[details.dataset.readingSection] = details.open;
     });
@@ -208,12 +231,15 @@
     }
   }
 
-  function restoreReadingPreferences() {
+  function restoreReadingPreferences(root = document) {
     const preferences = readReadingPreferences();
-    document.querySelectorAll("details[data-reading-section]").forEach((details) => {
+    root.querySelectorAll("details[data-reading-section]").forEach((details) => {
       const remembered = preferences[details.dataset.readingSection];
       if (typeof remembered === "boolean") details.open = remembered;
-      details.addEventListener("toggle", rememberReadingPreferences);
+      if (details.dataset.readingPreferenceReady !== "true") {
+        details.addEventListener("toggle", rememberReadingPreferences);
+        details.dataset.readingPreferenceReady = "true";
+      }
     });
   }
 
@@ -482,7 +508,13 @@
           ${sortableHeader("points", "Сумма", "metric-column")}
           ${sortableHeader("tokens", "Токены", "metric-column")}
           ${sortableHeader("accuracy", "Точность", "metric-column")}
-          ${competition.tasks.map((task, index) => sortableHeader(`task:${index}`, task.short, "task-column", `${task.title} · максимум ${task.maxScore} балла`)).join("")}
+          ${competition.tasks.map((task) => `
+            <th class="task-column" scope="col" title="${escapeHtml(task.title)} · максимум ${task.maxScore} балла">
+              <a class="task-header-link" href="${taskRoute(competition, task)}" aria-label="Открыть все решения: ${escapeHtml(task.title)}">
+                ${escapeHtml(task.short)}
+              </a>
+            </th>
+          `).join("")}
         </tr>
       </thead>
     `;
@@ -730,8 +762,106 @@
     }
   }
 
+  function taskVerdict(score, maxScore) {
+    if (score == null) return "На проверке";
+    if (score >= maxScore) return "Полное решение";
+    if (score > 0) return "Частичное решение";
+    return "Не зачтено";
+  }
+
+  async function fetchPublishedSolution(path) {
+    if (!path) return null;
+    const response = await fetch(
+      `${siteBasePath()}${path.replace(/^\/+/, "")}`,
+      { cache: "no-store" }
+    );
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  }
+
+  async function renderTask() {
+    const params = query();
+    const route = cleanTaskRoute();
+    const competitionId = route?.competition || params.get("competition");
+    const taskId = route?.task || params.get("task");
+    const competition = competitionById(competitionId) || data.competitions[0];
+    const taskIndex = competition.tasks.findIndex(
+      (item) => item.id === taskId || taskRouteSlug(item) === taskId
+    );
+    const safeTaskIndex = taskIndex >= 0 ? taskIndex : 0;
+    const task = competition.tasks[safeTaskIndex];
+    const models = competition.participants.filter((item) => item.type === "model");
+    const release = releaseForCompetition(competition.id);
+    document.title = `${task?.title || "Задача"} — Reasoning Space`;
+    document.querySelector("#task-back").href = homeRoute(
+      `?release=${encodeURIComponent(release?.id || data.releases[0].id)}`
+    );
+    document.querySelector("#task-competition").textContent = `${competition.title} · ${competition.stage}`;
+    document.querySelector("#task-title").textContent = task?.title || "Задача";
+
+    const list = document.querySelector("#task-model-solutions");
+    list.innerHTML = models.map((model) => {
+      const score = model.scores?.[safeTaskIndex];
+      const maxScore = Number(task?.maxScore || 0);
+      const state = scoreClass(score, maxScore);
+      return `
+        <details class="reading-solution task-model-solution ${state}"
+                 data-reading-section="model:${escapeHtml(participantRouteSlug(model))}"
+                 data-model-id="${escapeHtml(model.id)}">
+          <summary>
+            <span><small>Решение модели</small>${escapeHtml(model.name)}</span>
+            <span class="task-model-summary-result">
+              <em class="task-verdict ${state}">${escapeHtml(taskVerdict(score, maxScore))} · ${score == null ? "—" : escapeHtml(`${score} / ${maxScore}`)}</em>
+              <b aria-hidden="true">+</b>
+            </span>
+          </summary>
+          <div class="task-model-body">
+            <div class="prose" data-task-answer><p>Загружаем ответ…</p></div>
+            <div class="task-final-comment" data-task-comment hidden></div>
+          </div>
+        </details>
+      `;
+    }).join("");
+    restoreReadingPreferences(document);
+
+    const firstPath = models.map((model) => model.solutions?.[safeTaskIndex]).find(Boolean);
+    try {
+      const firstDocument = await fetchPublishedSolution(firstPath);
+      renderMarkdownInto("#task-statement", firstDocument?.task?.statement, "Условие задачи не опубликовано.");
+      renderMarkdownInto("#task-official", firstDocument?.task?.officialSolution, "Авторское решение не опубликовано.");
+    } catch (_) {
+      renderMarkdownInto("#task-statement", "", "Условие задачи временно недоступно.");
+      renderMarkdownInto("#task-official", "", "Авторское решение временно недоступно.");
+    }
+
+    await Promise.all(models.map(async (model) => {
+      const card = list.querySelector(`[data-model-id="${CSS.escape(model.id)}"]`);
+      const answer = card?.querySelector("[data-task-answer]");
+      if (!answer) return;
+      try {
+        const documentData = await fetchPublishedSolution(model.solutions?.[safeTaskIndex]);
+        if (!documentData) {
+          answer.innerHTML = "<p>Для этой модели нет опубликованного ответа.</p>";
+          return;
+        }
+        answer.innerHTML = renderMarkdown(documentData.result?.answer, "Текст ответа пуст.");
+        renderMathInNode(answer);
+        const feedback = String(documentData.review?.final?.feedback || "").trim();
+        const comment = card.querySelector("[data-task-comment]");
+        if (feedback && comment) {
+          comment.hidden = false;
+          comment.innerHTML = `<p class="eyebrow">Комментарий экспертов</p><div class="prose">${renderMarkdown(feedback, "")}</div>`;
+          renderMathInNode(comment);
+        }
+      } catch (_) {
+        answer.innerHTML = "<p>Не удалось загрузить опубликованный ответ.</p>";
+      }
+    }));
+  }
+
   updateSiteLinks();
   if (page === "leaderboard") renderLeaderboard();
   if (page === "competitions") renderCatalog();
   if (page === "solution") renderSolution();
+  if (page === "task") renderTask();
 })();

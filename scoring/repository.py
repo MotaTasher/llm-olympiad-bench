@@ -1517,6 +1517,52 @@ def finalization_statistics(competition: dict[str, Any]) -> dict[str, Any]:
     return {"tasks": tasks, **counts}
 
 
+def finalization_action_required(attempt: dict[str, Any]) -> bool:
+    """Return whether the selected attempt still needs an organizer action."""
+    if not attempt.get("evaluation_count"):
+        return False
+    if attempt.get("comment_required") or attempt.get("feedback_review_required"):
+        return True
+    return not attempt.get("finalized") and attempt.get("review_status") in {
+        "one_review",
+        "disagreement",
+        "partial",
+    }
+
+
+def next_finalization_action(
+    competition: dict[str, Any],
+    *,
+    current_problem_id: str,
+    current_result_id: str,
+) -> tuple[str, dict[str, Any]] | None:
+    """Find the next actionable cell, ordering models within each task first."""
+    ordered: list[tuple[str, dict[str, Any]]] = []
+    for problem_id in competition.get("problem_order", []):
+        problem = competition["problems"][problem_id]
+        states = {state.get("model_key"): state for state in problem.get("model_states", [])}
+        for model in competition.get("model_columns", []):
+            attempt = selected_finalization_attempt(states.get(model["model_key"]))
+            if attempt:
+                ordered.append((problem_id, attempt))
+    if not ordered:
+        return None
+
+    current_index = next(
+        (
+            index
+            for index, (problem_id, attempt) in enumerate(ordered)
+            if problem_id == current_problem_id and attempt.get("result_id") == current_result_id
+        ),
+        -1,
+    )
+    candidates = ordered[current_index + 1 :] + ordered[: current_index + 1]
+    return next(
+        (entry for entry in candidates if finalization_action_required(entry[1])),
+        None,
+    )
+
+
 def neighbor_problem_ids(competition: dict[str, Any], problem_id: str) -> tuple[str | None, str | None]:
     order = competition.get("problem_order") or []
     if problem_id not in order:

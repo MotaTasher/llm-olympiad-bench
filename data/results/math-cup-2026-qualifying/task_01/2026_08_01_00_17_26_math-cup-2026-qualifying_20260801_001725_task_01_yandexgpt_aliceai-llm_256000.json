@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_08_01_00_17_26_math-cup-2026-qualifying_20260801_001725_task_01_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-12T20:51:09.056197Z",
+  "updated_at": "2026-08-14T14:38:30.268619Z",
   "finalizations": {
     "res_b4f92a22a0dc029dc18dc817": {
       "result_id": "res_b4f92a22a0dc029dc18dc817",
@@ -61,11 +61,11 @@
       "score": 0.0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Изопериметрическая оценка учитывает только площадь области внутри пути, но не расположение квадрата относительно этой области. Проверка достижимости поэтому неверна.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Неверный ответ.",
+      "feedback_review_required": false,
+      "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:09.056197Z",
-      "updated_at": "2026-08-12T20:51:09.056197Z"
+      "updated_at": "2026-08-14T14:38:30.268619Z"
     }
   }
 }

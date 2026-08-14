@@ -65,21 +65,21 @@
   "competition_id": "math-cup-2026-final",
   "problem_id": "task_05",
   "run_id": "2026_07_15_07_24_50_retry_glm5_stream_20260715_072449_task_05_zai_glm-5.2_256000",
-  "updated_at": "2026-08-12T20:51:09.087603Z",
+  "updated_at": "2026-08-14T14:35:08.099919Z",
   "finalizations": {
     "res_e45527543abc6fd7630128b8": {
       "result_id": "res_e45527543abc6fd7630128b8",
       "result_index": 0,
       "model_key": "zai:glm-5.2",
       "model": "glm-5.2",
-      "score": 0.0,
+      "score": 0,
       "max_score": 2.0,
       "score_category": "zero",
-      "feedback": "Приведённая оценка плотности неверна, поэтому оптимальность конструкции не доказана.",
+      "feedback": "Ошибка в оценки плотности примера.",
       "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "updated_by": "mofeyTEA",
       "created_at": "2026-08-12T20:51:09.087603Z",
-      "updated_at": "2026-08-12T20:51:09.087603Z"
+      "updated_at": "2026-08-14T14:35:08.099919Z"
     }
   }
 }

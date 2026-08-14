@@ -84,17 +84,23 @@ use the local CS Space SVG as their favicon. Public solution rendering keeps
 model logs immutable, works around a missing KaTeX private-use negation glyph
 in the browser, and centers long prose in a wider reading column. Leaderboard
 participant and member names wrap without truncation.
+After a successful projection build, the exporter removes generated solution
+JSON documents that are no longer referenced by the new `generated/data.js`;
+this prevents obsolete schemas or retired attempts from remaining addressable.
 The problem statement is collapsed by default. When the optional shared
 finalization comment is non-empty, one collegial-comment block appears before
 the model solution. On the solution page, the public score badge reuses the
 leaderboard cell's full/partial/zero/pending color. The verdict and score are
 also repeated after the official solution so the result remains discoverable
 after reading the full answer.
-The statement, model answer and official solution cards also carry a
-black-to-result-color gradient so the score remains visible while reading.
-Their independent open/closed states are saved in browser local storage and
-restored across task navigation and later visits; storage failure falls back to
-the HTML defaults without blocking the page.
+Solution cards use a solid dark surface and a score-colored outline matching
+the leaderboard cell; result gradients are not used. Their independent
+open/closed states are saved in browser local storage and restored across task
+navigation and later visits; storage failure falls back to the collapsed HTML
+defaults without blocking the page. Task headers in the leaderboard are links,
+not sort controls. `/problems/<competition-id>/<task-slug>` opens the task
+statement, official solution and every model answer in leaderboard model order,
+with all sections initially collapsed and each model card carrying its verdict.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the
 selected release; generated model data continues to overlay only the result
@@ -107,12 +113,24 @@ of perfect-score cells for compatibility.
 
 The standalone Object Storage deployment uses `/` for the leaderboard,
 `/problems` for the catalog, and
+`/problems/<competition-id>/<task-slug>` for all answers to one task, and
 `/problems/<competition-id>/<task-slug>/<model-slug>` for model answers. Because
 Object Storage has no application router, deployment uploads the catalog HTML
-under the exact extensionless `problems` key and the solution shell under every
-concrete extensionless route key. Legacy `.html` objects remain for backward
-compatibility. Generated solution JSON must be uploaded before
+under the exact extensionless `problems` key, the task shell under every
+concrete task key and the solution shell under every concrete model key. Legacy
+`.html` objects remain for backward compatibility. Generated solution JSON must be uploaded before
 `generated/data.js`, so the matrix never links to a missing object.
+
+For the qualifying stage's answer-only tasks 1–6, the approved bulk operation
+for every non-full selected result is explicit and idempotent:
+
+```bash
+python scripts/approve_qualifying_wrong_answers.py
+python scripts/approve_qualifying_wrong_answers.py --apply
+```
+
+It preserves scores, replaces the shared final comment with `Неверный ответ.`
+and clears the editorial GPT-review flag.
 
 To change an existing competition's score scale, preview and then apply the
 explicit migration:

@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_07_15_14_47_24_qualifying_missing_20260715_144724_task_01_deepseek_deepseek-v4-pro_320000",
-  "updated_at": "2026-08-12T20:51:08.851357Z",
+  "updated_at": "2026-08-14T14:38:30.264114Z",
   "finalizations": {
     "res_09ba337e18d2c1882fcfd530": {
       "result_id": "res_09ba337e18d2c1882fcfd530",
@@ -61,11 +61,11 @@
       "score": 0.0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Полученный ответ неверен: рассуждение не учитывает геометрическое условие о площади квадрата внутри пути.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Неверный ответ.",
+      "feedback_review_required": false,
+      "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:08.851357Z",
-      "updated_at": "2026-08-12T20:51:08.851357Z"
+      "updated_at": "2026-08-14T14:38:30.264114Z"
     }
   }
 }

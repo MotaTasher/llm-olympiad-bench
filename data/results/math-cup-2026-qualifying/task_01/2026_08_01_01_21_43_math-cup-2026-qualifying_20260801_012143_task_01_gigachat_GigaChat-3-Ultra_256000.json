@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_08_01_01_21_43_math-cup-2026-qualifying_20260801_012143_task_01_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-12T20:51:09.039376Z",
+  "updated_at": "2026-08-14T14:38:30.265575Z",
   "finalizations": {
     "res_00b13c26d44ae2239eec1aee": {
       "result_id": "res_00b13c26d44ae2239eec1aee",
@@ -61,11 +61,11 @@
       "score": 0.0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Использована неверная оценка площади через полуокружность. Она не решает задачу о квадрате с центром на границе пути, поэтому полученный максимум неверен.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Неверный ответ.",
+      "feedback_review_required": false,
+      "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:09.039376Z",
-      "updated_at": "2026-08-12T20:51:09.039376Z"
+      "updated_at": "2026-08-14T14:38:30.265575Z"
     }
   }
 }

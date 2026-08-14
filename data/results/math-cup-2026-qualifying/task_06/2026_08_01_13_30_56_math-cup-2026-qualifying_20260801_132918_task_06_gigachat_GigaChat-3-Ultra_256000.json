@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_06",
   "run_id": "2026_08_01_13_30_56_math-cup-2026-qualifying_20260801_132918_task_06_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-12T20:51:09.060373Z",
+  "updated_at": "2026-08-14T14:38:30.275104Z",
   "finalizations": {
     "res_3b578d977991f6ca4e1f86f6": {
       "result_id": "res_3b578d977991f6ca4e1f86f6",
@@ -61,11 +61,11 @@
       "score": 0.0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "В рассуждении потеряно условие, однозначно определяющее знак. Поэтому вместо одного требуемого значения получены два возможных ответа.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Неверный ответ.",
+      "feedback_review_required": false,
+      "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:09.060373Z",
-      "updated_at": "2026-08-12T20:51:09.060373Z"
+      "updated_at": "2026-08-14T14:38:30.275104Z"
     }
   }
 }

@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_01",
   "run_id": "2026_08_01_00_17_26_math-cup-2026-qualifying_20260801_001725_task_01_openai_gpt-5.6-sol_256000",
-  "updated_at": "2026-08-12T20:51:09.055583Z",
+  "updated_at": "2026-08-14T14:38:30.267840Z",
   "finalizations": {
     "res_979737eca6c98f741086fc83": {
       "result_id": "res_979737eca6c98f741086fc83",
@@ -61,11 +61,11 @@
       "score": 0.0,
       "max_score": 4.0,
       "score_category": "zero",
-      "feedback": "Ответ опирается на недоказанную лемму о том, как оптимально распределить удаляемую площадь между углами и разрезом. Без неё заявленная точная граница не следует.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Неверный ответ.",
+      "feedback_review_required": false,
+      "updated_by": "bulk-approved",
       "created_at": "2026-08-12T20:51:09.055583Z",
-      "updated_at": "2026-08-12T20:51:09.055583Z"
+      "updated_at": "2026-08-14T14:38:30.267840Z"
     }
   }
 }

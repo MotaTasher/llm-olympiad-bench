@@ -50,10 +50,12 @@ generated/data.js
 generated/assets/<competition-id>/...
 generated/solutions/<competition-id>/<result-id>.json
 problems
+problems/<competition-id>/<task-slug>
 problems/<competition-id>/<task-slug>/<model-slug>
 ```
 
-`problems` is an extensionless copy of the catalog HTML. Every concrete clean
+`problems` is an extensionless copy of the catalog HTML. Every concrete task
+route is an extensionless copy of the task shell, and every concrete model
 route is an extensionless copy of the solution shell. Legacy `.html` objects
 remain for compatibility. Upload solution JSON and assets before replacing
 `generated/data.js`.

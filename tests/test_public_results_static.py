@@ -19,7 +19,20 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn("document.body.dataset.resultState", app)
         for state in ("full", "partial", "zero"):
             self.assertIn(f'data-result-state="{state}"', styles)
-        self.assertIn("linear-gradient", styles)
+        self.assertIn("border-color: rgba(var(--result-accent-rgb)", styles)
+        self.assertNotIn('data-reading-section="model" open', (ROOT / "public_results" / "solution.html").read_text(encoding="utf-8"))
+
+    def test_task_page_lists_all_models_and_task_headers_link_without_sorting(self) -> None:
+        task_html = (ROOT / "public_results" / "task.html").read_text(encoding="utf-8")
+        app = (ROOT / "public_results" / "app.js").read_text(encoding="utf-8")
+        self.assertIn('data-page="task"', task_html)
+        self.assertIn('id="task-model-solutions"', task_html)
+        self.assertNotIn('data-reading-section="statement" open', task_html)
+        self.assertNotIn('data-reading-section="official" open', task_html)
+        self.assertIn("function taskRoute(competition, task)", app)
+        self.assertIn('class="task-header-link"', app)
+        self.assertNotIn('sortableHeader(`task:', app)
+        self.assertIn('data-reading-section="model:', app)
 
 
 if __name__ == "__main__":

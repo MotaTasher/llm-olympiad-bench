@@ -63,6 +63,7 @@ try:
         competition_statistics,
         delete_evaluation,
         delete_finalization,
+        finalization_action_required,
         finalization_statistics,
         find_attempt,
         find_problem,
@@ -70,6 +71,7 @@ try:
         iter_evaluation_rows,
         model_states_for_review,
         neighbor_problem_ids,
+        next_finalization_action,
         next_unscored_attempt,
         progress_counts_for_model_states,
         safe_id,
@@ -97,6 +99,7 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
         competition_statistics,
         delete_evaluation,
         delete_finalization,
+        finalization_action_required,
         finalization_statistics,
         find_attempt,
         find_problem,
@@ -104,6 +107,7 @@ except ImportError:  # pragma: no cover - direct `python scoring/app.py`
         iter_evaluation_rows,
         model_states_for_review,
         neighbor_problem_ids,
+        next_finalization_action,
         next_unscored_attempt,
         progress_counts_for_model_states,
         safe_id,
@@ -1190,8 +1194,47 @@ def save_final_score():
         feedback_review_required=feedback_review_required,
         updated_by=current_user.username,
     )
-    flash("Итоговая оценка сохранена.", "info")
-    return redirect(url_for("finalization_detail_page", competition_id=competition_id, problem_id=problem_id, result_id=result_id))
+    refreshed = catalog()
+    refreshed_competition = refreshed["competition_map"].get(competition_id)
+    refreshed_found = find_attempt(
+        refreshed,
+        competition_id=competition_id,
+        problem_id=problem_id,
+        run_id=run_id,
+        result_id=result_id,
+    )
+    if refreshed_found and finalization_action_required(refreshed_found[1]):
+        flash("Итог сохранён, но здесь ещё нужно завершить комментарий.", "info")
+        return redirect(
+            url_for(
+                "finalization_detail_page",
+                competition_id=competition_id,
+                problem_id=problem_id,
+                result_id=result_id,
+            )
+        )
+    next_action = (
+        next_finalization_action(
+            refreshed_competition,
+            current_problem_id=problem_id,
+            current_result_id=result_id,
+        )
+        if refreshed_competition
+        else None
+    )
+    if next_action:
+        next_problem_id, next_attempt = next_action
+        flash("Итог сохранён. Открыт следующий ответ, требующий финализации.", "info")
+        return redirect(
+            url_for(
+                "finalization_detail_page",
+                competition_id=competition_id,
+                problem_id=next_problem_id,
+                result_id=next_attempt["result_id"],
+            )
+        )
+    flash("Итог сохранён. Больше ответов, требующих финализации, нет.", "info")
+    return redirect(url_for("competition_finalization_page", competition_id=competition_id))
 
 
 @app.post("/finalization/delete")
