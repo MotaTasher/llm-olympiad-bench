@@ -30,7 +30,9 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn("border-color: rgba(var(--result-accent-rgb)", styles)
         self.assertNotIn('data-reading-section="model" open', (ROOT / "public_results" / "solution.html").read_text(encoding="utf-8"))
         self.assertIn(".reading-reference[open]", styles)
-        self.assertIn("border: 0;", styles)
+        reference_css = styles[styles.index(".reading-reference,"):styles.index(".solution-result-section")]
+        self.assertIn("border-color: var(--line);", reference_css)
+        self.assertNotIn("rgba(var(--result-accent-rgb)", reference_css)
 
     def test_task_page_lists_all_models_and_task_headers_link_without_sorting(self) -> None:
         task_html = (ROOT / "public_results" / "task.html").read_text(encoding="utf-8")

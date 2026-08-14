@@ -806,20 +806,10 @@ h1, h2, h3 {
 
 .reading-reference,
 .reading-reference[open] {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  border-color: var(--line);
 }
-.reading-reference summary,
 .reading-reference[open] summary {
-  padding-right: 0;
-  padding-left: 0;
-  border-bottom: 1px solid var(--line);
-}
-.reading-reference .prose {
-  padding-right: 0;
-  padding-left: 0;
+  border-bottom-color: var(--line);
 }
 
 .solution-result-section { display: grid; gap: 14px; margin-top: 22px; }

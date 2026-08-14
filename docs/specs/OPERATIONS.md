@@ -91,9 +91,9 @@ The problem statement is collapsed by default. When the optional shared
 finalization comment is non-empty, one final-comment block appears inside the
 result section. On a single-model solution page the reading order is statement,
 official solution, model solution, then result. The statement and official
-solution are borderless collapsible sections; only the model solution keeps the
-score-colored card outline. The final result section contains the verdict,
-score, metrics and optional shared comment.
+solution keep neutral card outlines that do not change with the score; only the
+model solution uses the score-colored outline. The final result section
+contains the verdict, score, metrics and optional shared comment.
 Solution cards use a solid dark surface and a score-colored outline matching
 the leaderboard cell; result gradients are not used. Their independent
 open/closed states are saved in browser local storage and restored across task
