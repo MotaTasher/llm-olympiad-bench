@@ -51,6 +51,7 @@
     .topbar-single { grid-template-columns: minmax(0, 1fr); }
     .brand { margin: 0 0 4px; font-size: 20px; line-height: 1.2; font-weight: 750; letter-spacing: 0; }
     .crumbs { color: var(--muted); font-size: 14px; }
+    .site-links { margin-top: 4px; font-size: 13px; }
     .account-control {
       display: flex;
       gap: 10px;
@@ -904,6 +905,9 @@
       <div>
         <h1 class="brand">Olympiad Scorer</h1>
         <nav class="crumbs">{% block crumbs %}<a href="{{ url_for('index') }}">Соревнования</a>{% endblock %}</nav>
+        <nav class="crumbs site-links">
+          <a href="https://motatasher.me/reasoning/" target="_blank" rel="noopener">Витрина Reasoning Space ↗</a>
+        </nav>
       </div>
       {% if current_user.is_authenticated %}
         <div class="account-control">
