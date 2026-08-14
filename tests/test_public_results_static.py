@@ -53,6 +53,27 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn("compareParticipants(left, right, sortState(competition.id), ranks)", app)
         self.assertLess(app.index('class="task-result-panel"'), app.index('data-task-answer'))
 
+    def test_catalog_links_to_results_and_whole_problem_set(self) -> None:
+        catalog_html = (ROOT / "public_results" / "competitions.html").read_text(encoding="utf-8")
+        set_html = (ROOT / "public_results" / "problem-set.html").read_text(encoding="utf-8")
+        app = (ROOT / "public_results" / "app.js").read_text(encoding="utf-8")
+        styles = (ROOT / "public_results" / "styles.css").read_text(encoding="utf-8")
+        data = (ROOT / "public_results" / "data.js").read_text(encoding="utf-8")
+
+        self.assertNotIn("Опубликованные", catalog_html)
+        self.assertNotIn("Для каждого этапа есть отдельная таблица", catalog_html)
+        self.assertNotIn("Результаты моделей и трёх лучших команд", data)
+        self.assertNotIn("Результаты моделей на задачах", data)
+        self.assertIn('data-page="problem-set"', set_html)
+        self.assertIn('id="problem-set-list"', set_html)
+        self.assertIn("function problemSetRoute(competitionId)", app)
+        self.assertIn('class="competition-card-link"', app)
+        self.assertIn("Условия и авторские решения", app)
+        self.assertIn("Таблица результатов", app)
+        self.assertIn('if (page === "problem-set") renderProblemSet()', app)
+        self.assertIn(".cost-column, .cost-cell, .tokens-column", styles)
+        self.assertIn("width: 148px; min-width: 148px; max-width: 148px;", styles)
+
 
 if __name__ == "__main__":
     unittest.main()

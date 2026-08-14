@@ -120,13 +120,22 @@ of perfect-score cells for compatibility.
 
 The standalone Object Storage deployment uses `/` for the leaderboard,
 `/problems` for the catalog, and
+`/problems/<competition-id>` for all statements and official solutions in a
+stage,
 `/problems/<competition-id>/<task-slug>` for all answers to one task, and
 `/problems/<competition-id>/<task-slug>/<model-slug>` for model answers. Because
 Object Storage has no application router, deployment uploads the catalog HTML
-under the exact extensionless `problems` key, the task shell under every
-concrete task key and the solution shell under every concrete model key. Legacy
+under the exact extensionless `problems` key, the problem-set shell under each
+competition key, the task shell under every concrete task key and the solution
+shell under every concrete model key. Legacy
 `.html` objects remain for backward compatibility. Generated solution JSON must be uploaded before
 `generated/data.js`, so the matrix never links to a missing object.
+
+On narrow screens the sticky rank and participant columns are compact. Cost,
+token and accuracy columns are hidden, leaving the score sum and task results
+visible immediately; the complete metrics remain available on wider screens.
+Catalog cards contain explicit links to the full problem set and leaderboard,
+while the rest of each card also opens the leaderboard.
 
 For the qualifying stage's answer-only tasks 1–6, the approved bulk operation
 for every zero-score selected result is explicit and idempotent. Partial-credit

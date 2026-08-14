@@ -108,6 +108,14 @@
     };
   }
 
+  function cleanProblemSetRoute() {
+    const pathname = window.location.pathname.startsWith(siteBasePath())
+      ? `/${window.location.pathname.slice(siteBasePath().length)}`
+      : window.location.pathname;
+    const match = pathname.match(/^\/problems\/([^/]+)\/?$/);
+    return match ? { competition: decodeURIComponent(match[1]) } : null;
+  }
+
   function taskRouteSlug(task) {
     if (task?.slug) return task.slug;
     const match = String(task?.id || "").match(/^task[_-]?0*(\d+)$/i);
@@ -147,6 +155,14 @@
       return `${siteBasePath()}task.html?${params}`;
     }
     return `/problems/${encodeURIComponent(competition.id)}/${encodeURIComponent(taskRouteSlug(task))}`;
+  }
+
+  function problemSetRoute(competitionId) {
+    if (isLegacyDeployment()) {
+      const params = new URLSearchParams({ competition: competitionId });
+      return `${siteBasePath()}problem-set.html?${params}`;
+    }
+    return `/problems/${encodeURIComponent(competitionId)}`;
   }
 
   function competitionById(id) {
@@ -504,10 +520,10 @@
         <tr>
           ${sortableHeader("rank", "#", "rank-column")}
           ${sortableHeader("name", "Модель / команда", "participant-column")}
-          ${sortableHeader("cost", "Затраты", "metric-column")}
-          ${sortableHeader("points", "Сумма", "metric-column")}
-          ${sortableHeader("tokens", "Токены", "metric-column")}
-          ${sortableHeader("accuracy", "Точность", "metric-column")}
+          ${sortableHeader("cost", "Затраты", "metric-column cost-column")}
+          ${sortableHeader("points", "Сумма", "metric-column points-column")}
+          ${sortableHeader("tokens", "Токены", "metric-column tokens-column")}
+          ${sortableHeader("accuracy", "Точность", "metric-column accuracy-column")}
           ${competition.tasks.map((task) => `
             <th class="task-column" scope="col" title="${escapeHtml(task.title)} · максимум ${task.maxScore} балла">
               <a class="task-header-link" href="${taskRoute(competition, task)}" aria-label="Открыть все решения: ${escapeHtml(task.title)}">
@@ -561,9 +577,9 @@
             ${isTeam ? `<span class="participant-meta" title="${escapeHtml(participant.members)}">${escapeHtml(participant.members)}</span>` : ""}
           </th>
           ${moneyCell(participant)}
-          <td class="metric-cell strong">${formatPoints(participantPoints(participant))}</td>
-          <td class="metric-cell">${participant.tokens == null ? "—" : number.format(participant.tokens)}</td>
-          <td class="metric-cell strong">${participant.accuracy == null ? "—" : `${String(participant.accuracy).replace(".", ",")}%`}</td>
+          <td class="metric-cell points-cell strong">${formatPoints(participantPoints(participant))}</td>
+          <td class="metric-cell tokens-cell">${participant.tokens == null ? "—" : number.format(participant.tokens)}</td>
+          <td class="metric-cell accuracy-cell strong">${participant.accuracy == null ? "—" : `${String(participant.accuracy).replace(".", ",")}%`}</td>
           ${cells}
         </tr>
       `;
@@ -593,13 +609,13 @@
 
   function moneyCell(participant) {
     const value = participantMoney(participant);
-    if (value === null || value === undefined) return `<td class="metric-cell">—</td>`;
+    if (value === null || value === undefined) return `<td class="metric-cell cost-cell">—</td>`;
     if (participant.type !== "team") {
-      return `<td class="metric-cell" title="Затраты модели">$${value.toFixed(2)}</td>`;
+      return `<td class="metric-cell cost-cell" title="Затраты модели">$${value.toFixed(2)}</td>`;
     }
     const rubles = number.format(participant.prizeRub);
     const title = `Призовые: ${rubles} ₽ · курс ${String(participant.prizeRateRubPerUsd).replace(".", ",")} ₽/$ на ${participant.prizeRateDate}`;
-    return `<td class="metric-cell prize-cell" title="${escapeHtml(title)}"><span>$${value.toFixed(2)}</span><small>призовые</small></td>`;
+    return `<td class="metric-cell cost-cell prize-cell" title="${escapeHtml(title)}"><span>$${value.toFixed(2)}</span><small>призовые</small></td>`;
   }
 
   function rankingFor(participants) {
@@ -649,25 +665,82 @@
   function renderCatalog() {
     const grid = document.querySelector("#competition-grid");
     grid.innerHTML = data.catalog.map((item) => {
-      const href = homeRoute(`?competition=${encodeURIComponent(item.competitionId)}`);
+      const resultsHref = homeRoute(`?competition=${encodeURIComponent(item.competitionId)}`);
+      const problemsHref = problemSetRoute(item.competitionId);
       const stages = item.stages.map((stage) => `<span>${escapeHtml(stage)}</span>`).join("");
       return `
-        <a class="competition-card" href="${href}">
+        <article class="competition-card">
+          <a class="competition-card-link" href="${resultsHref}" aria-label="Открыть таблицу результатов: ${escapeHtml(item.title)}"></a>
           <div class="competition-card-top">
             <span>${escapeHtml(item.series)}</span>
             <span>${escapeHtml(item.year)}</span>
           </div>
           <div class="competition-card-body">
             <h2>${escapeHtml(item.title)}</h2>
-            <p>${escapeHtml(item.description)}</p>
+            <div class="competition-stage-tags">${stages}</div>
           </div>
-          <div class="competition-card-bottom">
-            <div>${stages}</div>
-            <strong>${escapeHtml(item.status)} <span aria-hidden="true">↗</span></strong>
+          <div class="competition-card-actions">
+            <a class="catalog-action secondary" href="${problemsHref}">Условия и авторские решения</a>
+            <a class="catalog-action primary" href="${resultsHref}">Таблица результатов <span aria-hidden="true">↗</span></a>
           </div>
-        </a>
+        </article>
       `;
     }).join("");
+  }
+
+  async function renderProblemSet() {
+    const params = query();
+    const route = cleanProblemSetRoute();
+    const competitionId = route?.competition || params.get("competition");
+    const competition = competitionById(competitionId) || data.competitions[0];
+    const list = document.querySelector("#problem-set-list");
+    const stageTitle = competition.stage
+      && !competition.title.toLocaleLowerCase("ru").includes(competition.stage.toLocaleLowerCase("ru"))
+      ? `${competition.title} · ${competition.stage}`
+      : competition.title;
+    document.title = `${stageTitle} — условия и авторские решения`;
+    document.querySelector("#problem-set-competition").textContent = stageTitle;
+    list.innerHTML = competition.tasks.map((task, index) => `
+      <article class="problem-set-task" data-problem-index="${index}">
+        <header class="problem-set-task-heading">
+          <span>${escapeHtml(task.short || String(index + 1).padStart(2, "0"))}</span>
+          <h2>${escapeHtml(task.title)}</h2>
+        </header>
+        <div class="problem-set-task-sections">
+          <details class="reading-solution reading-reference task-solution"
+                   data-reading-section="set:${escapeHtml(competition.id)}:${escapeHtml(task.id)}:statement">
+            <summary><span><small>Задача ${index + 1}</small>Условие</span><b aria-hidden="true">+</b></summary>
+            <div class="prose" data-problem-statement><p>Загружаем условие…</p></div>
+          </details>
+          <details class="reading-solution reading-reference official-solution"
+                   data-reading-section="set:${escapeHtml(competition.id)}:${escapeHtml(task.id)}:official">
+            <summary><span><small>Эталон</small>Авторское решение</span><b aria-hidden="true">+</b></summary>
+            <div class="prose" data-problem-official><p>Загружаем авторское решение…</p></div>
+          </details>
+        </div>
+      </article>
+    `).join("");
+    restoreReadingPreferences(list);
+
+    await Promise.all(competition.tasks.map(async (task, index) => {
+      const card = list.querySelector(`[data-problem-index="${index}"]`);
+      const statement = card?.querySelector("[data-problem-statement]");
+      const official = card?.querySelector("[data-problem-official]");
+      const path = competition.participants
+        .filter((participant) => participant.type === "model")
+        .map((participant) => participant.solutions?.[index])
+        .find(Boolean);
+      try {
+        const documentData = await fetchPublishedSolution(path);
+        statement.innerHTML = renderMarkdown(documentData?.task?.statement, "Условие задачи не опубликовано.");
+        official.innerHTML = renderMarkdown(documentData?.task?.officialSolution, "Авторское решение не опубликовано.");
+        renderMathInNode(statement);
+        renderMathInNode(official);
+      } catch (_) {
+        statement.innerHTML = "<p>Условие задачи временно недоступно.</p>";
+        official.innerHTML = "<p>Авторское решение временно недоступно.</p>";
+      }
+    }));
   }
 
   async function renderSolution() {
@@ -876,4 +949,5 @@
   if (page === "competitions") renderCatalog();
   if (page === "solution") renderSolution();
   if (page === "task") renderTask();
+  if (page === "problem-set") renderProblemSet();
 })();

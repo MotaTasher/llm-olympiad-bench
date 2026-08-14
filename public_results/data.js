@@ -414,10 +414,8 @@ window.RESULTS_DATA = {
       id: "math-cup-2026-final",
       series: "Math Cup",
       year: "2026",
-      title: "Math Cup 2026 · Финал",
-      description: "Результаты моделей и трёх лучших команд финального этапа.",
+      title: "Math Cup 2026",
       stages: ["Финал · 9 задач"],
-      status: "Таблица открыта",
       competitionId: "math-cup-2026-final",
       accent: "dark"
     },
@@ -425,10 +423,8 @@ window.RESULTS_DATA = {
       id: "math-cup-2026-qualifying",
       series: "Math Cup",
       year: "2026",
-      title: "Math Cup 2026 · Отбор",
-      description: "Результаты моделей на задачах отборочного этапа.",
+      title: "Math Cup 2026",
       stages: ["Отбор · 8 задач"],
-      status: "Таблица открыта",
       competitionId: "math-cup-2026-qualifying",
       accent: "dark"
     }
