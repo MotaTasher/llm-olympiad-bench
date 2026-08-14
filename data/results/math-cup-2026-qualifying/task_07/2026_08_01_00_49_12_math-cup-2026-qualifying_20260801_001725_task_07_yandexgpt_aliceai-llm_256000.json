@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_08_01_00_49_12_math-cup-2026-qualifying_20260801_001725_task_07_yandexgpt_aliceai-llm_256000",
-  "updated_at": "2026-08-12T20:51:09.062183Z",
+  "updated_at": "2026-08-14T20:35:08.831064Z",
   "finalizations": {
     "res_d3bf97a65b99985209f37176": {
       "result_id": "res_d3bf97a65b99985209f37176",
@@ -61,11 +61,11 @@
       "score": 1.5,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "Получена только площадная нижняя оценка. Явной укладки полосок на тетраэдре, достигающей этого числа, в решении нет.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Явного примера нет.",
+      "feedback_review_required": false,
+      "updated_by": "mofeyTEA",
       "created_at": "2026-08-10T13:18:26.526836Z",
-      "updated_at": "2026-08-12T20:51:09.062183Z"
+      "updated_at": "2026-08-14T20:35:08.831064Z"
     }
   }
 }

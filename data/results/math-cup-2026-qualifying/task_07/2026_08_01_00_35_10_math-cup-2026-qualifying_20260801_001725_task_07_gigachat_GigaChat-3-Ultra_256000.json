@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_08_01_00_35_10_math-cup-2026-qualifying_20260801_001725_task_07_gigachat_GigaChat-3-Ultra_256000",
-  "updated_at": "2026-08-12T20:51:09.060854Z",
+  "updated_at": "2026-08-14T20:34:11.569896Z",
   "finalizations": {
     "res_3cd639158ae8e30d0b082963": {
       "result_id": "res_3cd639158ae8e30d0b082963",
@@ -61,11 +61,11 @@
       "score": 1.5,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "Нижняя оценка по площади верна, но возможность покрытия 4302 полосками только заявлена. Конструкции, учитывающей стыки граней тетраэдра, нет.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Пример не объяснён.",
+      "feedback_review_required": false,
+      "updated_by": "mofeyTEA",
       "created_at": "2026-08-10T13:17:58.986175Z",
-      "updated_at": "2026-08-12T20:51:09.060854Z"
+      "updated_at": "2026-08-14T20:34:11.569896Z"
     }
   }
 }

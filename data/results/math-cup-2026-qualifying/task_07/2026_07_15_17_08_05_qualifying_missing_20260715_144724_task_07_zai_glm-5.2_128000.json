@@ -51,7 +51,7 @@
   "competition_id": "math-cup-2026-qualifying",
   "problem_id": "task_07",
   "run_id": "2026_07_15_17_08_05_qualifying_missing_20260715_144724_task_07_zai_glm-5.2_128000",
-  "updated_at": "2026-08-12T20:51:09.061712Z",
+  "updated_at": "2026-08-14T20:34:50.309069Z",
   "finalizations": {
     "res_579ebadc4cf4622b965f5f7e": {
       "result_id": "res_579ebadc4cf4622b965f5f7e",
@@ -61,11 +61,11 @@
       "score": 1.5,
       "max_score": 4.0,
       "score_category": "partial",
-      "feedback": "Нужная конструкция покрытия не доказана: приведена только оценка площади без способа уложить полоски на все четыре грани.",
-      "feedback_review_required": true,
-      "updated_by": "gpt-draft",
+      "feedback": "Пример не объяснён.",
+      "feedback_review_required": false,
+      "updated_by": "mofeyTEA",
       "created_at": "2026-08-10T13:18:17.517998Z",
-      "updated_at": "2026-08-12T20:51:09.061712Z"
+      "updated_at": "2026-08-14T20:34:50.309069Z"
     }
   }
 }
