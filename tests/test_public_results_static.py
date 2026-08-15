@@ -6,6 +6,15 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PublicResultsStaticTests(unittest.TestCase):
+    def test_yandex_metrika_is_present_on_every_public_shell(self) -> None:
+        metrika = (ROOT / "public_results" / "metrika.js").read_text(encoding="utf-8")
+        self.assertIn('ym(100459978, "init"', metrika)
+        self.assertIn('"https://mc.yandex.ru/metrika/tag.js"', metrika)
+        for name in ("index", "competitions", "problem-set", "model", "task", "solution"):
+            html = (ROOT / "public_results" / f"{name}.html").read_text(encoding="utf-8")
+            self.assertIn('<script src="metrika.js" defer></script>', html)
+            self.assertIn('https://mc.yandex.ru/watch/100459978', html)
+
     def test_solution_sections_have_stable_persistence_ids(self) -> None:
         html = (ROOT / "public_results" / "solution.html").read_text(encoding="utf-8")
         for section in ("statement", "model", "official"):

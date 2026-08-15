@@ -144,6 +144,10 @@ under every model-page key and the solution shell under every concrete
 task/model key. Legacy
 `.html` objects remain for backward compatibility. Generated solution JSON must be uploaded before
 `generated/data.js`, so the matrix never links to a missing object.
+The public shells load Yandex Metrica counter `100459978` through the local
+`metrika.js` bootstrap. The proxy CSP must include `https://mc.yandex.ru` in
+`script-src`, `connect-src` and `img-src`; loading `tag.js` alone does not prove
+that page-view requests can be sent.
 
 On narrow screens the sticky rank and participant columns are compact. Cost,
 token and accuracy columns are hidden, leaving the score sum and task results

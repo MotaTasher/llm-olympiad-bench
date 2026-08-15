@@ -14,6 +14,7 @@ This is the standalone public Reasoning Space site. It contains:
 - `assets/torn-paper-mask.svg`: shared irregular silhouette for the hero layers;
 - `generated/`: ignored public export created from real logs and sidecars;
 - `app.js`: release switching, generated-data merge and page rendering.
+- `metrika.js`: shared Yandex Metrica tag for counter `100459978`.
 
 The public URL contract uses clean, extension-free routes:
 
@@ -31,6 +32,11 @@ remain usable as compatibility entry points. On object storage, `/problems` and
 every concrete competition, task, model or solution route are extensionless
 HTML objects that contain the matching catalog, problem-set, task, model or
 solution shell; all page assets use root-relative URLs.
+
+Every public shell loads the same Yandex Metrica counter. The reverse proxy's
+Content Security Policy must allow `https://mc.yandex.ru` in `script-src`,
+`connect-src` and `img-src`; without `connect-src`, the tag loads but page-view
+requests are blocked by the browser.
 
 The exporter copies each selected competition's `assets/` directory into
 `generated/assets/<competition-id>/` and rewrites `assets/...` references in
