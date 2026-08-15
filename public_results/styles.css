@@ -472,6 +472,9 @@ h1, h2, h3 {
 .participant-cell { padding-left: 18px !important; }
 .participant-title { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
 .participant-name { display: block; min-width: 0; color: var(--ink); font-family: Unbounded, Arial, sans-serif; font-size: 13px; font-weight: 600; line-height: 1.35; letter-spacing: -.045em; overflow-wrap: anywhere; white-space: normal; }
+.participant-link { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: color .16s ease, text-decoration-color .16s ease; }
+.participant-link:hover,
+.participant-link:focus-visible { color: #fff; text-decoration-color: var(--accent-light); }
 /* Состав команды держим одной строкой: перенос одной фамилии вниз рвал ритм строк. */
 .participant-meta { display: block; margin-top: 6px; overflow: hidden; color: var(--muted); font-size: 11px; font-weight: 300; line-height: 1.4; white-space: nowrap; text-overflow: ellipsis; }
 
@@ -650,11 +653,8 @@ h1, h2, h3 {
 .competition-stage-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .competition-stage-tags span { padding: 7px 11px; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--muted); font-size: 12px; }
 .competition-card-actions { position: relative; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-top: 24px; border-top: 1px solid var(--line); }
-.catalog-action { display: grid; min-height: 54px; place-items: center; padding: 11px 13px; border: 1px solid var(--line-strong); border-radius: 15px; color: var(--ink); font-size: 12px; font-weight: 600; line-height: 1.25; text-align: center; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
-.catalog-action:hover { border-color: rgba(255,255,255,.5); transform: translateY(-1px); }
-.catalog-action.primary { background: #343338; }
-.catalog-action.secondary { color: var(--muted); }
-.catalog-action.secondary:hover { background: rgba(255,255,255,.04); color: var(--ink); }
+.catalog-action { display: grid; min-height: 54px; place-items: center; padding: 11px 13px; border: 1px solid var(--line-strong); border-radius: 15px; background: rgba(255,255,255,.035); color: var(--ink); font-size: 12px; font-weight: 600; line-height: 1.25; text-align: center; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
+.catalog-action:hover { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.07); transform: translateY(-1px); }
 
 .problem-set-list { display: grid; gap: 18px; padding: 55px 0 150px; }
 .problem-set-task { overflow: hidden; border: 1px solid var(--line); border-radius: 32px; background: rgba(255,255,255,.018); }
@@ -1044,6 +1044,9 @@ h1, h2, h3 {
   .solution-metrics div:last-child { border-bottom: 0; }
   .reading-solution summary { padding: 27px 20px; font-size: 25px; }
   .reading-solution .prose { padding: 25px 20px; }
+  .task-model-solution summary { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .task-model-summary-result { justify-content: space-between; width: 100%; }
+  .task-verdict { white-space: normal; }
   .task-result-line { align-items: flex-start; flex-direction: column; gap: 10px; }
   .task-result-line strong { text-align: left; }
 

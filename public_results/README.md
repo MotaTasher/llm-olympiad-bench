@@ -20,14 +20,16 @@ The public URL contract uses clean, extension-free routes:
 - `/problems` for the published-problem catalog;
 - `/problems/<competition-id>` for all statements and official solutions in a stage;
 - `/problems/<competition-id>/<task-slug>` for every model answer to one task;
+- `/problems/<competition-id>/<model-page-slug>` for every answer from one model;
 - `/problems/<competition-id>/<task-slug>/<model-slug>` for a concrete model
   answer, for example `/problems/math-cup-2026-final/task1/gpt-5.6`.
 
-Old `index.html`, `competitions.html`, `problem-set.html`, `task.html` and query-string solution URLs
+Old `index.html`, `competitions.html`, `problem-set.html`, `model.html`,
+`task.html` and query-string solution URLs
 remain usable as compatibility entry points. On object storage, `/problems` and
-every concrete competition, task or solution route are extensionless HTML
-objects that contain the matching catalog, problem-set, task or solution shell;
-all page assets use root-relative URLs.
+every concrete competition, task, model or solution route are extensionless
+HTML objects that contain the matching catalog, problem-set, task, model or
+solution shell; all page assets use root-relative URLs.
 
 The exporter copies each selected competition's `assets/` directory into
 `generated/assets/<competition-id>/` and rewrites `assets/...` references in

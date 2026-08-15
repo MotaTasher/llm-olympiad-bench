@@ -251,15 +251,17 @@ Storage. Старый путь scoring-домена `/results/` выведен �
 /problems
 /problems/<competition-id>
 /problems/<competition-id>/<task-slug>
+/problems/<competition-id>/<model-page-slug>
 /problems/<competition-id>/<task-slug>/<model-slug>
 ```
 
 При публикации в Object Storage каталог и страницы решений загружаются также
 под точными extensionless object keys. Ключ этапа содержит `problem-set.html`
 со всеми условиями и авторскими решениями, ключ задачи — оболочку `task.html`,
-а ключ конкретной модели — `solution.html`. Старые `index.html`,
-`competitions.html`, query-string `problem-set.html`, `task.html` и
-`solution.html` сохраняются для совместимости.
+ключ модели со всеми её ответами — `model.html`, а ключ конкретной ячейки —
+`solution.html`. Старые `index.html`, `competitions.html`, query-string
+`problem-set.html`, `model.html`, `task.html` и `solution.html` сохраняются для
+совместимости.
 
 Активная конфигурация Nginx должна содержать:
 

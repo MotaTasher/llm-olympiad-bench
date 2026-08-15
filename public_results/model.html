@@ -5,7 +5,7 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#030207">
-    <title>Условия и авторские решения — Reasoning Space</title>
+    <title>Решения модели — Reasoning Space</title>
     <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
     <link rel="stylesheet" href="vendor/katex/katex.min.css">
     <link rel="stylesheet" href="styles.css?v=31">
@@ -13,11 +13,11 @@
     <script src="vendor/dompurify/purify.min.js" defer></script>
     <script src="vendor/katex/katex.min.js" defer></script>
     <script src="vendor/katex/contrib/auto-render.min.js" defer></script>
-    <script src="data.js?v=11" defer></script>
+    <script src="data.js?v=12" defer></script>
     <script src="generated/data.js?v=9" defer></script>
     <script src="app.js?v=25" defer></script>
   </head>
-  <body data-page="problem-set">
+  <body data-page="model">
     <header class="site-header">
       <div class="brand">
         <a class="brand-logo" href="https://csspace.io/" aria-label="Официальный сайт CS Space">
@@ -27,21 +27,21 @@
       </div>
       <nav aria-label="Основная навигация">
         <a data-site-link="home" href="./">Главная</a>
-        <a class="active" data-site-link="catalog" href="problems">Задачи</a>
+        <a data-site-link="catalog" href="problems">Задачи</a>
       </nav>
     </header>
 
-    <main class="solution-main problem-set-main">
-      <a class="back-link" data-site-link="catalog" href="problems">← Все наборы задач</a>
-      <section class="solution-hero problem-set-hero">
+    <main class="solution-main model-main">
+      <a class="back-link" id="model-back" href="./">← Назад к таблице</a>
+      <section class="solution-hero model-hero">
         <div>
-          <p class="eyebrow" id="problem-set-competition">Math Cup 2026</p>
-          <h1>Условия и<br>авторские решения</h1>
+          <p class="eyebrow" id="model-competition">Math Cup 2026</p>
+          <h1 id="model-title">Модель</h1>
         </div>
       </section>
 
-      <section class="problem-set-list" id="problem-set-list" aria-live="polite">
-        <p>Загружаем задачи…</p>
+      <section class="solution-layout model-solutions-layout">
+        <div class="task-model-list" id="model-task-solutions"></div>
       </section>
     </main>
 
@@ -54,7 +54,7 @@
       </div>
       <nav class="footer-nav" aria-label="Навигация в подвале">
         <a data-site-link="home" href="./">Главная</a>
-        <a class="active" data-site-link="catalog" href="problems">Задачи</a>
+        <a data-site-link="catalog" href="problems">Задачи</a>
       </nav>
       <div class="footer-contact">
         <span>Контакты</span>

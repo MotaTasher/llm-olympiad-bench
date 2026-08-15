@@ -52,15 +52,19 @@ generated/solutions/<competition-id>/<result-id>.json
 problems
 problems/<competition-id>
 problems/<competition-id>/<task-slug>
+problems/<competition-id>/<model-page-slug>
 problems/<competition-id>/<task-slug>/<model-slug>
 ```
 
 `problems` is an extensionless copy of the catalog HTML. Every competition key
 is an extensionless copy of `problem-set.html` with all statements and official
 solutions for that stage. Every concrete task route is an extensionless copy of
-the task shell, and every concrete model route is an extensionless copy of the
-solution shell. Legacy `.html` objects remain for compatibility. Upload
-solution JSON and assets before replacing `generated/data.js`.
+the task shell, every model-page route is an extensionless copy of `model.html`,
+and every concrete task/model route is an extensionless copy of the solution
+shell. Task slugs use the `taskN` form, while model-page slugs use model names,
+so the two-segment objects do not collide. Legacy `.html` objects remain for
+compatibility. Upload solution JSON and assets before replacing
+`generated/data.js`.
 
 The public projection may contain the effective final score, sanitized solution
 metrics and the optional collegially approved finalization comment as

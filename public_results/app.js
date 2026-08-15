@@ -108,6 +108,18 @@
     };
   }
 
+  function cleanModelRoute() {
+    const pathname = window.location.pathname.startsWith(siteBasePath())
+      ? `/${window.location.pathname.slice(siteBasePath().length)}`
+      : window.location.pathname;
+    const match = pathname.match(/^\/problems\/([^/]+)\/([^/]+)\/?$/);
+    if (!match) return null;
+    return {
+      competition: decodeURIComponent(match[1]),
+      participant: decodeURIComponent(match[2])
+    };
+  }
+
   function cleanProblemSetRoute() {
     const pathname = window.location.pathname.startsWith(siteBasePath())
       ? `/${window.location.pathname.slice(siteBasePath().length)}`
@@ -132,6 +144,10 @@
     const prefix = providerPrefixes.find((candidate) => slug.startsWith(candidate));
     if (prefix) slug = slug.slice(prefix.length);
     return slug.endsWith("-sol") ? slug.slice(0, -4) : slug;
+  }
+
+  function modelPageSlug(participant) {
+    return participantRouteSlug(participant).replace(/^claude-/, "");
   }
 
   function solutionRoute(competition, participant, task) {
@@ -163,6 +179,17 @@
       return `${siteBasePath()}problem-set.html?${params}`;
     }
     return `/problems/${encodeURIComponent(competitionId)}`;
+  }
+
+  function modelRoute(competition, participant) {
+    if (isLegacyDeployment()) {
+      const params = new URLSearchParams({
+        competition: competition.id,
+        participant: participant.id
+      });
+      return `${siteBasePath()}model.html?${params}`;
+    }
+    return `/problems/${encodeURIComponent(competition.id)}/${encodeURIComponent(modelPageSlug(participant))}`;
   }
 
   function competitionById(id) {
@@ -563,6 +590,9 @@
       const medal = isTeam
         ? `<span class="medal" aria-label="${participant.rank} место в олимпиаде" title="${participant.rank} место в олимпиаде">${participant.medal}</span>`
         : "";
+      const participantName = isTeam
+        ? `<span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>`
+        : `<a class="participant-name participant-link" href="${modelRoute(competition, participant)}" title="Все решения ${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</a>`;
 
       const cells = competition.tasks.map((task, index) => {
         const score = participant.scores[index];
@@ -584,7 +614,7 @@
           <th class="participant-cell" scope="row">
             <span class="participant-title">
               ${medal}
-              <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
+              ${participantName}
             </span>
             ${isTeam ? `<span class="participant-meta" title="${escapeHtml(participant.members)}">${escapeHtml(participant.members)}</span>` : ""}
           </th>
@@ -692,8 +722,8 @@
             <div class="competition-stage-tags"><span>${escapeHtml(item.taskLabel)}</span></div>
           </div>
           <div class="competition-card-actions">
-            <a class="catalog-action secondary" href="${problemsHref}">Условия и авторские решения</a>
-            <a class="catalog-action primary" href="${resultsHref}">Таблица результатов <span aria-hidden="true">↗</span></a>
+            <a class="catalog-action" href="${problemsHref}">Условия и авторские решения</a>
+            <a class="catalog-action" href="${resultsHref}">Таблица результатов</a>
           </div>
         </article>
       `;
@@ -956,6 +986,89 @@
     }));
   }
 
+  async function renderModel() {
+    const params = query();
+    const route = cleanModelRoute();
+    const competitionId = route?.competition || params.get("competition");
+    const participantId = route?.participant || params.get("participant");
+    const competition = competitionById(competitionId) || data.competitions[0];
+    const model = competition.participants.find((participant) =>
+      participant.type === "model" && (
+        participant.id === participantId
+        || participantRouteSlug(participant) === participantId
+        || modelPageSlug(participant) === participantId
+      )
+    ) || competition.participants.find((participant) => participant.type === "model");
+    const release = releaseForCompetition(competition.id);
+    const stageTitle = competition.stage
+      && !competition.title.toLocaleLowerCase("ru").includes(competition.stage.toLocaleLowerCase("ru"))
+      ? `${competition.title} · ${competition.stage}`
+      : competition.title;
+
+    document.title = `${model?.name || "Модель"} — решения`;
+    document.querySelector("#model-back").href = homeRoute(
+      `?release=${encodeURIComponent(release?.id || data.releases[0].id)}`
+    );
+    document.querySelector("#model-competition").textContent = stageTitle;
+    document.querySelector("#model-title").textContent = model?.name || "Модель";
+
+    const list = document.querySelector("#model-task-solutions");
+    list.innerHTML = competition.tasks.map((task, index) => {
+      const score = model?.scores?.[index];
+      const maxScore = Number(task.maxScore || 0);
+      const state = scoreClass(score, maxScore);
+      const resultText = `${taskVerdict(score, maxScore)} · ${score == null ? "—" : `${score} / ${maxScore}`}`;
+      return `
+        <details class="reading-solution task-model-solution model-task-solution ${state}"
+                 data-reading-section="model-set:${escapeHtml(competition.id)}:${escapeHtml(model?.id)}:${escapeHtml(task.id)}"
+                 data-model-task-index="${index}">
+          <summary>
+            <span><small>Задача ${escapeHtml(task.short || index + 1)}</small>${escapeHtml(task.title)}</span>
+            <span class="task-model-summary-result">
+              <em class="task-verdict ${state}">${escapeHtml(resultText)}</em>
+              <b aria-hidden="true">+</b>
+            </span>
+          </summary>
+          <div class="task-model-body">
+            <div class="task-result-panel">
+              <div class="task-result-line">
+                <span>Результат</span>
+                <strong>${escapeHtml(resultText)}</strong>
+              </div>
+              <div class="task-final-comment" data-model-task-comment hidden></div>
+            </div>
+            <div class="prose" data-model-task-answer><p>Загружаем решение…</p></div>
+          </div>
+        </details>
+      `;
+    }).join("");
+    restoreReadingPreferences(list);
+
+    await Promise.all(competition.tasks.map(async (_, index) => {
+      const card = list.querySelector(`[data-model-task-index="${index}"]`);
+      const answer = card?.querySelector("[data-model-task-answer]");
+      if (!answer) return;
+      try {
+        const documentData = await fetchPublishedSolution(model?.solutions?.[index]);
+        if (!documentData) {
+          answer.innerHTML = "<p>Для этой задачи нет опубликованного решения.</p>";
+          return;
+        }
+        answer.innerHTML = renderMarkdown(documentData.result?.answer, "Текст решения пуст.");
+        renderMathInNode(answer);
+        const feedback = String(documentData.review?.final?.feedback || "").trim();
+        const comment = card.querySelector("[data-model-task-comment]");
+        if (feedback && comment) {
+          comment.hidden = false;
+          comment.innerHTML = `<p class="eyebrow">Комментарий экспертов</p><div class="prose">${renderMarkdown(feedback, "")}</div>`;
+          renderMathInNode(comment);
+        }
+      } catch (_) {
+        answer.innerHTML = "<p>Не удалось загрузить опубликованное решение.</p>";
+      }
+    }));
+  }
+
   updateSiteLinks();
   enableReadingBackgroundCollapse();
   if (page === "leaderboard") renderLeaderboard();
@@ -963,4 +1076,5 @@
   if (page === "solution") renderSolution();
   if (page === "task") renderTask();
   if (page === "problem-set") renderProblemSet();
+  if (page === "model") renderModel();
 })();

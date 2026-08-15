@@ -60,6 +60,18 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn("compareParticipants(left, right, sortState(competition.id), ranks)", app)
         self.assertLess(app.index('class="task-result-panel"'), app.index('data-task-answer'))
 
+    def test_model_page_lists_every_task_and_model_names_link_to_it(self) -> None:
+        model_html = (ROOT / "public_results" / "model.html").read_text(encoding="utf-8")
+        app = (ROOT / "public_results" / "app.js").read_text(encoding="utf-8")
+        self.assertIn('data-page="model"', model_html)
+        self.assertIn('id="model-task-solutions"', model_html)
+        self.assertIn("function modelPageSlug(participant)", app)
+        self.assertIn('replace(/^claude-/, "")', app)
+        self.assertIn("function modelRoute(competition, participant)", app)
+        self.assertIn('class="participant-name participant-link"', app)
+        self.assertIn('data-reading-section="model-set:', app)
+        self.assertIn('if (page === "model") renderModel()', app)
+
     def test_catalog_links_to_results_and_whole_problem_set(self) -> None:
         catalog_html = (ROOT / "public_results" / "competitions.html").read_text(encoding="utf-8")
         set_html = (ROOT / "public_results" / "problem-set.html").read_text(encoding="utf-8")
@@ -77,6 +89,9 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn('class="competition-card-link"', app)
         self.assertIn("Условия и авторские решения", app)
         self.assertIn("Таблица результатов", app)
+        self.assertNotIn('class="catalog-action primary"', app)
+        self.assertNotIn('class="catalog-action secondary"', app)
+        self.assertNotIn('Таблица результатов <span aria-hidden="true">↗</span>', app)
         self.assertIn('class="competition-card-stage"', app)
         self.assertIn('stageLabel: "Финал"', data)
         self.assertIn('stageLabel: "Отбор"', data)

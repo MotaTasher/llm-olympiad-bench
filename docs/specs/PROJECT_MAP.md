@@ -42,6 +42,7 @@ public_results/
   index.html              benchmark/year/stage filters and selected leaderboard
   competitions.html       compact public release catalog
   problem-set.html        all statements and official solutions for one stage
+  model.html              all published answers from one model in one stage
   solution.html           Markdown + KaTeX task/model/official solution reader
   data.js                 fallback snapshot, releases, teams and catalog data
   generated/              ignored runtime export consumed when present
