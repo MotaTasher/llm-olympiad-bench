@@ -34,6 +34,10 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn("if (feedback) renderMathInNode(container)", app)
         for state in ("full", "partial", "zero"):
             self.assertIn(f'data-result-state="{state}"', styles)
+        for color in ("#98b993", "#c9aa67", "#cb7f76"):
+            self.assertIn(color, styles)
+        for old_color in ("#d9ff72", "#ffd166", "#ff806d"):
+            self.assertNotIn(old_color, styles)
         self.assertIn("border-color: rgba(var(--result-accent-rgb)", styles)
         self.assertNotIn('data-reading-section="model" open', (ROOT / "public_results" / "solution.html").read_text(encoding="utf-8"))
         self.assertIn(".reading-reference[open]", styles)

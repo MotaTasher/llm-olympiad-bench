@@ -99,7 +99,9 @@ solution keep neutral card outlines that do not change with the score; only the
 model solution and result use the score-colored outline. The result section
 contains the verdict, score, metrics and optional shared comment.
 Solution cards use a solid dark surface and a score-colored outline matching
-the leaderboard cell; result gradients are not used. Their independent
+the leaderboard cell. The dark-theme status palette uses muted sage for a full
+score, ochre for a partial score and terracotta for zero; result gradients are
+not used. Their independent
 open/closed states are saved in browser local storage and restored across task
 navigation and later visits; storage failure falls back to the collapsed HTML
 defaults without blocking the page. Clicking an empty background area inside

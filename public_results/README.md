@@ -119,8 +119,9 @@ collapsed by default, and long prose is centered in a wider reading column.
 The browser remembers the independent open or closed state of all three
 reading sections in local storage and restores it between tasks and later
 visits. Reference cards keep a neutral outline; the result panel and model
-answer use a solid dark surface with a score-colored outline: green for a full
-score, yellow for a partial score, red for zero and graphite while pending.
+answer use a solid dark surface with a score-colored outline: muted sage for a
+full score, ochre for a partial score, terracotta for zero and graphite while
+pending.
 An expanded reading card also closes when its empty background is clicked;
 clicking rendered text, formulas, links or controls does not close it.
 
