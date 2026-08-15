@@ -107,7 +107,9 @@ navigation and later visits; storage failure falls back to the collapsed HTML
 defaults without blocking the page. Clicking an empty background area inside
 an expanded reading card collapses it, while text, formulas, links and controls
 keep their normal interaction. Task headers in the leaderboard are links,
-not sort controls. `/problems/<competition-id>/<task-slug>` opens the task
+not sort controls. Model links, task-header links and scored solution links fill
+their complete table cells; hover and keyboard focus highlight the cell rather
+than a smaller control inside it. `/problems/<competition-id>/<task-slug>` opens the task
 statement, official solution and every model answer in leaderboard model order,
 with all sections initially collapsed and each model card carrying its verdict.
 Inside an expanded model card, the result and optional shared comment precede

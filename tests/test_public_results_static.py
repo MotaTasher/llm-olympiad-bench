@@ -79,13 +79,23 @@ class PublicResultsStaticTests(unittest.TestCase):
         self.assertIn("function modelPageSlug(participant)", app)
         self.assertIn('replace(/^claude-/, "")', app)
         self.assertIn("function modelRoute(competition, participant)", app)
-        self.assertIn('class="participant-name participant-link"', app)
+        self.assertIn('class="participant-cell-link"', app)
         self.assertIn('data-reading-section="model-set:', app)
         self.assertIn("function attemptMetricsMarkup()", app)
         self.assertIn("function renderAttemptMetrics(card, result)", app)
         self.assertIn('data-attempt-cost', app)
         self.assertEqual(app.count("renderAttemptMetrics(card, documentData.result || {})"), 2)
         self.assertIn('if (page === "model") renderModel()', app)
+
+    def test_leaderboard_links_fill_their_table_cells(self) -> None:
+        app = (ROOT / "public_results" / "app.js").read_text(encoding="utf-8")
+        styles = (ROOT / "public_results" / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('<a class="participant-cell-link"', app)
+        self.assertIn('<a class="task-header-link"', app)
+        self.assertIn(".participant-cell:has(> .participant-cell-link)", styles)
+        self.assertIn(".task-column { padding: 0 !important; }", styles)
+        self.assertIn(".result-cell:has(> a:focus-visible)", styles)
+        self.assertIn(".participant-cell-link:focus-visible", styles)
 
     def test_catalog_links_to_results_and_whole_problem_set(self) -> None:
         catalog_html = (ROOT / "public_results" / "competitions.html").read_text(encoding="utf-8")

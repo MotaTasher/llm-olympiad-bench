@@ -590,9 +590,21 @@
       const medal = isTeam
         ? `<span class="medal" aria-label="${participant.rank} место в олимпиаде" title="${participant.rank} место в олимпиаде">${participant.medal}</span>`
         : "";
-      const participantName = isTeam
-        ? `<span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>`
-        : `<a class="participant-name participant-link" href="${modelRoute(competition, participant)}" title="Все решения ${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</a>`;
+      const participantCell = isTeam
+        ? `
+          <span class="participant-title">
+            ${medal}
+            <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
+          </span>
+          <span class="participant-meta" title="${escapeHtml(participant.members)}">${escapeHtml(participant.members)}</span>
+        `
+        : `
+          <a class="participant-cell-link" href="${modelRoute(competition, participant)}" title="Все решения ${escapeHtml(participant.name)}">
+            <span class="participant-title">
+              <span class="participant-name">${escapeHtml(participant.name)}</span>
+            </span>
+          </a>
+        `;
 
       const cells = competition.tasks.map((task, index) => {
         const score = participant.scores[index];
@@ -612,11 +624,7 @@
         <tr class="${isTeam ? "team-row" : "model-row"}">
           <td class="rank-cell">${rank}</td>
           <th class="participant-cell" scope="row">
-            <span class="participant-title">
-              ${medal}
-              ${participantName}
-            </span>
-            ${isTeam ? `<span class="participant-meta" title="${escapeHtml(participant.members)}">${escapeHtml(participant.members)}</span>` : ""}
+            ${participantCell}
           </th>
           ${moneyCell(participant)}
           <td class="metric-cell points-cell strong">${formatPoints(participantPoints(participant))}</td>
