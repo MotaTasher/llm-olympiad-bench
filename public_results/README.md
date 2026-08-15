@@ -6,6 +6,7 @@ This is the standalone public Reasoning Space site. It contains:
 - `competitions.html`: compact buttons for available competition releases;
 - `solution.html`: full-width single-model solution reading layout;
 - `task.html`: statement, official solution and all model answers for one task;
+- `model.html`: aggregate model result and all of that model's answers;
 - `data.js`: fallback release, team and catalog data;
 - `assets/csspace-logo.svg`: local vector CS Space logo used in headers and footers;
 - `assets/formula-pattern-{desktop,mobile}.svg`: original vector formula backgrounds;
@@ -79,6 +80,10 @@ individual expert scores and comments, reviewer/organizer identities, raw
 provider/request data, errors and internal filesystem paths. There is no public
 `review.experts` list. Run logs and evaluation sidecars are only read and are
 never modified.
+
+The task and model overview pages show the selected attempt's cost, token count
+and response time inside each answer card. A model page also repeats the
+aggregate leaderboard rank, points, cost, tokens and accuracy above its tasks.
 
 Each published stage is an independent release with its own URL and table.
 Three visible button rows select benchmark, year and stage without a dropdown;

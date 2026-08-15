@@ -884,6 +884,61 @@
     return "Не зачтено";
   }
 
+  function formatAttemptCost(value) {
+    const cost = Number(value);
+    return value === null || value === undefined || !Number.isFinite(cost)
+      ? "—"
+      : `$${cost.toFixed(4)}`;
+  }
+
+  function formatAttemptTokens(value) {
+    const tokens = Number(value);
+    return value === null || value === undefined || !Number.isFinite(tokens)
+      ? "—"
+      : number.format(tokens);
+  }
+
+  function formatLatency(value) {
+    const milliseconds = Number(value);
+    if (value === null || value === undefined || !Number.isFinite(milliseconds)) return "—";
+    const seconds = milliseconds / 1000;
+    if (seconds < 60) {
+      const digits = seconds < 10 && !Number.isInteger(seconds) ? 1 : 0;
+      return `${seconds.toFixed(digits).replace(".", ",")} с`;
+    }
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.round(seconds % 60);
+    return remainingSeconds ? `${minutes} мин ${remainingSeconds} с` : `${minutes} мин`;
+  }
+
+  function attemptMetricsMarkup() {
+    return `
+      <dl class="task-run-metrics" data-attempt-metrics hidden>
+        <div>
+          <dt>Стоимость</dt>
+          <dd data-attempt-cost>—</dd>
+        </div>
+        <div>
+          <dt>Токены</dt>
+          <dd data-attempt-tokens>—</dd>
+        </div>
+        <div>
+          <dt>Время ответа</dt>
+          <dd data-attempt-latency>—</dd>
+        </div>
+      </dl>
+    `;
+  }
+
+  function renderAttemptMetrics(card, result) {
+    const metrics = card?.querySelector("[data-attempt-metrics]");
+    if (!metrics) return;
+    metrics.querySelector("[data-attempt-cost]").textContent = formatAttemptCost(result?.cost);
+    metrics.querySelector("[data-attempt-tokens]").textContent = formatAttemptTokens(result?.tokens);
+    metrics.querySelector("[data-attempt-latency]").textContent = formatLatency(result?.latencyMs);
+    metrics.hidden = false;
+  }
+
   async function fetchPublishedSolution(path) {
     if (!path) return null;
     const response = await fetch(
@@ -942,6 +997,7 @@
                 <span>Результат</span>
                 <strong>${escapeHtml(taskVerdict(score, maxScore))} · ${score == null ? "—" : escapeHtml(`${score} / ${maxScore}`)}</strong>
               </div>
+              ${attemptMetricsMarkup()}
               <div class="task-final-comment" data-task-comment hidden></div>
             </div>
             <div class="prose" data-task-answer><p>Загружаем ответ…</p></div>
@@ -973,6 +1029,7 @@
         }
         answer.innerHTML = renderMarkdown(documentData.result?.answer, "Текст ответа пуст.");
         renderMathInNode(answer);
+        renderAttemptMetrics(card, documentData.result || {});
         const feedback = String(documentData.review?.final?.feedback || "").trim();
         const comment = card.querySelector("[data-task-comment]");
         if (feedback && comment) {
@@ -1011,6 +1068,17 @@
     );
     document.querySelector("#model-competition").textContent = stageTitle;
     document.querySelector("#model-title").textContent = model?.name || "Модель";
+    const rankedParticipants = competition.participants.filter(
+      (participant) => participant.type === "model" || participant.type === "team"
+    );
+    const rank = rankingFor(rankedParticipants).get(model?.id);
+    document.querySelector("#model-rank").textContent = rank == null ? "—" : String(rank).padStart(2, "0");
+    document.querySelector("#model-points").textContent = formatPoints(participantPoints(model || {}));
+    document.querySelector("#model-cost").textContent = formatAttemptCost(model?.cost).replace(/(\.\d{2})\d{2}$/, "$1");
+    document.querySelector("#model-tokens").textContent = formatAttemptTokens(model?.tokens);
+    document.querySelector("#model-accuracy").textContent = model?.accuracy == null
+      ? "—"
+      : `${String(model.accuracy).replace(".", ",")}%`;
 
     const list = document.querySelector("#model-task-solutions");
     list.innerHTML = competition.tasks.map((task, index) => {
@@ -1035,6 +1103,7 @@
                 <span>Результат</span>
                 <strong>${escapeHtml(resultText)}</strong>
               </div>
+              ${attemptMetricsMarkup()}
               <div class="task-final-comment" data-model-task-comment hidden></div>
             </div>
             <div class="prose" data-model-task-answer><p>Загружаем решение…</p></div>
@@ -1056,6 +1125,7 @@
         }
         answer.innerHTML = renderMarkdown(documentData.result?.answer, "Текст решения пуст.");
         renderMathInNode(answer);
+        renderAttemptMetrics(card, documentData.result || {});
         const feedback = String(documentData.review?.final?.feedback || "").trim();
         const comment = card.querySelector("[data-model-task-comment]");
         if (feedback && comment) {

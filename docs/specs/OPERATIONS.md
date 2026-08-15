@@ -111,10 +111,13 @@ not sort controls. `/problems/<competition-id>/<task-slug>` opens the task
 statement, official solution and every model answer in leaderboard model order,
 with all sections initially collapsed and each model card carrying its verdict.
 Inside an expanded model card, the result and optional shared comment precede
-the answer and use the same score color as the card outline. Model names in the
+the per-attempt cost, token count, response time and answer, and use the same
+score color as the card outline. Model names in the
 leaderboard link to `/problems/<competition-id>/<model-page-slug>`, which lists
-that model's result, optional shared comment and full answer for every task in
-the stage. Claude model-page slugs omit the redundant `claude-` prefix, for
+that model's result, optional shared comment, run metrics and full answer for
+every task in the stage. The top of that page repeats the aggregate table rank,
+points, cost, token count and accuracy. Claude model-page slugs omit the redundant
+`claude-` prefix, for
 example `fable-5`.
 The fallback public metadata also supplies team member names and stage-specific
 competition rules. The leaderboard switches that rules block together with the

@@ -8,14 +8,14 @@
     <title>Решения модели — Reasoning Space</title>
     <link rel="icon" type="image/svg+xml" href="assets/csspace-favicon.svg">
     <link rel="stylesheet" href="vendor/katex/katex.min.css">
-    <link rel="stylesheet" href="styles.css?v=31">
+    <link rel="stylesheet" href="styles.css?v=32">
     <script src="vendor/marked/marked.min.js" defer></script>
     <script src="vendor/dompurify/purify.min.js" defer></script>
     <script src="vendor/katex/katex.min.js" defer></script>
     <script src="vendor/katex/contrib/auto-render.min.js" defer></script>
     <script src="data.js?v=12" defer></script>
     <script src="generated/data.js?v=9" defer></script>
-    <script src="app.js?v=25" defer></script>
+    <script src="app.js?v=26" defer></script>
   </head>
   <body data-page="model">
     <header class="site-header">
@@ -38,6 +38,32 @@
           <p class="eyebrow" id="model-competition">Math Cup 2026</p>
           <h1 id="model-title">Модель</h1>
         </div>
+      </section>
+
+      <section class="model-overview" aria-label="Сводка результатов модели">
+        <div class="model-overview-rank">
+          <span>Место</span>
+          <strong id="model-rank">—</strong>
+          <small>в общей таблице</small>
+        </div>
+        <dl class="model-overview-stats">
+          <div>
+            <dt>Сумма баллов</dt>
+            <dd id="model-points">—</dd>
+          </div>
+          <div>
+            <dt>Затраты</dt>
+            <dd id="model-cost">—</dd>
+          </div>
+          <div>
+            <dt>Токены</dt>
+            <dd id="model-tokens">—</dd>
+          </div>
+          <div>
+            <dt>Точность</dt>
+            <dd id="model-accuracy">—</dd>
+          </div>
+        </dl>
       </section>
 
       <section class="solution-layout model-solutions-layout">

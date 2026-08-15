@@ -65,11 +65,17 @@ class PublicResultsStaticTests(unittest.TestCase):
         app = (ROOT / "public_results" / "app.js").read_text(encoding="utf-8")
         self.assertIn('data-page="model"', model_html)
         self.assertIn('id="model-task-solutions"', model_html)
+        for field in ("model-rank", "model-points", "model-cost", "model-tokens", "model-accuracy"):
+            self.assertIn(f'id="{field}"', model_html)
         self.assertIn("function modelPageSlug(participant)", app)
         self.assertIn('replace(/^claude-/, "")', app)
         self.assertIn("function modelRoute(competition, participant)", app)
         self.assertIn('class="participant-name participant-link"', app)
         self.assertIn('data-reading-section="model-set:', app)
+        self.assertIn("function attemptMetricsMarkup()", app)
+        self.assertIn("function renderAttemptMetrics(card, result)", app)
+        self.assertIn('data-attempt-cost', app)
+        self.assertEqual(app.count("renderAttemptMetrics(card, documentData.result || {})"), 2)
         self.assertIn('if (page === "model") renderModel()', app)
 
     def test_catalog_links_to_results_and_whole_problem_set(self) -> None:
