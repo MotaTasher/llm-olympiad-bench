@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "code_8b3bca91e21c34bd901fceb1",
+  "format": "code",
+  "competition_id": "algo-cup-2026-qualifying",
+  "problem_id": "task_02",
+  "author": {
+    "type": "team",
+    "id": "algo-103053-team-2",
+    "name": "Откатили интеллект"
+  },
+  "source": {
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "code": "#include \"bits/stdc++.h\"\n\n#define rep(i, n) for(int i = 0; i < (n); ++i)\n#define all(a) (a).begin(), (a).end()\n\nusing namespace std;\n\nusing ll = long long;\nusing vl = vector<ll>;\nusing vi = vector<int>;\nconst int INFi  = 2e9;\n\nconst int N = 1e5 + 5;\nvector<pair<int, int>> g[N];\nint dp[N];\n\nvoid dfs(int v, int p, int px) {\n    int c = 0;\n    dp[v] = 0;\n    for (auto &[u, x] : g[v]) {\n        if (u == p) continue;\n        dfs(u, v, x);\n        dp[v] += dp[u];\n        if (x == 1) c += 1;\n    }\n    dp[v] -= c / 2;\n    c %= 2;\n    if (c != px) {\n        if (c == 0) {\n            dp[v]++;\n        }\n    }\n}\n\nint ans = INFi;\nvoid solve(int v) {\n    dp[v] = 0;\n    int c = 0;\n    for (auto &[u, x] : g[v]) {\n        dp[v] += dp[u];\n        if (x == 1) c += 1;\n    }\n    dp[v] -= c / 2;\n    ans = min(ans, dp[v]);\n}\n\nvoid reroot(int v, int p) {\n    solve(v);\n    int sum = 0;\n    int c = 0;\n    for (auto &[u, x] : g[v]) sum += dp[u];\n    for (auto &[u, x] : g[v]) c += x;\n\n    for (auto &[u, x] : g[v]) {\n        if (u == p) continue;\n\n        int sum2 = sum - dp[u];\n        int c2 = c - x;\n        int y = x ^ 1;\n        dp[v] = sum2 - (c2 / 2);\n        c2 %= 2;\n        if (c2 == 0 && y == 1) {\n            dp[v]++;\n        }\n\n        reroot(u, v);\n    }\n}\n\nvoid solve() {\n    int n; cin >> n;\n    rep(_, n - 1) {\n        int u, v; cin >> u >> v;\n        g[u].push_back({v, 1});\n        g[v].push_back({u, 0});\n    }\n\n    dfs(1, -1, 0);\n    reroot(1, -1);\n\n    cout << ans << '\\n';\n\n    ans = INFi;\n    rep(i, n + 1) g[i].clear();\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}",
+    "sha256": "eeb7d56dd9ab188173d7455f097a7f01eed4ad701170414e2c55ddca5082c729",
+    "encoding": "utf-8"
+  },
+  "origin": {
+    "kind": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170535162,
+    "selection": "first_accepted_in_contest"
+  },
+  "generation": null
+}

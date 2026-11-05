@@ -133,6 +133,12 @@ python3 -m http.server 8080 --directory public_results
 интерфейс использует встроенный демонстрационный срез. Подробности о выборе
 попыток и строках команд — в `public_results/README.md`.
 
+Точный источник дизайна, размеры и проверка соседних бакетов описаны в
+[`specs/PUBLIC_DESIGN.md`](specs/PUBLIC_DESIGN.md). Шрифты Montserrat и Unbounded
+загружаются через Google Fonts с разрешённых сервером доменов; для проверки
+внешнего вида нужен интернет. Команды доступа к Object Storage через
+существующий `yc` находятся в корневом `AGENTS.md`.
+
 Production uses clean URLs (`/`, `/problems` and concrete
 `/problems/<competition>/<task>/<model>` routes). The simple local file server
 does not emulate extensionless Object Storage route objects, so use the legacy

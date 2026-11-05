@@ -2,6 +2,14 @@
 
 ## Main execution flow
 
+Code viewing/external checking is a separate boundary under `judging/`:
+immutable source artifact → explicit admin submission/outbox → separate judge
+record → sanitized public code document. Winner submissions are imported
+read-only; new model calls/submissions have not been run. Default source
+languages are C++ and Python. See [`CODE_JUDGING.md`](CODE_JUDGING.md) for
+bindings, units and CLI controls. `runner.py`, adapters and math prompts are
+unchanged; a code-generating model request must still be text-only.
+
 ```text
 canonical problem file
    │

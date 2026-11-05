@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "format": "code",
+  "competition": {
+    "id": "algo-cup-2026-qualifying",
+    "title": "Algo Cup 2026",
+    "stage": "Отбор"
+  },
+  "task": {
+    "id": "task_04",
+    "title": "Остатки по убыванию",
+    "maxScore": 1,
+    "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/D/"
+  },
+  "author": {
+    "id": "algo-103053-team-2",
+    "type": "team",
+    "name": "Откатили интеллект"
+  },
+  "source": {
+    "code": "#include \"bits/stdc++.h\"\n\n#define rep(i, n) for(int i = 0; i < (n); ++i)\n#define all(a) (a).begin(), (a).end()\n\nusing namespace std;\n\nusing ll = long long;\nusing vl = vector<ll>;\nusing vi = vector<int>;\nconst int INFi  = 2e9;\n\nvoid solve() {\n    int n, q; cin >> n >> q;\n    vi a(n);\n    rep(i, n) cin >> a[i];\n    vector<multiset<int>> T(n * 2);\n    rep(i, n) {\n        for (int j = i + n; j >= 1; j >>= 1) T[j].insert(a[i]);\n    }\n\n    rep(_, q) {\n        int tp; cin >> tp;\n        if (tp == 1) {\n            int i, v; cin >> i >> v;\n            i--;\n            int u = a[i];\n            a[i] = v;\n            for (i += n; i >= 1; i >>= 1) {\n                T[i].erase(T[i].find(u));\n                T[i].insert(v);\n            }\n            continue;\n        }\n        int l, r; cin >> l >> r;\n        l--;\n        int v; cin >> v;\n        vi segs;\n        for (l += n, r += n; l < r; l >>= 1, r >>= 1) {\n            if (l & 1) segs.emplace_back(l++);\n            if (r & 1) segs.emplace_back(--r);\n        }\n\n        sort(all(segs));\n\n        while (true) {\n            int mx = -INFi;\n            for (auto i : segs) {\n                auto it = T[i].upper_bound(v);\n                if (it == T[i].begin()) continue;\n                mx = max(mx, *prev(it));\n            }\n            if (mx == -INFi) break;\n            v %= mx;\n        }\n\n        cout << v << '\\n';\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    int t = 1;\n    // cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}",
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "sha256": "8e56815673a19e437894cfa212a47afe22dac4a653948ca6eb21deb19e44c0e1"
+  },
+  "result": {
+    "score": 1,
+    "verdict": "Принято · OK"
+  },
+  "judge": {
+    "judge": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170535720,
+    "compiler_id": "gcc14_cpp23",
+    "compiler_name": "C++23 (GCC 14.1)",
+    "status": "finished",
+    "verdict": "OK",
+    "metrics": {
+      "time_ms": 1252,
+      "memory_bytes": 95027200
+    },
+    "submitted_at": "2026-11-04T15:24:40+00:00",
+    "time_from_start_ms": 1542727
+  }
+}

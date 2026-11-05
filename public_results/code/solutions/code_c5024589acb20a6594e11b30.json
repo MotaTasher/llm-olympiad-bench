@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "format": "code",
+  "competition": {
+    "id": "algo-cup-2026-qualifying",
+    "title": "Algo Cup 2026",
+    "stage": "Отбор"
+  },
+  "task": {
+    "id": "task_03",
+    "title": "Новогодняя Фабрика",
+    "maxScore": 1,
+    "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/C/"
+  },
+  "author": {
+    "id": "algo-103053-team-3",
+    "type": "team",
+    "name": "Печень"
+  },
+  "source": {
+    "code": "#include \"bits/stdc++.h\"\n\nusing namespace std;\n\nusing ll = long long;\n\nvoid solve () {\n    int n;\n    ll k;\n    cin >> n >> k;\n    vector<pair<ll, ll>> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i].first;\n    }\n    for (int i = 0; i < n; i++) {\n        cin >> a[i].second;\n        if (a[i].second >= a[i].first) {\n            swap(a[i].first, a[i].second);\n        }\n    }\n    {\n        ll s = 0;\n        for (auto& [x, y] : a) s += y;\n        if (k >= s) {\n            cout << 0 << '\\n';\n            return;\n        }\n    }\n    std::sort(a.begin(), a.end());\n    std::reverse(a.begin(), a.end());\n    ll ans = 0, sum = 0;\n    for (int i = 0; i < n; i++) sum += a[i].first * a[i].second;\n    ans = sum;\n    vector<ll> pref1(n + 1), pref2(n + 1);\n    for (int i = 0; i < n; i++) {\n        pref1[i + 1] = pref1[i] + a[i].first * a[i].second;\n        pref2[i + 1] = pref2[i] + a[i].second;\n    }\n    for (int mn = 0; mn < n; mn++) {\n        // b[mn] -= c\n        // 0 <= c <= k\n        ll res = sum - a[mn].first * a[mn].second;\n        ll can = k;\n        ll a_mn = a[mn].first + k;\n        // k - pref2[r] >= a[mn].second\n//        int l = 0, r = n + 1;\n\n        for (int i = 0; i <= min(n, 30); i++) {\n            if (i) {\n                if (i - 1 == mn) continue;\n                res -= a[i - 1].first * 1ll * a[i - 1].second;\n                can -= a[i - 1].second;\n                if (can < 0) break;\n            }\n            ll r = min(can, (ll) a[mn].second);\n            // 0 <= c <= r\n            // res + a_mn * (b[mn] - c)\n            ans = min(ans, res + a_mn * (a[mn].second - r));\n            if (i < n && i != mn) {\n                // res + a_mn * (b[mn] - c) - a[i].first * min(a[i].second, v)\n                // v + c <= can\n                if (can >= a[i].second + a[mn].second) {\n                    //\n                } else {\n                    ll new_res = res + a_mn * a[mn].second;\n                    // - a_mn * c - a[i].first * v\n                    if (a[i].first >= a_mn) {\n                        ll v = min(a[i].second, can);\n                        new_res -= a_mn * min(a[mn].second, can - v) + a[i].first * v;\n                    } else {\n                        ll v = min(a[mn].second, can);\n                        new_res -= a_mn * v + a[i].first * min(a[i].second, can - v);\n                    }\n                    ans = min(ans, new_res);\n                }\n            }\n        }\n        can = k;\n        if (can < a[mn].second) continue;\n        can -= a[mn].second;\n        res = sum - a[mn].first * a[mn].second;\n        int l = 0, r = n + 1;\n        while (l + 1 < r) {\n            int m = (l + r) / 2;\n            ll res = pref2[m];\n            if (mn < m) res -= a[mn].second;\n            if (res <= can) {\n                l = m;\n            } else {\n                r = m;\n            }\n        }\n        if (l) {\n            can -= pref2[l];\n            res -= pref1[l];\n            if (mn < l) {\n                can += a[mn].second;\n                res += a[mn].first * a[mn].second;\n            }\n        }\n        if (l < n) {\n            assert(l != mn);\n            assert(0 <= can && can <= a[l].second);\n            res -= a[l].first * can;\n        }\n        ans = min(ans, res);\n    }\n    cout << ans << '\\n';\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n}",
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "sha256": "bd95c4f376b064cf2d673ac0cab902d781147edc2603a6082d445a95e457f02d"
+  },
+  "result": {
+    "score": 1,
+    "verdict": "Принято · OK"
+  },
+  "judge": {
+    "judge": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170513444,
+    "compiler_id": "gcc14_cpp23",
+    "compiler_name": "C++23 (GCC 14.1)",
+    "status": "finished",
+    "verdict": "OK",
+    "metrics": {
+      "time_ms": 149,
+      "memory_bytes": 9732096
+    },
+    "submitted_at": "2026-11-04T11:01:07+00:00",
+    "time_from_start_ms": 3505712
+  }
+}

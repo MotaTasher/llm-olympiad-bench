@@ -23,6 +23,9 @@ This directory is the first stop for coding agents. It describes the current imp
 | add or modify a model provider | [`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) |
 | change Flask UI or scoring persistence | [`SCORING_WEB.md`](SCORING_WEB.md), [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md) |
 | change the public-results site or export | [`PROJECT_MAP.md`](PROJECT_MAP.md), [`OPERATIONS.md`](OPERATIONS.md), [`../LOCAL_SETUP.md`](../LOCAL_SETUP.md) |
+| change public-site design or inspect sibling buckets | [`PUBLIC_DESIGN.md`](PUBLIC_DESIGN.md), root [`AGENTS.md`](../../AGENTS.md) access instructions |
+| prepare Algo Cup / use the Yandex Contest kit | [`YANDEX_CONTEST.md`](YANDEX_CONTEST.md), [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md) |
+| code sources, Yandex submission/verdict records, code viewer | [`CODE_JUDGING.md`](CODE_JUDGING.md), [`YANDEX_CONTEST.md`](YANDEX_CONTEST.md) |
 | change sync/export/secret checks | [`OPERATIONS.md`](OPERATIONS.md) |
 | deploy or diagnose production/scorer/public S3 | [`DEPLOYMENT.md`](DEPLOYMENT.md), [`OPERATIONS.md`](OPERATIONS.md) |
 | change the GeoGebra solution viewer | [`PROJECT_MAP.md`](PROJECT_MAP.md), [`../GEOGEBRA_VIEWER.md`](../GEOGEBRA_VIEWER.md) |

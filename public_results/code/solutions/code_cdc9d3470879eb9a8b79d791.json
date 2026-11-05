@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "format": "code",
+  "competition": {
+    "id": "algo-cup-2026-qualifying",
+    "title": "Algo Cup 2026",
+    "stage": "Отбор"
+  },
+  "task": {
+    "id": "task_03",
+    "title": "Новогодняя Фабрика",
+    "maxScore": 1,
+    "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/C/"
+  },
+  "author": {
+    "id": "algo-103053-team-1",
+    "type": "team",
+    "name": "Чемпионское дерьмо"
+  },
+  "source": {
+    "code": "#include <bits/stdc++.h>\n\nusing namespace std;\n\nusing ll = long long;\nusing ld = long double;\n\n#define all(a) a.begin(), a.end()\n#define rall(a) a.rbegin(), a.rend()\n#define rep(i, n) for(int i = 0; i < (n); i += 1)\n#define len(a) ((int)(a).size())\n\nconst ll inf = 1e18;\nmt19937 rnd(234);\n\nint n;\nll k;\nvector<ll> a, b;\n\ninline void solve() {\n    cin >> n >> k;\n    a.resize(n);\n    rep(i, n) {\n        cin >> a[i];\n    }\n    b.resize(n);\n    rep(i, n) {\n        cin >> b[i];\n    }\n    rep(i, n) {\n        if (a[i] > b[i]) swap(a[i], b[i]);\n    }\n    ll base_cost = 0;\n    rep(i, n) {\n        base_cost += a[i] * b[i];\n    }\n    vector <int> srtd(n);\n    rep(i, n) {\n        srtd[i] = i;\n    }\n    sort(all(srtd), [&](int i, int j) {\n        return b[i] > b[j];\n        });\n    vector<int> pos(n);\n    rep(i, n) {\n        pos[srtd[i]] = i;\n    }\n    vector<ll> psums(n + 1);\n    vector<ll> psums_cost(n + 1);\n    rep(i, n) {\n        psums[i + 1] = psums[i] + a[srtd[i]];\n        psums_cost[i + 1] = psums_cost[i] + a[srtd[i]] * b[srtd[i]];\n    }\n    auto get = [&](ll x, int bnd) {\n        ll res = 0;\n        if (psums[pos[bnd]] < x) {\n            x += a[bnd];\n            res -= a[bnd] * b[bnd];\n        }\n        if (x >= psums.back()) {\n            res += psums_cost.back();\n            return res;\n        }\n        int flex = upper_bound(all(psums), x) - psums.begin() - 1;\n        res += psums_cost[flex];\n        ll rest = x - psums[flex];\n        if (rest > 0) {\n            res += b[srtd[flex]] * rest;\n        }\n        return res;\n        };\n    ll res = base_cost;\n    rep(i, n) {\n        auto get_bob = [&](ll to_move) {\n            ll res = base_cost - a[i] * b[i] + (a[i] - to_move) * (b[i] + to_move);\n            res -= get(k - to_move, i);\n            ll new_moves = min(k - to_move, psums.back() - a[i]);\n            res += new_moves * (a[i] - to_move);\n            return res;\n            };\n        ll tl = 0;\n        ll tr = min(k, a[i]);\n        while (tl + 10 < tr) {\n            ll tm1 = (2 * tl + tr) / 3;\n            ll tm2 = (tl + 2 * tr) / 3;\n            if (get_bob(tm1) < get_bob(tm2)) {\n                tr = tm2;;\n            }\n            else {\n                tl = tm1;\n            }\n        }\n        for (ll j = tl; j <= tr; j += 1) {\n            res = min(res, get_bob(j));\n        }\n    }\n    cout << res << \"\\n\";\n}\n\nint32_t main() {\n    if (1) {\n        ios::sync_with_stdio(0);\n        cin.tie(0);\n        cout.tie(0);\n    }\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}",
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "sha256": "8e9dd2769a4c1974fd5c69c173d30832d45b5f8f9e141b9bcb486ef19a0e187d"
+  },
+  "result": {
+    "score": 1,
+    "verdict": "Принято · OK"
+  },
+  "judge": {
+    "judge": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170508808,
+    "compiler_id": "gcc14_cpp23",
+    "compiler_name": "C++23 (GCC 14.1)",
+    "status": "finished",
+    "verdict": "OK",
+    "metrics": {
+      "time_ms": 620,
+      "memory_bytes": 12169216
+    },
+    "submitted_at": "2026-11-04T10:07:17+00:00",
+    "time_from_start_ms": 2359454
+  }
+}

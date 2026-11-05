@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "code_41133fe323c65aa8f4dc2857",
+  "format": "code",
+  "competition_id": "algo-cup-2026-qualifying",
+  "problem_id": "task_04",
+  "author": {
+    "type": "team",
+    "id": "algo-103053-team-1",
+    "name": "Чемпионское дерьмо"
+  },
+  "source": {
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "code": "#include <bits/stdc++.h>\r\n\r\nusing namespace std;\r\n\r\nusing ll = long long;\r\nusing ld = long double;\r\n\r\n#define all(a) a.begin(), a.end()\r\n#define rall(a) a.rbegin(), a.rend()\r\n#define rep(i, n) for(int i = 0; i < (n); i += 1)\r\n#define len(a) ((int)(a).size())\r\n\r\nconst ll inf = 1e18;\r\nmt19937 rnd(234);\r\n\r\nstruct SegTree {\r\n    int len;\r\n    vector <multiset <int>> t;\r\n    vector <int> a;\r\n\r\n    SegTree(int n, const vector <int>& a) : a(a) {\r\n        len = 1 << (int)ceil(log2(n));\r\n        t.resize(2 * len);\r\n        build(1, 0, len - 1);\r\n    }\r\n\r\n    void build(int v, int l, int r) {\r\n        if (l == r) {\r\n            if (l < a.size()) t[v].insert(a[l]);\r\n            else t[v].insert(1);\r\n            return;\r\n        }\r\n        int m = (l + r) / 2;\r\n        build(2 * v, l, m);\r\n        build(2 * v + 1, m + 1, r);\r\n        for (auto i : t[2 * v]) t[v].insert(i);\r\n        for (auto i : t[2 * v + 1]) t[v].insert(i);\r\n    }\r\n\r\n    int max_less_or_eq(int v, int l, int r, int A, int B, int x) {\r\n        if (l > B || A > r) return -1;\r\n        if (A <= l && r <= B) {\r\n            auto it = t[v].upper_bound(x);\r\n            if (it != t[v].begin()) return *prev(it);\r\n            return -1;\r\n        }\r\n        int m = (l + r) / 2;\r\n        return max(max_less_or_eq(2 * v, l, m, A, B, x), max_less_or_eq(2 * v + 1, m + 1, r, A, B, x));\r\n    }\r\n\r\n    int max_less_or_eq(int l, int r, int x) {\r\n        return max_less_or_eq(1, 0, len - 1, l, r, x);\r\n    }\r\n\r\n    void update(int v, int l, int r, int i, int was_val, int new_val) {\r\n        if (l > i || i > r) return;\r\n        t[v].erase(t[v].find(was_val));\r\n        t[v].insert(new_val);\r\n        if (l == r) return;\r\n        int m = (l + r) / 2;\r\n        update(2 * v, l, m, i, was_val, new_val);\r\n        update(2 * v + 1, m + 1, r, i, was_val, new_val);\r\n    }\r\n\r\n    inline void update(int i, int new_val) {\r\n        update(1, 0, len - 1, i, a[i], new_val);\r\n        a[i] = new_val;\r\n    }\r\n};\r\ninline void solve() {\r\n    int n, q;\r\n    cin >> n >> q;\r\n    vector <int> a(n);\r\n    for (int i = 0; i < n; ++i) cin >> a[i];\r\n    SegTree t(n, a);\r\n    while (q--) {\r\n        int type;\r\n        cin >> type;\r\n        if (type == 1) {\r\n            int i, x;\r\n            cin >> i >> x;\r\n            t.update(i - 1, x);\r\n        }\r\n        else {\r\n            int l, r, s;\r\n            cin >> l >> r >> s; --l; --r;\r\n\r\n            while (true) {\r\n                int x = t.max_less_or_eq(l, r, s);\r\n                if (x == -1) break;\r\n                s %= x;\r\n            }\r\n\r\n            cout << s << \"\\n\";\r\n        }\r\n    }\r\n}\r\n\r\nint32_t main() {\r\n    if (1) {\r\n        ios::sync_with_stdio(0);\r\n        cin.tie(0);\r\n        cout.tie(0);\r\n    }\r\n    int t = 1;\r\n    // cin >> t;\r\n    while (t--) {\r\n        solve();\r\n    }\r\n    return 0;\r\n}",
+    "sha256": "e835a6eb3d4c6ea340918b00cb153c5d3be321fcc13723e680cfea9a03bce783",
+    "encoding": "utf-8"
+  },
+  "origin": {
+    "kind": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170507260,
+    "selection": "first_accepted_in_contest"
+  },
+  "generation": null
+}

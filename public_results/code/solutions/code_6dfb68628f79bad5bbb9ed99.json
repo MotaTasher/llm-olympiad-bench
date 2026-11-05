@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "format": "code",
+  "competition": {
+    "id": "algo-cup-2026-qualifying",
+    "title": "Algo Cup 2026",
+    "stage": "Отбор"
+  },
+  "task": {
+    "id": "task_02",
+    "title": "Все дороги ведут в Рим",
+    "maxScore": 1,
+    "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/B/"
+  },
+  "author": {
+    "id": "algo-103053-team-3",
+    "type": "team",
+    "name": "Печень"
+  },
+  "source": {
+    "code": "#include \"bits/stdc++.h\"\n\nusing namespace std;\n\nusing ll = long long;\n\npair<int, int> merge(pair<int, int> a, pair<int, int> b) {\n    a.second += b.second;\n    if (a.first && b.first) {\n        a.second++;\n        a.first = 0;\n    } else {\n        a.first |= b.first;\n    }\n    return a;\n}\n\nvoid solve () {\n    int n;\n    cin >> n;\n    vector<vector<pair<int, int>>> g(n);\n    for (int i = 0; i + 1 < n; i++) {\n        int x, y;\n        cin >> x >> y;\n        x--, y--;\n        g[x].push_back({y, 1});\n        g[y].push_back({x, 0});\n    }\n    vector<pair<int, int>> dp(n);\n    auto dfs = [&] (auto&& dfs, int v, int pr, int want) -> void {\n        dp[v] = {0, 0};\n        for (auto& [u, w] : g[v]) {\n            if (u != pr) {\n                dfs(dfs, u, v, w == 1);\n                dp[v] = merge(dp[v], dp[u]);\n            }\n        }\n        if (want && !dp[v].first) {\n            dp[v].first = 1;\n        }\n        if (!want && dp[v].first) {\n            dp[v].second++;\n            dp[v].first = 0;\n        }\n    };\n    dfs(dfs, 0, 0, 0);\n    int ans = dp[0].second + dp[0].first;\n    auto rec = [&] (auto&& rec, int v, int pr, pair<int, int> res) -> void {\n        vector<pair<int, int>> sons;\n        {\n            auto nres = res;\n            for (auto& [u, w] : g[v]) {\n                if (u != pr) {\n                    sons.push_back({u, w});\n                    nres = merge(nres, dp[u]);\n                }\n            }\n            ans = min(ans, nres.first + nres.second);\n        }\n        int sz = sons.size();\n        vector<pair<int, int>> pref(sz + 1, {0, 0}), suf(sz + 1, {0, 0});\n        pref[0] = res;\n        for (int i = 0; i < sz; i++) {\n            pref[i + 1] = merge(pref[i], dp[sons[i].first]);\n        }\n        for (int i = sz - 1; i >= 0; i--) {\n            suf[i] = merge(suf[i + 1], dp[sons[i].first]);\n        }\n        for (int i = 0; i < sz; i++) {\n            auto to = merge(pref[i], suf[i + 1]);\n            auto [u, w] = sons[i];\n            if (w == 0 && !to.first) {\n                to.first = 1;\n            }\n            if (w == 1 && to.first) {\n                to.second++;\n                to.first = 0;\n            }\n            rec(rec, u, v, to);\n            \n        }\n    };\n    rec(rec, 0, 0, {0, 0});\n    cout << ans << '\\n';\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n}",
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "sha256": "5f4f7b0e9cbc774dee8a784d3ac487624fedc722eebae34c7a81e23b593e037c"
+  },
+  "result": {
+    "score": 1,
+    "verdict": "Принято · OK"
+  },
+  "judge": {
+    "judge": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170510379,
+    "compiler_id": "gcc14_cpp23",
+    "compiler_name": "C++23 (GCC 14.1)",
+    "status": "finished",
+    "verdict": "OK",
+    "metrics": {
+      "time_ms": 85,
+      "memory_bytes": 40685568
+    },
+    "submitted_at": "2026-11-04T10:27:12+00:00",
+    "time_from_start_ms": 1470722
+  }
+}

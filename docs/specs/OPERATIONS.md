@@ -42,6 +42,32 @@ The exporter joins run logs and sidecars using competition/problem/run/index. It
 
 ## Public-results export
 
+For the prepared Algo Cup code stage, run
+`python scripts/export_contest_preview.py` to rebuild `contest-previews.js`
+from the curated standings and current model configuration. It makes no
+network or model calls and does not rewrite `generated/`. It also exports the
+selected winners' sanitized code documents under `public_results/code/`.
+Publish those documents, the vendored highlighter, `contest-previews.js`,
+`styles.css`, `app.js`, all HTML shells and the matching extensionless routes.
+Keep the deployed Math Cup `generated/` objects intact. See
+[`YANDEX_CONTEST.md`](YANDEX_CONTEST.md) for kit access, missing task-file
+permissions and the explicit prohibition on running models/submissions yet.
+Read-only code imports and future explicit admin submit/refresh commands are
+documented in [`CODE_JUDGING.md`](CODE_JUDGING.md). New writes remain disabled
+by the owner's current instruction; `submit` defaults to an offline dry run.
+
+For authenticated bucket access and exact CLI commands, follow root
+[`AGENTS.md`](../../AGENTS.md). Visual changes must follow the measured
+[`PUBLIC_DESIGN.md`](PUBLIC_DESIGN.md) reference; a design-only publication
+preserves the deployed `generated/` snapshot.
+
+Visual QA must use the actual proxy CSP. Its current `font-src` allows
+`https://fonts.gstatic.com` and blocks same-origin fonts. The public stylesheet
+therefore uses the allowed Google Fonts source. Check downloaded font requests
+and actual rendered faces in addition to screenshots; a CSS family name can
+hide an installed-font fallback. Preserve the owner's blue torn-paper hero and
+compact layout instead of copying the main landing page's composition.
+
 Generate the read-only public projection locally:
 
 ```bash
@@ -206,6 +232,69 @@ location ^~ /results/ { return 410; }
 The standalone Object Storage site is the only public results surface. Generate
 and publish its sanitized snapshot explicitly until a separate S3 bridge is
 implemented and verified.
+
+## Public HTTPS certificate checks
+
+Bucket access and public-domain HTTPS are separate checks. An existing `yc`
+login can inspect the bucket without installing AWS CLI or creating another
+static access key:
+
+```bash
+yc storage bucket get-https --name <public-bucket>
+yc certificate-manager certificate get --id <certificate-id>
+yc storage s3api list-objects-v2 --bucket <public-bucket> --max-keys 5
+```
+
+Compare the certificate actually served for the public hostname with the
+Certificate Manager expiry date. Check both the public address and the Object
+Storage endpoint using the public hostname as TLS SNI; a valid certificate in
+Certificate Manager alone does not prove either endpoint serves it. If the
+bucket still serves an expired certificate, reapply its intended managed
+certificate binding:
+
+```bash
+yc storage bucket set-https --name <public-bucket> --certificate-id <certificate-id>
+```
+
+[Object Storage HTTPS documentation](https://yandex.cloud/ru/docs/storage/operations/hosting/certificate)
+allows up to 30 minutes for activation. Verify HTTPS again with normal
+certificate validation. If Object Storage serves the new certificate but the
+public reverse proxy still serves an expired one, update the proxy certificate
+separately through its administrator. Do not change DNS or enable the retired
+scoring routes as a certificate workaround.
+
+### Public reverse-proxy renewal
+
+On 2026-11-05 the public certificate was renewed successfully after discovering
+that the migrated frontend runs Nginx in Docker, has no host Certbot binary or
+renewal timer, and retained a `standalone` renewal configuration plus legacy
+container-stop hooks. Port 80 was already owned by the web container. A bucket
+certificate reassignment cannot renew the separate certificate loaded by Nginx.
+
+The repair used the existing HTTP challenge location and its mounted webroot,
+then checked and gracefully reloaded Nginx **inside the proxy container**.
+Certbot's persisted authenticator is now `webroot`. It runs from the official
+Certbot 5.9.0 Docker image, pinned to the digest obtained during this repair;
+certificate and account keys stay on the server.
+
+The host now has `/usr/local/sbin/reasoning-certbot-renew` and
+`reasoning-certbot-renew.service` / `reasoning-certbot-renew.timer`. The timer
+checks twice daily with randomized delay. The wrapper:
+
+- locks against overlapping runs;
+- renews only the public Reasoning certificate;
+- uses `--no-directory-hooks` so old stop/start hooks cannot interrupt the site;
+- records successful renewal with a deploy-hook marker;
+- runs containerized `nginx -t` and reloads Nginx before clearing that marker.
+
+The real renewal, a staging `--dry-run --run-deploy-hooks`, and a normal systemd
+service run all passed. Public root and catalog requests passed normal TLS
+validation. Reuse this wrapper rather than installing host Nginx or running the
+old standalone configuration. See root `AGENTS.md` for temporary OS Login access
+and the private inventory fields; restore the original access metadata after
+maintenance. The public certificate expires on 2027-02-03 at 00:53 Moscow time;
+always inspect live expiry dates on subsequent visits rather than relying on
+this incident record.
 
 ## Evaluation-pool CSV
 

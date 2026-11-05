@@ -45,10 +45,13 @@ public_results/
   model.html              all published answers from one model in one stage
   solution.html           Markdown + KaTeX task/model/official solution reader
   data.js                 fallback snapshot, releases, teams and catalog data
+  contest-previews.js     prepared code stage, official teams and unstarted model rows
   generated/              ignored runtime export consumed when present
+  code/solutions/         versioned sanitized winner-code documents and judge metrics
   vendor/                 pinned Markdown sanitizer and KaTeX browser assets
   app.js                  merges generated results and renders public pages
-  styles.css              shared CS Space-inspired visual system
+  styles.css              compact Reasoning layout and CS Space typography
+  assets/blue-paper-texture.svg muted blue grain for the torn-paper hero
   README.md               local preview command and data-scope notes
 
 scripts/
@@ -56,6 +59,9 @@ scripts/
   validate_problem_data.py problem/competition JSON validation
   export_scoring.py       merge run logs and sidecars into CSV/JSONL
   export_public_results.py sanitized read-only public matrix and solution export
+  export_contest_preview.py local projection of curated standings and empty model rows
+  import_contest_winners.py read-only import of selected accepted team submissions
+  judge_code.py           local source preparation, dry-run/explicit submit, report refresh
   migrate_score_scale.py  explicit one-competition score-scale migration
   draft_missing_final_comments.py one-off, review-gated final-comment drafts
   sync_logs.py            rsync push/pull for logs and score sidecars
@@ -73,6 +79,18 @@ the 9-column benchmark are `google`, `xai` and `zai`; their source directories
 are `models/gemini/`, `models/grok/` and `models/glm/`.
 
 ## Data directories
+
+`judging/records.py` owns immutable code artifacts and separate external
+judgments; `judging/yandex_contest.py` connects to the supplied kit and handles
+read-only reports plus explicit administrative submissions. They do not alter
+the text-only adapter contract or human scoring. Data lives in
+`data/code_solutions/`, `data/judge_results/` and future `data/judge_jobs/`.
+See [`CODE_JUDGING.md`](CODE_JUDGING.md).
+
+`data/public_results/` contains curated public standings snapshots, outside the
+canonical problem-set scanner. The Yandex kit archive at the root is an
+operator-supplied tool; it is not a runtime dependency. See
+[`YANDEX_CONTEST.md`](YANDEX_CONTEST.md) for access and the no-runs boundary.
 
 | Path | Contents | Mutability |
 | --- | --- | --- |

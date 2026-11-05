@@ -27,6 +27,10 @@ Start from the first missing or incorrect persisted artifact, not from the UI sy
 | task text is empty or truncated | import/data contract | problem JSON, source PDF | `statement`, JSON escaping, import report |
 | sync command fails immediately | local config/tooling | `sync_logs.py`, `config/server.env` | remote value, `rsync` installed, SSH port |
 | sync connects but cannot write | server permissions/path | remote target | SSH user, absolute path, directory permissions |
+| public HTTPS certificate expired despite a valid Certificate Manager certificate | bucket TLS binding or reverse-proxy certificate | `yc storage bucket get-https`, served certificate dates | compare public and Object Storage TLS using the public hostname as SNI; reapply the intended managed binding, allow propagation, then check the proxy separately; see `OPERATIONS.md` |
+| public proxy certificate expires after a VM migration | missing renewal job, Docker-host mismatch or old standalone authenticator | proxy mounts, renewal configuration, scoped systemd timer | Nginx is containerized; use the recorded webroot renewal wrapper, disable legacy directory hooks for that invocation, test `--dry-run --run-deploy-hooks` and validate public TLS |
+| scorer public root returns `404` while its backend is healthy | intentional Nginx shutdown rule | active scorer virtual host, `DEPLOYMENT.md` | owner-requested closure was confirmed on 2026-11-05; preserve it unless explicitly asked to reopen |
+| public typography differs despite the expected CSS font family | CSP-blocked font download and installed-font fallback | browser font requests, console CSP errors, actual rendered fonts | current proxy permits only `fonts.gstatic.com` in `font-src`; use the allowed Google Fonts source and verify `isCustomFont: true`, not just computed styles |
 
 ## Minimal diagnostic commands
 

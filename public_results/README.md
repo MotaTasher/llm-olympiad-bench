@@ -8,10 +8,15 @@ This is the standalone public Reasoning Space site. It contains:
 - `task.html`: statement, official solution and all model answers for one task;
 - `model.html`: aggregate model result and all of that model's answers;
 - `data.js`: fallback release, team and catalog data;
+- `contest-previews.js`: prepared Algo Cup stage with official top-three teams
+  and null results for all configured models;
+- `code/solutions/`: sanitized accepted winner code, compiler and judge metrics;
+- `vendor/highlight/`: pinned highlight.js 11.11.1 with its license and dark theme;
 - `assets/csspace-logo.svg`: local vector CS Space logo used in headers and footers;
-- `assets/formula-pattern-{desktop,mobile}.svg`: original vector formula backgrounds;
-- `assets/graphite-texture.svg`: procedural dry paper grain without a raster tile;
-- `assets/torn-paper-mask.svg`: shared irregular silhouette for the hero layers;
+- `assets/formula-pattern-{desktop,mobile}.svg`: original formula artwork;
+- `assets/torn-paper-mask.svg`: shared irregular silhouette for both hero layers;
+- `assets/blue-paper-texture.svg`: blue pigment with the original paper grain;
+- `assets/graphite-texture.svg`: retained original gray texture;
 - `generated/`: ignored public export created from real logs and sidecars;
 - `app.js`: release switching, generated-data merge and page rendering.
 - `metrika.js`: shared Yandex Metrica tag for counter `100459978`.
@@ -52,10 +57,32 @@ Generate the current public projection, then open it locally:
 
 ```bash
 python3 scripts/export_public_results.py
+python3 scripts/export_contest_preview.py
 python3 -m http.server 8080 --directory public_results
 ```
 
 Then visit <http://127.0.0.1:8080>.
+
+The Algo Cup 2026 qualifying preview uses contest **103053**. Its three teams
+all solved four tasks; official ACM penalties **99 / 130 / 141** determine
+their order. Models have empty scores, metrics and rank and are labelled
+“Не запускалась” on their pages. No model calls or judge submissions have
+been made. Original task links are published while complete statements and
+submission write access remains unverified (existing report/source access works). The independent preview exporter never
+touches the Math Cup generated snapshot. See
+[`YANDEX_CONTEST.md`](../docs/specs/YANDEX_CONTEST.md) for provenance and kit
+connection instructions. Stage-specific launch rules describe the planned
+code format; existing math launch rules remain associated with Math Cup.
+
+Winner result cells and names now open code solutions and team overviews.
+All 12 first accepted submissions are published with Yandex verdict, compiler,
+maximum execution time, peak memory, submission ID and elapsed contest time.
+Code bypasses Markdown/math parsing and uses declared-language syntax
+highlighting with original-source copy/download, including C++ and Python.
+`scripts/import_contest_winners.py` imports existing submissions read-only;
+the source/judge contracts and later explicit admin-submission workflow are in
+[`CODE_JUDGING.md`](../docs/specs/CODE_JUDGING.md). No model submissions have
+been made. Keep the current layout, typography and hero when updating code UI.
 
 The generated view includes all 10 configured model rows for qualifying and
 final. A cell prefers a successful attempt with an effective organizer
@@ -101,17 +128,25 @@ explain their participant format, the corresponding one-attempt model
 evaluation and the multi-expert final-verdict process separately. Shared
 model-launch rules remain below it.
 
-The main-page hero uses the original desktop and mobile formula-pattern SVGs on
-a procedural SVG recycled-paper grain built with
-[`feTurbulence`](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/feTurbulence)
-and diffuse lighting; it does not use a raster pattern.
-The natural edge is produced by an inline SVG turbulence/displacement filter
-adapted from the MIT-licensed
-[TornPaper](https://github.com/happy358/TornPaper) technique. Graphite is also
-the interface accent for selected filters; green remains only as the semantic
-full-score color. The complete paper shape stays inside the hero so none of its
-four torn edges are clipped. A shared SVG mask lets the formula artwork reach
-the torn edge without distorting its straight lines or leaving a plain inset.
+The owner-confirmed visual direction keeps the compact Reasoning layout and
+the original formula-covered torn-paper hero, now with a dark navy pigment
+and white formula writing on the paper. Secondary labels are brighter
+and the description uses a solid dark panel.
+The main CS Space site is the font/brand reference; its abstract liquid artwork
+and large marketing-page gaps must not replace this composition. Details and
+reference measurements are in
+[`docs/specs/PUBLIC_DESIGN.md`](../docs/specs/PUBLIC_DESIGN.md).
+
+Montserrat and Unbounded load through Google Fonts because the production
+proxy permits fonts from `fonts.gstatic.com` but blocks local font files. QA
+must verify real downloaded faces under this CSP and compare desktop/mobile
+screenshots. A CSS family name alone does not prove that the correct font is
+being rendered. Score colors and reading interactions retain their meaning.
+
+Object Storage connection and publication commands are in root
+[`AGENTS.md`](../AGENTS.md). Use the existing `yc` session first. Design-only
+releases update assets, CSS and all HTML/extensionless shells while preserving
+the deployed generated data.
 
 The solution page renders the exported problem statement, model answer and
 official solution as sanitized GitHub-flavored Markdown. It shows the shared
@@ -145,5 +180,4 @@ perfect answers. Cost/prize, sum, token and accuracy columns precede the task
 columns. Task scores fill the complete table cell, aggregate values use a
 larger type size, and competition-level costs are displayed to cents. The
 participant column wraps full model, team and member names instead of eliding
-them. The main-page hero uses the supplied CS Space 2026 formula-pattern SVGs directly
-for desktop and mobile layouts; the logo is also served as a local SVG.
+them. The hero retains the original torn outline and formulas with the blue paper texture.

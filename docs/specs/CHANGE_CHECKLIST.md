@@ -33,6 +33,12 @@ Also run subsystem-specific checks:
 
 ## Final report
 
+Commit and push each completed change to the existing GitHub repository after
+checks and a staged credential scan. Local edits/local commits are not enough.
+For public-site changes, deploy the sanitized projection and verify live routes;
+preserve unrelated deployed data. See root `AGENTS.md` for the owner's
+persistent requirement. Include the pushed branch and commit SHA in the report.
+
 State:
 
 - files changed;

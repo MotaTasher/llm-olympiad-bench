@@ -1,7 +1,13 @@
 (function () {
   "use strict";
 
-  const sourceBaselineData = window.RESULTS_DATA;
+  const previews = window.CONTEST_PREVIEWS || {};
+  const sourceBaselineData = {
+    ...window.RESULTS_DATA,
+    releases: [...window.RESULTS_DATA.releases, ...(previews.releases || [])],
+    competitions: [...window.RESULTS_DATA.competitions, ...(previews.competitions || [])],
+    catalog: [...window.RESULTS_DATA.catalog, ...(previews.catalog || [])]
+  };
   const visibleBaselineModels = new Set([
     "GPT-5.6 Sol",
     "Claude Fable 5",
@@ -330,6 +336,7 @@
   }
 
   function renderMathInNode(node) {
+    if (node.querySelector(".code-viewer")) return;
     if (!window.renderMathInElement) return;
     try {
       window.renderMathInElement(node, {
@@ -402,7 +409,7 @@
       const competitionId = button.dataset.competition;
       const key = button.dataset.sort;
       const current = sortState(competitionId);
-      const defaultDirection = key === "name" || key === "rank" ? "asc" : "desc";
+      const defaultDirection = ["name", "rank", "penalty"].includes(key) ? "asc" : "desc";
       sortByCompetition.set(competitionId, {
         key,
         direction: current.key === key
@@ -496,6 +503,13 @@
       "Каждая модель отвечает на задачу один раз."
     ];
     list.innerHTML = rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("");
+    const launchRules = document.querySelector("#model-launch-rules");
+    if (launchRules) {
+      if (!launchRules.dataset.defaultRules) launchRules.dataset.defaultRules = launchRules.innerHTML;
+      launchRules.innerHTML = competition?.modelLaunchRules
+        ? competition.modelLaunchRules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")
+        : launchRules.dataset.defaultRules;
+    }
   }
 
   function renderStage(competition) {
@@ -506,7 +520,9 @@
       ? `
         <div class="leaderboard-meta">
           <span>${competition.tasks.length} задач · ${modelCount} моделей${teamCount ? " · топ-3 команды" : ""}</span>
-          <span>Нажмите на ячейку модели, чтобы открыть ответ</span>
+          <span>${competition.runStatus === "not_started"
+            ? `<a href="${escapeHtml(competition.sourceUrl)}" target="_blank" rel="noopener noreferrer">Официальный монитор ↗</a> · модели не запускались`
+            : "Нажмите на ячейку модели, чтобы открыть ответ"}</span>
         </div>
         <div class="matrix-shell">
           <div class="matrix-scroll" tabindex="0" aria-label="${escapeHtml(competition.stage)}: таблица результатов">
@@ -561,6 +577,7 @@
           ${sortableHeader("name", "Модель / команда", "participant-column")}
           ${sortableHeader("cost", "Затраты", "metric-column cost-column")}
           ${sortableHeader("points", "Сумма", "metric-column points-column")}
+          ${competition.scoringSystem === "acm" ? sortableHeader("penalty", "Штраф", "metric-column", "Официальный штраф ACM; меньше — лучше") : ""}
           ${sortableHeader("tokens", "Токены", "metric-column tokens-column")}
           ${sortableHeader("accuracy", "Точность", "metric-column accuracy-column")}
           ${competition.tasks.map((task) => `
@@ -586,18 +603,21 @@
       const isTeam = participant.type === "team";
       // Номер общего рейтинга стоит у всех строк; медаль команды переехала
       // к названию, иначе в одном столбце соседствуют номер и значок.
-      const rank = String(ranks.get(participant.id)).padStart(2, "0");
+      const rank = ranks.has(participant.id) ? String(ranks.get(participant.id)).padStart(2, "0") : "—";
       const medal = isTeam
         ? `<span class="medal" aria-label="${participant.rank} место в олимпиаде" title="${participant.rank} место в олимпиаде">${participant.medal}</span>`
         : "";
-      const participantCell = isTeam
-        ? `
+      const teamContent = isTeam ? `
           <span class="participant-title">
             ${medal}
             <span class="participant-name" title="${escapeHtml(participant.name)}">${escapeHtml(participant.name)}</span>
           </span>
           <span class="participant-meta" title="${escapeHtml(participant.members)}">${escapeHtml(participant.members)}</span>
-        `
+        ` : "";
+      const participantCell = isTeam
+        ? (participant.solutions?.some(Boolean)
+          ? `<a class="participant-cell-link" href="${modelRoute(competition, participant)}" title="Все решения команды">${teamContent}</a>`
+          : teamContent)
         : `
           <a class="participant-cell-link" href="${modelRoute(competition, participant)}" title="Все решения ${escapeHtml(participant.name)}">
             <span class="participant-title">
@@ -612,7 +632,7 @@
         const content = !isTeam && score == null && solution
           ? '<span class="review-status">На<br>проверке</span>'
           : `<span>${scoreText(score)}</span>`;
-        if (isTeam || !solution) {
+        if (!solution) {
           return `<td class="result-cell ${scoreClass(score, task.maxScore)}">${content}</td>`;
         }
         const href = solutionRoute(competition, participant, task);
@@ -628,6 +648,7 @@
           </th>
           ${moneyCell(participant)}
           <td class="metric-cell points-cell strong">${formatPoints(participantPoints(participant))}</td>
+          ${competition.scoringSystem === "acm" ? `<td class="metric-cell">${formatPoints(participant.penalty)}</td>` : ""}
           <td class="metric-cell tokens-cell">${participant.tokens == null ? "—" : number.format(participant.tokens)}</td>
           <td class="metric-cell accuracy-cell strong">${participant.accuracy == null ? "—" : `${String(participant.accuracy).replace(".", ",")}%`}</td>
           ${cells}
@@ -669,9 +690,12 @@
   }
 
   function rankingFor(participants) {
-    const ordered = [...participants].sort((left, right) => {
+    const ordered = participants.filter((item) => item.runStatus !== "not_started").sort((left, right) => {
       const pointsDifference = (participantPoints(right) ?? -1) - (participantPoints(left) ?? -1);
       if (pointsDifference) return pointsDifference;
+      if (left.penalty != null && right.penalty != null && left.penalty !== right.penalty) {
+        return left.penalty - right.penalty;
+      }
       const accuracyDifference = (right.accuracy ?? -1) - (left.accuracy ?? -1);
       if (accuracyDifference) return accuracyDifference;
       return left.name.localeCompare(right.name, "ru");
@@ -683,6 +707,7 @@
     if (key === "rank") return ranks.get(participant.id);
     if (key === "name") return participant.name;
     if (key === "points") return participantPoints(participant);
+    if (key === "penalty") return participant.penalty;
     if (key === "accuracy") return participant.accuracy;
     if (key === "cost") return participantMoney(participant);
     if (key === "tokens") return participant.tokens;
@@ -782,7 +807,7 @@
         .find(Boolean);
       try {
         const documentData = await fetchPublishedSolution(path);
-        statement.innerHTML = renderMarkdown(documentData?.task?.statement, "Условие задачи не опубликовано.");
+        statement.innerHTML = renderMarkdown(documentData?.task?.statement || taskStatement(task), "Условие задачи не опубликовано.");
         official.innerHTML = renderMarkdown(documentData?.task?.officialSolution, "Авторское решение не опубликовано.");
         renderMathInNode(statement);
         renderMathInNode(official);
@@ -853,7 +878,7 @@
           ? `${competitionTitle} · ${competitionStage}`
           : competitionTitle;
       document.querySelector("#solution-task").textContent = documentData.task?.title || task?.title || "Задача";
-      document.querySelector("#solution-model").textContent = documentData.model?.name || participant?.name || "Модель";
+      document.querySelector("#solution-model").textContent = documentData.author?.name || documentData.model?.name || participant?.name || "Участник";
       renderSolutionResult(
         result.score,
         documentMaxScore,
@@ -864,12 +889,17 @@
       document.querySelector("#solution-tokens").textContent =
         result.tokens == null ? "—" : number.format(result.tokens);
       renderFinalReview(documentData.review);
-      renderMarkdownInto(
-        "#solution-statement",
-        documentData.task?.statement,
-        "Условие задачи не опубликовано."
-      );
-      renderMarkdownInto("#solution-text", result.answer, "Текст ответа пуст.");
+      renderMarkdownInto("#solution-statement", documentData.task?.statement || taskStatement(task), "Условие задачи не опубликовано.");
+      renderAnswer(document.querySelector("#solution-text"), documentData, false);
+      if (documentData.format === "code") {
+        document.querySelector("#solution-text").closest("details").querySelector("summary small").textContent =
+          documentData.author?.type === "team" ? "Код команды" : "Код модели";
+        document.querySelector(".solution-metrics").hidden = true;
+        const judgeMetrics = document.querySelector("#solution-judge-metrics");
+        judgeMetrics.innerHTML = judgeMetricsMarkup(documentData.judge);
+        judgeMetrics.hidden = false;
+        if (!documentData.task?.officialSolution) document.querySelector('[data-reading-section="official"]').hidden = true;
+      }
       renderMarkdownInto(
         "#official-solution-text",
         documentData.task?.officialSolution,
@@ -885,7 +915,79 @@
     }
   }
 
-  function taskVerdict(score, maxScore) {
+  function taskStatement(task) {
+    return task?.statement || (task?.sourceUrl
+      ? `Полное условие с примерами и ограничениями доступно в [Яндекс Контесте](${task.sourceUrl}). Для просмотра может потребоваться вход в Яндекс.`
+      : "");
+  }
+
+  function judgeMetricsMarkup(judge) {
+    if (!judge) return "";
+    const time = judge.metrics?.time_ms;
+    const memory = judge.metrics?.memory_bytes;
+    const elapsed = judge.time_from_start_ms;
+    const clock = elapsed == null ? "—" : [Math.floor(elapsed / 3600000), Math.floor(elapsed / 60000) % 60, Math.floor(elapsed / 1000) % 60]
+      .map((n) => String(n).padStart(2, "0")).join(":");
+    const rows = [
+      ["Вердикт Яндекса", judge.verdict || "—", "Результат проверки в Яндекс Контесте"],
+      ["Язык / компилятор", judge.compiler_name || judge.compiler_id || "—", "Компилятор посылки"],
+      ["Время исполнения", time == null ? "—" : `${number.format(time)} мс`, "Максимальное время по тестам; это не время генерации ответа"],
+      ["Пиковая память", memory == null ? "—" : `${(memory / 1048576).toLocaleString("ru-RU", { maximumFractionDigits: 2 })} МиБ`, memory == null ? "Нет данных" : `${memory} байт`],
+      ["От начала тура", clock, "Время отправки относительно начала тура команды"],
+      ["Посылка", `#${judge.submission_id}`, "Идентификатор в Яндекс Контесте"],
+      ["Отправлено", judge.submitted_at ? new Date(judge.submitted_at).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" }) + " МСК" : "—", "Время отправки в Яндекс Контест"],
+    ];
+    return `<dl class="judge-metrics">${rows.map(([label, value, title]) => `<div><dt>${escapeHtml(label)}</dt><dd title="${escapeHtml(title)}">${escapeHtml(value)}</dd></div>`).join("")}</dl>`;
+  }
+
+  function renderAnswer(node, documentData, includeJudge = true) {
+    if (documentData?.format !== "code") {
+      node.innerHTML = renderMarkdown(documentData?.result?.answer, "Текст ответа пуст.");
+      renderMathInNode(node);
+      return;
+    }
+    const source = documentData.source || {};
+    const code = String(source.code ?? "");
+    const language = source.language === "cpp" ? "C++" : source.language === "python" ? "Python" : source.language || "Код";
+    if (includeJudge) {
+      const card = node.closest("details");
+      const score = documentData.result?.score;
+      const verdict = documentData.result?.verdict || documentData.judge?.verdict || "Нет вердикта";
+      card?.querySelectorAll(".task-verdict, .task-result-line strong").forEach((label) => {
+        label.textContent = `${verdict} · ${score == null ? "—" : `${score} / ${documentData.task?.maxScore || 1}`}`;
+      });
+    }
+    node.innerHTML = `${includeJudge ? judgeMetricsMarkup(documentData.judge) : ""}
+      <div class="code-viewer">
+        <div class="code-toolbar"><span>${escapeHtml(language)} · ${escapeHtml(source.filename || "solution.txt")}</span>
+          <div><button type="button" data-copy-code>Скопировать</button><button type="button" data-download-code>Скачать</button></div>
+        </div>
+        <pre tabindex="0" aria-label="Исходный код ${escapeHtml(language)}"><code></code></pre>
+      </div>`;
+    const codeNode = node.querySelector("pre code");
+    codeNode.textContent = code;
+    if (window.hljs?.getLanguage(source.language)) {
+      codeNode.classList.add(`language-${source.language}`);
+      window.hljs.highlightElement(codeNode);
+    }
+    node.querySelector("[data-copy-code]").addEventListener("click", async (event) => {
+      try {
+        await navigator.clipboard.writeText(code);
+        event.target.textContent = "Скопировано";
+      } catch (_) {
+        event.target.textContent = "Выделите код для копирования";
+      }
+    });
+    node.querySelector("[data-download-code]").addEventListener("click", () => {
+      const url = URL.createObjectURL(new Blob([code], { type: "text/plain;charset=utf-8" }));
+      const link = document.createElement("a");
+      link.href = url; link.download = source.filename || "solution.txt"; link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  }
+
+  function taskVerdict(score, maxScore, runStatus) {
+    if (runStatus === "not_started") return "Не запускалась";
     if (score == null) return "На проверке";
     if (score >= maxScore) return "Полное решение";
     if (score > 0) return "Частичное решение";
@@ -941,6 +1043,7 @@
   function renderAttemptMetrics(card, result) {
     const metrics = card?.querySelector("[data-attempt-metrics]");
     if (!metrics) return;
+    if (result?.cost == null && result?.tokens == null && result?.latencyMs == null) return;
     metrics.querySelector("[data-attempt-cost]").textContent = formatAttemptCost(result?.cost);
     metrics.querySelector("[data-attempt-tokens]").textContent = formatAttemptTokens(result?.tokens);
     metrics.querySelector("[data-attempt-latency]").textContent = formatLatency(result?.latencyMs);
@@ -973,7 +1076,7 @@
     );
     const ranks = rankingFor(rankedParticipants);
     const models = competition.participants
-      .filter((item) => item.type === "model")
+      .filter((item) => item.type === "model" || (competition.solutionFormat === "code" && item.type === "team"))
       .sort((left, right) => compareParticipants(left, right, sortState(competition.id), ranks));
     const release = releaseForCompetition(competition.id);
     document.title = `${task?.title || "Задача"} — Reasoning Space`;
@@ -993,9 +1096,9 @@
                  data-reading-section="model:${escapeHtml(participantRouteSlug(model))}"
                  data-model-id="${escapeHtml(model.id)}">
           <summary>
-            <span><small>Решение модели</small>${escapeHtml(model.name)}</span>
+            <span><small>${model.type === "team" ? "Решение команды" : "Решение модели"}</small>${escapeHtml(model.name)}</span>
             <span class="task-model-summary-result">
-              <em class="task-verdict ${state}">${escapeHtml(taskVerdict(score, maxScore))} · ${score == null ? "—" : escapeHtml(`${score} / ${maxScore}`)}</em>
+              <em class="task-verdict ${state}">${escapeHtml(taskVerdict(score, maxScore, model.runStatus))} · ${score == null ? "—" : escapeHtml(`${score} / ${maxScore}`)}</em>
               <b aria-hidden="true">+</b>
             </span>
           </summary>
@@ -1003,7 +1106,7 @@
             <div class="task-result-panel">
               <div class="task-result-line">
                 <span>Результат</span>
-                <strong>${escapeHtml(taskVerdict(score, maxScore))} · ${score == null ? "—" : escapeHtml(`${score} / ${maxScore}`)}</strong>
+                <strong>${escapeHtml(taskVerdict(score, maxScore, model.runStatus))} · ${score == null ? "—" : escapeHtml(`${score} / ${maxScore}`)}</strong>
               </div>
               ${attemptMetricsMarkup()}
               <div class="task-final-comment" data-task-comment hidden></div>
@@ -1018,7 +1121,7 @@
     const firstPath = models.map((model) => model.solutions?.[safeTaskIndex]).find(Boolean);
     try {
       const firstDocument = await fetchPublishedSolution(firstPath);
-      renderMarkdownInto("#task-statement", firstDocument?.task?.statement, "Условие задачи не опубликовано.");
+      renderMarkdownInto("#task-statement", firstDocument?.task?.statement || taskStatement(task), "Условие задачи не опубликовано.");
       renderMarkdownInto("#task-official", firstDocument?.task?.officialSolution, "Авторское решение не опубликовано.");
     } catch (_) {
       renderMarkdownInto("#task-statement", "", "Условие задачи временно недоступно.");
@@ -1035,7 +1138,7 @@
           answer.innerHTML = "<p>Для этой модели нет опубликованного ответа.</p>";
           return;
         }
-        answer.innerHTML = renderMarkdown(documentData.result?.answer, "Текст ответа пуст.");
+        renderAnswer(answer, documentData);
         renderMathInNode(answer);
         renderAttemptMetrics(card, documentData.result || {});
         const feedback = String(documentData.review?.final?.feedback || "").trim();
@@ -1058,7 +1161,7 @@
     const participantId = route?.participant || params.get("participant");
     const competition = competitionById(competitionId) || data.competitions[0];
     const model = competition.participants.find((participant) =>
-      participant.type === "model" && (
+      (participant.type === "model" || (competition.solutionFormat === "code" && participant.type === "team")) && (
         participant.id === participantId
         || participantRouteSlug(participant) === participantId
         || modelPageSlug(participant) === participantId
@@ -1093,7 +1196,7 @@
       const score = model?.scores?.[index];
       const maxScore = Number(task.maxScore || 0);
       const state = scoreClass(score, maxScore);
-      const resultText = `${taskVerdict(score, maxScore)} · ${score == null ? "—" : `${score} / ${maxScore}`}`;
+      const resultText = `${taskVerdict(score, maxScore, model?.runStatus)} · ${score == null ? "—" : `${score} / ${maxScore}`}`;
       return `
         <details class="reading-solution task-model-solution model-task-solution ${state}"
                  data-reading-section="model-set:${escapeHtml(competition.id)}:${escapeHtml(model?.id)}:${escapeHtml(task.id)}"
@@ -1131,7 +1234,7 @@
           answer.innerHTML = "<p>Для этой задачи нет опубликованного решения.</p>";
           return;
         }
-        answer.innerHTML = renderMarkdown(documentData.result?.answer, "Текст решения пуст.");
+        renderAnswer(answer, documentData);
         renderMathInNode(answer);
         renderAttemptMetrics(card, documentData.result || {});
         const feedback = String(documentData.review?.final?.feedback || "").trim();

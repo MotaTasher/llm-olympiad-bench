@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "code_cfa612f96dfa653bfb6342bf",
+  "format": "code",
+  "competition_id": "algo-cup-2026-qualifying",
+  "problem_id": "task_03",
+  "author": {
+    "type": "team",
+    "id": "algo-103053-team-2",
+    "name": "Откатили интеллект"
+  },
+  "source": {
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "code": "#include \"bits/stdc++.h\"\n\n#define rep(i, n) for(int i = 0; i < (n); ++i)\n#define all(a) (a).begin(), (a).end()\n\nusing namespace std;\n\nusing ll = long long;\nusing vl = vector<ll>;\nusing vi = vector<int>;\nconst int INFi  = 2e9;\n\nvoid solve() {\n    int n; ll k; cin >> n >> k;\n    vector<pair<ll, ll>> a(n);\n    rep(i, n) cin >> a[i].first;\n    rep(i, n) cin >> a[i].second;\n    rep(i, n) {\n        if (a[i].first < a[i].second) swap(a[i].first, a[i].second);\n    }\n    sort(all(a));\n    vector<ll> px(n + 1);\n    rep(i, n) px[i + 1] = px[i] + a[i].second;\n    vector<ll> pxy(n + 1);\n    rep(i, n) pxy[i + 1] = pxy[i] + a[i].first * a[i].second;\n\n    int ban = -1;\n\n    auto GetSumX = [&] (int l, int r) {\n        if (l >= r) return 0ll;\n        ll s = px[r] - px[l];\n        if (l <= ban && ban < r) s -= a[ban].second;\n        return s;\n    };\n\n    auto GetSumXY = [&] (int l, int r) {\n        if (l >= r) return 0ll;\n        ll s = pxy[r] - pxy[l];\n        if (l <= ban && ban < r) s -= a[ban].second * a[ban].first;\n        return s;\n    };\n\n\n    ll ANS = 8e18;\n    rep(i, n) {\n        auto [y, x] = a[i];\n        ban = i;\n        y += k;\n\n        int pos = lower_bound(all(a), make_pair(y, -1)) - a.begin();\n\n        // [pos, n) -> done\n\n        int l = pos - 1;\n        int r = n;\n        while (r - l > 1) {\n            int m = (l + r) / 2;\n            if (GetSumX(m, n) <= k) {\n                r = m;\n            } else {\n                l = m;\n            }\n        }\n\n        ll kx = k;\n        kx -= GetSumX(r, n);\n\n        ll ans = 0;\n        if (pos <= l) {\n            ans = GetSumXY(0, l) + y * x + a[l].first * (a[l].second - kx);\n            ANS = min(ANS, ans);\n            continue;\n        }\n\n        {\n            ll t = min(kx, x);\n            kx -= t;\n            x -= t;\n            ans += x * y;\n        }\n\n        l = -1;\n        r = pos;\n\n        while (r - l > 1) {\n            int m = (l + r) / 2;\n            if (GetSumX(m, pos) <= kx) {\n                r = m;\n            } else {\n                l = m;\n            }\n        }\n\n        kx -= GetSumX(r, pos);\n\n        if (0 <= l) {\n            ans += a[l].first * (a[l].second - kx);\n            ans += GetSumXY(0, l);\n        }\n        ANS = min(ANS, ans);\n    }\n\n    cout << ANS << '\\n';\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}",
+    "sha256": "0eea50eb1343fd5e60895a22d8c1895aa887b9c83e209b5ce57ef45823e48f27",
+    "encoding": "utf-8"
+  },
+  "origin": {
+    "kind": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170538774,
+    "selection": "first_accepted_in_contest"
+  },
+  "generation": null
+}

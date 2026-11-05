@@ -1,5 +1,18 @@
 # Server Workflow
 
+Публичный отбор Algo Cup 2026 (Яндекс Контест 103053) готовится отдельно:
+`python scripts/export_contest_preview.py` обновляет только
+`public_results/contest-previews.js`. Публикуйте его вместе с `app.js`, HTML и
+соответствующими extensionless-маршрутами, а также `code/`, `styles.css` и
+локальным highlighter в `vendor/highlight/`, сохраняя текущий `generated/`.
+Подключение к киту и границы подготовки без запусков описаны в
+[`docs/specs/YANDEX_CONTEST.md`](docs/specs/YANDEX_CONTEST.md).
+Код победителей и отчёты импортируются только на чтение. Новые посылки
+пока не отправляем; будущие команды и структура данных описаны в
+[`docs/specs/CODE_JUDGING.md`](docs/specs/CODE_JUDGING.md). После завершённого
+изменения исходники, документацию и разрешённые данные нужно закоммитить и
+отправить в GitHub, а публичную проекцию — в настроенный бакет.
+
 Инструкция для обмена логами со scoring-сервером. Доступ к серверу не нужен для локального запуска сайта; см. [docs/LOCAL_SETUP.md](docs/LOCAL_SETUP.md).
 Актуальная карта production-ролей, каталогов, публичного S3 и границ данных:
 [`docs/specs/DEPLOYMENT.md`](docs/specs/DEPLOYMENT.md).
@@ -237,6 +250,18 @@ sqlite3 instance/scorer-auth.sqlite3 ".backup '/secure/backup/scorer-auth.sqlite
 ```
 
 ## Публичная витрина результатов
+
+Проверенные команды подключения к Object Storage через существующую сессию
+`yc` находятся в [AGENTS.md](AGENTS.md#connecting-to-the-public-site-and-object-storage).
+Для загрузки публичных файлов SSH и новый статический ключ не нужны.
+Источники актуального дизайна и точные размеры — в
+[PUBLIC_DESIGN.md](docs/specs/PUBLIC_DESIGN.md).
+
+Для обслуживания HTTPS публичного прокси есть проверенный вход через временный
+OS Login без старого SSH-ключа — см. раздел в `AGENTS.md`. Nginx работает в
+Docker. Сертификат продлевает отдельный host-wrapper и systemd timer; команды
+проверки и описание ремонта находятся в
+[OPERATIONS.md](docs/specs/OPERATIONS.md#public-reverse-proxy-renewal).
 
 Статический сайт из `public_results/` разворачивается отдельно от Flask
 scoring-сайта. Scoring-домен остаётся закрытой админ-панелью и источником

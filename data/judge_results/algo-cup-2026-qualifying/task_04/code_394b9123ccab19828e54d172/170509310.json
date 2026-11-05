@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "solution_id": "code_394b9123ccab19828e54d172",
+  "competition_id": "algo-cup-2026-qualifying",
+  "problem_id": "task_04",
+  "judge": "yandex_contest",
+  "contest_id": 103053,
+  "problem_alias": "D",
+  "submission_id": 170509310,
+  "compiler_id": "gcc14_cpp23",
+  "compiler_name": "C++23 (GCC 14.1)",
+  "status": "finished",
+  "verdict": "OK",
+  "score": 1,
+  "metrics": {
+    "time_ms": 1364,
+    "memory_bytes": 104624128
+  },
+  "submitted_at": "2026-11-04T10:14:47+00:00",
+  "time_from_start_ms": 725811,
+  "ignored_in_monitor": false,
+  "source_url": "https://admin.contest.yandex.ru/submissions/170509310"
+}

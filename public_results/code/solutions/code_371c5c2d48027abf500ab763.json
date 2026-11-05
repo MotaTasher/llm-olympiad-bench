@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "format": "code",
+  "competition": {
+    "id": "algo-cup-2026-qualifying",
+    "title": "Algo Cup 2026",
+    "stage": "Отбор"
+  },
+  "task": {
+    "id": "task_01",
+    "title": "Сдвиг в ноль",
+    "maxScore": 1,
+    "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/A/"
+  },
+  "author": {
+    "id": "algo-103053-team-3",
+    "type": "team",
+    "name": "Печень"
+  },
+  "source": {
+    "code": "#include \"bits/stdc++.h\"\n\nusing namespace std;\n\nusing ll = long long;\n\nvoid solve () {\n    int n, k;\n    cin >> n >> k;\n    vector<ll> pref(n + 1);\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n        pref[i + 1] = pref[i] + a[i];\n    }\n    map<ll, vector<int>> pos;\n    for (int i = 0; i <= n; i++) {\n        pos[pref[i]].push_back(i);\n    }\n    auto get = [&] (int l, int r, ll want) {\n        if (l > r) return 0;\n        auto it = std::lower_bound(pos[want].begin(), pos[want].end(), l) - pos[want].begin();\n        auto it2 = std::upper_bound(pos[want].begin(), pos[want].end(), r) - pos[want].begin();\n        return int(it2 - it);\n    };\n    int ans = 0;\n    for (int s = 0; s < n; s++) {\n        ll want = pref[s];\n        int res = 0;\n        res += get(s + 1, n, want);\n//        for (int i = s + 1; i <= n; i++) res += pref[i] == want;\n        want = -pref[n] + pref[s];\n        res += get(1, s, want);\n//        for (int i = 1; i <= s; i++) res += pref[i] == want;\n        ans += res == k;\n    }\n    cout << ans << '\\n';\n}\n\nint main() {\n    ios_base::sync_with_stdio(0);\n    cin.tie(0);\n    cout.tie(0);\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n}",
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "sha256": "809ebbffaaacb1f8ffcb30208ece38f6445675fb90d71a111292a73e3ded1c98"
+  },
+  "result": {
+    "score": 1,
+    "verdict": "Принято · OK"
+  },
+  "judge": {
+    "judge": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170508916,
+    "compiler_id": "gcc14_cpp23",
+    "compiler_name": "C++23 (GCC 14.1)",
+    "status": "finished",
+    "verdict": "OK",
+    "metrics": {
+      "time_ms": 416,
+      "memory_bytes": 13787136
+    },
+    "submitted_at": "2026-11-04T10:08:54+00:00",
+    "time_from_start_ms": 372511
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "id": "algo-cup-2026-qualifying",
+  "contest_id": 103053,
+  "title": "Algo Cup 2026",
+  "official_title": "CS Space. Algo Cup (Отборочный тур, 2026)",
+  "series": "Algo Cup",
+  "year": "2026",
+  "stage": "Отбор",
+  "date": "4 ноября 2026",
+  "source": "https://contest.yandex.ru/contest/103053/standings/",
+  "checked_at": "2026-11-05",
+  "duration_minutes": 180,
+  "scoring_system": "acm",
+  "tasks": [
+    {
+      "id": "task_01",
+      "short": "A",
+      "title": "Сдвиг в ноль",
+      "maxScore": 1,
+      "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/A/"
+    },
+    {
+      "id": "task_02",
+      "short": "B",
+      "title": "Все дороги ведут в Рим",
+      "maxScore": 1,
+      "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/B/"
+    },
+    {
+      "id": "task_03",
+      "short": "C",
+      "title": "Новогодняя Фабрика",
+      "maxScore": 1,
+      "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/C/"
+    },
+    {
+      "id": "task_04",
+      "short": "D",
+      "title": "Остатки по убыванию",
+      "maxScore": 1,
+      "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/D/"
+    }
+  ],
+  "teams": [
+    {
+      "id": "algo-103053-team-1",
+      "rank": 1,
+      "name": "Чемпионское дерьмо",
+      "members": "Степанов Антон Александрович; Васильев Алексей Леонидович",
+      "scores": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "solved": 4,
+      "penalty": 99,
+      "yandex_participant_id": 134685778,
+      "code_solutions": [
+        {
+          "solution_id": "code_1c0709222d4a6e4cc5d8bbd5",
+          "submission_id": 170506135
+        },
+        {
+          "solution_id": "code_f1caf9ed1949a6ae27a3d645",
+          "submission_id": 170506621
+        },
+        {
+          "solution_id": "code_cdc9d3470879eb9a8b79d791",
+          "submission_id": 170508808
+        },
+        {
+          "solution_id": "code_41133fe323c65aa8f4dc2857",
+          "submission_id": 170507260
+        }
+      ]
+    },
+    {
+      "id": "algo-103053-team-2",
+      "rank": 2,
+      "name": "Откатили интеллект",
+      "members": "Ромашов Федор Викторович; Синицына Владислава Владиславовна",
+      "scores": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "solved": 4,
+      "penalty": 130,
+      "yandex_participant_id": 134685871,
+      "code_solutions": [
+        {
+          "solution_id": "code_299da1c199a167fa075c437d",
+          "submission_id": 170534303
+        },
+        {
+          "solution_id": "code_8b3bca91e21c34bd901fceb1",
+          "submission_id": 170535162
+        },
+        {
+          "solution_id": "code_cfa612f96dfa653bfb6342bf",
+          "submission_id": 170538774
+        },
+        {
+          "solution_id": "code_0935b4eab93ab7f0537fee01",
+          "submission_id": 170535720
+        }
+      ]
+    },
+    {
+      "id": "algo-103053-team-3",
+      "rank": 3,
+      "name": "Печень",
+      "members": "Кудряшов Кирилл Сергеевич",
+      "scores": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "solved": 4,
+      "penalty": 141,
+      "yandex_participant_id": 134685733,
+      "code_solutions": [
+        {
+          "solution_id": "code_371c5c2d48027abf500ab763",
+          "submission_id": 170508916
+        },
+        {
+          "solution_id": "code_6dfb68628f79bad5bbb9ed99",
+          "submission_id": 170510379
+        },
+        {
+          "solution_id": "code_c5024589acb20a6594e11b30",
+          "submission_id": 170513444
+        },
+        {
+          "solution_id": "code_394b9123ccab19828e54d172",
+          "submission_id": 170509310
+        }
+      ]
+    }
+  ]
+}

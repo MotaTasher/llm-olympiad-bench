@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "code_1c0709222d4a6e4cc5d8bbd5",
+  "format": "code",
+  "competition_id": "algo-cup-2026-qualifying",
+  "problem_id": "task_01",
+  "author": {
+    "type": "team",
+    "id": "algo-103053-team-1",
+    "name": "Чемпионское дерьмо"
+  },
+  "source": {
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "code": "#include <bits/stdc++.h>\n\nusing namespace std;\n\nusing ll = long long;\nusing ld = long double;\n\n#define all(a) a.begin(), a.end()\n#define rall(a) a.rbegin(), a.rend()\n#define rep(i, n) for(int i = 0; i < (n); i += 1)\n#define len(a) ((int)(a).size())\n\nconst ll inf = 1e18;\nmt19937 rnd(234);\n#define int ll\ninline void solve() {\n    int n, k;\n    cin >> n >> k;\n    vector <int> a(n);\n    for (int i = 0; i < n; ++i) cin >> a[i];\n\n    vector <int> pref(n + 1);\n    for (int i = 0; i < n; ++i) pref[i + 1] = pref[i] + a[i];\n\n    map <int, int> suf_vals;\n    map <int, int> pref_vals;\n\n    for (int i = 1; i <= n; ++i) suf_vals[pref[i]]++;\n\n    int answer = 0;\n\n    for (int l = 0; l < n; ++l) {\n        int pr = pref[l];\n        int sum = pref.back();\n\n        int suf_cnt = suf_vals[pr];\n        int pref_cnt = pref_vals[pr - sum];\n\n        if (suf_cnt + pref_cnt == k) ++answer;\n        if (l + 1 == n) break;\n\n        pref_vals[pref[l + 1]]++;\n        suf_vals[pref[l + 1]]--;\n    }\n\n    cout << answer << \"\\n\";\n}\n\nint32_t main() {\n    if (1) {\n        ios::sync_with_stdio(0);\n        cin.tie(0);\n        cout.tie(0);\n    }\n    int t;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}",
+    "sha256": "a354ac01e93389fd1204f7f2bd8192673858200a64ec224791cf16f787553a5d",
+    "encoding": "utf-8"
+  },
+  "origin": {
+    "kind": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170506135,
+    "selection": "first_accepted_in_contest"
+  },
+  "generation": null
+}

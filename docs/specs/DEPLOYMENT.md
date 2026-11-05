@@ -16,6 +16,24 @@ credentials. Concrete connection and staging values belong in the gitignored
 Public URLs and the Object Storage URI are recorded locally in
 `config/server.env`. The scoring domain is reserved for the authenticated admin
 application. Its retired `/results` and `/results/` paths return `410 Gone`.
+Root [`AGENTS.md`](../../AGENTS.md) contains the verified `yc` connection and
+upload workflow; [`PUBLIC_DESIGN.md`](PUBLIC_DESIGN.md) records the production
+design sources and sibling-bucket audit. Use Object Storage access directly for
+frontend files; do not infer SSH connectivity from a bucket name.
+
+The public proxy currently runs Nginx in a Docker container, with read-only
+certificate and ACME-webroot mounts from the host. Its independently issued
+certificate is renewed by the scoped host service and timer documented in
+[`OPERATIONS.md`](OPERATIONS.md#public-reverse-proxy-renewal). The verified
+temporary OS Login maintenance path and private connection-field names are in
+root `AGENTS.md`; no legacy SSH key is required when the existing cloud identity
+has the necessary access. The public HTTPS repair was verified on 2026-11-05.
+
+Operational status checked on 2026-11-05: the scoring backend is running, but
+its public Nginx root intentionally returns `404`. The active configuration
+records an owner-requested shutdown on 2026-09-11. Preserve this state until the
+owner explicitly requests reopening; a healthy backend does not authorize
+removing the shutdown rule. Retired public-results routes still return `410`.
 
 ## Scoring-host layout
 
@@ -97,6 +115,11 @@ S3 publication is therefore an explicit operator action.
   services on the scorer host.
 - Never copy `logs/`, `data/results/`, `instance/` or provider secret files to
   the public bucket.
+- Code source/judge directories are also repository source data: publish only
+  the allowlisted projection under `public_results/code/`, never raw admin
+  responses or `data/judge_jobs/`. Team code pages use the existing solution
+  shell and extensionless route contract. Source and docs must also be
+  committed and pushed to GitHub after each completed change per `AGENTS.md`.
 
 ## Operational verification
 
@@ -107,8 +130,8 @@ After publishing, verify:
 3. every solution JSON either lacks `review` or contains only `review.final`;
    it never contains `review.experts`, evaluator/editor identities or individual
    expert feedback;
-4. the scoring root still requires authentication and both `/results` forms
-   return `410`;
+4. when enabled, the scoring root requires authentication; while intentionally
+   closed, it keeps its configured `404`; both `/results` forms return `410`;
 5. the public `generatedAt` timestamp matches the intended scorer export;
 6. an unknown clean route returns `404`.
 

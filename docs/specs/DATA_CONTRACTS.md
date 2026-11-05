@@ -2,6 +2,19 @@
 
 ## Competition manifest
 
+Public-only stage previews are separate from canonical competition manifests:
+`data/public_results/<stage-id>.json` stores a provenance URL/date, official
+contest ID, task titles/source links and the top-three team results. The current
+ACM preview stores binary task scores, solved count and official penalty;
+ranking is solved descending, then penalty ascending. It is not a runnable
+problem set and must not contain partial statements presented as full tasks.
+`scripts/export_contest_preview.py` adds all configured model rows with
+`runStatus: not_started` and null scores, solution references and metrics;
+the UI leaves their rank empty. No run logs or evaluation sidecars represent
+placeholders. Selected real winner submissions link to the separate code
+source/judge contracts in [`CODE_JUDGING.md`](CODE_JUDGING.md). Original
+generation logs and human-score sidecars remain unchanged.
+
 Canonical path:
 
 ```text

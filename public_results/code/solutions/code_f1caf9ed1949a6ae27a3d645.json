@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "format": "code",
+  "competition": {
+    "id": "algo-cup-2026-qualifying",
+    "title": "Algo Cup 2026",
+    "stage": "Отбор"
+  },
+  "task": {
+    "id": "task_02",
+    "title": "Все дороги ведут в Рим",
+    "maxScore": 1,
+    "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/B/"
+  },
+  "author": {
+    "id": "algo-103053-team-1",
+    "type": "team",
+    "name": "Чемпионское дерьмо"
+  },
+  "source": {
+    "code": "#include <bits/stdc++.h>\n\nusing namespace std;\n\nusing ll = long long;\nusing ld = long double;\n\n#define all(a) a.begin(), a.end()\n#define rall(a) a.rbegin(), a.rend()\n#define rep(i, n) for(int i = 0; i < (n); i += 1)\n#define len(a) ((int)(a).size())\n\nconst ll inf = 1e18;\nmt19937 rnd(234);\n\nint n;\nvector<vector<pair<int, int>>> g;\nvector<int> deg;\nint num_gay;\nint res;\n\nvoid dfs1(int v, int p) {\n    for (auto [to, dir] : g[v]) {\n        if (to == p) continue;\n        if (dir) {\n            deg[v] += 1;\n            deg[to] += 1;\n        }\n        dfs1(to, v);\n    }\n}\n\nvoid dfs2(int v, int p) {\n    assert(num_gay % 2 == 0);\n    res = min(res, num_gay / 2);\n    for (auto [to, dir] : g[v]) {\n        if (to == p) continue;\n        num_gay -= deg[v] % 2;\n        num_gay -= deg[to] % 2;\n        if (dir) {\n            deg[v] -= 1;\n            deg[to] -= 1;\n        }\n        else {\n            deg[v] += 1;\n            deg[to] += 1;\n        }\n        num_gay += deg[v] % 2;\n        num_gay += deg[to] % 2;\n        dfs2(to, v);\n        num_gay -= deg[v] % 2;\n        num_gay -= deg[to] % 2;\n        if (dir) {\n            deg[v] += 1;\n            deg[to] += 1;\n        }\n        else {\n            deg[v] -= 1;\n            deg[to] -= 1;\n        }\n        num_gay += deg[v] % 2;\n        num_gay += deg[to] % 2;\n    }\n}\n\ninline void solve() {\n    cin >> n;\n    g.assign(n, {});\n    rep(i, n - 1) {\n        int u, v;\n        cin >> u >> v;\n        --u;\n        --v;\n        g[u].push_back(make_pair(v, 1));\n        g[v].push_back(make_pair(u, 0));\n    }\n    deg.assign(n, 0);\n    num_gay = 0;\n    dfs1(0, -1);\n    rep(v, n) {\n        num_gay += deg[v] % 2;\n    }\n    res = n;\n    dfs2(0, -1);\n    cout << res << \"\\n\";\n}\n\nint32_t main() {\n    if (1) {\n        ios::sync_with_stdio(0);\n        cin.tie(0);\n        cout.tie(0);\n    }\n    int t;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}",
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "sha256": "4a67cc5f0d410eb042e09405177cdf0d598139dbcba8fa89641c053964230969"
+  },
+  "result": {
+    "score": 1,
+    "verdict": "Принято · OK"
+  },
+  "judge": {
+    "judge": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170506621,
+    "compiler_id": "gcc14_cpp23",
+    "compiler_name": "C++23 (GCC 14.1)",
+    "status": "finished",
+    "verdict": "OK",
+    "metrics": {
+      "time_ms": 57,
+      "memory_bytes": 13656064
+    },
+    "submitted_at": "2026-11-04T09:40:47+00:00",
+    "time_from_start_ms": 769746
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "format": "code",
+  "competition": {
+    "id": "algo-cup-2026-qualifying",
+    "title": "Algo Cup 2026",
+    "stage": "Отбор"
+  },
+  "task": {
+    "id": "task_01",
+    "title": "Сдвиг в ноль",
+    "maxScore": 1,
+    "sourceUrl": "https://contest.yandex.ru/contest/103053/problems/A/"
+  },
+  "author": {
+    "id": "algo-103053-team-2",
+    "type": "team",
+    "name": "Откатили интеллект"
+  },
+  "source": {
+    "code": "#include \"bits/stdc++.h\"\n\n#define rep(i, n) for(int i = 0; i < (n); ++i)\n#define all(a) (a).begin(), (a).end()\n\nusing namespace std;\n\nusing ll = long long;\nusing vl = vector<ll>;\n\nvoid solve() {\n    int n, k; cin >> n >> k;\n    vl a(n);\n    rep(i, n) cin >> a[i];\n    vl p(n + 1);\n    rep(i, n) p[i+1] = p[i] + a[i];\n    map<ll, int> cnt;\n    rep(i, n + 1) cnt[p[i]]++;\n    map<ll, int> cnt2;\n    int ans = 0;\n    rep(s, n) {\n        cnt[p[s]]--;\n        int cur = cnt[p[s]];\n        if (s) cnt2[p[s]]++;\n        cur += cnt2[-p[n]+p[s]];\n        if (cur == k) ans++;\n    }\n    cout << ans << '\\n';\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(0);\n    int t = 1;\n    cin >> t;\n    while (t--) {\n        solve();\n    }\n    return 0;\n}",
+    "language": "cpp",
+    "filename": "solution.cpp",
+    "sha256": "6b46e10438e94a0a721b4660c847bf6f62adfbd996776679c64cc76c8c70dfb6"
+  },
+  "result": {
+    "score": 1,
+    "verdict": "Принято · OK"
+  },
+  "judge": {
+    "judge": "yandex_contest",
+    "contest_id": 103053,
+    "submission_id": 170534303,
+    "compiler_id": "gcc14_cpp23",
+    "compiler_name": "C++23 (GCC 14.1)",
+    "status": "finished",
+    "verdict": "OK",
+    "metrics": {
+      "time_ms": 241,
+      "memory_bytes": 16220160
+    },
+    "submitted_at": "2026-11-04T15:06:32+00:00",
+    "time_from_start_ms": 454585
+  }
+}
