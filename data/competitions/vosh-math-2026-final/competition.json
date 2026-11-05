@@ -33,6 +33,7 @@
       "https://vos.olimpiada.ru/news/7015",
       "https://olympiads.mccme.ru/vmo/2026/final/sol1.pdf",
       "https://olympiads.mccme.ru/vmo/2026/final/sol2.pdf"
-    ]
+    ],
+    "model_roster": "benchmark-2026-08-01"
   }
 }

@@ -70,6 +70,14 @@ The current adapters still use text-only system/user messages. Telemetry logging
 
 ## Model selection
 
+Competition cohorts now take precedence over the global default list. Read
+[`MODEL_ROSTERS.md`](MODEL_ROSTERS.md): manifests pin `metadata.model_roster`
+to immutable versioned provider/model IDs and display names. All existing
+canonical competitions retain the historical ten-model set; the Algo Cup
+preview has nine current flagships. `VERSIONS`/`DEFAULT` remain compatibility
+defaults for unassigned competitions and direct adapter construction. Changing
+them must never replace models in an already pinned competition.
+
 Each adapter imports:
 
 ```python
@@ -94,7 +102,8 @@ answer token cap when supported.
 `VERSIONS` is the active benchmark set and should stay small. The scoring UI uses only `VERSIONS` for configured columns; `LEGACY_VERSIONS` may document retired IDs, but must not be used to seed the default matrix.
 
 `runner.py --models all` expands to every active `VERSIONS` entry for every
-provider, using explicit specs such as `openai:gpt-5.6-sol`. If `--models` is
+provider when no competition roster is set; otherwise it expands that exact
+roster. It uses explicit specs such as `openai:gpt-5.6-sol`. If `--models` is
 omitted, runner reads `RUNNER_MODELS` from `config/models.env`; the committed
 default is `RUNNER_MODELS=all`, so CLI runs match the scoring UI configured
 columns. Individual model specs may be mixed with aliases, for example
@@ -165,6 +174,9 @@ Claude Fable 5 can return a refusal as HTTP 200; `stop_reason=refusal` is stored
 as `SolveResult.error` and is not treated as a successful benchmark answer.
 
 Current active set:
+
+This table is the historical/global fallback, not the new Algo Cup cohort.
+The dated current selection and official sources are in `MODEL_ROSTERS.md`.
 
 | Provider | Active model |
 | --- | --- |

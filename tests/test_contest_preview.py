@@ -5,7 +5,7 @@ import json
 import unittest
 from pathlib import Path
 
-from scoring.repository import configured_model_columns
+from scoring.repository import competition_model_columns
 from scripts.export_contest_preview import build_preview
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,7 +26,7 @@ class ContestPreviewTests(unittest.TestCase):
     def test_every_configured_model_is_empty_without_fabricated_attempts(self) -> None:
         competition = build_preview(self.snapshot)["competitions"][0]
         models = [p for p in competition["participants"] if p["type"] == "model"]
-        self.assertEqual(len(models), len(configured_model_columns()))
+        self.assertEqual(len(models), len(competition_model_columns({"model_roster": self.snapshot["model_roster"]})))
         for model in models:
             self.assertEqual(model["runStatus"], "not_started")
             self.assertEqual(model["scores"], [None] * 4)

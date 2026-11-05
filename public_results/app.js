@@ -8,18 +8,7 @@
     competitions: [...window.RESULTS_DATA.competitions, ...(previews.competitions || [])],
     catalog: [...window.RESULTS_DATA.catalog, ...(previews.catalog || [])]
   };
-  const visibleBaselineModels = new Set([
-    "GPT-5.6 Sol",
-    "Claude Fable 5",
-    "Claude Opus 5",
-    "DeepSeek V4 Pro",
-    "Gemini 3.1 Pro",
-    "GigaChat 3 Ultra",
-    "Grok 4.5",
-    "GLM 5.2",
-    "Alice AI LLM",
-    "Kimi K3"
-  ]);
+  const competitionRosters = window.COMPETITION_MODEL_ROSTERS || {};
   const baselineData = {
     ...sourceBaselineData,
     competitions: sourceBaselineData.competitions.map(normalizeBaselineCompetition)
@@ -212,8 +201,10 @@
 
   function normalizeBaselineCompetition(competition) {
     if (competition.scoreFormat !== "percent") return competition;
+    const roster = competitionRosters[competition.id];
+    const visibleModels = roster ? new Set(roster.models.map((model) => model.name)) : null;
     const participants = competition.participants
-      .filter((participant) => participant.type === "team" || visibleBaselineModels.has(participant.name))
+      .filter((participant) => participant.type === "team" || !visibleModels || visibleModels.has(participant.name))
       .map((participant) => {
         const scores = (participant.scores || []).map((score, index) => {
           if (score === null || score === undefined) return score;
@@ -829,7 +820,7 @@
     const participant = competition.participants.find(
       (item) => item.id === participantId || participantRouteSlug(item) === participantId
     )
-      || competition.participants.find((item) => item.type === "model");
+      || (!participantId ? competition.participants.find((item) => item.type === "model") : null);
     const taskIndex = competition.tasks.findIndex(
       (item) => item.id === taskId || taskRouteSlug(item) === taskId
     );
@@ -844,10 +835,8 @@
     document.querySelector("#solution-back").href = back;
     document.querySelector("#solution-competition").textContent = `${competition.title} · ${competition.stage}`;
     document.querySelector("#solution-task").textContent = task?.title || "Задача";
-    document.querySelector("#solution-model").textContent = participant?.name || "Модель";
-    const initialVerdict = score == null
-      ? "На проверке"
-      : score >= maxScore ? "Полное решение" : score > 0 ? "Частичное решение" : "Не зачтено";
+    document.querySelector("#solution-model").textContent = participant?.name || "Модель не входит в этот этап";
+    const initialVerdict = participant ? taskVerdict(score, maxScore, participant.runStatus) : "Нет опубликованного решения";
     renderSolutionResult(score, maxScore, initialVerdict);
     document.querySelector("#solution-cost").textContent = "—";
     document.querySelector("#solution-tokens").textContent = "—";
@@ -1166,12 +1155,22 @@
         || participantRouteSlug(participant) === participantId
         || modelPageSlug(participant) === participantId
       )
-    ) || competition.participants.find((participant) => participant.type === "model");
+    ) || (!participantId ? competition.participants.find((participant) => participant.type === "model") : null);
     const release = releaseForCompetition(competition.id);
     const stageTitle = competition.stage
       && !competition.title.toLocaleLowerCase("ru").includes(competition.stage.toLocaleLowerCase("ru"))
       ? `${competition.title} · ${competition.stage}`
       : competition.title;
+
+    if (!model) {
+      document.title = "Версия модели не участвует в этом этапе";
+      document.querySelector("#model-back").href = homeRoute(`?competition=${encodeURIComponent(competition.id)}`);
+      document.querySelector("#model-competition").textContent = stageTitle;
+      document.querySelector("#model-title").textContent = "Версия модели не участвует в этом этапе";
+      document.querySelector(".model-overview")?.remove();
+      document.querySelector("#model-task-solutions").innerHTML = "<p>У этого этапа закреплён отдельный состав моделей. Вернитесь к таблице, чтобы выбрать участвующую версию.</p>";
+      return;
+    }
 
     document.title = `${model?.name || "Модель"} — решения`;
     document.querySelector("#model-back").href = homeRoute(

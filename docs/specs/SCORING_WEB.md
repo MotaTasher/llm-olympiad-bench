@@ -138,7 +138,7 @@ global catalog before filtering and therefore cannot mutate the shared value.
 | `GET /geogebra/anonymous/<competition_id>/<problem_id>/<result_id>` | same scene with the model identity removed, for anonymous review |
 | `GET /geogebra/viewer.js` | the shared scene player from `scripts/geogebra_viewer/viewer.js` |
 
-`model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured model columns come from provider `versions.py` `VERSIONS` entries only. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
+`model_key` is stable and includes provider plus model ID, for example `openai:gpt-5.5`. `attempt` is optional; when omitted the page shows the latest attempt for the selected model. When present it selects the matching `result_id` without leaving the task page. Configured columns come from the selected competition's `metadata.model_roster`, or provider `versions.py` `VERSIONS` entries when no cohort is assigned. A pinned cohort may intentionally include retired versions; changing global defaults does not hide them. See `MODEL_ROSTERS.md`. The scoring UI does not add extra columns for arbitrary weak or retired models found only in historical logs; `LEGACY_VERSIONS` is documentation only and does not seed the matrix. Explicit aliases for the same active model may be canonicalized, for example `yandexgpt:yandexgpt-5.1/latest` is displayed under `yandexgpt:yandexgpt-5.1`.
 
 The competition overview, model statistics, all-checks and finalization pages
 share a single competition shell. The shell renders the competition title and
@@ -182,7 +182,8 @@ The competition matrix presents active model columns in fixed provider groups:
 `anthropic`, `deepseek`, `google`, `gigachat`, `xai`, `zai`, `openai`,
 `yandexgpt`, `kimi`. Unknown future providers sort after these groups. The
 `model_columns` order follows this provider order, and the order inside each
-provider follows the provider `VERSIONS` list instead of alphabetic model IDs.
+provider follows the selected competition cohort, or the provider `VERSIONS`
+list for unassigned competitions, instead of alphabetic model IDs.
 Every problem's `model_states` list is built in the same order as
 `model_columns`.
 
@@ -211,7 +212,8 @@ On `/competition/<competition_id>`, the matrix wrapper uses scoped
 `competition-matrix-wrap` / `competition-matrix` classes. It does not impose a
 fixed or viewport-derived vertical height; the page scrolls vertically, while
 the wrapper keeps horizontal scrolling for narrow screens and for the current
-10 active columns. The table uses compact fixed model columns and must not
+10 historical/default columns. Competition-specific cohorts may select a
+different count (Algo Cup has nine); see `MODEL_ROSTERS.md`. The table uses compact fixed model columns and must not
 expand from full model IDs in tooltips. The first column is scoped for long
 wrapping task titles and shows only the problem title as the anonymous-scoring
 link, prefixed by the problem number when one exists. It does not render problem

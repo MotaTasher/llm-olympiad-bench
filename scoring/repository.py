@@ -26,6 +26,7 @@ from olympiad_data import (
     problem_sort_key,
 )
 from scoring.presentation import format_datetime_parts
+from models.rosters import roster_for_metadata
 
 
 PROVIDER_ORDER = [
@@ -379,6 +380,25 @@ def configured_model_columns() -> dict[str, dict[str, Any]]:
                     **model_presentation(provider, model_id, model_order=model_order_value),
                 },
             )
+    return columns
+
+
+def competition_model_columns(metadata: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
+    roster = roster_for_metadata(metadata)
+    if roster is None:
+        return configured_model_columns()
+    columns = {}
+    for index, model in enumerate(roster["models"]):
+        provider, model_id = model["provider"], model["model_id"]
+        key = model_key(provider, model_id)
+        columns[key] = {
+            "model_key": key, "provider": provider, "model_id": model_id,
+            "label": model_id, "configured": True,
+            **model_presentation(provider, model_id, model_order=index),
+            "short_label": model.get("short_label") or model["display_name"],
+            "display_name": model["display_name"], "model_family": provider,
+            "model_roster": roster["id"],
+        }
     return columns
 
 
@@ -982,10 +1002,9 @@ def attach_run(
 
 
 def finalize_catalog(competitions: dict[str, dict[str, Any]], warnings: list[str]) -> dict[str, Any]:
-    configured = configured_model_columns()
-    active_keys = set(configured)
     for competition in competitions.values():
-        model_columns = dict(configured)
+        model_columns = competition_model_columns(competition.get("metadata"))
+        active_keys = set(model_columns)
         ordered_columns = sorted(model_columns.values(), key=model_column_sort_key)
         answer_count = 0
         scored_count = 0

@@ -1,5 +1,10 @@
 # Server Workflow
 
+Состав моделей закреплён за каждым соревнованием (`metadata.model_roster`).
+При обновлении Algo Cup публикуйте также `public_results/model-rosters.js`;
+старый `generated/` Math Cup не перезаписывайте. Правила версий:
+[`MODEL_ROSTERS.md`](docs/specs/MODEL_ROSTERS.md).
+
 Публичный отбор Algo Cup 2026 (Яндекс Контест 103053) готовится отдельно:
 `python scripts/export_contest_preview.py` обновляет только
 `public_results/contest-previews.js`. Публикуйте его вместе с `app.js`, HTML и

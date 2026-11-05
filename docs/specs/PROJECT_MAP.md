@@ -22,6 +22,7 @@ connection values remain in gitignored `config/server.env`.
 
 ```text
 models/
+  rosters.py              versioned per-competition model selection and validation
   base.py                 BaseModel and SolveResult contract
   common.py               shared prompt, env helpers, text-only guard, serialization
   telemetry.py            run-log schema v2 helpers, redaction, hashing, atomic writes, legacy normalization
@@ -46,6 +47,7 @@ public_results/
   solution.html           Markdown + KaTeX task/model/official solution reader
   data.js                 fallback snapshot, releases, teams and catalog data
   contest-previews.js     prepared code stage, official teams and unstarted model rows
+  model-rosters.js        public per-stage IDs/names; independent historical cohorts
   generated/              ignored runtime export consumed when present
   code/solutions/         versioned sanitized winner-code documents and judge metrics
   vendor/                 pinned Markdown sanitizer and KaTeX browser assets
@@ -79,6 +81,11 @@ the 9-column benchmark are `google`, `xai` and `zai`; their source directories
 are `models/gemini/`, `models/grok/` and `models/glm/`.
 
 ## Data directories
+
+`config/model_rosters/*.json` are immutable dated model cohorts, selected by
+canonical competition metadata or the public-only Algo Cup snapshot. They
+preserve old versions across current provider default changes. See
+[`MODEL_ROSTERS.md`](MODEL_ROSTERS.md).
 
 `judging/records.py` owns immutable code artifacts and separate external
 judgments; `judging/yandex_contest.py` connects to the supplied kit and handles

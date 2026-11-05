@@ -187,6 +187,8 @@ def stable_result_id(
 
 
 def model_name(column: dict[str, Any]) -> str:
+    if column.get("display_name"):
+        return str(column["display_name"])
     short = str(column.get("short_label") or column.get("model_id") or "Модель")
     prefix = MODEL_NAME_PREFIXES.get(str(column.get("provider") or ""), "")
     if not prefix or short.casefold().startswith(prefix.casefold()):
@@ -431,6 +433,8 @@ def export_competition(
                 "rank": rank,
                 "name": model_name(column),
                 "provider": column.get("provider_label") or column.get("provider") or "",
+                "modelKey": column["model_key"],
+                "modelFamily": column["provider"],
                 "scores": scores,
                 "solutions": solutions,
                 "solved": sum(score >= max_score for score, max_score in scored_with_max),
@@ -460,6 +464,7 @@ def export_competition(
         "date": format_date(competition.get("date")),
         "description": competition.get("description") or "",
         "taskCount": len(tasks),
+        "modelRoster": metadata.get("model_roster"),
         "tasks": tasks,
         "participants": participants,
     }

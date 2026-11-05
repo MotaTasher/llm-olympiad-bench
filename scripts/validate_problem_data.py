@@ -13,6 +13,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from olympiad_data import ASSETS_DIR, COMPETITION_MANIFEST
+from models.rosters import roster_for_metadata
 
 
 @dataclass
@@ -131,6 +132,11 @@ def validate_competition_manifest(path: Path, findings: list[Finding]) -> tuple[
         findings.append(Finding("ERROR", path, "metadata must be an object when present"))
     elif isinstance(metadata, dict) and "score_step" in metadata:
         validate_score_step_value(path, metadata.get("score_step"), findings, max_score=None)
+    if isinstance(metadata, dict) and metadata.get("model_roster") is not None:
+        try:
+            roster_for_metadata(metadata)
+        except ValueError as exc:
+            findings.append(Finding("ERROR", path, str(exc)))
 
     return competition_id.strip() if isinstance(competition_id, str) else None, data
 

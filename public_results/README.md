@@ -10,6 +10,7 @@ This is the standalone public Reasoning Space site. It contains:
 - `data.js`: fallback release, team and catalog data;
 - `contest-previews.js`: prepared Algo Cup stage with official top-three teams
   and null results for all configured models;
+- `model-rosters.js`: versioned model IDs/names scoped to each competition;
 - `code/solutions/`: sanitized accepted winner code, compiler and judge metrics;
 - `vendor/highlight/`: pinned highlight.js 11.11.1 with its license and dark theme;
 - `assets/csspace-logo.svg`: local vector CS Space logo used in headers and footers;
@@ -62,6 +63,14 @@ python3 -m http.server 8080 --directory public_results
 ```
 
 Then visit <http://127.0.0.1:8080>.
+
+Model cohorts are pinned per competition. Math Cup retains its historical ten
+models and exact generated answers; Algo Cup uses nine current flagships as of
+2026-11-05, one per provider. Version keys remain distinct while `modelFamily`
+keeps provider identity. The baseline table no longer filters models through
+one global latest-model name list. Export `model-rosters.js` with the preview
+and load it before app.js on every shell; never republish old results under new
+model names. See [`MODEL_ROSTERS.md`](../docs/specs/MODEL_ROSTERS.md).
 
 The Algo Cup 2026 qualifying preview uses contest **103053**. Its three teams
 all solved four tasks; official ACM penalties **99 / 130 / 141** determine

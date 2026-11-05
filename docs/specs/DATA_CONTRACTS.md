@@ -48,6 +48,10 @@ useful for structured consumers, in `metadata.official_title`.
 
 Known scoring metadata:
 
+- `metadata.model_roster`: ID of a versioned cohort file under
+  `config/model_rosters/`, fixing exact provider/API model IDs and display names
+  independently of adapter defaults; see [`MODEL_ROSTERS.md`](MODEL_ROSTERS.md).
+
 - `metadata.max_score`: positive finite number used as the fallback maximum
   score for tasks that do not define their own maximum;
 - `metadata.score_step`: positive finite number used as the fallback official
@@ -122,6 +126,12 @@ compact display title. Displayed problem titles come from `title`; if it is
 missing, the safe fallback is `Задача <number>` or the problem `id`.
 
 ## Run log
+
+New roster-aware runs may include `model_roster: {id, sha256, snapshot}`.
+`snapshot` is the exact loaded roster and `sha256` is its canonical JSON hash.
+`requested_models` contains the expanded explicit pinned specs. This is an
+additive schema-v2 field; old logs remain immutable/readable. Different model
+versions retain distinct `provider:model_id` keys, never a shared family score.
 
 Canonical path:
 

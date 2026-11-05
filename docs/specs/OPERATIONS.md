@@ -42,6 +42,13 @@ The exporter joins run logs and sidecars using competition/problem/run/index. It
 
 ## Public-results export
 
+Per-competition model cohorts are defined in `config/model_rosters/` and
+referenced by competition metadata, independently of moving adapter defaults.
+`export_contest_preview.py` also rebuilds `model-rosters.js`; publish it before
+the updated HTML shells. Old Math Cup stages retain the historical ten-model
+cohort and their deployed `generated/` snapshot. See
+[`MODEL_ROSTERS.md`](MODEL_ROSTERS.md) for new-stage upgrade instructions.
+
 For the prepared Algo Cup code stage, run
 `python scripts/export_contest_preview.py` to rebuild `contest-previews.js`
 from the curated standings and current model configuration. It makes no

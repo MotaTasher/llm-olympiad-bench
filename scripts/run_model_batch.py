@@ -83,10 +83,13 @@ def problem_ids(value: str) -> list[str]:
     return result
 
 
-def model_specs(value: str) -> list[str]:
+def model_specs(value: str, *, roster: dict[str, Any] | None = None) -> list[str]:
     if value.lower() == "new":
         return list(NEW_MODEL_CAPS)
     if value.lower() in {"all", "site", "configured"}:
+        if roster:
+            from models.rosters import roster_specs
+            return roster_specs(roster)
         return active_model_specs()
     return parse_csv(value)
 
@@ -145,7 +148,15 @@ def emitted_run_path(*, logs_dir: Path, competition: str, problem_id: str, run_i
 
 def build_pairs(args: argparse.Namespace) -> list[Pair]:
     problems = problem_ids(args.problems)
-    models = model_specs(args.models)
+    from models.rosters import load_roster, roster_for_metadata
+    roster_id = getattr(args, "model_roster", None)
+    manifest_path = Path(args.data_dir) / args.competition / "competition.json"
+    manifest = json_data(manifest_path) or {}
+    roster = load_roster(roster_id) if roster_id else roster_for_metadata(manifest.get("metadata"))
+    models = model_specs(args.models, roster=roster)
+    if roster:
+        from runner import requested_aliases
+        models = requested_aliases(",".join(models), roster=roster)
     succeeded = (
         successful_pairs(
             competition=args.competition,
@@ -217,6 +228,8 @@ async def run_one(
             "--run-id",
             run_id,
         ]
+        if getattr(args, "model_roster", None):
+            command.extend(["--model-roster", args.model_roster])
         started_at = datetime.now(UTC).isoformat()
         progress.write(f"START {args.competition}/{pair.problem_id} {pair.model} cap={pair.max_tokens}")
         start = monotonic()
@@ -348,6 +361,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--data-dir", default="data/competitions")
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--models", default="new", help="new/all or comma-separated model specs")
+    parser.add_argument("--model-roster", default=None, help="Explicit versioned cohort; otherwise use the competition manifest")
     parser.add_argument(
         "--problems",
         default="task_01",

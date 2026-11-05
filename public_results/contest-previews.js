@@ -139,12 +139,14 @@ window.CONTEST_PREVIEWS = {
           ]
         },
         {
-          "id": "anthropic-claude-fable-5",
-          "slug": "claude-fable-5",
+          "id": "anthropic-claude-fable-5-1",
+          "slug": "claude-fable-5-1",
           "type": "model",
-          "name": "Claude Fable 5",
+          "name": "Claude Fable 5.1",
           "provider": "Claude",
           "runStatus": "not_started",
+          "modelKey": "anthropic:claude-fable-5-1",
+          "modelFamily": "anthropic",
           "scores": [
             null,
             null,
@@ -165,38 +167,14 @@ window.CONTEST_PREVIEWS = {
           "tokens": null
         },
         {
-          "id": "anthropic-claude-opus-5",
-          "slug": "claude-opus-5",
+          "id": "deepseek-deepseek-flash",
+          "slug": "deepseek-flash",
           "type": "model",
-          "name": "Claude Opus 5",
-          "provider": "Claude",
-          "runStatus": "not_started",
-          "scores": [
-            null,
-            null,
-            null,
-            null
-          ],
-          "solutions": [
-            null,
-            null,
-            null,
-            null
-          ],
-          "points": null,
-          "solved": null,
-          "penalty": null,
-          "accuracy": null,
-          "cost": null,
-          "tokens": null
-        },
-        {
-          "id": "deepseek-deepseek-v4-pro",
-          "slug": "deepseek-v4-pro",
-          "type": "model",
-          "name": "DeepSeek V4 Pro",
+          "name": "DeepSeek V4.1 Flash 1017",
           "provider": "DeepSeek",
           "runStatus": "not_started",
+          "modelKey": "deepseek:deepseek-flash",
+          "modelFamily": "deepseek",
           "scores": [
             null,
             null,
@@ -217,12 +195,14 @@ window.CONTEST_PREVIEWS = {
           "tokens": null
         },
         {
-          "id": "google-gemini-3.1-pro-preview",
-          "slug": "gemini-3.1-pro-preview",
+          "id": "google-gemini-4-argon",
+          "slug": "gemini-4-argon",
           "type": "model",
-          "name": "Gemini 3.1 Pro",
+          "name": "Gemini 4 Argon",
           "provider": "Gemini",
           "runStatus": "not_started",
+          "modelKey": "google:gemini-4-argon",
+          "modelFamily": "google",
           "scores": [
             null,
             null,
@@ -249,6 +229,8 @@ window.CONTEST_PREVIEWS = {
           "name": "GigaChat 3 Ultra",
           "provider": "GigaChat",
           "runStatus": "not_started",
+          "modelKey": "gigachat:GigaChat-3-Ultra",
+          "modelFamily": "gigachat",
           "scores": [
             null,
             null,
@@ -269,12 +251,14 @@ window.CONTEST_PREVIEWS = {
           "tokens": null
         },
         {
-          "id": "xai-grok-4.5",
-          "slug": "grok-4.5",
+          "id": "xai-grok-4.7",
+          "slug": "grok-4.7",
           "type": "model",
-          "name": "Grok 4.5",
+          "name": "Grok 4.7",
           "provider": "Grok",
           "runStatus": "not_started",
+          "modelKey": "xai:grok-4.7",
+          "modelFamily": "xai",
           "scores": [
             null,
             null,
@@ -295,12 +279,14 @@ window.CONTEST_PREVIEWS = {
           "tokens": null
         },
         {
-          "id": "zai-glm-5.2",
-          "slug": "glm-5.2",
+          "id": "zai-glm-5.3",
+          "slug": "glm-5.3",
           "type": "model",
-          "name": "GLM 5.2",
+          "name": "GLM 5.3",
           "provider": "GLM",
           "runStatus": "not_started",
+          "modelKey": "zai:glm-5.3",
+          "modelFamily": "zai",
           "scores": [
             null,
             null,
@@ -321,12 +307,14 @@ window.CONTEST_PREVIEWS = {
           "tokens": null
         },
         {
-          "id": "openai-gpt-5.6-sol",
-          "slug": "gpt-5.6",
+          "id": "openai-gpt-6-astra",
+          "slug": "gpt-6-astra",
           "type": "model",
-          "name": "GPT-5.6 Sol",
+          "name": "GPT-6 Astra",
           "provider": "OpenAI",
           "runStatus": "not_started",
+          "modelKey": "openai:gpt-6-astra",
+          "modelFamily": "openai",
           "scores": [
             null,
             null,
@@ -353,6 +341,8 @@ window.CONTEST_PREVIEWS = {
           "name": "Alice AI LLM",
           "provider": "Яндекс",
           "runStatus": "not_started",
+          "modelKey": "yandexgpt:aliceai-llm",
+          "modelFamily": "yandexgpt",
           "scores": [
             null,
             null,
@@ -373,12 +363,14 @@ window.CONTEST_PREVIEWS = {
           "tokens": null
         },
         {
-          "id": "kimi-kimi-k3",
-          "slug": "kimi-k3",
+          "id": "kimi-kimi-k3.1-pro",
+          "slug": "kimi-k3.1-pro",
           "type": "model",
-          "name": "Kimi K3",
+          "name": "Kimi K3.1 Pro",
           "provider": "Kimi",
           "runStatus": "not_started",
+          "modelKey": "kimi:kimi-k3.1-pro",
+          "modelFamily": "kimi",
           "scores": [
             null,
             null,
@@ -399,6 +391,7 @@ window.CONTEST_PREVIEWS = {
           "tokens": null
         }
       ],
+      "modelRoster": "flagships-2026-11-05",
       "competitionRules": [
         "Команды решали четыре задачи по программированию в течение трёх часов.",
         "В таблице опубликованы три лучшие команды по официальному монитору Яндекс Контеста 103053. За принятую задачу — 1 балл; при равенстве числа решённых задач выше команда с меньшим штрафом.",

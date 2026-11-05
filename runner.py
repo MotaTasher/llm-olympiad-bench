@@ -27,6 +27,7 @@ from models.telemetry import (
     stable_result_id,
 )
 from olympiad_data import DataLoadError, resolve_problem
+from models.rosters import load_roster, roster_for_metadata, roster_specs
 
 
 MODEL_CLASSES = {
@@ -261,13 +262,22 @@ def active_model_specs() -> list[str]:
     return specs
 
 
-def requested_aliases(value: str) -> list[str]:
+def requested_aliases(value: str, *, roster: dict[str, Any] | None = None) -> list[str]:
     aliases = []
     for item in [part.strip() for part in value.split(",") if part.strip()]:
         if item.lower() in {"all", "site", "configured"}:
-            aliases.extend(active_model_specs())
+            aliases.extend(roster_specs(roster) if roster else active_model_specs())
         else:
-            aliases.append(item)
+            if roster and ":" not in item:
+                provider = provider_for_alias(item)
+                match = next((spec for spec in roster_specs(roster) if spec.split(":", 1)[0] == provider), None)
+                if not match:
+                    raise ValueError(f"Provider {item} is not in roster {roster['id']}")
+                aliases.append(match)
+            else:
+                if roster and item not in roster_specs(roster):
+                    raise ValueError(f"Model {item} is not in roster {roster['id']}; choose an explicit matching --model-roster")
+                aliases.append(item)
     result = []
     seen = set()
     for alias in aliases:
@@ -479,6 +489,7 @@ def parse_args() -> argparse.Namespace:
         help="Optional run name suffix. Final log id is YYYY_MM_DD_HH_MM_SS_<name>",
     )
     parser.add_argument("--logs-dir", default="logs", help="Where to write run JSON logs")
+    parser.add_argument("--model-roster", default=None, help="Explicit cohort ID; defaults to competition metadata.model_roster")
     parser.add_argument(
         "--allow-env-model-overrides",
         action="store_true",
@@ -508,6 +519,7 @@ def run_problem(
     cli_metadata: dict[str, Any] | None = None,
     settings: RunSettings | None = None,
     max_tokens: int | None = None,
+    model_roster: str | None = None,
 ) -> ProblemRunResult:
     problem_file = Path(problem_file)
     (
@@ -527,7 +539,8 @@ def run_problem(
     git = git_metadata()
     git_hash = str(git.get("hash") or "")
     run_id = build_run_id(now, run_id_suffix or problem_title)
-    aliases = requested_aliases(models_value)
+    roster = load_roster(model_roster) if model_roster else roster_for_metadata(competition_data.get("metadata"))
+    aliases = requested_aliases(models_value, roster=roster)
     logs_dir = Path(logs_dir)
     log_path = log_path_for(
         logs_dir,
@@ -570,6 +583,7 @@ def run_problem(
             },
         ),
         "requested_models": aliases,
+        "model_roster": ({"id": roster["id"], "sha256": sha256_json(roster), "snapshot": roster} if roster else None),
         "competition_id": competition_id,
         "competition_title": resolved_competition_title,
         "competition": competition_data,
@@ -749,6 +763,7 @@ def main() -> int:
                 "max_tokens": max_tokens,
             },
             max_tokens=max_tokens,
+            model_roster=args.model_roster,
         )
     except DataLoadError as exc:
         raise SystemExit(str(exc)) from exc

@@ -31,7 +31,8 @@ class KimiModel(BaseModel):
 
             total_budget = int(max_tokens) if max_tokens is not None else int(self._max_final_tokens or env("KIMI_MAX_TOKENS", "256000"))
             temperature = float(env("KIMI_TEMPERATURE", "1") or "1")
-            if self.model_id.startswith("kimi-k3") and temperature != 1:
+            is_k31 = self.model_id.startswith("kimi-k3.1-")
+            if self.model_id.startswith("kimi-k3") and not is_k31 and temperature != 1:
                 raise ValueError("Kimi K3 accepts only temperature=1")
             messages = [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": problem}]
             request_payload = {
@@ -40,11 +41,14 @@ class KimiModel(BaseModel):
                 "endpoint": sanitized_base_url(f"{env('KIMI_BASE_URL', KIMI_DEFAULT_BASE_URL)}/chat/completions"),
                 "stream": False,
             }
+            if is_k31:
+                request_payload.pop("temperature")
+                request_payload["reasoning_effort"] = env("KIMI_REASONING_EFFORT", "max") or "max"
             ensure_text_only_request(request_payload)
             response, latency_ms = timed(lambda: requests.post(
                 f"{env('KIMI_BASE_URL', KIMI_DEFAULT_BASE_URL)}/chat/completions",
                 headers={"Authorization": f"Bearer {require_env('KIMI_API_KEY')}", "Content-Type": "application/json"},
-                json={key: request_payload[key] for key in ("model", "messages", "max_completion_tokens", "temperature", "stream")},
+                json={key: request_payload[key] for key in ("model", "messages", "max_completion_tokens", "temperature", "reasoning_effort", "stream") if key in request_payload},
                 timeout=int(env("KIMI_TIMEOUT_SECONDS", "7200") or "7200"),
             ))
             try:

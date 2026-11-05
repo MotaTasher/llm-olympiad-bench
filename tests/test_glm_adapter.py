@@ -149,6 +149,18 @@ class GLMAdapterTests(unittest.TestCase):
         self.assertEqual(result.usage["reasoning_tokens"], 6)
         self.assertEqual(result.usage["cached_input_tokens"], 3)
 
+    def test_glm_53_keeps_version_identity_and_streams_max_thinking_without_tools(self) -> None:
+        with self.fake_openai_module(), patch.dict("os.environ", {"ZAI_API_KEY": "test-key"}, clear=True):
+            result = GLMModel("glm-5.3").solve("problem", max_tokens=123)
+        call = FakeCompletions.calls[0]
+        self.assertEqual(call["model"], "glm-5.3")
+        self.assertTrue(call["stream"])
+        self.assertEqual(call["extra_body"]["thinking"]["type"], "enabled")
+        self.assertEqual(call["extra_body"]["reasoning_effort"], "max")
+        self.assertNotIn("tools", call)
+        self.assertEqual(result.requested_model_id, "glm-5.3")
+        self.assertEqual(result.answer, "GLM_ANSWER")
+
     def test_flash_has_thinking_but_no_reasoning_effort_and_free_rate_is_exact(self) -> None:
         with self.fake_openai_module(), patch.dict("os.environ", {"ZAI_API_KEY": "test-key"}, clear=True):
             result = GLMModel("glm-4.7-flash").solve("problem", max_tokens=64)

@@ -23,8 +23,8 @@ ZAI_DEFAULT_REASONING_EFFORT = "max"
 ZAI_DEFAULT_TIMEOUT_SECONDS = 7200.0
 ZAI_DEFAULT_MAX_OUTPUT_TOKENS_PER_REQUEST = 128_000
 ZAI_CONTINUATION_INPUT = "Continue the reasoning and provide the complete final answer."
-ZAI_REASONING_EFFORT_MODELS = {"glm-5.2"}
-ZAI_STREAMING_MODELS = {"glm-5.2"}
+ZAI_REASONING_EFFORT_MODELS = {"glm-5.2", "glm-5.3"}
+ZAI_STREAMING_MODELS = {"glm-5.2", "glm-5.3"}
 
 
 def optional_nonnegative_int_env(name: str) -> int | None:

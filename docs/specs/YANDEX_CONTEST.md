@@ -13,10 +13,14 @@ The public stage is `algo-cup-2026-qualifying`. It publishes the winners'
 12 original first-accepted code submissions, compiler, verdict, execution
 time and memory. See [`CODE_JUDGING.md`](CODE_JUDGING.md) for source/judgment
 schemas, import commands and the future admin submission interface.
-It shows all configured model
+It shows nine flagship model
 columns with `null` scores, metrics and solution references, `runStatus:
 not_started`, and no rank. These are placeholders, not zero scores or attempts
 awaiting review. There are no new run logs or scoring sidecars.
+
+The selected models are frozen by `model_roster: flagships-2026-11-05` in the
+public snapshot. Historical Math Cup stages retain their own ten-model cohort.
+See [`MODEL_ROSTERS.md`](MODEL_ROSTERS.md); never inherit a mutable global list.
 
 `data/public_results/algo-cup-2026-qualifying.json` is a curated public
 standings snapshot, **not** a canonical problem set. It contains the top

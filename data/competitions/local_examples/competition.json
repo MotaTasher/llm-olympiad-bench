@@ -5,5 +5,7 @@
   "description": "Примеры задач для локальной проверки runner и scoring UI.",
   "date": null,
   "source": null,
-  "metadata": {}
+  "metadata": {
+    "model_roster": "benchmark-2026-08-01"
+  }
 }

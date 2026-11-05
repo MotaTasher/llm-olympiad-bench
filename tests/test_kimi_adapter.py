@@ -21,6 +21,19 @@ class FakeResponse:
 
 
 class KimiAdapterTests(unittest.TestCase):
+    def test_k31_omits_fixed_sampling_and_sends_max_reasoning_without_tools(self) -> None:
+        calls = []
+        def post(*args, **kwargs):
+            calls.append(kwargs["json"])
+            return FakeResponse(200, {"model": "kimi-k3.1-pro", "choices": [{"finish_reason": "stop", "message": {"content": "answer"}}], "usage": {}})
+        with patch.dict(os.environ, {"KIMI_API_KEY": "test-key", "KIMI_TEMPERATURE": "0.1"}), patch.dict(sys.modules, {"requests": SimpleNamespace(post=post)}):
+            result = KimiModel(model="kimi-k3.1-pro").solve("Problem", max_tokens=256000)
+        self.assertIsNone(result.error)
+        self.assertEqual(calls[0]["model"], "kimi-k3.1-pro")
+        self.assertEqual(calls[0]["reasoning_effort"], "max")
+        self.assertNotIn("temperature", calls[0])
+        self.assertNotIn("tools", calls[0])
+
     def test_k3_request_is_text_only_and_uses_current_completion_parameter(self) -> None:
         calls: list[dict[str, object]] = []
 

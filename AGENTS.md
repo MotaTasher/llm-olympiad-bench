@@ -45,6 +45,19 @@ The project runs several text-only LLM adapters on olympiad problems, stores com
    with their HTML/extensionless routes and verified on the live site, unless
    the owner explicitly requests local-only work.
 
+## Model versions per competition
+
+Read [`docs/specs/MODEL_ROSTERS.md`](docs/specs/MODEL_ROSTERS.md) before model
+updates. A competition pins `metadata.model_roster` to a versioned file under
+`config/model_rosters/`; the public Algo Cup snapshot has the same top-level
+field. Existing stages use `benchmark-2026-08-01`; Algo Cup uses
+`flagships-2026-11-05` (nine models, one per provider). Create a new cohort ID
+for future upgrades. Never edit a used roster or relabel old answers/scores as
+a newer model. Version identity is `provider:model_id`; `modelFamily` is only
+presentation metadata. Do not restore a global latest-model visibility filter.
+New competitions must select a cohort before running. Rebuild and publish
+`model-rosters.js` with the public projection; preserve historic `generated/`.
+
 ## Yandex Contest kit and the prepared Algo Cup stage
 
 The owner supplied `yandex-contest-kit-239.zip` at the repository root. Read

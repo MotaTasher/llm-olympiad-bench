@@ -2,6 +2,13 @@
 
 ## Main execution flow
 
+Version selection comes from each competition's `metadata.model_roster` before
+global defaults. `models/rosters.py` loads the versioned cohort; runner records
+its full snapshot/hash, scoring creates that competition's columns, and public
+export uses the same IDs and labels. Public baseline visibility is also scoped
+to the selected stage via `model-rosters.js`. See
+[`MODEL_ROSTERS.md`](MODEL_ROSTERS.md).
+
 Code viewing/external checking is a separate boundary under `judging/`:
 immutable source artifact → explicit admin submission/outbox → separate judge
 record → sanitized public code document. Winner submissions are imported

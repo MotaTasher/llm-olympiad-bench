@@ -1,5 +1,11 @@
 # GLM adapter
 
+The November Algo Cup cohort pins `glm-5.3`, using the same streaming,
+continuation, enabled-thinking and max-effort path. Historical stages keep
+`glm-5.2`; the direct-adapter default below remains the legacy compatibility
+default. Model IDs are selected per competition, not by changing old results.
+See [MODEL_ROSTERS.md](../../docs/specs/MODEL_ROSTERS.md).
+
 Runs Z.AI GLM models through the OpenAI-compatible endpoint:
 
 ```text

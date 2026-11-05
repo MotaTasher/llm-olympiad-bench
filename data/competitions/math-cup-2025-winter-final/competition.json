@@ -14,6 +14,7 @@
     "stage_index": 2,
     "document_type": "Решения",
     "max_score": 3,
-    "score_step": 4
+    "score_step": 4,
+    "model_roster": "benchmark-2026-08-01"
   }
 }

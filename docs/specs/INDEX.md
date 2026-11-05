@@ -21,6 +21,7 @@ This directory is the first stop for coding agents. It describes the current imp
 | change problem import or JSON fields | [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md), [`../ADDING_PROBLEMS.md`](../ADDING_PROBLEMS.md) |
 | change `runner.py` or log generation | [`ARCHITECTURE.md`](ARCHITECTURE.md), [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md) |
 | add or modify a model provider | [`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) |
+| select/upgrade model versions per competition | [`MODEL_ROSTERS.md`](MODEL_ROSTERS.md), [`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) |
 | change Flask UI or scoring persistence | [`SCORING_WEB.md`](SCORING_WEB.md), [`DATA_CONTRACTS.md`](DATA_CONTRACTS.md) |
 | change the public-results site or export | [`PROJECT_MAP.md`](PROJECT_MAP.md), [`OPERATIONS.md`](OPERATIONS.md), [`../LOCAL_SETUP.md`](../LOCAL_SETUP.md) |
 | change public-site design or inspect sibling buckets | [`PUBLIC_DESIGN.md`](PUBLIC_DESIGN.md), root [`AGENTS.md`](../../AGENTS.md) access instructions |
@@ -59,7 +60,9 @@ The following are cross-subsystem contracts and require coordinated updates:
 Current active benchmark columns are documented in
 [`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) and
 [`SCORING_WEB.md`](SCORING_WEB.md); the configured set is 9 provider groups and
-10 active model columns.
+10 historical/default model columns. Competition-specific cohorts override
+that default: Algo Cup pins nine current flagships, one per provider; old
+competitions keep their own versions. See [`MODEL_ROSTERS.md`](MODEL_ROSTERS.md).
 
 ## Documentation maintenance rule
 

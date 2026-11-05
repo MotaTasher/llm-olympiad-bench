@@ -9,6 +9,8 @@ const local = base.startsWith('http://127.0.0.1:');
 const root = path.resolve(__dirname, '../public_results');
 const output = fs.mkdtempSync(path.join(os.tmpdir(), 'reasoning-code-qa-'));
 const competition = 'algo-cup-2026-qualifying';
+const snapshot = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/public_results/' + competition + '.json'), 'utf8'));
+const expectedModels = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../config/model_rosters/' + snapshot.model_roster + '.json'), 'utf8')).models;
 
 (async () => {
   const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_EXECUTABLE || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
@@ -26,7 +28,8 @@ const competition = 'algo-cup-2026-qualifying';
       await page.goto(`${base}/?competition=${competition}`, { waitUntil: 'domcontentloaded' });
       await page.locator('.team-row .result-cell a').first().waitFor();
       assert.equal(await page.locator('.team-row .result-cell a').count(), 12);
-      assert.equal(await page.locator('.model-row').count(), 10);
+      assert.equal(await page.locator('.model-row').count(), expectedModels.length);
+      assert.deepEqual((await page.locator('.model-row .participant-name').allTextContents()).sort(), expectedModels.map(model => model.display_name).sort());
       assert((await page.locator('.model-row td').allTextContents()).every(text => text.trim() === '—'));
       assert.deepEqual(await page.locator('.team-row .rank-cell').allTextContents(), ['01', '02', '03']);
       const solutionUrl = await page.locator('.team-row .result-cell a').first().getAttribute('href');
@@ -34,7 +37,7 @@ const competition = 'algo-cup-2026-qualifying';
       const taskUrl = await page.locator('.task-header-link').first().getAttribute('href');
       const modelUrl = await page.locator('.model-row .participant-cell-link').first().getAttribute('href');
       await page.evaluate(() => document.fonts.ready);
-      await page.screenshot({ path: path.join(output, `leaderboard-${width}.png`) });
+      await page.screenshot({ path: path.join(output, `leaderboard-${width}.png`), fullPage: true });
       await page.goto(base + solutionUrl, { waitUntil: 'domcontentloaded' });
       await page.locator('#solution-text pre code.hljs').waitFor({ state: 'attached' });
       const source = await page.locator('#solution-text pre code').textContent();
@@ -61,11 +64,14 @@ const competition = 'algo-cup-2026-qualifying';
       assert.equal(await page.locator('#model-points').textContent(), '4');
       await page.goto(base + taskUrl, { waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => document.querySelectorAll('.code-viewer').length === 3);
-      assert.equal(await page.locator('[data-model-id]').count(), 13);
-      assert.equal((await page.locator('.task-verdict').allTextContents()).filter(text => text.includes('Не запускалась')).length, 10);
+      assert.equal(await page.locator('[data-model-id]').count(), 3 + expectedModels.length);
+      assert.equal((await page.locator('.task-verdict').allTextContents()).filter(text => text.includes('Не запускалась')).length, expectedModels.length);
       await page.goto(base + modelUrl, { waitUntil: 'domcontentloaded' });
       assert.equal(await page.locator('#model-rank').textContent(), '—');
       assert.equal(await page.locator('.code-viewer').count(), 0);
+
+      await page.goto(`${base}/problems/${competition}/gpt-5.6`, { waitUntil: 'domcontentloaded' });
+      assert.equal(await page.locator('#model-title').textContent(), 'Версия модели не участвует в этом этапе');
 
       // Synthetic Python source stays in this browser response; it is never saved/published.
       const python = 's = "<script>window.CODE_XSS = true</script> $value"\r\nprint(s)\r\n';
@@ -95,6 +101,8 @@ const competition = 'algo-cup-2026-qualifying';
       await page.screenshot({ path: path.join(output, `python-${width}.png`), fullPage: true });
       await context.unroute('**/code/solutions/*.json');
       await page.goto(`${base}/?competition=math-cup-2026-final`, { waitUntil: 'domcontentloaded' });
+      const historicalModels = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../config/model_rosters/benchmark-2026-08-01.json'), 'utf8')).models;
+      assert.deepEqual((await page.locator('.model-row .participant-name').allTextContents()).sort(), historicalModels.map(model => model.display_name).sort());
       const mathUrl = await page.locator('.model-row .result-cell a').first().getAttribute('href');
       await page.goto(base + mathUrl, { waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => document.querySelector('#solution-text').textContent.length > 100);

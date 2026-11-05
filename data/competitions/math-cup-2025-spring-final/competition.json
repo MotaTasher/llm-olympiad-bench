@@ -13,6 +13,7 @@
     "stage": "Финал",
     "stage_index": 2,
     "document_type": "Решения",
-    "score_step": 3
+    "score_step": 3,
+    "model_roster": "benchmark-2026-08-01"
   }
 }

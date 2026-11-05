@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "id": "flagships-2026-11-05",
+  "as_of": "2026-11-05",
+  "description": "One strongest generally available native text/reasoning model per supported provider, selected from official documentation.",
+  "models": [
+    {
+      "provider": "anthropic",
+      "model_id": "claude-fable-5-1",
+      "display_name": "Claude Fable 5.1",
+      "short_label": "Fable 5.1",
+      "source": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+      "verified_at": "2026-11-05"
+    },
+    {
+      "provider": "deepseek",
+      "model_id": "deepseek-flash",
+      "display_name": "DeepSeek V4.1 Flash 1017",
+      "short_label": "V4.1 Flash 1017",
+      "source": "https://api-docs.deepseek.com/updates/",
+      "verified_at": "2026-11-05",
+      "version_note": "The provider exposes a rolling deepseek-flash API ID; 1017 is the documented revision on the verification date."
+    },
+    {
+      "provider": "google",
+      "model_id": "gemini-4-argon",
+      "display_name": "Gemini 4 Argon",
+      "short_label": "4 Argon",
+      "source": "https://aistudio.google.com/docs/models/gemini-4-argon",
+      "verified_at": "2026-11-05"
+    },
+    {
+      "provider": "gigachat",
+      "model_id": "GigaChat-3-Ultra",
+      "display_name": "GigaChat 3 Ultra",
+      "short_label": "3 Ultra",
+      "source": "https://developers.sber.ru/docs/ru/gigachat/models/gigachat-3-ultra",
+      "verified_at": "2026-11-05"
+    },
+    {
+      "provider": "xai",
+      "model_id": "grok-4.7",
+      "display_name": "Grok 4.7",
+      "short_label": "4.7",
+      "source": "https://docs.x.ai/developers/release-notes",
+      "verified_at": "2026-11-05"
+    },
+    {
+      "provider": "zai",
+      "model_id": "glm-5.3",
+      "display_name": "GLM 5.3",
+      "short_label": "5.3",
+      "source": "https://docs.z.ai/guides/llm/glm-5.3",
+      "verified_at": "2026-11-05"
+    },
+    {
+      "provider": "openai",
+      "model_id": "gpt-6-astra",
+      "display_name": "GPT-6 Astra",
+      "short_label": "GPT-6 Astra",
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "verified_at": "2026-11-05"
+    },
+    {
+      "provider": "yandexgpt",
+      "model_id": "aliceai-llm",
+      "display_name": "Alice AI LLM",
+      "short_label": "Alice AI LLM",
+      "source": "https://aistudio.yandex.ru/en/docs/ai-studio/concepts/generation/",
+      "verified_at": "2026-11-05"
+    },
+    {
+      "provider": "kimi",
+      "model_id": "kimi-k3.1-pro",
+      "display_name": "Kimi K3.1 Pro",
+      "short_label": "K3.1 Pro",
+      "source": "https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart",
+      "verified_at": "2026-11-05"
+    }
+  ]
+}
