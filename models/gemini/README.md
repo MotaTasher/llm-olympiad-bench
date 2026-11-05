@@ -1,10 +1,17 @@
 # Gemini adapter
 
+Current direct-adapter defaults match the nine-model `flagships-2026-11-05`
+cohort. Historical competitions select their own pinned model IDs, regardless
+of global defaults. All constructors accept request-scoped `system_prompt`;
+runner selects a separate C++23/Python 3.13 prompt in explicit code mode. Only
+the statement is sent; official solutions are optional. No tools or provider
+code execution are enabled. See [model contracts](../../docs/specs/MODEL_ADAPTERS.md).
+
 Runs Google Gemini through the official `google-genai` package in text-only mode.
 
 Active models:
 
-- `gemini-3.1-pro-preview` — Google Pro reasoning model, default high thinking level.
+- `gemini-4-argon` — Google Pro reasoning model, default high thinking level.
 
 `gemini-3.5-flash` remains explicitly callable as a legacy model, but it no
 longer creates a default scoring or public-results column.
@@ -76,7 +83,7 @@ Credential-free smoke:
 ```bash
 python - <<'PY'
 from models.gemini import GeminiModel
-for model_id in ["gemini-3.1-pro-preview", "gemini-3.5-flash"]:
+for model_id in ["gemini-4-argon", "gemini-3.5-flash"]:
     result = GeminiModel(model_id).solve("Докажите, что 1 = 1.", max_tokens=32)
     assert result.error
     print(model_id, "error path ok")
@@ -84,3 +91,7 @@ PY
 ```
 
 The adapter sends the shared `SYSTEM_PROMPT`, a single text prompt and no provider tools, search, files, images, managed agents or code execution. The shared `ensure_text_only_request()` guard validates the request snapshot before the API call.
+
+Argon uses Interactions with 65536 tokens per synchronous request and linked
+continuations. It omits temperature/top_p/top_k and defaults to a 7200-second
+HTTP timeout. Historical Pro/Flash IDs remain explicitly supported.

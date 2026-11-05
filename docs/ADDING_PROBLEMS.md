@@ -230,3 +230,13 @@ Math Cup 2026. Финал
 `config/model_rosters/` или создайте новый; не изменяйте составы уже
 проверенных этапов. Это шаг интеграции в проект, а не требование к автономному
 конвертеру исходного ZIP. См. [MODEL_ROSTERS.md](specs/MODEL_ROSTERS.md).
+
+## Conditions for code generation
+
+A complete programming statement may be imported before official solutions
+exist: omit/null `answer` and `solution`. Preserve input/output specification,
+constraints and samples in `statement`; never promote public preview titles to
+canonical tasks. Set the parent manifest's `metadata.solution_format=code`,
+`metadata.code_language=cpp|python`, and the selected `metadata.model_roster`.
+Only the statement is sent to adapters. No generation/submission is authorized
+by importing data alone. See `specs/CODE_JUDGING.md` and `LOCAL_SETUP.md`.

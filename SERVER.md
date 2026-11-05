@@ -440,3 +440,20 @@ ssh user@host 'hostname && ls -la /absolute/path/to/shared/logs'
 подготовлен как черновик и его нужно прочитать и при необходимости поправить.
 Пока флаг `GPT — проверить комментарий` не снят в редакторе итога, этот текст
 не попадает в публичную витрину.
+
+## November code-generation preparation
+
+Direct-adapter defaults now select the nine `flagships-2026-11-05` models;
+historical competition cohorts and named historical batch scripts retain their
+old IDs. `run_model_batch.py --solution-format code --code-language cpp|python`
+forwards the separate statement-only prompt; cost estimates use the effective
+prompt, and `--only-missing` distinguishes formats/languages. Official solutions
+are optional. Runner saves complete generated source with run/result attribution
+but makes no judge calls. No real model runs or new submissions were performed;
+current restrictions remain in force. Full Algo Cup conditions still need import.
+
+The public reader hides an absent official-solution section on code-stage task,
+stage and solution pages. Existing math references, typography, hero, winner
+sources and deployed `generated/` data are preserved. Publish app.js before the
+six HTML shells and their exact extensionless routes; verify desktop/mobile
+code and math pages with `scripts/check_public_code.cjs`.

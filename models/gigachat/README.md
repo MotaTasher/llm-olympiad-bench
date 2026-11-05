@@ -1,8 +1,16 @@
 # GigaChat (Сбер)
 
+Current direct-adapter defaults match the nine-model `flagships-2026-11-05`
+cohort. Historical competitions select their own pinned model IDs, regardless
+of global defaults. All constructors accept request-scoped `system_prompt`;
+runner selects a separate C++23/Python 3.13 prompt in explicit code mode. Only
+the statement is sent; official solutions are optional. No tools or provider
+code execution are enabled. See [model contracts](../../docs/specs/MODEL_ADAPTERS.md).
+
 Этот адаптер запускает GigaChat через общий `runner.py` в text-only режиме: без `tools`, `functions`, `function_call` и внешних цепочек.
 Официальный benchmark запрашивает общий бюджет `256000` токенов. Адаптер
-передаёт этот предел API и фиксирует его в telemetry. SDK получает timeout
+фиксирует запрошенный бюджет отдельно и передаёт API не больше 8192 токенов.
+Это операционный предел проекта, а не заявленный максимум API. SDK получает timeout
 `7200` секунд и до трёх повторов для временных HTTP-ошибок, включая `429`.
 Активная колонка бенчмарка — `GigaChat-3-Ultra`; прежние модели оставлены как
 явно запускаемая legacy-версия.

@@ -428,3 +428,20 @@ ad-hoc exports outside the tracked data tree.
 Before committing new logs/results, scan for accidental credentials. Provider
 tokens, Authorization headers, cookies and private server config must never be
 committed.
+
+## November code-generation preparation
+
+Direct-adapter defaults now select the nine `flagships-2026-11-05` models;
+historical competition cohorts and named historical batch scripts retain their
+old IDs. `run_model_batch.py --solution-format code --code-language cpp|python`
+forwards the separate statement-only prompt; cost estimates use the effective
+prompt, and `--only-missing` distinguishes formats/languages. Official solutions
+are optional. Runner saves complete generated source with run/result attribution
+but makes no judge calls. No real model runs or new submissions were performed;
+current restrictions remain in force. Full Algo Cup conditions still need import.
+
+The public reader hides an absent official-solution section on code-stage task,
+stage and solution pages. Existing math references, typography, hero, winner
+sources and deployed `generated/` data are preserved. Publish app.js before the
+six HTML shells and their exact extensionless routes; verify desktop/mobile
+code and math pages with `scripts/check_public_code.cjs`.

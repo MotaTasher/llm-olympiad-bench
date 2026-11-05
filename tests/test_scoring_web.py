@@ -28,6 +28,7 @@ from scoring.repository import (
     checks_statistics,
     competition_statistics,
     configured_model_columns,
+    competition_model_columns,
     format_score_value,
     half_score_for,
     model_states_for_review,
@@ -589,7 +590,7 @@ class ScoringWebTests(unittest.TestCase):
         score_step: float | None = None,
     ) -> Path:
         path = self.competitions_dir / competition_id
-        competition_metadata = {"max_score": max_score}
+        competition_metadata = {"max_score": max_score, "model_roster": "benchmark-2026-08-01"}
         if score_step is not None:
             competition_metadata["score_step"] = score_step
         problem_metadata = {"max_score": max_score}
@@ -707,7 +708,7 @@ class ScoringWebTests(unittest.TestCase):
         )
 
     def active_model_columns(self) -> list[dict]:
-        return list(configured_model_columns().values())
+        return list(competition_model_columns({"model_roster": "benchmark-2026-08-01"}).values())
 
     def total_matrix_cells(self, problem_count: int = 1) -> int:
         return len(self.active_model_columns()) * problem_count
@@ -1898,36 +1899,15 @@ class ScoringWebTests(unittest.TestCase):
         self.assertTrue(any("score_step" in finding.message for finding in findings))
 
     def test_active_model_catalog_contains_only_strong_models(self) -> None:
-        expected = {
-            "openai:gpt-5.6-sol",
-            "anthropic:claude-fable-5",
-            "anthropic:claude-opus-5",
-            "deepseek:deepseek-v4-pro",
-            "google:gemini-3.1-pro-preview",
-            "gigachat:GigaChat-3-Ultra",
-            "xai:grok-4.5",
-            "zai:glm-5.2",
-            "yandexgpt:aliceai-llm",
-            "kimi:kimi-k3",
-        }
-        expected_order = [
-            "anthropic:claude-fable-5",
-            "anthropic:claude-opus-5",
-            "deepseek:deepseek-v4-pro",
-            "google:gemini-3.1-pro-preview",
-            "gigachat:GigaChat-3-Ultra",
-            "xai:grok-4.5",
-            "zai:glm-5.2",
-            "openai:gpt-5.6-sol",
-            "yandexgpt:aliceai-llm",
-            "kimi:kimi-k3",
-        ]
+        from models.rosters import load_roster, roster_specs
+        expected_order = roster_specs(load_roster("flagships-2026-11-05"))
+        expected = set(expected_order)
         self.assertEqual(set(runner.active_model_specs()), expected)
         self.assertEqual(set(configured_model_columns()), expected)
         self.assertEqual(runner.active_model_specs(), expected_order)
         self.assertEqual(runner.requested_aliases("all"), expected_order)
-        self.assertEqual(len(runner.requested_aliases("all")), 10)
-        self.assertEqual(len(set(runner.requested_aliases("all"))), 10)
+        self.assertEqual(len(runner.requested_aliases("all")), 9)
+        self.assertEqual(len(set(runner.requested_aliases("all"))), 9)
         for alias, provider in {
             "gemini": "google",
             "google": "google",
@@ -1958,14 +1938,14 @@ class ScoringWebTests(unittest.TestCase):
         competition = catalog["competition_map"]["math_2026"]
 
         expected_groups = [
-            ("anthropic", "Claude", list(CLAUDE_VERSIONS)),
-            ("deepseek", "DeepSeek", list(DEEPSEEK_VERSIONS)),
-            ("google", "Gemini", list(GEMINI_VERSIONS)),
-            ("gigachat", "GigaChat", list(GIGACHAT_VERSIONS)),
-            ("xai", "Grok", list(GROK_VERSIONS)),
-            ("zai", "GLM", list(GLM_VERSIONS)),
-            ("openai", "OpenAI", list(GPT_VERSIONS)),
-            ("yandexgpt", "Яндекс", list(YANDEX_VERSIONS)),
+            ("anthropic", "Claude", ["claude-fable-5", "claude-opus-5"]),
+            ("deepseek", "DeepSeek", ["deepseek-v4-pro"]),
+            ("google", "Gemini", ["gemini-3.1-pro-preview"]),
+            ("gigachat", "GigaChat", ["GigaChat-3-Ultra"]),
+            ("xai", "Grok", ["grok-4.5"]),
+            ("zai", "GLM", ["glm-5.2"]),
+            ("openai", "OpenAI", ["gpt-5.6-sol"]),
+            ("yandexgpt", "Яндекс", ["aliceai-llm"]),
             ("kimi", "Kimi", ["kimi-k3"]),
         ]
         groups = competition["model_groups"]
@@ -1982,7 +1962,7 @@ class ScoringWebTests(unittest.TestCase):
         self.assertEqual([state["model_key"] for state in problem["model_states"]], flat_from_groups)
 
     def test_model_short_labels_and_unknown_fallback(self) -> None:
-        columns = configured_model_columns()
+        columns = competition_model_columns({"model_roster": "benchmark-2026-08-01"})
         expected = {
             "claude-fable-5": "Fable 5",
             "claude-opus-5": "Opus 5",

@@ -75,6 +75,14 @@ accepted code submissions/metrics and empty rows for every configured model.
 documents with `scripts/export_contest_preview.py`; do not create fake logs,
 human evaluations or incomplete canonical task files.
 
+Code-generation infrastructure is ready: `runner.py --solution-format code
+--code-language cpp|python` uses only the statement and writes attributed source
+artifacts. Official answers/solutions are optional and never model inputs.
+Direct defaults are the nine November models; historical cohorts and named
+historical batch scripts must keep their original versions. No generation or
+submission is authorized merely by changing/preparing calls. `--only-missing`
+distinguishes math, C++ and Python. See `docs/LOCAL_SETUP.md` for later commands.
+
 Code sources belong in `data/code_solutions/`; Yandex judgments belong in
 `data/judge_results/`; submission outbox markers belong in `data/judge_jobs/`.
 Read [`docs/specs/CODE_JUDGING.md`](docs/specs/CODE_JUDGING.md) before touching

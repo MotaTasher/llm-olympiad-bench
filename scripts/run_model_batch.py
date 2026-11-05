@@ -25,11 +25,18 @@ from scripts.run_new_models_math_cup_2026_final import (  # noqa: E402
     provider_worker_limits,
     safe_name,
 )
-from models.common import SYSTEM_PROMPT  # noqa: E402
+from models.common import SYSTEM_PROMPT, code_system_prompt  # noqa: E402
 from models.pricing import estimate_cost, estimate_tokens  # noqa: E402
 
 
 MODEL_CAPS = {
+    "anthropic:claude-fable-5-1": 256_000,
+    "deepseek:deepseek-flash": 256_000,
+    "google:gemini-4-argon": 256_000,
+    "xai:grok-4.7": 256_000,
+    "zai:glm-5.3": 256_000,
+    "openai:gpt-6-astra": 256_000,
+    "kimi:kimi-k3.1-pro": 256_000,
     "openai:gpt-5.6-sol": 128_000,
     "openai:gpt-5.5": 128_000,
     "openai:gpt-5.4-mini": 128_000,
@@ -113,6 +120,8 @@ def successful_pairs(
     logs_dir: Path,
     models: list[str],
     problems: list[str],
+    solution_format: str = "math",
+    code_language: str = "cpp",
 ) -> set[tuple[str, str]]:
     expected = {(problem_id, model) for problem_id in problems for model in models}
     found: set[tuple[str, str]] = set()
@@ -120,9 +129,16 @@ def successful_pairs(
         payload = json_data(path)
         if not payload:
             continue
+        runtime = payload.get("runtime_settings") or {}
+        if runtime.get("solution_format", "math") != solution_format:
+            continue
+        if solution_format == "code" and runtime.get("code_language") != code_language:
+            continue
         problem_id = str(payload.get("problem_id") or path.parent.name)
         for result in payload.get("results", []) or []:
             if not str(result.get("answer") or "").strip() or result.get("error"):
+                continue
+            if solution_format == "code" and not result.get("code_solution_id"):
                 continue
             for candidate in model_candidates(result):
                 key = (problem_id, candidate)
@@ -152,6 +168,7 @@ def build_pairs(args: argparse.Namespace) -> list[Pair]:
     roster_id = getattr(args, "model_roster", None)
     manifest_path = Path(args.data_dir) / args.competition / "competition.json"
     manifest = json_data(manifest_path) or {}
+    metadata = manifest.get("metadata") or {}
     roster = load_roster(roster_id) if roster_id else roster_for_metadata(manifest.get("metadata"))
     models = model_specs(args.models, roster=roster)
     if roster:
@@ -163,6 +180,8 @@ def build_pairs(args: argparse.Namespace) -> list[Pair]:
             logs_dir=Path(args.logs_dir),
             models=models,
             problems=problems,
+            solution_format=getattr(args, "solution_format", None) or metadata.get("solution_format") or "math",
+            code_language=getattr(args, "code_language", None) or metadata.get("code_language") or "cpp",
         )
         if args.only_missing
         else set()
@@ -180,11 +199,16 @@ def estimate_pairs_cost(*, args: argparse.Namespace, pairs: list[Pair]) -> tuple
     total = 0.0
     by_provider: dict[str, float] = {}
     by_model: dict[str, float] = {}
+    manifest = json_data(Path(args.data_dir) / args.competition / "competition.json") or {}
+    metadata = manifest.get("metadata") or {}
+    solution_format = getattr(args, "solution_format", None) or metadata.get("solution_format") or "math"
+    language = getattr(args, "code_language", None) or metadata.get("code_language") or "cpp"
+    prompt = code_system_prompt(language) if solution_format == "code" else SYSTEM_PROMPT
     for pair in pairs:
         provider, _, model_id = pair.model.partition(":")
         problem_path = Path(args.data_dir) / args.competition / f"{pair.problem_id}.json"
         problem = json_data(problem_path) or {}
-        input_tokens = estimate_tokens(f"{SYSTEM_PROMPT}\n\n{problem.get('statement') or ''}")
+        input_tokens = estimate_tokens(f"{prompt}\n\n{problem.get('statement') or ''}")
         cost = estimate_cost(
             provider,
             model_id,
@@ -230,6 +254,10 @@ async def run_one(
         ]
         if getattr(args, "model_roster", None):
             command.extend(["--model-roster", args.model_roster])
+        if getattr(args, "solution_format", None):
+            command.extend(["--solution-format", args.solution_format])
+        if getattr(args, "code_language", None):
+            command.extend(["--code-language", args.code_language])
         started_at = datetime.now(UTC).isoformat()
         progress.write(f"START {args.competition}/{pair.problem_id} {pair.model} cap={pair.max_tokens}")
         start = monotonic()
@@ -360,7 +388,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--logs-dir", default=DEFAULT_LOGS_DIR)
     parser.add_argument("--data-dir", default="data/competitions")
     parser.add_argument("--output-dir", default=None)
-    parser.add_argument("--models", default="new", help="new/all or comma-separated model specs")
+    parser.add_argument("--models", default="all", help="all for the pinned cohort; new is the historical August subset")
+    parser.add_argument("--solution-format", choices=["math", "code"], default=None)
+    parser.add_argument("--code-language", choices=["cpp", "python"], default=None)
     parser.add_argument("--model-roster", default=None, help="Explicit versioned cohort; otherwise use the competition manifest")
     parser.add_argument(
         "--problems",

@@ -151,10 +151,12 @@ class GeminiModel(BaseModel):
         *,
         reasoning_budget_tokens: int | None = None,
         max_final_tokens: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         self._model = model or env("GEMINI_MODEL", DEFAULT_VERSION)
         self._reasoning_budget_tokens = reasoning_budget_tokens
         self._max_final_tokens = max_final_tokens
+        self._system_prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
 
     @property
     def model_id(self) -> str:
@@ -170,6 +172,8 @@ class GeminiModel(BaseModel):
             from google.genai import types
 
             timeout_seconds = optional_positive_float("GEMINI_TIMEOUT_SECONDS")
+            if timeout_seconds is None and self.model_id == "gemini-4-argon":
+                timeout_seconds = 7200
             client_kwargs: dict[str, Any] = {"api_key": api_key}
             if timeout_seconds is not None:
                 client_kwargs["http_options"] = types.HttpOptions(timeout=int(timeout_seconds * 1000))
@@ -192,12 +196,14 @@ class GeminiModel(BaseModel):
                 "thinking_level": thinking_level,
                 "temperature": temperature,
             }
+            if self.model_id == "gemini-4-argon":
+                generation_config.pop("temperature")
             if per_request_limit is not None:
                 generation_config["max_output_tokens"] = int(per_request_limit)
             request_payload = {
                 "endpoint": sanitized_base_url(GEMINI_INTERACTIONS_ENDPOINT),
                 "model": self.model_id,
-                "system_instruction": SYSTEM_PROMPT,
+                "system_instruction": self._system_prompt,
                 "input": problem,
                 "max_output_tokens_total": total_budget,
                 "max_output_tokens_per_request": per_request_limit,
@@ -205,6 +211,8 @@ class GeminiModel(BaseModel):
                 "thinking_config": {"thinking_level": thinking_level.upper()},
                 "store": True,
             }
+            if self.model_id == "gemini-4-argon":
+                request_payload.pop("temperature")
             ensure_text_only_request(request_payload)
 
             remaining_budget = int(total_budget or per_request_limit)
@@ -234,7 +242,7 @@ class GeminiModel(BaseModel):
                 step_request = {
                     "model": self.model_id,
                     "input": step_input,
-                    "system_instruction": SYSTEM_PROMPT,
+                    "system_instruction": self._system_prompt,
                     "generation_config": step_generation_config,
                     "previous_interaction_id": previous_interaction_id,
                     "store": True,
@@ -243,7 +251,7 @@ class GeminiModel(BaseModel):
                 interaction_kwargs: dict[str, Any] = {
                     "model": self.model_id,
                     "input": step_input,
-                    "system_instruction": SYSTEM_PROMPT,
+                    "system_instruction": self._system_prompt,
                     "generation_config": step_generation_config,
                     "store": True,
                 }

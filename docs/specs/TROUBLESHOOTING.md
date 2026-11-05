@@ -68,3 +68,13 @@ A useful final report names:
 4. the fix;
 5. the validation performed;
 6. external behavior not tested, such as provider API calls or remote SSH.
+
+## A continued response loses the code/math format
+
+For OpenAI Responses, `previous_response_id` preserves conversation context but
+not the preceding top-level `instructions`. Every continuation must resend the
+effective system prompt and log it in the step request. See the official
+[Responses migration guide](https://developers.openai.com/api/docs/guides/migrate-to-responses).
+`test_current_model_calls.py` verifies a two-step code response and per-request
+pricing tiers. A length-limited code answer is logged as an error without a
+judge-ready source artifact; it is never silently submitted.

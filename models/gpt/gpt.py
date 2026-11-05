@@ -10,7 +10,7 @@ from ..common import (
     safe_dict,
     timed,
 )
-from ..pricing import OPENAI_USD_PER_1M as PRICES_USD_PER_1M, estimate_cost, price_for
+from ..pricing import OPENAI_USD_PER_1M as PRICES_USD_PER_1M, combine_request_costs, estimate_cost, price_for
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
@@ -18,6 +18,7 @@ from .versions import DEFAULT as DEFAULT_VERSION
 OPENAI_RESPONSES_ENDPOINT = "https://api.openai.com/v1/responses"
 OPENAI_CONTINUATION_INPUT = "Continue."
 OPENAI_MAX_OUTPUT_TOKENS_BY_MODEL = {
+    "gpt-6-astra": 128_000,
     "gpt-5.6-sol": 128_000,
     "gpt-5.5": 128_000,
     "gpt-5.4-mini": 128_000,
@@ -107,10 +108,12 @@ class GPTModel(BaseModel):
         *,
         reasoning_budget_tokens: int | None = None,
         max_final_tokens: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         self._model = model or env("OPENAI_MODEL", DEFAULT_VERSION)
         self._reasoning_budget_tokens = reasoning_budget_tokens
         self._max_final_tokens = max_final_tokens
+        self._system_prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
 
     @property
     def model_id(self) -> str:
@@ -148,7 +151,7 @@ class GPTModel(BaseModel):
                 reasoning = {"effort": env("OPENAI_REASONING_EFFORT")}
             request_payload = {
                 "model": self.model_id,
-                "instructions": SYSTEM_PROMPT,
+                "instructions": self._system_prompt,
                 "input": problem,
                 "endpoint": sanitized_base_url(OPENAI_RESPONSES_ENDPOINT),
                 "stream": False,
@@ -163,6 +166,7 @@ class GPTModel(BaseModel):
             ensure_text_only_request(request_payload)
 
             responses = []
+            request_costs = []
             request_steps = []
             prompt_tokens = 0
             completion_tokens = 0
@@ -180,9 +184,9 @@ class GPTModel(BaseModel):
                     "max_output_tokens": step_max_tokens,
                     "store": True,
                 }
-                if previous_response_id is None:
-                    step_kwargs["instructions"] = SYSTEM_PROMPT
-                else:
+                # Responses chains retain conversation state, but not top-level instructions.
+                step_kwargs["instructions"] = self._system_prompt
+                if previous_response_id is not None:
                     step_kwargs["previous_response_id"] = previous_response_id
                 if reasoning is not None:
                     step_kwargs["reasoning"] = reasoning
@@ -191,7 +195,7 @@ class GPTModel(BaseModel):
                     "endpoint": sanitized_base_url(OPENAI_RESPONSES_ENDPOINT),
                     "model": self.model_id,
                     "input": step_input,
-                    "instructions": SYSTEM_PROMPT if previous_response_id is None else None,
+                    "instructions": self._system_prompt,
                     "previous_response_id": previous_response_id,
                     "max_output_tokens": step_max_tokens,
                     "store": True,
@@ -220,6 +224,12 @@ class GPTModel(BaseModel):
                 completion_tokens += step_completion_tokens
                 reasoning_tokens += step_reasoning_tokens
                 cached_input_tokens += step_cached_tokens
+                if self.model_id == "gpt-6-astra":
+                    request_costs.append(estimate_cost(
+                        "openai", self.model_id, input_tokens=step_prompt_tokens,
+                        output_tokens=step_completion_tokens, reasoning_tokens=step_reasoning_tokens or None,
+                        cached_input_tokens=step_cached_tokens or None,
+                    ))
                 text = response_text(response)
                 response_id = getattr(response, "id", None) or raw_response.get("id")
                 responses.append(
@@ -251,7 +261,10 @@ class GPTModel(BaseModel):
                 input_tokens=prompt_tokens,
                 output_tokens=completion_tokens,
                 reasoning_tokens=reasoning_tokens or None,
+                cached_input_tokens=cached_input_tokens or None,
             )
+            if request_costs:
+                cost = combine_request_costs(request_costs)
             raw_response = {
                 "endpoint": sanitized_base_url(OPENAI_RESPONSES_ENDPOINT),
                 "multi_request": {
@@ -283,7 +296,7 @@ class GPTModel(BaseModel):
                 answer=answer,
                 prompt_tokens=prompt_tokens,
                 completion_tokens=completion_tokens,
-                cost_usd=round(cost_usd, 8),
+                cost_usd=float(cost.get("total") if cost.get("total") is not None else cost_usd),
                 latency_ms=latency_ms,
                 raw_response=raw_response,
                 error=error,

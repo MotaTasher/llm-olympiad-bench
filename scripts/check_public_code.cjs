@@ -40,6 +40,7 @@ const expectedModels = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../co
       await page.screenshot({ path: path.join(output, `leaderboard-${width}.png`), fullPage: true });
       await page.goto(base + solutionUrl, { waitUntil: 'domcontentloaded' });
       await page.locator('#solution-text pre code.hljs').waitFor({ state: 'attached' });
+      assert.equal(await page.locator('[data-reading-section="official"]').isHidden(), true);
       const source = await page.locator('#solution-text pre code').textContent();
       assert(source.includes('#include'));
       assert((await page.locator('#solution-text .hljs-keyword').count()) > 0);
@@ -64,11 +65,17 @@ const expectedModels = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../co
       assert.equal(await page.locator('#model-points').textContent(), '4');
       await page.goto(base + taskUrl, { waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => document.querySelectorAll('.code-viewer').length === 3);
+      assert.equal(await page.locator('[data-reading-section="official"]').isHidden(), true);
       assert.equal(await page.locator('[data-model-id]').count(), 3 + expectedModels.length);
       assert.equal((await page.locator('.task-verdict').allTextContents()).filter(text => text.includes('Не запускалась')).length, expectedModels.length);
       await page.goto(base + modelUrl, { waitUntil: 'domcontentloaded' });
       assert.equal(await page.locator('#model-rank').textContent(), '—');
       assert.equal(await page.locator('.code-viewer').count(), 0);
+
+      await page.goto(`${base}/problems/${competition}`, { waitUntil: 'domcontentloaded' });
+      await page.waitForFunction(() => [...document.querySelectorAll('.official-solution')].every(node => node.hidden));
+      assert.equal(await page.locator('.official-solution:visible').count(), 0);
+      assert.equal(await page.locator('.problem-set-task').count(), 4);
 
       await page.goto(`${base}/problems/${competition}/gpt-5.6`, { waitUntil: 'domcontentloaded' });
       assert.equal(await page.locator('#model-title').textContent(), 'Версия модели не участвует в этом этапе');
@@ -108,6 +115,7 @@ const expectedModels = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../co
       await page.waitForFunction(() => document.querySelector('#solution-text').textContent.length > 100);
       assert.equal(await page.locator('.code-viewer').count(), 0);
       assert.equal(await page.locator('#solution-judge-metrics').isHidden(), true);
+      assert.equal(await page.locator('[data-reading-section="official"]').isVisible(), true);
       assert.deepEqual(errors, []);
       console.log(JSON.stringify({ width, teamSolutions: 12, cpp: 'ok', python: 'ok', copyDownload: 'exact', math: 'ok' }));
       await context.close();

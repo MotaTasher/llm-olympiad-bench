@@ -14,8 +14,11 @@ immutable source artifact → explicit admin submission/outbox → separate judg
 record → sanitized public code document. Winner submissions are imported
 read-only; new model calls/submissions have not been run. Default source
 languages are C++ and Python. See [`CODE_JUDGING.md`](CODE_JUDGING.md) for
-bindings, units and CLI controls. `runner.py`, adapters and math prompts are
-unchanged; a code-generating model request must still be text-only.
+bindings, units and CLI controls. `runner.py --solution-format code --code-language cpp|python` selects a separate
+text-only source-generation prompt. Only the statement is sent; official answers
+and solutions are optional and are never model inputs. A successful complete
+response produces an immutable source artifact referenced by `code_solution_id`.
+No external submission happens in runner. The math prompt remains unchanged.
 
 ```text
 canonical problem file
@@ -111,7 +114,8 @@ The intended separation is:
 Explicit CLI `--models` values override `RUNNER_MODELS` for that run.
 `--max-tokens` sets one output/completion-token ceiling for every selected
 adapter. If omitted, runner reads the committed `RUNNER_MAX_TOKENS=256000`
-benchmark default. The same requested budget is sent to every active adapter.
+benchmark default. The requested budget is recorded for every adapter; GigaChat and Alice apply
+explicit operational caps of 8192 and 8000 tokens respectively.
 OpenAI, Gemini, Grok and GLM treat `--max-tokens` as a total budget and split it
 when it exceeds a provider request cap. OpenAI and Grok chain text-only
 Responses requests with `previous_response_id`; Gemini uses
@@ -119,10 +123,9 @@ Responses requests with `previous_response_id`; Gemini uses
 `clear_thinking=false`. Each stops on the first non-empty visible output. An
 exhausted budget with no visible output is an adapter error. Other adapters
 receive `--max-tokens` as one provider-specific output/completion ceiling.
-The active benchmark set keeps one flagship per provider, except Anthropic,
-which keeps Fable and Opus. The current site/runner configured set is 9 provider
-groups and 10 active model columns: Claude, DeepSeek, Gemini, GigaChat, Grok,
-GLM, OpenAI, Yandex and Kimi. Retired IDs may remain documented as legacy versions but do not create
+Unassigned competitions and direct adapters default to the nine November
+flagships, one per provider. Historical pinned competitions retain their ten
+versions, including two Claude columns. Retired IDs may remain documented as legacy versions but do not create
 scoring UI columns from historical logs. Legacy `grok-code-fast-1` results are
 canonicalized into `xai:grok-build-0.1`; they do not create a separate column.
 

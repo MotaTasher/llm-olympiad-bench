@@ -442,6 +442,13 @@ class RunnerTests(TempCompetition):
 
 
 class ScoringRepositoryTests(TempCompetition):
+    def setUp(self) -> None:
+        super().setUp()
+        path = self.competition / "competition.json"
+        manifest = json.loads(path.read_text())
+        manifest["metadata"]["model_roster"] = "benchmark-2026-08-01"
+        write_json(path, manifest)
+
     def test_catalog_contains_canonical_problem_without_logs_and_statuses(self) -> None:
         self.write_problem("task_01", title="No Logs")
         logs_dir = self.tmp / "logs"

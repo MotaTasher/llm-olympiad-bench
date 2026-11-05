@@ -31,6 +31,22 @@ SYSTEM_PROMPT = (
     "Не используй инструменты, поиск, код или калькуляторы."
 )
 
+CODE_SYSTEM_PROMPT_VERSION = "2026-11-05-code-v1"
+
+
+def code_system_prompt(language: str) -> str:
+    target = {"cpp": "C++23", "python": "Python 3.13"}.get(language)
+    if target is None:
+        raise ValueError("Code language must be cpp or python")
+    return (
+        "Ты решаешь олимпиадную задачу по программированию. "
+        "Используй только переданное условие; проверь ограничения, сложность и крайние случаи. "
+        "Не используй инструменты, поиск, внешние сервисы, калькуляторы или исполнение кода. "
+        f"Напиши полное работающее решение на {target} одним исходным файлом. "
+        "Следуй формату ввода и вывода из условия; по умолчанию используй стандартные потоки. "
+        "В финальном ответе верни только исходный код: без Markdown, пояснений и блоков с тройными кавычками."
+    )
+
 
 def ensure_text_only_request(value: Any, path: str = "request") -> None:
     if isinstance(value, dict):

@@ -12,7 +12,7 @@ from ..common import (
     safe_dict,
     timed,
 )
-from ..pricing import estimate_cost
+from ..pricing import combine_request_costs, estimate_cost
 from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
@@ -114,10 +114,12 @@ class GrokModel(BaseModel):
         *,
         reasoning_budget_tokens: int | None = None,
         max_final_tokens: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         self._model = canonical_model_id(model or env("XAI_MODEL", DEFAULT_VERSION))
         self._reasoning_budget_tokens = reasoning_budget_tokens
         self._max_final_tokens = max_final_tokens
+        self._system_prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
 
     @property
     def model_id(self) -> str:
@@ -143,7 +145,7 @@ class GrokModel(BaseModel):
                 client_kwargs["max_retries"] = max_retries
             client = OpenAI(**client_kwargs)
             initial_input = [
-                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": self._system_prompt},
                 {"role": "user", "content": problem},
             ]
             total_budget = None
@@ -183,6 +185,7 @@ class GrokModel(BaseModel):
             ensure_text_only_request(request_payload)
 
             responses: list[dict[str, Any]] = []
+            request_costs = []
             request_steps: list[dict[str, Any]] = []
             prompt_tokens = 0
             completion_tokens = 0
@@ -234,6 +237,11 @@ class GrokModel(BaseModel):
                 completion_tokens += step_completion
                 reasoning_tokens += step_reasoning
                 cached_input_tokens += step_cached
+                if self.model_id == "grok-4.7":
+                    request_costs.append(estimate_cost(
+                        "xai", self.model_id, input_tokens=step_prompt, output_tokens=step_completion,
+                        cached_input_tokens=step_cached or None,
+                    ))
                 text = response_text(response)
                 response_id = getattr(response, "id", None) or raw_step.get("id")
                 ticks = provider_cost_ticks(raw_step)
@@ -261,6 +269,8 @@ class GrokModel(BaseModel):
                 output_tokens=completion_tokens,
                 cached_input_tokens=cached_input_tokens or None,
             )
+            if request_costs:
+                cost = combine_request_costs(request_costs)
             if provider_ticks_seen:
                 provider_cost = provider_ticks_total / 10_000_000_000
                 cost = {

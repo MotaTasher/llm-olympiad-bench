@@ -23,10 +23,12 @@ class DeepSeekModel(BaseModel):
         *,
         reasoning_budget_tokens: int | None = None,
         max_final_tokens: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         self._model = model or env("DEEPSEEK_MODEL", DEFAULT_VERSION)
         self._reasoning_budget_tokens = reasoning_budget_tokens
         self._max_final_tokens = max_final_tokens
+        self._system_prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
 
     @property
     def model_id(self) -> str:
@@ -39,10 +41,15 @@ class DeepSeekModel(BaseModel):
             client = OpenAI(
                 api_key=require_env("DEEPSEEK_API_KEY"),
                 base_url=env("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
+                timeout=float(env("DEEPSEEK_TIMEOUT_SECONDS", "7200") or "7200"),
+                max_retries=int(env("DEEPSEEK_MAX_RETRIES", "0") or "0"),
             )
 
             kwargs = {}
-            if self.model_id not in {"deepseek-reasoner"}:
+            if self.model_id == "deepseek-flash":
+                kwargs["extra_body"] = {"thinking": {"type": "enabled"}}
+                kwargs["reasoning_effort"] = env("DEEPSEEK_REASONING_EFFORT", "max") or "max"
+            elif self.model_id not in {"deepseek-reasoner"}:
                 kwargs["temperature"] = float(env("DEEPSEEK_TEMPERATURE", "0.3") or "0.3")
             if max_tokens is not None:
                 kwargs["max_tokens"] = int(max_tokens)
@@ -51,7 +58,7 @@ class DeepSeekModel(BaseModel):
             elif env("DEEPSEEK_MAX_TOKENS") is not None:
                 kwargs["max_tokens"] = int(env("DEEPSEEK_MAX_TOKENS", "4096") or "4096")
             messages = [
-                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": self._system_prompt},
                 {"role": "user", "content": problem},
             ]
             base_url = env("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
@@ -87,6 +94,7 @@ class DeepSeekModel(BaseModel):
                 self.model_id,
                 input_tokens=prompt_tokens,
                 output_tokens=completion_tokens,
+                cached_input_tokens=getattr(usage, "prompt_cache_hit_tokens", None),
             )
 
             message = response.choices[0].message
@@ -112,7 +120,7 @@ class DeepSeekModel(BaseModel):
                 answer=answer,
                 prompt_tokens=prompt_tokens,
                 completion_tokens=completion_tokens,
-                cost_usd=round(cost_usd, 8),
+                cost_usd=float(cost.get("total") if cost.get("total") is not None else cost_usd),
                 latency_ms=latency_ms,
                 raw_response=raw_response,
                 error=error,

@@ -1,6 +1,6 @@
-# Moonshot API flagship snapshot: 2026-08-01
-# https://platform.kimi.ai/ (K3 is the provider's flagship)
-# Account access is verified at runtime with GET /v1/models.
-VERSIONS = ["kimi-k3"]
-LEGACY_VERSIONS: list[str] = []
+# Current direct-adapter / unassigned-competition default, verified 2026-11-05.
+# https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart
+# Historical competitions select their own immutable model roster.
+VERSIONS = ['kimi-k3.1-pro']
+LEGACY_VERSIONS = ['kimi-k3']
 DEFAULT = VERSIONS[0]

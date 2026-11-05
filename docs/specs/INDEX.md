@@ -60,7 +60,7 @@ The following are cross-subsystem contracts and require coordinated updates:
 Current active benchmark columns are documented in
 [`MODEL_ADAPTERS.md`](MODEL_ADAPTERS.md) and
 [`SCORING_WEB.md`](SCORING_WEB.md); the configured set is 9 provider groups and
-10 historical/default model columns. Competition-specific cohorts override
+nine default model columns. Historical competitions retain ten pinned columns; cohorts override
 that default: Algo Cup pins nine current flagships, one per provider; old
 competitions keep their own versions. See [`MODEL_ROSTERS.md`](MODEL_ROSTERS.md).
 

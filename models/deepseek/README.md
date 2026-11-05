@@ -1,8 +1,15 @@
 # DeepSeek
 
+Current direct-adapter defaults match the nine-model `flagships-2026-11-05`
+cohort. Historical competitions select their own pinned model IDs, regardless
+of global defaults. All constructors accept request-scoped `system_prompt`;
+runner selects a separate C++23/Python 3.13 prompt in explicit code mode. Only
+the statement is sent; official solutions are optional. No tools or provider
+code execution are enabled. See [model contracts](../../docs/specs/MODEL_ADAPTERS.md).
+
 Этот адаптер запускает DeepSeek через OpenAI-compatible Chat Completions API в text-only режиме: без `tools`, function calling, поиска и внешних цепочек.
 Единый лимит completion-токенов задаётся через `runner.py --max-tokens`; `DEEPSEEK_MAX_TOKENS` остаётся fallback-настройкой.
-Активная колонка бенчмарка — `deepseek-v4-pro`; `deepseek-v4-flash` оставлен
+Активная колонка бенчмарка — `deepseek-flash`; `deepseek-v4-flash` оставлен
 как явно запускаемая legacy-версия.
 
 ## 1. Как получить ключ
@@ -60,7 +67,7 @@ config/models.env
 Пример:
 
 ```env
-DEEPSEEK_MODEL=deepseek-v4-pro
+DEEPSEEK_MODEL=deepseek-flash
 DEEPSEEK_MAX_TOKENS=8192
 ```
 
@@ -113,3 +120,8 @@ DEEPSEEK_MAX_TOKENS=8192
 
 - [DeepSeek platform](https://platform.deepseek.com)
 - [DeepSeek API docs](https://api-docs.deepseek.com)
+
+`deepseek-flash` enables thinking explicitly and sends max reasoning effort,
+omitting temperature. Defaults: HTTP timeout 7200 seconds, SDK retries 0;
+configure `DEEPSEEK_TIMEOUT_SECONDS` / `DEEPSEEK_MAX_RETRIES` if needed.
+The `deepseek-v4-pro` ID remains pinned in historical competitions.

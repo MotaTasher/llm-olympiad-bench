@@ -1,14 +1,32 @@
 from __future__ import annotations
 
 import unittest
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from models.rosters import load_roster, roster_specs
 from scripts import run_model_batch
 from scripts import run_new_models_math_cup_2026_final
 
 
 class ModelBatchTests(unittest.TestCase):
+    def test_only_missing_distinguishes_math_cpp_and_python(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            task = root / 'cup' / 'task_01'
+            task.mkdir(parents=True)
+            result = {'provider': 'openai', 'model': 'gpt-6-astra', 'answer': 'source', 'error': None}
+            (task / 'math.json').write_text(json.dumps({'problem_id': 'task_01', 'results': [result]}))
+            kwargs = dict(competition='cup', logs_dir=root, models=['openai:gpt-6-astra'], problems=['task_01'])
+            self.assertTrue(run_model_batch.successful_pairs(**kwargs))
+            self.assertFalse(run_model_batch.successful_pairs(**kwargs, solution_format='code'))
+            (task / 'cpp.json').write_text(json.dumps({'problem_id': 'task_01',
+                'runtime_settings': {'solution_format': 'code', 'code_language': 'cpp'},
+                'results': [{**result, 'code_solution_id': 'code_one'}]}))
+            self.assertTrue(run_model_batch.successful_pairs(**kwargs, solution_format='code'))
+            self.assertFalse(run_model_batch.successful_pairs(**kwargs, solution_format='code', code_language='python'))
+
     def test_batch_success_requires_completed_nonempty_model_result(self) -> None:
         self.assertTrue(
             run_model_batch.successful_run_payload(
@@ -40,18 +58,7 @@ class ModelBatchTests(unittest.TestCase):
     def test_all_and_new_expand_to_curated_active_sets(self) -> None:
         self.assertEqual(
             run_model_batch.model_specs("all"),
-            [
-                "anthropic:claude-fable-5",
-                "anthropic:claude-opus-5",
-                "deepseek:deepseek-v4-pro",
-                "google:gemini-3.1-pro-preview",
-                "gigachat:GigaChat-3-Ultra",
-                "xai:grok-4.5",
-                "zai:glm-5.2",
-                "openai:gpt-5.6-sol",
-                "yandexgpt:aliceai-llm",
-                "kimi:kimi-k3",
-            ],
+            roster_specs(load_roster("flagships-2026-11-05")),
         )
         self.assertEqual(
             run_model_batch.model_specs("new"),

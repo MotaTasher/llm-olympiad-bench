@@ -1,10 +1,17 @@
 # GPT (OpenAI)
 
+Current direct-adapter defaults match the nine-model `flagships-2026-11-05`
+cohort. Historical competitions select their own pinned model IDs, regardless
+of global defaults. All constructors accept request-scoped `system_prompt`;
+runner selects a separate C++23/Python 3.13 prompt in explicit code mode. Only
+the statement is sent; official solutions are optional. No tools or provider
+code execution are enabled. See [model contracts](../../docs/specs/MODEL_ADAPTERS.md).
+
 Этот адаптер запускает OpenAI-модели через Responses API в text-only режиме:
 без `tools`, поиска, code interpreter и function calling.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`;
 `OPENAI_MAX_COMPLETION_TOKENS` остаётся fallback-настройкой.
-Активная колонка бенчмарка — `gpt-5.6-sol`; прежние `gpt-5.5` и
+Активная колонка бенчмарка — `gpt-6-astra`; прежние `gpt-5.5` и
 `gpt-5.4-mini` оставлены как явно запускаемые legacy-версии.
 
 ## 1. Как получить ключ
@@ -62,7 +69,7 @@ config/models.env
 Пример:
 
 ```env
-OPENAI_MODEL=gpt-5.6-sol
+OPENAI_MODEL=gpt-6-astra
 OPENAI_REASONING_EFFORT=high
 OPENAI_MAX_COMPLETION_TOKENS=12000
 OPENAI_TIMEOUT_SECONDS=7200

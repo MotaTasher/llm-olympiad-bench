@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from models.base import BaseModel, SolveResult
-from models.common import SYSTEM_PROMPT, error_result
+from models.common import CODE_SYSTEM_PROMPT_VERSION, SYSTEM_PROMPT, code_system_prompt, error_result
 from models.telemetry import (
     RUN_LOG_SCHEMA_VERSION,
     SYSTEM_PROMPT_VERSION,
@@ -82,6 +82,8 @@ MODEL_ENV_VARS = {
 class RunSettings:
     reasoning_budget_tokens: int | None = None
     max_final_tokens: int | None = None
+    solution_format: str | None = None
+    code_language: str | None = None
 
 
 @dataclass(frozen=True)
@@ -166,6 +168,7 @@ def create_model(
     *,
     reasoning_budget_tokens: int | None = None,
     max_final_tokens: int | None = None,
+    system_prompt: str | None = None,
 ) -> BaseModel:
     raw = alias.strip()
     key, _, model_id = raw.partition(":")
@@ -179,6 +182,7 @@ def create_model(
     kwargs = {
         "reasoning_budget_tokens": reasoning_budget_tokens,
         "max_final_tokens": max_final_tokens,
+        "system_prompt": system_prompt,
     }
     if any(value is not None for value in kwargs.values()):
         return model_class(model=model_id or None, **kwargs)
@@ -490,6 +494,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--logs-dir", default="logs", help="Where to write run JSON logs")
     parser.add_argument("--model-roster", default=None, help="Explicit cohort ID; defaults to competition metadata.model_roster")
+    parser.add_argument("--solution-format", choices=["math", "code"], default=None, help="Defaults to competition metadata, then math")
+    parser.add_argument("--code-language", choices=["cpp", "python"], default=None, help="Code mode language; default cpp (C++23)")
+    parser.add_argument("--code-solutions-dir", default="data/code_solutions", help="Immutable code artifact destination; no submissions")
     parser.add_argument(
         "--allow-env-model-overrides",
         action="store_true",
@@ -520,6 +527,7 @@ def run_problem(
     settings: RunSettings | None = None,
     max_tokens: int | None = None,
     model_roster: str | None = None,
+    code_solutions_dir: Path | str = "data/code_solutions",
 ) -> ProblemRunResult:
     problem_file = Path(problem_file)
     (
@@ -541,6 +549,12 @@ def run_problem(
     run_id = build_run_id(now, run_id_suffix or problem_title)
     roster = load_roster(model_roster) if model_roster else roster_for_metadata(competition_data.get("metadata"))
     aliases = requested_aliases(models_value, roster=roster)
+    metadata = competition_data.get("metadata") or {}
+    solution_format = (settings.solution_format if settings else None) or metadata.get("solution_format") or "math"
+    code_language = (settings.code_language if settings else None) or metadata.get("code_language") or "cpp"
+    if solution_format not in {"math", "code"}:
+        raise ValueError("solution_format must be math or code")
+    effective_prompt = code_system_prompt(code_language) if solution_format == "code" else SYSTEM_PROMPT
     logs_dir = Path(logs_dir)
     log_path = log_path_for(
         logs_dir,
@@ -596,12 +610,14 @@ def run_problem(
         "problem_hash": sha256_json(problem_data),
         "problem_text_hash": sha256_text(problem_text),
         "system_prompt": {
-            "version": SYSTEM_PROMPT_VERSION,
-            "sha256": sha256_text(SYSTEM_PROMPT),
-            "text": SYSTEM_PROMPT,
+            "version": CODE_SYSTEM_PROMPT_VERSION if solution_format == "code" else SYSTEM_PROMPT_VERSION,
+            "sha256": sha256_text(effective_prompt),
+            "text": effective_prompt,
         },
         "runtime_settings": {
             "text_only": True,
+            "solution_format": solution_format,
+            "code_language": code_language if solution_format == "code" else None,
             "sequential": True,
             "max_tokens": max_tokens,
             "reasoning_budget_tokens": (
@@ -645,14 +661,14 @@ def run_problem(
         model_label = alias
         print_progress(f"{ordinal} START {model_label}")
         try:
-            if settings and (
-                settings.reasoning_budget_tokens is not None
-                or settings.max_final_tokens is not None
-            ):
+            if solution_format == "code" or (settings and (
+                settings.reasoning_budget_tokens is not None or settings.max_final_tokens is not None
+            )):
                 model = create_model(
                     alias,
-                    reasoning_budget_tokens=settings.reasoning_budget_tokens,
-                    max_final_tokens=settings.max_final_tokens,
+                    reasoning_budget_tokens=settings.reasoning_budget_tokens if settings else None,
+                    max_final_tokens=settings.max_final_tokens if settings else None,
+                    system_prompt=effective_prompt if solution_format == "code" else None,
                 )
             else:
                 model = create_model(alias)
@@ -670,6 +686,10 @@ def run_problem(
         except Exception as exc:
             result = error_result(skeleton.get("requested_model_id") or alias, exc)
         measured_ms = int((time.monotonic() - call_start) * 1000)
+        if solution_format == "code" and not result.error and str(result.finish_reason or "").upper() in {
+            "LENGTH", "MAX_TOKENS", "MAX_OUTPUT_TOKENS", "INCOMPLETE", "ALTERNATIVE_STATUS_TRUNCATED_FINAL",
+        }:
+            result.error = "Code generation ended before completion; source was not prepared for judging"
         finalized = finalize_result(
             skeleton,
             result,
@@ -678,6 +698,23 @@ def run_problem(
             run_id=run_id,
             measured_ms=measured_ms,
         )
+        if solution_format == "code" and not result.error:
+            try:
+                from judging.records import extract_source, make_solution, write_solution
+                model_key = f"{provider}:{model.model_id}"
+                solution = make_solution(
+                    competition_id=competition_id, task_id=problem_id,
+                    author={"type": "model", "id": re.sub(r"[^A-Za-z0-9._-]+", "-", model_key), "name": model.model_id},
+                    code=extract_source(result.answer, code_language), language=code_language,
+                    origin={"kind": "model_generation"},
+                    generation={"result_id": finalized["result_id"], "run_id": run_id, "model_key": model_key},
+                )
+                write_solution(Path(code_solutions_dir), solution)
+                finalized["code_solution_id"] = solution["id"]
+            except Exception as exc:
+                result.error = f"Code source preparation failed: {exc}"
+                finalized["error"] = str(result.error)
+                finalized["status"] = "error"
         log["results"][result_index] = finalized
         log["status"] = run_status(log["results"])
         write_log(
@@ -764,6 +801,8 @@ def main() -> int:
             },
             max_tokens=max_tokens,
             model_roster=args.model_roster,
+            settings=RunSettings(solution_format=args.solution_format, code_language=args.code_language),
+            code_solutions_dir=args.code_solutions_dir,
         )
     except DataLoadError as exc:
         raise SystemExit(str(exc)) from exc

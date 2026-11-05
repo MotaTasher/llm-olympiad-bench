@@ -46,7 +46,12 @@ For long official competition names, `title` may be a compact display title
 used by the scoring UI. Keep the full official name in `description` and, when
 useful for structured consumers, in `metadata.official_title`.
 
-Known scoring metadata:
+Known competition metadata:
+
+- `metadata.solution_format`: `math` (default) or `code`; CLI overrides it.
+- `metadata.code_language`: `cpp` (default) or `python` for code mode; CLI
+  overrides it. These are competition-level generation settings, not task fields.
+  Official answers/solutions may be absent; runner sends only `statement`.
 
 - `metadata.model_roster`: ID of a versioned cohort file under
   `config/model_rosters/`, fixing exact provider/API model IDs and display names
@@ -102,7 +107,12 @@ Optional known fields:
 
 Problem files must not contain `competition_id` or `competition_title`; ownership is determined by the parent directory. Unknown additional fields are allowed and must be preserved by migrations and import workflows.
 
-Known scoring metadata:
+Known competition metadata:
+
+- `metadata.solution_format`: `math` (default) or `code`; CLI overrides it.
+- `metadata.code_language`: `cpp` (default) or `python` for code mode; CLI
+  overrides it. These are competition-level generation settings, not task fields.
+  Official answers/solutions may be absent; runner sends only `statement`.
 
 - `metadata.max_score`: maximum allowed manual score for this task;
 - `metadata.score_step`: official scoring step used by the range input and
@@ -432,3 +442,14 @@ python scripts/validate_problem_data.py data/competitions --all --strict
 ```
 
 `--strict` is accepted for command compatibility. The current validator always checks the canonical direct-child layout.
+
+## Code-generation log linkage
+
+Schema-v2 run logs record `runtime_settings.solution_format`, `code_language`
+(`null` for math), and the effective system prompt/version/hash. Successful
+complete code answers add `results[].code_solution_id`, pointing to a separate
+immutable source under `data/code_solutions/`. Source preparation failures keep
+the original answer, mark the result as error and create no judge job. Separate
+generation references preserve attribution across identical source from multiple
+runs. Judgment/ACM scores remain separate from human scoring and model telemetry.
+See `CODE_JUDGING.md`; schema-v2 math logs remain compatible.

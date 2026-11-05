@@ -1,5 +1,12 @@
 # Grok adapter
 
+Current direct-adapter defaults match the nine-model `flagships-2026-11-05`
+cohort. Historical competitions select their own pinned model IDs, regardless
+of global defaults. All constructors accept request-scoped `system_prompt`;
+runner selects a separate C++23/Python 3.13 prompt in explicit code mode. Only
+the statement is sent; official solutions are optional. No tools or provider
+code execution are enabled. See [model contracts](../../docs/specs/MODEL_ADAPTERS.md).
+
 Runs xAI Grok models through the official hosted OpenAI-compatible endpoint:
 
 ```text
@@ -8,7 +15,7 @@ https://api.x.ai/v1
 
 Active models:
 
-- `grok-4.5` — general-purpose flagship reasoning model; existing benchmark default remains `XAI_REASONING_EFFORT=high`.
+- `grok-4.7` — general-purpose flagship reasoning model; existing benchmark default remains `XAI_REASONING_EFFORT=high`.
 
 `grok-build-0.1` remains explicitly callable as a legacy text-only model.
 `grok-code-fast-1` is a legacy alias that canonicalizes to it; neither ID
@@ -57,7 +64,7 @@ Credential-free smoke:
 ```bash
 python - <<'PY'
 from models.grok import GrokModel
-for model_id in ["grok-4.5", "grok-4.3", "grok-build-0.1"]:
+for model_id in ["grok-4.7", "grok-4.3", "grok-build-0.1"]:
     result = GrokModel(model_id).solve("Докажите, что 1 = 1.", max_tokens=32)
     assert result.error
     print(model_id, "error path ok")

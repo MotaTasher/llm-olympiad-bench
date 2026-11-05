@@ -130,10 +130,12 @@ class ClaudeModel(BaseModel):
         *,
         reasoning_budget_tokens: int | None = None,
         max_final_tokens: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         self._model = model or env("ANTHROPIC_MODEL", DEFAULT_VERSION)
         self._reasoning_budget_tokens = reasoning_budget_tokens
         self._max_final_tokens = max_final_tokens
+        self._system_prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
 
     @property
     def model_id(self) -> str:
@@ -171,7 +173,7 @@ class ClaudeModel(BaseModel):
             messages: list[dict[str, Any]] = [{"role": "user", "content": problem}]
             request_payload = {
                 "model": self.model_id,
-                "system": SYSTEM_PROMPT,
+                "system": self._system_prompt,
                 "endpoint": sanitized_base_url("https://api.anthropic.com/v1/messages"),
                 "max_output_tokens_total": total_budget,
                 "max_output_tokens_per_request": per_request_limit,
@@ -180,7 +182,11 @@ class ClaudeModel(BaseModel):
                 "final_answer_outside_reasoning_budget": True,
                 "stream": total_budget > ANTHROPIC_NONSTREAMING_MAX_TOKENS,
             }
-            if thinking_budget is not None:
+            always_adaptive = self.model_id == "claude-fable-5-1"
+            if always_adaptive:
+                request_payload["thinking"] = adaptive_thinking_config()
+                request_payload["output_config"] = {"effort": effort_value()}
+            elif thinking_budget is not None:
                 if budget_tokens > 0:
                     if uses_adaptive_thinking(self.model_id):
                         request_payload["thinking"] = adaptive_thinking_config()
@@ -217,10 +223,10 @@ class ClaudeModel(BaseModel):
                 kwargs: dict[str, Any] = {
                     "model": self.model_id,
                     "max_tokens": step_max_tokens,
-                    "system": SYSTEM_PROMPT,
+                    "system": self._system_prompt,
                     "messages": messages,
                 }
-                if budget_tokens > 0 and not is_finalization:
+                if always_adaptive or (budget_tokens > 0 and not is_finalization):
                     if uses_adaptive_thinking(self.model_id):
                         kwargs["thinking"] = adaptive_thinking_config()
                         kwargs["output_config"] = {"effort": effort_value()}
@@ -235,13 +241,13 @@ class ClaudeModel(BaseModel):
                 step_request = {
                     "model": self.model_id,
                     "max_tokens": step_max_tokens,
-                    "system": SYSTEM_PROMPT,
+                    "system": self._system_prompt,
                     "messages": messages,
                     "endpoint": sanitized_base_url("https://api.anthropic.com/v1/messages"),
                     "stream": use_streaming,
                     "phase": "final_answer" if is_finalization else "reasoning",
                 }
-                if budget_tokens > 0 and not is_finalization:
+                if always_adaptive or (budget_tokens > 0 and not is_finalization):
                     step_request["thinking"] = kwargs["thinking"]
                     if "output_config" in kwargs:
                         step_request["output_config"] = kwargs["output_config"]
@@ -387,7 +393,7 @@ class ClaudeModel(BaseModel):
                 answer=answer,
                 prompt_tokens=prompt_tokens,
                 completion_tokens=completion_tokens,
-                cost_usd=round(cost_usd, 8),
+                cost_usd=float(cost.get("total") if cost.get("total") is not None else cost_usd),
                 latency_ms=latency_ms,
                 raw_response=raw_response,
                 error=error,

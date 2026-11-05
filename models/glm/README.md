@@ -1,9 +1,15 @@
 # GLM adapter
 
+Current direct-adapter defaults match the nine-model `flagships-2026-11-05`
+cohort. Historical competitions select their own pinned model IDs, regardless
+of global defaults. All constructors accept request-scoped `system_prompt`;
+runner selects a separate C++23/Python 3.13 prompt in explicit code mode. Only
+the statement is sent; official solutions are optional. No tools or provider
+code execution are enabled. See [model contracts](../../docs/specs/MODEL_ADAPTERS.md).
+
 The November Algo Cup cohort pins `glm-5.3`, using the same streaming,
 continuation, enabled-thinking and max-effort path. Historical stages keep
-`glm-5.2`; the direct-adapter default below remains the legacy compatibility
-default. Model IDs are selected per competition, not by changing old results.
+`glm-5.2`; direct-adapter defaults now use `glm-5.3`. Model IDs are selected per competition, not by changing old results.
 See [MODEL_ROSTERS.md](../../docs/specs/MODEL_ROSTERS.md).
 
 Runs Z.AI GLM models through the OpenAI-compatible endpoint:
@@ -14,7 +20,7 @@ https://api.z.ai/api/paas/v4/
 
 Active models:
 
-- `glm-5.2` — flagship paid model; thinking is enabled and `reasoning_effort=max` is sent.
+- `glm-5.3` — flagship paid model; thinking is enabled and `reasoning_effort=max` is sent.
 
 `glm-4.7-flash` remains explicitly callable as a legacy model; neither it nor
 `glm-4.7-flashx` creates an active benchmark column.
@@ -58,7 +64,7 @@ ZAI_TIMEOUT_SECONDS=7200
 ZAI_MAX_RETRIES=0
 ```
 
-`glm-5.2` uses streaming chat completions so long thinking requests deliver
+`glm-5.3` uses streaming chat completions so long thinking requests deliver
 incremental data instead of waiting for one buffered response until the HTTP
 timeout. The adapter joins every `reasoning_content` and `content` delta and
 requests terminal usage telemetry. `glm-4.7-flash` keeps the compatible
@@ -69,7 +75,7 @@ Credential-free smoke:
 ```bash
 python - <<'PY'
 from models.glm import GLMModel
-for model_id in ["glm-5.2", "glm-4.7-flash"]:
+for model_id in ["glm-5.3", "glm-4.7-flash"]:
     result = GLMModel(model_id).solve("Докажите, что 1 = 1.", max_tokens=32)
     assert result.error
     print(model_id, "error path ok")

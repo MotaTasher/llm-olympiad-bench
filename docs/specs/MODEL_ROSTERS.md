@@ -80,7 +80,7 @@ never claim that an alias guarantees exact future reproducibility.
 The loader rejects invalid IDs, unknown providers, duplicate model keys, empty
 cohorts and missing names. A missing/invalid **referenced** cohort fails visibly;
 it must not silently fall back to today's global list. A manifest with no
-`model_roster` retains the previous global behavior for compatibility. Newly
+`model_roster` uses the current nine global `VERSIONS` defaults for compatibility. Newly
 added competitions must explicitly select a cohort before any runs.
 
 Once a cohort is used, create a **new file/ID** for updates. Do not edit a used
@@ -100,8 +100,9 @@ new comparison of an existing problem set, prefer a new stage/competition ID.
   store `model_roster.id`, its canonical JSON SHA-256 and the entire snapshot.
 - The batch runner's `all/site/configured` expansion follows the competition
   manifest or explicit `--model-roster`. Historical `new` batches remain their
-  explicitly curated historical subsets. Supply `--max-tokens` for a new model
-  that has no legacy batch default; the roster itself does not change budgets.
+  explicitly curated historical subsets. November model defaults use a 256000
+  total budget, except GigaChat 8192 and Alice 8000 operational defaults.
+  `--max-tokens` overrides the requested total; the roster itself owns no budget.
 - The public exporter uses the catalog's pinned columns. `modelKey` preserves
   version identity; `modelFamily` preserves provider identity.
 - `export_contest_preview.py` writes the Algo Cup projection plus
@@ -124,11 +125,12 @@ PY
 python scripts/export_contest_preview.py
 ```
 
-No generation/submission was authorized or performed for this update. Provider
-API keys were absent in this environment, so account access, quotas and real
-generation calls were not verified. Public listings do not prove account
-availability. New-model pricing/budgets also need a fresh preflight before
-paid runs; this change does not relabel old pricing estimates as new prices.
+No generation/submission was authorized or performed for this update. Most provider credentials were absent in this environment; GigaChat credential
+presence alone was checked. Account access, quotas and real generation calls
+were not verified. Public listings do not prove account
+availability. Current request parameters, operational caps and list-price estimates were
+updated and mock-tested; account/quotas still need preflight before paid runs.
+Old pricing records are not relabeled.
 The existing math/code prompt boundary still applies.
 
 ## Provider-specific compatibility
@@ -136,7 +138,7 @@ The existing math/code prompt boundary still applies.
 Kimi K3.1 Pro omits fixed sampling parameters and sends `reasoning_effort=max`
 by default; the old K3 request remains unchanged. GLM 5.3 uses the existing
 streaming/continuation path, thinking and max effort. All requests stay text-only
-and keep the shared prompt. No provider-side tools or code execution were added.
+and use the shared mode-specific prompt (unchanged math or explicit code). No provider-side tools or code execution were added.
 
 ## Validation
 

@@ -799,7 +799,9 @@
       try {
         const documentData = await fetchPublishedSolution(path);
         statement.innerHTML = renderMarkdown(documentData?.task?.statement || taskStatement(task), "Условие задачи не опубликовано.");
-        official.innerHTML = renderMarkdown(documentData?.task?.officialSolution, "Авторское решение не опубликовано.");
+        const officialText = documentData?.task?.officialSolution || task.officialSolution;
+        official.innerHTML = renderMarkdown(officialText, "Авторское решение не опубликовано.");
+        if (competition.solutionFormat === "code") official.closest("details").hidden = !officialText;
         renderMathInNode(statement);
         renderMathInNode(official);
       } catch (_) {
@@ -1111,7 +1113,9 @@
     try {
       const firstDocument = await fetchPublishedSolution(firstPath);
       renderMarkdownInto("#task-statement", firstDocument?.task?.statement || taskStatement(task), "Условие задачи не опубликовано.");
-      renderMarkdownInto("#task-official", firstDocument?.task?.officialSolution, "Авторское решение не опубликовано.");
+      const officialText = firstDocument?.task?.officialSolution || task?.officialSolution;
+      renderMarkdownInto("#task-official", officialText, "Авторское решение не опубликовано.");
+      if (competition.solutionFormat === "code") document.querySelector("#task-official").closest("details").hidden = !officialText;
     } catch (_) {
       renderMarkdownInto("#task-statement", "", "Условие задачи временно недоступно.");
       renderMarkdownInto("#task-official", "", "Авторское решение временно недоступно.");

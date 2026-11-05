@@ -45,6 +45,20 @@ def normalize_language(language: str) -> str:
     return language
 
 
+def extract_source(answer: str, language: str) -> str:
+    """Accept plain source or one complete source-only Markdown fence; never execute."""
+    language = normalize_language(language)
+    if "```" not in answer:
+        return answer
+    match = re.fullmatch(r"\s*```([A-Za-z0-9+._-]*)[^\S\n]*\r?\n([\s\S]*?)\r?\n```\s*", answer)
+    if not match or "```" in match.group(2):
+        raise ValueError("Expected a single source file without prose or multiple code blocks")
+    label = match.group(1).lower()
+    if label and normalize_language(label) != language:
+        raise ValueError("Code fence language does not match the requested compiler language")
+    return match.group(2)
+
+
 def make_solution(*, competition_id: str, task_id: str, author: dict[str, str],
                   code: str, language: str, origin: dict[str, Any],
                   generation: dict[str, str] | None = None) -> dict[str, Any]:
@@ -55,7 +69,11 @@ def make_solution(*, competition_id: str, task_id: str, author: dict[str, str],
         raise ValueError("Code author must be a team or model")
     component(competition_id); component(task_id); component(author["id"])
     digest = hashlib.sha256(code.encode("utf-8")).hexdigest()
-    identity = json.dumps([competition_id, task_id, author["id"], language, digest], ensure_ascii=False)
+    identity_parts = [competition_id, task_id, author["id"], language, digest]
+    if generation is not None:
+        # Equal source from different immutable model runs still needs separate attribution.
+        identity_parts.extend([generation["result_id"], generation["run_id"], generation["model_key"]])
+    identity = json.dumps(identity_parts, ensure_ascii=False)
     solution_id = "code_" + hashlib.sha256(identity.encode()).hexdigest()[:24]
     return {
         "schema_version": 1, "id": solution_id, "format": "code",

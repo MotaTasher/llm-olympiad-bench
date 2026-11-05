@@ -190,3 +190,11 @@ columns. Task scores fill the complete table cell, aggregate values use a
 larger type size, and competition-level costs are displayed to cents. The
 participant column wraps full model, team and member names instead of eliding
 them. The hero retains the original torn outline and formulas with the blue paper texture.
+
+### Optional official solutions for code stages
+
+Code-stage problem-set/task/individual pages hide their official-solution card
+when no reference solution exists, and display it when added later. Math-stage
+reference rendering is preserved. Generation works from the complete statement
+alone; it never consumes reference solutions. The public model placeholders and
+12 imported winner sources remain unchanged; no new runs were performed.

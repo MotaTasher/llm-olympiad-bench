@@ -10,8 +10,8 @@ string, including whitespace; we do not rewrite or execute participant code.
 All imported winners used **C++23 (GCC 14.1)**, verdict `OK`.
 
 No new model calls, submissions or rejudging were performed. Model rows still
-have `null` scores/metrics and `runStatus: not_started`. The existing math
-prompts, logs, human evaluation files and Flask scoring flow are unchanged.
+have `null` scores/metrics and `runStatus: not_started`. The math prompt, existing logs, human evaluation files and Flask scoring flow
+are preserved. Runner now supports a separate statement-only code mode.
 
 `judging/` owns the new external-judge boundary. Model generation stays
 text-only. A generated source artifact references its immutable original
@@ -29,7 +29,7 @@ Path: `data/code_solutions/<competition_id>/<problem_id>/<solution_id>.json`.
   "format": "code",
   "competition_id": "algo-cup-2026-qualifying",
   "problem_id": "task_01",
-  "author": {"type": "model", "id": "openai-gpt-5.6-sol", "name": "GPT-5.6 Sol"},
+  "author": {"type": "model", "id": "openai-gpt-6-astra", "name": "GPT-6 Astra"},
   "source": {
     "language": "cpp",
     "filename": "solution.cpp",
@@ -38,14 +38,16 @@ Path: `data/code_solutions/<competition_id>/<problem_id>/<solution_id>.json`.
     "encoding": "utf-8"
   },
   "origin": {"kind": "model_generation"},
-  "generation": {"result_id": "res_...", "run_id": "...", "model_key": "openai:gpt-5.6-sol"}
+  "generation": {"result_id": "res_...", "run_id": "...", "model_key": "openai:gpt-6-astra"}
 }
 ```
 
 `author.type` is `team` or `model`. Imported teams have `generation: null` and
 an origin containing `kind: yandex_contest`, original contest/submission IDs
 and `selection: first_accepted_in_contest`. The stable source ID hashes
-competition, problem, author ID, language and source SHA-256. Rewriting an
+competition, problem, author ID, language and source SHA-256. Generated
+sources also include their generation result/run/model references in identity,
+so identical code from two runs keeps separate attribution. Rewriting an
 artifact with different contents is rejected. It is separate from a judge
 submission: the same source can have an independently recorded judgment.
 
@@ -53,8 +55,10 @@ Default languages/compilers are **`cpp` → `gcc14_cpp23`** and
 **`python` → `python3_13`**. Explicit alternatives are C++20 (`gcc_cpp20`) and
 PyPy (`pypy3_7_1_0`). The actual compiler must also be enabled in the target
 contest. Never infer the language from model name. Inputs are UTF-8, nonempty,
-at most 262144 bytes. Preparation consumes an explicit source file; it does
-not extract arbitrary Markdown fences or execute code.
+at most 262144 bytes. Manual preparation consumes an explicit source file. Runner also accepts raw
+source or one complete source-only Markdown fence with a matching language;
+prose/multiple fences, empty/oversized output and truncated responses fail
+preparation. Neither path executes code.
 
 ## Judge record (schema_version 1)
 
@@ -125,16 +129,18 @@ The current owner instruction is **no new submissions or model runs yet**.
 The following interface is implemented and mock-tested for later authorized
 use; the real write path has **not** been exercised on the contest.
 
-1. Generate code in the existing text-only model flow under a separately
-   agreed code prompt and record its immutable result. No code prompt or
-   `runner.py` behavior has been changed in this task.
-2. Prepare a source artifact locally:
+1. After generation is authorized, use `runner.py --solution-format code
+   --code-language cpp` (or `python`) with the pinned model cohort and complete
+   statement. It creates the source artifact automatically and links
+   `results[].code_solution_id` to the immutable result. Official answers and
+   solutions are optional; only `statement` goes to the model.
+2. Alternatively, prepare an existing explicit source file locally:
 
    ```bash
    python scripts/judge_code.py prepare --source /path/solution.cpp --language cpp \
      --competition algo-cup-2026-qualifying --task task_01 \
-     --author-id openai-gpt-5.6-sol --author-name 'GPT-5.6 Sol' \
-     --model-key openai:gpt-5.6-sol --result-id res_REAL --run-id REAL_RUN
+     --author-id openai-gpt-6-astra --author-name 'GPT-6 Astra' \
+     --model-key openai:gpt-6-astra --result-id res_REAL --run-id REAL_RUN
    ```
 
 3. Review the **offline dry run**, which needs no kit/session and writes no

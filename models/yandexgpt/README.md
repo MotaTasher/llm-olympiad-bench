@@ -1,8 +1,15 @@
 # YandexGPT / Alice
 
-Алиас `alice` в `runner.py` использует тот же text-completion адаптер Yandex AI Studio. Публичного API голосовой Alice для произвольного скоринга задач здесь не используется. Официальный benchmark запрашивает общий бюджет `128000` токенов, но этот адаптер безопасно ограничивает запрос до API-лимита `8000` и фиксирует оба значения в telemetry.
+Current direct-adapter defaults match the nine-model `flagships-2026-11-05`
+cohort. Historical competitions select their own pinned model IDs, regardless
+of global defaults. All constructors accept request-scoped `system_prompt`;
+runner selects a separate C++23/Python 3.13 prompt in explicit code mode. Only
+the statement is sent; official solutions are optional. No tools or provider
+code execution are enabled. See [model contracts](../../docs/specs/MODEL_ADAPTERS.md).
 
-Адаптер работает через basic completion endpoint в text-only режиме: без tools, function calling, поиска, кода и внешних цепочек.
+Алиас `alice` в `runner.py` использует тот же text-completion адаптер Yandex AI Studio. Публичного API голосовой Alice для произвольного скоринга задач здесь не используется. Официальный benchmark запрашивает общий бюджет `256000` токенов, но этот адаптер безопасно ограничивает запрос до операционного предела проекта `8000` и фиксирует оба значения в telemetry.
+
+Адаптер работает через basic completion endpoint в text-only режиме: без tools, function calling, поиска, исполнения кода и внешних цепочек.
 Единый лимит output-токенов задаётся через `runner.py --max-tokens`; `YANDEX_MAX_TOKENS` остаётся fallback-настройкой.
 Активная колонка бенчмарка — флагман `aliceai-llm`; `yandexgpt-5.1` и
 `yandexgpt-5-lite` оставлены как явно запускаемые legacy-версии.
@@ -135,3 +142,7 @@ RUB_PER_USD=90
 - [YandexGPT quickstart](https://yandex.cloud/en/docs/foundation-models/quickstart/yandexgpt)
 - [API key management](https://yandex.cloud/en/docs/iam/operations/api-key/create)
 - [Foundation Models pricing](https://yandex.cloud/ru/prices#foundation-models)
+
+Current completion URL: `https://ai.api.cloud.yandex.net/foundationModels/v1/completion`.
+Timeout defaults to 900 seconds. The 8000 output cap is operational, not a
+claim of a model-independent provider limit; requested/actual budgets are logged.

@@ -15,7 +15,7 @@ from ..telemetry import sanitized_base_url
 from .versions import DEFAULT as DEFAULT_VERSION
 
 
-YANDEX_MAX_TOKENS_PER_REQUEST = 256_000
+YANDEX_MAX_TOKENS_PER_REQUEST = 8_000  # Conservative operational cap, not a claimed model maximum.
 
 
 class YandexGPTModel(BaseModel):
@@ -25,10 +25,12 @@ class YandexGPTModel(BaseModel):
         *,
         reasoning_budget_tokens: int | None = None,
         max_final_tokens: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         self._model = model or env("YANDEX_MODEL", DEFAULT_VERSION)
         self._reasoning_budget_tokens = reasoning_budget_tokens
         self._max_final_tokens = max_final_tokens
+        self._system_prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
 
     @property
     def model_id(self) -> str:
@@ -70,7 +72,7 @@ class YandexGPTModel(BaseModel):
             completion_options = {
                 "stream": False,
                 "temperature": float(env("YANDEX_TEMPERATURE", "0.15") or "0.15"),
-                "maxTokens": requested_max_tokens,
+                "maxTokens": min(requested_max_tokens, YANDEX_MAX_TOKENS_PER_REQUEST),
             }
             reasoning_mode = env("YANDEX_REASONING_MODE")
             if reasoning_mode:
@@ -80,7 +82,7 @@ class YandexGPTModel(BaseModel):
                 "modelUri": f"gpt://{folder_id}/{self.model_id}",
                 "completionOptions": completion_options,
                 "messages": [
-                    {"role": "system", "text": SYSTEM_PROMPT},
+                    {"role": "system", "text": self._system_prompt},
                     {"role": "user", "text": problem},
                 ],
             }
@@ -89,20 +91,20 @@ class YandexGPTModel(BaseModel):
                 "completionOptions": completion_options,
                 "messages": payload["messages"],
                 "endpoint": sanitized_base_url(
-                    "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+                    "https://ai.api.cloud.yandex.net/foundationModels/v1/completion"
                 ),
                 "stream": completion_options.get("stream"),
                 "requested_max_tokens": requested_max_tokens,
-                "provider_max_tokens": YANDEX_MAX_TOKENS_PER_REQUEST,
+                "operational_max_tokens": YANDEX_MAX_TOKENS_PER_REQUEST,
             }
             ensure_text_only_request(request_payload)
 
             def post_completion() -> requests.Response:
                 return requests.post(
-                    "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+                    "https://ai.api.cloud.yandex.net/foundationModels/v1/completion",
                     headers=headers,
                     json=payload,
-                    timeout=int(env("YANDEX_TIMEOUT", "120") or "120"),
+                    timeout=int(env("YANDEX_TIMEOUT", "900") or "900"),
                 )
 
             response, latency_ms = timed(post_completion)

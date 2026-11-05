@@ -55,7 +55,7 @@ class KimiAdapterTests(unittest.TestCase):
             )
 
         with patch.dict(os.environ, {"KIMI_API_KEY": "test-key", "KIMI_TEMPERATURE": "1"}, clear=False), patch.dict(sys.modules, {"requests": SimpleNamespace(post=post)}):
-            result = KimiModel().solve("Solve this", max_tokens=256_000)
+            result = KimiModel(model="kimi-k3").solve("Solve this", max_tokens=256_000)
 
         payload = calls[0]["json"]
         self.assertEqual(payload["model"], "kimi-k3")
@@ -72,7 +72,7 @@ class KimiAdapterTests(unittest.TestCase):
             return FakeResponse(400, {"error": {"type": "invalid_request_error", "message": "bad parameter"}})
 
         with patch.dict(os.environ, {"KIMI_API_KEY": "test-key", "KIMI_TEMPERATURE": "1"}, clear=False), patch.dict(sys.modules, {"requests": SimpleNamespace(post=post)}):
-            result = KimiModel().solve("Solve this", max_tokens=256_000)
+            result = KimiModel(model="kimi-k3").solve("Solve this", max_tokens=256_000)
 
         self.assertIn("bad parameter", result.error or "")
         self.assertEqual(result.raw_response["error"]["type"], "invalid_request_error")

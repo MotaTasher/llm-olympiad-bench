@@ -13,10 +13,11 @@ KIMI_DEFAULT_BASE_URL = "https://api.moonshot.ai/v1"
 
 
 class KimiModel(BaseModel):
-    def __init__(self, model: str | None = None, *, reasoning_budget_tokens: int | None = None, max_final_tokens: int | None = None) -> None:
+    def __init__(self, model: str | None = None, *, reasoning_budget_tokens: int | None = None, max_final_tokens: int | None = None, system_prompt: str | None = None) -> None:
         self._model = model or env("KIMI_MODEL", DEFAULT_VERSION)
         self._reasoning_budget_tokens = reasoning_budget_tokens
         self._max_final_tokens = max_final_tokens
+        self._system_prompt = system_prompt if system_prompt is not None else SYSTEM_PROMPT
 
     @property
     def model_id(self) -> str:
@@ -34,7 +35,7 @@ class KimiModel(BaseModel):
             is_k31 = self.model_id.startswith("kimi-k3.1-")
             if self.model_id.startswith("kimi-k3") and not is_k31 and temperature != 1:
                 raise ValueError("Kimi K3 accepts only temperature=1")
-            messages = [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": problem}]
+            messages = [{"role": "system", "content": self._system_prompt}, {"role": "user", "content": problem}]
             request_payload = {
                 "model": self.model_id, "messages": messages, "max_completion_tokens": total_budget,
                 "temperature": temperature,

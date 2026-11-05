@@ -55,6 +55,13 @@ PROVIDER_LABELS = {
 }
 
 SHORT_MODEL_LABELS = {
+    ("anthropic", "claude-fable-5-1"): "Fable 5.1",
+    ("deepseek", "deepseek-flash"): "V4.1 Flash 1017",
+    ("google", "gemini-4-argon"): "4 Argon",
+    ("xai", "grok-4.7"): "4.7",
+    ("zai", "glm-5.3"): "5.3",
+    ("openai", "gpt-6-astra"): "GPT-6 Astra",
+    ("kimi", "kimi-k3.1-pro"): "K3.1 Pro",
     ("anthropic", "claude-fable-5"): "Fable 5",
     ("anthropic", "claude-opus-5"): "Opus 5",
     ("anthropic", "claude-opus-4-8"): "Opus 4.8",

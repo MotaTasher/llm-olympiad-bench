@@ -1,19 +1,6 @@
-# models/deepseek/versions.py
-# Source:
-#   https://api-docs.deepseek.com/api/list-models
-#   https://api-docs.deepseek.com/quick_start/pricing
-#   https://api-docs.deepseek.com/updates/
-# Benchmark snapshot: 2026-08-01
-#
-# Programmatic check:
-#   curl https://api.deepseek.com/models \
-#     -H "Authorization: Bearer $DEEPSEEK_API_KEY"
-
-VERSIONS = [
-    # Strongest paid model.
-    "deepseek-v4-pro",
-]
-
-LEGACY_VERSIONS = ["deepseek-v4-flash"]
-
+# Current direct-adapter / unassigned-competition default, verified 2026-11-05.
+# https://api-docs.deepseek.com/updates/
+# Historical competitions select their own immutable model roster.
+VERSIONS = ['deepseek-flash']
+LEGACY_VERSIONS = ['deepseek-v4-flash', 'deepseek-v4-pro']
 DEFAULT = VERSIONS[0]

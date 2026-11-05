@@ -1,14 +1,6 @@
-# models/gemini/versions.py
-# Source:
-#   https://ai.google.dev/gemini-api/docs/models
-#   https://ai.google.dev/gemini-api/docs/pricing
-#   https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking
-# Benchmark snapshot: 2026-08-01
-
-VERSIONS = [
-    "gemini-3.1-pro-preview",
-]
-
-LEGACY_VERSIONS = ["gemini-3.5-flash"]
-
+# Current direct-adapter / unassigned-competition default, verified 2026-11-05.
+# https://aistudio.google.com/docs/models/gemini-4-argon
+# Historical competitions select their own immutable model roster.
+VERSIONS = ['gemini-4-argon']
+LEGACY_VERSIONS = ['gemini-3.5-flash', 'gemini-3.1-pro-preview']
 DEFAULT = VERSIONS[0]

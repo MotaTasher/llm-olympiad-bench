@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import math
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+from datetime import UTC, datetime
 from typing import Any
 
 
-PRICING_VERSION = "2026-08-01"
+PRICING_VERSION = "2026-11-05"
 DEFAULT_RUB_PER_USD = 90.0
 
 
@@ -40,6 +41,7 @@ class TieredTokenPrice:
 
 
 OPENAI_USD_PER_1M = {
+    "gpt-6-astra": (10.00, 50.00),
     "gpt-5.6-sol": (5.00, 30.00),
     "gpt-5.5": (5.00, 30.00),
     "gpt-5.4-mini": (0.75, 4.50),
@@ -50,6 +52,7 @@ OPENAI_USD_PER_1M = {
 }
 
 ANTHROPIC_USD_PER_1M = {
+    "claude-fable-5-1": (10.00, 50.00),
     "claude-fable-5": (10.00, 50.00),
     "claude-opus-5": (5.00, 25.00),
     "claude-opus-4-8": (5.00, 25.00),
@@ -59,6 +62,7 @@ ANTHROPIC_USD_PER_1M = {
 }
 
 DEEPSEEK_USD_PER_1M = {
+    "deepseek-flash": (0.30, 1.20),  # Conservative peak estimate; off-peak is half.
     "deepseek-v4-flash": (0.14, 0.28),
     "deepseek-v4-pro": (0.435, 0.87),
     "deepseek-chat": (0.14, 0.28),
@@ -66,6 +70,7 @@ DEEPSEEK_USD_PER_1M = {
 }
 
 GEMINI_STANDARD_USD_PER_1M = {
+    "gemini-4-argon": (4.00, 0.20, 20.00),
     "gemini-3.5-flash": (1.50, 0.15, 9.00),
 }
 
@@ -86,19 +91,22 @@ GEMINI_TIERED_USD_PER_1M = {
 }
 
 XAI_USD_PER_1M = {
+    "grok-4.7": (2.00, 0.50, 6.00),
     "grok-4.5": (2.00, 0.30, 6.00),
     "grok-4.3": (1.25, 0.20, 2.50),
     "grok-build-0.1": (1.00, 0.20, 2.00),
 }
 
 ZAI_USD_PER_1M = {
+    "glm-5.3": (1.40, 0.26, 4.40),
     "glm-5.2": (1.40, 0.26, 4.40),
     "glm-4.7-flash": (0.0, 0.0, 0.0),
 }
 
-# Official Kimi K3 list price, USD per million tokens, 2026-08-01.
+# Official Kimi list prices, USD per million tokens; historical K3 retained.
 # https://platform.kimi.ai/ (latest models section)
 KIMI_USD_PER_1M = {
+    "kimi-k3.1-pro": (2.00, 0.20, 10.00),
     "kimi-k3": (3.00, 0.30, 15.00),
 }
 
@@ -161,6 +169,18 @@ def total_price_for(model_id: str, prices: dict[str, float], fallback: float) ->
 
 def token_price(provider: str, model_id: str) -> TokenPrice | None:
     provider = provider.lower()
+    if provider == "openai" and model_id == "gpt-6-astra":
+        return TokenPrice(provider, model_id, "USD", 10.0, 50.0, 1.0)
+    if provider == "anthropic" and model_id == "claude-fable-5-1":
+        return TokenPrice(provider, model_id, "USD", 10.0, 50.0, 0.25)
+    if provider == "deepseek" and model_id == "deepseek-flash":
+        return TokenPrice(provider, model_id, "USD", 0.30, 1.20, 0.006,
+                          note="Peak list-price estimate as of 2026-11-05; off-peak rates are half. Not a provider invoice.")
+    if provider == "google" and model_id == "gemini-4-argon":
+        introductory = datetime.now(UTC).date().isoformat() < "2026-12-01"
+        return TokenPrice(provider, model_id, "USD", 2.0 if introductory else 4.0,
+                          10.0 if introductory else 20.0, 0.10 if introductory else 0.20,
+                          note="Introductory paid-list rates through 2026-11-30." if introductory else "Standard paid-list rates from 2026-12-01.")
     if provider == "openai":
         input_price, output_price = price_for(model_id, OPENAI_USD_PER_1M, OPENAI_USD_PER_1M["gpt-5.6-sol"])
         return TokenPrice(provider, model_id, "USD", input_price, output_price)
@@ -243,7 +263,7 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
             input_per_1m=input_price,
             cached_input_per_1m=cached_input_price,
             output_per_1m=output_price,
-            note="Official Kimi K3 standard list price; provider usage counters are used.",
+            note="Official Kimi standard list price for the exact model; provider usage counters are used.",
         )
     if provider == "yandexgpt":
         normalized = model_id.lower()
@@ -285,6 +305,19 @@ def token_price(provider: str, model_id: str) -> TokenPrice | None:
 def estimate_tokens(text: str) -> int:
     compact_length = len((text or "").strip())
     return max(1, math.ceil(compact_length / 4))
+
+
+def combine_request_costs(costs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Apply context tiers per request, then sum the USD estimates for a chain."""
+    if not costs:
+        raise ValueError("At least one request estimate is required")
+    result = dict(costs[-1])
+    for field in ("input", "output", "cached_input", "reasoning", "total"):
+        values = [cost[field] for cost in costs if cost.get(field) is not None]
+        result[field] = round(sum(values), 8) if values else None
+    result["note"] = "Summed per-request estimates; each request selects its own context tier."
+    result["requests"] = costs
+    return result
 
 
 def estimate_google_cost_from_total_tokens(
@@ -403,6 +436,13 @@ def estimate_cost(
             "exchange_rate": None,
             "note": "No pricing configured.",
         }
+
+    if provider == "openai" and model_id == "gpt-6-astra" and input_tokens > 272_000:
+        price = replace(price, input_per_1m=20.0, cached_input_per_1m=2.0, output_per_1m=75.0,
+                        note="Long-context rates apply above 272000 input tokens.")
+    elif provider == "xai" and model_id == "grok-4.7" and input_tokens > 200_000:
+        price = replace(price, input_per_1m=4.0, cached_input_per_1m=1.0, output_per_1m=12.0,
+                        note="Long-context rates apply above 200000 input tokens; provider cost overrides estimates.")
 
     if price.currency == "USD":
         cached_tokens = int(cached_input_tokens or 0)
