@@ -99,7 +99,10 @@ calling or provider-side code execution. Providers with no numeric reasoning
 budget API leave that setting as best effort while still applying the visible
 answer token cap when supported.
 
-`VERSIONS` is the active benchmark set and should stay small. The scoring UI uses only `VERSIONS` for configured columns; `LEGACY_VERSIONS` may document retired IDs, but must not be used to seed the default matrix.
+`VERSIONS` is the compatibility default set and should stay small. Unassigned
+competitions use it for configured columns; pinned competitions use their
+own exact cohort, including explicitly selected historical versions.
+`LEGACY_VERSIONS` documents retired IDs and never automatically seeds a matrix.
 
 `runner.py --models all` expands to every active `VERSIONS` entry for every
 provider when no competition roster is set; otherwise it expands that exact

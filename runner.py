@@ -479,7 +479,7 @@ def parse_args() -> argparse.Namespace:
         help=(
             "Comma-separated aliases/specs. Examples: gpt,claude or "
             "openai:gpt-5.5,anthropic:claude-opus-4-8. Use 'all' to run every "
-            "active model shown in the scoring UI. Defaults to RUNNER_MODELS "
+            "model in the competition's pinned cohort (global defaults if unassigned). Defaults to RUNNER_MODELS "
             "from config/models.env."
         ),
     )
